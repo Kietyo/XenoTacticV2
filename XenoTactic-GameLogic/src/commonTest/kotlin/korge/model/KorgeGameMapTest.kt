@@ -1,11 +1,10 @@
 import com.soywiz.korio.async.runBlockingNoJs
+import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import korge.model.korge_test_utils.createTempFile
-import korge_utils.TEST_TEMP_DATA_VFS
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import model.GameMap
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

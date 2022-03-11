@@ -13,7 +13,7 @@ repositories {
 }
 
 val kormaVersion = "2.2.2"
-val korioVersion = "2.2.0"
+val korioVersion = "2.6.2"
 
 kotlin {
     jvm {

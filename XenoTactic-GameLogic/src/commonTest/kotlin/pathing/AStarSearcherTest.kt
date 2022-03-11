@@ -1,10 +1,13 @@
 package pathing
 
+import GOLDENS_DATA_VFS
 import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korio.file.baseName
+import com.soywiz.korio.file.std.localCurrentDirVfs
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair
@@ -13,6 +16,7 @@ import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.measureTime
+import loadGameMapFromGoldensAsync
 import test_utils.doublesSimilar
 import utils.StatCounterMap
 
@@ -477,6 +481,11 @@ internal class AStarSearcherTest {
     @Test
     fun regressionTest00001() = runBlockingNoJs {
         val map = loadGameMapFromGoldensAsync("00001.json")
+
+        //        val map =
+        //            Json.decodeFromString<GameMap>(localCurrentDirVfs["src/commonTest/testdata/goldens"].apply {
+        //                mkdir()
+        //            }["00001.json"].readString())
 
         val path = PathFinder.getShortestPath(map, AStarSearcher)
         assertNotNull(path)

@@ -5,10 +5,47 @@ import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.ResizeComponent
 import com.soywiz.korge.input.MouseEvents
 import com.soywiz.korge.view.*
+import com.soywiz.korio.async.runBlockingNoSuspensions
+import com.soywiz.korio.file.VfsFile
+import com.soywiz.korio.file.std.localCurrentDirVfs
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import model.GameMap
-import kotlin.math.min
+
+val TEST_TEMP_DATA_VFS = runBlockingNoSuspensions {
+    localCurrentDirVfs["src/commonTest/testdata/TEMP"].apply {
+        mkdir()
+    }
+}
+
+val TEST_DATA_VFS = runBlockingNoSuspensions {
+    localCurrentDirVfs["src/commonTest/testdata"].apply {
+        mkdir()
+    }
+}
+
+fun VfsFile.existsBlocking(): Boolean {
+    return runBlockingNoSuspensions { this.exists() }
+}
+
+inline fun <reified T> VfsFile.decodeJson(): T? {
+    if (existsBlocking()) {
+        return Json.decodeFromString<T>(this.readStringBlocking())
+    }
+    return null
+}
+
+fun VfsFile.toGameMap(): GameMap? {
+    return this.decodeJson<GameMap>()
+}
+
+fun VfsFile.listSimpleBlocking(): List<VfsFile> {
+    return runBlockingNoSuspensions { listSimple() }
+}
+
+fun VfsFile.readStringBlocking(): String {
+    return runBlockingNoSuspensions { readString() }
+}
 
 
 fun <T : View> T.getReferenceParent(): Container {
@@ -23,15 +60,6 @@ fun <T : View> T.alignLeftToLeftOfWindow(): T {
 
 fun <T : View> T.alignTopToTopOfWindow(): T {
     this.y = getReferenceParent().getVisibleLocalArea().y
-    return this
-}
-
-fun <T : View> T.scaleWhileMaintainingAspect(width: Double, height: Double): T {
-    val scaledByWidth = width / this.scaledWidth
-    val scaledByHeight = height / this.scaledHeight
-    val scaleValue = min(scaledByHeight, scaledByWidth)
-    this.scaledHeight = this.scaledHeight * scaleValue
-    this.scaledWidth = this.scaledWidth * scaleValue
     return this
 }
 
