@@ -1,0 +1,297 @@
+{
+  "width": 20,
+  "height": 16,
+  "start": {
+    "x": 3,
+    "y": 4
+  },
+  "finish": {
+    "x": 2,
+    "y": 14
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 16,
+      "y": 7
+    },
+    {
+      "sequenceNumber": 1,
+      "x": 7,
+      "y": 11
+    },
+    {
+      "sequenceNumber": 2,
+      "x": 16,
+      "y": 0
+    }
+  ],
+  "teleportIns": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 4,
+      "y": 6
+    }
+  },
+  "teleportOuts": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 14,
+      "y": 3
+    }
+  },
+  "rocks": [
+    {
+      "x": 14,
+      "y": 10,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 16,
+      "y": 11,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 11,
+      "y": 10,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 13,
+      "y": 4,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 16,
+      "y": 12,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 12,
+      "y": 8,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 14,
+      "y": 12,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 4,
+      "y": 14,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 12,
+      "y": 12,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 1,
+      "y": 12,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 17,
+      "y": 11,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 0,
+      "y": 11,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 18,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 9,
+      "y": 10,
+      "width": 4,
+      "height": 2
+    }
+  ]
+}

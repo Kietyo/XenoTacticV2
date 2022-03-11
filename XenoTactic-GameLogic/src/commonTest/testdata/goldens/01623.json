@@ -1,0 +1,46 @@
+{
+  "width": 23,
+  "height": 38,
+  "start": {
+    "x": 20,
+    "y": 22
+  },
+  "finish": {
+    "x": 3,
+    "y": 16
+  },
+  "teleportIns": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 20,
+      "y": 20
+    }
+  },
+  "teleportOuts": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 3,
+      "y": 9
+    }
+  },
+  "rocks": [
+    {
+      "x": 11,
+      "y": 14,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 20,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}

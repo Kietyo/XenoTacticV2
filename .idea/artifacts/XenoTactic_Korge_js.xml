@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="XenoTactic-Korge-js">
+    <output-path>$PROJECT_DIR$/XenoTactic-Korge/build/libs</output-path>
+    <root id="archive" name="XenoTactic-Korge-js.jar" />
+  </artifact>
+</component>

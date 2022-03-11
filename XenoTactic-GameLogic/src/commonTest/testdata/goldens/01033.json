@@ -1,0 +1,84 @@
+{
+  "width": 50,
+  "height": 33,
+  "start": {
+    "x": 21,
+    "y": 9
+  },
+  "finish": {
+    "x": 25,
+    "y": 17
+  },
+  "teleportIns": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 17,
+      "y": 25
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 4,
+      "y": 6
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 19,
+      "y": 25
+    }
+  },
+  "teleportOuts": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 6,
+      "y": 31
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 28,
+      "y": 31
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 1,
+      "y": 10
+    }
+  },
+  "rocks": [
+    {
+      "x": 17,
+      "y": 10,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 4,
+      "y": 21,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 43,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 37,
+      "y": 10,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 4,
+      "y": 19,
+      "width": 4,
+      "height": 2
+    }
+  ]
+}

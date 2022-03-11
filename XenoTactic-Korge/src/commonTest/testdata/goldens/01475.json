@@ -1,0 +1,29 @@
+{
+  "width": 33,
+  "height": 11,
+  "start": {
+    "x": 10,
+    "y": 0
+  },
+  "finish": {
+    "x": 7,
+    "y": 5
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 26,
+      "y": 5
+    },
+    {
+      "sequenceNumber": 1,
+      "x": 22,
+      "y": 9
+    },
+    {
+      "sequenceNumber": 2,
+      "x": 3,
+      "y": 4
+    }
+  ]
+}

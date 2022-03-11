@@ -1,0 +1,152 @@
+{
+  "width": 28,
+  "height": 46,
+  "start": {
+    "x": 1,
+    "y": 16
+  },
+  "finish": {
+    "x": 12,
+    "y": 12
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 26,
+      "y": 26
+    },
+    {
+      "sequenceNumber": 1,
+      "x": 16,
+      "y": 9
+    },
+    {
+      "sequenceNumber": 2,
+      "x": 24,
+      "y": 38
+    },
+    {
+      "sequenceNumber": 3,
+      "x": 6,
+      "y": 40
+    }
+  ],
+  "teleportIns": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 25,
+      "y": 32
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 15,
+      "y": 13
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 23,
+      "y": 26
+    },
+    "3": {
+      "sequenceNumber": 3,
+      "x": 16,
+      "y": 35
+    }
+  },
+  "teleportOuts": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 10,
+      "y": 37
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 13,
+      "y": 43
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 19,
+      "y": 12
+    },
+    "3": {
+      "sequenceNumber": 3,
+      "x": 18,
+      "y": 8
+    }
+  },
+  "rocks": [
+    {
+      "x": 0,
+      "y": 19,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 6,
+      "y": 21,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 0,
+      "y": 22,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 18,
+      "y": 33,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 17,
+      "y": 21,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 18,
+      "y": 25,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 22,
+      "y": 30,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 22,
+      "y": 3,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 21,
+      "y": 27,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 12,
+      "y": 19,
+      "width": 4,
+      "height": 2
+    }
+  ]
+}

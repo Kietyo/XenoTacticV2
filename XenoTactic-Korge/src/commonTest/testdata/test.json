@@ -1,0 +1,69 @@
+{
+    "width": 30,
+    "height": 3,
+    "start": {
+        "x": 1,
+        "y": 0
+    },
+    "finish": {
+        "x": 6,
+        "y": 0
+    },
+    "checkpoints": [
+        {
+            "sequenceNumber": 0,
+            "x": 22,
+            "y": 1
+        },
+        {
+            "sequenceNumber": 1,
+            "x": 9,
+            "y": 0
+        },
+        {
+            "sequenceNumber": 2,
+            "x": 18,
+            "y": 0
+        },
+        {
+            "sequenceNumber": 3,
+            "x": 16,
+            "y": 1
+        },
+        {
+            "sequenceNumber": 4,
+            "x": 12,
+            "y": 0
+        },
+        {
+            "sequenceNumber": 5,
+            "x": 14,
+            "y": 0
+        },
+        {
+            "sequenceNumber": 6,
+            "x": 20,
+            "y": 0
+        },
+        {
+            "sequenceNumber": 7,
+            "x": 3,
+            "y": 0
+        },
+        {
+            "sequenceNumber": 8,
+            "x": 24,
+            "y": 1
+        },
+        {
+            "sequenceNumber": 9,
+            "x": 26,
+            "y": 1
+        },
+        {
+            "sequenceNumber": 10,
+            "x": 28,
+            "y": 0
+        }
+    ]
+}

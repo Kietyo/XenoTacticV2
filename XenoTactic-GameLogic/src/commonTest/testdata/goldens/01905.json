@@ -1,0 +1,104 @@
+{
+  "width": 43,
+  "height": 35,
+  "start": {
+    "x": 21,
+    "y": 1
+  },
+  "finish": {
+    "x": 33,
+    "y": 7
+  },
+  "rocks": [
+    {
+      "x": 0,
+      "y": 4,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 4,
+      "y": 21,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 4,
+      "y": 19,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 32,
+      "y": 11,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 28,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 28,
+      "y": 3,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 33,
+      "y": 12,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 18,
+      "y": 11,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 31,
+      "y": 18,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 28,
+      "y": 6,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 16,
+      "y": 23,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 1,
+      "y": 19,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 28,
+      "y": 30,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 14,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 27,
+      "y": 13,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}

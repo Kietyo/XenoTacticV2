@@ -1,0 +1,56 @@
+{
+  "width": 17,
+  "height": 12,
+  "start": {
+    "x": 14,
+    "y": 10
+  },
+  "finish": {
+    "x": 0,
+    "y": 3
+  },
+  "teleportIns": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 5,
+      "y": 6
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 0,
+      "y": 1
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 3,
+      "y": 4
+    },
+    "3": {
+      "sequenceNumber": 3,
+      "x": 10,
+      "y": 3
+    }
+  },
+  "teleportOuts": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 13,
+      "y": 2
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 13,
+      "y": 2
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 8,
+      "y": 4
+    },
+    "3": {
+      "sequenceNumber": 3,
+      "x": 6,
+      "y": 4
+    }
+  }
+}

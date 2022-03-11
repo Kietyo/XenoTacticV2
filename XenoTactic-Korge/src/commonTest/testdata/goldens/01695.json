@@ -1,0 +1,47 @@
+{
+  "width": 43,
+  "height": 19,
+  "start": {
+    "x": 27,
+    "y": 3
+  },
+  "finish": {
+    "x": 28,
+    "y": 14
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 21,
+      "y": 9
+    },
+    {
+      "sequenceNumber": 1,
+      "x": 6,
+      "y": 10
+    },
+    {
+      "sequenceNumber": 2,
+      "x": 35,
+      "y": 1
+    },
+    {
+      "sequenceNumber": 3,
+      "x": 18,
+      "y": 5
+    },
+    {
+      "sequenceNumber": 4,
+      "x": 33,
+      "y": 8
+    }
+  ],
+  "rocks": [
+    {
+      "x": 3,
+      "y": 15,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}

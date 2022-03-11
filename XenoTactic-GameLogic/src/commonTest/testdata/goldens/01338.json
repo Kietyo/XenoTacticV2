@@ -1,0 +1,258 @@
+{
+  "width": 47,
+  "height": 27,
+  "start": {
+    "x": 45,
+    "y": 3
+  },
+  "finish": {
+    "x": 21,
+    "y": 20
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 37,
+      "y": 17
+    },
+    {
+      "sequenceNumber": 1,
+      "x": 41,
+      "y": 4
+    },
+    {
+      "sequenceNumber": 2,
+      "x": 22,
+      "y": 3
+    },
+    {
+      "sequenceNumber": 3,
+      "x": 7,
+      "y": 22
+    }
+  ],
+  "rocks": [
+    {
+      "x": 12,
+      "y": 17,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 11,
+      "y": 12,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 43,
+      "y": 10,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 9,
+      "y": 14,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 42,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 27,
+      "y": 0,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 9,
+      "y": 22,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 30,
+      "y": 9,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 27,
+      "y": 22,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 18,
+      "y": 1,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 37,
+      "y": 23,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 9,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 14,
+      "y": 23,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 33,
+      "y": 24,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 32,
+      "y": 14,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 24,
+      "y": 9,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 24,
+      "y": 22,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 26,
+      "y": 7,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 16,
+      "y": 16,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 34,
+      "y": 19,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 4,
+      "y": 16,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 16,
+      "y": 7,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 28,
+      "y": 11,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 38,
+      "y": 12,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 11,
+      "y": 10,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 37,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 30,
+      "y": 22,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 44,
+      "y": 5,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 2,
+      "y": 14,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 41,
+      "y": 14,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 34,
+      "y": 22,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 27,
+      "y": 6,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 31,
+      "y": 10,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}

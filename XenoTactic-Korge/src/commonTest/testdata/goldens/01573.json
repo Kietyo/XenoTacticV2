@@ -1,0 +1,38 @@
+{
+  "width": 14,
+  "height": 16,
+  "start": {
+    "x": 10,
+    "y": 7
+  },
+  "finish": {
+    "x": 6,
+    "y": 10
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 8,
+      "y": 10
+    },
+    {
+      "sequenceNumber": 1,
+      "x": 5,
+      "y": 13
+    }
+  ],
+  "rocks": [
+    {
+      "x": 10,
+      "y": 4,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "width": 43,
+  "height": 45,
+  "start": {
+    "x": 6,
+    "y": 32
+  },
+  "finish": {
+    "x": 8,
+    "y": 33
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 12,
+      "y": 29
+    }
+  ],
+  "teleportIns": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 32,
+      "y": 0
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 2,
+      "y": 12
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 32,
+      "y": 41
+    }
+  },
+  "teleportOuts": {
+    "0": {
+      "sequenceNumber": 0,
+      "x": 38,
+      "y": 3
+    },
+    "1": {
+      "sequenceNumber": 1,
+      "x": 21,
+      "y": 20
+    },
+    "2": {
+      "sequenceNumber": 2,
+      "x": 1,
+      "y": 6
+    }
+  },
+  "rocks": [
+    {
+      "x": 29,
+      "y": 21,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 18,
+      "y": 0,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 2,
+      "y": 31,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 40,
+      "y": 36,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 35,
+      "y": 43,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 33,
+      "y": 14,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 7,
+      "y": 21,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 10,
+      "y": 0,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 18,
+      "y": 0,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 17,
+      "y": 27,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 14,
+      "y": 35,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 32,
+      "y": 37,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "width": 42,
+  "height": 50,
+  "start": {
+    "x": 38,
+    "y": 13
+  },
+  "finish": {
+    "x": 32,
+    "y": 27
+  },
+  "checkpoints": [
+    {
+      "sequenceNumber": 0,
+      "x": 7,
+      "y": 14
+    },
+    {
+      "sequenceNumber": 1,
+      "x": 15,
+      "y": 14
+    }
+  ],
+  "rocks": [
+    {
+      "x": 34,
+      "y": 3,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 9,
+      "y": 26,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 6,
+      "y": 31,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 26,
+      "y": 24,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 29,
+      "y": 2,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 30,
+      "y": 7,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 21,
+      "y": 19,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 24,
+      "y": 2,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 30,
+      "y": 22,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 11,
+      "y": 23,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 36,
+      "y": 29,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}

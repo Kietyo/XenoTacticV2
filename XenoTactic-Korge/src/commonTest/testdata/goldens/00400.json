@@ -1,0 +1,38 @@
+{
+  "width": 34,
+  "height": 18,
+  "start": {
+    "x": 25,
+    "y": 13
+  },
+  "finish": {
+    "x": 27,
+    "y": 7
+  },
+  "rocks": [
+    {
+      "x": 20,
+      "y": 8,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "width": 4,
+      "height": 2
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "width": 2,
+      "height": 4
+    },
+    {
+      "x": 26,
+      "y": 8,
+      "width": 2,
+      "height": 4
+    }
+  ]
+}
