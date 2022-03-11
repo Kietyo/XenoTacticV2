@@ -3,8 +3,7 @@ import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.localCurrentDirVfs
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import model.GameMap
-
+import com.xenotactic.gamelogic.model.GameMap
 
 val TEST_TEMP_DATA_VFS = runBlockingNoSuspensions {
     localCurrentDirVfs["src/commonTest/testdata/TEMP"].apply {
