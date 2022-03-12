@@ -67,7 +67,6 @@ internal class PathUpdaterTest {
     }
 
     @Test
-    @Ignore
     fun correctnessRegressionTest_solverPlacements() = runBlockingNoJs {
         val jsonFiles = GOLDENS_DATA_VFS.listSimple()
 
@@ -195,7 +194,6 @@ internal class PathUpdaterTest {
     }
 
     @Test
-    @Ignore
     fun correctnessRegressionTest_randomPlacements() = runBlockingNoJs {
         val numRandomPlacements = 15
         val jsonFiles = GOLDENS_DATA_VFS.listSimple()
@@ -326,7 +324,6 @@ internal class PathUpdaterTest {
     }
 
     @Test
-    @Ignore
     fun correctnessRegressionTest_initialization() = runBlockingNoJs {
         val searcher1 = AStarSearcher
 
