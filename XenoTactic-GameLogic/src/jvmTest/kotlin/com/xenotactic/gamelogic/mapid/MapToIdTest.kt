@@ -22,7 +22,7 @@ internal class MapToIdTest {
 
     @Test
     fun regressionTestForGoldenMaps() {
-        val UPDATE_GOLDENS = true
+        val UPDATE_GOLDENS = false
         val expectedMapIds = getGoldenMapIds()
 
         println(expectedMapIds)
@@ -32,8 +32,6 @@ internal class MapToIdTest {
         gameMaps.parallelMap {
             idToGameMapResults.put(MapToId.calculateId(it), it)
         }
-
-//        assertEquals(gameMaps.size, idToGameMapResults.size)
 
         if (UPDATE_GOLDENS) {
             writeGoldenMapIds(MapIds.create(idToGameMapResults.keys))
@@ -61,7 +59,7 @@ internal class MapToIdTest {
         }
 
         assert(badTestCases.isEmpty()) {
-            "Found a lot of bad test cases:\n${badTestCases.joinToString("\n")}"
+            "Found a bad test case(s):\n${badTestCases.joinToString("\n")}"
         }
     }
 }

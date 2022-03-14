@@ -26,7 +26,7 @@ object MapToId {
 
         val asBytes = ProtoBuf.encodeToByteArray(gameMap.toGameMapForId())
 
-        println("asBytes: ${asBytes.joinToString(" ") { it.hex.substr(2) } }")
+//        println("asBytes: ${asBytes.joinToString(" ") { it.hex.substr(2) } }")
 
         val digest = md.digest(asBytes)
 
