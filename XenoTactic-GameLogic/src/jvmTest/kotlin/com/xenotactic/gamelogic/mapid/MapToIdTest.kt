@@ -5,13 +5,10 @@ import com.soywiz.kds.iterators.parallelMap
 import com.xenotactic.gamelogic.model.GameMap
 import getAllGoldenMaps
 import getGoldenMapIds
-import kotlinx.serialization.Serializable
 import loadGameMapFromGoldensBlocking
 import writeGoldenMapIds
 import kotlin.test.Test
-import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 
 internal class MapToIdTest {
@@ -31,19 +28,40 @@ internal class MapToIdTest {
         println(expectedMapIds)
 
         val gameMaps = getAllGoldenMaps()
-        val resultSet = mutableMapOf<String, GameMap>()
+        val idToGameMapResults = mutableMapOf<String, GameMap>()
         gameMaps.parallelMap {
-            resultSet.put(MapToId.calculateId(it), it)
+            idToGameMapResults.put(MapToId.calculateId(it), it)
         }
 
-        assertEquals(gameMaps.size, resultSet.size)
+        assertEquals(gameMaps.size, idToGameMapResults.size)
 
-        val setsEqual = expectedMapIds.ids == resultSet.keys
+        val setsEqual = expectedMapIds.ids == idToGameMapResults.keys
 
         if (UPDATE_GOLDENS) {
-            writeGoldenMapIds(MapIds(resultSet.keys))
+            writeGoldenMapIds(MapIds(idToGameMapResults.keys))
         } else {
-            assertContentEquals(expectedMapIds.ids, resultSet.keys?.asIterable())
+            assertMapIdEquals(expectedMapIds.ids, idToGameMapResults)
+        }
+    }
+
+    data class BadTestCases(
+        val idNotExpected: String,
+        val gameMap: GameMap
+    )
+
+    fun assertMapIdEquals(expectedIds: Set<String>, mapAndIds: Map<String, GameMap>) {
+        assertEquals(expectedIds.size, mapAndIds.size)
+
+        val badTestCases = mutableListOf<BadTestCases>()
+
+        for ((mapId, gameMap) in mapAndIds) {
+            if (mapId !in expectedIds) {
+                badTestCases += BadTestCases(mapId, gameMap)
+            }
+        }
+
+        assert(badTestCases.isEmpty()) {
+            "Found a lot of bad test cases:\n${badTestCases.joinToString("\n")}"
         }
     }
 }
