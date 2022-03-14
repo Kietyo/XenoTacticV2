@@ -162,5 +162,6 @@ internal class KorgeGameMapTest {
     fun testDecodeMap() = runBlockingNoJs {
         val map = loadGameMapFromGoldensAsync("00001.json")
         println(map)
+        println(map.hashCode())
     }
 }

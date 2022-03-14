@@ -13,7 +13,7 @@ repositories {
 }
 
 val kormaVersion = "2.2.2"
-val korioVersion = "2.2.0"
+val korioVersion = "2.6.2"
 
 kotlin {
     jvm {
@@ -47,6 +47,7 @@ kotlin {
             dependencies {
                 implementation("com.soywiz.korlibs.korma:korma:$kormaVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.3.2")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
                 implementation("com.soywiz.korlibs.korio:korio:$korioVersion")
             }
