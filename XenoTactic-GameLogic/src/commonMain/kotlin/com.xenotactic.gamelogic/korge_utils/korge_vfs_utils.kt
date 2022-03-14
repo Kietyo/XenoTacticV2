@@ -58,12 +58,22 @@ val GOLDENS_DATA_VFS = runBlockingNoSuspensions {
 val GOLDEN_IDS_FILE = TEST_DATA_VFS["golden_ids.json"]
 
 @Serializable
-data class MapIds(
-    val ids: Set<String> = emptySet()
-)
+data class MapIds private constructor(
+    val ids: List<String>
+) {
+    companion object {
+        fun create(ids: Collection<String>): MapIds {
+            val setSize = ids.toSet().size
+            require(setSize == ids.size) {
+                "Expected no duplicate ids. Expected: $setSize. Actual: ${ids.size}"
+            }
+            return MapIds(ids.sorted())
+        }
+    }
+}
 
 fun getGoldenMapIds(): MapIds {
-    val data = GOLDEN_IDS_FILE.readStringOrNull() ?: return MapIds()
+    val data = GOLDEN_IDS_FILE.readStringOrNull() ?: return MapIds.create(emptyList())
     return Json.decodeFromString<MapIds>(data)
 }
 

@@ -22,7 +22,7 @@ internal class MapToIdTest {
 
     @Test
     fun regressionTestForGoldenMaps() {
-        val UPDATE_GOLDENS = false
+        val UPDATE_GOLDENS = true
         val expectedMapIds = getGoldenMapIds()
 
         println(expectedMapIds)
@@ -33,12 +33,10 @@ internal class MapToIdTest {
             idToGameMapResults.put(MapToId.calculateId(it), it)
         }
 
-        assertEquals(gameMaps.size, idToGameMapResults.size)
-
-        val setsEqual = expectedMapIds.ids == idToGameMapResults.keys
+//        assertEquals(gameMaps.size, idToGameMapResults.size)
 
         if (UPDATE_GOLDENS) {
-            writeGoldenMapIds(MapIds(idToGameMapResults.keys))
+            writeGoldenMapIds(MapIds.create(idToGameMapResults.keys))
         } else {
             assertMapIdEquals(expectedMapIds.ids, idToGameMapResults)
         }
@@ -49,13 +47,15 @@ internal class MapToIdTest {
         val gameMap: GameMap
     )
 
-    fun assertMapIdEquals(expectedIds: Set<String>, mapAndIds: Map<String, GameMap>) {
+    fun assertMapIdEquals(expectedIds: List<String>, mapAndIds: Map<String, GameMap>) {
         assertEquals(expectedIds.size, mapAndIds.size)
+
+        val expectedIdSet = expectedIds.toSet()
 
         val badTestCases = mutableListOf<BadTestCases>()
 
         for ((mapId, gameMap) in mapAndIds) {
-            if (mapId !in expectedIds) {
+            if (mapId !in expectedIdSet) {
                 badTestCases += BadTestCases(mapId, gameMap)
             }
         }
