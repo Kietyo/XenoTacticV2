@@ -1,5 +1,7 @@
+import com.soywiz.kds.iterators.parallelMap
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korio.file.VfsFile
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import random.MapGeneratorConfiguration
@@ -8,19 +10,20 @@ import random.RandomMapGenerator
 import kotlin.random.Random
 import kotlin.test.Ignore
 import kotlin.test.Test
+import kotlin.test.assertIs
 
 internal class GoldenTest {
 
-    //    @Test
-    //    fun verifyExistingGoldens() {
-    //        getGoldenJsonFiles().forEachIndexed { index: Int, vfsFile: VfsFile ->
-    //            val result = vfsFile.toGameMap().verify()
-    //            assertIs<MapVerificationResult.Success>(
-    //                result,
-    //                "Map $vfsFile failed verification. Result: $result"
-    //            )
-    //        }
-    //    }
+    @Test
+    fun verifyExistingGoldens() {
+        getGoldenJsonFiles().parallelMap { vfsFile: VfsFile ->
+            val result = vfsFile.toGameMap()?.verify()
+            assertIs<MapVerificationResult.Success>(
+                result,
+                "Map $vfsFile failed verification. Result: $result"
+            )
+        }
+    }
 
     @Test
     @Ignore
@@ -32,7 +35,6 @@ internal class GoldenTest {
         val numGoldensToCreate = 1000
         var numOffset = 1000
         var numGoldensCreated = 0
-
 
         while (numGoldensCreated < numGoldensToCreate) {
             val map = RandomMapGenerator.generate(
