@@ -3,9 +3,13 @@ package com.xenotactic.gamelogic.mapid
 import com.soywiz.korio.lang.substr
 import com.soywiz.krypto.encoding.hex
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
+import kotlinx.serialization.protobuf.ProtoNumber
 import verify
 import java.security.MessageDigest
 
@@ -18,17 +22,11 @@ object MapToId {
      * byte buffer, then hashing the result using SHA-1.
      */
     fun calculateId(gameMap: GameMap): String {
-        require(gameMap.verify() == MapVerificationResult.Success)
-
         val md = MessageDigest.getInstance("SHA-1")
 
         println("gameMap before: $gameMap")
 
-        val asBytes = ProtoBuf.encodeToByteArray(gameMap)
-
-        val gameMapAfterDecode = ProtoBuf.decodeFromByteArray<GameMap>(asBytes)
-
-        println("gameMap after: $gameMapAfterDecode")
+        val asBytes = ProtoBuf.encodeToByteArray(gameMap.toGameMapForId())
 
         println("asBytes: ${asBytes.joinToString(" ") { it.hex.substr(2) } }")
 

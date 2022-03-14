@@ -4,6 +4,7 @@ import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.utils.sequenceOfNullable
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import verify
 
 @Serializable
 data class GameMap(
@@ -248,6 +249,23 @@ data class GameMap(
             addAll(checkpoints)
             add(finish!!)
         }
+    }
+
+    fun toGameMapForId(): GameMapForId {
+        require(verify() == MapVerificationResult.Success) {
+            "Only verified maps are allowed for ID generation."
+        }
+        return GameMapForId(
+            width,
+            height,
+            checkpoints,
+            teleportIns,
+            teleportOuts,
+            towers,
+            rocks,
+            smallBlockers,
+            speedAreas
+        )
     }
 
     companion object {
