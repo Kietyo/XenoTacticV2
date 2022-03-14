@@ -4,6 +4,8 @@ import com.soywiz.korio.file.std.localCurrentDirVfs
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.model.GameMap
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 
 val TEST_TEMP_DATA_VFS = runBlockingNoSuspensions {
     localCurrentDirVfs["src/commonTest/testdata/TEMP"].apply {
@@ -32,10 +34,16 @@ fun VfsFile.listSimpleBlocking(): List<VfsFile> {
     return runBlockingNoSuspensions { listSimple() }
 }
 
+fun VfsFile.readStringOrNull(): String? {
+    if (existsBlocking()) {
+        return readStringBlocking()
+    }
+    return null
+}
+
 fun VfsFile.readStringBlocking(): String {
     return runBlockingNoSuspensions { readString() }
 }
-
 
 fun VfsFile.toGameMap(): GameMap? {
     return this.decodeJson<GameMap>()
@@ -44,6 +52,27 @@ fun VfsFile.toGameMap(): GameMap? {
 val GOLDENS_DATA_VFS = runBlockingNoSuspensions {
     localCurrentDirVfs["src/commonTest/testdata/goldens"].apply {
         mkdir()
+    }
+}
+
+val GOLDEN_IDS_FILE = TEST_DATA_VFS["golden_ids.json"]
+
+@Serializable
+data class MapIds(
+    val ids: Set<String> = emptySet()
+)
+
+fun getGoldenMapIds(): MapIds {
+    val data = GOLDEN_IDS_FILE.readStringOrNull() ?: return MapIds()
+    return Json.decodeFromString<MapIds>(data)
+}
+
+fun writeGoldenMapIds(mapIds: MapIds) {
+    runBlockingNoSuspensions {
+        val json = Json {
+            prettyPrint = true
+        }
+        GOLDEN_IDS_FILE.writeString(json.encodeToString(mapIds))
     }
 }
 

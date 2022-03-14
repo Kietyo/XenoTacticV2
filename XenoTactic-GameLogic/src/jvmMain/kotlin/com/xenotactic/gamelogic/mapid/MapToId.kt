@@ -24,8 +24,6 @@ object MapToId {
     fun calculateId(gameMap: GameMap): String {
         val md = MessageDigest.getInstance("SHA-1")
 
-        println("gameMap before: $gameMap")
-
         val asBytes = ProtoBuf.encodeToByteArray(gameMap.toGameMapForId())
 
         println("asBytes: ${asBytes.joinToString(" ") { it.hex.substr(2) } }")
