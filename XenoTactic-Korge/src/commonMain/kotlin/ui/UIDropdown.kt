@@ -83,7 +83,7 @@ class UIDropdown(
                 data.value.text, textSize = entryHeight, color = Colors.BLACK,
                 autoScaling = true
             ) {
-                scaleWhileMaintainingAspect(entryTextWidth, entryHeight)
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(entryTextWidth, entryHeight))
                 alignLeftToLeftOf(dropdownBg, padding = textPaddingLeft)
             }
         }

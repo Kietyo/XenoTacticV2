@@ -9,9 +9,9 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
+import com.xenotactic.gamelogic.model.GameMap
 import engine.Component
 import events.RemovedEntityEvent
-import model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence

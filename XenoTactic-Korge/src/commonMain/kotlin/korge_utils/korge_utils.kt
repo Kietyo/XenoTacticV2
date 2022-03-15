@@ -10,43 +10,6 @@ import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.localCurrentDirVfs
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import model.GameMap
-
-val TEST_TEMP_DATA_VFS = runBlockingNoSuspensions {
-    localCurrentDirVfs["src/commonTest/testdata/TEMP"].apply {
-        mkdir()
-    }
-}
-
-val TEST_DATA_VFS = runBlockingNoSuspensions {
-    localCurrentDirVfs["src/commonTest/testdata"].apply {
-        mkdir()
-    }
-}
-
-fun VfsFile.existsBlocking(): Boolean {
-    return runBlockingNoSuspensions { this.exists() }
-}
-
-inline fun <reified T> VfsFile.decodeJson(): T? {
-    if (existsBlocking()) {
-        return Json.decodeFromString<T>(this.readStringBlocking())
-    }
-    return null
-}
-
-fun VfsFile.toGameMap(): GameMap? {
-    return this.decodeJson<GameMap>()
-}
-
-fun VfsFile.listSimpleBlocking(): List<VfsFile> {
-    return runBlockingNoSuspensions { listSimple() }
-}
-
-fun VfsFile.readStringBlocking(): String {
-    return runBlockingNoSuspensions { readString() }
-}
-
 
 fun <T : View> T.getReferenceParent(): Container {
     val parentView = this.parent!!
@@ -143,8 +106,6 @@ fun <T : View> T.alignRightToRightOfWindow(): T {
     this.x = getReferenceParent().getVisibleGlobalArea().width - this.width
     return this
 }
-
-
 
 fun <T : View> T.scaledDimensions() =
     Pair(this.scaledWidth, this.scaledHeight)

@@ -3,13 +3,13 @@ package components
 import com.soywiz.klogger.Logger
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
+import com.xenotactic.gamelogic.model.GameMap
 import engine.Component
 import engine.Engine
 import events.AddEntityEvent
 import events.EventBus
 import events.RemovedEntityEvent
 import events.UpdatedPathLengthEvent
-import model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import pathing.PathFinder

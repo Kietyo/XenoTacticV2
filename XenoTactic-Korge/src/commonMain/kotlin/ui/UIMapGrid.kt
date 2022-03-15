@@ -4,8 +4,8 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korge.ui.uiScrollable
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
+import com.xenotactic.gamelogic.model.GameMap
 import events.EventBus
-import model.GameMap
 import korge_utils.MaterialColors
 
 inline fun Container.uiMapGrid(

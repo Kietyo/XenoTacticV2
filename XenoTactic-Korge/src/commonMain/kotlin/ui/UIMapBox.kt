@@ -8,9 +8,9 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.async.runBlockingNoSuspensions
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
+import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import model.GameMap
 import pathing.PathFinder
 
 import kotlin.math.min

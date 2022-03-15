@@ -33,7 +33,10 @@ class UIMapOverlay(
             eventBus.send(UIMapOverlayOutsideClickedEvent)
         }
 
-        view.scaleWhileMaintainingAspect(globalAreaDimensions.width, globalAreaDimensions.height)
+        view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
+            globalAreaDimensions.width,
+            globalAreaDimensions.height
+        ))
         view.centerOn(background)
         view.addTo(this)
         // Add an empty onClick listener to "eat" the input if the view itself is clicked.

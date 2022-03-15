@@ -60,7 +60,6 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         val cameraInputProcessor = CameraInputProcessor(mapView, eventBus)
         cameraInputProcessor.setZoomFactor(0.7)
-        val zoomSettingText = text("Zoom Factor: ${mapView.scale}", textSize = 20.0)
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
             this, engine, mapView,

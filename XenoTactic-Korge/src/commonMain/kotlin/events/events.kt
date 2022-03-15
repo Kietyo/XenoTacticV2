@@ -4,8 +4,8 @@ import MapVerificationResult
 import com.soywiz.korge.view.View
 import com.soywiz.korim.bitmap.Bitmap32
 import com.soywiz.korio.file.VfsFile
+import com.xenotactic.gamelogic.model.GameMap
 import components.GoalData
-import model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 
 object EscapeButtonActionEvent

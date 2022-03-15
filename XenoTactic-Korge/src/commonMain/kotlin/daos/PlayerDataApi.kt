@@ -2,13 +2,13 @@ package daos
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korio.file.std.resourcesVfs
+import com.xenotactic.gamelogic.model.PlayerData
 import decodeJson
 import existsBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import model.PlayerData
 
 object PlayerDataApi {
     private val mutex = Mutex()

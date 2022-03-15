@@ -12,12 +12,12 @@ import com.soywiz.korim.color.RGBA
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
+import com.xenotactic.gamelogic.model.GameMap
 import events.EventBus
 import events.GoldensEntryClickEvent
 import events.GoldensEntryHoverOnEvent
 import existsBlocking
 import kotlinx.coroutines.Dispatchers
-import model.GameMap
 import korge_utils.MaterialColors
 
 data class MapWithMetadata(
@@ -122,7 +122,12 @@ class UIGoldensViewerEntry(
 
     fun setTitle(title: String) {
         titleView.text = title
-        titleView.scaleWhileMaintainingAspect(TEXT_SECTION_WIDTH, TEXT_SECTION_HEIGHT.toDouble())
+        titleView.scaleWhileMaintainingAspect(
+            ScalingOption.ByWidthAndHeight(
+                TEXT_SECTION_WIDTH,
+                TEXT_SECTION_HEIGHT.toDouble()
+            )
+        )
     }
 
     companion object {

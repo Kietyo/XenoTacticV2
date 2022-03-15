@@ -11,9 +11,9 @@ import com.soywiz.korge.ui.uiVerticalStack
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.Signal
+import com.xenotactic.gamelogic.model.GameMap
 import events.EventBus
 import events.PlayMapEvent
-import model.GameMap
 import kotlin.math.min
 
 inline fun Container.uiMapEntry(

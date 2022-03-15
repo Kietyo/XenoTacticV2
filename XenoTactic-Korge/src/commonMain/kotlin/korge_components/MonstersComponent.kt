@@ -7,6 +7,9 @@ import com.soywiz.korge.view.View
 import com.soywiz.korge.view.circle
 import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
+import com.xenotactic.gamelogic.model.MONSTER_HEIGHT
+import com.xenotactic.gamelogic.model.MONSTER_WIDTH
+import com.xenotactic.gamelogic.model.MonsterEntity
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import components.GameMapComponent
@@ -14,9 +17,6 @@ import engine.Component
 import engine.Engine
 import events.EventBus
 import events.SpawnCreepEvent
-import model.MONSTER_HEIGHT
-import model.MONSTER_WIDTH
-import model.MonsterEntity
 import pathing.PathSequenceTraversal
 
 class MonstersComponent(

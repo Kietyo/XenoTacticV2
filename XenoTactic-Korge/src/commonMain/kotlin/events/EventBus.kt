@@ -4,6 +4,7 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korge.bus.GlobalBus
 import com.soywiz.korio.async.launchImmediately
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlin.reflect.KClass
 
 interface EventBusInterface {
@@ -21,7 +22,7 @@ object DummyEventBus : EventBusInterface {
  */
 class EventBus(private val scope: CoroutineScope) : EventBusInterface {
 
-    private val globalBus = GlobalBus()
+    private val globalBus = GlobalBus(GlobalScope.coroutineContext)
 
     override fun send(message: Any) {
         scope.launchImmediately {
