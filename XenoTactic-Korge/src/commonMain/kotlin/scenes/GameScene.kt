@@ -3,11 +3,11 @@ package scenes
 import korge_components.ResizeDebugComponent
 import bridges.MapBridge
 import com.soywiz.klogger.Logger
+import com.soywiz.korge.component.docking.dockedTo
+import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.camera
-import com.soywiz.korge.view.centerXOnStage
-import com.soywiz.korge.view.text
+import com.soywiz.korge.view.*
+import com.soywiz.korma.geom.Anchor
 import components.GameMapComponent
 import components.GoalComponent
 import components.ObjectPlacementComponent
@@ -18,6 +18,7 @@ import input_processors.CameraInputProcessor
 import input_processors.KeyInputProcessor
 import input_processors.ObjectPlacementInputProcessor
 import korge_components.MonstersComponent
+import korge_utils.alignBottomToBottomOfWindow
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import renderer.MapRendererUpdater
@@ -69,53 +70,28 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         addComponent(cameraInputProcessor)
         addComponent(objectPlacementInputProcessor)
 
-        //        val dockedContainer = container {
-        //            this.dockedTo(Anchor.BOTTOM_RIGHT)
-        //        }
-        //
-        //        val uiStack = dockedContainer.uiVerticalStack {
-        //            uiButton {
-        //                text = "Tower"
-        //            }
-        //            uiButton {
-        //                text = "Rock"
-        //            }
-        //            uiButton {
-        //                text = "Delete"
-        //            }
-        //        }
-        //
-        //        uiStack.xy(-uiStack.width, -uiStack.height)
-
-
-        //        val width = placementContainer.width
-        //        val height = placementContainer.height
         addComponent(ResizeDebugComponent(this))
-        //        addComponent(PlacementUI(this, engine, eventBus))
 
         uiPlacement = uiPlacement(engine, eventBus)
-        //                uiPlacement.alignBottomToBottomOfWindow()
 
         uiActiveTextNotifier(engine, eventBus).run {
             centerXOnStage()
         }
 
+        val pathText = text("Path Length: XX") {
+            onStageResized(true) {width: Int, height: Int ->
+                alignBottomToBottomOfWindow()
+            }
+        }
 
         addComponent(KeyInputProcessor(this, eventBus))
-        addComponent(InformationalUI(this, engine, eventBus))
-        //        addComponent(GoalUI(this, eventBus))
+//        addComponent(InformationalUI(this, engine, eventBus))
         val monstersComponent = MonstersComponent(mapView, engine, eventBus, mapRenderer._gridSize)
         addComponent(monstersComponent)
 
         val goalComponent = GoalComponent(engine, eventBus)
         engine.setOneTimeComponent(goalComponent)
         //        goalComponent.calculateGoalForMap()
-
-        //
-        //        placementContainer.xy(500, 400)
-
-        //        placementContainer.alignRightToRightOf(sceneContainer)
-        //        placementContainer.alignBottomToBottomOf(sceneContainer)
 
         eventBus.register<ExitGameSceneEvent> {
             launch {

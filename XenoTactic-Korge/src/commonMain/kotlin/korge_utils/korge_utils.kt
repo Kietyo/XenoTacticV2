@@ -26,21 +26,21 @@ fun <T : View> T.alignTopToTopOfWindow(): T {
     return this
 }
 
-fun <T : View> T.alignBottomToBottomOfWindow(): T {
+fun <T : View> T.debugPrint() {
     val refParent = getReferenceParent()
     val globalArea = refParent.getVisibleGlobalArea()
     val localArea = refParent.getVisibleLocalArea()
-    val windowsBound = refParent.windowBounds
+    val windowsArea = this.getVisibleWindowArea()
+    val windowBounds = refParent.windowBounds
     val localAreaFromGlobal = globalToLocalXY(globalArea.width, globalArea.height)
     val globalAreaFromLocal = localToGlobalXY(localArea.width, localArea.height)
     val windowBoundsToGlobal = localToGlobalXY(windowBounds.height, windowBounds.width)
     val windowBoundsToLocal = globalToLocalXY(windowBounds.height, windowBounds.width)
-    val windowsArea = this.getVisibleWindowArea()
     println(
         """
-        refParent.getVisibleLocalArea(): ${refParent.getVisibleLocalArea()}
-        refParent.getVisibleGlobalArea(): ${refParent.getVisibleGlobalArea()}
-        refParent.getVisibleWindowArea(): ${refParent.getVisibleWindowArea()}
+        refParent.getVisibleLocalArea(): $localArea
+        refParent.getVisibleGlobalArea(): $globalArea
+        refParent.getVisibleWindowArea(): $windowsArea
         localAreaFromGlobal: $localAreaFromGlobal
         globalAreaFromLocal: $globalAreaFromLocal
         refParent.height: ${refParent.height}
@@ -53,46 +53,37 @@ fun <T : View> T.alignBottomToBottomOfWindow(): T {
         windowBoundsToLocal: ${windowBoundsToLocal}
     """.trimIndent()
     )
-
-    return alignBottomToBottomOfWindow(windowsArea.width.toInt(), windowsArea.height.toInt())
 }
 
-fun <T : View> T.alignBottomToBottomOfWindow(resizedWidth: Int, resizedHeight: Int): T {
-    val refParent = getReferenceParent()
-    val globalArea = refParent.getVisibleGlobalArea()
-    val localArea = refParent.getVisibleLocalArea()
-    val windowsBounds = refParent.windowBounds
-    val localAreaFromGlobal = globalToLocalXY(globalArea.width, globalArea.height)
-    val globalAreaFromLocal = localToGlobalXY(localArea.width, localArea.height)
-    val windowBoundsToGlobal = localToGlobalXY(windowBounds.height, windowBounds.width)
-    val windowBoundsToLocal = globalToLocalXY(windowBounds.height, windowBounds.width)
+fun <T : View> T.alignBottomToBottomOfWindow(): T {
     val windowsArea = this.getVisibleWindowArea()
+    println("alignBottomToBottomOfWindow")
+    debugPrint()
+    return alignBottomToBottomOfWindow(
+        windowsArea.width.toInt() + windowsArea.x.toInt(),
+        windowsArea.height.toInt(),
+        yOffset = windowsArea.y.toInt()
+    )
+}
+
+fun <T : View> T.alignBottomToBottomOfWindow(
+    resizedWidth: Int, resizedHeight: Int,
+    yOffset: Int = 0
+): T {
+    val refParent = getReferenceParent()
     val resizeWHToLocal =
         refParent.globalToLocalXY(resizedWidth.toDouble(), resizedHeight.toDouble())
+    println("alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
+            "resizedHeight=$resizedHeight, yOffset=$yOffset):")
+    debugPrint()
     println(
         """
-        resizedWidth: $resizedWidth, resizedHeight: $resizedHeight
-        refParent.getVisibleLocalArea(): ${refParent.getVisibleLocalArea()}
-        refParent.getVisibleGlobalArea(): ${refParent.getVisibleGlobalArea()}
-        refParent.getVisibleWindowArea(): ${refParent.getVisibleWindowArea()}
-        globalArea: $globalArea
-        localArea: $localArea
-        windowsBounds: $windowsBounds
-        localAreaFromGlobal: $localAreaFromGlobal
-        globalAreaFromLocal: $globalAreaFromLocal
-        refParent.height: ${refParent.height}
-        refParent.width: ${refParent.width}
-        refParent.windowBounds: ${refParent.windowBounds}
-        this.scaledHeight: ${this.scaledHeight}
-        this.height: ${this.height}
-        this.unscaledHeight: ${this.unscaledHeight}
-        windowBoundsToGlobal: ${windowBoundsToGlobal}
-        windowBoundsToLocal: ${windowBoundsToLocal}
         resizeWHToLocal: $resizeWHToLocal
+        refParent.globalToLocalXY(0.0, yOffset.toDouble()).y: ${refParent.globalToLocalXY(0.0, yOffset.toDouble()).y}
     """.trimIndent()
     )
 
-    this.y = resizeWHToLocal.y - this.scaledHeight
+    this.y = resizeWHToLocal.y + yOffset - this.scaledHeight
     return this
 }
 
