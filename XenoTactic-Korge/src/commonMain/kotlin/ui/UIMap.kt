@@ -1,6 +1,9 @@
 package ui
 
+import com.soywiz.korge.input.onClick
+import com.soywiz.korge.ui.uiFillLayeredContainer
 import com.soywiz.korge.view.*
+import com.soywiz.korge.view.fast.fastSpriteContainer
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
@@ -67,7 +70,10 @@ class UIMap(
     val _drawnText = mutableMapOf<MapEntity, View>()
 
     // Note that the order in which layers are initialized mattes here.
-    val _boardLayer = this.container()
+    val _boardLayer = this.container() {
+        this.propagateEvents = false
+        this.mouseChildren = false
+    }
     val _gridNumberLayer = this.container()
 
     val _gridLinesLayer = this.container()
@@ -121,6 +127,7 @@ class UIMap(
             )
         }
 
+        println("Finished drawing board!")
     }
 
     fun handleRemoveEntityEvent(event: RemovedEntityEvent) {
