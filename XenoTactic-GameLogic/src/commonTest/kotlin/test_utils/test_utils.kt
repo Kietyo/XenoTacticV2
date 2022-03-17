@@ -90,15 +90,6 @@ fun randomVector(): Point {
     return Point(Random.nextFloat(), Random.nextFloat())
 }
 
-fun generateRandomFileName(length: Int = 6): String {
-    val random = Random
-    val sb = StringBuilder()
-    repeat(length) {
-        sb.append(random.nextInt(0, 10))
-    }
-    return sb.toString()
-}
-
 fun assertEquals(expected: CircleIntersectionUtil.Result, actual: CircleIntersectionUtil.Result) {
     println(expected::class)
     println(actual::class)

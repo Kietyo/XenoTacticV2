@@ -5,6 +5,7 @@ import bridges.MapBridge
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.component.docking.dockedTo
 import com.soywiz.korge.component.onStageResized
+import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.soywiz.korma.geom.Anchor

@@ -59,7 +59,7 @@ class UIMap(
     val gameMap: GameMap,
     shortestPath: PathSequence? = null,
     private val uiMapSettings: UIMapSettings = UIMapSettings()
-) : Container(), Component {
+) : Container(), View.Reference, Component {
     val _gridSize = uiMapSettings.gridSize
     val _borderSize = uiMapSettings.borderSize
     val _gridLineSize = uiMapSettings.gridLineSize
@@ -73,6 +73,7 @@ class UIMap(
     val _boardLayer = this.container() {
         this.propagateEvents = false
         this.mouseChildren = false
+        this.hitTestEnabled = false
     }
     val _gridNumberLayer = this.container()
 
