@@ -36,33 +36,33 @@ class CameraInputProcessor(override val view: View, val eventBus: EventBus) : Mo
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         //        println("went here? $event")
         when (event.type) {
-            MouseEvent.Type.DRAG -> {
-                //				println(
-                //					"view.x: ${view.x}, view.y: ${view.y}," +
-                //							" view.width: ${view.width}, view.height: ${view
-                //							.height}, " +
-                //							"view.globalXY(): ${view.globalXY()}, view.scale:
-                //							${view.scale}, " +
-                //							"view.scaledHeight: ${view.scaledHeight}, view
-                //							.scaledWidth: ${
-                //								view
-                //									.scaledWidth
-                //							}, " +
-                //							"\nview.mouse.currentPosGlobal: ${view.mouse
-                //							.currentPosGlobal}, " +
-                //							"view.mouse.currentPosLocal: ${view.mouse
-                //							.currentPosLocal}, " +
-                //							"view.mouse.currentPosStage: ${view.mouse
-                //							.currentPosStage}"
-                //				)
-                //				println(it)
-                touchDragged(event.x, event.y)
-            }
-            MouseEvent.Type.UP -> touchUp()
-            MouseEvent.Type.DOWN -> touchDown(
-                event.x, event.y,
-                event.button
-            )
+//            MouseEvent.Type.DRAG -> {
+//                //				println(
+//                //					"view.x: ${view.x}, view.y: ${view.y}," +
+//                //							" view.width: ${view.width}, view.height: ${view
+//                //							.height}, " +
+//                //							"view.globalXY(): ${view.globalXY()}, view.scale:
+//                //							${view.scale}, " +
+//                //							"view.scaledHeight: ${view.scaledHeight}, view
+//                //							.scaledWidth: ${
+//                //								view
+//                //									.scaledWidth
+//                //							}, " +
+//                //							"\nview.mouse.currentPosGlobal: ${view.mouse
+//                //							.currentPosGlobal}, " +
+//                //							"view.mouse.currentPosLocal: ${view.mouse
+//                //							.currentPosLocal}, " +
+//                //							"view.mouse.currentPosStage: ${view.mouse
+//                //							.currentPosStage}"
+//                //				)
+//                //				println(it)
+//                touchDragged(event.x, event.y)
+//            }
+//            MouseEvent.Type.UP -> touchUp()
+//            MouseEvent.Type.DOWN -> touchDown(
+//                event.x, event.y,
+//                event.button
+//            )
             MouseEvent.Type.SCROLL -> scrolled(event.scrollDeltaYPixels)
             else -> Unit
         }

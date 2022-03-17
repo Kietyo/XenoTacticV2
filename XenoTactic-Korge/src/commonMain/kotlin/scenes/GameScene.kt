@@ -5,6 +5,7 @@ import bridges.MapBridge
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.component.docking.dockedTo
 import com.soywiz.korge.component.onStageResized
+import com.soywiz.korge.input.draggable
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
@@ -60,15 +61,20 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         val mapRendererUpdater = MapRendererUpdater(engine, mapRenderer, eventBus)
         engine.setOneTimeComponent(mapRenderer)
 
+        mapView.draggable {
+
+        }
+
         val cameraInputProcessor = CameraInputProcessor(mapView, eventBus)
         cameraInputProcessor.setZoomFactor(0.7)
+        addComponent(cameraInputProcessor)
+
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
             this, engine, mapView,
             mapRenderer._gridSize
         )
 
-        addComponent(cameraInputProcessor)
         addComponent(objectPlacementInputProcessor)
 
         addComponent(ResizeDebugComponent(this))
