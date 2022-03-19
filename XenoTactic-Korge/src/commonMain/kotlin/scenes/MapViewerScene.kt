@@ -106,7 +106,8 @@ class MapViewerScene(
 
         addComponent(ResizeDebugComponent(this))
 
-        header.onMyMapsClick {
+        header.onHeaderSectionClick {
+            if (it != UIHeaderSection.MY_MAPS) return@onHeaderSectionClick
             mapGrid.resetWithEntries(
                 playerData.maps.map { map ->
                     { width: Double, height: Double ->
@@ -127,6 +128,7 @@ class MapViewerScene(
                     }
                 }
             )
+
         }
 
         logger.info {
