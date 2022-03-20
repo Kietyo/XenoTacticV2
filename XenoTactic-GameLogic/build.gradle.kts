@@ -10,10 +10,13 @@ version = "1.0.0"
 repositories {
     mavenCentral()
     mavenLocal()
+    google()
 }
 
 val kormaVersion = "2.6.3"
 val korioVersion = "2.6.3"
+val gitliveVersion = "1.4.3"
+val ktorVersion = "1.6.8"
 
 kotlin {
     jvm {
@@ -50,6 +53,17 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.3.2")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
                 implementation("com.soywiz.korlibs.korio:korio:$korioVersion")
+
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+
+//                implementation("com.google.firebase:firebase-database-ktx:20.0.4")
+
+//                implementation("dev.gitlive:firebase-app:$gitliveVersion")
+//                implementation("dev.gitlive:firebase-common:$gitliveVersion")
+//                implementation("dev.gitlive:firebase-firestore:$gitliveVersion")
+//                implementation("dev.gitlive:firebase-auth:$gitliveVersion")
+//                implementation("dev.gitlive:firebase-database:$gitliveVersion")
             }
         }
         val commonTest by getting {
