@@ -180,8 +180,8 @@ data class GameMap(
         }
     }
 
-    fun getAllRocksAtPoint(x: Int, y: Int): List<MapEntity.Rock> {
-        return rocks.filter { it.intersectsUnitBlock(x, y) }
+    fun getAllRocksAtPoint(x: Int, y: Int): Sequence<MapEntity.Rock> {
+        return rocks.asSequence().filter { it.intersectsUnitBlock(x, y) }
     }
 
     fun getFirstRockAt(x: Int, y: Int): MapEntity.Rock? {

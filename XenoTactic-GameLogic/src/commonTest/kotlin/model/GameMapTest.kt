@@ -17,7 +17,7 @@ internal class GameMapTest {
     @Test
     fun getAllRocksAtPoint_emptyMap_noRocks() {
         val map = GameMap(10, 10)
-        assertTrue(map.getAllRocksAtPoint(1, 1).isEmpty())
+        assertTrue(map.getAllRocksAtPoint(1, 1).count() == 0)
     }
 
     @Test
@@ -25,17 +25,17 @@ internal class GameMapTest {
         val map = GameMap(10, 10)
         map.placeEntity(MapEntity.Rock(IntPoint(1, 1), 1, 1))
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 1, 1)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 1, 1)),
             map.getAllRocksAtPoint(1, 1)
         )
-        assertTrue(map.getAllRocksAtPoint(0, 0).isEmpty())
-        assertTrue(map.getAllRocksAtPoint(0, 1).isEmpty())
-        assertTrue(map.getAllRocksAtPoint(0, 2).isEmpty())
-        assertTrue(map.getAllRocksAtPoint(1, 0).isEmpty())
-        assertTrue(map.getAllRocksAtPoint(1, 2).isEmpty())
-        assertTrue(map.getAllRocksAtPoint(2, 0).isEmpty())
-        assertTrue(map.getAllRocksAtPoint(2, 1).isEmpty())
-        assertTrue(map.getAllRocksAtPoint(2, 2).isEmpty())
+        assertTrue(map.getAllRocksAtPoint(0, 0).count() == 0)
+        assertTrue(map.getAllRocksAtPoint(0, 1).count() == 0)
+        assertTrue(map.getAllRocksAtPoint(0, 2).count() == 0)
+        assertTrue(map.getAllRocksAtPoint(1, 0).count() == 0)
+        assertTrue(map.getAllRocksAtPoint(1, 2).count() == 0)
+        assertTrue(map.getAllRocksAtPoint(2, 0).count() == 0)
+        assertTrue(map.getAllRocksAtPoint(2, 1).count() == 0)
+        assertTrue(map.getAllRocksAtPoint(2, 2).count() == 0)
     }
 
     @Test
@@ -43,35 +43,35 @@ internal class GameMapTest {
         val map = GameMap(10, 10)
         map.placeEntity(MapEntity.Rock(IntPoint(1, 1), 4, 2))
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(1, 1)
         )
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(2, 1)
         )
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(3, 1)
         )
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(4, 1)
         )
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(1, 2)
         )
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(2, 1)
         )
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(3, 1)
         )
         assertContentEquals(
-            listOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(4, 1)
         )
     }

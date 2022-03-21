@@ -11,12 +11,13 @@ repositories {
     mavenCentral()
     mavenLocal()
     google()
+    maven { url = uri("https://plugins.gradle.org/m2/") }
 }
 
 val kormaVersion = "2.6.3"
 val korioVersion = "2.6.3"
 val gitliveVersion = "1.4.3"
-val ktorVersion = "1.6.8"
+val ktorVersion = "1.6.1"
 
 kotlin {
     jvm {
@@ -44,7 +45,7 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -55,15 +56,15 @@ kotlin {
                 implementation("com.soywiz.korlibs.korio:korio:$korioVersion")
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
-//                implementation("com.google.firebase:firebase-database-ktx:20.0.4")
 
-//                implementation("dev.gitlive:firebase-app:$gitliveVersion")
-//                implementation("dev.gitlive:firebase-common:$gitliveVersion")
-//                implementation("dev.gitlive:firebase-firestore:$gitliveVersion")
-//                implementation("dev.gitlive:firebase-auth:$gitliveVersion")
-//                implementation("dev.gitlive:firebase-database:$gitliveVersion")
+                //                implementation("com.google.firebase:firebase-database-ktx:20.0.4")
+
+                //                implementation("dev.gitlive:firebase-app:$gitliveVersion")
+                //                implementation("dev.gitlive:firebase-common:$gitliveVersion")
+                //                implementation("dev.gitlive:firebase-firestore:$gitliveVersion")
+                //                implementation("dev.gitlive:firebase-auth:$gitliveVersion")
+                //                implementation("dev.gitlive:firebase-database:$gitliveVersion")
             }
         }
         val commonTest by getting {
@@ -71,11 +72,23 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val jvmMain by getting
+        val jvmMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+            }
+        }
         val jvmTest by getting
-        val jsMain by getting
+        val jsMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-js:$ktorVersion")
+            }
+        }
         val jsTest by getting
-        val nativeMain by getting
-        val nativeTest by getting
+//        val nativeMain by getting {
+//            dependencies {
+//                implementation("io.ktor:ktor-client-curl:$ktorVersion")
+//            }
+//        }
+//        val nativeTest by getting
     }
 }
