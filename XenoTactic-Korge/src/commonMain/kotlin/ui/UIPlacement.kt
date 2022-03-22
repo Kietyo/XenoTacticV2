@@ -115,15 +115,15 @@ class UIPlacement(
             }
         }
 
-        onStageResizedV2(true) { width, height ->
-            logger.debug {
-                "stage resized? width: $width, height: $height"
-            }
-
-            placementContainer.alignRightToRightOfWindow()
-//            placementContainer.alignBottomToBottomOfWindow(width, height)
-            placementContainer.alignBottomToBottomOf(placementContainer.getReferenceParent())
-        }
+//        onStageResizedV2(true) { width, height ->
+//            logger.debug {
+//                "stage resized? width: $width, height: $height"
+//            }
+//
+//            placementContainer.alignRightToRightOfWindow()
+////            placementContainer.alignBottomToBottomOfWindow(width, height)
+//            placementContainer.alignBottomToBottomOf(placementContainer.getReferenceParent())
+//        }
 
         eventBus.register<EscapeButtonActionEvent> {
             handleEscapeAction()

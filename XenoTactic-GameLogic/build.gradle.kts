@@ -57,7 +57,6 @@ kotlin {
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
 
-
                 //                implementation("com.google.firebase:firebase-database-ktx:20.0.4")
 
                 //                implementation("dev.gitlive:firebase-app:$gitliveVersion")

@@ -21,6 +21,7 @@ import input_processors.KeyInputProcessor
 import input_processors.ObjectPlacementInputProcessor
 import korge_components.MonstersComponent
 import korge_utils.alignBottomToBottomOfWindow
+import korge_utils.alignRightToRightOfWindow
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import renderer.MapRendererUpdater
@@ -28,8 +29,6 @@ import ui.*
 
 class GameScene(val mapBridge: MapBridge) : Scene() {
     val eventBus = EventBus(MainScope())
-
-    lateinit var uiPlacement: UIPlacement
 
     init {
         logger.debug {
@@ -79,14 +78,19 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         addComponent(ResizeDebugComponent(this))
 
-        uiPlacement = uiPlacement(engine, eventBus)
+        val uiPlacement = uiPlacement(engine, eventBus).apply {
+            onStageResized(true) { width: Int, height: Int ->
+                alignRightToRightOfWindow()
+                alignBottomToBottomOfWindow()
+            }
+        }
 
         uiActiveTextNotifier(engine, eventBus).run {
             centerXOnStage()
         }
 
         val pathText = text("Path Length: XX") {
-            onStageResized(true) {width: Int, height: Int ->
+            onStageResized(true) { width: Int, height: Int ->
                 alignBottomToBottomOfWindow()
             }
         }
