@@ -1,5 +1,6 @@
 package ui
 
+import com.soywiz.kds.Array2
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiFillLayeredContainer
 import com.soywiz.korge.view.*
@@ -10,19 +11,26 @@ import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
+import com.soywiz.korio.async.launch
+import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.model.IntPoint
 import engine.Component
 import events.RemovedEntityEvent
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.utils.RockCounterUtil
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import input_processors.PointerAction
 import korge_utils.MaterialColors
 import korge_utils.SpeedAreaColorUtil
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
 
 data class UIMapSettings(
     val gridSize: Double = GRID_SIZE,
@@ -69,6 +77,8 @@ class UIMap(
     val _drawnEntities = mutableMapOf<MapEntity, MutableList<View>>()
     val _drawnText = mutableMapOf<MapEntity, View>()
 
+    val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
+
     // Note that the order in which layers are initialized mattes here.
     val _boardLayer = this.container() {
         this.propagateEvents = false
@@ -87,6 +97,9 @@ class UIMap(
 
     val _entityLayer = this.container()
 
+    val _rockCountersLayer = this.container()
+    val _rockCountersLayerMutex = Mutex()
+
     val _entityLabelLayer = this.container()
 
     val _pathingLinesLayer = this.container()
@@ -103,8 +116,54 @@ class UIMap(
         drawGridNumbers()
         drawGridLines()
         renderEntities()
+        renderRockCounters()
         renderEntityText()
         renderPathLines(shortestPath)
+    }
+
+    suspend fun viewRockCounters() {
+        if (_rockCountersLayerMutex.isLocked) {
+            println("Rock counters mutex is locked, skipping")
+            return
+        }
+        _rockCountersLayerMutex.lock()
+        println("Started rock counter routine")
+        _rockCountersLayer.visible = true
+        launch (GlobalScope.coroutineContext) {
+            delay(5000)
+            _rockCountersLayer.visible = false
+            _rockCountersLayerMutex.unlock()
+            println("End rock counter routine")
+        }
+    }
+
+    private fun renderRockCounters() {
+        val rockCounters = RockCounterUtil.calculate(gameMap)
+        for (x in 0 until gameMap.width) {
+            for (y in 0 until  gameMap.height) {
+                val num = rockCounters[x, y]
+                if (num > 0) {
+                        val (worldX, worldY) = toWorldCoordinates(
+                            _gridSize,
+                            Point(x + 0.5, y + 0.5), gameMap.width,
+                            gameMap.height
+                        )
+                        val component = _rockCountersLayer.text(
+                            num.toString(), textSize = 15.0, alignment = TextAlignment
+                                .MIDDLE_CENTER,
+                            font = ENTITY_TEXT_FONT
+                        ).xy(
+                            worldX,
+                            worldY
+                        ).apply {
+                            scaledHeight = _gridSize / 2
+                            scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
+                        }
+                    _drawnRockCounters[IntPoint(x, y)] = component
+                }
+            }
+        }
+        _rockCountersLayer.visible = false
     }
 
     private fun drawBoard() {
@@ -127,7 +186,6 @@ class UIMap(
                 MaterialColors.GREEN_600
             )
         }
-
         println("Finished drawing board!")
     }
 
@@ -283,7 +341,6 @@ class UIMap(
             addEntity(entity)
         }
     }
-
 
     fun renderEntityText() {
         // Draw map text

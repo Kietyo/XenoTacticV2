@@ -2,14 +2,14 @@ package ui
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.UIVerticalStack
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiVerticalStack
-import com.soywiz.korge.ui.uiWindow
+import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.alignBottomToBottomOf
 import com.soywiz.korge.view.centerOnStage
+import com.soywiz.korio.async.AsyncSignal
+import com.soywiz.korio.async.Signal
+import com.soywiz.korio.async.Signal2
 import components.GameMapComponent
 import components.ObjectPlacementComponent
 import engine.Engine
@@ -24,6 +24,10 @@ import korge_utils.onStageResizedV2
 inline fun Container.uiPlacement(engine: Engine, eventBus: EventBus): UIPlacement =
     UIPlacement(engine, eventBus).addTo(this)
 
+enum class UIPlacementButton {
+    VIEW_ROCK_COUNTERS
+}
+
 class UIPlacement(
     val engine: Engine,
     val eventBus: EventBus
@@ -31,9 +35,20 @@ class UIPlacement(
     val placementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
     val placementContainer: UIVerticalStack
 
+    val onButtonClick = AsyncSignal<UIPlacementButton>()
+
     init {
 
         placementContainer = uiVerticalStack {
+            uiButton {
+                uiSkin = UISkin {
+                    setSkinProperty("textSize", 12.0)
+                }
+                text = "View rock counters"
+                onClick {
+                    onButtonClick(UIPlacementButton.VIEW_ROCK_COUNTERS)
+                }
+            }
             uiButton {
                 text = "Tower"
                 onClick {

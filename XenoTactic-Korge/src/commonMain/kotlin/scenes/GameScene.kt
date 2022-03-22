@@ -3,13 +3,10 @@ package scenes
 import korge_components.ResizeDebugComponent
 import bridges.MapBridge
 import com.soywiz.klogger.Logger
-import com.soywiz.korge.component.docking.dockedTo
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
-import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import com.soywiz.korma.geom.Anchor
 import components.GameMapComponent
 import components.GoalComponent
 import components.ObjectPlacementComponent
@@ -55,10 +52,10 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         //        this.setSize(gameMap.width * GRID_SIZE, gameMap.height * GRID_SIZE)
 
         val mapView = camera()
-        val mapRenderer =
+        val uiMap =
             mapView.uiMap(gameMap, shortestPath = gameMapComponent.shortestPath)
-        val mapRendererUpdater = MapRendererUpdater(engine, mapRenderer, eventBus)
-        engine.setOneTimeComponent(mapRenderer)
+        val mapRendererUpdater = MapRendererUpdater(engine, uiMap, eventBus)
+        engine.setOneTimeComponent(uiMap)
 
         mapView.draggable {
 
@@ -71,7 +68,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
             this, engine, mapView,
-            mapRenderer._gridSize
+            uiMap._gridSize
         )
 
         addComponent(objectPlacementInputProcessor)
@@ -82,6 +79,15 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             onStageResized(true) { width: Int, height: Int ->
                 alignRightToRightOfWindow()
                 alignBottomToBottomOfWindow()
+            }
+
+            onButtonClick {
+                println("Button clicked: $it")
+                when (it) {
+                    UIPlacementButton.VIEW_ROCK_COUNTERS -> {
+                        uiMap.viewRockCounters()
+                    }
+                }
             }
         }
 
@@ -97,7 +103,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         addComponent(KeyInputProcessor(this, eventBus))
 //        addComponent(InformationalUI(this, engine, eventBus))
-        val monstersComponent = MonstersComponent(mapView, engine, eventBus, mapRenderer._gridSize)
+        val monstersComponent = MonstersComponent(mapView, engine, eventBus, uiMap._gridSize)
         addComponent(monstersComponent)
 
         val goalComponent = GoalComponent(engine, eventBus)
