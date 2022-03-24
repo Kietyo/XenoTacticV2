@@ -46,9 +46,13 @@ class UIMapEntry(
 
     val onPlayButtonClick = Signal<MouseEvents>()
     val onSaveButtonClick = Signal<MouseEvents>()
+    val onMapSectionClick = Signal<Unit>()
 
     init {
         mapSection = this.uiMapBox(gameMap, MAP_SECTION_WIDTH, _height)
+        mapSection.onClick {
+            onMapSectionClick(Unit)
+        }
 
         val buttonsSection = this.solidRect(BUTTON_SECTION_WIDTH, _height, Colors.ROSYBROWN)
         buttonsSection.alignLeftToRightOf(mapSection)

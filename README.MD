@@ -1,7 +1,7 @@
 Attributions
-
-
 - MemDixy/cyanochlorite - Idea for rock counters
+- TheCurse - Early development support/advice
+- Lawlzer - Early development support/advice
 
 Trying to get Native working for curl http client engine
 

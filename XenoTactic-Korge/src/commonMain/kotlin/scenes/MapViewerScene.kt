@@ -46,6 +46,8 @@ class MapViewerScene(
             )
         }
 
+        val mapInspector = this.uiMapInspector()
+
         val mapGrid = this.uiFixedGrid(
             globalEventBus,
             maxColumns,
@@ -70,12 +72,15 @@ class MapViewerScene(
                                 PlayerDataApi.savePlayerData(playerData)
                             }
                         }
+                        onMapSectionClick {
+                            println("Map clicked! ${mapWithMetadata.map}")
+                            mapInspector.setMap(mapWithMetadata.map)
+                        }
                     }
                 }
             }
         )
 
-        val mapInspector = this.uiMapInspector()
 
         this.onStageResized(true) { width, height ->
             header.alignLeftToLeftOfWindow()

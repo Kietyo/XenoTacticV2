@@ -5,6 +5,7 @@ import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiScrollable
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
+import com.xenotactic.gamelogic.model.GameMap
 import random.MapGeneratorConfiguration
 import random.RandomMapGenerator
 import korge_utils.MaterialColors
@@ -14,10 +15,13 @@ inline fun Container.uiMapInspector(): UIMapInspector =
 
 @OptIn(KorgeExperimental::class)
 class UIMapInspector : Container() {
+    val WIDTH = 250.0
+    val HEIGHT = 600.0
+
+    val mapInspectorBackground = this.solidRect(WIDTH, HEIGHT, MaterialColors.GRAY_800)
+    lateinit var mapSection: UIMapBox
 
     init {
-        val WIDTH = 250.0
-        val HEIGHT = 600.0
         val PADDING_TOP = 5.0
         val PADDING_LEFT_AND_RIGHT = 5.0
 
@@ -28,10 +32,9 @@ class UIMapInspector : Container() {
         val SECTION_BUTTONS_HEIGHT = 25.0
 
         container {
-            val mapInspectorBackground = this.solidRect(WIDTH, HEIGHT, MaterialColors.GRAY_800)
 
             //            val mapSection = this.solidRect(MAP_BOX_WIDTH, MAP_BOX_HEIGHT)
-            val mapSection = this.uiMapBox(
+            mapSection = this.uiMapBox(
                 RandomMapGenerator.generate(
                     MapGeneratorConfiguration(10, 10)
                 ).map, INNER_ELEMENT_WIDTH, MAP_BOX_HEIGHT
@@ -95,5 +98,9 @@ class UIMapInspector : Container() {
             content.alignTopToBottomOf(sectionButtonsContainer, PADDING_TOP)
 
         }
+    }
+
+    fun setMap(gameMap: GameMap) {
+        mapSection.updateMap(gameMap, true)
     }
 }

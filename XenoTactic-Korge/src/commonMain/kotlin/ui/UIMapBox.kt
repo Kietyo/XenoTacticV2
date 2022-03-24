@@ -27,17 +27,37 @@ inline fun Container.uiMapBox(
  */
 class UIMapBox(
     gameMap: GameMap,
-    boxWidth: Double, boxHeight: Double,
-    gameMapGridSize: Double = 25.0,
-    paddingTopAndBottom: Double = 5.0,
-    paddingLeftAndRight: Double = 5.0,
+    val boxWidth: Double, val boxHeight: Double,
+    val gameMapGridSize: Double = 25.0,
+    val paddingTopAndBottom: Double = 5.0,
+    val paddingLeftAndRight: Double = 5.0,
     calculateMapPath: Boolean = false
 ) : Container() {
 
-    val mapContainer: Container
-    var mapScale: Double = 1.0
+    val mapSection = this.solidRect(boxWidth, boxHeight, Colors.BLACK.withAd(0.4))
+    val mapContainer: Container = this.container()
 
     init {
+
+
+//        mapContainer.scaledWidth = maxMapWidth
+//        mapContainer.scaledHeight = maxMapWidth
+//        mapContainer.scale = mapScale
+//        mapContainer.centerOn(mapSection)
+
+        updateMap(gameMap, calculateMapPath)
+
+
+
+        //        launch(Dispatchers.Default) {
+        //            val asBitMap = mapContainer.renderToBitmap(scenes.VIEWS_INSTANCE)
+        //            mapContainer.removeChildren()
+        //            val mapImage = mapContainer.image(asBitMap)
+        //        }
+
+    }
+
+    fun updateMap(gameMap: GameMap, calculateMapPath: Boolean) {
         val currentMapContainerHeight = gameMap.height * gameMapGridSize
         val currentMapContainerWidth = gameMap.width * gameMapGridSize
 
@@ -47,10 +67,11 @@ class UIMapBox(
         val scaledByHeight = maxMapHeight / currentMapContainerHeight
         val scaledByWidth = maxMapWidth / currentMapContainerWidth
 
-        mapScale = min(scaledByHeight, scaledByWidth)
+        val mapScale = min(scaledByHeight, scaledByWidth)
 
-        val mapSection = this.solidRect(boxWidth, boxHeight, Colors.BLACK.withAd(0.4))
-        mapContainer = this.container {
+        mapContainer.scale = mapScale
+        mapContainer.removeChildren()
+        mapContainer.apply {
             this.uiMap(
                 gameMap,
                 shortestPath = if (calculateMapPath) PathFinder.getShortestPath(gameMap) else
@@ -63,9 +84,6 @@ class UIMapBox(
                 )
             )
         }
-
-
-        mapContainer.scale = mapScale
         mapContainer.centerOn(mapSection)
 
         GlobalScope.launch {
@@ -73,13 +91,6 @@ class UIMapBox(
             mapContainer.removeChildren()
             val mapImage = mapContainer.image(asBitMap)
         }
-
-//        launch(Dispatchers.Default) {
-//            val asBitMap = mapContainer.renderToBitmap(scenes.VIEWS_INSTANCE)
-//            mapContainer.removeChildren()
-//            val mapImage = mapContainer.image(asBitMap)
-//        }
-
     }
 
     companion object {
