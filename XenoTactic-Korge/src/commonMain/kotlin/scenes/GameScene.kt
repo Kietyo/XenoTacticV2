@@ -7,12 +7,14 @@ import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
+import com.soywiz.korma.math.roundDecimalPlaces
 import components.GameMapComponent
 import components.GoalComponent
 import components.ObjectPlacementComponent
 import engine.Engine
 import events.EventBus
 import events.ExitGameSceneEvent
+import events.UpdatedPathLengthEvent
 import input_processors.CameraInputProcessor
 import input_processors.KeyInputProcessor
 import input_processors.ObjectPlacementInputProcessor
@@ -95,14 +97,20 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             centerXOnStage()
         }
 
-        val pathText = text("Path Length: XX") {
+        val pathText = UIPathText().addTo(this@sceneInit) {
             onStageResized(true) { width: Int, height: Int ->
                 alignBottomToBottomOfWindow()
             }
+
+            eventBus.register<UpdatedPathLengthEvent> {
+                updatePathLength(it.newPathLength)
+            }
+
+            updatePathLength(gameMapComponent.shortestPath?.pathLength)
         }
 
+
         addComponent(KeyInputProcessor(this, eventBus))
-//        addComponent(InformationalUI(this, engine, eventBus))
         val monstersComponent = MonstersComponent(mapView, engine, eventBus, uiMap._gridSize)
         addComponent(monstersComponent)
 

@@ -6,7 +6,6 @@ import com.soywiz.korma.math.roundDecimalPlaces
 import components.GameMapComponent
 import engine.Engine
 import events.EventBus
-import events.PathChangedEvent
 import events.UpdatedPathLengthEvent
 
 class InformationalUI(
@@ -20,10 +19,6 @@ class InformationalUI(
         pathText = view.text("")
         val globalArea = view.getVisibleWindowArea()
         resizeInternal(globalArea.width, globalArea.height)
-
-        eventBus.register<PathChangedEvent> {
-            handlePathChanged()
-        }
 
         handlePathChanged()
 

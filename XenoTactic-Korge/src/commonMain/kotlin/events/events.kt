@@ -10,8 +10,6 @@ import com.xenotactic.gamelogic.model.MapEntity
 
 object EscapeButtonActionEvent
 
-object PathChangedEvent
-
 data class UpdatedPathLengthEvent(val newPathLength: Double?)
 
 data class RemovedEntityEvent(val entity: MapEntity)
