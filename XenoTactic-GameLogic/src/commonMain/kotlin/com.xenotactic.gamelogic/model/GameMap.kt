@@ -22,6 +22,19 @@ data class GameMap(
     @Transient
     private val blockingPoints: BlockingPointContainer.Mutable = BlockingPointContainer.Mutable()
 
+    val numCheckpoints: Int
+        get() = checkpoints.size
+
+    val numTeleports: Int
+        get() = teleportIns.size
+
+    val numRocks: Int
+        get() = rocks.size
+
+    val numSpeedAreas: Int
+        get() = speedAreas.size
+
+
     fun getStart() = start
     fun getFinish() = finish
 
