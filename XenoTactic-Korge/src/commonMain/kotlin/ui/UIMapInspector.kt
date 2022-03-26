@@ -5,28 +5,28 @@ import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiScrollable
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
+import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.MapEntityType
-import random.MapGeneratorConfiguration
-import random.RandomMapGenerator
 import korge_utils.MaterialColors
 
 inline fun Container.uiMapInspector(): UIMapInspector =
     UIMapInspector().addTo(this)
 
 @OptIn(KorgeExperimental::class)
-class UIMapInspector : Container() {
+class UIMapInspector(
+    val inspectorHeight: Double = 430.0
+) : Container() {
     val WIDTH = 250.0
-    val HEIGHT = 600.0
 
     val PADDING_TOP = 5.0
+    val PADDING_BOTTOM = 5.0
     val PADDING_LEFT_AND_RIGHT = 5.0
 
     val INNER_ELEMENT_WIDTH = WIDTH - PADDING_LEFT_AND_RIGHT * 2
     val MAP_BOX_HEIGHT = 175.0
 
 
-    val mapInspectorBackground = this.solidRect(WIDTH, HEIGHT, MaterialColors.GRAY_800)
+    val mapInspectorBackground = this.solidRect(WIDTH, inspectorHeight, MaterialColors.GRAY_800)
     val mapBoxArea = this.solidRect(INNER_ELEMENT_WIDTH, MAP_BOX_HEIGHT, MaterialColors.GRAY_500)
         .apply {
             centerXOn(mapInspectorBackground)
@@ -43,6 +43,7 @@ class UIMapInspector : Container() {
             this.backgroundColor = Colors.TRANSPARENT_WHITE
         })
 
+    lateinit var mapIdText: Text
 
     init {
 
@@ -96,10 +97,15 @@ class UIMapInspector : Container() {
         sectionButtonsContainer.centerXOn(mapInspectorBackground)
         sectionButtonsContainer.alignTopToBottomOf(mapSection, PADDING_TOP)
 
-
-
         content.centerXOn(mapInspectorBackground)
         content.alignTopToBottomOf(sectionButtonsContainer, PADDING_TOP)
+
+//        val text("Map ID: ${MapToId.calculateId(gameMap)}", textSize = 10.0)
+        mapIdText = text("Map ID: asdfasdfasdfasdfsdf", textSize = 10.0) {
+            alignLeftToLeftOf(mapInspectorBackground, PADDING_LEFT_AND_RIGHT)
+            alignBottomToBottomOf(mapInspectorBackground, PADDING_BOTTOM)
+            visible(false)
+        }
 
     }
 
@@ -108,6 +114,9 @@ class UIMapInspector : Container() {
             updateMap(gameMap, true)
             visible(true)
         }
+
+        noMapSelectedText.visible = false
+
         content.removeChildren()
         content.apply {
             val mapSettingsSection = this.container {
@@ -125,5 +134,8 @@ class UIMapInspector : Container() {
                 }
             }
         }
+
+        mapIdText.text = "Map ID: ${MapToId.calculateId(gameMap)}"
+        mapIdText.visible = true
     }
 }

@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PlayerData(
     var userName: String = "XenoTactic",
-    var maps: MutableList<GameMap> = mutableListOf()
+    var maps: MutableMap<String, GameMap> = mutableMapOf()
 )

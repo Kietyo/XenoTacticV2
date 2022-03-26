@@ -8,11 +8,13 @@ import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.soywiz.korio.async.invoke
+import com.xenotactic.gamelogic.mapid.MapToId
 import daos.PlayerDataApi
 import events.EventBus
 import events.PlayMapEvent
 import getGoldenJsonFiles
 import korge_utils.alignLeftToLeftOfWindow
+import korge_utils.alignRightToRightOfWindow
 import korge_utils.alignTopToTopOfWindow
 import kotlinx.coroutines.launch
 import toGameMap
@@ -29,11 +31,14 @@ class MapViewerScene(
     override suspend fun Container.sceneInit() {
         println("MapViewerScene: Init")
 
+        val HEADER_HEIGHT = 50.0
+
         val playerData = PlayerDataApi.getPlayerData()
         playerData.userName = "XenoTactic"
         PlayerDataApi.savePlayerData(playerData)
 
-        val header = UIHeader(playerData.userName, getVisibleGlobalArea().width).addTo(this)
+        val header = UIHeader(playerData.userName, HEADER_HEIGHT, getVisibleGlobalArea().width)
+            .addTo(this)
 
         val maxColumns = 4
         val maxRows = 5
@@ -49,6 +54,30 @@ class MapViewerScene(
 
         val mapInspector = this.uiMapInspector()
 
+        val playEntries = goldenMaps.map { mapWithMetadata ->
+            { width: Double, height: Double ->
+                UIMapEntry(
+                    mapWithMetadata.map,
+                    width, height
+                ).apply {
+                    onPlayButtonClick {
+                        globalEventBus.send(PlayMapEvent(mapWithMetadata.map))
+                    }
+                    onSaveButtonClick {
+                        playerData.maps[MapToId.calculateId(mapWithMetadata.map)] =
+                            mapWithMetadata.map
+                        launch {
+                            PlayerDataApi.savePlayerData(playerData)
+                        }
+                    }
+                    onMapSectionClick {
+                        println("Map clicked! ${mapWithMetadata.map}")
+                        mapInspector.setMap(mapWithMetadata.map)
+                    }
+                }
+            }
+        }
+
         val mapGrid = this.uiFixedGrid(
             globalEventBus,
             maxColumns,
@@ -58,28 +87,7 @@ class MapViewerScene(
             10.0
         )
         mapGrid.resetWithEntries(
-            goldenMaps.map { mapWithMetadata ->
-                { width: Double, height: Double ->
-                    UIMapEntry(
-                        mapWithMetadata.map,
-                        width, height
-                    ).apply {
-                        onPlayButtonClick {
-                            globalEventBus.send(PlayMapEvent(mapWithMetadata.map))
-                        }
-                        onSaveButtonClick {
-                            playerData.maps.add(mapWithMetadata.map)
-                            launch {
-                                PlayerDataApi.savePlayerData(playerData)
-                            }
-                        }
-                        onMapSectionClick {
-                            println("Map clicked! ${mapWithMetadata.map}")
-                            mapInspector.setMap(mapWithMetadata.map)
-                        }
-                    }
-                }
-            }
+            playEntries
         )
 
 
@@ -89,20 +97,22 @@ class MapViewerScene(
             mapGrid.alignTopToBottomOf(header)
             mapGrid.alignLeftToLeftOfWindow()
             mapInspector.alignTopToBottomOf(header)
-            mapInspector.alignLeftToRightOf(mapGrid, padding = 10.0)
+            mapInspector.alignRightToRightOfWindow()
         }
 
         addComponent(ResizeDebugComponent(this))
 
         header.onHeaderSectionClick {
-            if (it != UIHeaderSection.MY_MAPS) return@onHeaderSectionClick
             when (it) {
-                UIHeaderSection.PLAY -> TODO()
+                UIHeaderSection.PLAY -> {
+                    header.updateSelectionBox(it)
+                    mapGrid.resetWithEntries(playEntries)
+                }
                 UIHeaderSection.EDITOR -> TODO()
                 UIHeaderSection.MY_MAPS -> {
                     header.updateSelectionBox(it)
                     mapGrid.resetWithEntries(
-                        playerData.maps.map { map ->
+                        playerData.maps.map { (_, map) ->
                             { width: Double, height: Double ->
                                 UIMapEntry(
                                     map,
@@ -112,7 +122,7 @@ class MapViewerScene(
                                         globalEventBus.send(PlayMapEvent(map))
                                     }
                                     onSaveButtonClick {
-                                        playerData.maps.add(map)
+                                        playerData.maps[MapToId.calculateId(map)] = map
                                         launch {
                                             PlayerDataApi.savePlayerData(playerData)
                                         }

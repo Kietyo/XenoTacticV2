@@ -1,7 +1,6 @@
 package ui
 
 import com.soywiz.korge.input.onClick
-import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.Signal
@@ -15,6 +14,7 @@ enum class UIHeaderSection {
 
 class UIHeader(
     val userName: String,
+    headerHeight: Double = 50.0,
     headerWidth: Double
 ) : Container() {
     val onHeaderSectionClick = Signal<UIHeaderSection>()
@@ -24,13 +24,12 @@ class UIHeader(
     val sectionToTextMap = mutableMapOf<UIHeaderSection, Text>()
 
     init {
-        val HEADER_HEIGHT = 50.0
         val HEADER_TITLE_PADDING_LEFT = 10.0
         val PROFILE_PADDING_TOP_AND_BOTTOM = 10.0
         val PROFILE_PADDING_RIGHT = 5.0
 
         val headerSection = this.solidRect(
-            headerWidth, HEADER_HEIGHT,
+            headerWidth, headerHeight,
             color = Colors.BROWN
         )
         this.text(userName, textSize = 30.0) {
@@ -39,31 +38,33 @@ class UIHeader(
         }
 
         val headerTextSize = 20.0
-        val textSpacing = 25.0
+        val textSpacing = 50.0
         val textWidth = 75.0
 
         val headerOptions = this.container {
             val playText = this.text("Play", textSize = headerTextSize) {
+                sectionToTextMap[UIHeaderSection.PLAY] = this
                 onClick {
                     onHeaderSectionClick(UIHeaderSection.PLAY)
                 }
             }
-            val editorText = this.text("Editor", textSize = headerTextSize) {
-                onClick {
-                    onHeaderSectionClick(UIHeaderSection.EDITOR)
-                }
-            }
-            editorText.x += textWidth + textSpacing
+//            val editorText = this.text("Editor", textSize = headerTextSize) {
+//                sectionToTextMap[UIHeaderSection.EDITOR] = this
+//                onClick {
+//                    onHeaderSectionClick(UIHeaderSection.EDITOR)
+//                }
+//            }
             val myMapsText = this.text("My Maps", textSize = headerTextSize) {
-                x += textWidth * 2 + textSpacing * 2
+                sectionToTextMap[UIHeaderSection.MY_MAPS] = this
                 onClick {
                     onHeaderSectionClick(UIHeaderSection.MY_MAPS)
                 }
             }
 
-            sectionToTextMap[UIHeaderSection.PLAY] = playText
-            sectionToTextMap[UIHeaderSection.EDITOR] = editorText
-            sectionToTextMap[UIHeaderSection.MY_MAPS] = myMapsText
+            val textViews = mutableListOf(playText, myMapsText)
+            textViews.windowed(2) {
+                it[1].alignLeftToRightOf(it[0], textSpacing)
+            }
 
             selectedSectionBox = this.solidRect(25, 25, Colors.BLACK.withAd(0.5))
             this.sendChildToBack(selectedSectionBox)
@@ -74,7 +75,6 @@ class UIHeader(
             println(
                 """
                     playText.scaledDimensions(): ${playText.scaledDimensions()}
-                    editorText.scaledDimensions(): ${editorText.scaledDimensions()}
                     myMapsText.scaledDimensions(): ${myMapsText.scaledDimensions()}
                 """.trimIndent()
             )
@@ -84,7 +84,7 @@ class UIHeader(
         headerOptions.x += 200.0
 
         val profileSection = this.solidRect(
-            100.0, HEADER_HEIGHT - PROFILE_PADDING_TOP_AND_BOTTOM,
+            100.0, headerHeight - PROFILE_PADDING_TOP_AND_BOTTOM,
             color = Colors.BLACK.withAd(0.25)
         )
         profileSection.alignRightToRightOf(headerSection, padding = PROFILE_PADDING_RIGHT)

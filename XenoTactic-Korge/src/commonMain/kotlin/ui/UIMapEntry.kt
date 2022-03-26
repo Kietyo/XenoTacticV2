@@ -73,7 +73,7 @@ class UIMapEntry(
                         onSaveButtonClick(it)
                     }
                 }
-                val deleteButton = this.uiButton(buttonStackWidth, buttonHeight, "Delete")
+                val deleteButton = this.uiButton(buttonStackWidth, buttonHeight, "Hide")
             }
 
         val outlineRect = this.roundRect(
