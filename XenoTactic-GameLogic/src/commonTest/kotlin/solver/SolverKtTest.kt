@@ -3,7 +3,6 @@ package solver
 import com.soywiz.klogger.Logger
 import com.xenotactic.gamelogic.globals.COUNTERS
 import com.xenotactic.gamelogic.model.GameMap
-import loadGameMapFromGoldensBlocking
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.utils.measureTime
 import pathing.AStarSearcher

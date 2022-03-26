@@ -2,6 +2,9 @@ import com.soywiz.kds.iterators.parallelMap
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
+import com.xenotactic.gamelogic.korge_utils.toGameMap
+import com.xenotactic.gamelogic.test_utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.test_utils.getGoldenJsonFiles
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import random.MapGeneratorConfiguration

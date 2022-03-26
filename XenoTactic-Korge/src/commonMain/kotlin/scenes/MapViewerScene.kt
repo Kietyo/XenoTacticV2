@@ -7,6 +7,7 @@ import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
+import com.soywiz.korio.async.invoke
 import daos.PlayerDataApi
 import events.EventBus
 import events.PlayMapEvent
@@ -89,51 +90,39 @@ class MapViewerScene(
             mapGrid.alignLeftToLeftOfWindow()
             mapInspector.alignTopToBottomOf(header)
             mapInspector.alignLeftToRightOf(mapGrid, padding = 10.0)
-
-            //            println(
-            //                """
-            //                resize:
-            //                width: $width,
-            //                height: $height,
-            //                gameMapView.width: ${gameMapView.width}
-            //                gameMapView.height: ${gameMapView.height}
-            //                gameMapView.scaledWidth: ${gameMapView.scaledWidth}
-            //                gameMapView.scaledHeight: ${gameMapView.scaledHeight}
-            //                this.actualWidth: ${this.actualWidth}
-            //                this.actualHeight: ${this.actualHeight}
-            //                this.virtualWidth: ${this.virtualWidth}
-            //                this.virtualHeight: ${this.virtualHeight}
-            //                this.actualVirtualWidth: ${this.actualVirtualWidth}
-            //                this.actualVirtualHeight: ${this.actualVirtualHeight}
-            //            """.trimIndent()
-            //            )
         }
 
         addComponent(ResizeDebugComponent(this))
 
         header.onHeaderSectionClick {
             if (it != UIHeaderSection.MY_MAPS) return@onHeaderSectionClick
-            mapGrid.resetWithEntries(
-                playerData.maps.map { map ->
-                    { width: Double, height: Double ->
-                        UIMapEntry(
-                            map,
-                            width, height
-                        ).apply {
-                            onPlayButtonClick {
-                                globalEventBus.send(PlayMapEvent(map))
-                            }
-                            onSaveButtonClick {
-                                playerData.maps.add(map)
-                                launch {
-                                    PlayerDataApi.savePlayerData(playerData)
+            when (it) {
+                UIHeaderSection.PLAY -> TODO()
+                UIHeaderSection.EDITOR -> TODO()
+                UIHeaderSection.MY_MAPS -> {
+                    header.updateSelectionBox(it)
+                    mapGrid.resetWithEntries(
+                        playerData.maps.map { map ->
+                            { width: Double, height: Double ->
+                                UIMapEntry(
+                                    map,
+                                    width, height
+                                ).apply {
+                                    onPlayButtonClick {
+                                        globalEventBus.send(PlayMapEvent(map))
+                                    }
+                                    onSaveButtonClick {
+                                        playerData.maps.add(map)
+                                        launch {
+                                            PlayerDataApi.savePlayerData(playerData)
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
+                    )
                 }
-            )
-
+            }
         }
 
         logger.info {

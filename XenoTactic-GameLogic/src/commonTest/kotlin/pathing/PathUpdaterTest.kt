@@ -1,6 +1,5 @@
 package pathing
 
-import GOLDENS_DATA_VFS
 import com.soywiz.kds.iterators.parallelMap
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
@@ -9,10 +8,11 @@ import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import loadGameMapFromGoldensAsync
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.test_utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.test_utils.loadGameMapFromGoldensAsync
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.utils.removeAllIndents
 import solver.*

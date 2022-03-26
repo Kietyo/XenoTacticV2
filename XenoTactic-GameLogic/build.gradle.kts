@@ -14,8 +14,7 @@ repositories {
     maven { url = uri("https://plugins.gradle.org/m2/") }
 }
 
-val kormaVersion = "2.6.3"
-val korioVersion = "2.6.3"
+val korgeVersion = "2.6.3"
 val gitliveVersion = "1.4.3"
 val ktorVersion = "1.6.1"
 
@@ -49,11 +48,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.soywiz.korlibs.korma:korma:$kormaVersion")
+                implementation("com.soywiz.korlibs.korma:korma:$korgeVersion")
+                implementation("com.soywiz.korlibs.korio:korio:$korgeVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.3.2")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
-                implementation("com.soywiz.korlibs.korio:korio:$korioVersion")
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
 

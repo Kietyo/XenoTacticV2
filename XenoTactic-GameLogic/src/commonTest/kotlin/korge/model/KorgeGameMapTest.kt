@@ -1,6 +1,8 @@
 import com.soywiz.korio.async.runBlockingNoJs
+import com.xenotactic.gamelogic.korge_utils.TEST_TEMP_DATA_VFS
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.test_utils.loadGameMapFromGoldensAsync
 import korge.model.korge_test_utils.createTempFile
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString

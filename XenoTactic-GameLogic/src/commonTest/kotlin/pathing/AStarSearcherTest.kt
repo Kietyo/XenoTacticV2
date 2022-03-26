@@ -1,6 +1,5 @@
 package pathing
 
-import GOLDENS_DATA_VFS
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.baseName
 import com.soywiz.korio.file.std.localCurrentDirVfs
@@ -15,8 +14,9 @@ import com.xenotactic.gamelogic.pathing.EntityPath
 import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.test_utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.test_utils.loadGameMapFromGoldensAsync
 import com.xenotactic.gamelogic.utils.measureTime
-import loadGameMapFromGoldensAsync
 import test_utils.doublesSimilar
 import utils.StatCounterMap
 
