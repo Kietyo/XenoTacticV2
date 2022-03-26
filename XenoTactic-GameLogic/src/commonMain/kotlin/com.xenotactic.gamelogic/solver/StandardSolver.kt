@@ -15,7 +15,7 @@ object StandardSolver : Solver {
     class StandardSolverInternal(val _map: GameMap, val _solverParams: SolverParams) {
 
         val _cachedPaths = mutableMapOf<SearchState, PathSequence?>()
-        val _towerCache = TowerCache()
+        val _towerCache = TowerCache(_map.width, _map.height)
         val _placementsToPathCache = TowerPlacementsToPathCache()
 
         fun solve(): SolverResult {

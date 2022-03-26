@@ -22,7 +22,7 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
         val _map: GameMap,
         val _solverParams: SolverParams
     ) {
-        var _towerCache = TowerCache()
+        var _towerCache = TowerCache(_map.width, _map.height)
         val _towerPlacementsToPathCache = TowerPlacementsToPathCache()
 
         fun solve(): SolverResult {

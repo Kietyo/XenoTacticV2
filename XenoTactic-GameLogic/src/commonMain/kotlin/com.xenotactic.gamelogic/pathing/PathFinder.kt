@@ -94,14 +94,12 @@ object PathFinder {
             GamePath? {
         if (gameMap.getStart() == null || gameMap.getFinish() == null) return null
 
-        return measureTime("time it took to get path") {
-            searcher.getUpdatablePath(
-                gameMap.width, gameMap.height,
-                pathingEntities,
-                teleportPairs + additionalTeleportPairs,
-                blockingEntities,
-                blockingPoints
-            )
-        }.second
+        return searcher.getUpdatablePath(
+            gameMap.width, gameMap.height,
+            pathingEntities,
+            teleportPairs + additionalTeleportPairs,
+            blockingEntities,
+            blockingPoints
+        )
     }
 }

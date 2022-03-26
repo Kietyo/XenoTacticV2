@@ -43,7 +43,6 @@ internal class SolverKtTest {
     }
 
     @Test
-    @Ignore
     fun solverTest2() {
         val map: GameMap
         while (true) {
@@ -70,7 +69,7 @@ internal class SolverKtTest {
         println("Generated map:")
         println(map)
 
-        val solver = StandardSolver2
+        val solver = StandardSolver4
 
         println("Attempting to solve:")
         val result = measureTime("Time it took to solve") {

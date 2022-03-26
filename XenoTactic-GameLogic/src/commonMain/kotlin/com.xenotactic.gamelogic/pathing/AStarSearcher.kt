@@ -84,17 +84,12 @@ object AStarSearcher : SearcherInterface {
         val cachedShortestPoints: MutableMap<Pair<Point, Point>, Point> =
             mutableMapOf<Pair<Point, Point>, Point>()
 
-        val availablePathingPoints = measureTime(
-            "calculate pathing points from blocking " +
-                    "entities"
-        ) {
-            getAvailablePathingPointsFromBlockingEntities(
-                _blockingEntities,
-                mapWidth,
-                mapHeight,
-                _blockingPoints
-            )
-        }.second
+        val availablePathingPoints = getAvailablePathingPointsFromBlockingEntities(
+            _blockingEntities,
+            mapWidth,
+            mapHeight,
+            _blockingPoints
+        )
 
         private fun getFirstTeleportIntersection(
             shortestPath: Path?,
