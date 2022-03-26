@@ -2,14 +2,10 @@ package ui
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.view.*
-import com.soywiz.korim.bitmap.Bitmap32
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.async.runBlockingNoSuspensions
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.model.GameMap
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import pathing.PathFinder
 
@@ -80,7 +76,7 @@ class UIMapBox(
                     drawGridNumbers = false,
                     gridSize = gameMapGridSize,
                     pathLinesRatio = (0.5 / mapScale) * PATH_LINES_RATIO,
-                    drawCheckeredBoard = false
+                    boardType = BoardType.SOLID
                 )
             )
         }

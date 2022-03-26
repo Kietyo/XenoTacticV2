@@ -1,10 +1,6 @@
 package ui
 
-import com.soywiz.kds.Array2
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.uiFillLayeredContainer
 import com.soywiz.korge.view.*
-import com.soywiz.korge.view.fast.fastSpriteContainer
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
@@ -32,6 +28,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 
+enum class BoardType {
+    SOLID,
+    CHECKERED_1X1,
+    CHECKERED_2X2,
+}
+
 data class UIMapSettings(
     val gridSize: Double = GRID_SIZE,
     val borderRatio: Double = BORDER_RATIO,
@@ -39,7 +41,7 @@ data class UIMapSettings(
     val gridNumbersRatio: Double = GRID_NUMBERS_RATIO,
     val pathLinesRatio: Double = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
-    val drawCheckeredBoard: Boolean = true,
+    val boardType: BoardType = BoardType.CHECKERED_2X2,
 ) {
     val borderSize = gridSize * borderRatio
     val gridLineSize = gridSize * gridLinesRatio
@@ -129,7 +131,7 @@ class UIMap(
         _rockCountersLayerMutex.lock()
         println("Started rock counter routine")
         _rockCountersLayer.visible = true
-        launch (GlobalScope.coroutineContext) {
+        launch(GlobalScope.coroutineContext) {
             delay(5000)
             _rockCountersLayer.visible = false
             _rockCountersLayerMutex.unlock()
@@ -140,25 +142,25 @@ class UIMap(
     private fun renderRockCounters() {
         val rockCounters = RockCounterUtil.calculate(gameMap)
         for (x in 0 until gameMap.width) {
-            for (y in 0 until  gameMap.height) {
+            for (y in 0 until gameMap.height) {
                 val num = rockCounters[x, y]
                 if (num > 0) {
-                        val (worldX, worldY) = toWorldCoordinates(
-                            _gridSize,
-                            Point(x + 0.5, y + 0.5), gameMap.width,
-                            gameMap.height
-                        )
-                        val component = _rockCountersLayer.text(
-                            num.toString(), textSize = 15.0, alignment = TextAlignment
-                                .MIDDLE_CENTER,
-                            font = ENTITY_TEXT_FONT
-                        ).xy(
-                            worldX,
-                            worldY
-                        ).apply {
-                            scaledHeight = _gridSize / 2
-                            scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
-                        }
+                    val (worldX, worldY) = toWorldCoordinates(
+                        _gridSize,
+                        Point(x + 0.5, y + 0.5), gameMap.width,
+                        gameMap.height
+                    )
+                    val component = _rockCountersLayer.text(
+                        num.toString(), textSize = 15.0, alignment = TextAlignment
+                            .MIDDLE_CENTER,
+                        font = ENTITY_TEXT_FONT
+                    ).xy(
+                        worldX,
+                        worldY
+                    ).apply {
+                        scaledHeight = _gridSize / 2
+                        scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
+                    }
                     _drawnRockCounters[IntPoint(x, y)] = component
                 }
             }
@@ -167,24 +169,42 @@ class UIMap(
     }
 
     private fun drawBoard() {
-        if (uiMapSettings.drawCheckeredBoard) {
-            var altColorWidth = true
-            for (i in 0 until gameMap.width) {
-                var altColorHeight = altColorWidth
-                for (j in 0 until gameMap.height) {
-                    val currColor = if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
-                        .GREEN_800
-                    _boardLayer.solidRect(_gridSize, _gridSize, currColor)
-                        .xy(i * _gridSize, j * _gridSize)
-                    altColorHeight = !altColorHeight
-                }
-                altColorWidth = !altColorWidth
-            }
-        } else {
-            _boardLayer.solidRect(
+        when (uiMapSettings.boardType) {
+            BoardType.SOLID -> _boardLayer.solidRect(
                 _gridSize * gameMap.width, _gridSize * gameMap.height,
                 MaterialColors.GREEN_600
             )
+            BoardType.CHECKERED_1X1 -> {
+                var altColorWidth = true
+                for (i in 0 until gameMap.width) {
+                    var altColorHeight = altColorWidth
+                    for (j in 0 until gameMap.height) {
+                        val currColor = if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
+                            .GREEN_800
+                        _boardLayer.solidRect(_gridSize, _gridSize, currColor)
+                            .xy(i * _gridSize, j * _gridSize)
+                        altColorHeight = !altColorHeight
+                    }
+                    altColorWidth = !altColorWidth
+                }
+            }
+            BoardType.CHECKERED_2X2 -> {
+                var altColorWidth = true
+                val gridSize = _gridSize * 2
+                for (i in 0 until ((gameMap.width + 1) / 2)) {
+                    var altColorHeight = altColorWidth
+                    for (j in 0 until ((gameMap.height + 1) / 2)) {
+                        val gridWidth = if ((i + 1) * 2 > gameMap.width) _gridSize else gridSize
+                        val gridHeight = if ((j + 1) * 2 > gameMap.height) _gridSize else gridSize
+                        val currColor = if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
+                            .GREEN_800
+                        _boardLayer.solidRect(gridWidth, gridHeight, currColor)
+                            .xy(i * gridSize, j * gridSize)
+                        altColorHeight = !altColorHeight
+                    }
+                    altColorWidth = !altColorWidth
+                }
+            }
         }
         println("Finished drawing board!")
     }

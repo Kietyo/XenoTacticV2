@@ -121,8 +121,11 @@ class CameraInputProcessor(override val view: View, val eventBus: EventBus) : Mo
         }
     }
 
+    // Max zoom out. Lower value = more zoom out.
+    val MAX_ZOOM_OUT = 0.2
+
     fun zoomOutCamera() {
-        val newZoomFactor = max(0.05, view.scale - ZOOM_DELTA)
+        val newZoomFactor = max(MAX_ZOOM_OUT, view.scale - ZOOM_DELTA)
         setZoomFactor(newZoomFactor)
     }
 
