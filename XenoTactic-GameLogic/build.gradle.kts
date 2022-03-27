@@ -2,6 +2,12 @@ plugins {
     kotlin("multiplatform") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.10"
     id("maven-publish")
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.0"
+    id("org.jetbrains.kotlinx.benchmark") version "0.4.2"
+}
+
+allOpen {
+    annotation("org.openjdk.jmh.annotations.State")
 }
 
 group = "com.xenotactic.gamelogic"
@@ -56,6 +62,8 @@ kotlin {
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
 
+                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
+
                 //                implementation("com.google.firebase:firebase-database-ktx:20.0.4")
 
                 //                implementation("dev.gitlive:firebase-app:$gitliveVersion")
@@ -88,5 +96,11 @@ kotlin {
 //            }
 //        }
 //        val nativeTest by getting
+    }
+}
+
+benchmark {
+    targets {
+        register("jvm")
     }
 }

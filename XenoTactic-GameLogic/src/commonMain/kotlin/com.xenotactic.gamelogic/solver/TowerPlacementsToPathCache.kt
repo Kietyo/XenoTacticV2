@@ -9,13 +9,13 @@ import pathing.PathFinder
 import utils.TowerCache
 
 class TowerPlacementsToPathCache {
-    val cache = mutableMapOf<Collection<IntPoint>, PathSequence?>()
+    val cache = mutableMapOf<Set<IntPoint>, PathSequence?>()
 
     fun getShortestPath(
         map: GameMap, placementSpots: Array2<Boolean>,
         towerCache: TowerCache
     ): PathSequence? {
-        val spots = mutableListOf<IntPoint>()
+        val spots = mutableSetOf<IntPoint>()
         placementSpots.each { x, y, v ->
             if (v) {
                 spots.add(IntPoint(x, y))
@@ -25,15 +25,13 @@ class TowerPlacementsToPathCache {
     }
 
     fun getShortestPath(
-        map: GameMap, placementSpots: Collection<IntPoint>,
+        map: GameMap, placementSpots: Set<IntPoint>,
         towerCache: TowerCache = TowerCache(map.width, map.height)
     ): PathSequence? {
-        if (cache.containsKey(placementSpots)) return cache[placementSpots]
-
-        val result = PathFinder.getShortestPathWithTowers(map, placementSpots.map {
-            towerCache.getTower(it.x, it.y)
-        })
-        cache[placementSpots] = result
-        return result
+        return cache.getOrPut(placementSpots) {
+            PathFinder.getShortestPathWithTowers(map, placementSpots.map {
+                towerCache.getTower(it.x, it.y)
+            })
+        }
     }
 }

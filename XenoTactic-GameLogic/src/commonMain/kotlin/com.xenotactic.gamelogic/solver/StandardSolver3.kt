@@ -22,8 +22,13 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
         val _map: GameMap,
         val _solverParams: SolverParams
     ) {
+        val _availableTowerPlacementSpots = getAvailableTowerPlacementSpots(_map)
         var _towerCache = TowerCache(_map.width, _map.height)
         val _towerPlacementsToPathCache = TowerPlacementsToPathCache()
+
+        var numTotalSolverInternalCalls = 0
+        var numStatesExplored = 0
+        var numCacheHits = 0
 
         fun solve(): SolverResult {
             require(_solverParams.optimizationGoal is OptimizationGoal.MaxPath)
@@ -32,13 +37,12 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
 
             initialShortestPath ?: return SolverResult.Unsuccessful
 
-            val availableTowerPlacementSpots = getAvailableTowerPlacementSpots(_map)
-
-            val result = solveInternal(SearchState(emptySet()), availableTowerPlacementSpots)
+            val result = solveInternal(SearchState(emptySet()))
             println(
                 """
                 numTotalSolverInternalCalls: $numTotalSolverInternalCalls
                 numStatesExplored: $numStatesExplored
+                numCacheHits: $numCacheHits
             """.trimIndent()
             )
             return when (result) {
@@ -54,13 +58,14 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
         }
 
         val dp = mutableMapOf<SearchState, SearchResult>()
-        var numTotalSolverInternalCalls = 0
-        var numStatesExplored = 0
 
-        fun solveInternal(state: SearchState, availableTowerPlacementSpots: List<IntPoint>):
+        fun solveInternal(state: SearchState):
                 SearchResult {
             numTotalSolverInternalCalls++
-            if (dp.containsKey(state)) return dp[state]!!
+            if (dp.containsKey(state)) {
+                numCacheHits++
+                return dp[state]!!
+            }
             numStatesExplored++
             val path = _towerPlacementsToPathCache.getShortestPath(
                 _map,
@@ -85,7 +90,7 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
             var numSpotsConsidered = 0
             for (spot in getNextTowerPlacementSpotsV2(
                 _map, state.towerPlacements, path,
-                availableTowerPlacementSpots, _towerCache
+                _availableTowerPlacementSpots, _towerCache
             ).neighborBlockingEntities) {
                 val pathWithSpot = _towerPlacementsToPathCache.getShortestPath(
                     _map,
@@ -109,8 +114,7 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
                 }
                 numProcessed++
                 val result = solveInternal(
-                    SearchState(state.towerPlacements + pair.second),
-                    availableTowerPlacementSpots
+                    SearchState(state.towerPlacements + pair.second)
                 )
                 when (result) {
                     is SearchResult.Success -> {

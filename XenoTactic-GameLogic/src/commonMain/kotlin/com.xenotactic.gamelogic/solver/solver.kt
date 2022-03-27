@@ -50,7 +50,7 @@ sealed class SearchResult {
 
 fun getNextTowerPlacementSpots(
     map: GameMap,
-    currentPlacements: Collection<IntPoint>,
+    currentPlacements: Set<IntPoint>,
     pathSequence: PathSequence,
     towerPlacementSpots: List<IntPoint>,
     towerCache: TowerCache
@@ -76,7 +76,7 @@ data class NextTowerPlacementSpotsOutput(
 
 fun getNextTowerPlacementSpotsV2(
     map: GameMap,
-    currentPlacements: Collection<IntPoint>,
+    currentPlacements: Set<IntPoint>,
     pathSequence: PathSequence,
     towerPlacementSpots: List<IntPoint>,
     towerCache: TowerCache
@@ -87,8 +87,9 @@ fun getNextTowerPlacementSpotsV2(
 
     for (spot in towerPlacementSpots) {
         val tower = towerCache.getTower(spot.x, spot.y)
-        if (pathSequence
-                .intersectsRectangle(Rectangle(spot.x.toDouble(), spot.y.toDouble(), 2.0, 2.0))
+        val intersectsPath = pathSequence
+            .intersectsRectangle(Rectangle(spot.x.toDouble(), spot.y.toDouble(), 2.0, 2.0))
+        if (intersectsPath
             && !map.intersectsBlockingEntities(spot.x, spot.y, 2, 2)
         ) {
             if (EntitiesBlockingEntityUtil(tower, map).anyPartiallyBlocking ||

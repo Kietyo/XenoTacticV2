@@ -29,8 +29,7 @@ internal class SolverKtTest {
 
     @Test
     fun solverTest() {
-
-        val solver = StandardSolver2
+        val solver = StandardSolver3()
 
         val result = measureTime("Time it took to solve") {
             solver.solve(STANDARD_MAP, SolverParams(15, OptimizationGoal.MaxPath))
@@ -43,7 +42,7 @@ internal class SolverKtTest {
     }
 
     @Test
-    fun solverTest2() {
+    fun solver3Test2() {
         val map: GameMap
         while (true) {
             val genMap = RandomMapGenerator.generate(
@@ -69,7 +68,7 @@ internal class SolverKtTest {
         println("Generated map:")
         println(map)
 
-        val solver = StandardSolver4
+        val solver = StandardSolver3(SolverSettings(2, 2))
 
         println("Attempting to solve:")
         val result = measureTime("Time it took to solve") {
@@ -83,7 +82,7 @@ internal class SolverKtTest {
     }
 
     @Test
-    fun solverTest3() {
+    fun solver3Test3() {
         Logger.defaultLevel = Logger.Level.INFO
         val map: GameMap
         while (true) {
