@@ -57,29 +57,14 @@ internal class DatastoreKorgeTest {
         println(data)
         println(data.toString())
     }
-}
 
-suspend fun request(method: Http.Method, path: String, request: Any?, mapper: ObjectMapper = Mapper): Any {
-    val requestContent = request?.let {
-        when (it) {
-            is RawString -> ...
-            else -> Json.stringifyTyped(it, mapper)
-        }
-    }
-    val result = endpoint.request(
-        method,
-        path,
-        content = requestContent?.openAsync(),
-        headers = Http.Headers(
-            Http.Headers.ContentType to "application/json"
-        )
-    )
-    result.checkErrors()
-    val stringResult = result.readAllString()
-    //println(stringResult)
-    return try {
-        Json.parse(stringResult) ?: mapOf<String, String>()
-    } catch (e: IOException) {
-        mapOf<String, String>()
+    @Test
+    fun putData3() = runBlockingNoJs {
+        val datastore = DatastoreKorge()
+
+        val data = datastore.putData3()
+
+        println(data)
+        println(data.toString())
     }
 }

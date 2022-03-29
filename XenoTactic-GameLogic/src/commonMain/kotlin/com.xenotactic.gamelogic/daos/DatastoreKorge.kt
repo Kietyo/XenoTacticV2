@@ -17,29 +17,32 @@ class DatastoreKorge {
 
     }
 
+    suspend fun addMapIfNotExists() {
+
+    }
+
     suspend fun getData(): HttpClient.Response {
         return client.request(
             Http.Method.GET,
-            "https://xenotactic-default-rtdb.firebaseio.com/users.json",
+//            "https://xenotactic-default-rtdb.firebaseio.com/users.json",
+            "https://xenotactic-default-rtdb.firebaseio.com/mike/bob/timestamp.json",
         )
     }
 
     suspend fun headData(): HttpClient.Response {
         return client.request(
             Http.Method.HEAD,
-            "https://xenotactic-default-rtdb.firebaseio.com/users.json",
+            "https://xenotactic-default-rtdb.firebaseio.com/mike/bob/timestamp.json",
         )
     }
 
     suspend fun putData(): Any {
-
-        val response = restClient.put(
+        return restClient.put(
             "users/bob/name.json",
             """
                 { "first": "Jack", "last": "Sparrow" }
             """.trimIndent()
         )
-        return response
     }
 
     suspend fun putData2(): Any {
@@ -47,7 +50,17 @@ class DatastoreKorge {
             Http.Method.PUT,
             "https://xenotactic-default-rtdb.firebaseio.com/users/mike/name.json",
             content =             """
-                { "first": "Jack", "last": "Sparrow" }
+                { "first": "Jack", "last": "Sparrow", "timestamp": 0 }
+            """.trimIndent().openAsync()
+        )
+    }
+
+    suspend fun putData3(): Any {
+        return client.request(
+            Http.Method.PUT,
+            "https://xenotactic-default-rtdb.firebaseio.com/users/mike/name/timestamp.json",
+            content =             """
+                { ".sv": "timestamp"}
             """.trimIndent().openAsync()
         )
     }
