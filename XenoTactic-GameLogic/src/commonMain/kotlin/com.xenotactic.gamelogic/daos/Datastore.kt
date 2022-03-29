@@ -25,16 +25,13 @@ class Datastore {
         job.join()
     }
 
-    suspend fun putData() {
-        val job = launch(GlobalScope.coroutineContext) {
-            val response = client.put<String> {
-                url("https://xenotactic-default-rtdb.firebaseio.com/users/bob/name.json")
-                body = """
-                    { "first": "Jack", "last": "Sparrow" }
+    suspend fun putData(): String {
+//         { ".sv" : "timestamp" , "first": "Jack", "last": "Sparrow" }
+        return client.put<String> {
+            url("https://xenotactic-default-rtdb.firebaseio.com/users2/cabba/timestamp.json")
+            body = """
+                    { ".sv_millis" : "timestamp" }
                 """.trimIndent()
-            }
-            println(response)
         }
-        job.join()
     }
 }

@@ -11,6 +11,8 @@ internal class DatastoreTest {
         val db = Datastore()
 
         db.getData()
-//        db.putData()
+        val data = db.putData()
+
+        println(data)
     }
 }
