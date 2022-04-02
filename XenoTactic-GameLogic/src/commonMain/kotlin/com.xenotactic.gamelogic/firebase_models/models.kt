@@ -26,7 +26,7 @@ data class FbGameMap(
     @SerialName("007_towers")
     val towers: List<MapEntity.Tower> = emptyList(),
     @SerialName("008_rocks")
-    val rocks: List<MapEntity.Rock>,
+    val rocks: List<MapEntity.Rock> = emptyList(),
     @SerialName("009_smallBlockers")
     val smallBlockers: List<MapEntity.SmallBlocker> = emptyList(),
     @SerialName("010_speedAreas")

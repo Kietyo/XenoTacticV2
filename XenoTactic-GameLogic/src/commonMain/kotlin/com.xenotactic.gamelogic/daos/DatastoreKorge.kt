@@ -67,7 +67,26 @@ object DatastoreKorge {
         return Json.decodeFromString<FbMapEntry>(str)
     }
 
-    suspend fun getAllMapData(): HttpClient.Response {
+    suspend fun deleteMap(map: GameMap) {
+        val id = MapToId.calculateId(map)
+        val response = client.request(
+            Http.Method.DELETE,
+            "https://xenotactic-default-rtdb.firebaseio.com/maps/$id.json",
+        )
+
+        println("delete response: $response")
+    }
+
+    suspend fun deleteAllMaps() {
+        val response = client.request(
+            Http.Method.DELETE,
+            "https://xenotactic-default-rtdb.firebaseio.com/maps.json",
+        )
+
+        println("delete response: $response")
+    }
+
+    suspend fun getAllMapData(): FbMapData {
         val response = client.request(
             Http.Method.GET,
             "https://xenotactic-default-rtdb.firebaseio.com/maps.json",
@@ -76,6 +95,7 @@ object DatastoreKorge {
         val str = "{\"data\":${response.readAllString()}}"
 
         println("str:\n$str")
+        println("response: $response")
 
         val dataParse = Json.decodeFromString<FbMapData>(str)
 
@@ -93,7 +113,7 @@ object DatastoreKorge {
 
 //        val mapVal = Json.decodeFromString<Map<String, String>>(str)
 //        println("mapVal: $mapVal")
-        return response
+        return Json.decodeFromString<FbMapData>(str)
     }
 
     suspend fun getData2(): HttpClient.Response {
@@ -147,7 +167,6 @@ object DatastoreKorge {
             """.trimIndent().openAsync()
         )
     }
-
 
 }
 
