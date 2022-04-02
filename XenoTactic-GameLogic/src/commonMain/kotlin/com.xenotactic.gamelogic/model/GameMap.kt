@@ -1,6 +1,7 @@
 package com.xenotactic.gamelogic.model
 
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
+import com.xenotactic.gamelogic.firebase_models.FbGameMap
 import com.xenotactic.gamelogic.utils.sequenceOfNullable
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -274,6 +275,22 @@ data class GameMap(
             checkpoints,
             teleportIns,
             teleportOuts,
+            towers,
+            rocks,
+            smallBlockers,
+            speedAreas
+        )
+    }
+
+    fun toFbGameMap(): FbGameMap {
+        return FbGameMap(
+            width,
+            height,
+            start,
+            finish,
+            checkpoints,
+            teleportIns.values.toList(),
+            teleportOuts.values.toList(),
             towers,
             rocks,
             smallBlockers,
