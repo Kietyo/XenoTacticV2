@@ -41,7 +41,7 @@ data class UIMapSettings(
     val gridNumbersRatio: Double = GRID_NUMBERS_RATIO,
     val pathLinesRatio: Double = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
-    val boardType: BoardType = BoardType.CHECKERED_2X2,
+    val boardType: BoardType = BoardType.CHECKERED_1X1,
 ) {
     val borderSize = gridSize * borderRatio
     val gridLineSize = gridSize * gridLinesRatio
@@ -83,9 +83,9 @@ class UIMap(
 
     // Note that the order in which layers are initialized mattes here.
     val _boardLayer = this.container() {
-        this.propagateEvents = false
-        this.mouseChildren = false
-        this.hitTestEnabled = false
+//        this.propagateEvents = false
+//        this.mouseChildren = false
+//        this.hitTestEnabled = false
     }
     val _gridNumberLayer = this.container()
 

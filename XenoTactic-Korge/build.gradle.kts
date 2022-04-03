@@ -42,4 +42,6 @@ korge {
     project.dependencies {
         add("commonMainApi", "com.xenotactic.gamelogic:XenoTactic-GameLogic:1.0.0")
     }
+
+    entrypoint("Debug", "DebugMain")
 }

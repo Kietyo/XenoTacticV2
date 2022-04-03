@@ -72,7 +72,6 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             this, engine, mapView,
             uiMap._gridSize
         )
-
         addComponent(objectPlacementInputProcessor)
 
         addComponent(ResizeDebugComponent(this))
