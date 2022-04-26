@@ -2,9 +2,12 @@ package scenes
 
 import korge_components.ResizeDebugComponent
 import bridges.MapBridge
+import com.soywiz.klock.TimeSpan
 import com.soywiz.klogger.Logger
+import com.soywiz.korev.Key
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
+import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.soywiz.korma.math.roundDecimalPlaces
@@ -55,13 +58,11 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         val mapView = camera()
         val uiMap =
-            mapView.uiMap(gameMap, shortestPath = gameMapComponent.shortestPath)
+            mapView.uiMap(gameMap, shortestPath = gameMapComponent.shortestPath).apply {
+                draggable()
+            }
         val mapRendererUpdater = MapRendererUpdater(engine, uiMap, eventBus)
         engine.setOneTimeComponent(uiMap)
-
-        mapView.draggable {
-
-        }
 
         val cameraInputProcessor = CameraInputProcessor(mapView, eventBus)
         cameraInputProcessor.setZoomFactor(0.7)
@@ -73,7 +74,6 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             uiMap._gridSize
         )
         addComponent(objectPlacementInputProcessor)
-
         addComponent(ResizeDebugComponent(this))
 
         val uiPlacement = uiPlacement(engine, eventBus).apply {
@@ -116,6 +116,16 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         val goalComponent = GoalComponent(engine, eventBus)
         engine.setOneTimeComponent(goalComponent)
         //        goalComponent.calculateGoalForMap()
+
+        val MOVE_MAP_DELTA = 7
+
+        addFixedUpdater(TimeSpan(10.0)) {
+            val keys = views.keys
+            if (keys[Key.UP]) uiMap.y = uiMap.y + MOVE_MAP_DELTA
+            if (keys[Key.DOWN]) uiMap.y = uiMap.y - MOVE_MAP_DELTA
+            if (keys[Key.LEFT]) uiMap.x = uiMap.x + MOVE_MAP_DELTA
+            if (keys[Key.RIGHT]) uiMap.x = uiMap.x - MOVE_MAP_DELTA
+        }
 
         eventBus.register<ExitGameSceneEvent> {
             launch {

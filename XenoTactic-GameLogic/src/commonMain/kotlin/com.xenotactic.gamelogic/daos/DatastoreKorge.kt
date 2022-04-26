@@ -11,7 +11,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.jvm.JvmInline
 
-object DatastoreKorge {
+class DatastoreKorge(val accessToken: String = "") {
     val restClient =
         createHttpClientEndpoint("https://xenotactic-default-rtdb.firebaseio.com").rest()
     val client = createHttpClient {
@@ -127,8 +127,8 @@ object DatastoreKorge {
     suspend fun getData(): HttpClient.Response {
         return client.request(
             Http.Method.GET,
-//            "https://xenotactic-default-rtdb.firebaseio.com/users.json",
-            "https://xenotactic-default-rtdb.firebaseio.com/mike/bob/timestamp.json",
+            "https://xenotactic-default-rtdb.firebaseio.com/users.json?access_token=$accessToken",
+//            "https://xenotactic-default-rtdb.firebaseio.com/mike/bob/timestamp.json?access_token=$accessToken",
         )
     }
 
@@ -141,7 +141,7 @@ object DatastoreKorge {
 
     suspend fun putData(): Any {
         return restClient.put(
-            "users/bob/name.json",
+            "users/bob/name.json?access_token=$accessToken",
             """
                 { "first": "Jack", "last": "Sparrow" }
             """.trimIndent()
@@ -151,7 +151,7 @@ object DatastoreKorge {
     suspend fun putData2(): Any {
         return client.request(
             Http.Method.PUT,
-            "https://xenotactic-default-rtdb.firebaseio.com/users/mike/name.json",
+            "https://xenotactic-default-rtdb.firebaseio.com/users/mike/name.json?access_token=$accessToken",
             content =             """
                 { "first": "Jack", "last": "Sparrow", "timestamp": 0 }
             """.trimIndent().openAsync()

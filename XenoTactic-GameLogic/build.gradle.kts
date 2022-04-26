@@ -1,9 +1,18 @@
+val main_class = "CoolMainKt"
+
+project.setProperty("mainClassName", main_class)
+
 plugins {
     kotlin("multiplatform") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.10"
     id("maven-publish")
     id("org.jetbrains.kotlin.plugin.allopen") version "1.6.0"
     id("org.jetbrains.kotlinx.benchmark") version "0.4.2"
+    application
+}
+
+application {
+    mainClass.set(main_class)
 }
 
 allOpen {
@@ -63,6 +72,11 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
+
+                implementation("com.google.firebase:firebase-admin:8.1.0")
+
+                compileOnly("com.google.api-client:google-api-client:1.31.5")
+
 
                 //                implementation("com.google.firebase:firebase-database-ktx:20.0.4")
 

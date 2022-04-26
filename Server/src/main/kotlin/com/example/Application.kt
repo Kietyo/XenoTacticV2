@@ -8,7 +8,6 @@ fun main() {
     embeddedServer(CIO, port = 8080, host = "0.0.0.0") {
         configureHTTP()
         configureRouting()
-        configureSockets()
         configureSecurity()
     }.start(wait = true)
 }

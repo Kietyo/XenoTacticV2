@@ -14,7 +14,7 @@ plugins {
     `maven-publish`
 }
 
-group = "com.xenotactic.server"
+group = "com.xenotactic.server.api"
 version = "1.0.0"
 application {
     mainClass.set(main_class)
@@ -26,7 +26,7 @@ repositories {
 }
 
 val projectId = project.findProperty("projectId") ?: "ktor-hello-world-test"
-val image = "gcr.io/$projectId/korge_multiplayer_demo"
+val image = "gcr.io/$projectId/xenotactic_api_server"
 
 jib {
     to.image = image
@@ -59,7 +59,6 @@ dependencies {
     implementation("io.ktor:ktor-auth:$ktor_version")
     implementation("io.ktor:ktor-server-cio:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
-//    implementation("com.kietyo.multiplayer.gamelogic:GameLogic:1.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
