@@ -1,4 +1,4 @@
-package com.example.plugins
+package com.xenotactic.server.plugins
 
 import io.ktor.features.*
 import io.ktor.http.*

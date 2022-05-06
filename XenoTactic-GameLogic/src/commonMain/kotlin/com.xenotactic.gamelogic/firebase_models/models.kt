@@ -20,18 +20,7 @@ data class FbGameMap(
     val rocks: List<MapEntity.Rock> = emptyList(),
     val smallBlockers: List<MapEntity.SmallBlocker> = emptyList(),
     val speedAreas: List<MapEntity.SpeedArea> = emptyList(),
-) {
-//    fun toGameMap() {
-//        return GameMap(
-//            width,
-//            height,
-//            start,
-//            finish,
-//            checkpoints.toMutableList(),
-//            tele
-//        )
-//    }
-}
+)
 
 @Serializable
 data class FbMapData(

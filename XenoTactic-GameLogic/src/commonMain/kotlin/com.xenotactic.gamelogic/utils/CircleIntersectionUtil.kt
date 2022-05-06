@@ -4,7 +4,7 @@ import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.pathing.Segment
 
 /**
- * Util for calculating the intersection of a circle and a segment.
+ * Util for calculating the intersection of a circle and a line segment.
  */
 object CircleIntersectionUtil {
     sealed class Result {
@@ -35,7 +35,7 @@ object CircleIntersectionUtil {
             val secondIntersectionPoint: Point
         ) : Result()
 
-        // The circle is just touching either the first or second point of the segment.
+        // The circle is just touching EITHER the first or second point of the segment.
         data class Touching(
             val touchesFirstPoint: Boolean,
             val touchesSecondPoint: Boolean
@@ -45,6 +45,7 @@ object CircleIntersectionUtil {
             }
         }
 
+        // The line is tangent to the circle at a point.
         data class Tangent(
             val tangentPoint: Point
         ) : Result()

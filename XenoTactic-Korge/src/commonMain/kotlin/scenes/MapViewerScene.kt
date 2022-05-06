@@ -69,6 +69,7 @@ class MapViewerScene(
                         launch {
                             PlayerDataApi.savePlayerData(playerData)
                         }
+                        Unit
                     }
                     onMapSectionClick {
                         println("Map clicked! ${mapWithMetadata.map}")
@@ -145,3 +146,4 @@ class MapViewerScene(
         val logger = Logger<MapViewerScene>()
     }
 }
+

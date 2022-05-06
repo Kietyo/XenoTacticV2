@@ -57,6 +57,9 @@ object MainModule : Module() {
         mapPrototype { MapViewerScene(globalBus, mapBridge) }
         mapPrototype { GoldensViewerScene(globalBus) }
         mapPrototype { TestScene() }
+        mapPrototype {
+            EditorScene()
+        }
 
     }
 }

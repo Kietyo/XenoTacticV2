@@ -31,7 +31,7 @@ repositories {
 
 val korgeVersion = "2.6.3"
 val gitliveVersion = "1.4.3"
-val ktorVersion = "1.6.1"
+val ktorVersion = "2.0.1"
 
 kotlin {
     jvm {
@@ -70,6 +70,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
 
