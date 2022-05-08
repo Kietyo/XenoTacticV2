@@ -29,7 +29,8 @@ repositories {
     maven { url = uri("https://plugins.gradle.org/m2/") }
 }
 
-val korgeVersion = "2.6.3"
+//val korgeVersion = "2.7.0"
+val korgeVersion = "2.0.0.999"
 val gitliveVersion = "1.4.3"
 val ktorVersion = "2.0.1"
 
@@ -50,14 +51,14 @@ kotlin {
             }
         }
     }
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+//    val hostOs = System.getProperty("os.name")
+//    val isMingwX64 = hostOs.startsWith("Windows")
+//    val nativeTarget = when {
+//        hostOs == "Mac OS X" -> macosX64("native")
+//        hostOs == "Linux" -> linuxX64("native")
+//        isMingwX64 -> mingwX64("native")
+//        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+//    }
 
 
     sourceSets {
@@ -70,13 +71,14 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
 
                 implementation("com.google.firebase:firebase-admin:8.1.0")
 
                 compileOnly("com.google.api-client:google-api-client:1.31.5")
+
+//                implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
 
                 //                implementation("com.google.firebase:firebase-database-ktx:20.0.4")
@@ -95,12 +97,13 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                implementation("io.ktor:ktor-client-cio-jvm:$ktorVersion")
             }
         }
         val jvmTest by getting
         val jsMain by getting {
             dependencies {
+//                implementation("io.ktor:ktor-client-cio-js:$ktorVersion")
                 implementation("io.ktor:ktor-client-js:$ktorVersion")
             }
         }

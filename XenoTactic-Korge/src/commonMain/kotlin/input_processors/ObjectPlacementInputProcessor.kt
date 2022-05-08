@@ -140,30 +140,28 @@ class ObjectPlacementInputProcessor(
                 return
             }
             is PointerAction.HighlightForPlacement -> {
+                val currentEntity = pointerAction.mapEntity
                 val roundedGridX = when {
-                    pointerAction.mapEntity.width == 1 -> floor(
-                        gridX -
-                                (pointerAction.mapEntity.width) / 2
+                    currentEntity.width == 1 -> floor(
+                        gridX - (currentEntity.width) / 2
                     ).toInt()
-                    else -> (gridX - (pointerAction.mapEntity.width) / 2).roundToInt()
+                    else -> (gridX - (currentEntity.width) / 2).roundToInt()
                 }
 
                 val roundedGridY = when {
-                    pointerAction.mapEntity.height == 1 -> floor(
-                        gridY -
-                                (pointerAction.mapEntity.height) / 2
-                    )
-                        .toInt()
-                    else -> (gridY - (pointerAction.mapEntity.height) / 2).roundToInt()
+                    currentEntity.height == 1 -> floor(
+                        gridY - (currentEntity.height) / 2
+                    ).toInt()
+                    else -> (gridY - (currentEntity.height) / 2).roundToInt()
                 }
 
                 val gridXToInt = roundedGridX.clamp(
-                    -pointerAction.mapEntity.width,
-                    gameMapComponent.width - 1 + pointerAction.mapEntity.width
+                    -currentEntity.width,
+                    gameMapComponent.width - 1 + currentEntity.width
                 )
                 val gridYToInt = roundedGridY.clamp(
-                    -pointerAction.mapEntity.height,
-                    gameMapComponent.height - 1 + pointerAction.mapEntity.height
+                    -currentEntity.height,
+                    gameMapComponent.height - 1 + currentEntity.height
                 )
 
                 if ((gridXToInt !in 0 until gameMapComponent.width)

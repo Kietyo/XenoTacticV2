@@ -1,6 +1,7 @@
 package solver
 
 import com.soywiz.kds.Array2
+import com.soywiz.kds.each
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.pathing.PathSequence

@@ -4,11 +4,11 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.net.http.Http
 import com.soywiz.korio.stream.openAsync
+import com.xenotactic.gamelogic.httpClient
 import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.gamelogic.model.GameMap
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.util.*
@@ -17,7 +17,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class Datastore(val accessToken: String = "") {
-    val client = HttpClient(CIO)
+    val client = httpClient()
     suspend fun getData(): String {
         return client.get("https://xenotactic-default-rtdb.firebaseio.com/users.json?access_token=$accessToken") {
             //                this.setAttributes {

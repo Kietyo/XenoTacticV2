@@ -1,13 +1,11 @@
 package scenes
 
 import korge_components.ResizeDebugComponent
-import bridges.MapBridge
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import com.soywiz.korio.async.invoke
 import com.xenotactic.gamelogic.mapid.MapToId
 import daos.PlayerDataApi
 import events.EventBus
@@ -23,8 +21,7 @@ import verify
 
 
 class MapViewerScene(
-    val globalEventBus: EventBus,
-    val mapBridge: MapBridge
+    val globalEventBus: EventBus
 ) : Scene() {
 
     @OptIn(KorgeExperimental::class)

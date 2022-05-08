@@ -9,7 +9,6 @@ import com.soywiz.korim.color.RGBA
 import com.soywiz.korinject.AsyncInjector
 import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.SizeInt
-import com.xenotactic.gamelogic.WaveSystem
 import com.xenotactic.gamelogic.model.GameMap
 import events.EventBus
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +53,7 @@ object MainModule : Module() {
             }
             GameScene(mapBridge)
         }
-        mapPrototype { MapViewerScene(globalBus, mapBridge) }
+        mapPrototype { MapViewerScene(globalBus) }
         mapPrototype { GoldensViewerScene(globalBus) }
         mapPrototype { TestScene() }
         mapPrototype {
