@@ -123,6 +123,12 @@ class UIMap(
         renderPathLines(shortestPath)
     }
 
+    val xOffset: Double
+        get() = this.x
+
+    val yOffset: Double
+        get() = this.y
+
     suspend fun viewRockCounters() {
         if (_rockCountersLayerMutex.isLocked) {
             println("Rock counters mutex is locked, skipping")
@@ -494,24 +500,7 @@ class UIMap(
                         .visible(true)
                 }
             }
-            is PointerAction.RemoveRockAtPlace -> {
-                val data = pointerAction.data
-                if (data == null) {
-                    _highlightRectangle.visible(false)
-                } else {
-                    val (worldX, worldY) = toWorldCoordinates(
-                        _gridSize,
-                        data.entity.intPoint,
-                        gameMap.width, gameMap.height, data.entity.height
-                    )
-                    val (worldWidth, worldHeight) = toWorldDimensions(data.entity, _gridSize)
-                    _highlightRectangle
-                        .size(worldWidth, worldHeight)
-                        .xy(worldX, worldY)
-                        .visible(true)
-                }
-            }
-            is PointerAction.RemoveTowerAtPlace -> {
+            is PointerAction.RemoveEntityAtPlace -> {
                 val data = pointerAction.data
                 if (data == null) {
                     _highlightRectangle.visible(false)

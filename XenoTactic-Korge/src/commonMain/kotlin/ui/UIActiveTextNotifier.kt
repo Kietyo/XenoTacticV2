@@ -2,6 +2,7 @@ package ui
 
 import com.soywiz.korge.view.*
 import com.soywiz.korim.text.TextAlignment
+import com.xenotactic.gamelogic.model.MapEntityType
 import components.ObjectPlacementComponent
 import engine.Engine
 import events.EventBus
@@ -45,11 +46,18 @@ class UIActiveTextNotifier(
             is PointerAction.HighlightForPlacement -> {
                 activeButtonText.text = "Placing entity: ${pointerAction.mapEntity.friendlyName}"
             }
-            is PointerAction.RemoveRockAtPlace -> {
-                activeButtonText.text = "Removing rock"
-            }
-            is PointerAction.RemoveTowerAtPlace -> {
-                activeButtonText.text = "Removing tower"
+            is PointerAction.RemoveEntityAtPlace -> {
+                activeButtonText.text = when (pointerAction.entityType) {
+                    MapEntityType.START -> TODO()
+                    MapEntityType.FINISH -> TODO()
+                    MapEntityType.CHECKPOINT -> TODO()
+                    MapEntityType.ROCK -> "Removing rock"
+                    MapEntityType.TOWER -> "Removing tower"
+                    MapEntityType.TELEPORT_IN -> TODO()
+                    MapEntityType.TELEPORT_OUT -> TODO()
+                    MapEntityType.SMALL_BLOCKER -> TODO()
+                    MapEntityType.SPEED_AREA -> TODO()
+                }
             }
         }
     }

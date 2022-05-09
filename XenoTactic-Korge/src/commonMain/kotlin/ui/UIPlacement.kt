@@ -5,21 +5,16 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alignBottomToBottomOf
 import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korio.async.AsyncSignal
-import com.soywiz.korio.async.Signal
-import com.soywiz.korio.async.Signal2
 import components.GameMapComponent
 import components.ObjectPlacementComponent
 import engine.Engine
 import events.*
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 import input_processors.PointerAction
 import solver.*
-import korge_utils.alignRightToRightOfWindow
-import korge_utils.getReferenceParent
-import korge_utils.onStageResizedV2
 
 inline fun Container.uiPlacement(engine: Engine, eventBus: EventBus): UIPlacement =
     UIPlacement(engine, eventBus).addTo(this)
@@ -77,7 +72,7 @@ class UIPlacement(
                 text = "Remove Tower"
                 onClick {
                     placementComponent.pointerAction =
-                        PointerAction.RemoveTowerAtPlace()
+                        PointerAction.RemoveEntityAtPlace(MapEntityType.TOWER)
                     afterPointerActionChange()
                 }
             }
@@ -85,7 +80,7 @@ class UIPlacement(
                 text = "Remove Rock"
                 onClick {
                     placementComponent.pointerAction =
-                        PointerAction.RemoveRockAtPlace()
+                        PointerAction.RemoveEntityAtPlace(MapEntityType.ROCK)
                     afterPointerActionChange()
                 }
             }

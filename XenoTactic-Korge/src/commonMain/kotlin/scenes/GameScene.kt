@@ -56,21 +56,20 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         //        this.setSize(gameMap.width * GRID_SIZE, gameMap.height * GRID_SIZE)
 
-        val mapView = camera()
         val uiMap =
-            mapView.uiMap(gameMap, shortestPath = gameMapComponent.shortestPath).apply {
+            uiMap(gameMap, shortestPath = gameMapComponent.shortestPath).apply {
                 draggable()
             }
         val mapRendererUpdater = MapRendererUpdater(engine, uiMap, eventBus)
         engine.setOneTimeComponent(uiMap)
 
-        val cameraInputProcessor = CameraInputProcessor(mapView, eventBus)
+        val cameraInputProcessor = CameraInputProcessor(uiMap, eventBus)
         cameraInputProcessor.setZoomFactor(0.7)
         addComponent(cameraInputProcessor)
 
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
-            this, engine, mapView,
+            this, uiMap, engine,
             uiMap._gridSize
         )
         addComponent(objectPlacementInputProcessor)
@@ -110,7 +109,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
 
         addComponent(KeyInputProcessor(this, eventBus))
-        val monstersComponent = MonstersComponent(mapView, engine, eventBus, uiMap._gridSize)
+        val monstersComponent = MonstersComponent(uiMap, engine, eventBus, uiMap._gridSize)
         addComponent(monstersComponent)
 
         val goalComponent = GoalComponent(engine, eventBus)

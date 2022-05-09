@@ -2,9 +2,9 @@ package input_processors
 
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 
-data class RemoveRockData(val x: Int, val y: Int, val entity: MapEntity)
-data class RemoveTowerData(val x: Int, val y: Int, val entity: MapEntity)
+data class RemoveEntityData(val x: Int, val y: Int, val entity: MapEntity)
 
 sealed class PointerAction {
     object Inactive : PointerAction()
@@ -13,8 +13,9 @@ sealed class PointerAction {
             null
     ) : PointerAction()
 
-    data class RemoveRockAtPlace(var data: RemoveRockData? = null) : PointerAction()
-    data class RemoveTowerAtPlace(var data: RemoveTowerData? = null) : PointerAction()
+    data class RemoveEntityAtPlace(
+        val entityType: MapEntityType,
+        var data: RemoveEntityData? = null) : PointerAction()
 }
 
 sealed class PointerActionInputConfig {

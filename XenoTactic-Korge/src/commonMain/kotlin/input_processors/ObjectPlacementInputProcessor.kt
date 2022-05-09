@@ -3,13 +3,12 @@ package input_processors
 import com.soywiz.kmem.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.MouseComponent
-import com.soywiz.korge.view.Camera
-import com.soywiz.korge.view.Views
+import com.soywiz.korge.view.*
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 import components.GameMapComponent
 import components.ObjectPlacementComponent
 import engine.Engine
@@ -18,9 +17,9 @@ import kotlin.math.floor
 import kotlin.math.roundToInt
 
 class ObjectPlacementInputProcessor(
-    override val view: BaseView,
+    override val view: View,
+    val uiMapView: UIMap,
     val engine: Engine,
-    val camera: Camera,
     val gridSize: Double
 ) : MouseComponent {
     val objectPlacementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
@@ -28,7 +27,7 @@ class ObjectPlacementInputProcessor(
     val gameMapComponent = engine.getOneTimeComponent<GameMapComponent>()
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
-        val localXY = camera.globalToLocalXY(event.x.toDouble(), event.y.toDouble())
+        val localXY = uiMapView.globalToLocalXY(event.x.toDouble(), event.y.toDouble())
         when (event.type) {
             MouseEvent.Type.DOWN -> {
                 println(event)
@@ -99,17 +98,7 @@ class ObjectPlacementInputProcessor(
                         else -> TODO()
                     }
                 }
-                is PointerAction.RemoveRockAtPlace -> {
-                    val data = pointerAction.data
-                    if (data != null) {
-                        gameMapComponent.removeEntity(
-                            data.entity
-                        )
-                        pointerAction.data = null
-                        mapRendererComponent.renderHighlightingForPointerAction(pointerAction)
-                    }
-                }
-                is PointerAction.RemoveTowerAtPlace -> {
+                is PointerAction.RemoveEntityAtPlace -> {
                     val data = pointerAction.data
                     if (data != null) {
                         gameMapComponent.removeEntity(data.entity)
@@ -123,9 +112,18 @@ class ObjectPlacementInputProcessor(
     }
 
     fun mouseMoved(screenX: Double, screenY: Double) {
+        println("screenX: $screenX, screenY: $screenY")
+//        val relativePoint = view.getPointRelativeTo(Point(screenX, screenY), uiMapView)
+//        val relativePoint = uiMapView.getPositionRelativeTo(view)
+//        val relativePoint = uiMapView._boardLayer.globalToLocalXY(screenX, screenY)
+//        val relativePoint = uiMapView.localToGlobalXY(screenX, screenY)
+
+//        println("relativePoint: $relativePoint")
+
+        val relativePoint = Point(screenX, screenY)
         val unprojected = Point(
-            screenX,
-            gameMapComponent.height * gridSize - screenY
+            relativePoint.x,
+            gameMapComponent.height * gridSize - relativePoint.y
         )
 
         val gridX = unprojected.x / gridSize
@@ -174,7 +172,7 @@ class ObjectPlacementInputProcessor(
                 pointerAction.placementLocation = IntPoint(gridXToInt, gridYToInt)
                 mapRendererComponent.renderHighlightingForPointerAction(pointerAction)
             }
-            is PointerAction.RemoveRockAtPlace -> {
+            is PointerAction.RemoveEntityAtPlace -> {
                 val roundedGridX = floor(
                     gridX
                 ).toInt()
@@ -190,45 +188,31 @@ class ObjectPlacementInputProcessor(
                     }
                 }
 
-                val firstRockAtPoint =
-                    gameMapComponent.getFirstRockAt(roundedGridX, roundedGridY)
-
-                if (firstRockAtPoint == null) {
-                    pointerAction.data = null
-                } else {
-                    pointerAction.data = RemoveRockData(
+                val firstEntityAtPoint = when (pointerAction.entityType) {
+                    MapEntityType.START -> TODO()
+                    MapEntityType.FINISH -> TODO()
+                    MapEntityType.CHECKPOINT -> TODO()
+                    MapEntityType.ROCK -> gameMapComponent.getFirstRockAt(
                         roundedGridX,
-                        roundedGridY,
-                        firstRockAtPoint
+                        roundedGridY
                     )
-                }
-            }
-            is PointerAction.RemoveTowerAtPlace -> {
-                val roundedGridX = floor(
-                    gridX
-                ).toInt()
-
-                val roundedGridY = floor(
-                    gridY
-                ).toInt()
-
-                if (pointerAction.data != null) {
-                    val removeEntityData = pointerAction.data!!
-                    if (removeEntityData.x == roundedGridX && removeEntityData.y == roundedGridY) {
-                        return
-                    }
+                    MapEntityType.TOWER -> gameMapComponent.getFirstTowerAt(
+                        roundedGridX,
+                        roundedGridY
+                    )
+                    MapEntityType.TELEPORT_IN -> TODO()
+                    MapEntityType.TELEPORT_OUT -> TODO()
+                    MapEntityType.SMALL_BLOCKER -> TODO()
+                    MapEntityType.SPEED_AREA -> TODO()
                 }
 
-                val firstRockAtPoint =
-                    gameMapComponent.getFirstTowerAt(roundedGridX, roundedGridY)
-
-                if (firstRockAtPoint == null) {
+                if (firstEntityAtPoint == null) {
                     pointerAction.data = null
                 } else {
-                    pointerAction.data = RemoveTowerData(
+                    pointerAction.data = RemoveEntityData(
                         roundedGridX,
                         roundedGridY,
-                        firstRockAtPoint
+                        firstEntityAtPoint
                     )
                 }
             }
