@@ -43,7 +43,7 @@ class RootScene(
             sceneContainer.pushTo<GameScene>()
         }
 
-        sceneContainer.changeTo<MapViewerScene>()
+        sceneContainer.changeTo<EditorScene>()
     }
 
     override suspend fun sceneAfterDestroy() {

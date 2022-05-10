@@ -3,7 +3,7 @@ package ui
 import com.soywiz.korge.component.ResizeComponent
 import com.soywiz.korge.view.*
 import com.soywiz.korma.math.roundDecimalPlaces
-import components.GameMapComponent
+import components.UIMapControllerComponent
 import engine.Engine
 import events.EventBus
 import events.UpdatedPathLengthEvent
@@ -12,7 +12,7 @@ class InformationalUI(
     override val view: Container, val engine: Engine,
     val eventBus: EventBus
 ) : ResizeComponent {
-    val gameMapComponent = engine.getOneTimeComponent<GameMapComponent>()
+    val uiMapControllerComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
     val pathText: Text
 
     init {
@@ -28,7 +28,7 @@ class InformationalUI(
     }
 
     fun handlePathChanged() {
-        updateTextWithPathLength(gameMapComponent.shortestPath?.pathLength)
+        updateTextWithPathLength(uiMapControllerComponent.shortestPath?.pathLength)
     }
 
     fun updateTextWithPathLength(pathLength: Double?) {

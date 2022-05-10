@@ -9,22 +9,31 @@ import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
-import components.GameMapComponent
 import components.ObjectPlacementComponent
+import components.UIMapControllerComponent
 import engine.Engine
 import ui.UIMap
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
+data class MouseEventWithGridCoordinates(
+    // Origin starts at left
+    val gridX: Double,
+    // Origin starts at bottom
+    val gridY: Double,
+    val event: MouseEvent
+)
+
 class ObjectPlacementInputProcessor(
     override val view: View,
     val uiMapView: UIMap,
     val engine: Engine,
-    val gridSize: Double
 ) : MouseComponent {
     val objectPlacementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
-    val mapRendererComponent = engine.getOneTimeComponent<UIMap>()
-    val gameMapComponent = engine.getOneTimeComponent<GameMapComponent>()
+    val gameMapComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
+
+    val gridSize: Double
+        get() = uiMapView._gridSize
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         val localXY = uiMapView.globalToLocalXY(event.x.toDouble(), event.y.toDouble())
@@ -59,7 +68,7 @@ class ObjectPlacementInputProcessor(
             }
         }
 
-        mapRendererComponent.renderHighlightingForPointerAction(objectPlacementComponent.pointerAction)
+        uiMapView.renderHighlightingForPointerAction(objectPlacementComponent.pointerAction)
     }
 
     fun touchDown(button: MouseButton) {
@@ -103,7 +112,7 @@ class ObjectPlacementInputProcessor(
                     if (data != null) {
                         gameMapComponent.removeEntity(data.entity)
                         pointerAction.data = null
-                        mapRendererComponent.renderHighlightingForPointerAction(pointerAction)
+                        uiMapView.renderHighlightingForPointerAction(pointerAction)
                     }
                 }
                 else -> TODO("Unsupported: $pointerAction")
@@ -122,8 +131,8 @@ class ObjectPlacementInputProcessor(
 
         val relativePoint = Point(screenX, screenY)
         val unprojected = Point(
-            relativePoint.x,
-            gameMapComponent.height * gridSize - relativePoint.y
+            screenX,
+            uiMapView.mapHeight * gridSize - screenY
         )
 
         val gridX = unprojected.x / gridSize
@@ -170,7 +179,7 @@ class ObjectPlacementInputProcessor(
                 }
 
                 pointerAction.placementLocation = IntPoint(gridXToInt, gridYToInt)
-                mapRendererComponent.renderHighlightingForPointerAction(pointerAction)
+                uiMapView.renderHighlightingForPointerAction(pointerAction)
             }
             is PointerAction.RemoveEntityAtPlace -> {
                 val roundedGridX = floor(

@@ -113,6 +113,11 @@ class UIMap(
     val _highlightRectangle = _highlightLayer
         .solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
 
+    val mapHeight: Int
+        get() = gameMap.height
+    val mapWidth: Int
+        get() = gameMap.width
+
     init {
         drawBoard()
         drawGridNumbers()

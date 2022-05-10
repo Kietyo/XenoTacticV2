@@ -7,11 +7,9 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korev.Key
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
-import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import com.soywiz.korma.math.roundDecimalPlaces
-import components.GameMapComponent
+import components.UIMapControllerComponent
 import components.GoalComponent
 import components.ObjectPlacementComponent
 import engine.Engine
@@ -44,20 +42,20 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             "sceneInit called"
         }
         val engine = Engine()
-        val gameMapComponent = GameMapComponent(engine, eventBus)
-        val objectPlacementComponent = ObjectPlacementComponent(eventBus)
-        engine.setOneTimeComponent(gameMapComponent)
+        val uiMapControllerComponent = UIMapControllerComponent(engine, eventBus)
+        val objectPlacementComponent = ObjectPlacementComponent()
+        engine.setOneTimeComponent(uiMapControllerComponent)
         engine.setOneTimeComponent(objectPlacementComponent)
 
         //        val gameMap = loadGameMapFromGoldensBlocking("00051.json")
         val gameMap = mapBridge.gameMap
 
-        gameMapComponent.updateMap(gameMap)
+        uiMapControllerComponent.updateMap(gameMap)
 
         //        this.setSize(gameMap.width * GRID_SIZE, gameMap.height * GRID_SIZE)
 
         val uiMap =
-            uiMap(gameMap, shortestPath = gameMapComponent.shortestPath).apply {
+            uiMap(gameMap, shortestPath = uiMapControllerComponent.shortestPath).apply {
                 draggable()
             }
         val mapRendererUpdater = MapRendererUpdater(engine, uiMap, eventBus)
@@ -70,7 +68,6 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
             this, uiMap, engine,
-            uiMap._gridSize
         )
         addComponent(objectPlacementInputProcessor)
         addComponent(ResizeDebugComponent(this))
@@ -104,7 +101,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
                 updatePathLength(it.newPathLength)
             }
 
-            updatePathLength(gameMapComponent.shortestPath?.pathLength)
+            updatePathLength(uiMapControllerComponent.shortestPath?.pathLength)
         }
 
 

@@ -11,6 +11,8 @@ import com.soywiz.korio.async.Signal
 import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.GameMap
+import engine.Engine
+import input_processors.ObjectPlacementInputProcessor
 import korge_utils.alignBottomToBottomOfWindow
 import ui.uiMap
 import kotlin.reflect.KProperty1
@@ -40,6 +42,8 @@ class EditorScene() : Scene() {
                 centerOnStage()
             }
 
+        val engine = Engine()
+
 
         uiHorizontalStack {
             uiButton(text = "Add rocks") {
@@ -62,6 +66,14 @@ class EditorScene() : Scene() {
 
             alignBottomToBottomOfWindow()
             centerXOnStage()
+        }
+
+
+
+        addUpdater {
+            if (currentMode == Mode.EDITING) {
+
+            }
         }
 
     }

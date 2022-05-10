@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.model.MONSTER_WIDTH
 import com.xenotactic.gamelogic.model.MonsterEntity
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
-import components.GameMapComponent
+import components.UIMapControllerComponent
 import engine.Component
 import engine.Engine
 import events.EventBus
@@ -30,7 +30,7 @@ class MonstersComponent(
         val monsterRadius: Double
     )
 
-    val gameMapComponent = engine.getOneTimeComponent<GameMapComponent>()
+    val uiMapControllerComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
     val monsters = mutableListOf<MonsterWithView>()
 
     init {
@@ -40,14 +40,14 @@ class MonstersComponent(
     }
 
     fun handleSpawnCreepEvent() {
-        if (gameMapComponent.shortestPath != null) {
+        if (uiMapControllerComponent.shortestPath != null) {
             val monsterEntity = MonsterEntity(
-                PathSequenceTraversal(gameMapComponent.shortestPath!!)
+                PathSequenceTraversal(uiMapControllerComponent.shortestPath!!)
             )
             val (worldX, worldY) = toWorldCoordinates(
                 gridSize,
                 monsterEntity.currentPoint,
-                gameMapComponent.width, gameMapComponent.height
+                uiMapControllerComponent.width, uiMapControllerComponent.height
             )
             val (worldWidth, worldHeight) = toWorldDimensions(MONSTER_WIDTH, MONSTER_HEIGHT, gridSize)
             val monsterRadius = worldWidth / 2
@@ -70,7 +70,7 @@ class MonstersComponent(
             val (worldX, worldY) = toWorldCoordinates(
                 gridSize,
                 monsterEntity.currentPoint,
-                gameMapComponent.width, gameMapComponent.height
+                uiMapControllerComponent.width, uiMapControllerComponent.height
             )
             monster.view.xy(
                 worldX - monster.monsterRadius,
