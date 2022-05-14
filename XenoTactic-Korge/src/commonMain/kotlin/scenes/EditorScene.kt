@@ -1,5 +1,6 @@
 package scenes
 
+import com.soywiz.klock.Frequency
 import com.soywiz.klock.TimeProvider
 import com.soywiz.korge.input.*
 import com.soywiz.korge.scene.Scene
@@ -11,7 +12,12 @@ import com.soywiz.korio.async.Signal
 import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.model.IntPoint
+import components.ObjectPlacementComponent
+import components.UIMapControllerComponent
 import engine.Engine
+import events.EventBus
+import input_processors.MouseEventWithGridCoordinatesProcessor
 import input_processors.ObjectPlacementInputProcessor
 import korge_utils.alignBottomToBottomOfWindow
 import ui.uiMap
@@ -43,6 +49,13 @@ class EditorScene() : Scene() {
             }
 
         val engine = Engine()
+        val eventBus = EventBus(this@EditorScene)
+        engine.setOneTimeComponent(ObjectPlacementComponent())
+        engine.setOneTimeComponent(UIMapControllerComponent(engine, eventBus))
+
+        val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
+            this, uiMap, Engine()
+        )
 
 
         uiHorizontalStack {
@@ -72,7 +85,17 @@ class EditorScene() : Scene() {
 
         addUpdater {
             if (currentMode == Mode.EDITING) {
+                val globalMouse = mouse.currentPosGlobal
+                val (gridX, gridY) =
+                    uiMap.getGridPositionsFromGlobalMouse(globalMouse.x, globalMouse.y)
 
+                val (roundedGridX, roundedGridY) = uiMap.getRoundedGridCoordinates(gridX, gridY,
+                    1, 1)
+
+                println("gridX: $gridX, gridY: $gridY, roundedGridX: $roundedGridX, roundedGridY:" +
+                        " $roundedGridY")
+
+                uiMap.renderRectangle(roundedGridX, roundedGridY, 1, 1)
             }
         }
 

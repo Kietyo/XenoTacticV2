@@ -8,6 +8,14 @@ import com.soywiz.korio.async.Signal
 import com.soywiz.korma.geom.Point
 import ui.UIMap
 
+data class MouseEventWithGridCoordinates(
+    // Origin starts at left
+    val gridX: Double,
+    // Origin starts at bottom
+    val gridY: Double,
+    val event: MouseEvent
+)
+
 class MouseEventWithGridCoordinatesProcessor(
     override val view: BaseView,
     val uiMapView: UIMap,
@@ -15,9 +23,11 @@ class MouseEventWithGridCoordinatesProcessor(
     val gridSize: Double
         get() = this.uiMapView._gridSize
 
+    lateinit var lastEvent: MouseEvent
     val onMouseEventWithGridCoordinates = Signal<MouseEventWithGridCoordinates>()
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
+        println("event: $event")
         val localXY = uiMapView.globalToLocalXY(event.x.toDouble(), event.y.toDouble())
         val unprojected = Point(
             localXY.x,

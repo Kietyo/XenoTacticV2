@@ -16,14 +16,6 @@ import ui.UIMap
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
-data class MouseEventWithGridCoordinates(
-    // Origin starts at left
-    val gridX: Double,
-    // Origin starts at bottom
-    val gridY: Double,
-    val event: MouseEvent
-)
-
 class ObjectPlacementInputProcessor(
     override val view: View,
     val uiMapView: UIMap,
@@ -36,7 +28,10 @@ class ObjectPlacementInputProcessor(
         get() = uiMapView._gridSize
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
-        val localXY = uiMapView.globalToLocalXY(event.x.toDouble(), event.y.toDouble())
+        val (gridX, gridY) = uiMapView.getGridPositionsFromGlobalMouse(
+            event.x.toDouble(), event.y.toDouble()
+        )
+        println(event)
         when (event.type) {
             MouseEvent.Type.DOWN -> {
                 println(event)
@@ -64,7 +59,7 @@ class ObjectPlacementInputProcessor(
                 //                )
             }
             MouseEvent.Type.MOVE -> {
-                mouseMoved(localXY.x, localXY.y)
+                mouseMoved(gridX, gridY)
             }
         }
 
@@ -120,26 +115,7 @@ class ObjectPlacementInputProcessor(
         }
     }
 
-    fun mouseMoved(screenX: Double, screenY: Double) {
-        println("screenX: $screenX, screenY: $screenY")
-//        val relativePoint = view.getPointRelativeTo(Point(screenX, screenY), uiMapView)
-//        val relativePoint = uiMapView.getPositionRelativeTo(view)
-//        val relativePoint = uiMapView._boardLayer.globalToLocalXY(screenX, screenY)
-//        val relativePoint = uiMapView.localToGlobalXY(screenX, screenY)
-
-//        println("relativePoint: $relativePoint")
-
-        val relativePoint = Point(screenX, screenY)
-        val unprojected = Point(
-            screenX,
-            uiMapView.mapHeight * gridSize - screenY
-        )
-
-        val gridX = unprojected.x / gridSize
-        val gridY = unprojected.y / gridSize
-
-        //        println("gridX: $gridX, gridY: $gridY")
-
+    fun mouseMoved(gridX: Double, gridY: Double) {
         val pointerAction = objectPlacementComponent.pointerAction
 
         when (pointerAction) {
@@ -148,28 +124,13 @@ class ObjectPlacementInputProcessor(
             }
             is PointerAction.HighlightForPlacement -> {
                 val currentEntity = pointerAction.mapEntity
-                val roundedGridX = when {
-                    currentEntity.width == 1 -> floor(
-                        gridX - (currentEntity.width) / 2
-                    ).toInt()
-                    else -> (gridX - (currentEntity.width) / 2).roundToInt()
-                }
-
-                val roundedGridY = when {
-                    currentEntity.height == 1 -> floor(
-                        gridY - (currentEntity.height) / 2
-                    ).toInt()
-                    else -> (gridY - (currentEntity.height) / 2).roundToInt()
-                }
-
-                val gridXToInt = roundedGridX.clamp(
-                    -currentEntity.width,
-                    gameMapComponent.width - 1 + currentEntity.width
-                )
-                val gridYToInt = roundedGridY.clamp(
-                    -currentEntity.height,
-                    gameMapComponent.height - 1 + currentEntity.height
-                )
+                val (gridXToInt, gridYToInt) =
+                    uiMapView.getRoundedGridCoordinates(
+                        gridX,
+                        gridY,
+                        currentEntity.width,
+                        currentEntity.height
+                    )
 
                 if ((gridXToInt !in 0 until gameMapComponent.width)
                     || gridYToInt !in 0 until gameMapComponent.height

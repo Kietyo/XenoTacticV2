@@ -1,5 +1,6 @@
 package korge_utils
 
+import com.soywiz.kmem.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.ResizeComponent
@@ -10,6 +11,8 @@ import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.localCurrentDirVfs
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlin.math.floor
+import kotlin.math.roundToInt
 
 fun <T : View> T.getReferenceParent(): Container {
     val parentView = this.parent!!
@@ -134,3 +137,4 @@ fun MouseEvents.isScrollUp(): Boolean {
     return event.type == MouseEvent.Type.SCROLL && event.button == MouseButton.BUTTON_WHEEL &&
             event.scrollDeltaYLines < 0
 }
+

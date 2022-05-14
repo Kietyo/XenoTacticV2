@@ -1,5 +1,6 @@
 package ui
 
+import com.soywiz.kmem.clamp
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
@@ -9,6 +10,8 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.Rectangle
+import com.soywiz.korma.geom.RectangleInt
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.model.GameMap
@@ -27,6 +30,8 @@ import korge_utils.SpeedAreaColorUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
+import kotlin.math.floor
+import kotlin.math.roundToInt
 
 enum class BoardType {
     SOLID,
@@ -483,6 +488,23 @@ class UIMap(
         }
     }
 
+    fun renderRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
+        val (worldX, worldY) = toWorldCoordinates(
+            _gridSize,
+            IntPoint(gridX, gridY),
+            gameMap.width, gameMap.height, entityHeight
+        )
+        val (worldWidth, worldHeight) = toWorldDimensions(
+            entityWidth,
+            entityHeight,
+            _gridSize
+        )
+        _highlightRectangle
+            .size(worldWidth, worldHeight)
+            .xy(worldX, worldY)
+            .visible(true)
+    }
+
     fun renderHighlightingForPointerAction(pointerAction: PointerAction) {
         when (pointerAction) {
             PointerAction.Inactive -> {
@@ -490,19 +512,12 @@ class UIMap(
             }
             is PointerAction.HighlightForPlacement -> {
                 if (pointerAction.placementLocation != null) {
-                    val (worldX, worldY) = toWorldCoordinates(
-                        _gridSize,
-                        pointerAction.placementLocation!!,
-                        gameMap.width, gameMap.height, pointerAction.mapEntity.height
+                    val (gridX, gridY) = pointerAction.placementLocation!!
+                    renderRectangle(
+                        gridX, gridY,
+                        pointerAction.mapEntity.width,
+                        pointerAction.mapEntity.height,
                     )
-                    val (worldWidth, worldHeight) = toWorldDimensions(
-                        pointerAction.mapEntity,
-                        _gridSize
-                    )
-                    _highlightRectangle
-                        .size(worldWidth, worldHeight)
-                        .xy(worldX, worldY)
-                        .visible(true)
                 }
             }
             is PointerAction.RemoveEntityAtPlace -> {
@@ -523,5 +538,49 @@ class UIMap(
                 }
             }
         }
+    }
+
+    fun getGridPositionsFromGlobalMouse(globalMouseX: Double, globalMouseY: Double): Pair<Double, Double> {
+        val localXY = globalToLocalXY(globalMouseX, globalMouseY)
+        val unprojected = Point(
+            localXY.x,
+            mapHeight * _gridSize - localXY.y
+        )
+
+        val gridX = unprojected.x / _gridSize
+        val gridY = unprojected.y / _gridSize
+
+        return gridX to gridY
+    }
+
+    fun getRoundedGridCoordinates(
+        gridX: Double,
+        gridY: Double,
+        entityWidth: Int,
+        entityHeight: Int,
+    ): Pair<Int, Int> {
+        val roundedGridX = when {
+            entityWidth == 1 -> floor(
+                gridX - entityWidth / 2
+            ).toInt()
+            else -> (gridX - entityWidth / 2).roundToInt()
+        }
+
+        val roundedGridY = when {
+            entityHeight == 1 -> floor(
+                gridY - entityHeight / 2
+            ).toInt()
+            else -> (gridY - entityHeight / 2).roundToInt()
+        }
+
+        val gridXToInt = roundedGridX.clamp(
+            0,
+            mapWidth - entityWidth
+        )
+        val gridYToInt = roundedGridY.clamp(
+            0,
+            mapHeight - entityHeight
+        )
+        return gridXToInt to gridYToInt
     }
 }
