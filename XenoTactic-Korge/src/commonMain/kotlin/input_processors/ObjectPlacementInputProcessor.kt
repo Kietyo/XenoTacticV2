@@ -12,6 +12,7 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import components.ObjectPlacementComponent
 import components.UIMapControllerComponent
 import engine.Engine
+import events.EventBus
 import ui.UIMap
 import kotlin.math.floor
 import kotlin.math.roundToInt
@@ -20,6 +21,7 @@ class ObjectPlacementInputProcessor(
     override val view: View,
     val uiMapView: UIMap,
     val engine: Engine,
+    val eventBus: EventBus
 ) : MouseComponent {
     val objectPlacementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
     val gameMapComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
@@ -68,8 +70,8 @@ class ObjectPlacementInputProcessor(
 
     fun touchDown(button: MouseButton) {
         //        println("screenX: $screenX, screenY: $screenY, pointer: $pointer, button: $button")
-        val pointerAction = objectPlacementComponent.pointerAction
         if (button == MouseButton.LEFT) {
+            val pointerAction = objectPlacementComponent.pointerAction
             when (pointerAction) {
                 PointerAction.Inactive -> {
                     return

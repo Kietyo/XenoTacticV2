@@ -6,6 +6,8 @@ import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
 import com.soywiz.korio.async.Signal
 import com.soywiz.korma.geom.Point
+import components.EditorComponent
+import engine.Engine
 import ui.UIMap
 
 data class MouseEventWithGridCoordinates(
@@ -16,10 +18,12 @@ data class MouseEventWithGridCoordinates(
     val event: MouseEvent
 )
 
-class MouseEventWithGridCoordinatesProcessor(
+class EditorPlacementMouseComponent(
     override val view: BaseView,
     val uiMapView: UIMap,
+    val engine: Engine
 ): MouseComponent {
+    val editorComponent = engine.getOneTimeComponent<EditorComponent>()
     val gridSize: Double
         get() = this.uiMapView._gridSize
 

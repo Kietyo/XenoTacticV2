@@ -67,7 +67,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
-            this, uiMap, engine,
+            this, uiMap, engine, eventBus
         )
         addComponent(objectPlacementInputProcessor)
         addComponent(ResizeDebugComponent(this))

@@ -21,6 +21,7 @@ korge {
     id = "com.kietyo.xenotactic.korge.xenotactic"
     supportExperimental3d()
     supportBox2d()
+    supportFleks()
     // To enable all targets at once
 
     //targetAll()
