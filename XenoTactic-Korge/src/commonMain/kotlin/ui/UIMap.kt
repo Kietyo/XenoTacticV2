@@ -1,6 +1,7 @@
 package ui
 
 import com.soywiz.kmem.clamp
+import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
@@ -10,8 +11,6 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.Rectangle
-import com.soywiz.korma.geom.RectangleInt
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.model.GameMap
@@ -488,7 +487,7 @@ class UIMap(
         }
     }
 
-    fun renderRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
+    fun renderHighlightRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize,
             IntPoint(gridX, gridY),
@@ -505,15 +504,19 @@ class UIMap(
             .visible(true)
     }
 
+    fun hideHighlightRectangle() {
+        _highlightRectangle.visible(false)
+    }
+
     fun renderHighlightingForPointerAction(pointerAction: PointerAction) {
         when (pointerAction) {
             PointerAction.Inactive -> {
-                _highlightRectangle.visible(false)
+                hideHighlightRectangle()
             }
             is PointerAction.HighlightForPlacement -> {
                 if (pointerAction.placementLocation != null) {
                     val (gridX, gridY) = pointerAction.placementLocation!!
-                    renderRectangle(
+                    renderHighlightRectangle(
                         gridX, gridY,
                         pointerAction.mapEntity.width,
                         pointerAction.mapEntity.height,
@@ -523,7 +526,7 @@ class UIMap(
             is PointerAction.RemoveEntityAtPlace -> {
                 val data = pointerAction.data
                 if (data == null) {
-                    _highlightRectangle.visible(false)
+                    hideHighlightRectangle()
                 } else {
                     val (worldX, worldY) = toWorldCoordinates(
                         _gridSize,
@@ -538,6 +541,10 @@ class UIMap(
                 }
             }
         }
+    }
+
+    fun getGridPositionsFromGlobalMouse(event: MouseEvent): Pair<Double, Double> {
+        return getGridPositionsFromGlobalMouse(event.x.toDouble(), event.y.toDouble())
     }
 
     fun getGridPositionsFromGlobalMouse(globalMouseX: Double, globalMouseY: Double): Pair<Double, Double> {

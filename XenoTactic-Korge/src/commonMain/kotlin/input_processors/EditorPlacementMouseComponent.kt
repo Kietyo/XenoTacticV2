@@ -4,11 +4,13 @@ import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
-import com.soywiz.korio.async.Signal
-import com.soywiz.korma.geom.Point
 import components.EditorComponent
 import engine.Engine
 import ui.UIMap
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
 
 data class MouseEventWithGridCoordinates(
     // Origin starts at left
@@ -20,34 +22,70 @@ data class MouseEventWithGridCoordinates(
 
 class EditorPlacementMouseComponent(
     override val view: BaseView,
-    val uiMapView: UIMap,
+    val uiMap: UIMap,
     val engine: Engine
 ): MouseComponent {
     val editorComponent = engine.getOneTimeComponent<EditorComponent>()
     val gridSize: Double
-        get() = this.uiMapView._gridSize
+        get() = this.uiMap._gridSize
 
-    lateinit var lastEvent: MouseEvent
-    val onMouseEventWithGridCoordinates = Signal<MouseEventWithGridCoordinates>()
+    lateinit var downEvent: MouseEvent
+    lateinit var currentEvent: MouseEvent
+
+    val ALLOWED_EVENTS = setOf<MouseEvent.Type>(
+        MouseEvent.Type.DOWN,
+        MouseEvent.Type.DRAG,
+        MouseEvent.Type.UP,
+    )
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
-        println("event: $event")
-        val localXY = uiMapView.globalToLocalXY(event.x.toDouble(), event.y.toDouble())
-        val unprojected = Point(
-            localXY.x,
-            uiMapView.mapHeight * gridSize - localXY.y
-        )
+        if (!editorComponent.isEditingEnabled ||
+                !ALLOWED_EVENTS.contains(event.type)) {
+            return
+        }
 
-        val gridX = unprojected.x / gridSize
-        val gridY = unprojected.y / gridSize
+        if (event.type == MouseEvent.Type.UP) {
+            uiMap.hideHighlightRectangle()
+            return
+        }
 
-        println("gridX: $gridX, gridY: $gridY")
+        if (event.type == MouseEvent.Type.DOWN) {
+            downEvent = event.copy()
+        }
 
-        onMouseEventWithGridCoordinates(
-            MouseEventWithGridCoordinates(
-                gridX, gridY, event
-            )
-        )
+        currentEvent = event.copy()
+        val (downGridX, downGridY) = uiMap.getGridPositionsFromGlobalMouse(downEvent)
+        val (lastGridX, lastGridY) = uiMap.getGridPositionsFromGlobalMouse(currentEvent)
+
+        val lowGridX = min(downGridX, lastGridX)
+        val lowGridY = min(downGridY, lastGridY)
+
+        val highGridX = ceil(max(downGridX, lastGridX))
+        val highGridY = ceil(max(downGridY, lastGridY))
+
+        val width = max(highGridX.toInt() - lowGridX.toInt(), 1)
+        val height = max(highGridY.toInt() - lowGridY.toInt(), 1)
+
+        val roundedGridX = lowGridX.toInt()
+        val roundedGridY = lowGridY.toInt()
+
+        println("""
+            event: $event,
+            downGridX: $lowGridX, downGridY: $lowGridY,
+            lastGridX: $highGridX, lastGridY: $highGridY,
+            width: $width, height: $height,
+            roundedGridX: $roundedGridX, roundedGridY: $roundedGridY
+        """.trimIndent())
+
+//        println("gridX: $gridX, gridY: $gridY")
+
+//        onMouseEventWithGridCoordinates(
+//            MouseEventWithGridCoordinates(
+//                gridX, gridY, event
+//            )
+//        )
+
+        uiMap.renderHighlightRectangle(roundedGridX, roundedGridY, width, height)
     }
 
 }

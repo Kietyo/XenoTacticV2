@@ -42,12 +42,16 @@ class EditorScene() : Scene() {
                 centerOnStage()
             }
 
+        val editorComponent = EditorComponent()
+
         val engine = Engine()
-        engine.setOneTimeComponent(EditorComponent())
+        engine.setOneTimeComponent(editorComponent)
 
         val editorPlacementMouseComponent = EditorPlacementMouseComponent(
             this, uiMap, engine
         )
+
+        addComponent(editorPlacementMouseComponent)
 
 
         uiHorizontalStack {
@@ -57,11 +61,13 @@ class EditorScene() : Scene() {
                         Mode.PLAYING -> {
                             notificationText.text = "Rock Placement Mode"
                             draggableCloseable.close()
+                            editorComponent.isEditingEnabled = true
                             currentMode = Mode.EDITING
                         }
                         Mode.EDITING -> {
                             notificationText.text = "N/A"
                             draggableCloseable = uiMap.draggableCloseable()
+                            editorComponent.isEditingEnabled = false
                             currentMode = Mode.PLAYING
                         }
                     }
@@ -75,25 +81,25 @@ class EditorScene() : Scene() {
 
 
 
-        addUpdater {
-            if (currentMode == Mode.EDITING) {
-                val globalMouse = mouse.currentPosGlobal
-                val (gridX, gridY) =
-                    uiMap.getGridPositionsFromGlobalMouse(globalMouse.x, globalMouse.y)
-
-                val (roundedGridX, roundedGridY) = uiMap.getRoundedGridCoordinates(
-                    gridX, gridY,
-                    1, 1
-                )
-
-                println(
-                    "gridX: $gridX, gridY: $gridY, roundedGridX: $roundedGridX, roundedGridY:" +
-                            " $roundedGridY"
-                )
-
-                uiMap.renderRectangle(roundedGridX, roundedGridY, 1, 1)
-            }
-        }
-
+//        addUpdater {
+//            if (false && currentMode == Mode.EDITING) {
+//                val globalMouse = mouse.currentPosGlobal
+//                val (gridX, gridY) =
+//                    uiMap.getGridPositionsFromGlobalMouse(globalMouse.x, globalMouse.y)
+//
+//                val (roundedGridX, roundedGridY) = uiMap.getRoundedGridCoordinates(
+//                    gridX, gridY,
+//                    1, 1
+//                )
+//
+//                println(
+//                    "gridX: $gridX, gridY: $gridY, roundedGridX: $roundedGridX, roundedGridY:" +
+//                            " $roundedGridY"
+//                )
+//
+//                uiMap.renderRectangle(roundedGridX, roundedGridY, 1, 1)
+//            }
+//        }
+//
     }
 }
