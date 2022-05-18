@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.model.MONSTER_WIDTH
 import com.xenotactic.gamelogic.model.MonsterEntity
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
-import components.UIMapControllerComponent
+import components.GameMapControllerComponent
 import engine.Component
 import engine.Engine
 import events.EventBus
@@ -30,7 +30,7 @@ class MonstersComponent(
         val monsterRadius: Double
     )
 
-    val uiMapControllerComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
+    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
     val monsters = mutableListOf<MonsterWithView>()
 
     init {
@@ -40,14 +40,14 @@ class MonstersComponent(
     }
 
     fun handleSpawnCreepEvent() {
-        if (uiMapControllerComponent.shortestPath != null) {
+        if (gameMapControllerComponent.shortestPath != null) {
             val monsterEntity = MonsterEntity(
-                PathSequenceTraversal(uiMapControllerComponent.shortestPath!!)
+                PathSequenceTraversal(gameMapControllerComponent.shortestPath!!)
             )
             val (worldX, worldY) = toWorldCoordinates(
                 gridSize,
                 monsterEntity.currentPoint,
-                uiMapControllerComponent.width, uiMapControllerComponent.height
+                gameMapControllerComponent.width, gameMapControllerComponent.height
             )
             val (worldWidth, worldHeight) = toWorldDimensions(MONSTER_WIDTH, MONSTER_HEIGHT, gridSize)
             val monsterRadius = worldWidth / 2
@@ -70,7 +70,7 @@ class MonstersComponent(
             val (worldX, worldY) = toWorldCoordinates(
                 gridSize,
                 monsterEntity.currentPoint,
-                uiMapControllerComponent.width, uiMapControllerComponent.height
+                gameMapControllerComponent.width, gameMapControllerComponent.height
             )
             monster.view.xy(
                 worldX - monster.monsterRadius,

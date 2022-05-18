@@ -1,21 +1,18 @@
 package input_processors
 
-import com.soywiz.kmem.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.*
-import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import components.ObjectPlacementComponent
-import components.UIMapControllerComponent
+import components.GameMapControllerComponent
 import engine.Engine
 import events.EventBus
 import ui.UIMap
 import kotlin.math.floor
-import kotlin.math.roundToInt
 
 class ObjectPlacementInputProcessor(
     override val view: View,
@@ -24,7 +21,7 @@ class ObjectPlacementInputProcessor(
     val eventBus: EventBus
 ) : MouseComponent {
     val objectPlacementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
-    val gameMapComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
+    val gameMapComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
 
     val gridSize: Double
         get() = uiMapView._gridSize

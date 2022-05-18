@@ -7,13 +7,12 @@ import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.*
 import com.xenotactic.gamelogic.model.GameMap
 import components.EditorComponent
-import components.ObjectPlacementComponent
-import components.UIMapControllerComponent
+import components.GameMapControllerComponent
 import engine.Engine
 import events.EventBus
-import input_processors.EditorPlacementMouseComponent
-import input_processors.ObjectPlacementInputProcessor
+import input_processors.EditorPlacementMouseKomponent
 import korge_utils.alignBottomToBottomOfWindow
+import renderer.MapRendererUpdater
 import ui.uiMap
 
 enum class Mode {
@@ -44,15 +43,24 @@ class EditorScene() : Scene() {
 
         val editorComponent = EditorComponent()
 
+        val eventBus = EventBus(this@EditorScene)
+
         val engine = Engine()
         engine.setOneTimeComponent(editorComponent)
+        engine.setOneTimeComponent(
+            GameMapControllerComponent(
+                engine, eventBus,
+                gameMap = gameMap
+            )
+        )
 
-        val editorPlacementMouseComponent = EditorPlacementMouseComponent(
+        val editorPlacementMouseKomponent = EditorPlacementMouseKomponent(
             this, uiMap, engine
         )
 
-        addComponent(editorPlacementMouseComponent)
+        addComponent(editorPlacementMouseKomponent)
 
+        MapRendererUpdater(engine, uiMap, eventBus)
 
         uiHorizontalStack {
             uiButton(text = "Add rocks") {
@@ -69,6 +77,7 @@ class EditorScene() : Scene() {
                             draggableCloseable = uiMap.draggableCloseable()
                             editorComponent.isEditingEnabled = false
                             currentMode = Mode.PLAYING
+                            uiMap.hideHighlightRectangle()
                         }
                     }
 
@@ -80,26 +89,25 @@ class EditorScene() : Scene() {
         }
 
 
-
-//        addUpdater {
-//            if (false && currentMode == Mode.EDITING) {
-//                val globalMouse = mouse.currentPosGlobal
-//                val (gridX, gridY) =
-//                    uiMap.getGridPositionsFromGlobalMouse(globalMouse.x, globalMouse.y)
-//
-//                val (roundedGridX, roundedGridY) = uiMap.getRoundedGridCoordinates(
-//                    gridX, gridY,
-//                    1, 1
-//                )
-//
-//                println(
-//                    "gridX: $gridX, gridY: $gridY, roundedGridX: $roundedGridX, roundedGridY:" +
-//                            " $roundedGridY"
-//                )
-//
-//                uiMap.renderRectangle(roundedGridX, roundedGridY, 1, 1)
-//            }
-//        }
-//
+        //        addUpdater {
+        //            if (false && currentMode == Mode.EDITING) {
+        //                val globalMouse = mouse.currentPosGlobal
+        //                val (gridX, gridY) =
+        //                    uiMap.getGridPositionsFromGlobalMouse(globalMouse.x, globalMouse.y)
+        //
+        //                val (roundedGridX, roundedGridY) = uiMap.getRoundedGridCoordinates(
+        //                    gridX, gridY,
+        //                    1, 1
+        //                )
+        //
+        //                println(
+        //                    "gridX: $gridX, gridY: $gridY, roundedGridX: $roundedGridX, roundedGridY:" +
+        //                            " $roundedGridY"
+        //                )
+        //
+        //                uiMap.renderRectangle(roundedGridX, roundedGridY, 1, 1)
+        //            }
+        //        }
+        //
     }
 }

@@ -5,6 +5,7 @@ import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.*
 import com.xenotactic.gamelogic.utils.horizontalDirectionTo
@@ -143,6 +144,9 @@ object AStarSearcher : SearcherInterface {
             pathingEntities: List<MapEntity>,
             teleportPairs: List<TeleportPair>,
         ): GamePath? {
+            if (pathingEntities.size < 2) {
+                return null
+            }
             val sequenceNumToTeleportPair = teleportPairs.groupBy { it.sequenceNumber }.mapValues {
                 it.value.first()
             }

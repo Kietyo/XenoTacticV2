@@ -259,9 +259,9 @@ data class GameMap(
 
     fun getSequentialPathingEntities(): List<MapEntity> {
         return mutableListOf<MapEntity>().apply {
-            add(start!!)
+            if (start != null) { add(start!!) }
             addAll(checkpoints)
-            add(finish!!)
+            if (finish != null) { add(finish!!) }
         }
     }
 

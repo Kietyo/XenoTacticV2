@@ -1,6 +1,6 @@
 package renderer
 
-import components.UIMapControllerComponent
+import components.GameMapControllerComponent
 import engine.Engine
 import events.AddEntityEvent
 import events.EventBus
@@ -13,7 +13,7 @@ class MapRendererUpdater(
     val renderer: UIMap,
     val eventBus: EventBus
 ) {
-    val uiMapControllerComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
+    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
 
     init {
         eventBus.register<AddEntityEvent> {
@@ -23,7 +23,7 @@ class MapRendererUpdater(
             renderer.handleRemoveEntityEvent(it)
         }
         eventBus.register<UpdatedPathLengthEvent> {
-            renderer.renderPathLines(uiMapControllerComponent.shortestPath)
+            renderer.renderPathLines(gameMapControllerComponent.shortestPath)
         }
     }
 }

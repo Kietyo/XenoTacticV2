@@ -15,8 +15,11 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 import pathing.PathFinder
 
 
-class UIMapControllerComponent(val engine: Engine, val eventBus: EventBus) : Component {
+class GameMapControllerComponent(
+    val engine: Engine, val eventBus: EventBus,
     private var gameMap: GameMap = GameMap(GAME_WIDTH, GAME_HEIGHT)
+) : Component {
+
     var shortestPath: PathSequence? = null
         private set
 
@@ -85,6 +88,6 @@ class UIMapControllerComponent(val engine: Engine, val eventBus: EventBus) : Com
     }
 
     companion object {
-        val log = Logger<UIMapControllerComponent>()
+        val log = Logger<GameMapControllerComponent>()
     }
 }

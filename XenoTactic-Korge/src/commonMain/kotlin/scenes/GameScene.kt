@@ -9,7 +9,7 @@ import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import components.UIMapControllerComponent
+import components.GameMapControllerComponent
 import components.GoalComponent
 import components.ObjectPlacementComponent
 import engine.Engine
@@ -42,23 +42,23 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             "sceneInit called"
         }
         val engine = Engine()
-        val uiMapControllerComponent = UIMapControllerComponent(engine, eventBus)
+        val gameMapControllerComponent = GameMapControllerComponent(engine, eventBus)
         val objectPlacementComponent = ObjectPlacementComponent()
-        engine.setOneTimeComponent(uiMapControllerComponent)
+        engine.setOneTimeComponent(gameMapControllerComponent)
         engine.setOneTimeComponent(objectPlacementComponent)
 
         //        val gameMap = loadGameMapFromGoldensBlocking("00051.json")
         val gameMap = mapBridge.gameMap
 
-        uiMapControllerComponent.updateMap(gameMap)
+        gameMapControllerComponent.updateMap(gameMap)
 
         //        this.setSize(gameMap.width * GRID_SIZE, gameMap.height * GRID_SIZE)
 
         val uiMap =
-            uiMap(gameMap, shortestPath = uiMapControllerComponent.shortestPath).apply {
+            uiMap(gameMap, shortestPath = gameMapControllerComponent.shortestPath).apply {
                 draggable()
             }
-        val mapRendererUpdater = MapRendererUpdater(engine, uiMap, eventBus)
+        MapRendererUpdater(engine, uiMap, eventBus)
         engine.setOneTimeComponent(uiMap)
 
         val cameraInputProcessor = CameraInputProcessor(uiMap, eventBus)
@@ -101,7 +101,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
                 updatePathLength(it.newPathLength)
             }
 
-            updatePathLength(uiMapControllerComponent.shortestPath?.pathLength)
+            updatePathLength(gameMapControllerComponent.shortestPath?.pathLength)
         }
 
 

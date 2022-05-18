@@ -77,7 +77,7 @@ object PathFinder {
             gameMap,
             gameMap.getBlockingEntities(),
             pathingEntities = pathingEntities,
-            teleportPairs = emptyList<TeleportPair>(),
+            teleportPairs = teleportPairs,
             searcher = searcher
         )
     }

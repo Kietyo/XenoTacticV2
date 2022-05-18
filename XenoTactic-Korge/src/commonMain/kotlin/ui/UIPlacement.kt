@@ -7,7 +7,7 @@ import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korio.async.AsyncSignal
-import components.UIMapControllerComponent
+import components.GameMapControllerComponent
 import components.ObjectPlacementComponent
 import engine.Engine
 import events.*
@@ -99,7 +99,7 @@ class UIPlacement(
                             text = "Solve"
                             onClick {
                                 val solver = StandardSolver3(SolverSettings())
-                                val mapComponent = engine.getOneTimeComponent<UIMapControllerComponent>()
+                                val mapComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
                                 val solution = solver.solve(
                                     mapComponent.getGameMapDebugOnly(),
                                     SolverParams(5, OptimizationGoal.MaxPath)
