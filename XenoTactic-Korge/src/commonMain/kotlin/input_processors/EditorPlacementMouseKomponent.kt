@@ -108,6 +108,8 @@ class EditorPlacementMouseKomponent(
                     height
                 )
             )
+
+            // Resets the highlight rectangle to the current cursor position
             handle(MouseEvent.Type.MOVE, gridX, gridY)
         } else {
             uiMap.renderHighlightRectangle(roundedGridX, roundedGridY, width, height)

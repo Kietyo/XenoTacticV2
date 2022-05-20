@@ -6,13 +6,13 @@ import kotlin.test.Test
 
 internal class DatastoreTest {
 
-    @Test
-    fun testDatastore() = runBlockingNoJs {
-        val db = Datastore()
-
-        db.getData()
-        val data = db.putData()
-
-        println(data)
-    }
+//    @Test
+//    fun testDatastore() = runBlockingNoJs {
+//        val db = Datastore()
+//
+//        db.getData()
+//        val data = db.putData()
+//
+//        println(data)
+//    }
 }

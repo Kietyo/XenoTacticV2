@@ -9,13 +9,16 @@ import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.test_utils.getAllGoldenMaps
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 internal class DatastoreKorgeTest {
 
+    val datastoreKorge = DatastoreKorge()
+
     @Test
     fun getData() = runBlockingNoJs {
-        val data = DatastoreKorge.getData()
+        val data = datastoreKorge.getData()
 
         println(data)
         println(data.content.toString())
@@ -26,7 +29,7 @@ internal class DatastoreKorgeTest {
 
     @Test
     fun getData2() = runBlockingNoJs {
-        val data = DatastoreKorge.getData2()
+        val data = datastoreKorge.getData2()
 
         println(data)
         println(data.content.toString())
@@ -37,7 +40,7 @@ internal class DatastoreKorgeTest {
 
     @Test
     fun headData() = runBlockingNoJs {
-        val data = DatastoreKorge.headData()
+        val data = datastoreKorge.headData()
 
         println(data)
         println(data.content.toString())
@@ -48,14 +51,14 @@ internal class DatastoreKorgeTest {
 
     @Test
     fun putData() = runBlockingNoJs {
-        val data = DatastoreKorge.putData()
+        val data = datastoreKorge.putData()
 
         println(data)
     }
 
     @Test
     fun putData2() = runBlockingNoJs {
-        val data = DatastoreKorge.putData2()
+        val data = datastoreKorge.putData2()
 
         println(data)
         println(data.toString())
@@ -63,7 +66,7 @@ internal class DatastoreKorgeTest {
 
     @Test
     fun putData3() = runBlockingNoJs {
-        val data = DatastoreKorge.putData3()
+        val data = datastoreKorge.putData3()
 
         println(data)
         println(data.toString())
@@ -73,7 +76,7 @@ internal class DatastoreKorgeTest {
     fun mapExists() = runBlockingNoJs {
         val map = getAllGoldenMaps().first()
 
-        val data = DatastoreKorge.mapExists(map)
+        val data = datastoreKorge.mapExists(map)
 
         println("data: $data")
         //        println("data.statusText: ${data.statusText}")
@@ -95,17 +98,17 @@ internal class DatastoreKorgeTest {
 
     @Test
     fun addMapIfNotExists2() = runBlockingNoJs {
-        DatastoreKorge.addMapIfNotExists(TEST_GAME_MAP)
+        datastoreKorge.addMapIfNotExists(TEST_GAME_MAP)
 
-        DatastoreKorge.getMapEntry(TEST_GAME_MAP)
+        datastoreKorge.getMapEntry(TEST_GAME_MAP)
 
         Unit
-//        DatastoreKorge.deleteMap(gameMap)
+//        datastoreKorge.deleteMap(gameMap)
     }
 
     @Test
     fun deleteMap() = runBlockingNoJs {
-        DatastoreKorge.deleteMap(TEST_GAME_MAP)
+        datastoreKorge.deleteMap(TEST_GAME_MAP)
     }
 
     @Test
@@ -113,7 +116,7 @@ internal class DatastoreKorgeTest {
 
         val jobs = getAllGoldenMaps().parallelMap {
             launch(Dispatchers.Default) {
-                DatastoreKorge.addMapIfNotExists(it)
+                datastoreKorge.addMapIfNotExists(it)
             }
         }
 
@@ -121,16 +124,16 @@ internal class DatastoreKorgeTest {
 
         //        getAllGoldenMaps().parallelMap {
         //            launch(Dispatchers.Default) {
-        //                DatastoreKorge.addMapIfNotExists(it)
+        //                datastoreKorge.addMapIfNotExists(it)
         //            }
         //        }
 
         //        for (map in getAllGoldenMaps()) {
-        //            DatastoreKorge.addMapIfNotExists(map)
+        //            datastoreKorge.addMapIfNotExists(map)
         //        }
 
         //        val map = loadGameMapFromGoldensBlocking("00005.json")
-        //        DatastoreKorge.addMapIfNotExists(map)
+        //        datastoreKorge.addMapIfNotExists(map)
 
         //        println(data)
         //        println(data.content.toString())
@@ -140,7 +143,7 @@ internal class DatastoreKorgeTest {
 
     @Test
     fun getAllMapData() = runBlockingNoJs {
-        val data = DatastoreKorge.getAllMapData()
+        val data = datastoreKorge.getAllMapData()
 
         println("data: $data")
         //        println("data.readAllString(): ${data.readAllString()}")
@@ -149,6 +152,6 @@ internal class DatastoreKorgeTest {
 
     @Test
     fun deleteAllMaps() = runBlockingNoJs {
-        DatastoreKorge.deleteAllMaps()
+        datastoreKorge.deleteAllMaps()
     }
 }

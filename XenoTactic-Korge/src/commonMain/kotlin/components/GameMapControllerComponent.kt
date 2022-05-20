@@ -1,6 +1,7 @@
 package components
 
 import com.soywiz.klogger.Logger
+import com.soywiz.korma.geom.RectangleInt
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.GameMap

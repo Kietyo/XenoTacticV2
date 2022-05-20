@@ -52,13 +52,13 @@ class Datastore(val accessToken: String = "") {
         }
     }
 
-    //    suspend fun putData(): String {
-    //        //         { ".sv" : "timestamp" , "first": "Jack", "last": "Sparrow" }
-    //        return client.put<String> {
-    //            url("https://xenotactic-default-rtdb.firebaseio.com/users2/cabba/timestamp.json")
-    //            body = """
-    //                    { ".sv_millis" : "timestamp" }
-    //                """.trimIndent()
-    //        }
-    //    }
+//        suspend fun putData(): String {
+//            //         { ".sv" : "timestamp" , "first": "Jack", "last": "Sparrow" }
+//            return client.put<String> {
+//                url("https://xenotactic-default-rtdb.firebaseio.com/users2/cabba/timestamp.json")
+//                body = """
+//                        { ".sv_millis" : "timestamp" }
+//                    """.trimIndent()
+//            }
+//        }
 }

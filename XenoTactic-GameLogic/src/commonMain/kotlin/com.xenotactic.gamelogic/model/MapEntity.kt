@@ -2,6 +2,7 @@ package com.xenotactic.gamelogic.model
 
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
+import com.soywiz.korma.geom.RectangleInt
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -125,6 +126,10 @@ sealed class MapEntity {
 
     fun getRectangle(): Rectangle {
         return Rectangle(x, y, width, height)
+    }
+
+    fun getRectangleInt(): RectangleInt {
+        return getRectangle().toInt()
     }
 
     // Returns whether or not this entity intersects with a 1x1 block

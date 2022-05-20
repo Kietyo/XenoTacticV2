@@ -1,11 +1,13 @@
 package utils
 
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.RectangleInt
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndRectangle
 import com.xenotactic.gamelogic.utils.measureTime
+import com.xenotactic.gamelogic.utils.rectangleIntersects
 import test_utils.assertPointSetEquals
 import test_utils.randomVector
 import kotlin.math.min
@@ -14,6 +16,8 @@ import kotlin.random.Random
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 internal class UtilsKtTest {
 
@@ -737,5 +741,48 @@ internal class UtilsKtTest {
                 2f, 2f
             )
         )
+    }
+
+    fun RectangleInt.testString(): String {
+        return "left: ${this.left}, right: ${this.right}, top: ${this.top}, bottom: ${this.bottom}"
+    }
+
+    @Test
+    fun rectangleIntersectsTest() {
+        val a = RectangleInt(0, 0, 3, 3)
+        val b = RectangleInt(2, 2, 3, 3)
+        println(a.testString())
+        println(b.testString())
+        assertTrue(rectangleIntersects(
+            RectangleInt(0, 0, 3, 3),
+            RectangleInt(2, 2, 3, 3),
+        ))
+        assertTrue(rectangleIntersects(
+            RectangleInt(0, 0, 3, 3),
+            RectangleInt(1, 1, 3, 3),
+        ))
+        assertTrue(rectangleIntersects(
+            RectangleInt(0, 0, 3, 3),
+            RectangleInt(0, 0, 3, 3),
+        ))
+
+        assertTrue(rectangleIntersects(
+            RectangleInt(2, 2, 3, 3),
+            RectangleInt(0, 0, 3, 3),
+        ))
+
+
+        assertFalse(rectangleIntersects(
+            RectangleInt(0, 0, 3, 3),
+            RectangleInt(3, 3, 3, 3),
+        ))
+        assertFalse(rectangleIntersects(
+            RectangleInt(0, 0, 3, 3),
+            RectangleInt(3, 0, 3, 3),
+        ))
+        assertFalse(rectangleIntersects(
+            RectangleInt(0, 0, 3, 3),
+            RectangleInt(0, 3, 3, 3),
+        ))
     }
 }
