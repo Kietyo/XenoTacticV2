@@ -9,6 +9,8 @@ repositories {
     mavenCentral()
 }
 
+val korgeVersion = "2.0.0.999"
+
 kotlin {
     jvm {
         compilations.all {
@@ -37,7 +39,12 @@ kotlin {
 
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("com.soywiz.korlibs.korio:korio:$korgeVersion")
+                implementation("com.xenotactic.gamelogic:XenoTactic-GameLogic:1.0.0")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))

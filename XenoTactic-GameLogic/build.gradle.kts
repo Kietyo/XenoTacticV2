@@ -71,13 +71,12 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.3.2")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
 
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
 
-                implementation("com.google.firebase:firebase-admin:8.1.0")
-
-                compileOnly("com.google.api-client:google-api-client:1.31.5")
+//                implementation("io.ktor:ktor-client-core:$ktorVersion")
+//                implementation("com.google.firebase:firebase-admin:8.1.0")
+//                compileOnly("com.google.api-client:google-api-client:1.31.5")
 
 //                implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
@@ -98,20 +97,20 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio-jvm:$ktorVersion")
+//                implementation("io.ktor:ktor-client-cio-jvm:$ktorVersion")
             }
         }
         val jvmTest by getting
         val jsMain by getting {
             dependencies {
 //                implementation("io.ktor:ktor-client-cio-js:$ktorVersion")
-                implementation("io.ktor:ktor-client-js:$ktorVersion")
+//                implementation("io.ktor:ktor-client-js:$ktorVersion")
             }
         }
         val jsTest by getting
         val nativeMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-curl:$ktorVersion")
+//                implementation("io.ktor:ktor-client-curl:$ktorVersion")
             }
         }
         val nativeTest by getting
