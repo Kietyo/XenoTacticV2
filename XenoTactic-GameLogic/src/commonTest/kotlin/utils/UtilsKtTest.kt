@@ -2,6 +2,7 @@ package utils
 
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.RectangleInt
+import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle
@@ -749,40 +750,38 @@ internal class UtilsKtTest {
 
     @Test
     fun rectangleIntersectsTest() {
-        val a = RectangleInt(0, 0, 3, 3)
-        val b = RectangleInt(2, 2, 3, 3)
-        println(a.testString())
-        println(b.testString())
+        val a = GRectInt(0, 0, 3, 3)
+        val b = GRectInt(2, 2, 3, 3)
+
         assertTrue(rectangleIntersects(
-            RectangleInt(0, 0, 3, 3),
-            RectangleInt(2, 2, 3, 3),
+            GRectInt(0, 0, 3, 3),
+            GRectInt(2, 2, 3, 3),
         ))
         assertTrue(rectangleIntersects(
-            RectangleInt(0, 0, 3, 3),
-            RectangleInt(1, 1, 3, 3),
+            GRectInt(0, 0, 3, 3),
+            GRectInt(1, 1, 3, 3),
         ))
         assertTrue(rectangleIntersects(
-            RectangleInt(0, 0, 3, 3),
-            RectangleInt(0, 0, 3, 3),
+            GRectInt(0, 0, 3, 3),
+            GRectInt(0, 0, 3, 3),
         ))
 
         assertTrue(rectangleIntersects(
-            RectangleInt(2, 2, 3, 3),
-            RectangleInt(0, 0, 3, 3),
+            GRectInt(2, 2, 3, 3),
+            GRectInt(0, 0, 3, 3),
         ))
 
-
         assertFalse(rectangleIntersects(
-            RectangleInt(0, 0, 3, 3),
-            RectangleInt(3, 3, 3, 3),
+            GRectInt(0, 0, 3, 3),
+            GRectInt(3, 3, 3, 3),
         ))
         assertFalse(rectangleIntersects(
-            RectangleInt(0, 0, 3, 3),
-            RectangleInt(3, 0, 3, 3),
+            GRectInt(0, 0, 3, 3),
+            GRectInt(3, 0, 3, 3),
         ))
         assertFalse(rectangleIntersects(
-            RectangleInt(0, 0, 3, 3),
-            RectangleInt(0, 3, 3, 3),
+            GRectInt(0, 0, 3, 3),
+            GRectInt(0, 3, 3, 3),
         ))
     }
 }

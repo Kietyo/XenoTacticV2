@@ -5,6 +5,7 @@ import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.RectangleInt
 import com.soywiz.korma.geom.radians
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
+import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
@@ -364,11 +365,11 @@ fun String.removeAllIndents(): String {
 fun <T> sequenceOfNullable(element: T?) =
     if (element == null) emptySequence<T>() else sequenceOf(element)
 
-// Returns true if a intersects b.
-fun rectangleIntersects(a: RectangleInt, b: RectangleInt): Boolean {
+fun rectangleIntersects(a: GRectInt, b: GRectInt): Boolean {
     return a.left < b.right && a.right > b.left &&
-            a.top < b.bottom && a.bottom > b.top
+            a.bottom < b.top && a.top > b.bottom
 }
+
 
 fun main() {
     //     println(getIntersectionPoints(_root_ide_package_.com.soywiz.korma.geom.Point(0f, 0f), _root_ide_package_.com.soywiz.korma.geom.Point(8f, 8f), _root_ide_package_.com.soywiz.korma.geom.Point(3f, 3f), 3f))

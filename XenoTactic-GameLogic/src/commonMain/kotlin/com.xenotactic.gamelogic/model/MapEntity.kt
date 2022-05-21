@@ -5,17 +5,6 @@ import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.RectangleInt
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class IntPoint(val x: Int, val y: Int) {
-    companion object {
-        val ZERO = IntPoint(0, 0)
-    }
-
-    fun toPoint(): Point {
-        return Point(x, y)
-    }
-}
-
 enum class MapEntityType {
     START,
     FINISH,
@@ -128,8 +117,8 @@ sealed class MapEntity {
         return Rectangle(x, y, width, height)
     }
 
-    fun getRectangleInt(): RectangleInt {
-        return getRectangle().toInt()
+    fun getGRectInt(): GRectInt {
+        return GRectInt(x, y, width, height)
     }
 
     // Returns whether or not this entity intersects with a 1x1 block
