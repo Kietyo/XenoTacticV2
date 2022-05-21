@@ -59,8 +59,11 @@ fun <T : View> T.debugPrint() {
 }
 
 fun <T : View> T.alignBottomToBottomOfWindow(): T {
-    val windowsArea = this.getVisibleWindowArea()
-    println("alignBottomToBottomOfWindow")
+    val windowsArea = this.getVisibleLocalArea()
+    println("""
+        alignBottomToBottomOfWindow:
+        windowsArea: $windowsArea
+    """.trimIndent())
     debugPrint()
     return alignBottomToBottomOfWindow(
         windowsArea.width.toInt() + windowsArea.x.toInt(),

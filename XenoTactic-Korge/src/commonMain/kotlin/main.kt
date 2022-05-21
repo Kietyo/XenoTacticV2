@@ -19,7 +19,7 @@ import kotlin.reflect.KClass
 
 object MainModule : Module() {
     override val bgcolor: RGBA = Colors["#2b2b2b"]
-    override val size: SizeInt = SizeInt(1000, 480)
+    override val size: SizeInt = SizeInt(500, 400)
     override val clipBorders: Boolean = false
     override val mainScene: KClass<out Scene> = RootScene::class
     override val scaleAnchor: Anchor

@@ -10,6 +10,7 @@ import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korio.async.launch
+import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
@@ -84,6 +85,11 @@ class UIMap(
     val _drawnText = mutableMapOf<MapEntity, View>()
 
     val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
+
+    val _boardBG = solidRect(
+        _gridSize * gameMap.width, _gridSize * gameMap.height,
+        MaterialColors.GREEN_600
+    )
 
     // Note that the order in which layers are initialized mattes here.
     val _boardLayer = this.container() {
@@ -543,12 +549,8 @@ class UIMap(
         }
     }
 
-    fun getGridPositionsFromGlobalMouse(event: MouseEvent): Pair<Double, Double> {
-        return getGridPositionsFromGlobalMouse(event.x.toDouble(), event.y.toDouble())
-    }
-
     fun getGridPositionsFromGlobalMouse(globalMouseX: Double, globalMouseY: Double): Pair<Double, Double> {
-        val localXY = globalToLocalXY(globalMouseX, globalMouseY)
+        val localXY = _boardLayer.globalToLocalXY(globalMouseX, globalMouseY)
         val unprojected = Point(
             localXY.x,
             mapHeight * _gridSize - localXY.y

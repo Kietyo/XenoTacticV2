@@ -54,7 +54,8 @@ class EditorPlacementMouseKomponent(
             return
         }
 
-        val gridPositions = uiMap.getGridPositionsFromGlobalMouse(event)
+        val globalXY = views.globalMouseXY
+        val gridPositions = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
         handle(event.type, gridPositions.first, gridPositions.second)
     }

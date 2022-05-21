@@ -13,6 +13,8 @@ import events.EventBus
 import input_processors.EditorPlacementMouseKomponent
 import korge_utils.alignBottomToBottomOfWindow
 import renderer.MapRendererUpdater
+import ui.BoardType
+import ui.UIMapSettings
 import ui.uiMap
 
 enum class Mode {
@@ -84,8 +86,8 @@ class EditorScene() : Scene() {
                 }
             }
 
-            alignBottomToBottomOfWindow()
             centerXOnStage()
+            alignBottomToBottomOfWindow()
         }
 
 
