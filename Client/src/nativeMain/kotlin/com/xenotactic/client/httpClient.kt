@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic
+package com.xenotactic.client
 
 import io.ktor.client.*
 

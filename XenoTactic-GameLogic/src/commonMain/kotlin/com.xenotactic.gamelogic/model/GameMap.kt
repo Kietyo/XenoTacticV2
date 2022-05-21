@@ -131,6 +131,7 @@ data class GameMap(
             is MapEntity.TeleportOut -> teleportOuts.remove(entity.sequenceNumber)
             is MapEntity.Tower -> towers.remove(entity)
             is MapEntity.SpeedArea -> speedAreas.remove(entity)
+            is MapEntity.SmallBlocker -> smallBlockers.remove(entity)
         }
 
         if (entity.isBlockingEntity) {

@@ -3,8 +3,8 @@ val main_class = "CoolMainKt"
 project.setProperty("mainClassName", main_class)
 
 plugins {
-    kotlin("multiplatform") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("multiplatform") version "1.7.0-RC"
+    kotlin("plugin.serialization") version "1.6.21"
     id("maven-publish")
     id("org.jetbrains.kotlin.plugin.allopen") version "1.6.0"
     id("org.jetbrains.kotlinx.benchmark") version "0.4.2"
