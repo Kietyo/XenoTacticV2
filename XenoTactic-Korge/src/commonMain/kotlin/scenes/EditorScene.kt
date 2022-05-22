@@ -11,6 +11,7 @@ import components.GameMapControllerComponent
 import engine.Engine
 import events.EventBus
 import input_processors.EditorPlacementMouseKomponent
+import input_processors.MouseDragKomponent
 import korge_utils.alignBottomToBottomOfWindow
 import renderer.MapRendererUpdater
 import ui.BoardType
@@ -35,13 +36,15 @@ class EditorScene() : Scene() {
 
         val gameMap = GameMap(10, 10)
 
-        lateinit var draggableCloseable: DraggableCloseable
+//        lateinit var draggableCloseable: DraggableCloseable
 
         val uiMap =
             uiMap(gameMap).apply {
-                draggableCloseable = draggableCloseable()
+//                draggableCloseable = draggableCloseable()
                 centerOnStage()
             }
+
+        uiMap.addComponent(MouseDragKomponent(this, uiMap))
 
         val editorComponent = EditorComponent()
 
@@ -70,13 +73,13 @@ class EditorScene() : Scene() {
                     when (currentMode) {
                         Mode.PLAYING -> {
                             notificationText.text = "Rock Placement Mode"
-                            draggableCloseable.close()
+//                            draggableCloseable.close()
                             editorComponent.isEditingEnabled = true
                             currentMode = Mode.EDITING
                         }
                         Mode.EDITING -> {
                             notificationText.text = "N/A"
-                            draggableCloseable = uiMap.draggableCloseable()
+//                            draggableCloseable = uiMap.draggableCloseable()
                             editorComponent.isEditingEnabled = false
                             currentMode = Mode.PLAYING
                             uiMap.hideHighlightRectangle()
