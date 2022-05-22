@@ -4,6 +4,7 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korma.geom.RectangleInt
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
+import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameMap
 import engine.Component
 import engine.Engine
@@ -13,7 +14,10 @@ import events.RemovedEntityEvent
 import events.UpdatedPathLengthEvent
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.utils.rectangleIntersects
 import pathing.PathFinder
+import kotlin.math.max
+import kotlin.math.min
 
 
 class GameMapControllerComponent(
@@ -46,9 +50,30 @@ class GameMapControllerComponent(
     }
 
     fun placeEntity(entity: MapEntity) {
-        gameMap.placeEntity(entity)
+        if (!rectangleIntersects(
+                GRectInt(0, 0, gameMap.width, gameMap.height),
+                entity.getGRectInt()
+            )
+        ) {
+            return
+        }
+
+        val placementEntity = when (entity) {
+            is MapEntity.Rock -> {
+                val newX = max(entity.x, 0)
+                val newY = max(entity.y, 0)
+                val entityWidth = entity.width - (newX - entity.x)
+                val entityHeight = entity.height - (newY - entity.y)
+                val newWidth = min(gameMap.width, entity.x + entityWidth) - entity.x
+                val newHeight = min(gameMap.height, entity.y + entityHeight) - entity.y
+                MapEntity.Rock(newX, newY, newWidth, newHeight)
+            }
+            else -> entity
+        }
+
+        gameMap.placeEntity(placementEntity)
         updateShortestPath(PathFinder.getShortestPath(gameMap))
-        eventBus.send(AddEntityEvent(entity))
+        eventBus.send(AddEntityEvent(placementEntity))
     }
 
     fun removeEntity(entity: MapEntity) {

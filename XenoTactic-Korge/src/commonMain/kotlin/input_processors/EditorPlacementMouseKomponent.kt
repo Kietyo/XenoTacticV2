@@ -28,11 +28,6 @@ class EditorPlacementMouseKomponent(
 ) : MouseComponent {
     val editorComponent = engine.getOneTimeComponent<EditorComponent>()
     val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
-    val gridSize: Double
-        get() = this.uiMap._gridSize
-
-    lateinit var downEvent: MouseEvent
-    lateinit var currentEvent: MouseEvent
 
     val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
@@ -53,6 +48,8 @@ class EditorPlacementMouseKomponent(
         ) {
             return
         }
+
+        println(event)
 
         val globalXY = views.globalMouseXY
         val gridPositions = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
