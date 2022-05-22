@@ -5,7 +5,6 @@ import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.input.DraggableInfo
-import com.soywiz.korge.input.MouseDragState
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.xy
@@ -23,29 +22,57 @@ fun DraggableInfo.asString(): String {
     """.trimIndent()
 }
 
+enum class MouseDragState {
+    UNKNOWN,
+    START,
+    DRAG,
+    END
+}
+
 data class MouseDragKomponent(
     override val view: View,
-    val actualView: View
-): MouseComponent {
+) : MouseComponent {
+    var allowLeftClickDrag = true
+    var allowRightClickDrag = true
     val autoMove = true
-    val info = DraggableInfo(actualView)
+    val info = DraggableInfo(view)
 
-    val ALLOWED_EVENTS = setOf(
+    private val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
         MouseEvent.Type.DRAG,
         MouseEvent.Type.UP,
     )
 
+    // This is used to prevent other buttons from accidentally "closing" the current
+    // drag state. For example, right clicking while doing a left click drag.
+    private var activeButton = MouseButton.LEFT
+
     fun getState(event: MouseEvent): MouseDragState {
-        return when {
-            event.type == MouseEvent.Type.DOWN && event.button == MouseButton.LEFT -> MouseDragState.START
-            event.type == MouseEvent.Type.UP && event.button == MouseButton.LEFT -> MouseDragState.END
-            event.type == MouseEvent.Type.DRAG -> MouseDragState.DRAG
-            else -> TODO()
+        when (event.type) {
+            MouseEvent.Type.DOWN -> {
+                if (allowLeftClickDrag && event.button == MouseButton.LEFT) {
+                    return MouseDragState.START
+                }
+                if (allowRightClickDrag && event.button == MouseButton.RIGHT) {
+                    return MouseDragState.START
+                }
+                return MouseDragState.UNKNOWN
+            }
+            MouseEvent.Type.UP -> {
+                if (allowLeftClickDrag && event.button == MouseButton.LEFT) {
+                    return MouseDragState.END
+                }
+                if (allowRightClickDrag && event.button == MouseButton.RIGHT) {
+                    return MouseDragState.END
+                }
+                return MouseDragState.UNKNOWN
+            }
+            MouseEvent.Type.DRAG -> return MouseDragState.DRAG
+            else -> return MouseDragState.UNKNOWN
         }
     }
 
-    val mousePos = Point()
+    private val currentPosition = Point()
 
     var startX = 0.0
     var startY = 0.0
@@ -58,46 +85,58 @@ data class MouseDragKomponent(
         }
 
         val state = getState(event)
+        println(
+            """
+            event: $event,
+            state: $state
+            info: ${info.asString()}
+        """.trimIndent()
+        )
+        if (state == MouseDragState.UNKNOWN) {
+            return
+        }
 
         if (state != MouseDragState.START && !dragging) return
+        if (dragging && state != MouseDragState.DRAG) {
+            if (event.button != activeButton) {
+                return
+            }
+        }
 
-        mousePos.copyFrom(views.globalMouseXY)
-
-        val px = mousePos.x
-        val py = mousePos.y
+        currentPosition.copyFrom(views.globalMouseXY)
 
         when (state) {
             MouseDragState.START -> {
+                require(!dragging)
+                activeButton = event.button
                 dragging = true
-                startX = px
-                startY = py
+                startX = currentPosition.x
+                startY = currentPosition.y
                 info.reset()
             }
             MouseDragState.END -> {
                 dragging = false
             }
+            else -> Unit
         }
 
-        val cx = mousePos.x
-        val cy = mousePos.y
-        val dx = cx - startX
-        val dy = cy - startY
+        val deltaX = currentPosition.x - startX
+        val deltaY = currentPosition.y - startY
 
-        info.set(dx, dy, state.isStart, state.isEnd, TimeProvider.now())
+        info.set(
+            deltaX,
+            deltaY,
+            state == MouseDragState.START,
+            state == MouseDragState.END,
+            TimeProvider.now()
+        )
 
         handle(event)
-//        onDrag?.invoke(info)
-        //println("DRAG: $dx, $dy, $start, $end")
-
     }
 
     fun handle(event: MouseEvent) {
         val state = getState(event)
-        val view = actualView
-        println("""
-            event: $event,
-            info: ${info.asString()}
-        """.trimIndent())
+        val view = view
         if (state == MouseDragState.START) {
             info.viewStartXY.copyFrom(view.pos)
         }

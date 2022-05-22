@@ -44,7 +44,8 @@ class EditorScene() : Scene() {
                 centerOnStage()
             }
 
-        uiMap.addComponent(MouseDragKomponent(this, uiMap))
+        val mouseDragKomponent = MouseDragKomponent(uiMap)
+        uiMap.addComponent(mouseDragKomponent)
 
         val editorComponent = EditorComponent()
 
@@ -72,14 +73,16 @@ class EditorScene() : Scene() {
                 onClick {
                     when (currentMode) {
                         Mode.PLAYING -> {
+                            // Switch to editing mode
                             notificationText.text = "Rock Placement Mode"
-//                            draggableCloseable.close()
+                            mouseDragKomponent.allowLeftClickDrag = false
                             editorComponent.isEditingEnabled = true
                             currentMode = Mode.EDITING
                         }
                         Mode.EDITING -> {
+                            // Switching to playing mode
                             notificationText.text = "N/A"
-//                            draggableCloseable = uiMap.draggableCloseable()
+                            mouseDragKomponent.allowLeftClickDrag = true
                             editorComponent.isEditingEnabled = false
                             currentMode = Mode.PLAYING
                             uiMap.hideHighlightRectangle()
