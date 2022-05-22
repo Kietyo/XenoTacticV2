@@ -1,5 +1,6 @@
 package input_processors
 
+import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.MouseComponent
@@ -42,10 +43,26 @@ class EditorPlacementMouseKomponent(
     var currentGridX = 0.0
     var currentGridY = 0.0
 
+    var isRightClickDrag = false
+
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!editorComponent.isEditingEnabled ||
             !ALLOWED_EVENTS.contains(event.type)
         ) {
+            return
+        }
+
+        if (event.type == MouseEvent.Type.DOWN && event.button == MouseButton.RIGHT) {
+            isRightClickDrag = true
+            return
+        }
+
+        if (event.type == MouseEvent.Type.UP && event.button == MouseButton.RIGHT) {
+            isRightClickDrag = false
+            return
+        }
+
+        if (isRightClickDrag) {
             return
         }
 
