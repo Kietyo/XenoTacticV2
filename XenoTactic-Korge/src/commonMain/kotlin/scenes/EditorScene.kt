@@ -75,14 +75,18 @@ class EditorScene() : Scene() {
                         Mode.PLAYING -> {
                             // Switch to editing mode
                             notificationText.text = "Rock Placement Mode"
-                            mouseDragKomponent.allowLeftClickDrag = false
+                            mouseDragKomponent.adjustSettings {
+                                allowLeftClickDragging = false
+                            }
                             editorComponent.isEditingEnabled = true
                             currentMode = Mode.EDITING
                         }
                         Mode.EDITING -> {
                             // Switching to playing mode
                             notificationText.text = "N/A"
-                            mouseDragKomponent.allowLeftClickDrag = true
+                            mouseDragKomponent.adjustSettings {
+                                allowLeftClickDragging = true
+                            }
                             editorComponent.isEditingEnabled = false
                             currentMode = Mode.PLAYING
                             uiMap.hideHighlightRectangle()

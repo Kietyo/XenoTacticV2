@@ -29,11 +29,16 @@ enum class MouseDragState {
     END
 }
 
+data class MouseDragKomponentSettings(
+    var allowLeftClickDragging: Boolean = true,
+    var allowRightClickDragging: Boolean = true,
+    var allowMiddleClickDragging: Boolean = true,
+)
+
 data class MouseDragKomponent(
     override val view: View,
+    val settings: MouseDragKomponentSettings = MouseDragKomponentSettings()
 ) : MouseComponent {
-    var allowLeftClickDrag = true
-    var allowRightClickDrag = true
     val autoMove = true
     val info = DraggableInfo(view)
 
@@ -43,26 +48,37 @@ data class MouseDragKomponent(
         MouseEvent.Type.UP,
     )
 
+    fun adjustSettings(fn: MouseDragKomponentSettings.() -> Unit) {
+        fn(settings)
+        reset()
+    }
+
     // This is used to prevent other buttons from accidentally "closing" the current
     // drag state. For example, right clicking while doing a left click drag.
     private var activeButton = MouseButton.LEFT
 
-    fun getState(event: MouseEvent): MouseDragState {
+    private fun getState(event: MouseEvent): MouseDragState {
         when (event.type) {
             MouseEvent.Type.DOWN -> {
-                if (allowLeftClickDrag && event.button == MouseButton.LEFT) {
+                if (event.button == MouseButton.LEFT) {
                     return MouseDragState.START
                 }
-                if (allowRightClickDrag && event.button == MouseButton.RIGHT) {
+                if (event.button == MouseButton.MIDDLE) {
+                    return MouseDragState.START
+                }
+                if (event.button == MouseButton.RIGHT) {
                     return MouseDragState.START
                 }
                 return MouseDragState.UNKNOWN
             }
             MouseEvent.Type.UP -> {
-                if (allowLeftClickDrag && event.button == MouseButton.LEFT) {
+                if (event.button == MouseButton.LEFT) {
                     return MouseDragState.END
                 }
-                if (allowRightClickDrag && event.button == MouseButton.RIGHT) {
+                if (event.button == MouseButton.MIDDLE) {
+                    return MouseDragState.END
+                }
+                if (event.button == MouseButton.RIGHT) {
                     return MouseDragState.END
                 }
                 return MouseDragState.UNKNOWN
@@ -79,29 +95,48 @@ data class MouseDragKomponent(
 
     var dragging = false
 
+    private fun reset() {
+        dragging = false
+    }
+
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         if (event.type !in ALLOWED_EVENTS) {
             return
         }
 
+        if (!settings.allowLeftClickDragging && event.button == MouseButton.LEFT) {
+            return
+        }
+
+        if (!settings.allowRightClickDragging && event.button == MouseButton.RIGHT) {
+            return
+        }
+
+        if (dragging) {
+            if (event.type != MouseEvent.Type.DRAG &&
+                    event.button != activeButton) {
+                return
+            }
+        }
+
         val state = getState(event)
+
         println(
             """
+            dragging: $dragging,
+            settings: $settings
             event: $event,
             state: $state
             info: ${info.asString()}
         """.trimIndent()
         )
+
         if (state == MouseDragState.UNKNOWN) {
+            require(!dragging)
             return
         }
 
-        if (state != MouseDragState.START && !dragging) return
-        if (dragging && state != MouseDragState.DRAG) {
-            if (event.button != activeButton) {
-                return
-            }
-        }
+        require(state != MouseDragState.UNKNOWN)
 
         currentPosition.copyFrom(views.globalMouseXY)
 
@@ -131,7 +166,9 @@ data class MouseDragKomponent(
             TimeProvider.now()
         )
 
-        handle(event)
+        if (dragging) {
+            handle(event)
+        }
     }
 
     fun handle(event: MouseEvent) {

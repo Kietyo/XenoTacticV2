@@ -66,8 +66,6 @@ class EditorPlacementMouseKomponent(
             return
         }
 
-        println(event)
-
         val globalXY = views.globalMouseXY
         val gridPositions = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
@@ -96,15 +94,15 @@ class EditorPlacementMouseKomponent(
         val roundedGridX = lowGridX.toInt()
         val roundedGridY = lowGridY.toInt()
 
-        println(
-            """
-            eventType: $eventType,
-            downGridX: $lowGridX, downGridY: $lowGridY,
-            lastGridX: $highGridX, lastGridY: $highGridY,
-            width: $width, height: $height,
-            roundedGridX: $roundedGridX, roundedGridY: $roundedGridY
-        """.trimIndent()
-        )
+//        println(
+//            """
+//            eventType: $eventType,
+//            downGridX: $lowGridX, downGridY: $lowGridY,
+//            lastGridX: $highGridX, lastGridY: $highGridY,
+//            width: $width, height: $height,
+//            roundedGridX: $roundedGridX, roundedGridY: $roundedGridY
+//        """.trimIndent()
+//        )
 
         //        println("gridX: $gridX, gridY: $gridY")
 
