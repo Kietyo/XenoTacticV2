@@ -9,9 +9,9 @@ import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import components.GameMapControllerComponent
-import components.GoalComponent
-import components.ObjectPlacementComponent
+import components.GameMapControllerEComponent
+import components.GoalEComponent
+import components.ObjectPlacementEComponent
 import engine.Engine
 import events.EventBus
 import events.ExitGameSceneEvent
@@ -19,7 +19,7 @@ import events.UpdatedPathLengthEvent
 import input_processors.CameraInputProcessor
 import input_processors.KeyInputProcessor
 import input_processors.ObjectPlacementInputProcessor
-import korge_components.MonstersComponent
+import korge_components.MonstersEComponent
 import korge_utils.alignBottomToBottomOfWindow
 import korge_utils.alignRightToRightOfWindow
 import kotlinx.coroutines.MainScope
@@ -42,8 +42,8 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             "sceneInit called"
         }
         val engine = Engine()
-        val gameMapControllerComponent = GameMapControllerComponent(engine, eventBus)
-        val objectPlacementComponent = ObjectPlacementComponent()
+        val gameMapControllerComponent = GameMapControllerEComponent(engine, eventBus)
+        val objectPlacementComponent = ObjectPlacementEComponent()
         engine.setOneTimeComponent(gameMapControllerComponent)
         engine.setOneTimeComponent(objectPlacementComponent)
 
@@ -106,10 +106,10 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
 
         addComponent(KeyInputProcessor(this, eventBus))
-        val monstersComponent = MonstersComponent(uiMap, engine, eventBus, uiMap._gridSize)
+        val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
         addComponent(monstersComponent)
 
-        val goalComponent = GoalComponent(engine, eventBus)
+        val goalComponent = GoalEComponent(engine, eventBus)
         engine.setOneTimeComponent(goalComponent)
         //        goalComponent.calculateGoalForMap()
 

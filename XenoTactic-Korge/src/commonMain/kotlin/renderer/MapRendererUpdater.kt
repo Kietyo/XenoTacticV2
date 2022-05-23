@@ -1,6 +1,6 @@
 package renderer
 
-import components.GameMapControllerComponent
+import components.GameMapControllerEComponent
 import engine.Engine
 import events.AddEntityEvent
 import events.EventBus
@@ -13,7 +13,7 @@ class MapRendererUpdater(
     val renderer: UIMap,
     val eventBus: EventBus
 ) {
-    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
+    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
 
     init {
         eventBus.register<AddEntityEvent> {

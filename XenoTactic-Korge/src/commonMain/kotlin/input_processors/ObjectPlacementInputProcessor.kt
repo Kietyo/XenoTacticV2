@@ -7,8 +7,8 @@ import com.soywiz.korge.view.*
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
-import components.ObjectPlacementComponent
-import components.GameMapControllerComponent
+import components.ObjectPlacementEComponent
+import components.GameMapControllerEComponent
 import engine.Engine
 import events.EventBus
 import ui.UIMap
@@ -20,8 +20,8 @@ class ObjectPlacementInputProcessor(
     val engine: Engine,
     val eventBus: EventBus
 ) : MouseComponent {
-    val objectPlacementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
-    val gameMapComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
+    val objectPlacementComponent = engine.getOneTimeComponent<ObjectPlacementEComponent>()
+    val gameMapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
 
     val gridSize: Double
         get() = uiMapView._gridSize

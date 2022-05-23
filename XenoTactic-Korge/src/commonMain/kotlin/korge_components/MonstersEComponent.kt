@@ -12,25 +12,25 @@ import com.xenotactic.gamelogic.model.MONSTER_WIDTH
 import com.xenotactic.gamelogic.model.MonsterEntity
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
-import components.GameMapControllerComponent
-import engine.Component
+import components.GameMapControllerEComponent
+import engine.EComponent
 import engine.Engine
 import events.EventBus
 import events.SpawnCreepEvent
 import pathing.PathSequenceTraversal
 
-class MonstersComponent(
+class MonstersEComponent(
     override val view: Container,
     val engine: Engine,
     val eventBus: EventBus,
     val gridSize: Double
-) : UpdateComponent, Component {
+) : UpdateComponent, EComponent {
     data class MonsterWithView(
         val monsterEntity: MonsterEntity, val view: View,
         val monsterRadius: Double
     )
 
-    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
+    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
     val monsters = mutableListOf<MonsterWithView>()
 
     init {

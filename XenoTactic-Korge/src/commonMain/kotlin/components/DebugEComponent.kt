@@ -1,7 +1,7 @@
 package components
 
 import com.soywiz.korma.geom.Point
-import engine.Component
+import engine.EComponent
 import engine.Engine
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
@@ -21,7 +21,7 @@ sealed class DebugPathingPoints {
     object None : DebugPathingPoints()
 }
 
-class DebugComponent(val engine: Engine) : Component {
+class DebugEComponent(val engine: Engine) : EComponent {
     val pathTypeToPaths = mutableMapOf<SearcherType, PathSequence?>()
 
     val pathingPoints = mutableListOf<PathingPoint>()
@@ -34,7 +34,7 @@ class DebugComponent(val engine: Engine) : Component {
             pathingPoints.clear()
             return
         }
-        val mapComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
+        val mapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
         val gameMap = mapComponent.getGameMapDebugOnly()
         pathingPoints.clear()
         pathingPoints.addAll(

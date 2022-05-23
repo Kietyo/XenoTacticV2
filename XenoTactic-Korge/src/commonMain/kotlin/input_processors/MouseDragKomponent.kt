@@ -9,6 +9,7 @@ import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.xy
 import com.soywiz.korma.geom.Point
+import engine.EComponent
 
 
 fun DraggableInfo.asString(): String {
@@ -30,6 +31,7 @@ enum class MouseDragState {
 }
 
 data class MouseDragKomponentSettings(
+    var isEnabled: Boolean = true,
     var allowLeftClickDragging: Boolean = true,
     var allowRightClickDragging: Boolean = true,
     var allowMiddleClickDragging: Boolean = true,
@@ -38,7 +40,7 @@ data class MouseDragKomponentSettings(
 data class MouseDragKomponent(
     override val view: View,
     val settings: MouseDragKomponentSettings = MouseDragKomponentSettings()
-) : MouseComponent {
+) : MouseComponent, EComponent {
     val autoMove = true
     val info = DraggableInfo(view)
 
@@ -93,13 +95,14 @@ data class MouseDragKomponent(
     var startX = 0.0
     var startY = 0.0
 
-    var dragging = false
+    private var dragging = false
 
     private fun reset() {
         dragging = false
     }
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
+        if (!settings.isEnabled) return
         if (event.type !in ALLOWED_EVENTS) {
             return
         }

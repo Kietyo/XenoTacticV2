@@ -6,22 +6,19 @@ import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.*
 import com.xenotactic.gamelogic.model.GameMap
-import components.EditorComponent
-import components.GameMapControllerComponent
+import com.xenotactic.gamelogic.model.MapEntityType
+import components.EditorEComponent
+import components.GameMapControllerEComponent
+import components.NotificationTextEComponent
+import components.UIMapEComponent
 import engine.Engine
 import events.EventBus
 import input_processors.EditorPlacementMouseKomponent
 import input_processors.MouseDragKomponent
 import korge_utils.alignBottomToBottomOfWindow
 import renderer.MapRendererUpdater
-import ui.BoardType
-import ui.UIMapSettings
+import ui.UIEditorButtons
 import ui.uiMap
-
-enum class Mode {
-    PLAYING,
-    EDITING
-}
 
 class EditorScene() : Scene() {
     override suspend fun Container.sceneInit() {
@@ -32,33 +29,32 @@ class EditorScene() : Scene() {
             centerXOnStage()
         }
 
-        var currentMode = Mode.PLAYING
-
         val gameMap = GameMap(10, 10)
 
-//        lateinit var draggableCloseable: DraggableCloseable
+        //        lateinit var draggableCloseable: DraggableCloseable
 
         val uiMap =
-            uiMap(gameMap).apply {
-//                draggableCloseable = draggableCloseable()
+            uiMap(gameMap).apply { //                draggableCloseable = draggableCloseable()
                 centerOnStage()
             }
 
         val mouseDragKomponent = MouseDragKomponent(uiMap)
         uiMap.addComponent(mouseDragKomponent)
 
-        val editorComponent = EditorComponent()
+        val editorComponent = EditorEComponent()
 
         val eventBus = EventBus(this@EditorScene)
 
         val engine = Engine()
         engine.setOneTimeComponent(editorComponent)
         engine.setOneTimeComponent(
-            GameMapControllerComponent(
-                engine, eventBus,
-                gameMap = gameMap
+            GameMapControllerEComponent(
+                engine, eventBus, gameMap = gameMap
             )
         )
+        engine.setOneTimeComponent(UIMapEComponent(uiMap))
+        engine.setOneTimeComponent(mouseDragKomponent)
+        engine.setOneTimeComponent(NotificationTextEComponent(notificationText))
 
         val editorPlacementMouseKomponent = EditorPlacementMouseKomponent(
             this, uiMap, engine
@@ -68,37 +64,54 @@ class EditorScene() : Scene() {
 
         MapRendererUpdater(engine, uiMap, eventBus)
 
-        uiHorizontalStack {
-            uiButton(text = "Add rocks") {
-                onClick {
-                    when (currentMode) {
-                        Mode.PLAYING -> {
-                            // Switch to editing mode
-                            notificationText.text = "Rock Placement Mode"
-                            mouseDragKomponent.adjustSettings {
-                                allowLeftClickDragging = false
-                            }
-                            editorComponent.isEditingEnabled = true
-                            currentMode = Mode.EDITING
-                        }
-                        Mode.EDITING -> {
-                            // Switching to playing mode
-                            notificationText.text = "N/A"
-                            mouseDragKomponent.adjustSettings {
-                                allowLeftClickDragging = true
-                            }
-                            editorComponent.isEditingEnabled = false
-                            currentMode = Mode.PLAYING
-                            uiMap.hideHighlightRectangle()
-                        }
-                    }
-
-                }
-            }
-
+        val uiEditorButtons = UIEditorButtons(engine).addTo(this).apply {
             centerXOnStage()
             alignBottomToBottomOfWindow()
         }
+
+//        uiHorizontalStack {
+//            uiButton(text = "Add Start") {
+//                onClick {
+//                    if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.START) { // Switching to playing mode
+//                        notificationText.text = "N/A"
+//                        mouseDragKomponent.adjustSettings {
+//                            allowLeftClickDragging = true
+//                        }
+//                        editorComponent.isEditingEnabled = false
+//                        uiMap.hideHighlightRectangle()
+//                    } else { // Switch to editing mode
+//                        notificationText.text = "Start Placement Mode"
+//                        mouseDragKomponent.adjustSettings {
+//                            allowLeftClickDragging = false
+//                        }
+//                        editorComponent.isEditingEnabled = true
+//                        editorComponent.entityTypeToPlace = MapEntityType.START
+//                    }
+//                }
+//            }
+//            uiButton(text = "Add rocks") {
+//                onClick {
+//                    if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
+//                        notificationText.text = "N/A"
+//                        mouseDragKomponent.adjustSettings {
+//                            allowLeftClickDragging = true
+//                        }
+//                        editorComponent.isEditingEnabled = false
+//                        uiMap.hideHighlightRectangle()
+//
+//                    } else { // Switch to editing mode
+//                        notificationText.text = "Rock Placement Mode"
+//                        mouseDragKomponent.adjustSettings {
+//                            allowLeftClickDragging = false
+//                        }
+//                        editorComponent.isEditingEnabled = true
+//                        editorComponent.entityTypeToPlace = MapEntityType.ROCK
+//                    }
+//                }
+//            }
+//
+//
+//        }
 
 
         //        addUpdater {

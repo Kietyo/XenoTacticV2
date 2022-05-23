@@ -1,7 +1,6 @@
 package ui
 
 import com.soywiz.kmem.clamp
-import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
@@ -10,13 +9,12 @@ import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
-import engine.Component
+import engine.EComponent
 import events.RemovedEntityEvent
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -74,7 +72,7 @@ class UIMap(
     val gameMap: GameMap,
     shortestPath: PathSequence? = null,
     private val uiMapSettings: UIMapSettings = UIMapSettings()
-) : Container(), View.Reference, Component {
+) : Container(), View.Reference, EComponent {
     val _gridSize = uiMapSettings.gridSize
     val _borderSize = uiMapSettings.borderSize
     val _gridLineSize = uiMapSettings.gridLineSize

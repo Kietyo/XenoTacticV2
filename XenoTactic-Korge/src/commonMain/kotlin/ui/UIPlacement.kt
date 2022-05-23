@@ -7,8 +7,8 @@ import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korio.async.AsyncSignal
-import components.GameMapControllerComponent
-import components.ObjectPlacementComponent
+import components.GameMapControllerEComponent
+import components.ObjectPlacementEComponent
 import engine.Engine
 import events.*
 import com.xenotactic.gamelogic.model.MapEntity
@@ -27,7 +27,7 @@ class UIPlacement(
     val engine: Engine,
     val eventBus: EventBus
 ) : Container() {
-    val placementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
+    val placementComponent = engine.getOneTimeComponent<ObjectPlacementEComponent>()
     val placementContainer: UIVerticalStack
 
     val onButtonClick = AsyncSignal<UIPlacementButton>()
@@ -99,7 +99,7 @@ class UIPlacement(
                             text = "Solve"
                             onClick {
                                 val solver = StandardSolver3(SolverSettings())
-                                val mapComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
+                                val mapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
                                 val solution = solver.solve(
                                     mapComponent.getGameMapDebugOnly(),
                                     SolverParams(5, OptimizationGoal.MaxPath)

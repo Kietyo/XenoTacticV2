@@ -1,12 +1,11 @@
 package components
 
 import com.soywiz.klogger.Logger
-import com.soywiz.korma.geom.RectangleInt
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameMap
-import engine.Component
+import engine.EComponent
 import engine.Engine
 import events.AddEntityEvent
 import events.EventBus
@@ -20,10 +19,10 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-class GameMapControllerComponent(
+class GameMapControllerEComponent(
     val engine: Engine, val eventBus: EventBus,
     private var gameMap: GameMap = GameMap(GAME_WIDTH, GAME_HEIGHT)
-) : Component {
+) : EComponent {
 
     var shortestPath: PathSequence? = null
         private set
@@ -104,7 +103,7 @@ class GameMapControllerComponent(
     fun updateShortestPath(path: PathSequence?) {
         shortestPath = path
 
-        engine.getOneTimeComponentNullable<DebugComponent>()?.updatePathingPoints()
+        engine.getOneTimeComponentNullable<DebugEComponent>()?.updatePathingPoints()
 
         eventBus.send(UpdatedPathLengthEvent(shortestPath?.pathLength))
     }
@@ -114,6 +113,6 @@ class GameMapControllerComponent(
     }
 
     companion object {
-        val log = Logger<GameMapControllerComponent>()
+        val log = Logger<GameMapControllerEComponent>()
     }
 }

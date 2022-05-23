@@ -3,7 +3,7 @@ package ui
 import com.soywiz.korge.view.*
 import com.soywiz.korim.text.TextAlignment
 import com.xenotactic.gamelogic.model.MapEntityType
-import components.ObjectPlacementComponent
+import components.ObjectPlacementEComponent
 import engine.Engine
 import events.EventBus
 import events.PointerActionChangeEvent
@@ -19,7 +19,7 @@ class UIActiveTextNotifier(
     val engine: Engine,
     val eventBus: EventBus
 ) : Container() {
-    val placementComponent = engine.getOneTimeComponent<ObjectPlacementComponent>()
+    val placementComponent = engine.getOneTimeComponent<ObjectPlacementEComponent>()
     val activeButtonText: Text
 
     init {

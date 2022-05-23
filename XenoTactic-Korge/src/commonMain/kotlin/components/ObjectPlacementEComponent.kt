@@ -1,9 +1,8 @@
 package components
 
-import engine.Component
-import events.EventBus
+import engine.EComponent
 import input_processors.PointerAction
 
-class ObjectPlacementComponent : Component {
+class ObjectPlacementEComponent : EComponent {
     var pointerAction: PointerAction = PointerAction.Inactive
 }

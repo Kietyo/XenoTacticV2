@@ -1,6 +1,6 @@
 package components
 
-import engine.Component
+import engine.EComponent
 import engine.Engine
 import events.EventBus
 import events.UpdatedGoalDataEvent
@@ -16,12 +16,12 @@ data class GoalData(
     val goldGoal: Int,
 )
 
-class GoalComponent(val engine: Engine, val eventBus: EventBus) : Component {
+class GoalEComponent(val engine: Engine, val eventBus: EventBus) : EComponent {
     private var goalData: GoalData? = null
     private var solverResult: SolverResult.Success? = null
 
     fun calculateGoalForMap() {
-        val mapComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
+        val mapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
         val shortestPath = mapComponent.shortestPath
 
         if (shortestPath == null) {

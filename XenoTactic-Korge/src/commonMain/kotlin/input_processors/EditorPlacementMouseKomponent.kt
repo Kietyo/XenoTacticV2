@@ -6,8 +6,9 @@ import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
 import com.xenotactic.gamelogic.model.MapEntity
-import components.EditorComponent
-import components.GameMapControllerComponent
+import com.xenotactic.gamelogic.model.MapEntityType
+import components.EditorEComponent
+import components.GameMapControllerEComponent
 import engine.Engine
 import ui.UIMap
 import kotlin.math.ceil
@@ -27,8 +28,8 @@ class EditorPlacementMouseKomponent(
     val uiMap: UIMap,
     val engine: Engine
 ) : MouseComponent {
-    val editorComponent = engine.getOneTimeComponent<EditorComponent>()
-    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerComponent>()
+    val editorComponent = engine.getOneTimeComponent<EditorEComponent>()
+    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
 
     val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
@@ -69,7 +70,9 @@ class EditorPlacementMouseKomponent(
         val globalXY = views.globalMouseXY
         val gridPositions = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
-        handle(event.type, gridPositions.first, gridPositions.second)
+        if (editorComponent.entityTypeToPlace == MapEntityType.ROCK) {
+            handle(event.type, gridPositions.first, gridPositions.second)
+        }
     }
 
     fun handle(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {

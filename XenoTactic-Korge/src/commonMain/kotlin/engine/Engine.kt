@@ -1,32 +1,31 @@
 package engine
 
-import components.ObjectPlacementComponent
 import kotlin.reflect.KClass
 
 class Engine {
 
-    val oneTimeComponents = mutableMapOf<KClass<out Component>, Any>()
+    val oneTimeComponents = mutableMapOf<KClass<out EComponent>, Any>()
 
-    fun <T: Component> setOneTimeComponent(obj: T) {
+    fun <T: EComponent> setOneTimeComponent(obj: T) {
         this[obj::class] = obj
     }
 
-    fun <T: Component> setOneTimeComponentIfNotExists(obj: T) {
+    fun <T: EComponent> setOneTimeComponentIfNotExists(obj: T) {
         if (!oneTimeComponents.containsKey(obj::class)) {
             this[obj::class] = obj
         }
     }
 
-    operator fun <T : Component> set(kClass: KClass<out Component>, obj: T) {
+    operator fun <T : EComponent> set(kClass: KClass<out EComponent>, obj: T) {
         oneTimeComponents[kClass] = obj
         println(oneTimeComponents)
     }
 
-    inline fun <reified T: Component> getOneTimeComponent(): T {
+    inline fun <reified T: EComponent> getOneTimeComponent(): T {
         return (oneTimeComponents[T::class] as T?)!!
     }
 
-    inline fun <reified T: Component> getOneTimeComponentNullable(): T? {
+    inline fun <reified T: EComponent> getOneTimeComponentNullable(): T? {
         return oneTimeComponents[T::class] as T?
     }
 }
