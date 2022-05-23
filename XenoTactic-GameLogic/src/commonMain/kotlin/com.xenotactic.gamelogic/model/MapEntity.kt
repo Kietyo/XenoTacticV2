@@ -32,6 +32,24 @@ enum class MapEntityType {
                 }
             }.toSet()
 
+        sealed class EntitySize {
+            // No fixed size
+            object Varied : EntitySize()
+            data class Fixed(val width: Int, val height: Int): EntitySize()
+        }
+
+        fun getEntitySize(entityType: MapEntityType): EntitySize {
+            return when (entityType) {
+                START,
+                FINISH,
+                CHECKPOINT,
+                TOWER,
+                TELEPORT_IN,
+                TELEPORT_OUT-> EntitySize.Fixed(2, 2)
+                ROCK, SPEED_AREA -> EntitySize.Varied
+                SMALL_BLOCKER -> EntitySize.Fixed(1, 1)
+            }
+        }
     }
 }
 

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="XenoTactic-GameLogic-jvm">
+    <output-path>$PROJECT_DIR$/XenoTactic-GameLogic/build/libs</output-path>
+    <root id="archive" name="XenoTactic-GameLogic-jvm.jar">
+      <element id="module-output" name="XenoTactic.XenoTactic-GameLogic.jvmMain" />
+    </root>
+  </artifact>
+</component>

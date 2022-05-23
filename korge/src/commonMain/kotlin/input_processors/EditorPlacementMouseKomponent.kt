@@ -68,10 +68,13 @@ class EditorPlacementMouseKomponent(
         }
 
         val globalXY = views.globalMouseXY
-        val gridPositions = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
+        val (gridX, gridY) = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
         if (editorComponent.entityTypeToPlace == MapEntityType.ROCK) {
-            handle(event.type, gridPositions.first, gridPositions.second)
+            handle(event.type, gridX, gridY)
+        } else if (editorComponent.entityTypeToPlace == MapEntityType.START) {
+//            val entitySize = MapEntityType.
+//            val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(gridX, gridY)
         }
     }
 

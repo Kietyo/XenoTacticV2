@@ -69,51 +69,6 @@ class EditorScene() : Scene() {
             alignBottomToBottomOfWindow()
         }
 
-//        uiHorizontalStack {
-//            uiButton(text = "Add Start") {
-//                onClick {
-//                    if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.START) { // Switching to playing mode
-//                        notificationText.text = "N/A"
-//                        mouseDragKomponent.adjustSettings {
-//                            allowLeftClickDragging = true
-//                        }
-//                        editorComponent.isEditingEnabled = false
-//                        uiMap.hideHighlightRectangle()
-//                    } else { // Switch to editing mode
-//                        notificationText.text = "Start Placement Mode"
-//                        mouseDragKomponent.adjustSettings {
-//                            allowLeftClickDragging = false
-//                        }
-//                        editorComponent.isEditingEnabled = true
-//                        editorComponent.entityTypeToPlace = MapEntityType.START
-//                    }
-//                }
-//            }
-//            uiButton(text = "Add rocks") {
-//                onClick {
-//                    if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
-//                        notificationText.text = "N/A"
-//                        mouseDragKomponent.adjustSettings {
-//                            allowLeftClickDragging = true
-//                        }
-//                        editorComponent.isEditingEnabled = false
-//                        uiMap.hideHighlightRectangle()
-//
-//                    } else { // Switch to editing mode
-//                        notificationText.text = "Rock Placement Mode"
-//                        mouseDragKomponent.adjustSettings {
-//                            allowLeftClickDragging = false
-//                        }
-//                        editorComponent.isEditingEnabled = true
-//                        editorComponent.entityTypeToPlace = MapEntityType.ROCK
-//                    }
-//                }
-//            }
-//
-//
-//        }
-
-
         //        addUpdater {
         //            if (false && currentMode == Mode.EDITING) {
         //                val globalMouse = mouse.currentPosGlobal

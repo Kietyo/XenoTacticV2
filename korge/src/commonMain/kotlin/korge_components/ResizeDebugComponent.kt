@@ -1,6 +1,5 @@
 package korge_components
 
-import com.soywiz.korge.box2d.worldView
 import com.soywiz.korge.component.ResizeComponent
 import com.soywiz.korge.view.*
 import korge_utils.getReferenceParent
@@ -26,9 +25,6 @@ class ResizeDebugComponent(override val view: Container) : ResizeComponent {
             view.parent.windowBounds: ${view.parent!!.windowBounds}
             view.width: ${view.width}
             view.height: ${view.height}
-            view.worldView().windowBounds: ${view.worldView().windowBounds}
-            view.worldView().width: ${view.worldView().width}
-            view.worldView().height: ${view.worldView().height}
             view.getBounds(): ${view.getBounds()}
             view.getBoundsNoAnchoring(): ${view.getBoundsNoAnchoring()}
             view.localXY(): ${view.localXY()}
