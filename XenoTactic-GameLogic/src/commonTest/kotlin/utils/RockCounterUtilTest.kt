@@ -35,7 +35,7 @@ internal class RockCounterUtilTest {
         val result = RockCounterUtil.calculate(gameMap)
 
         val expected = IntArray2(5, 5, 0).apply {
-            set(2, 2, 1)
+            set(2, 2, 2)
         }
 
         assertEquals(expected, result)

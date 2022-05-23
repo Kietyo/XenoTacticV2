@@ -17,6 +17,12 @@ plugins {
     application
 }
 
+korge {
+    serializationJson()
+}
+
+//apply(plugin = "plugin.serialization")
+
 //application {
 //    mainClass.set(main_class)
 //}
