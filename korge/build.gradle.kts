@@ -55,6 +55,11 @@ apply<KorgeGradlePlugin>()
 korge {
     id = "com.xenotactic.korge"
 
+    supportExperimental3d()
+    supportBox2d()
+    targetJvm()
+//    targetJs()
+//    targetDesktop()
     serializationJson()
 }
 

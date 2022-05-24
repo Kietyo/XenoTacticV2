@@ -16,6 +16,12 @@ enum class MapEntityType {
     SMALL_BLOCKER,
     SPEED_AREA;
 
+    sealed class EntitySize {
+        // No fixed size
+        object Varied : EntitySize()
+        data class Fixed(val width: Int, val height: Int): EntitySize()
+    }
+
     companion object {
         val blockingEntityTypes =
             MapEntityType.values().filter {
@@ -31,12 +37,6 @@ enum class MapEntityType {
                     SPEED_AREA -> false
                 }
             }.toSet()
-
-        sealed class EntitySize {
-            // No fixed size
-            object Varied : EntitySize()
-            data class Fixed(val width: Int, val height: Int): EntitySize()
-        }
 
         fun getEntitySize(entityType: MapEntityType): EntitySize {
             return when (entityType) {

@@ -17,7 +17,6 @@ import com.xenotactic.gamelogic.model.IntPoint
 import engine.EComponent
 import events.RemovedEntityEvent
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.RockCounterUtil
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
@@ -80,7 +79,7 @@ class UIMap(
     val _pathLinesWidth = uiMapSettings.pathLinesWidth
 
     val _drawnEntities = mutableMapOf<MapEntity, MutableList<View>>()
-    val _drawnText = mutableMapOf<MapEntity, View>()
+    val _entityToDrawnText = mutableMapOf<MapEntity, Text>()
 
     val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
 
@@ -132,7 +131,6 @@ class UIMap(
         drawGridLines()
         renderEntities()
         renderRockCounters()
-        renderEntityText()
         renderPathLines(shortestPath)
     }
 
@@ -289,7 +287,7 @@ class UIMap(
         }
     }
 
-    fun addEntity(entity: MapEntity) {
+    private fun renderEntityInternal(entity: MapEntity) {
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize, entity, gameMap.width, gameMap
                 .height
@@ -307,7 +305,7 @@ class UIMap(
                 )
             }
             is MapEntity.Start -> {
-                _entityLayer.circle(worldWidth / 2, Colors.MAGENTA).xy(
+                _entityLayer.circle(worldWidth / 2, Colors.RED).xy(
                     worldX, worldY
                 )
             }
@@ -374,68 +372,63 @@ class UIMap(
         drawnEntitesList.add(view)
     }
 
-    fun renderEntities() {
-        // Draw map entity shapes
-        for (entity in gameMap.getAllEntities()) {
-            addEntity(entity)
+    fun renderEntityTextInternal(entity: MapEntity) {
+        if (_entityToDrawnText.containsKey(entity)) {
+            // Already drew text for entity
+            return
+        }
+        val text: String? = when (entity) {
+            is MapEntity.CheckPoint -> {
+                "CP ${entity.ordinalSequenceNumber}"
+            }
+            is MapEntity.Finish -> {
+                "FINISH"
+            }
+            is MapEntity.Start -> {
+                "START"
+            }
+            is MapEntity.Tower -> null
+            is MapEntity.Rock -> null
+            is MapEntity.TeleportIn -> {
+                "TP ${entity.ordinalSequenceNumber} IN"
+            }
+            is MapEntity.TeleportOut -> {
+                "TP ${entity.ordinalSequenceNumber} OUT"
+            }
+            is MapEntity.SmallBlocker -> null
+            is MapEntity.SpeedArea -> "${entity.getSpeedText()}"
+        }
+
+        if (text != null) {
+            val (worldX, worldY) = toWorldCoordinates(
+                _gridSize,
+                entity.centerPoint, gameMap.width,
+                gameMap.height
+            )
+            val component = _entityLabelLayer.text(
+                text, textSize = 15.0, alignment = TextAlignment
+                    .MIDDLE_CENTER,
+                font = ENTITY_TEXT_FONT
+            ).xy(
+                worldX,
+                worldY
+            ).apply {
+                scaledHeight = _gridSize / 2
+                scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
+            }
+            _entityToDrawnText[entity] = component
         }
     }
 
-    fun renderEntityText() {
-        // Draw map text
-        for (entity in gameMap.getEntitiesForTypes(
-            MapEntityType.START,
-            MapEntityType.FINISH,
-            MapEntityType.CHECKPOINT,
-            MapEntityType.TELEPORT_IN,
-            MapEntityType.TELEPORT_OUT,
-            MapEntityType.SPEED_AREA
-        )) {
-            if (_drawnText.containsKey(entity)) {
-                continue
-            }
-            val text: String? = when (entity) {
-                is MapEntity.CheckPoint -> {
-                    "CP ${entity.ordinalSequenceNumber}"
-                }
-                is MapEntity.Finish -> {
-                    "FINISH"
-                }
-                is MapEntity.Start -> {
-                    "START"
-                }
-                is MapEntity.Tower -> null
-                is MapEntity.Rock -> null
-                is MapEntity.TeleportIn -> {
-                    "TP ${entity.ordinalSequenceNumber} IN"
-                }
-                is MapEntity.TeleportOut -> {
-                    "TP ${entity.ordinalSequenceNumber} OUT"
-                }
-                is MapEntity.SmallBlocker -> null
-                is MapEntity.SpeedArea -> "${entity.getSpeedText()}"
-            }
+    fun addEntity(entity: MapEntity) {
+        renderEntityInternal(entity)
+//        renderEntityTextInternal(entity)
+    }
 
-            if (text != null) {
-                val (worldX, worldY) = toWorldCoordinates(
-                    _gridSize,
-                    entity.centerPoint, gameMap.width,
-                    gameMap.height
-                )
-                val component = _entityLabelLayer.text(
-                    text, textSize = 15.0, alignment = TextAlignment
-                        .MIDDLE_CENTER,
-                    font = ENTITY_TEXT_FONT
-                ).xy(
-                    worldX,
-                    worldY
-                ).apply {
-                    scaledHeight = _gridSize / 2
-                    scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
-                }
-                _drawnText[entity] = component
-            }
-
+    private fun renderEntities() {
+        // Draw map entity shapes
+        for (entity in gameMap.getAllEntities()) {
+            addEntity(entity)
         }
     }
 

@@ -4,6 +4,7 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.Container
+import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import components.EditorEComponent
 import components.NotificationTextEComponent

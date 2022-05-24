@@ -8,7 +8,6 @@ import com.soywiz.korma.geom.Point
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import loadGameMapFromGoldensAsync
-import model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair

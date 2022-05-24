@@ -71,14 +71,21 @@ class EditorPlacementMouseKomponent(
         val (gridX, gridY) = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
         if (editorComponent.entityTypeToPlace == MapEntityType.ROCK) {
-            handle(event.type, gridX, gridY)
+            handleRockPlacement(event.type, gridX, gridY)
         } else if (editorComponent.entityTypeToPlace == MapEntityType.START) {
-//            val entitySize = MapEntityType.
-//            val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(gridX, gridY)
+            val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorComponent.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
+            val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight)
+            uiMap.renderHighlightRectangle(gridXInt, gridYInt, entityWidth, entityHeight)
+            if (event.type == MouseEvent.Type.UP) {
+//                uiMap.hideHighlightRectangle()
+//                gameMapControllerComponent.placeEntity(entityToAdd)
+                val entityToAdd = MapEntity.Start(gridXInt, gridYInt)
+                uiMap.addEntity(entityToAdd)
+            }
         }
     }
 
-    fun handle(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
+    fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
         if (eventType == MouseEvent.Type.DOWN ||
             eventType == MouseEvent.Type.MOVE) {
             downGridX = gridX
@@ -129,7 +136,7 @@ class EditorPlacementMouseKomponent(
             )
 
             // Resets the highlight rectangle to the current cursor position
-            handle(MouseEvent.Type.MOVE, gridX, gridY)
+            handleRockPlacement(MouseEvent.Type.MOVE, gridX, gridY)
         } else {
             uiMap.renderHighlightRectangle(roundedGridX, roundedGridY, width, height)
         }
