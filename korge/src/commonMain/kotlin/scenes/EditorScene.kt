@@ -14,6 +14,7 @@ import components.UIMapEComponent
 import engine.Engine
 import events.EventBus
 import input_processors.EditorPlacementMouseKomponent
+import input_processors.KeyInputProcessor
 import input_processors.MouseDragKomponent
 import korge_utils.alignBottomToBottomOfWindow
 import renderer.MapRendererUpdater
@@ -29,7 +30,7 @@ class EditorScene() : Scene() {
             centerXOnStage()
         }
 
-        val gameMap = GameMap(10, 10)
+        val gameMap = GameMap(30, 30)
 
         //        lateinit var draggableCloseable: DraggableCloseable
 
@@ -45,7 +46,7 @@ class EditorScene() : Scene() {
 
         val eventBus = EventBus(this@EditorScene)
 
-        val engine = Engine()
+        val engine = Engine(eventBus)
         engine.setOneTimeComponent(editorComponent)
         engine.setOneTimeComponent(
             GameMapControllerEComponent(
@@ -61,6 +62,7 @@ class EditorScene() : Scene() {
         )
 
         addComponent(editorPlacementMouseKomponent)
+        addComponent(KeyInputProcessor(this, engine))
 
         MapRendererUpdater(engine, uiMap, eventBus)
 

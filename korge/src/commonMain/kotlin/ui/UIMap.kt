@@ -422,7 +422,7 @@ class UIMap(
 
     fun addEntity(entity: MapEntity) {
         renderEntityInternal(entity)
-//        renderEntityTextInternal(entity)
+        renderEntityTextInternal(entity)
     }
 
     private fun renderEntities() {

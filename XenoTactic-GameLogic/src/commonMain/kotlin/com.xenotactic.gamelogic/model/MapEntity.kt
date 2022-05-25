@@ -2,7 +2,6 @@ package com.xenotactic.gamelogic.model
 
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
-import com.soywiz.korma.geom.RectangleInt
 import kotlinx.serialization.Serializable
 
 enum class MapEntityType {
@@ -37,6 +36,20 @@ enum class MapEntityType {
                     SPEED_AREA -> false
                 }
             }.toSet()
+
+        fun createEntity(entityType: MapEntityType, x: Int, y: Int): MapEntity {
+            return when (entityType) {
+                START -> MapEntity.Start(x, y)
+                FINISH -> MapEntity.Finish(x, y)
+                CHECKPOINT -> TODO()
+                ROCK -> TODO()
+                TOWER -> TODO()
+                TELEPORT_IN -> TODO()
+                TELEPORT_OUT -> TODO()
+                SMALL_BLOCKER -> TODO()
+                SPEED_AREA -> TODO()
+            }
+        }
 
         fun getEntitySize(entityType: MapEntityType): EntitySize {
             return when (entityType) {

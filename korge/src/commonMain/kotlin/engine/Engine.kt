@@ -1,9 +1,10 @@
 package engine
 
+import com.soywiz.korge.bus.Bus
+import events.EventBus
 import kotlin.reflect.KClass
 
-class Engine {
-
+class Engine(val eventBus: EventBus) {
     val oneTimeComponents = mutableMapOf<KClass<out EComponent>, Any>()
 
     fun <T: EComponent> setOneTimeComponent(obj: T) {
@@ -31,7 +32,7 @@ class Engine {
 }
 
 fun main() {
-    val engine = Engine()
+//    val engine = Engine()
 //    engine[ObjectPlacementComponent::class] = ObjectPlacementComponent("snoop")
 //    engine.addOneTimeComponent(ObjectPlacementComponent("blah"))
 //

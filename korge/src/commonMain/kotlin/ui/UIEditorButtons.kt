@@ -4,13 +4,14 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.Container
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import components.EditorEComponent
 import components.NotificationTextEComponent
 import components.UIMapEComponent
 import engine.Engine
+import events.EscapeButtonActionEvent
 import input_processors.MouseDragKomponent
+import input_processors.PlacedEntityEvent
 
 class UIEditorButtons(
     val engine: Engine
@@ -27,35 +28,62 @@ class UIEditorButtons(
 
     init {
         uiHorizontalStack {
-            uiButton(text = "Add Start") {
+            val addStartButton = uiButton(text = "Add Start") {
                 onClick {
                     if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.START) { // Switching to playing mode
-                        notificationText.text = DEFAULT_NOTIFICATION_TEXT
-                        mouseDragKomponent.adjustSettings {
-                            allowLeftClickDragging = true
-                        }
-                        editorComponent.isEditingEnabled = false
-                        uiMap.hideHighlightRectangle()
+                        switchToPlayingMode()
                     } else { // Switch to editing mode
                         switchToEditingMode(MapEntityType.START)
+                    }
+                }
+            }
+            val addFinishButton = uiButton(text = "Add Finish") {
+                onClick {
+                    if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
+                        switchToPlayingMode()
+                    } else { // Switch to editing mode
+                        switchToEditingMode(MapEntityType.FINISH)
                     }
                 }
             }
             uiButton(text = "Add rocks") {
                 onClick {
                     if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
-                        notificationText.text = "N/A"
-                        mouseDragKomponent.adjustSettings {
-                            allowLeftClickDragging = true
-                        }
-                        editorComponent.isEditingEnabled = false
-                        uiMap.hideHighlightRectangle()
+                        switchToPlayingMode()
                     } else { // Switch to editing mode
                         switchToEditingMode(MapEntityType.ROCK)
                     }
                 }
             }
+
+            engine.eventBus.register<PlacedEntityEvent> {
+                when (it.entityType) {
+                    MapEntityType.START -> addStartButton.disable()
+                    MapEntityType.FINISH -> addFinishButton.disable()
+                    MapEntityType.CHECKPOINT -> TODO()
+                    MapEntityType.ROCK -> TODO()
+                    MapEntityType.TOWER -> TODO()
+                    MapEntityType.TELEPORT_IN -> TODO()
+                    MapEntityType.TELEPORT_OUT -> TODO()
+                    MapEntityType.SMALL_BLOCKER -> TODO()
+                    MapEntityType.SPEED_AREA -> TODO()
+                }
+                switchToPlayingMode()
+            }
+
+            engine.eventBus.register<EscapeButtonActionEvent> {
+                switchToPlayingMode()
+            }
         }
+    }
+
+    fun switchToPlayingMode() {
+        notificationText.text = DEFAULT_NOTIFICATION_TEXT
+        mouseDragKomponent.adjustSettings {
+            allowLeftClickDragging = true
+        }
+        editorComponent.isEditingEnabled = false
+        uiMap.hideHighlightRectangle()
     }
 
     fun switchToEditingMode(entityType: MapEntityType) {
@@ -70,7 +98,7 @@ class UIEditorButtons(
     fun getNotificationText(entityType: MapEntityType): String {
         val entityName = when (entityType) {
             MapEntityType.START -> "Start"
-            MapEntityType.FINISH -> TODO()
+            MapEntityType.FINISH -> "Finish"
             MapEntityType.CHECKPOINT -> TODO()
             MapEntityType.ROCK -> "Rock"
             MapEntityType.TOWER -> TODO()

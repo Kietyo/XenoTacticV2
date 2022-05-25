@@ -23,6 +23,8 @@ data class MouseEventWithGridCoordinates(
     val event: MouseEvent
 )
 
+data class PlacedEntityEvent(val entityType: MapEntityType)
+
 class EditorPlacementMouseKomponent(
     override val view: BaseView,
     val uiMap: UIMap,
@@ -72,22 +74,36 @@ class EditorPlacementMouseKomponent(
 
         if (editorComponent.entityTypeToPlace == MapEntityType.ROCK) {
             handleRockPlacement(event.type, gridX, gridY)
-        } else if (editorComponent.entityTypeToPlace == MapEntityType.START) {
+        } else if (editorComponent.entityTypeToPlace in setOf(
+                MapEntityType.START,
+                MapEntityType.FINISH
+            )
+        ) {
             val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorComponent.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
-            val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight)
+            val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(
+                gridX,
+                gridY,
+                entityWidth,
+                entityHeight
+            )
             uiMap.renderHighlightRectangle(gridXInt, gridYInt, entityWidth, entityHeight)
             if (event.type == MouseEvent.Type.UP) {
-//                uiMap.hideHighlightRectangle()
-//                gameMapControllerComponent.placeEntity(entityToAdd)
-                val entityToAdd = MapEntity.Start(gridXInt, gridYInt)
-                uiMap.addEntity(entityToAdd)
+                val entityToAdd =
+                    MapEntityType.createEntity(
+                        editorComponent.entityTypeToPlace,
+                        gridXInt,
+                        gridYInt
+                    )
+                gameMapControllerComponent.placeEntity(entityToAdd)
+                engine.eventBus.send(PlacedEntityEvent(editorComponent.entityTypeToPlace))
             }
         }
     }
 
     fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
         if (eventType == MouseEvent.Type.DOWN ||
-            eventType == MouseEvent.Type.MOVE) {
+            eventType == MouseEvent.Type.MOVE
+        ) {
             downGridX = gridX
             downGridY = gridY
         }
@@ -107,15 +123,15 @@ class EditorPlacementMouseKomponent(
         val roundedGridX = lowGridX.toInt()
         val roundedGridY = lowGridY.toInt()
 
-//        println(
-//            """
-//            eventType: $eventType,
-//            downGridX: $lowGridX, downGridY: $lowGridY,
-//            lastGridX: $highGridX, lastGridY: $highGridY,
-//            width: $width, height: $height,
-//            roundedGridX: $roundedGridX, roundedGridY: $roundedGridY
-//        """.trimIndent()
-//        )
+        //        println(
+        //            """
+        //            eventType: $eventType,
+        //            downGridX: $lowGridX, downGridY: $lowGridY,
+        //            lastGridX: $highGridX, lastGridY: $highGridY,
+        //            width: $width, height: $height,
+        //            roundedGridX: $roundedGridX, roundedGridY: $roundedGridY
+        //        """.trimIndent()
+        //        )
 
         //        println("gridX: $gridX, gridY: $gridY")
 

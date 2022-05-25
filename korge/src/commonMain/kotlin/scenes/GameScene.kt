@@ -41,7 +41,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         logger.debug {
             "sceneInit called"
         }
-        val engine = Engine()
+        val engine = Engine(eventBus)
         val gameMapControllerComponent = GameMapControllerEComponent(engine, eventBus)
         val objectPlacementComponent = ObjectPlacementEComponent()
         engine.setOneTimeComponent(gameMapControllerComponent)
@@ -105,7 +105,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         }
 
 
-        addComponent(KeyInputProcessor(this, eventBus))
+        addComponent(KeyInputProcessor(this, engine))
         val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
         addComponent(monstersComponent)
 
