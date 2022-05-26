@@ -102,6 +102,7 @@ class EditorPlacementMouseKomponent(
                 if (editorComponent.entityTypeToPlace == MapEntityType.TELEPORT_IN) {
                     stagingTeleportIn = entityToAdd as MapEntity.TeleportIn
                     editorComponent.entityTypeToPlace = MapEntityType.TELEPORT_OUT
+                    uiMap.renderHighlightEntity(entityToAdd)
                     return
                 }
                 if (editorComponent.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {
@@ -111,6 +112,7 @@ class EditorPlacementMouseKomponent(
                         entityToAdd
                     )
                     engine.eventBus.send(PlacedEntityEvent(editorComponent.entityTypeToPlace))
+                    uiMap.clearHighlightLayer()
                     return
                 }
                 gameMapControllerComponent.placeEntity(entityToAdd)

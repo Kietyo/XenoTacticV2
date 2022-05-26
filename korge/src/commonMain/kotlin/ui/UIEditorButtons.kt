@@ -85,7 +85,7 @@ class UIEditorButtons(
                     MapEntityType.ROCK -> TODO()
                     MapEntityType.TOWER -> TODO()
                     MapEntityType.TELEPORT_IN -> TODO()
-                    MapEntityType.TELEPORT_OUT -> TODO()
+                    MapEntityType.TELEPORT_OUT -> Unit
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
                 }

@@ -117,8 +117,7 @@ class UIMap(
     }
 
     val _highlightLayer = this.container()
-    val _highlightRectangle = _highlightLayer
-        .solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
+    val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
 
     val mapHeight: Int
         get() = gameMap.height
@@ -287,101 +286,20 @@ class UIMap(
         }
     }
 
-//    fun createEntityView(entity: MapEntity): View {
-//        val (worldWidth, worldHeight) = toWorldDimensions(entity, _gridSize)
-//        return when (entity) {
-//            is MapEntity.CheckPoint -> {
-//                Circle(worldWidth / 2, Colors.MAROON)
-//            }
-//            is MapEntity.Finish -> {
-//                Circle(worldWidth / 2, Colors.MAGENTA).xy(
-//                    worldX, worldY
-//                )
-//            }
-//            is MapEntity.Start -> {
-//                Circle(worldWidth / 2, Colors.RED).xy(
-//                    worldX, worldY
-//                )
-//            }
-//            is MapEntity.Tower -> {
-//                val towerContainer = _entityLayer.container {
-//                    this.solidRect(
-//                        worldWidth, worldHeight,
-//                        MaterialColors.YELLOW_500
-//                    )
-//                    this.solidRect(
-//                        worldWidth - _borderSize, worldHeight - _borderSize,
-//                        MaterialColors.YELLOW_900
-//                    ).centerOn(this)
-//                }.xy(worldX, worldY)
-//                towerContainer
-//            }
-//            is MapEntity.Rock -> {
-//                val rockContainer = _entityLayer.container {
-//                    this.solidRect(
-//                        worldWidth, worldHeight,
-//                        MaterialColors.BROWN_500
-//                    )
-//                    this.solidRect(
-//                        worldWidth - _borderSize, worldHeight - _borderSize,
-//                        MaterialColors.BROWN_900
-//                    ).centerOn(this)
-//                }.xy(worldX, worldY)
-//                rockContainer
-//            }
-//            is MapEntity.TeleportIn -> {
-//                _entityLayer.circle(worldWidth / 2, Colors.GREEN.withAd(0.6)).xy(
-//                    worldX, worldY
-//                )
-//            }
-//            is MapEntity.TeleportOut -> {
-//                _entityLayer.circle(worldWidth / 2, Colors.RED.withAd(0.6)).xy(
-//                    worldX, worldY
-//                )
-//            }
-//            is MapEntity.SmallBlocker -> {
-//                val entityContainer = _entityLayer.container {
-//                    this.solidRect(
-//                        worldWidth, worldHeight,
-//                        MaterialColors.YELLOW_500
-//                    )
-//                    this.solidRect(
-//                        worldWidth - _borderSize, worldHeight - _borderSize,
-//                        MaterialColors.YELLOW_900
-//                    ).centerOn(this)
-//                }.xy(worldX, worldY)
-//                entityContainer
-//            }
-//            is MapEntity.SpeedArea -> {
-//                val speedAreaColor = SpeedAreaColorUtil(
-//                    entity,
-//                    slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
-//                ).withAd(0.7)
-//                _speedAreaLayer.circle(worldWidth / 2, speedAreaColor).xy(
-//                    worldX, worldY
-//                )
-//            }
-//        }
-//    }
-
-    private fun renderEntityInternal(entity: MapEntity) {
-        val (worldX, worldY) = toWorldCoordinates(
-            _gridSize, entity, gameMap.width, gameMap
-                .height
-        )
+    fun createEntityView(entity: MapEntity): View {
         val (worldWidth, worldHeight) = toWorldDimensions(entity, _gridSize)
-        val view = when (entity) {
+        return when (entity) {
             is MapEntity.CheckPoint -> {
-                _entityLayer.circle(worldWidth / 2, Colors.MAROON)
+                Circle(worldWidth / 2, Colors.MAROON)
             }
             is MapEntity.Finish -> {
-                _entityLayer.circle(worldWidth / 2, Colors.MAGENTA)
+                Circle(worldWidth / 2, Colors.MAGENTA)
             }
             is MapEntity.Start -> {
-                _entityLayer.circle(worldWidth / 2, Colors.RED)
+                Circle(worldWidth / 2, Colors.RED)
             }
             is MapEntity.Tower -> {
-                _entityLayer.container {
+                Container().apply {
                     this.solidRect(
                         worldWidth, worldHeight,
                         MaterialColors.YELLOW_500
@@ -393,7 +311,7 @@ class UIMap(
                 }
             }
             is MapEntity.Rock -> {
-                _entityLayer.container {
+                Container().apply {
                     this.solidRect(
                         worldWidth, worldHeight,
                         MaterialColors.BROWN_500
@@ -405,13 +323,13 @@ class UIMap(
                 }
             }
             is MapEntity.TeleportIn -> {
-                _entityLayer.circle(worldWidth / 2, Colors.GREEN.withAd(0.6))
+                Circle(worldWidth / 2, Colors.GREEN.withAd(0.6))
             }
             is MapEntity.TeleportOut -> {
-                _entityLayer.circle(worldWidth / 2, Colors.RED.withAd(0.6))
+                Circle(worldWidth / 2, Colors.RED.withAd(0.6))
             }
             is MapEntity.SmallBlocker -> {
-                _entityLayer.container {
+                Container().apply {
                     this.solidRect(
                         worldWidth, worldHeight,
                         MaterialColors.YELLOW_500
@@ -427,9 +345,22 @@ class UIMap(
                     entity,
                     slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
                 ).withAd(0.7)
-                _speedAreaLayer.circle(worldWidth / 2, speedAreaColor)
+                Circle(worldWidth / 2, speedAreaColor)
             }
-        }.apply {
+        }
+    }
+
+    private fun renderEntityInternal(entity: MapEntity) {
+        val (worldX, worldY) = toWorldCoordinates(
+            _gridSize, entity, gameMap.width, gameMap
+                .height
+        )
+        val view = createEntityView(entity).apply {
+            if (entity is MapEntity.SpeedArea) {
+                addTo(_speedAreaLayer)
+            } else {
+                addTo(_entityLayer)
+            }
             xy(worldX, worldY)
         }
         val drawnEntitesList = _drawnEntities.getOrPut(entity) { mutableListOf() }
@@ -563,6 +494,22 @@ class UIMap(
             .size(worldWidth, worldHeight)
             .xy(worldX, worldY)
             .visible(true)
+    }
+
+    fun renderHighlightEntity(entity: MapEntity) {
+        val (worldX, worldY) = toWorldCoordinates(
+            _gridSize, entity, gameMap.width, gameMap
+                .height
+        )
+        val view = createEntityView(entity).apply {
+            addTo(_highlightLayer)
+            xy(worldX, worldY)
+        }
+
+    }
+
+    fun clearHighlightLayer() {
+        _highlightLayer.removeChildren()
     }
 
     fun hideHighlightRectangle() {
