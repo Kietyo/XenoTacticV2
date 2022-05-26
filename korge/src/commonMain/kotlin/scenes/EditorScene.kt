@@ -19,16 +19,11 @@ import input_processors.MouseDragKomponent
 import korge_utils.alignBottomToBottomOfWindow
 import renderer.MapRendererUpdater
 import ui.UIEditorButtons
+import ui.UINotificationText
 import ui.uiMap
 
 class EditorScene() : Scene() {
     override suspend fun Container.sceneInit() {
-
-        text("Hello world")
-
-        val notificationText = text("N/A") {
-            centerXOnStage()
-        }
 
         val gameMap = GameMap(20, 20)
 
@@ -38,6 +33,8 @@ class EditorScene() : Scene() {
             uiMap(gameMap).apply { //                draggableCloseable = draggableCloseable()
                 centerOnStage()
             }
+
+
 
         val mouseDragKomponent = MouseDragKomponent(uiMap)
         uiMap.addComponent(mouseDragKomponent)
@@ -55,7 +52,12 @@ class EditorScene() : Scene() {
         )
         engine.setOneTimeComponent(UIMapEComponent(uiMap))
         engine.setOneTimeComponent(mouseDragKomponent)
+
+        val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
+            centerXOnStage()
+        }
         engine.setOneTimeComponent(NotificationTextEComponent(notificationText))
+
 
         val editorPlacementMouseKomponent = EditorPlacementMouseKomponent(
             this, uiMap, engine

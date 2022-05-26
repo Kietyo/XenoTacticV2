@@ -4,9 +4,12 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.centerOnStage
+import com.soywiz.korge.view.centerXOnStage
 import com.soywiz.korge.view.text
 import com.xenotactic.gamelogic.model.MapEntityType
 import components.EditorEComponent
+import components.GameMapControllerEComponent
 import components.NotificationTextEComponent
 import components.UIMapEComponent
 import engine.Engine
@@ -20,10 +23,9 @@ class UIEditorButtons(
     val editorComponent = engine.getOneTimeComponent<EditorEComponent>()
     val uiMapComponent = engine.getOneTimeComponent<UIMapEComponent>()
     val mouseDragKomponent = engine.getOneTimeComponent<MouseDragKomponent>()
-    val notificationTextEComponent = engine.getOneTimeComponent<NotificationTextEComponent>()
+    val gameMapControllerEComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
 
     val uiMap = uiMapComponent.uiMap
-    val notificationText = notificationTextEComponent.text
 
     val DEFAULT_NOTIFICATION_TEXT = "N/A"
 
@@ -88,7 +90,9 @@ class UIEditorButtons(
     }
 
     fun switchToPlayingMode() {
-        notificationText.text = DEFAULT_NOTIFICATION_TEXT
+        engine.eventBus.send(NotificationTextUpdateEvent(
+            DEFAULT_NOTIFICATION_TEXT
+        ))
         mouseDragKomponent.adjustSettings {
             allowLeftClickDragging = true
         }
@@ -97,7 +101,9 @@ class UIEditorButtons(
     }
 
     fun switchToEditingMode(entityType: MapEntityType) {
-        notificationText.text = getNotificationText(entityType)
+        engine.eventBus.send(NotificationTextUpdateEvent(
+            getNotificationText(entityType)
+        ))
         mouseDragKomponent.adjustSettings {
             allowLeftClickDragging = false
         }
@@ -109,7 +115,7 @@ class UIEditorButtons(
         val entityName = when (entityType) {
             MapEntityType.START -> "Start"
             MapEntityType.FINISH -> "Finish"
-            MapEntityType.CHECKPOINT -> "Checkpoint"
+            MapEntityType.CHECKPOINT -> "Checkpoint ${gameMapControllerEComponent.numCheckpoints + 1}"
             MapEntityType.ROCK -> "Rock"
             MapEntityType.TOWER -> TODO()
             MapEntityType.TELEPORT_IN -> TODO()
