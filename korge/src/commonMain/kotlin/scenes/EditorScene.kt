@@ -30,7 +30,7 @@ class EditorScene() : Scene() {
             centerXOnStage()
         }
 
-        val gameMap = GameMap(30, 30)
+        val gameMap = GameMap(20, 20)
 
         //        lateinit var draggableCloseable: DraggableCloseable
 

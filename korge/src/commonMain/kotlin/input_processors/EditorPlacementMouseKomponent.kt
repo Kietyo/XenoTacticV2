@@ -76,7 +76,8 @@ class EditorPlacementMouseKomponent(
             handleRockPlacement(event.type, gridX, gridY)
         } else if (editorComponent.entityTypeToPlace in setOf(
                 MapEntityType.START,
-                MapEntityType.FINISH
+                MapEntityType.FINISH,
+                MapEntityType.CHECKPOINT,
             )
         ) {
             val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorComponent.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
@@ -89,7 +90,7 @@ class EditorPlacementMouseKomponent(
             uiMap.renderHighlightRectangle(gridXInt, gridYInt, entityWidth, entityHeight)
             if (event.type == MouseEvent.Type.UP) {
                 val entityToAdd =
-                    MapEntityType.createEntity(
+                    createEntityToAdd(
                         editorComponent.entityTypeToPlace,
                         gridXInt,
                         gridYInt
@@ -97,6 +98,28 @@ class EditorPlacementMouseKomponent(
                 gameMapControllerComponent.placeEntity(entityToAdd)
                 engine.eventBus.send(PlacedEntityEvent(editorComponent.entityTypeToPlace))
             }
+        } else {
+            TODO("Unsupported entity type: ${editorComponent.entityTypeToPlace}")
+        }
+    }
+
+    fun createEntityToAdd(entityType: MapEntityType, gridXInt: Int, gridYInt: Int): MapEntity {
+        return when(entityType) {
+            MapEntityType.START,
+            MapEntityType.FINISH -> MapEntityType.createEntity(
+                editorComponent.entityTypeToPlace,
+                gridXInt,
+                gridYInt
+            )
+            MapEntityType.CHECKPOINT -> {
+                MapEntity.CheckPoint(gameMapControllerComponent.numCheckpoints, gridXInt, gridYInt)
+            }
+            MapEntityType.ROCK -> TODO()
+            MapEntityType.TOWER -> TODO()
+            MapEntityType.TELEPORT_IN -> TODO()
+            MapEntityType.TELEPORT_OUT -> TODO()
+            MapEntityType.SMALL_BLOCKER -> TODO()
+            MapEntityType.SPEED_AREA -> TODO()
         }
     }
 

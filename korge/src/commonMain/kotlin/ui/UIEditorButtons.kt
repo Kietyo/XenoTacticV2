@@ -4,6 +4,7 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.text
 import com.xenotactic.gamelogic.model.MapEntityType
 import components.EditorEComponent
 import components.NotificationTextEComponent
@@ -46,6 +47,15 @@ class UIEditorButtons(
                     }
                 }
             }
+            val addCheckpoint = uiButton(text = "Add Checkpoint") {
+                onClick {
+                    if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
+                        switchToPlayingMode()
+                    } else { // Switch to editing mode
+                        switchToEditingMode(MapEntityType.CHECKPOINT)
+                    }
+                }
+            }
             uiButton(text = "Add rocks") {
                 onClick {
                     if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
@@ -60,7 +70,7 @@ class UIEditorButtons(
                 when (it.entityType) {
                     MapEntityType.START -> addStartButton.disable()
                     MapEntityType.FINISH -> addFinishButton.disable()
-                    MapEntityType.CHECKPOINT -> TODO()
+                    MapEntityType.CHECKPOINT -> Unit
                     MapEntityType.ROCK -> TODO()
                     MapEntityType.TOWER -> TODO()
                     MapEntityType.TELEPORT_IN -> TODO()
@@ -99,7 +109,7 @@ class UIEditorButtons(
         val entityName = when (entityType) {
             MapEntityType.START -> "Start"
             MapEntityType.FINISH -> "Finish"
-            MapEntityType.CHECKPOINT -> TODO()
+            MapEntityType.CHECKPOINT -> "Checkpoint"
             MapEntityType.ROCK -> "Rock"
             MapEntityType.TOWER -> TODO()
             MapEntityType.TELEPORT_IN -> TODO()

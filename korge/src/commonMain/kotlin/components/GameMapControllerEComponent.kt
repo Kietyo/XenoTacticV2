@@ -18,7 +18,8 @@ import pathing.PathFinder
 import kotlin.math.max
 import kotlin.math.min
 
-
+// The game map controller.
+// All actions affecting the game map should go through this class.
 class GameMapControllerEComponent(
     val engine: Engine, val eventBus: EventBus,
     private var gameMap: GameMap = GameMap(GAME_WIDTH, GAME_HEIGHT)
@@ -35,6 +36,8 @@ class GameMapControllerEComponent(
         get() {
             return gameMap.width
         }
+    val numCheckpoints: Int
+        get() = gameMap.numCheckpoints
 
     fun getFirstRockAt(x: Int, y: Int): MapEntity.Rock? {
         return gameMap.getFirstRockAt(x, y)
