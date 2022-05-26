@@ -48,6 +48,8 @@ class EditorPlacementMouseKomponent(
 
     var isRightClickDrag = false
 
+    var stagingTeleportIn: MapEntity.TeleportIn? = null
+
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!editorComponent.isEditingEnabled ||
             !ALLOWED_EVENTS.contains(event.type)
@@ -78,6 +80,8 @@ class EditorPlacementMouseKomponent(
                 MapEntityType.START,
                 MapEntityType.FINISH,
                 MapEntityType.CHECKPOINT,
+                MapEntityType.TELEPORT_IN,
+                MapEntityType.TELEPORT_OUT
             )
         ) {
             val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorComponent.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
@@ -95,6 +99,20 @@ class EditorPlacementMouseKomponent(
                         gridXInt,
                         gridYInt
                     )
+                if (editorComponent.entityTypeToPlace == MapEntityType.TELEPORT_IN) {
+                    stagingTeleportIn = entityToAdd as MapEntity.TeleportIn
+                    editorComponent.entityTypeToPlace = MapEntityType.TELEPORT_OUT
+                    return
+                }
+                if (editorComponent.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {
+                    require(stagingTeleportIn != null)
+                    gameMapControllerComponent.placeEntities(
+                        stagingTeleportIn!!,
+                        entityToAdd
+                    )
+                    engine.eventBus.send(PlacedEntityEvent(editorComponent.entityTypeToPlace))
+                    return
+                }
                 gameMapControllerComponent.placeEntity(entityToAdd)
                 engine.eventBus.send(PlacedEntityEvent(editorComponent.entityTypeToPlace))
             }
@@ -116,8 +134,12 @@ class EditorPlacementMouseKomponent(
             }
             MapEntityType.ROCK -> TODO()
             MapEntityType.TOWER -> TODO()
-            MapEntityType.TELEPORT_IN -> TODO()
-            MapEntityType.TELEPORT_OUT -> TODO()
+            MapEntityType.TELEPORT_IN -> {
+                MapEntity.TeleportIn(gameMapControllerComponent.numTeleports, gridXInt, gridYInt)
+            }
+            MapEntityType.TELEPORT_OUT -> {
+                MapEntity.TeleportOut(gameMapControllerComponent.numTeleports, gridXInt, gridYInt)
+            }
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
         }

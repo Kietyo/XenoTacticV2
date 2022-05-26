@@ -12,6 +12,7 @@ import events.EventBus
 import events.RemovedEntityEvent
 import events.UpdatedPathLengthEvent
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import pathing.PathFinder
@@ -24,7 +25,6 @@ class GameMapControllerEComponent(
     val engine: Engine, val eventBus: EventBus,
     private var gameMap: GameMap = GameMap(GAME_WIDTH, GAME_HEIGHT)
 ) : EComponent {
-
     var shortestPath: PathSequence? = null
         private set
 
@@ -39,6 +39,9 @@ class GameMapControllerEComponent(
     val numCheckpoints: Int
         get() = gameMap.numCheckpoints
 
+    val numTeleports: Int
+        get() = gameMap.numTeleports
+
     fun getFirstRockAt(x: Int, y: Int): MapEntity.Rock? {
         return gameMap.getFirstRockAt(x, y)
     }
@@ -51,31 +54,34 @@ class GameMapControllerEComponent(
         return gameMap.intersectsBlockingEntities(entity)
     }
 
-    fun placeEntity(entity: MapEntity) {
-        if (!rectangleIntersects(
-                GRectInt(0, 0, gameMap.width, gameMap.height),
-                entity.getGRectInt()
-            )
-        ) {
-            return
+    fun placeEntities(vararg entities: MapEntity) {
+        val gameMapRect = GRectInt(0, 0, gameMap.width, gameMap.height)
+        val allEntitiesIntersectMap = entities.all {
+            rectangleIntersects(gameMapRect, it.getGRectInt())
         }
+        if (!allEntitiesIntersectMap) return
 
-        val placementEntity = when (entity) {
-            is MapEntity.Rock -> {
-                val newX = max(entity.x, 0)
-                val newY = max(entity.y, 0)
-                val entityWidth = entity.width - (newX - entity.x)
-                val entityHeight = entity.height - (newY - entity.y)
-                val newWidth = min(gameMap.width, entity.x + entityWidth) - entity.x
-                val newHeight = min(gameMap.height, entity.y + entityHeight) - entity.y
-                MapEntity.Rock(newX, newY, newWidth, newHeight)
+        for (entity in entities) {
+            val placementEntity = when (entity) {
+                is MapEntity.Rock -> {
+                    val newX = max(entity.x, 0)
+                    val newY = max(entity.y, 0)
+                    val entityWidth = entity.width - (newX - entity.x)
+                    val entityHeight = entity.height - (newY - entity.y)
+                    val newWidth = min(gameMap.width, entity.x + entityWidth) - entity.x
+                    val newHeight = min(gameMap.height, entity.y + entityHeight) - entity.y
+                    MapEntity.Rock(newX, newY, newWidth, newHeight)
+                }
+                else -> entity
             }
-            else -> entity
+            gameMap.placeEntity(placementEntity)
+            eventBus.send(AddEntityEvent(placementEntity))
         }
-
-        gameMap.placeEntity(placementEntity)
         updateShortestPath(PathFinder.getShortestPath(gameMap))
-        eventBus.send(AddEntityEvent(placementEntity))
+    }
+
+    fun placeEntity(entity: MapEntity) {
+        placeEntities(entity)
     }
 
     fun removeEntity(entity: MapEntity) {
@@ -113,6 +119,22 @@ class GameMapControllerEComponent(
 
     fun getGameMapDebugOnly(): GameMap {
         return gameMap
+    }
+
+    fun getNotificationText(entityType: MapEntityType): String {
+        val entityName = when (entityType) {
+            MapEntityType.START -> "Start"
+            MapEntityType.FINISH -> "Finish"
+            MapEntityType.CHECKPOINT -> "Checkpoint ${numCheckpoints + 1}"
+            MapEntityType.ROCK -> "Rock"
+            MapEntityType.TOWER -> TODO()
+            MapEntityType.TELEPORT_IN -> "Teleport In"
+            MapEntityType.TELEPORT_OUT -> TODO()
+            MapEntityType.SMALL_BLOCKER -> TODO()
+            MapEntityType.SPEED_AREA -> TODO()
+        }
+
+        return "Placement Mode: $entityName"
     }
 
     companion object {

@@ -58,6 +58,15 @@ class UIEditorButtons(
                     }
                 }
             }
+            val addTeleport = uiButton(text = "Add Teleport") {
+                onClick {
+                    if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
+                        switchToPlayingMode()
+                    } else { // Switch to editing mode
+                        switchToEditingMode(MapEntityType.TELEPORT_IN)
+                    }
+                }
+            }
             uiButton(text = "Add rocks") {
                 onClick {
                     if (editorComponent.isEditingEnabled && editorComponent.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
@@ -102,7 +111,7 @@ class UIEditorButtons(
 
     fun switchToEditingMode(entityType: MapEntityType) {
         engine.eventBus.send(NotificationTextUpdateEvent(
-            getNotificationText(entityType)
+            gameMapControllerEComponent.getNotificationText(entityType)
         ))
         mouseDragKomponent.adjustSettings {
             allowLeftClickDragging = false
@@ -111,19 +120,4 @@ class UIEditorButtons(
         editorComponent.entityTypeToPlace = entityType
     }
 
-    fun getNotificationText(entityType: MapEntityType): String {
-        val entityName = when (entityType) {
-            MapEntityType.START -> "Start"
-            MapEntityType.FINISH -> "Finish"
-            MapEntityType.CHECKPOINT -> "Checkpoint ${gameMapControllerEComponent.numCheckpoints + 1}"
-            MapEntityType.ROCK -> "Rock"
-            MapEntityType.TOWER -> TODO()
-            MapEntityType.TELEPORT_IN -> TODO()
-            MapEntityType.TELEPORT_OUT -> TODO()
-            MapEntityType.SMALL_BLOCKER -> TODO()
-            MapEntityType.SPEED_AREA -> TODO()
-        }
-
-        return "Placement Mode: $entityName"
-    }
 }
