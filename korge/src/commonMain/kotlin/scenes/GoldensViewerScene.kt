@@ -176,6 +176,7 @@ class GoldensViewerScene(
                 MapVerificationResult.Success -> "${it.mapFile.baseName}: LGTM"
                 is MapVerificationResult.Failure ->
                     "${it.mapFile.baseName}: ${verificationResult.error}"
+                else -> TODO()
             }
         }
 

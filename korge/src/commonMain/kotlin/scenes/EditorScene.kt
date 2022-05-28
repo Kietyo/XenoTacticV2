@@ -37,11 +37,9 @@ class EditorScene() : Scene() {
             }
 
         val mouseDragKomponent = MouseDragKomponent(uiMap)
-        uiMap.addComponent(mouseDragKomponent)
+//        uiMap.addComponent(mouseDragKomponent)
 
         val editorComponent = EditorEComponent()
-
-
 
         engine.setOneTimeComponent(editorComponent)
         engine.setOneTimeComponent(
