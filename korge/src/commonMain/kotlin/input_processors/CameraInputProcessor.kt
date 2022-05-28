@@ -8,6 +8,7 @@ import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.plus
+import engine.Engine
 import events.EventBus
 import events.LeftControlAndEqual
 import events.LeftControlAndMinus
@@ -17,7 +18,7 @@ import kotlin.math.sqrt
 
 const val ZOOM_DELTA = 0.04
 
-class CameraInputProcessor(override val view: View, val eventBus: EventBus) : MouseComponent {
+class CameraInputProcessor(override val view: View, val engine: Engine) : MouseComponent {
     var touchedDownX = 0.0
     var touchedDownY = 0.0
     var isMouseTouchedDown = false
@@ -25,10 +26,10 @@ class CameraInputProcessor(override val view: View, val eventBus: EventBus) : Mo
     var originalCameraPosition = Point.Zero
 
     init {
-        eventBus.register<LeftControlAndMinus> {
+        engine.eventBus.register<LeftControlAndMinus> {
             zoomOutCamera()
         }
-        eventBus.register<LeftControlAndEqual> {
+        engine.eventBus.register<LeftControlAndEqual> {
             zoomInCamera()
         }
     }

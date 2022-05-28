@@ -12,6 +12,7 @@ import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korio.file.baseName
 import com.xenotactic.gamelogic.utils.measureTime
+import engine.Engine
 import events.EventBus
 import events.GoldensEntryClickEvent
 import events.GoldensEntryHoverOnEvent
@@ -43,6 +44,8 @@ class GoldensViewerScene(
         }
 
         val eventBus = EventBus(CoroutineScope(Dispatchers.Default))
+
+        val engine = Engine(eventBus)
 
         val maxColumns = 7
         val maxRows = 5
@@ -151,7 +154,7 @@ class GoldensViewerScene(
         val descriptionText = this.text("")
         descriptionText.alignTopToBottomOf(mapGrid)
 
-        val overlayContainer = this.uiMapOverlay(eventBus)
+        val overlayContainer = UIMapOverlay(engine)
 
         eventBus.register<GoldensEntryClickEvent> {
             overlayContainer.setOverlay(

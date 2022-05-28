@@ -4,17 +4,14 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
+import engine.Engine
 import events.EventBus
 import input_processors.CameraInputProcessor
 
 object UIMapOverlayOutsideClickedEvent
 
-inline fun Container.uiMapOverlay(
-    eventBus: EventBus
-): UIMapOverlay = UIMapOverlay(eventBus).addTo(this)
-
 class UIMapOverlay(
-    val eventBus: EventBus
+    val engine: Engine
 ) : Container() {
 
     var isCurrentlySet = false
@@ -30,7 +27,7 @@ class UIMapOverlay(
             logger.info {
                 "background clicked!"
             }
-            eventBus.send(UIMapOverlayOutsideClickedEvent)
+            engine.eventBus.send(UIMapOverlayOutsideClickedEvent)
         }
 
         view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
@@ -43,7 +40,7 @@ class UIMapOverlay(
         // This is to avoid triggering the onClick listener of the background.
         view.onClick { }
 
-        val cameraInputProcessor = CameraInputProcessor(view, eventBus)
+        val cameraInputProcessor = CameraInputProcessor(view, engine)
         addComponent(cameraInputProcessor)
 
         isCurrentlySet = true

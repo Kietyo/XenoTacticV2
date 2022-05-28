@@ -61,7 +61,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         MapRendererUpdater(engine, uiMap, eventBus)
         engine.setOneTimeComponent(uiMap)
 
-        val cameraInputProcessor = CameraInputProcessor(uiMap, eventBus)
+        val cameraInputProcessor = CameraInputProcessor(uiMap, engine)
         cameraInputProcessor.setZoomFactor(0.7)
         addComponent(cameraInputProcessor)
 

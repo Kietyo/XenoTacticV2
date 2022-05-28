@@ -13,6 +13,7 @@ import components.NotificationTextEComponent
 import components.UIMapEComponent
 import engine.Engine
 import events.EventBus
+import input_processors.CameraInputProcessor
 import input_processors.EditorPlacementMouseKomponent
 import input_processors.KeyInputProcessor
 import input_processors.MouseDragKomponent
@@ -26,8 +27,6 @@ class EditorScene() : Scene() {
     override suspend fun Container.sceneInit() {
 
         val gameMap = GameMap(20, 20)
-
-        //        lateinit var draggableCloseable: DraggableCloseable
 
         val uiMap =
             uiMap(gameMap).apply { //                draggableCloseable = draggableCloseable()
@@ -65,6 +64,7 @@ class EditorScene() : Scene() {
 
         addComponent(editorPlacementMouseKomponent)
         addComponent(KeyInputProcessor(this, engine))
+        addComponent(CameraInputProcessor(uiMap, engine))
 
         MapRendererUpdater(engine, uiMap, eventBus)
 
