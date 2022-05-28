@@ -5,6 +5,7 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.baseName
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import loadGameMapFromGoldensAsync
