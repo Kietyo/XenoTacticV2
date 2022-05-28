@@ -2,6 +2,7 @@ package engine
 
 import com.soywiz.korge.bus.Bus
 import events.EventBus
+import events.EventBusInterface
 import kotlin.reflect.KClass
 
 class Engine(val eventBus: EventBus) {

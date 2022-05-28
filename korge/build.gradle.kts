@@ -61,6 +61,8 @@ korge {
 //    targetJs()
 //    targetDesktop()
     serializationJson()
+
+    supportFleks()
 }
 
 dependencies {

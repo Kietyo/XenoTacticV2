@@ -41,3 +41,8 @@ data class GoldensEntryHoverOnEvent(
 )
 
 object GoldensEntryHoverOutEvent
+
+data class UIEntityClickedEvent(
+    val view: View,
+    val entity: MapEntity
+)

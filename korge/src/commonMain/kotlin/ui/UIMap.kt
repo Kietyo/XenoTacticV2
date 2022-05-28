@@ -1,16 +1,19 @@
 package ui
 
 import com.soywiz.kmem.clamp
+import com.soywiz.korge.input.onClick
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
+import com.soywiz.korim.paint.Paint
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.line
+import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
@@ -21,6 +24,9 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.RockCounterUtil
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
+import engine.Engine
+import events.DummyEventBus
+import events.UIEntityClickedEvent
 import input_processors.PointerAction
 import korge_utils.MaterialColors
 import korge_utils.SpeedAreaColorUtil
@@ -51,13 +57,6 @@ data class UIMapSettings(
     val pathLinesWidth = gridSize * pathLinesRatio
 }
 
-inline fun Container.uiMap(
-    gameMap: GameMap,
-    shortestPath: PathSequence? = null,
-    uiMapSettings: UIMapSettings = UIMapSettings()
-): UIMap =
-    UIMap(gameMap, shortestPath, uiMapSettings).addTo(this)
-
 val ENTITY_TEXT_FONT = BitmapFont(
     font = DefaultTtfFont, 30.0, effect = BitmapEffect(
         //                        dropShadowX = 1,
@@ -69,6 +68,7 @@ val ENTITY_TEXT_FONT = BitmapFont(
 
 class UIMap(
     val gameMap: GameMap,
+    val engine: Engine? = null,
     shortestPath: PathSequence? = null,
     private val uiMapSettings: UIMapSettings = UIMapSettings()
 ) : Container(), View.Reference, EComponent {
@@ -82,11 +82,6 @@ class UIMap(
     val _entityToDrawnText = mutableMapOf<MapEntity, Text>()
 
     val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
-
-    val _boardBG = solidRect(
-        _gridSize * gameMap.width, _gridSize * gameMap.height,
-        MaterialColors.GREEN_600
-    )
 
     // Note that the order in which layers are initialized mattes here.
     val _boardLayer = this.container() {
@@ -105,6 +100,7 @@ class UIMap(
     val _speedAreaLayer = this.container()
 
     val _entityLayer = this.container()
+    val _selectionLayer = this.container()
 
     val _rockCountersLayer = this.container()
     val _rockCountersLayerMutex = Mutex()
@@ -131,6 +127,22 @@ class UIMap(
         renderEntities()
         renderRockCounters()
         renderPathLines(shortestPath)
+
+        engine?.eventBus?.register<UIEntityClickedEvent> {
+            val (worldWidth, worldHeight) = toWorldDimensions(it.entity, _gridSize)
+//            val solidRect = SolidRect(
+//                worldWidth + 10, worldHeight + 10,
+//                MaterialColors.YELLOW_900).addTo(_selectionLayer).apply {
+//                    centerOn(it.view)
+//            }
+
+            Graphics().addTo(_selectionLayer).apply {
+                stroke(Colors.YELLOW, StrokeInfo(3.0)) {
+                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                }
+                centerOn(it.view)
+            }
+        }
     }
 
     val xOffset: Double
@@ -236,7 +248,6 @@ class UIMap(
         }
     }
 
-
     fun drawGridLines() {
         _gridLinesGraphics.clear()
         _gridLinesGraphics.stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
@@ -287,67 +298,7 @@ class UIMap(
     }
 
     fun createEntityView(entity: MapEntity): View {
-        val (worldWidth, worldHeight) = toWorldDimensions(entity, _gridSize)
-        return when (entity) {
-            is MapEntity.CheckPoint -> {
-                Circle(worldWidth / 2, Colors.MAROON)
-            }
-            is MapEntity.Finish -> {
-                Circle(worldWidth / 2, Colors.MAGENTA)
-            }
-            is MapEntity.Start -> {
-                Circle(worldWidth / 2, Colors.RED)
-            }
-            is MapEntity.Tower -> {
-                Container().apply {
-                    this.solidRect(
-                        worldWidth, worldHeight,
-                        MaterialColors.YELLOW_500
-                    )
-                    this.solidRect(
-                        worldWidth - _borderSize, worldHeight - _borderSize,
-                        MaterialColors.YELLOW_900
-                    ).centerOn(this)
-                }
-            }
-            is MapEntity.Rock -> {
-                Container().apply {
-                    this.solidRect(
-                        worldWidth, worldHeight,
-                        MaterialColors.BROWN_500
-                    )
-                    this.solidRect(
-                        worldWidth - _borderSize, worldHeight - _borderSize,
-                        MaterialColors.BROWN_900
-                    ).centerOn(this)
-                }
-            }
-            is MapEntity.TeleportIn -> {
-                Circle(worldWidth / 2, Colors.GREEN.withAd(0.6))
-            }
-            is MapEntity.TeleportOut -> {
-                Circle(worldWidth / 2, Colors.RED.withAd(0.6))
-            }
-            is MapEntity.SmallBlocker -> {
-                Container().apply {
-                    this.solidRect(
-                        worldWidth, worldHeight,
-                        MaterialColors.YELLOW_500
-                    )
-                    this.solidRect(
-                        worldWidth - _borderSize, worldHeight - _borderSize,
-                        MaterialColors.YELLOW_900
-                    ).centerOn(this)
-                }
-            }
-            is MapEntity.SpeedArea -> {
-                val speedAreaColor = SpeedAreaColorUtil(
-                    entity,
-                    slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
-                ).withAd(0.7)
-                Circle(worldWidth / 2, speedAreaColor)
-            }
-        }
+        return UIEntity(entity, engine, _gridSize, _borderSize)
     }
 
     private fun renderEntityInternal(entity: MapEntity) {

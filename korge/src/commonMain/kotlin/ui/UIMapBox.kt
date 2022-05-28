@@ -68,11 +68,11 @@ class UIMapBox(
         mapContainer.scale = mapScale
         mapContainer.removeChildren()
         mapContainer.apply {
-            this.uiMap(
+            UIMap(
                 gameMap,
                 shortestPath = if (calculateMapPath) PathFinder.getShortestPath(gameMap) else
                     null,
-                UIMapSettings(
+                uiMapSettings = UIMapSettings(
                     drawGridNumbers = false,
                     gridSize = gameMapGridSize,
                     pathLinesRatio = (0.5 / mapScale) * PATH_LINES_RATIO,

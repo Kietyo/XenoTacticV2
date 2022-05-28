@@ -160,6 +160,7 @@ class GoldensViewerScene(
             overlayContainer.setOverlay(
                 UIMap(
                     it.gameMap,
+                    engine,
                     shortestPath = PathFinder.getShortestPath(it.gameMap)
                 )
             )

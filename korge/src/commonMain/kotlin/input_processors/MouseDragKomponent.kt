@@ -124,15 +124,15 @@ data class MouseDragKomponent(
 
         val state = getState(event)
 
-        println(
-            """
-            dragging: $dragging,
-            settings: $settings
-            event: $event,
-            state: $state
-            info: ${info.asString()}
-        """.trimIndent()
-        )
+//        println(
+//            """
+//            dragging: $dragging,
+//            settings: $settings
+//            event: $event,
+//            state: $state
+//            info: ${info.asString()}
+//        """.trimIndent()
+//        )
 
         if (state == MouseDragState.UNKNOWN) {
             require(!dragging)
@@ -145,7 +145,6 @@ data class MouseDragKomponent(
 
         when (state) {
             MouseDragState.START -> {
-                require(!dragging)
                 activeButton = event.button
                 dragging = true
                 startX = currentPosition.x

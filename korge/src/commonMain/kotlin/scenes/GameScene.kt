@@ -55,7 +55,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         //        this.setSize(gameMap.width * GRID_SIZE, gameMap.height * GRID_SIZE)
 
         val uiMap =
-            uiMap(gameMap, shortestPath = gameMapControllerComponent.shortestPath).apply {
+            UIMap(gameMap, engine, shortestPath = gameMapControllerComponent.shortestPath).apply {
                 draggable()
             }
         MapRendererUpdater(engine, uiMap, eventBus)
