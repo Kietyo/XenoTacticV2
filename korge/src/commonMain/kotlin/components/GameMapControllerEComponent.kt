@@ -128,8 +128,8 @@ class GameMapControllerEComponent(
             MapEntityType.CHECKPOINT -> "Checkpoint ${numCheckpoints + 1}"
             MapEntityType.ROCK -> "Rock"
             MapEntityType.TOWER -> TODO()
-            MapEntityType.TELEPORT_IN -> "Teleport In"
-            MapEntityType.TELEPORT_OUT -> TODO()
+            MapEntityType.TELEPORT_IN -> "Teleport In ${numTeleports + 1}"
+            MapEntityType.TELEPORT_OUT -> "Teleport Out ${numTeleports + 1}"
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
         }

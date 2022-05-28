@@ -10,6 +10,7 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import components.EditorEComponent
 import components.GameMapControllerEComponent
 import engine.Engine
+import ui.NotificationTextUpdateEvent
 import ui.UIMap
 import kotlin.math.ceil
 import kotlin.math.max
@@ -103,6 +104,9 @@ class EditorPlacementMouseKomponent(
                     stagingTeleportIn = entityToAdd as MapEntity.TeleportIn
                     editorComponent.entityTypeToPlace = MapEntityType.TELEPORT_OUT
                     uiMap.renderHighlightEntity(entityToAdd)
+                    engine.eventBus.send(NotificationTextUpdateEvent(
+                        gameMapControllerComponent.getNotificationText(MapEntityType.TELEPORT_OUT)
+                    ))
                     return
                 }
                 if (editorComponent.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {

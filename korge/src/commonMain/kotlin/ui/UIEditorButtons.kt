@@ -107,6 +107,7 @@ class UIEditorButtons(
         }
         editorComponent.isEditingEnabled = false
         uiMap.hideHighlightRectangle()
+        uiMap.clearHighlightLayer()
     }
 
     fun switchToEditingMode(entityType: MapEntityType) {
