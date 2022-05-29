@@ -17,8 +17,10 @@ import input_processors.CameraInputProcessor
 import input_processors.EditorPlacementMouseKomponent
 import input_processors.KeyInputProcessor
 import input_processors.MouseDragKomponent
+import input_processors.SelectorMouseComponent
 import korge_utils.alignBottomToBottomOfWindow
 import renderer.MapRendererUpdater
+import systems.SelectingEntitiesSystem
 import ui.UIEditorButtons
 import ui.UIMap
 import ui.UINotificationText
@@ -63,6 +65,7 @@ class EditorScene() : Scene() {
         addComponent(editorPlacementMouseKomponent)
         addComponent(KeyInputProcessor(this, engine))
         addComponent(CameraInputProcessor(uiMap, engine))
+        addComponent(SelectorMouseComponent(this, engine))
 
         MapRendererUpdater(engine, uiMap, eventBus)
 
@@ -70,6 +73,8 @@ class EditorScene() : Scene() {
             centerXOnStage()
             alignBottomToBottomOfWindow()
         }
+
+        SelectingEntitiesSystem(engine)
 
         //        addUpdater {
         //            if (false && currentMode == Mode.EDITING) {

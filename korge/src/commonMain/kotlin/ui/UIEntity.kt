@@ -4,13 +4,16 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.render.RenderContext
 import com.soywiz.korge.view.Circle
 import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.Graphics
 import com.soywiz.korge.view.SolidRect
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOn
 import com.soywiz.korge.view.centerOnStage
+import com.soywiz.korge.view.container
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korim.color.Colors
+import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import components.GameMapEComponent
@@ -24,8 +27,7 @@ class UIEntity(
     val engine: Engine?,
     val gridSize: Double,
     val borderSize: Double
-): Container() {
-
+) : Container() {
     init {
         val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
         when (entity) {
@@ -87,9 +89,48 @@ class UIEntity(
             engine?.eventBus?.send(
                 UIEntityClickedEvent(this, entity)
             )
-            println("""
+            println(
+                """
                     entity clicked: $entity
-                """.trimIndent())
+                """.trimIndent()
+            )
+        }
+    }
+
+    var selectionLayer = this.container()
+
+    var selectionBox: Graphics? = null
+
+    fun cancelSelection() {
+        selectionBox?.removeFromParent()
+        selectionBox = null
+    }
+
+    val IN_PROCESS_SELECTION_COLOR = Colors.YELLOW.withAd(0.5)
+    val SELECTION_COLOR = Colors.YELLOW
+
+    fun doInProcessSelection() {
+        if (selectionBox == null) {
+            val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
+            selectionBox = Graphics().addTo(this).apply {
+                stroke(IN_PROCESS_SELECTION_COLOR, com.soywiz.korim.vector.StrokeInfo(3.0)) {
+                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                }
+                centerOn(this)
+            }
+        }
+    }
+
+    fun doEndSelection() {
+        if (selectionBox != null) cancelSelection()
+        if (selectionBox == null) {
+            val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
+            selectionBox = Graphics().addTo(this).apply {
+                stroke(SELECTION_COLOR, com.soywiz.korim.vector.StrokeInfo(3.0)) {
+                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                }
+                centerOn(this)
+            }
         }
     }
 }

@@ -9,14 +9,31 @@ import com.soywiz.korge.view.*
 import com.soywiz.korio.async.runBlockingNoSuspensions
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.localCurrentDirVfs
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.Point
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
+fun getTopLeft(p1: Point, p2: Point): Point {
+    return Point(
+        minOf(p1.x, p2.x),
+        minOf(p1.y, p2.y)
+    )
+}
+
+fun getBottomRight(p1: Point, p2: Point): Point {
+    return Point(
+        maxOf(p1.x, p2.x),
+        maxOf(p1.y, p2.y)
+    )
+}
+
 fun <T : View> T.getReferenceParent(): Container {
     val parentView = this.parent!!
-    return parentView.referenceParent ?: parentView
+    return parentView.referenceParent
+        ?: parentView
 }
 
 fun <T : View> T.alignLeftToLeftOfWindow(): T {
@@ -60,10 +77,12 @@ fun <T : View> T.debugPrint() {
 
 fun <T : View> T.alignBottomToBottomOfWindow(): T {
     val windowsArea = this.getVisibleLocalArea()
-    println("""
+    println(
+        """
         alignBottomToBottomOfWindow:
         windowsArea: $windowsArea
-    """.trimIndent())
+    """.trimIndent()
+    )
     debugPrint()
     return alignBottomToBottomOfWindow(
         windowsArea.width.toInt() + windowsArea.x.toInt(),
@@ -79,13 +98,20 @@ fun <T : View> T.alignBottomToBottomOfWindow(
     val refParent = getReferenceParent()
     val resizeWHToLocal =
         refParent.globalToLocalXY(resizedWidth.toDouble(), resizedHeight.toDouble())
-    println("alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
-            "resizedHeight=$resizedHeight, yOffset=$yOffset):")
+    println(
+        "alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
+                "resizedHeight=$resizedHeight, yOffset=$yOffset):"
+    )
     debugPrint()
     println(
         """
         resizeWHToLocal: $resizeWHToLocal
-        refParent.globalToLocalXY(0.0, yOffset.toDouble()).y: ${refParent.globalToLocalXY(0.0, yOffset.toDouble()).y}
+        refParent.globalToLocalXY(0.0, yOffset.toDouble()).y: ${
+            refParent.globalToLocalXY(
+                0.0,
+                yOffset.toDouble()
+            ).y
+        }
     """.trimIndent()
     )
 

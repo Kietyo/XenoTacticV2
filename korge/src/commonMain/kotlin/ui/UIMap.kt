@@ -1,17 +1,16 @@
 package ui
 
 import com.soywiz.kmem.clamp
-import com.soywiz.korge.input.onClick
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
-import com.soywiz.korim.paint.Paint
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.line
 import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.globals.*
@@ -25,11 +24,9 @@ import com.xenotactic.gamelogic.utils.RockCounterUtil
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import engine.Engine
-import events.DummyEventBus
 import events.UIEntityClickedEvent
 import input_processors.PointerAction
 import korge_utils.MaterialColors
-import korge_utils.SpeedAreaColorUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
@@ -78,7 +75,7 @@ class UIMap(
     val _gridNumberFontSize = uiMapSettings.gridNumberFontSize
     val _pathLinesWidth = uiMapSettings.pathLinesWidth
 
-    val _drawnEntities = mutableMapOf<MapEntity, MutableList<View>>()
+    val _drawnEntities = mutableMapOf<MapEntity, MutableList<UIEntity>>()
     val _entityToDrawnText = mutableMapOf<MapEntity, Text>()
 
     val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
@@ -100,6 +97,7 @@ class UIMap(
     val _speedAreaLayer = this.container()
 
     val _entityLayer = this.container()
+
     val _selectionLayer = this.container()
 
     val _rockCountersLayer = this.container()
@@ -128,21 +126,21 @@ class UIMap(
         renderRockCounters()
         renderPathLines(shortestPath)
 
-        engine?.eventBus?.register<UIEntityClickedEvent> {
-            val (worldWidth, worldHeight) = toWorldDimensions(it.entity, _gridSize)
-//            val solidRect = SolidRect(
-//                worldWidth + 10, worldHeight + 10,
-//                MaterialColors.YELLOW_900).addTo(_selectionLayer).apply {
-//                    centerOn(it.view)
+//        engine?.eventBus?.register<UIEntityClickedEvent> {
+//            val (worldWidth, worldHeight) = toWorldDimensions(it.entity, _gridSize)
+////            val solidRect = SolidRect(
+////                worldWidth + 10, worldHeight + 10,
+////                MaterialColors.YELLOW_900).addTo(_selectionLayer).apply {
+////                    centerOn(it.view)
+////            }
+//
+//            Graphics().addTo(_selectionLayer).apply {
+//                stroke(Colors.YELLOW, StrokeInfo(3.0)) {
+//                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+//                }
+//                centerOn(it.view)
 //            }
-
-            Graphics().addTo(_selectionLayer).apply {
-                stroke(Colors.YELLOW, StrokeInfo(3.0)) {
-                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
-                }
-                centerOn(it.view)
-            }
-        }
+//        }
     }
 
     val xOffset: Double
@@ -297,7 +295,7 @@ class UIMap(
         }
     }
 
-    fun createEntityView(entity: MapEntity): View {
+    fun createEntityView(entity: MapEntity): UIEntity {
         return UIEntity(entity, engine, _gridSize, _borderSize)
     }
 
@@ -544,5 +542,12 @@ class UIMap(
             mapHeight - entityHeight
         )
         return gridXToInt to gridYToInt
+    }
+
+    fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
+        return _drawnEntities.values.asSequence().flatten().filter {
+            rect.intersects(it.getGlobalBounds())
+        }.toList()
+
     }
 }
