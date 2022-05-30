@@ -39,6 +39,7 @@ class SelectorMouseComponent(
     val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 
     var dragging = false
+    var isInitialClick = false
 
     var startPosition = Point()
     var currentPosition = Point()
@@ -53,6 +54,7 @@ class SelectorMouseComponent(
             event.button == MouseButton.LEFT
         ) {
             dragging = true
+            isInitialClick = true
             startPosition.copyFrom(views.globalMouseXY)
         }
 
@@ -60,6 +62,7 @@ class SelectorMouseComponent(
             event.button == MouseButton.LEFT
         ) {
             dragging = false
+            isInitialClick = false
             return
         }
 

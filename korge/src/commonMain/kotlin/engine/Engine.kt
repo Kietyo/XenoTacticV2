@@ -1,11 +1,15 @@
 package engine
 
+import com.github.quillraven.fleks.World
 import com.soywiz.korge.bus.Bus
 import events.EventBus
 import events.EventBusInterface
 import kotlin.reflect.KClass
 
-class Engine(val eventBus: EventBus) {
+class Engine(val eventBus: EventBus,
+             val world: World = World {
+
+             }) {
     val oneTimeComponents = mutableMapOf<KClass<out EComponent>, Any>()
 
     fun <T: EComponent> setOneTimeComponent(obj: T) {

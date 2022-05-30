@@ -6,6 +6,7 @@ import events.AddEntityEvent
 import events.EventBus
 import events.RemovedEntityEvent
 import events.UpdatedPathLengthEvent
+import fleks.components.RenderEntityComponent
 import ui.UIMap
 
 class MapRendererUpdater(
@@ -16,8 +17,12 @@ class MapRendererUpdater(
     val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
 
     init {
-        eventBus.register<AddEntityEvent> {
-            renderer.addEntity(it.entity)
+        eventBus.register<AddEntityEvent> {event ->
+            engine.world.entity {
+                add<RenderEntityComponent> {
+                    this.entity = event.entity
+                }
+            }
         }
         eventBus.register<RemovedEntityEvent> {
             renderer.handleRemoveEntityEvent(it)

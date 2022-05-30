@@ -24,7 +24,7 @@ import korge_utils.SpeedAreaColorUtil
 
 class UIEntity(
     val entity: MapEntity,
-    val engine: Engine?,
+//    val engine: Engine?,
     val gridSize: Double,
     val borderSize: Double
 ) : Container() {
@@ -85,16 +85,16 @@ class UIEntity(
             }
         }
 
-        onClick {
-            engine?.eventBus?.send(
-                UIEntityClickedEvent(this, entity)
-            )
-            println(
-                """
-                    entity clicked: $entity
-                """.trimIndent()
-            )
-        }
+//        onClick {
+//            engine?.eventBus?.send(
+//                UIEntityClickedEvent(this, entity)
+//            )
+//            println(
+//                """
+//                    entity clicked: $entity
+//                """.trimIndent()
+//            )
+//        }
     }
 
     var selectionLayer = this.container()

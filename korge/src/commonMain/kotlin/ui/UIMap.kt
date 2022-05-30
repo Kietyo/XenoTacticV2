@@ -12,7 +12,6 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.line
-import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
@@ -24,7 +23,6 @@ import com.xenotactic.gamelogic.utils.RockCounterUtil
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import engine.Engine
-import events.UIEntityClickedEvent
 import input_processors.PointerAction
 import korge_utils.MaterialColors
 import kotlinx.coroutines.GlobalScope
@@ -67,7 +65,8 @@ class UIMap(
     val gameMap: GameMap,
     val engine: Engine? = null,
     shortestPath: PathSequence? = null,
-    private val uiMapSettings: UIMapSettings = UIMapSettings()
+    private val uiMapSettings: UIMapSettings = UIMapSettings(),
+    initialRenderEntities: Boolean = true
 ) : Container(), View.Reference, EComponent {
     val _gridSize = uiMapSettings.gridSize
     val _borderSize = uiMapSettings.borderSize
@@ -122,7 +121,9 @@ class UIMap(
         drawBoard()
         drawGridNumbers()
         drawGridLines()
-        renderEntities()
+        if (initialRenderEntities) {
+            renderEntities()
+        }
         renderRockCounters()
         renderPathLines(shortestPath)
 
@@ -296,7 +297,8 @@ class UIMap(
     }
 
     fun createEntityView(entity: MapEntity): UIEntity {
-        return UIEntity(entity, engine, _gridSize, _borderSize)
+//        return UIEntity(entity, engine, _gridSize, _borderSize)
+        return UIEntity(entity, _gridSize, _borderSize)
     }
 
     private fun renderEntityInternal(entity: MapEntity) {

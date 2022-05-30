@@ -1,18 +1,18 @@
 package scenes
 
-import com.soywiz.korge.input.*
+import com.github.quillraven.fleks.World
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.*
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.MapEntityType
 import components.EditorEComponent
 import components.GameMapControllerEComponent
 import components.NotificationTextEComponent
 import components.UIMapEComponent
 import engine.Engine
 import events.EventBus
+import fleks.components.RenderEntityComponent
+import fleks.listeners.RenderEntityComponentListener
+import fleks.systems.RenderingSystem
 import input_processors.CameraInputProcessor
 import input_processors.EditorPlacementMouseKomponent
 import input_processors.KeyInputProcessor
@@ -31,12 +31,22 @@ class EditorScene() : Scene() {
         val gameMap = GameMap(20, 20)
         val eventBus = EventBus(this@EditorScene)
 
-        val engine = Engine(eventBus)
-
         val uiMap =
-            UIMap(gameMap, engine).addTo(this).apply { //                draggableCloseable = draggableCloseable()
+            UIMap(gameMap, engine = null).addTo(this).apply { //                draggableCloseable = draggableCloseable()
                 centerOnStage()
             }
+
+        val world = World {
+//            system(::RenderingSystem)
+
+            component(::RenderEntityComponent, ::RenderEntityComponentListener)
+
+            inject(uiMap)
+        }
+
+        val engine = Engine(eventBus, world)
+
+
 
         val mouseDragKomponent = MouseDragKomponent(uiMap)
 //        uiMap.addComponent(mouseDragKomponent)
@@ -96,5 +106,6 @@ class EditorScene() : Scene() {
         //            }
         //        }
         //
+
     }
 }
