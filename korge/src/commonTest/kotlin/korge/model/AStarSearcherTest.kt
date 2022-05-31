@@ -483,7 +483,6 @@ internal class AStarSearcherTest {
         }
 
         println(counters)
-        Unit
     }
 
     @Test

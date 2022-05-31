@@ -1,3 +1,4 @@
+
 buildscript {
     val korgePluginVersion: String by project
 
@@ -19,5 +20,6 @@ allprojects {
         mavenLocal()
         google()
         maven { url = uri("https://plugins.gradle.org/m2/") }
+
     }
 }

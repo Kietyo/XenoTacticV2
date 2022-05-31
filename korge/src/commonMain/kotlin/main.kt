@@ -1,4 +1,3 @@
-import bridges.MapBridge
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.Korge
 import com.soywiz.korge.scene.Module
@@ -10,11 +9,17 @@ import com.soywiz.korinject.AsyncInjector
 import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.SizeInt
 import com.xenotactic.gamelogic.model.GameMap
-import events.EventBus
+import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.korge.bridges.MapBridge
+import com.xenotactic.korge.events.EventBus
+import com.xenotactic.korge.scenes.EditorScene
+import com.xenotactic.korge.scenes.GameScene
+import com.xenotactic.korge.scenes.GoldensViewerScene
+import com.xenotactic.korge.scenes.MapViewerScene
+import com.xenotactic.korge.scenes.RootScene
+import com.xenotactic.korge.scenes.TestScene
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import com.xenotactic.gamelogic.model.MapEntity
-import scenes.*
 import kotlin.reflect.KClass
 
 object MainModule : Module() {
