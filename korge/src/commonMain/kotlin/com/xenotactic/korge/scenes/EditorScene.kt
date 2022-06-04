@@ -18,7 +18,7 @@ import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.EditorPlacementMouseKomponent
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragKomponent
-import com.xenotactic.korge.input_processors.SelectorMouseComponent
+import com.xenotactic.korge.input_processors.SelectorMouseProcessor
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.renderer.MapRendererUpdater
 import com.xenotactic.korge.systems.SelectingEntitiesSystem
@@ -48,8 +48,6 @@ class EditorScene : Scene() {
 
         val engine = Engine(eventBus, world)
 
-
-
         val mouseDragKomponent = MouseDragKomponent(uiMap)
 //        uiMap.addComponent(mouseDragKomponent)
 
@@ -74,10 +72,13 @@ class EditorScene : Scene() {
             this, uiMap, engine
         )
 
-        addComponent(editorPlacementMouseKomponent)
         addComponent(KeyInputProcessor(this, engine))
         addComponent(CameraInputProcessor(uiMap, engine))
-        addComponent(SelectorMouseComponent(this, engine))
+        SelectorMouseProcessor(this, engine).let {
+            addComponent(it)
+            engine.setOneTimeComponent(it)
+        }
+        addComponent(editorPlacementMouseKomponent)
 
         MapRendererUpdater(engine, uiMap, eventBus)
 

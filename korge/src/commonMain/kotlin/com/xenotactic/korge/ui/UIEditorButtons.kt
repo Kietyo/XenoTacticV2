@@ -12,14 +12,14 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.input_processors.MouseDragKomponent
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
+import com.xenotactic.korge.input_processors.SelectorMouseProcessor
 
-class UIEditorButtons(
-    val engine: Engine
-) : Container() {
+class UIEditorButtons(val engine: Engine) : Container() {
     val editorComponent = engine.getOneTimeComponent<EditorEComponent>()
     val uiMapComponent = engine.getOneTimeComponent<UIMapEComponent>()
     val mouseDragKomponent = engine.getOneTimeComponent<MouseDragKomponent>()
     val gameMapControllerEComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+    val selectorMouseProcessor = engine.getOneTimeComponent<SelectorMouseProcessor>()
 
     val uiMap = uiMapComponent.uiMap
 
@@ -95,26 +95,25 @@ class UIEditorButtons(
     }
 
     fun switchToPlayingMode() {
-        engine.eventBus.send(NotificationTextUpdateEvent(
-            DEFAULT_NOTIFICATION_TEXT
-        ))
+        engine.eventBus.send(NotificationTextUpdateEvent(DEFAULT_NOTIFICATION_TEXT))
         mouseDragKomponent.adjustSettings {
             allowLeftClickDragging = true
         }
         editorComponent.isEditingEnabled = false
         uiMap.hideHighlightRectangle()
         uiMap.clearHighlightLayer()
+        selectorMouseProcessor.isEnabled = true
+        println("selectorMouseProcessor is enabled")
     }
 
     fun switchToEditingMode(entityType: MapEntityType) {
-        engine.eventBus.send(NotificationTextUpdateEvent(
-            gameMapControllerEComponent.getNotificationText(entityType)
-        ))
+        engine.eventBus.send(NotificationTextUpdateEvent(gameMapControllerEComponent.getNotificationText(entityType)))
         mouseDragKomponent.adjustSettings {
             allowLeftClickDragging = false
         }
         editorComponent.isEditingEnabled = true
         editorComponent.entityTypeToPlace = entityType
+        selectorMouseProcessor.isEnabled = false
     }
 
 }

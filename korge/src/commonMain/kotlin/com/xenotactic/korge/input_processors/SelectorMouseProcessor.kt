@@ -12,6 +12,7 @@ import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
 import com.xenotactic.korge.components.UIMapEComponent
+import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.korge.ui.UIEntity
@@ -24,11 +25,12 @@ data class SelectedUIEntitiesEvent(
     val newSelectionSnapshot: List<UIEntity>
 )
 
-class SelectorMouseComponent(
+class SelectorMouseProcessor(
     override val view: Container,
-    val engine: Engine
+    val engine: Engine,
+    var isEnabled: Boolean = true
 ) :
-    MouseComponent {
+    MouseComponent, EComponent {
 
     val uiMap = engine.getOneTimeComponent<UIMapEComponent>().uiMap
 
@@ -43,8 +45,12 @@ class SelectorMouseComponent(
     var previousSelectionSnapshot = emptyList<UIEntity>()
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
+        if (!isEnabled) return
         if (event.type == MouseEvent.Type.MOVE) return
-        println(event)
+        println("""
+            selectorMouseComponent:
+            event: $event
+        """.trimIndent())
 
         if (event.type == MouseEvent.Type.DOWN &&
             event.button == MouseButton.LEFT

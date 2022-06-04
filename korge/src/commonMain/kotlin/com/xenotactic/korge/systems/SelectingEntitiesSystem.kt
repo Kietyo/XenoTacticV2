@@ -10,7 +10,6 @@ class SelectingEntitiesSystem(
 ) {
 
     init {
-
         engine.eventBus.register<SelectedUIEntitiesEvent> {
             when (it.type) {
                 SelectionType.PRE_SELECTION -> {
