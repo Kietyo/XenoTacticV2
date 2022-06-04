@@ -22,7 +22,6 @@ import com.xenotactic.korge.ui.uiMapInspector
 import getGoldenJsonFiles
 import kotlinx.coroutines.launch
 import toGameMap
-import ui.*
 import verify
 
 

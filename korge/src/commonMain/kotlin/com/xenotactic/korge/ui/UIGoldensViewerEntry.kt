@@ -1,6 +1,7 @@
 package com.xenotactic.korge.ui
 
 import MapVerificationResult
+import com.github.quillraven.fleks.Inject
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onOver
@@ -15,6 +16,8 @@ import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
+import com.xenotactic.korge.fleks.components.EntityRenderComponent
+import com.xenotactic.korge.fleks.components.EntityUIComponent
 import com.xenotactic.korge.korge_utils.MaterialColors
 import existsBlocking
 import kotlinx.coroutines.Dispatchers
@@ -76,6 +79,7 @@ class UIGoldensViewerEntry(
         val entrySettings = when (verificationResult) {
             MapVerificationResult.Success -> EntrySettings(Colors.GREEN, false)
             is MapVerificationResult.Failure -> EntrySettings(Colors.RED, true)
+            else -> TODO()
         }
 
         val outlineRect = this.roundRect(
@@ -133,3 +137,5 @@ class UIGoldensViewerEntry(
         val logger = Logger<UIGoldensViewerEntry>()
     }
 }
+
+

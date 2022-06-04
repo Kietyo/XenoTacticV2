@@ -30,7 +30,6 @@ import com.xenotactic.korge.ui.uiActiveTextNotifier
 import com.xenotactic.korge.ui.uiPlacement
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import ui.*
 
 class GameScene(val mapBridge: MapBridge) : Scene() {
     val eventBus = EventBus(MainScope())

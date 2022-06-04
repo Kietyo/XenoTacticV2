@@ -30,7 +30,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import pathing.PathFinder
 import toGameMap
-import ui.*
 import verify
 
 enum class MapFilterOptions(val text: String) {

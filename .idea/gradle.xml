@@ -13,6 +13,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Client" />
+            <option value="$PROJECT_DIR$/Fleks" />
             <option value="$PROJECT_DIR$/Server" />
             <option value="$PROJECT_DIR$/XenoTactic-GameLogic" />
             <option value="$PROJECT_DIR$/korge" />

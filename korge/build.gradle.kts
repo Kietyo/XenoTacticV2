@@ -62,9 +62,10 @@ korge {
 //    targetDesktop()
     serializationJson()
 
-    supportFleks()
+//    supportFleks()
 }
 
 dependencies {
     add("commonMainImplementation", project(":XenoTactic-GameLogic"))
+    add("commonMainImplementation", project(":Fleks"))
 }
