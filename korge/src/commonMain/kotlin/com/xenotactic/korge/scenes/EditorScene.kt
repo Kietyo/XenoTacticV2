@@ -12,6 +12,8 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.fleks.components.EntityRenderComponent
 import com.xenotactic.korge.fleks.components.EntityUIComponent
+import com.xenotactic.korge.fleks.components.PreSelectionComponent
+import com.xenotactic.korge.fleks.listeners.PreSelectionComponentListener
 import com.xenotactic.korge.fleks.listeners.RenderEntityComponentListener
 import com.xenotactic.korge.fleks.systems.RenderEntitySystem
 import com.xenotactic.korge.input_processors.CameraInputProcessor
@@ -33,7 +35,7 @@ class EditorScene : Scene() {
         val eventBus = EventBus(this@EditorScene)
 
         val uiMap =
-            UIMap(gameMap, engine = null).addTo(this).apply { //                draggableCloseable = draggableCloseable()
+            UIMap(gameMap, engine = null, initialRenderEntities = false).addTo(this).apply { //                draggableCloseable = draggableCloseable()
                 centerOnStage()
             }
 
@@ -44,6 +46,8 @@ class EditorScene : Scene() {
             component(::EntityUIComponent)
 
             inject(uiMap)
+
+            component(::PreSelectionComponent, ::PreSelectionComponentListener)
         }
 
         val engine = Engine(eventBus, world)

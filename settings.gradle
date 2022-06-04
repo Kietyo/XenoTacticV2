@@ -1,7 +1,7 @@
 //enableFeaturePreview("GRADLE_METADATA")
 
-include(":Client")
-include(":Server")
+//include(":Client")
+//include(":Server")
 include(":XenoTactic-GameLogic")
-include(":korge")
-include(":Fleks")
+//include(":korge")
+//include(":Fleks")

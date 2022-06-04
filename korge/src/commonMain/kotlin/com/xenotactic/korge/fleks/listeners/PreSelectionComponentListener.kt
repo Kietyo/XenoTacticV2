@@ -6,7 +6,7 @@ import com.github.quillraven.fleks.Inject
 import com.xenotactic.korge.fleks.components.EntityRenderComponent
 import com.xenotactic.korge.fleks.components.PreSelectionComponent
 
-class SelectionComponentListener : ComponentListener<PreSelectionComponent> {
+class PreSelectionComponentListener : ComponentListener<PreSelectionComponent> {
 
     val entityRenderComponentMapper = Inject.componentMapper<EntityRenderComponent>()
 

@@ -23,12 +23,13 @@ class MapRendererUpdater(
                     this.entity = event.entity
                 }
             }
-
         }
         eventBus.register<RemovedEntityEvent> {
-            renderer.handleRemoveEntityEvent(it)
+            TODO()
+//            renderer.handleRemoveEntityEvent(it)
         }
         eventBus.register<UpdatedPathLengthEvent> {
+            TODO()
             renderer.renderPathLines(gameMapControllerComponent.shortestPath)
         }
     }
