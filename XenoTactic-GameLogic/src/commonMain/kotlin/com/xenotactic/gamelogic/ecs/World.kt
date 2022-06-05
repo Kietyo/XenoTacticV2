@@ -87,11 +87,7 @@ class World {
     return newEntity
   }
 
-  fun createFamily(familyConfiguration: FamilyConfiguration): Family {
+  fun addFamily(familyConfiguration: FamilyConfiguration): Family {
     return familyService.createFamily(familyConfiguration)
   }
 }
-
-object PreSelectComponent
-object SelectedCoponent
-

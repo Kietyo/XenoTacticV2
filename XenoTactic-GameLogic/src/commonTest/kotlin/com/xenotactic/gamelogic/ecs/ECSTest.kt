@@ -5,8 +5,6 @@ import kotlin.test.assertEquals
 
 internal class ECSTest {
 
-
-
     @Test
     fun entityWithComponentGetsReturned() {
         val world = World()

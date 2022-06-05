@@ -10,7 +10,7 @@ internal class FamilyTest {
     fun familyTest1() {
         val world = World()
 
-        val family = world.createFamily(
+        val family = world.addFamily(
             FamilyConfiguration(
                 allOfComponents = listOf(TestComponent::class)
             )
@@ -18,5 +18,10 @@ internal class FamilyTest {
 
         assertEquals(family.getEntities().size, 0)
 
+        val entity = world.addEntity {
+            addOrReplaceComponent(TestComponent("test"))
+        }
+
+        assertEquals(family.getEntities().size, 1)
     }
 }
