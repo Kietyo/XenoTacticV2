@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 //apply<KorgeGradlePlugin>()
 
 //apply(plugin = "kotlin")
@@ -14,8 +16,8 @@ repositories {
 }
 
 plugins {
-//    kotlin("multiplatform") version "1.7.0-RC"
-    kotlin("multiplatform") version "1.6.21"
+    kotlin("multiplatform") version "1.7.0-RC"
+//    kotlin("multiplatform") version "1.6.21"
     kotlin("plugin.serialization") version "1.6.21"
     id("maven-publish")
     id("org.jetbrains.kotlin.plugin.allopen") version "1.6.0"
@@ -142,3 +144,11 @@ benchmark {
         register("jvm")
     }
 }
+//val compileKotlin: KotlinCompile by tasks
+//compileKotlin.kotlinOptions {
+//    languageVersion = "1.7"
+//}
+//val compileKotlin: KotlinCompile by tasks
+//compileKotlin.kotlinOptions {
+//    languageVersion = "1.7"
+//}
