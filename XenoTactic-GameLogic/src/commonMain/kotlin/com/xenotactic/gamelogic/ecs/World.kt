@@ -23,7 +23,7 @@ class EntityService() {
 }
 
 abstract class ComponentService {
-  open val componentTypeToArray: Map<KClass<out Any>, ArrayList<Any>> = emptyMap()
+  open val componentTypeToArray: Map<KClass<out Any>, ComponentEntityContainer<Any>> = emptyMap()
 
   inline fun <reified T> getComponentForEntity(entity: Entity): T {
     return getComponentForEntityOrNull(entity) ?: throw ECSComponentNotFoundException {
@@ -33,25 +33,41 @@ abstract class ComponentService {
 
   inline fun <reified T> getComponentForEntityOrNull(entity: Entity): T? {
     val arr = componentTypeToArray[T::class] ?: return null
-    return arr[entity.id] as T
+    return arr.getComponentOrNull(entity.id) as T
+  }
+}
+
+class ComponentEntityContainer<T>() {
+  val entityIdToComponentMap: MutableMap<Int, T> = mutableMapOf()
+
+  fun setComponent(entityId: Int, component: T) {
+    entityIdToComponentMap.put(entityId, component)
+  }
+
+  fun getComponentOrNull(entityId: Int): T? {
+    return entityIdToComponentMap.get(entityId)
+  }
+
+  fun removeComponent(entityId: Int): T? {
+    return entityIdToComponentMap.remove(entityId)
   }
 }
 
 class MutableComponentService(): ComponentService() {
-  override val componentTypeToArray = mutableMapOf<KClass<out Any>, ArrayList<Any>>()
+  override val componentTypeToArray = mutableMapOf<KClass<out Any>, ComponentEntityContainer<Any>>()
 
   fun <T> addComponentForEntity(entityId: Int, component: T) {
-    val list = componentTypeToArray.getOrPut(component!!::class) {
-      ArrayList()
+    val container = componentTypeToArray.getOrPut(component!!::class) {
+      ComponentEntityContainer()
     }
-    list.add(entityId, component)
+    container.setComponent(entityId, component)
   }
 
   // Returns true if the entity had the component, and the component was removed.
-//  inline fun <reified T> removeComponentForEntity(entity: Entity): Boolean {
-//    val list = componentTypeToArray.get(T::class)
-//    list.
-//  }
+  inline fun <reified T> removeComponentForEntity(entity: Entity): T? {
+    val container = componentTypeToArray[T::class] ?: return null
+    return container.removeComponent(entity.id) as T
+  }
 }
 
 class EntityBuilder(
