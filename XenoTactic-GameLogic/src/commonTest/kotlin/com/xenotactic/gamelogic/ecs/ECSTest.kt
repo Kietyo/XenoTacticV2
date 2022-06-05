@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 internal class ECSTest {
 
-    data class TestComponent(val value: String)
+
 
     @Test
     fun entityWithComponentGetsReturned() {
@@ -13,7 +13,7 @@ internal class ECSTest {
         val component = TestComponent("test")
 
         val entity = world.addEntity {
-            addComponent(component)
+            addOrReplaceComponent(component)
         }
 
         assertEquals(entity.getComponent(), component)

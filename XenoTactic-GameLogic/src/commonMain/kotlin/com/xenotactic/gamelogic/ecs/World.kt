@@ -6,15 +6,32 @@ class Entity(
         val id: Int,
         val componentService: ComponentService
 ) {
+  inline fun <T> addOrReplaceComponent(component: T) {
+    componentService.addOrReplaceComponentForEntity(id, component)
+  }
   inline fun <reified T> getComponent(): T {
     return componentService.getComponentForEntity<T>(this)
   }
   inline fun <reified T> getComponentOrNull(): T? {
     return componentService.getComponentForEntityOrNull<T>(this)
   }
+
+  inline fun containsComponent(klass: KClass<*>): Boolean {
+    return componentService.containsComponentForEntity(klass, this)
+  }
+
+  fun matchesFamilyConfiguration(familyConfiguration: FamilyConfiguration): Boolean {
+    return familyConfiguration.allOfComponents.all {
+      containsComponent(it)
+    } && familyConfiguration.anyOfComponents.any {
+      containsComponent(it)
+    } && familyConfiguration.noneOfComponents.none {
+      containsComponent(it)
+    }
+  }
 }
 
-class EntityService() {
+class EntityIdService() {
   private var nextId: Int = 0
 
   fun getNewEntityId(): Int {
@@ -22,20 +39,7 @@ class EntityService() {
   }
 }
 
-abstract class ComponentService {
-  open val componentTypeToArray: Map<KClass<out Any>, ComponentEntityContainer<Any>> = emptyMap()
 
-  inline fun <reified T> getComponentForEntity(entity: Entity): T {
-    return getComponentForEntityOrNull(entity) ?: throw ECSComponentNotFoundException {
-      "No component type ${T::class} found for entity: ${entity.id}"
-    }
-  }
-
-  inline fun <reified T> getComponentForEntityOrNull(entity: Entity): T? {
-    val arr = componentTypeToArray[T::class] ?: return null
-    return arr.getComponentOrNull(entity.id) as T
-  }
-}
 
 class ComponentEntityContainer<T>() {
   val entityIdToComponentMap: MutableMap<Int, T> = mutableMapOf()
@@ -51,42 +55,40 @@ class ComponentEntityContainer<T>() {
   fun removeComponent(entityId: Int): T? {
     return entityIdToComponentMap.remove(entityId)
   }
-}
 
-class MutableComponentService(): ComponentService() {
-  override val componentTypeToArray = mutableMapOf<KClass<out Any>, ComponentEntityContainer<Any>>()
-
-  fun <T> addComponentForEntity(entityId: Int, component: T) {
-    val container = componentTypeToArray.getOrPut(component!!::class) {
-      ComponentEntityContainer()
-    }
-    container.setComponent(entityId, component)
-  }
-
-  // Returns true if the entity had the component, and the component was removed.
-  inline fun <reified T> removeComponentForEntity(entity: Entity): T? {
-    val container = componentTypeToArray[T::class] ?: return null
-    return container.removeComponent(entity.id) as T
+  fun containsComponent(entityId: Int): Boolean {
+    return entityIdToComponentMap.containsKey(entityId)
   }
 }
+
+
 
 class EntityBuilder(
         val entityId: Int,
-        private val mutableComponentService: MutableComponentService
+        private val componentService: ComponentService
 ) {
-  fun <T> addComponent(component: T) {
-    mutableComponentService.addComponentForEntity(entityId, component)
+  fun <T> addOrReplaceComponent(component: T) {
+    componentService.addOrReplaceComponentForEntity(entityId, component)
   }
 }
 
 class World {
-  val entityService = EntityService()
-  val mutableComponentService = MutableComponentService()
+  private val entityIdService = EntityIdService()
+  private val componentService = ComponentService(this)
+  private val familyService = FamilyService(this)
+
+  internal val entities = arrayListOf<Entity>()
 
   fun addEntity(builder: EntityBuilder.() -> Unit): Entity {
-    val id = entityService.getNewEntityId()
-    builder(EntityBuilder(id, mutableComponentService))
-    return Entity(id, mutableComponentService)
+    val id = entityIdService.getNewEntityId()
+    builder(EntityBuilder(id, componentService))
+    val newEntity = Entity(id, componentService)
+    entities.add(newEntity)
+    return newEntity
+  }
+
+  fun createFamily(familyConfiguration: FamilyConfiguration): Family {
+    return familyService.createFamily(familyConfiguration)
   }
 }
 
