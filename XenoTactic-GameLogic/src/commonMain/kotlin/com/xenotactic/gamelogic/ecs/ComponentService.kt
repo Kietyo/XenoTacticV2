@@ -15,24 +15,36 @@ class ComponentService(
 
     inline fun <reified T> getComponentForEntityOrNull(entity: Entity): T? {
         val arr = componentTypeToArray[T::class] ?: return null
-        return arr.getComponentOrNull(entity.id) as T
+        return arr.getComponentOrNull(entity) as T
     }
 
     fun containsComponentForEntity(kClass: KClass<*>, entity: Entity): Boolean {
         val arr = componentTypeToArray[kClass] ?: return false
-        return arr.containsComponent(entity.id)
+        return arr.containsComponent(entity)
     }
 
-    fun <T> addOrReplaceComponentForEntity(entityId: Int, component: T) {
+    fun <T> addOrReplaceComponentForEntity(entity: Entity, component: T) {
+        val klass = component!!::class
         val container = componentTypeToArray.getOrPut(component!!::class) {
             ComponentEntityContainer()
         }
-        container.setComponent(entityId, component)
+        container.addOrReplaceComponent(entity, component)
+    }
+
+    fun getOrPutContainer(klass: KClass<*>): ComponentEntityContainer<Any> {
+        return componentTypeToArray.getOrPut(klass) {
+            ComponentEntityContainer()
+        }
     }
 
     // Returns true if the entity had the component, and the component was removed.
     inline fun <reified T> removeComponentForEntity(entity: Entity): T? {
         val container = componentTypeToArray[T::class] ?: return null
-        return container.removeComponent(entity.id) as T
+        return container.removeComponent(entity) as T
+    }
+
+    inline fun <reified T> addComponentListener(listener: ComponentListener<T>) {
+        val container = getOrPutContainer(T::class) as ComponentEntityContainer<T>
+        container.addListener(listener)
     }
 }
