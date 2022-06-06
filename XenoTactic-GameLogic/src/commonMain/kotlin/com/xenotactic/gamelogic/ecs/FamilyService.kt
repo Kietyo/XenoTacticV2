@@ -12,6 +12,10 @@ data class Family(
     private var entities: ArrayList<Entity>
 ) {
     fun getEntities() : List<Entity> = entities
+
+    internal fun addEntity(entity: Entity) {
+        entities.add(entity)
+    }
 }
 
 data class FamilyNode(
@@ -24,6 +28,14 @@ class FamilyService(
 ) {
 
     val families = mutableMapOf<FamilyConfiguration, FamilyNode>()
+
+    fun updateFamiliesWithNewEntity(newEntity: Entity) {
+        for ((config, node) in families) {
+            if (newEntity.matchesFamilyConfiguration(config)) {
+                node.family.addEntity(newEntity)
+            }
+        }
+    }
 
     fun createFamily(familyConfiguration: FamilyConfiguration): Family {
         val node = families.getOrPut(familyConfiguration) {
