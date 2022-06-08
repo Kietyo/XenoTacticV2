@@ -2,7 +2,7 @@ package com.xenotactic.gamelogic.ecs;
 
 class World {
     private val entityIdService = EntityIdService()
-    internal val componentService = ComponentService(this)
+    val componentService = ComponentService(this)
     private val familyService = FamilyService(this)
 
     internal val entities = arrayListOf<Entity>()
@@ -21,7 +21,7 @@ class World {
         return familyService.createFamily(familyConfiguration)
     }
 
-    internal inline fun <reified T> addComponentListener(listener: ComponentListener<T>) {
+    inline fun <reified T> addComponentListener(listener: ComponentListener<T>) {
         componentService.addComponentListener(listener)
     }
 }

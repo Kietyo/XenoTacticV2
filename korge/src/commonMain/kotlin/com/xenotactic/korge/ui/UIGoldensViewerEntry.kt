@@ -1,7 +1,6 @@
 package com.xenotactic.korge.ui
 
 import MapVerificationResult
-import com.github.quillraven.fleks.Inject
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onOver

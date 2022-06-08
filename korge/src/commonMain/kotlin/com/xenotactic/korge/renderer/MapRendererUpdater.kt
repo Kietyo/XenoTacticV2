@@ -11,7 +11,7 @@ import com.xenotactic.korge.ui.UIMap
 
 class MapRendererUpdater(
     val engine: Engine,
-    val renderer: UIMap,
+    val uiMap: UIMap,
     val eventBus: EventBus
 ) {
     val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
@@ -27,8 +27,8 @@ class MapRendererUpdater(
 //            renderer.handleRemoveEntityEvent(it)
         }
         eventBus.register<UpdatedPathLengthEvent> {
-            TODO()
-            renderer.renderPathLines(gameMapControllerComponent.shortestPath)
+//            TODO()
+            uiMap.renderPathLines(gameMapControllerComponent.shortestPath)
         }
     }
 }

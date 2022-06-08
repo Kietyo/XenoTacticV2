@@ -13,9 +13,7 @@ import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.fleks.components.EntityRenderComponent
 import com.xenotactic.korge.fleks.components.EntityUIComponent
 import com.xenotactic.korge.fleks.components.PreSelectionComponent
-import com.xenotactic.korge.fleks.listeners.PreSelectionComponentListener
 import com.xenotactic.korge.fleks.listeners.RenderEntityComponentListener
-import com.xenotactic.korge.fleks.systems.RenderEntitySystem
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.EditorPlacementMouseKomponent
 import com.xenotactic.korge.input_processors.KeyInputProcessor
@@ -39,25 +37,24 @@ class EditorScene : Scene() {
                 centerOnStage()
             }
 
-        val world = World().apply {
-            addComponentListener()
-        }
-
-        val world = World {
-            system(::RenderEntitySystem)
-
-            component(::EntityRenderComponent, ::RenderEntityComponentListener)
-            component(::EntityUIComponent)
-
-            inject(uiMap)
-
-            component(::PreSelectionComponent, ::PreSelectionComponentListener)
-        }
-
+        val world = World()
         val engine = Engine(eventBus, world)
 
+//        val world = World {
+//            system(::RenderEntitySystem)
+//
+//            component(::EntityRenderComponent, ::RenderEntityComponentListener)
+//            component(::EntityUIComponent)
+//
+//            inject(uiMap)
+//
+//            component(::PreSelectionComponent, ::PreSelectionComponentListener)
+//        }
+
+
+
         val mouseDragKomponent = MouseDragKomponent(uiMap)
-//        uiMap.addComponent(mouseDragKomponent)
+        //        uiMap.addComponent(mouseDragKomponent)
 
         val editorComponent = EditorEComponent()
 
@@ -74,6 +71,10 @@ class EditorScene : Scene() {
             centerXOnStage()
         }
         engine.setOneTimeComponent(NotificationTextEComponent(notificationText))
+
+        world.apply {
+            addComponentListener(RenderEntityComponentListener(engine))
+        }
 
 
         val editorPlacementMouseKomponent = EditorPlacementMouseKomponent(
