@@ -18,10 +18,8 @@ class MapRendererUpdater(
 
     init {
         eventBus.register<AddEntityEvent> { event ->
-            engine.world.entity {
-                add<EntityRenderComponent> {
-                    this.entity = event.entity
-                }
+            engine.world.addEntity {
+                addOrReplaceComponent(EntityRenderComponent(event.entity))
             }
         }
         eventBus.register<RemovedEntityEvent> {

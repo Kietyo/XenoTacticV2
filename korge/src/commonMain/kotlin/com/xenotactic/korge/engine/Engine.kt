@@ -1,13 +1,11 @@
 package com.xenotactic.korge.engine
 
-import com.github.quillraven.fleks.World
+import com.xenotactic.gamelogic.ecs.World
 import com.xenotactic.korge.events.EventBus
 import kotlin.reflect.KClass
 
 class Engine(val eventBus: EventBus,
-             val world: World = World {
-
-             }) {
+             val world: World) {
     val oneTimeComponents = mutableMapOf<KClass<out EComponent>, Any>()
 
     fun <T: EComponent> setOneTimeComponent(obj: T) {

@@ -1,8 +1,8 @@
 package com.xenotactic.korge.scenes
 
-import com.github.quillraven.fleks.World
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
+import com.xenotactic.gamelogic.ecs.World
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.korge.components.EditorEComponent
 import com.xenotactic.korge.components.GameMapControllerEComponent
@@ -38,6 +38,10 @@ class EditorScene : Scene() {
             UIMap(gameMap, engine = null, initialRenderEntities = false).addTo(this).apply { //                draggableCloseable = draggableCloseable()
                 centerOnStage()
             }
+
+        val world = World().apply {
+            addComponentListener()
+        }
 
         val world = World {
             system(::RenderEntitySystem)

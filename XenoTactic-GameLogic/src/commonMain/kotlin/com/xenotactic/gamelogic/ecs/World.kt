@@ -7,7 +7,7 @@ class World {
 
     internal val entities = arrayListOf<Entity>()
 
-    fun addEntity(builder: EntityBuilder.() -> Unit): Entity {
+    fun addEntity(builder: EntityBuilder.() -> Unit = {}): Entity {
         val id = entityIdService.getNewEntityId()
         val newEntity = Entity(id, componentService)
         builder(EntityBuilder(newEntity, componentService))

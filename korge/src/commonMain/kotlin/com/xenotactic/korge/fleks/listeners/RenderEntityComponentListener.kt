@@ -4,6 +4,8 @@ import com.github.quillraven.fleks.ComponentListener
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.Inject
 import com.github.quillraven.fleks.World
+import com.xenotactic.gamelogic.ecs.ComponentListener
+import com.xenotactic.gamelogic.ecs.Entity
 import com.xenotactic.korge.fleks.components.EntityRenderComponent
 import com.xenotactic.korge.fleks.components.EntityUIComponent
 import com.xenotactic.korge.ui.UIMap
@@ -23,6 +25,14 @@ class RenderEntityComponentListener : ComponentListener<EntityRenderComponent> {
 
     override fun onComponentRemoved(entity: Entity, component: EntityRenderComponent) {
         uiMap.removeEntity(component.entity)
+    }
+
+    override fun onAdd(entity: Entity, component: EntityRenderComponent) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onRemove(entity: Entity, component: EntityRenderComponent) {
+        TODO("Not yet implemented")
     }
 
 }

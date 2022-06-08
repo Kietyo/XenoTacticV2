@@ -55,6 +55,34 @@ internal class ComponentListenerTest {
         }
 
         assertTrue(onAddTriggered)
+    }
 
+    @Test
+    fun addComponentToCreatedEntityResultsInListenerTriggered() {
+        val world = World()
+
+        var onAddTriggered = false
+
+        world.addComponentListener(object : ComponentListener<TestComponent> {
+            override fun onAdd(entity: Entity, component: TestComponent) {
+                println("Added component!: $component")
+                onAddTriggered = true
+            }
+
+            override fun onRemove(entity: Entity, component: TestComponent) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        assertFalse(onAddTriggered)
+
+        val entity = world.addEntity()
+
+        assertFalse(onAddTriggered)
+
+        entity.addOrReplaceComponent(TestComponent("test"))
+
+        assertTrue(onAddTriggered)
     }
 }
