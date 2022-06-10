@@ -20,3 +20,6 @@
 include(":korge")
 include(":XenoTactic-GameLogic")
 //include(":Fleks")
+
+include("XenoECS")
+project(":XenoECS").projectDir = file("C:\\Users\\kietm\\GitHub\\XenoECS")

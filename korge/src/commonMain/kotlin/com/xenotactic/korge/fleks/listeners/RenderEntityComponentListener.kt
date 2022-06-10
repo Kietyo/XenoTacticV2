@@ -1,7 +1,7 @@
 package com.xenotactic.korge.fleks.listeners
 
-import com.xenotactic.gamelogic.ecs.ComponentListener
-import com.xenotactic.gamelogic.ecs.Entity
+import com.xenotactic.ecs.ComponentListener
+import com.xenotactic.ecs.Entity
 import com.xenotactic.korge.components.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.EntityRenderComponent

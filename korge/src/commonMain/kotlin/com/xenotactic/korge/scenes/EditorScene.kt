@@ -2,7 +2,7 @@ package com.xenotactic.korge.scenes
 
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import com.xenotactic.gamelogic.ecs.World
+import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.korge.components.EditorEComponent
 import com.xenotactic.korge.components.GameMapControllerEComponent

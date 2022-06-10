@@ -11,6 +11,7 @@
         <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/../XenoECS" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/XenoTactic-GameLogic" />
             <option value="$PROJECT_DIR$/korge" />
