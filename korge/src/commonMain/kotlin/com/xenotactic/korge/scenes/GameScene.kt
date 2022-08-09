@@ -6,7 +6,10 @@ import com.soywiz.korev.Key
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.*
+import com.soywiz.korge.view.SContainer
+import com.soywiz.korge.view.addFixedUpdater
+import com.soywiz.korge.view.addTo
+import com.soywiz.korge.view.centerXOnStage
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.korge.components.GameMapControllerEComponent
 import com.xenotactic.korge.components.GoalEComponent
@@ -40,7 +43,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         }
     }
 
-    override suspend fun Container.sceneInit() {
+    override suspend fun SContainer.sceneInit() {
         Logger.defaultLevel = Logger.Level.DEBUG
         logger.debug {
             "sceneInit called"
@@ -150,12 +153,6 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
     override suspend fun sceneBeforeLeaving() {
         logger.debug {
             "sceneBeforeLeaving called"
-        }
-    }
-
-    override suspend fun Container.sceneMain() {
-        logger.debug {
-            "sceneMain called"
         }
     }
 

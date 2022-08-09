@@ -1,7 +1,13 @@
 package com.xenotactic.korge.ui
 
 import com.soywiz.korge.component.ResizeComponent
-import com.soywiz.korge.view.*
+import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.Text
+import com.soywiz.korge.view.Views
+import com.soywiz.korge.view.getVisibleLocalArea
+import com.soywiz.korge.view.getVisibleWindowArea
+import com.soywiz.korge.view.text
+import com.soywiz.korge.view.xy
 import com.soywiz.korma.math.roundDecimalPlaces
 import com.xenotactic.korge.components.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine

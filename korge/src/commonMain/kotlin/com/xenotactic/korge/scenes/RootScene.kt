@@ -2,7 +2,7 @@ package com.xenotactic.korge.scenes
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korge.view.text
@@ -17,7 +17,7 @@ class RootScene(
     override var views: Views, val globalEventBus: EventBus,
     val mapBridge: MapBridge
 ) : Scene() {
-    override suspend fun Container.sceneInit() {
+    override suspend fun SContainer.sceneInit() {
         VIEWS_INSTANCE = views
 
         this.text("Loading...", textSize = 50.0).centerOnStage()

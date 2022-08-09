@@ -1,7 +1,10 @@
 package com.xenotactic.korge.scenes
 
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.*
+import com.soywiz.korge.view.SContainer
+import com.soywiz.korge.view.addTo
+import com.soywiz.korge.view.centerOnStage
+import com.soywiz.korge.view.centerXOnStage
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.korge.components.EditorEComponent
@@ -10,9 +13,6 @@ import com.xenotactic.korge.components.NotificationTextEComponent
 import com.xenotactic.korge.components.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
-import com.xenotactic.korge.fleks.components.EntityRenderComponent
-import com.xenotactic.korge.fleks.components.EntityUIComponent
-import com.xenotactic.korge.fleks.components.PreSelectionComponent
 import com.xenotactic.korge.fleks.listeners.RenderEntityComponentListener
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.EditorPlacementMouseKomponent
@@ -27,7 +27,7 @@ import com.xenotactic.korge.ui.UIMap
 import com.xenotactic.korge.ui.UINotificationText
 
 class EditorScene : Scene() {
-    override suspend fun Container.sceneInit() {
+    override suspend fun SContainer.sceneInit() {
 
         val gameMap = GameMap(20, 20)
         val eventBus = EventBus(this@EditorScene)
@@ -73,7 +73,7 @@ class EditorScene : Scene() {
         engine.setOneTimeComponent(NotificationTextEComponent(notificationText))
 
         world.apply {
-            addComponentListener(RenderEntityComponentListener(engine))
+            addComponentListener(RenderEntityComponentListener(world, engine))
         }
 
 

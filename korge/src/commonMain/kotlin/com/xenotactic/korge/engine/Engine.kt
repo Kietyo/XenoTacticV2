@@ -21,7 +21,6 @@ class Engine(val eventBus: EventBus,
 
     operator fun <T : EComponent> set(kClass: KClass<out EComponent>, obj: T) {
         oneTimeComponents[kClass] = obj
-        println(oneTimeComponents)
     }
 
     inline fun <reified T: EComponent> getOneTimeComponent(): T {

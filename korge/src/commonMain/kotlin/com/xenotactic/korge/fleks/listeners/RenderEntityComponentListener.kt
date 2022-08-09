@@ -2,21 +2,25 @@ package com.xenotactic.korge.fleks.listeners
 
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.Entity
+import com.xenotactic.ecs.World
 import com.xenotactic.korge.components.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.EntityRenderComponent
 import com.xenotactic.korge.fleks.components.EntityUIComponent
-import com.xenotactic.korge.ui.UIMap
 
 class RenderEntityComponentListener(
+    val world: World,
     val engine: Engine
 ) : ComponentListener<EntityRenderComponent> {
     val uiMap = engine.getOneTimeComponent<UIMapEComponent>().uiMap
+    val entityUIComponent = world.getComponentContainer<EntityUIComponent>()
 
     override fun onAdd(entity: Entity, component: EntityRenderComponent) {
-        entity.addOrReplaceComponent(EntityUIComponent(
-            uiMap.addEntity(component.entity)
-        ))
+        world.modifyEntity(entity) {
+            addOrReplaceComponent(EntityUIComponent(
+                uiMap.addEntity(component.entity)
+            ))
+        }
     }
 
     override fun onRemove(entity: Entity, component: EntityRenderComponent) {

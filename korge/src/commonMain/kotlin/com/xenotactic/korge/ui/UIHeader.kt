@@ -14,10 +14,7 @@ import com.soywiz.korge.view.text
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.Signal
 import com.xenotactic.korge.korge_utils.scaledDimensions
-import kotlin.collections.mutableListOf
-import kotlin.collections.mutableMapOf
 import kotlin.collections.set
-import kotlin.collections.windowed
 
 enum class UIHeaderSection {
     PLAY,

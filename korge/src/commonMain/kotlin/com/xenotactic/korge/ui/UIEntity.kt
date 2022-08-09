@@ -8,6 +8,7 @@ import com.soywiz.korge.view.centerOn
 import com.soywiz.korge.view.container
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korim.color.Colors
+import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.toWorldDimensions
@@ -105,8 +106,10 @@ class UIEntity(
         if (selectionBox == null) {
             val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
             selectionBox = Graphics().addTo(this).apply {
-                stroke(IN_PROCESS_SELECTION_COLOR, com.soywiz.korim.vector.StrokeInfo(3.0)) {
-                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                updateShape {
+                    stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(3.0)) {
+                        this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                    }
                 }
                 centerOn(this)
             }
@@ -118,8 +121,10 @@ class UIEntity(
         if (selectionBox == null) {
             val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
             selectionBox = Graphics().addTo(this).apply {
-                stroke(SELECTION_COLOR, com.soywiz.korim.vector.StrokeInfo(3.0)) {
-                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                updateShape {
+                    stroke(SELECTION_COLOR, StrokeInfo(3.0)) {
+                        this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                    }
                 }
                 centerOn(this)
             }

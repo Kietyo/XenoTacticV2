@@ -9,8 +9,13 @@ import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.KeyComponent
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.ui.*
-import com.soywiz.korge.view.*
+import com.soywiz.korge.ui.uiButton
+import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.SContainer
+import com.soywiz.korge.view.Views
+import com.soywiz.korge.view.alignLeftToRightOf
+import com.soywiz.korge.view.alignTopToBottomOf
+import com.soywiz.korge.view.text
 import com.soywiz.korio.file.baseName
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.korge.engine.Engine
@@ -45,7 +50,7 @@ class GoldensViewerScene(
         val logger = Logger<GoldensViewerScene>()
     }
 
-    override suspend fun Container.sceneInit() {
+    override suspend fun SContainer.sceneInit() {
         logger.info {
             "sceneInit"
         }
@@ -203,7 +208,7 @@ class GoldensViewerScene(
         }
     }
 
-    override suspend fun Container.sceneMain() {
+    override suspend fun SContainer.sceneMain() {
         logger.info {
             "sceneMain"
         }

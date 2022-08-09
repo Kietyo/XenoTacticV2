@@ -61,6 +61,7 @@ class ObjectPlacementInputProcessor(
             MouseEvent.Type.MOVE -> {
                 mouseMoved(gridX, gridY)
             }
+            else -> TODO()
         }
 
         uiMapView.renderHighlightingForPointerAction(objectPlacementComponent.pointerAction)

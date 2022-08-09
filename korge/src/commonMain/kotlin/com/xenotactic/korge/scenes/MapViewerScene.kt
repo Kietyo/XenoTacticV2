@@ -4,7 +4,10 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.*
+import com.soywiz.korge.view.SContainer
+import com.soywiz.korge.view.addTo
+import com.soywiz.korge.view.alignTopToBottomOf
+import com.soywiz.korge.view.getVisibleGlobalArea
 import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.korge.daos.PlayerDataApi
 import com.xenotactic.korge.events.EventBus
@@ -23,14 +26,18 @@ import getGoldenJsonFiles
 import kotlinx.coroutines.launch
 import toGameMap
 import verify
-
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.map
+import kotlin.collections.set
+import kotlin.collections.take
 
 class MapViewerScene(
     val globalEventBus: EventBus
 ) : Scene() {
 
     @OptIn(KorgeExperimental::class)
-    override suspend fun Container.sceneInit() {
+    override suspend fun SContainer.sceneInit() {
         println("MapViewerScene: Init")
 
         val HEADER_HEIGHT = 50.0

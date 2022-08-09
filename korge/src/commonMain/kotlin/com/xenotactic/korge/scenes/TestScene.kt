@@ -2,14 +2,14 @@ package com.xenotactic.korge.scenes
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.container
 import com.soywiz.korge.view.line
 import com.soywiz.korge.view.text
 
 class TestScene : Scene() {
 
-    override suspend fun Container.sceneInit() {
+    override suspend fun SContainer.sceneInit() {
         val textBox = this.container {
             val text = this.text("This is a sample test")
             this.line(

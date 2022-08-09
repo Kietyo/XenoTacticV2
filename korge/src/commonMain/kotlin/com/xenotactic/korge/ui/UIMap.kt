@@ -2,15 +2,16 @@ package com.xenotactic.korge.ui
 
 import com.soywiz.kmem.clamp
 import com.soywiz.korge.view.*
+import com.soywiz.korge.view.vector.gpuGraphics
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
+import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.model.GameMap
@@ -88,8 +89,8 @@ class UIMap(
     val _gridNumberLayer = this.container()
 
     val _gridLinesLayer = this.container()
-    val _gridLinesGraphics = _gridLinesLayer.sgraphics {
-        useNativeRendering = false
+    val _gridLinesGraphics = _gridLinesLayer.gpuGraphics {
+//        useNativeRendering = false
         visible(false)
     }
 
@@ -105,8 +106,8 @@ class UIMap(
     val _entityLabelLayer = this.container()
 
     val _pathingLinesLayer = this.container()
-    val _pathingLinesGraphics = _pathingLinesLayer.sgraphics {
-        useNativeRendering = false
+    val _pathingLinesGraphics = _pathingLinesLayer.gpuGraphics {
+//        useNativeRendering = false
     }
 
     val _highlightLayer = this.container()
@@ -252,13 +253,15 @@ class UIMap(
     }
 
     fun drawGridLines() {
-        _gridLinesGraphics.clear()
-        _gridLinesGraphics.stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
-            for (i in 0..gameMap.width) {
-                this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height * _gridSize)
-            }
-            for (j in 0..gameMap.height) {
-                this.line(0.0, j * _gridSize, gameMap.width * _gridSize, j * _gridSize)
+//        _gridLinesGraphics.clear()
+        _gridLinesGraphics.updateShape {
+            stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
+                for (i in 0..gameMap.width) {
+                    this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height * _gridSize)
+                }
+                for (j in 0..gameMap.height) {
+                    this.line(0.0, j * _gridSize, gameMap.width * _gridSize, j * _gridSize)
+                }
             }
         }
     }
@@ -384,40 +387,43 @@ class UIMap(
     }
 
     fun renderPathLines(pathSequence: PathSequence?) {
-        _pathingLinesGraphics.clear()
+//        _pathingLinesGraphics.clear()
 
         // Draw path lines
         if (pathSequence != null) {
-            _pathingLinesGraphics.stroke(
-                Colors.YELLOW, info = StrokeInfo(
-                    thickness = _pathLinesWidth,
-                )
-            ) {
-                for (path in pathSequence.paths) {
-                    for (segment in path.getSegments()) {
-                        var (p1WorldX, p1WorldY) = toWorldCoordinates(
-                            _gridSize,
-                            segment.point1, gameMap.width,
-                            gameMap.height
-                        )
-                        var (p2WorldX, p2WorldY) = toWorldCoordinates(
-                            _gridSize,
-                            segment.point2, gameMap.width,
-                            gameMap.height
-                        )
-                        // TODO: This is a workaround since Korge cannot render vertical/horizontal
-                        // lines correctly. Follow bug here:
-                        // https://github.com/korlibs/korge-next/issues/392
-                        if (p1WorldX == p2WorldX) {
-                            p2WorldX += 1
+            _pathingLinesGraphics.updateShape {
+                stroke(
+                    Colors.YELLOW, info = StrokeInfo(
+                        thickness = _pathLinesWidth,
+                    )
+                ) {
+                    for (path in pathSequence.paths) {
+                        for (segment in path.getSegments()) {
+                            var (p1WorldX, p1WorldY) = toWorldCoordinates(
+                                _gridSize,
+                                segment.point1, gameMap.width,
+                                gameMap.height
+                            )
+                            var (p2WorldX, p2WorldY) = toWorldCoordinates(
+                                _gridSize,
+                                segment.point2, gameMap.width,
+                                gameMap.height
+                            )
+                            // TODO: This is a workaround since Korge cannot render vertical/horizontal
+                            // lines correctly. Follow bug here:
+                            // https://github.com/korlibs/korge-next/issues/392
+                            if (p1WorldX == p2WorldX) {
+                                p2WorldX += 1
+                            }
+                            if (p1WorldY == p2WorldY) {
+                                p2WorldY += 1
+                            }
+                            this.line(p1WorldX, p1WorldY, p2WorldX, p2WorldY)
                         }
-                        if (p1WorldY == p2WorldY) {
-                            p2WorldY += 1
-                        }
-                        this.line(p1WorldX, p1WorldY, p2WorldX, p2WorldY)
                     }
                 }
             }
+
 
             //            for (path in pathSequence.paths) {
             //                for (segment in path.getSegments()) {
