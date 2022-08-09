@@ -4,7 +4,7 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korio.file.std.resourcesVfs
 import com.xenotactic.gamelogic.model.PlayerData
 import decodeJson
-import existsBlocking
+import decodeJsonBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString
@@ -19,7 +19,7 @@ object PlayerDataApi {
         return mutex.withLock lock@{
             logger.info { "Getting player data" }
             val playerDataFile = resourcesVfs["player_data.json"]
-            if (playerDataFile.existsBlocking()) {
+            if (playerDataFile.exists()) {
                 return playerDataFile.decodeJson<PlayerData>()!!
             }
             PlayerData()
