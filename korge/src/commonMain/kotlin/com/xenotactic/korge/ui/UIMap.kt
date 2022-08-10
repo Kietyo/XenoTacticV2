@@ -65,10 +65,10 @@ val ENTITY_TEXT_FONT = BitmapFont(
 class UIMap(
     val gameMap: GameMap,
     val engine: Engine? = null,
-    shortestPath: PathSequence? = null,
+    val shortestPath: PathSequence? = null,
     private val uiMapSettings: UIMapSettings = UIMapSettings(),
-    initialRenderEntities: Boolean = true
-) : Container(), View.Reference, EComponent {
+    val initialRenderEntities: Boolean = true
+) : Container(), EComponent {
     val _gridSize = uiMapSettings.gridSize
     val _borderSize = uiMapSettings.borderSize
     val _gridLineSize = uiMapSettings.gridLineSize
@@ -91,12 +91,13 @@ class UIMap(
     val _gridLinesLayer = this.container()
     val _gridLinesGraphics = _gridLinesLayer.gpuGraphics {
 //        useNativeRendering = false
-        visible(false)
+//        visible(false)
     }
 
     val _speedAreaLayer = this.container()
 
-    val _entityLayer = this.container()
+    val _entityLayer = this.container().apply {
+    }
 
     val _selectionLayer = this.container()
 
@@ -128,21 +129,21 @@ class UIMap(
         renderRockCounters()
         renderPathLines(shortestPath)
 
-//        engine?.eventBus?.register<UIEntityClickedEvent> {
-//            val (worldWidth, worldHeight) = toWorldDimensions(it.entity, _gridSize)
-////            val solidRect = SolidRect(
-////                worldWidth + 10, worldHeight + 10,
-////                MaterialColors.YELLOW_900).addTo(_selectionLayer).apply {
-////                    centerOn(it.view)
-////            }
-//
-//            Graphics().addTo(_selectionLayer).apply {
-//                stroke(Colors.YELLOW, StrokeInfo(3.0)) {
-//                    this.rectHole(0.0, 0.0, worldWidth, worldHeight)
-//                }
-//                centerOn(it.view)
-//            }
-//        }
+        //                engine?.eventBus?.register<UIEntityClickedEvent> {
+        //                    val (worldWidth, worldHeight) = toWorldDimensions(it.entity, _gridSize)
+        //        //            val solidRect = SolidRect(
+        //        //                worldWidth + 10, worldHeight + 10,
+        //        //                MaterialColors.YELLOW_900).addTo(_selectionLayer).apply {
+        //        //                    centerOn(it.view)
+        //        //            }
+        //
+        //                    Graphics().addTo(_selectionLayer).apply {
+        //                        stroke(Colors.YELLOW, StrokeInfo(3.0)) {
+        //                            this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+        //                        }
+        //                        centerOn(it.view)
+        //                    }
+        //                }
     }
 
     val xOffset: Double
@@ -197,6 +198,7 @@ class UIMap(
     }
 
     private fun drawBoard() {
+        println("Drawing board")
         when (uiMapSettings.boardType) {
             BoardType.SOLID -> _boardLayer.solidRect(
                 _gridSize * gameMap.width, _gridSize * gameMap.height,

@@ -107,7 +107,7 @@ class UIEntity(
             val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
             selectionBox = Graphics().addTo(this).apply {
                 updateShape {
-                    stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(3.0)) {
+                    stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(6.0)) {
                         this.rectHole(0.0, 0.0, worldWidth, worldHeight)
                     }
                 }
@@ -122,7 +122,7 @@ class UIEntity(
             val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
             selectionBox = Graphics().addTo(this).apply {
                 updateShape {
-                    stroke(SELECTION_COLOR, StrokeInfo(3.0)) {
+                    stroke(SELECTION_COLOR, StrokeInfo(6.0)) {
                         this.rectHole(0.0, 0.0, worldWidth, worldHeight)
                     }
                 }
