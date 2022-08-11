@@ -14,8 +14,8 @@ import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korio.async.AsyncSignal
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.GameMapControllerEComponent
-import com.xenotactic.korge.components.ObjectPlacementEComponent
+import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
+import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.events.EventBus

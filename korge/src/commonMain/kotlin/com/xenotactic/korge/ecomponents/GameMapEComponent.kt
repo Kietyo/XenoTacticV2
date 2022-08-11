@@ -1,4 +1,4 @@
-package com.xenotactic.korge.components
+package com.xenotactic.korge.ecomponents
 
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.korge.engine.EComponent

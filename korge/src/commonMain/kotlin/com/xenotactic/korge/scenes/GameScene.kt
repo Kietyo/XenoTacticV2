@@ -11,9 +11,9 @@ import com.soywiz.korge.view.addFixedUpdater
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerXOnStage
 import com.xenotactic.korge.bridges.MapBridge
-import com.xenotactic.korge.components.GameMapControllerEComponent
-import com.xenotactic.korge.components.GoalEComponent
-import com.xenotactic.korge.components.ObjectPlacementEComponent
+import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
+import com.xenotactic.korge.ecomponents.GoalEComponent
+import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.ExitGameSceneEvent

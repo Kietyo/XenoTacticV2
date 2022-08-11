@@ -11,7 +11,7 @@ import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
-import com.xenotactic.korge.components.UIMapEComponent
+import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.SelectionType

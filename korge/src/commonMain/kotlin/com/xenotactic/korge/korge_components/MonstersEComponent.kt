@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.model.MONSTER_WIDTH
 import com.xenotactic.gamelogic.model.MonsterEntity
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
-import com.xenotactic.korge.components.GameMapControllerEComponent
+import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus

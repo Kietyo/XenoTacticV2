@@ -1,4 +1,4 @@
-package com.xenotactic.korge.components
+package com.xenotactic.korge.ecomponents
 
 import com.soywiz.korge.view.Text
 import com.xenotactic.korge.engine.EComponent

@@ -1,6 +1,6 @@
 package com.xenotactic.korge.renderer
 
-import com.xenotactic.korge.components.GameMapControllerEComponent
+import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus

@@ -7,8 +7,8 @@ import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.EditorEComponent
-import com.xenotactic.korge.components.GameMapControllerEComponent
+import com.xenotactic.korge.ecomponents.EditorEComponent
+import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
 import com.xenotactic.korge.ui.UIMap

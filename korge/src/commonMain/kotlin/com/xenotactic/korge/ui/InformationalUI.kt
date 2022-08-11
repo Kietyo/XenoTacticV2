@@ -9,7 +9,7 @@ import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korge.view.text
 import com.soywiz.korge.view.xy
 import com.soywiz.korma.math.roundDecimalPlaces
-import com.xenotactic.korge.components.GameMapControllerEComponent
+import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.UpdatedPathLengthEvent

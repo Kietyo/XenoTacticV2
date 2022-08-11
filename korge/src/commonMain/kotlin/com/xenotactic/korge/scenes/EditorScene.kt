@@ -1,19 +1,16 @@
 package com.xenotactic.korge.scenes
 
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korge.view.centerXOnStage
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korim.color.Colors
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.korge.components.EditorEComponent
-import com.xenotactic.korge.components.GameMapControllerEComponent
-import com.xenotactic.korge.components.NotificationTextEComponent
-import com.xenotactic.korge.components.UIMapEComponent
+import com.xenotactic.korge.ecomponents.EditorEComponent
+import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
+import com.xenotactic.korge.ecomponents.NotificationTextEComponent
+import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.fleks.listeners.RenderEntityComponentListener
@@ -22,11 +19,9 @@ import com.xenotactic.korge.input_processors.EditorPlacementMouseKomponent
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragKomponent
 import com.xenotactic.korge.input_processors.SelectorMouseProcessor
-import com.xenotactic.korge.korge_utils.MaterialColors
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.renderer.MapRendererUpdater
 import com.xenotactic.korge.systems.SelectingEntitiesSystem
-import com.xenotactic.korge.ui.BoardType
 import com.xenotactic.korge.ui.UIEditorButtons
 import com.xenotactic.korge.ui.UIMap
 import com.xenotactic.korge.ui.UIMapSettings
@@ -47,10 +42,10 @@ class EditorScene : Scene() {
             ).addTo(this).apply { //                draggableCloseable = draggableCloseable()
                 centerOnStage()
 
-//                _boardLayer.solidRect(
-//                    _gridSize * gameMap.width, _gridSize * gameMap.height,
-//                    MaterialColors.GREEN_600
-//                )
+                //                _boardLayer.solidRect(
+                //                    _gridSize * gameMap.width, _gridSize * gameMap.height,
+                //                    MaterialColors.GREEN_600
+                //                )
             }
 
         val world = World()
@@ -68,7 +63,7 @@ class EditorScene : Scene() {
         //        }
 
         val mouseDragKomponent = MouseDragKomponent(uiMap)
-                uiMap.addComponent(mouseDragKomponent)
+        uiMap.addComponent(mouseDragKomponent)
 
         val editorComponent = EditorEComponent()
 

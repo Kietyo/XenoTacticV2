@@ -7,7 +7,7 @@ import com.soywiz.korge.view.alpha
 import com.soywiz.korge.view.text
 import com.soywiz.korim.text.TextAlignment
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.ObjectPlacementEComponent
+import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.PointerActionChangeEvent

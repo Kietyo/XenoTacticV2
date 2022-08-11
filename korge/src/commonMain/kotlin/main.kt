@@ -13,6 +13,7 @@ import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.scenes.EditorScene
+import com.xenotactic.korge.scenes.EditorSceneV2
 import com.xenotactic.korge.scenes.GameScene
 import com.xenotactic.korge.scenes.GoldensViewerScene
 import com.xenotactic.korge.scenes.MapViewerScene
@@ -61,6 +62,7 @@ object MainModule : Module() {
         mapPrototype { MapViewerScene(globalBus) }
         mapPrototype { GoldensViewerScene(globalBus) }
         mapPrototype { TestScene() }
+        mapPrototype { EditorSceneV2() }
         mapPrototype {
             EditorScene()
         }

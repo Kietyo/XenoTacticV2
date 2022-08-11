@@ -4,8 +4,8 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.Container
+import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.ecomponents.EditorEComponent
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
@@ -13,13 +13,18 @@ import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.input_processors.MouseDragKomponent
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.input_processors.SelectorMouseProcessor
+import com.xenotactic.korge.state.EditorState
 
-class UIEditorButtons(val engine: Engine) : Container() {
-    val editorComponent = engine.getOneTimeComponent<EditorEComponent>()
-    val uiMapComponent = engine.getOneTimeComponent<UIMapEComponent>()
-    val mouseDragKomponent = engine.getOneTimeComponent<MouseDragKomponent>()
-    val gameMapControllerEComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
-    val selectorMouseProcessor = engine.getOneTimeComponent<SelectorMouseProcessor>()
+class UIEditorButtonsV2(
+    val gameWorld: World,
+    val uiWorld: World,
+    val engine: Engine
+) : Container() {
+    val editorComponent = uiWorld.injections.getSingleton<EditorState>()
+    val uiMapComponent = gameWorld.injections.getSingleton<UIMapEComponent>()
+    val mouseDragKomponent = gameWorld.injections.getSingleton<MouseDragKomponent>()
+    val gameMapControllerEComponent = gameWorld.injections.getSingleton<GameMapControllerEComponent>()
+    val selectorMouseProcessor = gameWorld.injections.getSingleton<SelectorMouseProcessor>()
 
     val uiMap = uiMapComponent.uiMap
 
@@ -107,7 +112,13 @@ class UIEditorButtons(val engine: Engine) : Container() {
     }
 
     fun switchToEditingMode(entityType: MapEntityType) {
-        engine.eventBus.send(NotificationTextUpdateEvent(gameMapControllerEComponent.getNotificationText(entityType)))
+        engine.eventBus.send(
+            NotificationTextUpdateEvent(
+                gameMapControllerEComponent.getNotificationText(
+                    entityType
+                )
+            )
+        )
         mouseDragKomponent.adjustSettings {
             allowLeftClickDragging = false
         }

@@ -5,7 +5,7 @@ import com.soywiz.korge.view.View
 import com.soywiz.korio.file.VfsFile
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.korge.components.GoalData
+import com.xenotactic.korge.ecomponents.GoalData
 
 object EscapeButtonActionEvent
 
