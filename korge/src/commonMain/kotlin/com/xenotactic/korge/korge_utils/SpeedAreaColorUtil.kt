@@ -32,9 +32,29 @@ object SpeedAreaColorUtil {
         fastLow: Double = 1.0,
         fastHigh: Double = 2.0
     ): RGBA {
-        return if (speedArea.speedEffect <= 1.0) {
-            getSlowSpeedAreaColor(speedArea.speedEffect, slowAreaColors, slowLow, slowHigh)
-        } else getFastSpeedAreaColor(speedArea.speedEffect, fastAreaColors, fastLow, fastHigh)
+        return invoke(
+            speedArea.speedEffect,
+            slowAreaColors,
+            fastAreaColors,
+            slowLow,
+            slowHigh,
+            fastLow,
+            fastHigh
+        )
+    }
+
+    operator fun invoke(
+        speedEffect: Double,
+        slowAreaColors: List<RGBA> = SLOW_AREA_COLORS,
+        fastAreaColors: List<RGBA> = FAST_AREA_COLORS,
+        slowLow: Double = 0.0,
+        slowHigh: Double = 1.0,
+        fastLow: Double = 1.0,
+        fastHigh: Double = 2.0
+    ): RGBA {
+        return if (speedEffect <= 1.0) {
+            getSlowSpeedAreaColor(speedEffect, slowAreaColors, slowLow, slowHigh)
+        } else getFastSpeedAreaColor(speedEffect, fastAreaColors, fastLow, fastHigh)
     }
 
     /**

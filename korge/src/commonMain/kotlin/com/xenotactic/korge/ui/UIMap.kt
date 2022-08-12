@@ -82,16 +82,16 @@ class UIMap(
 
     // Note that the order in which layers are initialized mattes here.
     val _boardLayer = this.container {
-//        this.propagateEvents = false
-//        this.mouseChildren = false
-//        this.hitTestEnabled = false
+        //        this.propagateEvents = false
+        //        this.mouseChildren = false
+        //        this.hitTestEnabled = false
     }
     val _gridNumberLayer = this.container()
 
     val _gridLinesLayer = this.container()
     val _gridLinesGraphics = _gridLinesLayer.gpuGraphics {
-//        useNativeRendering = false
-//        visible(false)
+        //        useNativeRendering = false
+        //        visible(false)
     }
 
     val _speedAreaLayer = this.container()
@@ -108,7 +108,7 @@ class UIMap(
 
     val _pathingLinesLayer = this.container()
     val _pathingLinesGraphics = _pathingLinesLayer.gpuGraphics {
-//        useNativeRendering = false
+        //        useNativeRendering = false
     }
 
     val _highlightLayer = this.container()
@@ -209,8 +209,9 @@ class UIMap(
                 for (i in 0 until gameMap.width) {
                     var altColorHeight = altColorWidth
                     for (j in 0 until gameMap.height) {
-                        val currColor = if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
-                            .GREEN_800
+                        val currColor =
+                            if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
+                                .GREEN_800
                         _boardLayer.solidRect(_gridSize, _gridSize, currColor)
                             .xy(i * _gridSize, j * _gridSize)
                         altColorHeight = !altColorHeight
@@ -226,8 +227,9 @@ class UIMap(
                     for (j in 0 until ((gameMap.height + 1) / 2)) {
                         val gridWidth = if ((i + 1) * 2 > gameMap.width) _gridSize else gridSize
                         val gridHeight = if ((j + 1) * 2 > gameMap.height) _gridSize else gridSize
-                        val currColor = if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
-                            .GREEN_800
+                        val currColor =
+                            if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
+                                .GREEN_800
                         _boardLayer.solidRect(gridWidth, gridHeight, currColor)
                             .xy(i * gridSize, j * gridSize)
                         altColorHeight = !altColorHeight
@@ -255,7 +257,7 @@ class UIMap(
     }
 
     fun drawGridLines() {
-//        _gridLinesGraphics.clear()
+        //        _gridLinesGraphics.clear()
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
                 for (i in 0..gameMap.width) {
@@ -306,8 +308,11 @@ class UIMap(
     }
 
     fun createEntityView(entity: MapEntity): UIEntity {
-//        return UIEntity(entity, engine, _gridSize, _borderSize)
-        return UIEntity(entity, _gridSize, _borderSize)
+        //        return UIEntity(entity, engine, _gridSize, _borderSize)
+        return UIEntity(
+            entity.type, entity.width, entity.height, _gridSize, _borderSize,
+            if (entity is MapEntity.SpeedArea) entity.speedEffect else null
+        )
     }
 
     private fun renderEntityInternal(entity: MapEntity): UIEntity {
@@ -323,8 +328,8 @@ class UIMap(
             }
             xy(worldX, worldY)
         }
-        val drawnEntitesList = _drawnEntities.getOrPut(entity) { mutableListOf() }
-        drawnEntitesList.add(uiEntity)
+        val drawnEntitiesList = _drawnEntities.getOrPut(entity) { mutableListOf() }
+        drawnEntitiesList.add(uiEntity)
         return uiEntity
     }
 
@@ -389,7 +394,7 @@ class UIMap(
     }
 
     fun renderPathLines(pathSequence: PathSequence?) {
-//        _pathingLinesGraphics.clear()
+        //        _pathingLinesGraphics.clear()
 
         // Draw path lines
         if (pathSequence != null) {
@@ -425,7 +430,6 @@ class UIMap(
                     }
                 }
             }
-
 
             //            for (path in pathSequence.paths) {
             //                for (segment in path.getSegments()) {
@@ -515,7 +519,10 @@ class UIMap(
         }
     }
 
-    fun getGridPositionsFromGlobalMouse(globalMouseX: Double, globalMouseY: Double): Pair<Double, Double> {
+    fun getGridPositionsFromGlobalMouse(
+        globalMouseX: Double,
+        globalMouseY: Double
+    ): Pair<Double, Double> {
         val localXY = _boardLayer.globalToLocalXY(globalMouseX, globalMouseY)
         val unprojected = Point(
             localXY.x,

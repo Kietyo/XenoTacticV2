@@ -11,29 +11,33 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.korge.korge_utils.MaterialColors
 import com.xenotactic.korge.korge_utils.SpeedAreaColorUtil
 
 class UIEntity(
-    val entity: MapEntity,
+    val entityType: MapEntityType,
+    val entityWidth: Int,
+    val entityHeight: Int,
 //    val engine: Engine?,
     val gridSize: Double,
-    val borderSize: Double
+    val borderSize: Double,
+    val speedEffect: Double? = null,
 ) : Container() {
     init {
-        val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
-        when (entity) {
-            is MapEntity.CheckPoint -> {
+        val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
+        when (entityType) {
+            MapEntityType.CHECKPOINT -> {
                 Circle(worldWidth / 2, Colors.MAROON).addTo(this)
             }
-            is MapEntity.Finish -> {
+            MapEntityType.FINISH -> {
                 Circle(worldWidth / 2, Colors.MAGENTA).addTo(this)
             }
-            is MapEntity.Start -> {
+            MapEntityType.START -> {
                 Circle(worldWidth / 2, Colors.RED).addTo(this)
             }
-            is MapEntity.Tower -> {
+            MapEntityType.TOWER -> {
                 this.solidRect(
                     worldWidth, worldHeight,
                     MaterialColors.YELLOW_500
@@ -43,7 +47,7 @@ class UIEntity(
                     MaterialColors.YELLOW_900
                 ).centerOn(this)
             }
-            is MapEntity.Rock -> {
+            MapEntityType.ROCK -> {
                 this.solidRect(
                     worldWidth, worldHeight,
                     MaterialColors.BROWN_500
@@ -53,13 +57,13 @@ class UIEntity(
                     MaterialColors.BROWN_900
                 ).centerOn(this)
             }
-            is MapEntity.TeleportIn -> {
+            MapEntityType.TELEPORT_IN -> {
                 Circle(worldWidth / 2, Colors.GREEN.withAd(0.6)).addTo(this)
             }
-            is MapEntity.TeleportOut -> {
+            MapEntityType.TELEPORT_OUT -> {
                 Circle(worldWidth / 2, Colors.RED.withAd(0.6)).addTo(this)
             }
-            is MapEntity.SmallBlocker -> {
+            MapEntityType.SMALL_BLOCKER -> {
                 this.solidRect(
                     worldWidth, worldHeight,
                     MaterialColors.YELLOW_500
@@ -69,9 +73,9 @@ class UIEntity(
                     MaterialColors.YELLOW_900
                 ).centerOn(this)
             }
-            is MapEntity.SpeedArea -> {
+            MapEntityType.SPEED_AREA -> {
                 val speedAreaColor = SpeedAreaColorUtil(
-                    entity,
+                    speedEffect!!,
                     slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
                 ).withAd(0.7)
                 Circle(worldWidth / 2, speedAreaColor).addTo(this)
@@ -104,7 +108,7 @@ class UIEntity(
 
     fun doInProcessSelection() {
         if (selectionBox == null) {
-            val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
+            val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
             selectionBox = Graphics().addTo(this).apply {
                 updateShape {
                     stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(6.0)) {
@@ -119,7 +123,7 @@ class UIEntity(
     fun doEndSelection() {
         if (selectionBox != null) cancelSelection()
         if (selectionBox == null) {
-            val (worldWidth, worldHeight) = toWorldDimensions(entity, gridSize)
+            val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
             selectionBox = Graphics().addTo(this).apply {
                 updateShape {
                     stroke(SELECTION_COLOR, StrokeInfo(6.0)) {
