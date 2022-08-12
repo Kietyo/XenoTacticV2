@@ -20,9 +20,7 @@ class AddEntityToUIMapFamilyListener(
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            MapEntityComponent::class,
-            SizeComponent::class,
-            BottomLeftPositionComponent::class
+            MapEntityComponent::class, SizeComponent::class, BottomLeftPositionComponent::class
         ),
     )
 
@@ -39,16 +37,16 @@ class AddEntityToUIMapFamilyListener(
         val sizeComponent = sizeComponentContainer.getComponent(entity)
         val speedEffectComponent = speedEffectComponentContainer.getComponentOrNull(entity)
         val (worldX, worldY) = uiMapV2.getWorldCoordinates(
-            bottomLeftPositionComponent.x,
-            bottomLeftPositionComponent.y,
-            sizeComponent.height
+            bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
         )
 
         val uiEntity = UIEntity(
-            mapEntityComponent.entityType, sizeComponent.width,
-            sizeComponent.height, uiMapV2.gridSize, uiMapV2.borderSize,
-            if (mapEntityComponent.entityType == MapEntityType.SPEED_AREA) speedEffectComponent!!.speedEffect else
-                null
+            mapEntityComponent.entityType,
+            sizeComponent.width,
+            sizeComponent.height,
+            uiMapV2.gridSize,
+            uiMapV2.borderSize,
+            if (mapEntityComponent.entityType == MapEntityType.SPEED_AREA) speedEffectComponent!!.speedEffect else null
         ).apply {
             if (mapEntityComponent.entityType == MapEntityType.SPEED_AREA) {
                 addTo(uiMapV2.speedAreaLayer)

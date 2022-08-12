@@ -3,6 +3,7 @@ package com.xenotactic.korge.scenes
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo
+import com.soywiz.korge.view.centerOnStage
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.components.MapEntityComponent
@@ -18,7 +19,7 @@ import com.xenotactic.korge.ui.UIMapV2
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
         val uiMapV2 = UIMapV2().addTo(this)
-
+        uiMapV2.centerOnStage()
 
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()

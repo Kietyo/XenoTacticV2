@@ -5,7 +5,9 @@ import com.soywiz.korge.view.container
 import com.soywiz.korge.view.filter.IdentityFilter
 import com.soywiz.korge.view.filter.filter
 import com.soywiz.korge.view.solidRect
+import com.soywiz.korge.view.text
 import com.soywiz.korge.view.xy
+import com.soywiz.korim.text.TextAlignment
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
@@ -34,6 +36,7 @@ class UIMapV2(
     val uiMapSettingsV2: UIMapSettingsV2 = UIMapSettingsV2()
 ) : Container() {
     val gridSize get() = uiMapSettingsV2.gridSize
+    val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
     val borderSize get() = uiMapSettingsV2.borderSize
     private val _width get() = uiMapSettingsV2.width
     private val _height get() = uiMapSettingsV2.height
@@ -44,6 +47,8 @@ class UIMapV2(
         //        this.hitTestEnabled = false
     }
 
+    val _gridNumberLayer = this.container()
+
     val speedAreaLayer = this.container()
 
     val entityLayer = this.container().apply {
@@ -51,6 +56,7 @@ class UIMapV2(
 
     init {
         drawBoard()
+        drawGridNumbers()
     }
 
     fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int) =
@@ -101,5 +107,42 @@ class UIMapV2(
             }
         }
         println("Finished drawing board!")
+    }
+
+    private fun drawGridNumbers() {
+        _gridNumberLayer.removeChildren()
+
+        if (!uiMapSettingsV2.drawGridNumbers) {
+            return
+        }
+
+        for (i in 0 until _width) {
+            _gridNumberLayer.text(
+                i.toString(),
+                textSize = gridNumberFontSize,
+                alignment = TextAlignment.BOTTOM_LEFT
+            ).xy(
+                i * gridSize, 0.0
+            )
+            _gridNumberLayer.text(i.toString(), textSize = gridNumberFontSize).xy(
+                i * gridSize, _height * gridSize
+            )
+        }
+        for (j in 0 until _height) {
+            _gridNumberLayer.text(
+                j.toString(),
+                textSize = gridNumberFontSize,
+                alignment = TextAlignment.BASELINE_RIGHT
+            ).xy(
+                -10.0, _height * gridSize - j * gridSize
+            )
+            _gridNumberLayer.text(
+                j.toString(),
+                textSize = gridNumberFontSize,
+                alignment = TextAlignment.BASELINE_LEFT
+            ).xy(
+                _width * gridSize + 10.0, _height * gridSize - j * gridSize
+            )
+        }
     }
 }

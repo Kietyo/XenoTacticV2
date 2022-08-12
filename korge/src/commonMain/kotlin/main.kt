@@ -3,6 +3,7 @@ import com.soywiz.korge.Korge
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.Views
+import com.soywiz.korgw.GameWindow
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korinject.AsyncInjector
@@ -30,6 +31,7 @@ object MainModule : Module() {
     override val mainScene: KClass<out Scene> = RootScene::class
     override val scaleAnchor: Anchor
         get() = Anchor.MIDDLE_CENTER
+    override val quality: GameWindow.Quality = GameWindow.Quality.QUALITY
 
     val logger = Logger<MainModule>()
 

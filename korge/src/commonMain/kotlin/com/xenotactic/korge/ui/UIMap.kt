@@ -146,12 +146,6 @@ class UIMap(
         //                }
     }
 
-    val xOffset: Double
-        get() = this.x
-
-    val yOffset: Double
-        get() = this.y
-
     suspend fun viewRockCounters() {
         if (_rockCountersLayerMutex.isLocked) {
             println("Rock counters mutex is locked, skipping")
@@ -256,7 +250,7 @@ class UIMap(
         removeEntity(event.entity)
     }
 
-    fun drawGridLines() {
+    private fun drawGridLines() {
         //        _gridLinesGraphics.clear()
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
@@ -270,7 +264,7 @@ class UIMap(
         }
     }
 
-    fun drawGridNumbers() {
+    private fun drawGridNumbers() {
         _gridNumberLayer.removeChildren()
 
         if (!uiMapSettings.drawGridNumbers) {
@@ -307,7 +301,7 @@ class UIMap(
         }
     }
 
-    fun createEntityView(entity: MapEntity): UIEntity {
+    private fun createEntityView(entity: MapEntity): UIEntity {
         //        return UIEntity(entity, engine, _gridSize, _borderSize)
         return UIEntity(
             entity.type, entity.width, entity.height, _gridSize, _borderSize,
@@ -333,7 +327,7 @@ class UIMap(
         return uiEntity
     }
 
-    fun renderEntityTextInternal(entity: MapEntity) {
+    private fun renderEntityTextInternal(entity: MapEntity) {
         if (_entityToDrawnText.containsKey(entity)) {
             // Already drew text for entity
             return
