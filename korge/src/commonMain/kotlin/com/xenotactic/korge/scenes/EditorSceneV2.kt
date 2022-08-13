@@ -33,7 +33,7 @@ class EditorSceneV2 : Scene() {
             injections.setSingleton(uiMapV2)
             addFamilyListener(AddEntityToUIMapFamilyListener(this))
             addEntity {
-                addComponentOrThrow(MapEntityComponent(MapEntityType.START))
+                addComponentOrThrow(MapEntityType.START)
                 addComponentOrThrow(SizeComponent.SIZE_2X2_COMPONENT)
                 addComponentOrThrow(BottomLeftPositionComponent(0, 0))
             }

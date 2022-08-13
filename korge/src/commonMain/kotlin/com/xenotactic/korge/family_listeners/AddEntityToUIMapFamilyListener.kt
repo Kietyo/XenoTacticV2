@@ -20,19 +20,19 @@ class AddEntityToUIMapFamilyListener(
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            MapEntityComponent::class, SizeComponent::class, BottomLeftPositionComponent::class
+            MapEntityType::class, SizeComponent::class, BottomLeftPositionComponent::class
         ),
     )
 
     val uiMapV2 = world.injections.getSingleton<UIMapV2>()
-    val mapEntityComponentContainer = world.getComponentContainer<MapEntityComponent>()
+    val mapEntityTypeContainer = world.getComponentContainer<MapEntityType>()
     val sizeComponentContainer = world.getComponentContainer<SizeComponent>()
     val bottomLeftPositionComponentContainer =
         world.getComponentContainer<BottomLeftPositionComponent>()
     val speedEffectComponentContainer = world.getComponentContainer<SpeedEffectComponent>()
 
     override fun onAdd(entity: Entity) {
-        val mapEntityComponent = mapEntityComponentContainer.getComponent(entity)
+        val mapEntityComponent = mapEntityTypeContainer.getComponent(entity)
         val bottomLeftPositionComponent = bottomLeftPositionComponentContainer.getComponent(entity)
         val sizeComponent = sizeComponentContainer.getComponent(entity)
         val speedEffectComponent = speedEffectComponentContainer.getComponentOrNull(entity)
@@ -40,15 +40,17 @@ class AddEntityToUIMapFamilyListener(
             bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
         )
 
+        println("onAdd. mapEntityComponent: $mapEntityComponent")
+
         val uiEntity = UIEntity(
-            mapEntityComponent.entityType,
+            mapEntityComponent,
             sizeComponent.width,
             sizeComponent.height,
             uiMapV2.gridSize,
             uiMapV2.borderSize,
-            if (mapEntityComponent.entityType == MapEntityType.SPEED_AREA) speedEffectComponent!!.speedEffect else null
+            if (mapEntityComponent == MapEntityType.SPEED_AREA) speedEffectComponent!!.speedEffect else null
         ).apply {
-            if (mapEntityComponent.entityType == MapEntityType.SPEED_AREA) {
+            if (mapEntityComponent == MapEntityType.SPEED_AREA) {
                 addTo(uiMapV2.speedAreaLayer)
             } else {
                 addTo(uiMapV2.entityLayer)
