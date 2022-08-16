@@ -1,11 +1,7 @@
 package com.xenotactic.gamelogic.firebase_models
 
-import com.xenotactic.gamelogic.mapid.MapToId
-import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.protobuf.ProtoNumber
 
 @Serializable
 data class FbGameMap(
@@ -13,7 +9,7 @@ data class FbGameMap(
     val height: Int,
     val start: MapEntity.Start? = null,
     val finish: MapEntity.Finish? = null,
-    val checkpoints: List<MapEntity.CheckPoint> = emptyList(),
+    val checkpoints: List<MapEntity.Checkpoint> = emptyList(),
     val teleportIns: List<MapEntity.TeleportIn> = emptyList(),
     val teleportOuts: List<MapEntity.TeleportOut> = emptyList(),
     val towers: List<MapEntity.Tower> = emptyList(),

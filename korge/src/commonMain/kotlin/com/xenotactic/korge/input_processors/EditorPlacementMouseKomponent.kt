@@ -138,7 +138,7 @@ class EditorPlacementMouseKomponent(
                 gridYInt
             )
             MapEntityType.CHECKPOINT -> {
-                MapEntity.CheckPoint(gameMapControllerComponent.numCheckpoints, gridXInt, gridYInt)
+                MapEntity.Checkpoint(gameMapControllerComponent.numCheckpoints, gridXInt, gridYInt)
             }
             MapEntityType.ROCK -> TODO()
             MapEntityType.TOWER -> TODO()

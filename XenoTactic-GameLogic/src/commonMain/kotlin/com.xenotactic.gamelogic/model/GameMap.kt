@@ -12,7 +12,7 @@ data class GameMap(
     val width: Int, val height: Int,
     private var start: MapEntity.Start? = null,
     private var finish: MapEntity.Finish? = null,
-    private val checkpoints: MutableList<MapEntity.CheckPoint> = mutableListOf(),
+    private val checkpoints: MutableList<MapEntity.Checkpoint> = mutableListOf(),
     private val teleportIns: MutableMap<Int, MapEntity.TeleportIn> = mutableMapOf(),
     private val teleportOuts: MutableMap<Int, MapEntity.TeleportOut> = mutableMapOf(),
     private val towers: MutableList<MapEntity.Tower> = mutableListOf(),
@@ -108,7 +108,7 @@ data class GameMap(
             is MapEntity.Rock -> rocks.add(entity)
             is MapEntity.Start -> start = entity
             is MapEntity.Finish -> finish = entity
-            is MapEntity.CheckPoint -> checkpoints.add(entity)
+            is MapEntity.Checkpoint -> checkpoints.add(entity)
             is MapEntity.TeleportIn -> teleportIns[entity.sequenceNumber] = entity
             is MapEntity.TeleportOut -> teleportOuts[entity.sequenceNumber] = entity
             is MapEntity.Tower -> towers.add(entity)
@@ -126,7 +126,7 @@ data class GameMap(
             is MapEntity.Rock -> rocks.remove(entity)
             is MapEntity.Start -> start = null
             is MapEntity.Finish -> start = null
-            is MapEntity.CheckPoint -> checkpoints.remove(entity)
+            is MapEntity.Checkpoint -> checkpoints.remove(entity)
             is MapEntity.TeleportIn -> teleportIns.remove(entity.sequenceNumber)
             is MapEntity.TeleportOut -> teleportOuts.remove(entity.sequenceNumber)
             is MapEntity.Tower -> towers.remove(entity)
@@ -144,7 +144,7 @@ data class GameMap(
             is MapEntity.TeleportOut,
             is MapEntity.Start,
             is MapEntity.Finish,
-            is MapEntity.CheckPoint -> true
+            is MapEntity.Checkpoint -> true
             is MapEntity.TeleportIn,
             is MapEntity.Rock,
             is MapEntity.Tower,
@@ -228,7 +228,7 @@ data class GameMap(
      */
     fun getPathingEntityAfter(entity: MapEntity): MapEntity? {
         when (entity) {
-            is MapEntity.CheckPoint -> {
+            is MapEntity.Checkpoint -> {
                 if (entity.sequenceNumber == checkpoints.size - 1) return finish
                 return checkpoints[entity.sequenceNumber + 1]
             }

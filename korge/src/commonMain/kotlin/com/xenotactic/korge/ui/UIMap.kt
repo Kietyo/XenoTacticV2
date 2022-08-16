@@ -332,27 +332,7 @@ class UIMap(
             // Already drew text for entity
             return
         }
-        val text: String? = when (entity) {
-            is MapEntity.CheckPoint -> {
-                "CP ${entity.ordinalSequenceNumber}"
-            }
-            is MapEntity.Finish -> {
-                "FINISH"
-            }
-            is MapEntity.Start -> {
-                "START"
-            }
-            is MapEntity.Tower -> null
-            is MapEntity.Rock -> null
-            is MapEntity.TeleportIn -> {
-                "TP ${entity.ordinalSequenceNumber} IN"
-            }
-            is MapEntity.TeleportOut -> {
-                "TP ${entity.ordinalSequenceNumber} OUT"
-            }
-            is MapEntity.SmallBlocker -> null
-            is MapEntity.SpeedArea -> "${entity.getSpeedText()}"
-        }
+        val text: String? = entity.toMapEntityData().getText()
 
         if (text != null) {
             val (worldX, worldY) = toWorldCoordinates(

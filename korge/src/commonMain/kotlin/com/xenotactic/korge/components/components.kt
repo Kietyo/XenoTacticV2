@@ -1,10 +1,12 @@
 package com.xenotactic.korge.components
 
 import com.soywiz.korge.view.View
+import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
 
 data class MapEntityComponent(
-    val entityType: MapEntityType)
+    val entityData: MapEntityData
+)
 
 data class UIMapEntityComponent(
     val entityView: View

@@ -75,22 +75,22 @@ class RandomMapGenerator {
         } while (start.intersectsEntity(finish))
         map.placeEntity(finish)
 
-        val addedCheckPoints = mutableListOf<MapEntity.CheckPoint>()
+        val addedCheckpoints = mutableListOf<MapEntity.Checkpoint>()
         for (i in 0 until config.checkpoints) {
-            var checkpoint: MapEntity.CheckPoint
+            var checkpoint: MapEntity.Checkpoint
             do {
                 numTotalAttempts++
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
                     return failure()
                 }
                 checkpoint =
-                    MapEntity.CheckPoint(i, getRandomPointWithinMapBounds(MapEntity.CHECKPOINT))
+                    MapEntity.Checkpoint(i, getRandomPointWithinMapBounds(MapEntity.CHECKPOINT))
             } while (
                 start.intersectsEntity(checkpoint) ||
                 finish.intersectsEntity(checkpoint) ||
-                addedCheckPoints.any { it.intersectsEntity(checkpoint) }
+                addedCheckpoints.any { it.intersectsEntity(checkpoint) }
             )
-            addedCheckPoints.add(checkpoint)
+            addedCheckpoints.add(checkpoint)
             map.placeEntity(checkpoint)
         }
 
@@ -109,7 +109,7 @@ class RandomMapGenerator {
             } while (
                 start.intersectsEntity(teleportIn) ||
                 finish.intersectsEntity(teleportIn) ||
-                addedCheckPoints.any { it.intersectsEntity(teleportIn) } ||
+                addedCheckpoints.any { it.intersectsEntity(teleportIn) } ||
                 addedTpIns.any { it.intersectsEntity(teleportIn) } ||
                 addedTpOuts.any { it.intersectsEntity(teleportIn) }
             )
@@ -128,7 +128,7 @@ class RandomMapGenerator {
                 start.intersectsEntity(teleportOut) ||
                 finish.intersectsEntity(teleportOut) ||
                 addedTpIns.any { it.intersectsEntity(teleportOut) } ||
-                addedCheckPoints.any { it.intersectsEntity(teleportOut) } ||
+                addedCheckpoints.any { it.intersectsEntity(teleportOut) } ||
                 PathFinder.getShortestPathWithTeleportPair(
                     map, TeleportPair(
                         teleportIn,
@@ -176,7 +176,7 @@ class RandomMapGenerator {
                 if (
                     start.isFullyCoveredBy(newRockList) ||
                     finish.isFullyCoveredBy(newRockList) ||
-                    addedCheckPoints.any { it.isFullyCoveredBy(newRockList) } ||
+                    addedCheckpoints.any { it.isFullyCoveredBy(newRockList) } ||
                     // TODO: This is not enough, rocks still get placed on top of tp in/outs
                     addedTpIns.any { it.isFullyCoveredBy(newRockList) } ||
                     addedTpOuts.any { it.isFullyCoveredBy(newRockList) }
@@ -207,7 +207,7 @@ class RandomMapGenerator {
         return when (entityType) {
             is MapEntity.Start -> MapEntity.Start(getRandomPointWithinMapBounds(entityType))
             is MapEntity.Finish -> MapEntity.Finish(getRandomPointWithinMapBounds(entityType))
-            is MapEntity.CheckPoint -> TODO()
+            is MapEntity.Checkpoint -> TODO()
             is MapEntity.Rock -> TODO()
             is MapEntity.Tower -> TODO()
             is MapEntity.TeleportIn -> TODO()

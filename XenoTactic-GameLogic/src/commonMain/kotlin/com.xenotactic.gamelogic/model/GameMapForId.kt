@@ -17,7 +17,7 @@ data class GameMapForId(
     @ProtoNumber(2)
     val height: Int,
     @ProtoNumber(3)
-    val checkpoints: List<MapEntity.CheckPoint>,
+    val checkpoints: List<MapEntity.Checkpoint>,
     @ProtoNumber(4)
     val teleportIns: Map<Int, MapEntity.TeleportIn>,
     @ProtoNumber(5)

@@ -6,6 +6,7 @@ import com.xenotactic.ecs.Entity
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.components.MapEntityComponent
 import com.xenotactic.korge.components.SizeComponent
@@ -20,12 +21,12 @@ class AddEntityToUIMapFamilyListener(
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            MapEntityType::class, SizeComponent::class, BottomLeftPositionComponent::class
+            MapEntityComponent::class, SizeComponent::class, BottomLeftPositionComponent::class
         ),
     )
 
     val uiMapV2 = world.injections.getSingleton<UIMapV2>()
-    val mapEntityTypeContainer = world.getComponentContainer<MapEntityType>()
+    val mapEntityTypeContainer = world.getComponentContainer<MapEntityComponent>()
     val sizeComponentContainer = world.getComponentContainer<SizeComponent>()
     val bottomLeftPositionComponentContainer =
         world.getComponentContainer<BottomLeftPositionComponent>()
@@ -35,7 +36,6 @@ class AddEntityToUIMapFamilyListener(
         val mapEntityComponent = mapEntityTypeContainer.getComponent(entity)
         val bottomLeftPositionComponent = bottomLeftPositionComponentContainer.getComponent(entity)
         val sizeComponent = sizeComponentContainer.getComponent(entity)
-        val speedEffectComponent = speedEffectComponentContainer.getComponentOrNull(entity)
         val (worldX, worldY) = uiMapV2.getWorldCoordinates(
             bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
         )
@@ -43,14 +43,14 @@ class AddEntityToUIMapFamilyListener(
         println("onAdd. mapEntityComponent: $mapEntityComponent")
 
         val uiEntity = UIEntity(
-            mapEntityComponent,
+            mapEntityComponent.entityData.toMapEntityType(),
             sizeComponent.width,
             sizeComponent.height,
             uiMapV2.gridSize,
             uiMapV2.borderSize,
-            if (mapEntityComponent == MapEntityType.SPEED_AREA) speedEffectComponent!!.speedEffect else null
+            if (mapEntityComponent.entityData is MapEntityData.SpeedArea) mapEntityComponent.entityData.speedEffect else null
         ).apply {
-            if (mapEntityComponent == MapEntityType.SPEED_AREA) {
+            if (mapEntityComponent.entityData is MapEntityData.SpeedArea) {
                 addTo(uiMapV2.speedAreaLayer)
             } else {
                 addTo(uiMapV2.entityLayer)

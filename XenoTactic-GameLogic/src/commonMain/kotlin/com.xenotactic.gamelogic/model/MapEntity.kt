@@ -132,7 +132,7 @@ sealed class MapEntity {
 
     fun at(p: IntPoint): MapEntity {
         return when (this) {
-            is CheckPoint -> CheckPoint(this.sequenceNumber, p.x, p.y)
+            is Checkpoint -> Checkpoint(this.sequenceNumber, p.x, p.y)
             is Finish -> Finish(p.x, p.y)
             is Rock -> Rock(p.x, p.y, width, height)
             is Start -> Start(p.x, p.y)
@@ -314,7 +314,7 @@ sealed class MapEntity {
      * Sequence number starts at 0.
      */
     @Serializable
-    data class CheckPoint(
+    data class Checkpoint(
         val sequenceNumber: Int,
         override val x: Int,
         override val y: Int
@@ -378,8 +378,22 @@ sealed class MapEntity {
         fun getSpeedText() = "${(speedEffect * 100).toInt()}%"
     }
 
+    fun toMapEntityData(): MapEntityData {
+        return when (this) {
+            is Checkpoint -> MapEntityData.Checkpoint(sequenceNumber)
+            is Finish -> MapEntityData.Finish
+            is Rock -> MapEntityData.Rock
+            is SmallBlocker -> MapEntityData.SmallBlocker
+            is SpeedArea -> MapEntityData.SpeedArea(radius, speedEffect)
+            is Start -> MapEntityData.Start
+            is TeleportIn -> MapEntityData.TeleportIn(sequenceNumber)
+            is TeleportOut -> MapEntityData.TeleportOut(sequenceNumber)
+            is Tower -> MapEntityData.Tower
+        }
+    }
+
     companion object {
-        val CHECKPOINT = CheckPoint(0, 0, 0)
+        val CHECKPOINT = Checkpoint(0, 0, 0)
         val TELEPORT_IN = TeleportIn(0, 0, 0)
         val TELEPORT_OUT = TeleportOut(0, 0, 0)
         val ROCK_1X1 = Rock(0, 0, 1, 1)

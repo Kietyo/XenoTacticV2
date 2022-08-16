@@ -29,7 +29,7 @@ internal class SearcherTest {
     fun getShortestPath() {
         val path = BFSSearcher.getShortestPath(
             10, 10,
-            listOf(MapEntity.Start(0, 0), MapEntity.CheckPoint(0, 3, 0), MapEntity.Finish(6, 0)),
+            listOf(MapEntity.Start(0, 0), MapEntity.Checkpoint(0, 3, 0), MapEntity.Finish(6, 0)),
         )
         print(path)
     }

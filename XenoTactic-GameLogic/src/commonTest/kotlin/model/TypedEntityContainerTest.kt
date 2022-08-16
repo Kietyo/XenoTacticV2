@@ -9,8 +9,8 @@ internal class TypedEntityContainerTest {
 
     @Test
     fun placeEntity() {
-        val entityContainer = TypedEntityContainer<MapEntity.CheckPoint>()
-        entityContainer.placeEntity(MapEntity.CheckPoint(0, 0, 0))
+        val entityContainer = TypedEntityContainer<MapEntity.Checkpoint>()
+        entityContainer.placeEntity(MapEntity.Checkpoint(0, 0, 0))
         assertTrue(entityContainer.containsEntity(0, 0))
         assertTrue(entityContainer.containsEntity(0, 1))
         assertTrue(entityContainer.containsEntity(1, 0))

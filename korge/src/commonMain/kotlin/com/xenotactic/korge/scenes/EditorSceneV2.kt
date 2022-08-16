@@ -5,6 +5,7 @@ import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.components.MapEntityComponent
 import com.xenotactic.korge.components.SizeComponent
@@ -33,11 +34,10 @@ class EditorSceneV2 : Scene() {
             injections.setSingleton(uiMapV2)
             addFamilyListener(AddEntityToUIMapFamilyListener(this))
             addEntity {
-                addComponentOrThrow(MapEntityType.START)
+                addComponentOrThrow(MapEntityComponent(MapEntityData.Start))
                 addComponentOrThrow(SizeComponent.SIZE_2X2_COMPONENT)
                 addComponentOrThrow(BottomLeftPositionComponent(0, 0))
             }
-
 
         }
 

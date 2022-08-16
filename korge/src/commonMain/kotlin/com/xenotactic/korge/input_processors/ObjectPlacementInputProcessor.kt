@@ -90,7 +90,7 @@ class ObjectPlacementInputProcessor(
                                 pointerAction.mapEntity.at(pointerAction.placementLocation!!)
                             )
                         }
-                        is MapEntity.CheckPoint -> TODO()
+                        is MapEntity.Checkpoint -> TODO()
                         is MapEntity.Tower, is MapEntity.SmallBlocker -> {
                             val entityAtPlace =
                                 pointerAction.mapEntity.at(pointerAction.placementLocation!!)

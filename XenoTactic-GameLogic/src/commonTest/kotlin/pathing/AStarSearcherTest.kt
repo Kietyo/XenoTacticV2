@@ -2,7 +2,6 @@ package pathing
 
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.baseName
-import com.soywiz.korio.file.std.localCurrentDirVfs
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
@@ -259,18 +258,18 @@ internal class AStarSearcherTest {
                 listOf(
                     EntityPath.EntityToEntityIntersectsTeleport(
                         MapEntity.Start(0, 8),
-                        MapEntity.CheckPoint(0, 8, 8),
+                        MapEntity.Checkpoint(0, 8, 8),
                         0,
                         Path.create(1 to 9, 9 to 9),
                         Path.create(1 to 9, 4 to 9)
                     ),
                     EntityPath.EntityToEntityPath(
                         MapEntity.TeleportOut(0, 6, 8),
-                        MapEntity.CheckPoint(0, 8, 8),
+                        MapEntity.Checkpoint(0, 8, 8),
                         Path.create(7 to 9, 9 to 9)
                     ),
                     EntityPath.EntityToEntityIntersectsTeleport(
-                        MapEntity.CheckPoint(0, 8, 8),
+                        MapEntity.Checkpoint(0, 8, 8),
                         MapEntity.Finish(8, 0),
                         1,
                         Path.create(9 to 9, 9 to 1),
@@ -287,7 +286,7 @@ internal class AStarSearcherTest {
                 10, 10,
                 listOf(
                     MapEntity.Start(0, 8),
-                    MapEntity.CheckPoint(0, 8, 8),
+                    MapEntity.Checkpoint(0, 8, 8),
                     MapEntity.Finish(8, 0)
                 ),
                 teleportPairs = listOf(
@@ -305,30 +304,30 @@ internal class AStarSearcherTest {
                 listOf(
                     EntityPath.EntityToEntityIntersectsTeleport(
                         MapEntity.Start(0, 8),
-                        MapEntity.CheckPoint(0, 8, 8),
+                        MapEntity.Checkpoint(0, 8, 8),
                         0,
                         Path.create(1 to 9, 9 to 9),
                         Path.create(1 to 9, 4 to 9)
                     ),
                     EntityPath.EntityToEntityPath(
                         MapEntity.TeleportOut(0, 6, 8),
-                        MapEntity.CheckPoint(0, 8, 8),
+                        MapEntity.Checkpoint(0, 8, 8),
                         Path.create(7 to 9, 9 to 9)
                     ),
                     EntityPath.EntityToEntityIntersectsTeleport(
-                        MapEntity.CheckPoint(0, 8, 8),
-                        MapEntity.CheckPoint(1, 8, 0),
+                        MapEntity.Checkpoint(0, 8, 8),
+                        MapEntity.Checkpoint(1, 8, 0),
                         1,
                         Path.create(9 to 9, 9 to 1),
                         Path.create(9 to 9, 9 to 7)
                     ),
                     EntityPath.EntityToEntityPath(
                         MapEntity.TeleportOut(1, 8, 3),
-                        MapEntity.CheckPoint(1, 8, 0),
+                        MapEntity.Checkpoint(1, 8, 0),
                         Path.create(9 to 4, 9 to 1)
                     ),
                     EntityPath.EntityToEntityIntersectsTeleport(
-                        MapEntity.CheckPoint(1, 8, 0),
+                        MapEntity.Checkpoint(1, 8, 0),
                         MapEntity.Finish(0, 0),
                         2,
                         Path.create(9 to 1, 1 to 1),
@@ -345,8 +344,8 @@ internal class AStarSearcherTest {
                 10, 10,
                 listOf(
                     MapEntity.Start(0, 8),
-                    MapEntity.CheckPoint(0, 8, 8),
-                    MapEntity.CheckPoint(1, 8, 0),
+                    MapEntity.Checkpoint(0, 8, 8),
+                    MapEntity.Checkpoint(1, 8, 0),
                     MapEntity.Finish(0, 0)
                 ),
                 teleportPairs = listOf(
@@ -371,7 +370,7 @@ internal class AStarSearcherTest {
             AStarSearcher.getUpdatablePath(
                 10, 10,
                 listOf(
-                    MapEntity.CheckPoint(0, 3, 6),
+                    MapEntity.Checkpoint(0, 3, 6),
                     MapEntity.Finish(7, 0)
                 ),
                 blockingEntities = listOf(MapEntity.Rock(2, 5, 4, 2))
@@ -391,7 +390,7 @@ internal class AStarSearcherTest {
             AStarSearcher.getUpdatablePath(
                 10, 10,
                 listOf(
-                    MapEntity.CheckPoint(0, 1, 1),
+                    MapEntity.Checkpoint(0, 1, 1),
                     MapEntity.Finish(2, 1)
                 ),
                 blockingEntities = listOf(

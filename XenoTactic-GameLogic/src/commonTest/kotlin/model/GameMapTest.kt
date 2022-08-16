@@ -117,7 +117,7 @@ internal class GameMapTest {
         gameMap.placeEntities(
             MapEntity.Start(0, 0),
             MapEntity.Finish(7, 0),
-            MapEntity.CheckPoint(0, 3, 6),
+            MapEntity.Checkpoint(0, 3, 6),
             MapEntity.Rock(2, 5, 4, 2)
         )
 
