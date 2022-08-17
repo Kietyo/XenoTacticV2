@@ -70,7 +70,7 @@ inline fun <T> measureTime(
 fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: Int, gameHeight: Int) =
     toWorldCoordinates(
         gridSize,
-        entity.intPoint.toPoint(), gameWidth, gameHeight,
+        entity.intPoint, gameWidth, gameHeight,
         entityHeight = entity.height
     )
 
@@ -81,15 +81,25 @@ fun toWorldCoordinates(
         Pair<Double, Double> =
     toWorldCoordinates(
         gridSize,
-        intPoint.toPoint(), gameWidth, gameHeight, entityHeight
+        intPoint.x.toDouble(), intPoint.y.toDouble(), gameWidth, gameHeight, entityHeight
+    )
+
+fun toWorldCoordinates(
+    gridSize: Double, point: Point, gameWidth: Int, gameHeight: Int,
+    entityHeight: Int = 1
+):
+        Pair<Double, Double> =
+    toWorldCoordinates(
+        gridSize,
+        point.x, point.y, gameWidth, gameHeight, entityHeight
     )
 
 fun toWorldCoordinates(
     gridSize: Double,
-    point: Point, gameWidth: Int, gameHeight: Int, entityHeight: Int = 0
+    x: Double, y: Double, gameWidth: Int, gameHeight: Int, entityHeight: Int = 0
 ):
         Pair<Double, Double> =
-    Pair((point.x) * gridSize, (gameHeight - point.y - entityHeight) * gridSize)
+    Pair(x * gridSize, (gameHeight - y - entityHeight) * gridSize)
 
 //fun toWorldCoordinates(entity: MonsterEntity) =
 //    Pair((entity.currentPoint.x) * GRID_SIZE, (entity.currentPoint.y) * GRID_SIZE)
@@ -359,7 +369,6 @@ fun String.removeAllIndents(): String {
         it.trimIndent()
     }
 }
-
 
 
 fun <T> sequenceOfNullable(element: T?) =

@@ -26,7 +26,7 @@ data class MouseEventWithGridCoordinates(
 
 data class PlacedEntityEvent(val entityType: MapEntityType)
 
-class EditorPlacementMouseKomponent(
+class EditorPlacementInputProcessor(
     override val view: BaseView,
     val uiMap: UIMap,
     val engine: Engine
@@ -92,7 +92,7 @@ class EditorPlacementMouseKomponent(
                 entityWidth,
                 entityHeight
             )
-            uiMap.renderHighlightRectangle(gridXInt, gridYInt, entityWidth, entityHeight)
+            uiMap.renderEntityHighlightRectangle(gridXInt, gridYInt, entityWidth, entityHeight)
             if (event.type == MouseEvent.Type.UP) {
                 val entityToAdd =
                     createEntityToAdd(
@@ -207,7 +207,7 @@ class EditorPlacementMouseKomponent(
             // Resets the highlight rectangle to the current cursor position
             handleRockPlacement(MouseEvent.Type.MOVE, gridX, gridY)
         } else {
-            uiMap.renderHighlightRectangle(roundedGridX, roundedGridY, width, height)
+            uiMap.renderEntityHighlightRectangle(roundedGridX, roundedGridY, width, height)
         }
     }
 

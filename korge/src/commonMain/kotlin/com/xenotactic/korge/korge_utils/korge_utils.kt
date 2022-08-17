@@ -1,5 +1,6 @@
 package com.xenotactic.korge.korge_utils
 
+import com.soywiz.kmem.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.ResizeComponent
@@ -11,6 +12,41 @@ import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korma.geom.Point
+import kotlin.math.floor
+import kotlin.math.roundToInt
+
+fun getRoundedGridCoordinates(
+    gridX: Double,
+    gridY: Double,
+    entityWidth: Int,
+    entityHeight: Int,
+    mapWidth: Int,
+    mapHeight: Int
+): Pair<Int, Int> {
+    val roundedGridX = when {
+        entityWidth == 1 -> floor(
+            gridX - entityWidth / 2
+        ).toInt()
+        else -> (gridX - entityWidth / 2).roundToInt()
+    }
+
+    val roundedGridY = when {
+        entityHeight == 1 -> floor(
+            gridY - entityHeight / 2
+        ).toInt()
+        else -> (gridY - entityHeight / 2).roundToInt()
+    }
+
+    val gridXToInt = roundedGridX.clamp(
+        0,
+        mapWidth - entityWidth
+    )
+    val gridYToInt = roundedGridY.clamp(
+        0,
+        mapHeight - entityHeight
+    )
+    return gridXToInt to gridYToInt
+}
 
 fun getTopLeft(p1: Point, p2: Point): Point {
     return Point(

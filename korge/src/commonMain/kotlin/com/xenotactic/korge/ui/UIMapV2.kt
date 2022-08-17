@@ -1,19 +1,19 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.filter.IdentityFilter
-import com.soywiz.korge.view.filter.filter
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.text
-import com.soywiz.korge.view.xy
+import com.soywiz.korge.view.*
+import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.text.TextAlignment
+import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
 import com.xenotactic.gamelogic.globals.GRID_SIZE
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
+import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.utils.toWorldCoordinates
+import com.xenotactic.gamelogic.views.UIEntity
 
 data class UIMapSettingsV2(
     val width: Int = 10,
@@ -38,8 +38,8 @@ class UIMapV2(
     val gridSize get() = uiMapSettingsV2.gridSize
     val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
     val borderSize get() = uiMapSettingsV2.borderSize
-    private val _width get() = uiMapSettingsV2.width
-    private val _height get() = uiMapSettingsV2.height
+    val mapWidth get() = uiMapSettingsV2.width
+    val mapHeight get() = uiMapSettingsV2.height
 
     val _boardLayer = this.container {
         //        this.propagateEvents = false
@@ -56,13 +56,16 @@ class UIMapV2(
 
     val _entityLabelLayer = this.container()
 
+    val _highlightLayer = this.container()
+    val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
+
     init {
         drawBoard()
         drawGridNumbers()
     }
 
     fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int = 0) =
-        Pair(x * gridSize, (_height - y - entityHeight) * gridSize)
+        Pair(x * gridSize, (mapHeight - y - entityHeight) * gridSize)
 
     fun toWorldDimensions(width: Int, height: Int) = Pair(width * gridSize, height * gridSize)
 
@@ -70,15 +73,15 @@ class UIMapV2(
         println("Drawing board")
         when (uiMapSettingsV2.boardType) {
             BoardType.SOLID -> _boardLayer.solidRect(
-                gridSize * _width,
-                gridSize * _height,
+                gridSize * mapWidth,
+                gridSize * mapHeight,
                 MaterialColors.GREEN_600
             )
             BoardType.CHECKERED_1X1 -> {
                 var altColorWidth = true
-                for (i in 0 until _width) {
+                for (i in 0 until mapWidth) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until _height) {
+                    for (j in 0 until mapHeight) {
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -92,11 +95,11 @@ class UIMapV2(
             BoardType.CHECKERED_2X2 -> {
                 var altColorWidth = true
                 val gridSize = gridSize * 2
-                for (i in 0 until ((_width + 1) / 2)) {
+                for (i in 0 until ((mapWidth + 1) / 2)) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until ((_height + 1) / 2)) {
-                        val gridWidth = if ((i + 1) * 2 > _width) this.gridSize else gridSize
-                        val gridHeight = if ((j + 1) * 2 > _height) this.gridSize else gridSize
+                    for (j in 0 until ((mapHeight + 1) / 2)) {
+                        val gridWidth = if ((i + 1) * 2 > mapWidth) this.gridSize else gridSize
+                        val gridHeight = if ((j + 1) * 2 > mapHeight) this.gridSize else gridSize
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -118,7 +121,7 @@ class UIMapV2(
             return
         }
 
-        for (i in 0 until _width) {
+        for (i in 0 until mapWidth) {
             _gridNumberLayer.text(
                 i.toString(),
                 textSize = gridNumberFontSize,
@@ -127,24 +130,94 @@ class UIMapV2(
                 i * gridSize, 0.0
             )
             _gridNumberLayer.text(i.toString(), textSize = gridNumberFontSize).xy(
-                i * gridSize, _height * gridSize
+                i * gridSize, mapHeight * gridSize
             )
         }
-        for (j in 0 until _height) {
+        for (j in 0 until mapHeight) {
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_RIGHT
             ).xy(
-                -10.0, _height * gridSize - j * gridSize
+                -10.0, mapHeight * gridSize - j * gridSize
             )
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_LEFT
             ).xy(
-                _width * gridSize + 10.0, _height * gridSize - j * gridSize
+                mapWidth * gridSize + 10.0, mapHeight * gridSize - j * gridSize
             )
         }
+    }
+
+    fun getGridPositionsFromGlobalMouse(
+        globalMouseX: Double,
+        globalMouseY: Double
+    ): Pair<Double, Double> {
+        val localXY = globalToLocalXY(globalMouseX, globalMouseY)
+        val unprojected = Point(
+            localXY.x,
+            mapHeight * gridSize - localXY.y
+        )
+
+        val gridX = unprojected.x / gridSize
+        val gridY = unprojected.y / gridSize
+
+        return gridX to gridY
+    }
+
+    fun getRoundedGridCoordinates(
+        gridX: Double,
+        gridY: Double,
+        entityWidth: Int,
+        entityHeight: Int,
+    ): Pair<Int, Int> =
+        com.xenotactic.korge.korge_utils.getRoundedGridCoordinates(
+            gridX,
+            gridY,
+            entityWidth,
+            entityHeight,
+            mapWidth,
+            mapHeight
+        )
+
+    fun renderEntityHighlightRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
+        val (worldX, worldY) = toWorldCoordinates(
+            gridSize,
+            IntPoint(gridX, gridY),
+            mapWidth, mapHeight, entityHeight
+        )
+        val (worldWidth, worldHeight) = com.xenotactic.gamelogic.utils.toWorldDimensions(
+            entityWidth,
+            entityHeight,
+            gridSize
+        )
+        _highlightRectangle
+            .size(worldWidth, worldHeight)
+            .xy(worldX, worldY)
+            .visible(true)
+    }
+
+    fun renderHighlightEntity(entity: MapEntity) {
+        val (worldX, worldY) = toWorldCoordinates(
+            gridSize, entity, mapWidth, mapHeight
+        )
+        createEntityView(entity).apply {
+            addTo(_highlightLayer)
+            xy(worldX, worldY)
+        }
+    }
+
+    private fun createEntityView(entity: MapEntity): UIEntity {
+        //        return UIEntity(entity, engine, _gridSize, _borderSize)
+        return UIEntity(
+            entity.type, entity.width, entity.height, gridSize, borderSize,
+            if (entity is MapEntity.SpeedArea) entity.speedEffect else null
+        )
+    }
+
+    fun clearHighlightLayer() {
+        _highlightLayer.removeChildren()
     }
 }

@@ -14,7 +14,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.fleks.listeners.RenderEntityComponentListener
 import com.xenotactic.korge.input_processors.CameraInputProcessor
-import com.xenotactic.korge.input_processors.EditorPlacementMouseKomponent
+import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessor
@@ -85,7 +85,7 @@ class EditorScene : Scene() {
             addComponentListener(RenderEntityComponentListener(world, engine))
         }
 
-        val editorPlacementMouseKomponent = EditorPlacementMouseKomponent(
+        val editorPlacementInputProcessor = EditorPlacementInputProcessor(
             this, uiMap, engine
         )
 
@@ -95,7 +95,7 @@ class EditorScene : Scene() {
             addComponent(it)
             engine.setOneTimeComponent(it)
         }
-        addComponent(editorPlacementMouseKomponent)
+        addComponent(editorPlacementInputProcessor)
 
         MapRendererUpdater(engine, uiMap, eventBus)
 

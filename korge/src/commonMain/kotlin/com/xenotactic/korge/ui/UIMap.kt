@@ -1,6 +1,5 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.kmem.clamp
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.vector.gpuGraphics
 import com.soywiz.korim.bitmap.effect.BitmapEffect
@@ -27,12 +26,11 @@ import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.input_processors.PointerAction
+import com.xenotactic.korge.korge_utils.getRoundedGridCoordinates
 import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
-import kotlin.math.floor
-import kotlin.math.roundToInt
 
 enum class BoardType {
     SOLID,
@@ -200,6 +198,7 @@ class UIMap(
                 _gridSize * gameMap.width, _gridSize * gameMap.height,
                 MaterialColors.GREEN_600
             )
+
             BoardType.CHECKERED_1X1 -> {
                 var altColorWidth = true
                 for (i in 0 until gameMap.width) {
@@ -215,6 +214,7 @@ class UIMap(
                     altColorWidth = !altColorWidth
                 }
             }
+
             BoardType.CHECKERED_2X2 -> {
                 var altColorWidth = true
                 val gridSize = _gridSize * 2
@@ -418,7 +418,7 @@ class UIMap(
         }
     }
 
-    fun renderHighlightRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
+    fun renderEntityHighlightRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize,
             IntPoint(gridX, gridY),
@@ -440,11 +440,10 @@ class UIMap(
             _gridSize, entity, gameMap.width, gameMap
                 .height
         )
-        val view = createEntityView(entity).apply {
+        createEntityView(entity).apply {
             addTo(_highlightLayer)
             xy(worldX, worldY)
         }
-
     }
 
     fun clearHighlightLayer() {
@@ -460,16 +459,18 @@ class UIMap(
             PointerAction.Inactive -> {
                 hideHighlightRectangle()
             }
+
             is PointerAction.HighlightForPlacement -> {
                 if (pointerAction.placementLocation != null) {
                     val (gridX, gridY) = pointerAction.placementLocation!!
-                    renderHighlightRectangle(
+                    renderEntityHighlightRectangle(
                         gridX, gridY,
                         pointerAction.mapEntity.width,
                         pointerAction.mapEntity.height,
                     )
                 }
             }
+
             is PointerAction.RemoveEntityAtPlace -> {
                 val data = pointerAction.data
                 if (data == null) {
@@ -511,31 +512,8 @@ class UIMap(
         gridY: Double,
         entityWidth: Int,
         entityHeight: Int,
-    ): Pair<Int, Int> {
-        val roundedGridX = when {
-            entityWidth == 1 -> floor(
-                gridX - entityWidth / 2
-            ).toInt()
-            else -> (gridX - entityWidth / 2).roundToInt()
-        }
-
-        val roundedGridY = when {
-            entityHeight == 1 -> floor(
-                gridY - entityHeight / 2
-            ).toInt()
-            else -> (gridY - entityHeight / 2).roundToInt()
-        }
-
-        val gridXToInt = roundedGridX.clamp(
-            0,
-            mapWidth - entityWidth
-        )
-        val gridYToInt = roundedGridY.clamp(
-            0,
-            mapHeight - entityHeight
-        )
-        return gridXToInt to gridYToInt
-    }
+    ): Pair<Int, Int> =
+        getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight, mapWidth, mapHeight)
 
     fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
         return _drawnEntities.values.asSequence().flatten().filter {
