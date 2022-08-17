@@ -89,6 +89,7 @@ kotlin {
             dependencies {
                 implementation("com.soywiz.korlibs.korma:korma:$korgeVersion")
                 implementation("com.soywiz.korlibs.korio:korio:$korgeVersion")
+                implementation("com.soywiz.korlibs.korge2:korge:$korgeVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.3.2")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")

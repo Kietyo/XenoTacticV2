@@ -6,14 +6,11 @@ import com.xenotactic.ecs.Entity
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.MapEntityData
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.MapEntityComponent
-import com.xenotactic.korge.components.SizeComponent
-import com.xenotactic.korge.components.BottomLeftPositionComponent
-import com.xenotactic.korge.components.SpeedEffectComponent
-import com.xenotactic.korge.components.UIMapEntityComponent
-import com.xenotactic.korge.ui.UIEntity
+import com.xenotactic.gamelogic.utils.getCenterPoint
+import com.xenotactic.korge.korge_utils.makeEntityLabelText
+import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.ui.UIMapV2
 
 class AddEntityToUIMapFamilyListener(
@@ -30,7 +27,6 @@ class AddEntityToUIMapFamilyListener(
     val sizeComponentContainer = world.getComponentContainer<SizeComponent>()
     val bottomLeftPositionComponentContainer =
         world.getComponentContainer<BottomLeftPositionComponent>()
-    val speedEffectComponentContainer = world.getComponentContainer<SpeedEffectComponent>()
 
     override fun onAdd(entity: Entity) {
         val mapEntityComponent = mapEntityTypeContainer.getComponent(entity)
@@ -48,7 +44,7 @@ class AddEntityToUIMapFamilyListener(
             sizeComponent.height,
             uiMapV2.gridSize,
             uiMapV2.borderSize,
-            if (mapEntityComponent.entityData is MapEntityData.SpeedArea) mapEntityComponent.entityData.speedEffect else null
+            if (mapEntityComponent.entityData is MapEntityData.SpeedArea) (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect else null
         ).apply {
             if (mapEntityComponent.entityData is MapEntityData.SpeedArea) {
                 addTo(uiMapV2.speedAreaLayer)
@@ -56,6 +52,24 @@ class AddEntityToUIMapFamilyListener(
                 addTo(uiMapV2.entityLayer)
             }
             xy(worldX, worldY)
+        }
+
+        val text = mapEntityComponent.entityData.getText()
+        if (text != null) {
+            val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
+            val (centerWorldX, centerWorldY) = uiMapV2.getWorldCoordinates(
+                centerPoint.x.toInt(),
+                centerPoint.y.toInt()
+            )
+            val textView = makeEntityLabelText(text).apply {
+                addTo(uiMapV2._entityLabelLayer)
+                xy(centerWorldX, centerWorldY)
+                scaledHeight = uiMapV2.gridSize / 2
+                scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
+            }
+            world.modifyEntity(entity) {
+                addComponentOrThrow(UIMapEntityTextComponent(textView))
+            }
         }
 
         world.modifyEntity(entity) {

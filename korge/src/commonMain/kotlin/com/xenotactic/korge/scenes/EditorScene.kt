@@ -17,7 +17,7 @@ import com.xenotactic.korge.fleks.listeners.RenderEntityComponentListener
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.EditorPlacementMouseKomponent
 import com.xenotactic.korge.input_processors.KeyInputProcessor
-import com.xenotactic.korge.input_processors.MouseDragKomponent
+import com.xenotactic.korge.input_processors.MouseDragState
 import com.xenotactic.korge.input_processors.SelectorMouseProcessor
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.renderer.MapRendererUpdater
@@ -62,8 +62,8 @@ class EditorScene : Scene() {
         //            component(::PreSelectionComponent, ::PreSelectionComponentListener)
         //        }
 
-        val mouseDragKomponent = MouseDragKomponent(uiMap)
-        uiMap.addComponent(mouseDragKomponent)
+        val mouseDragState = MouseDragState(uiMap)
+        uiMap.addComponent(mouseDragState)
 
         val editorComponent = EditorEComponent()
 
@@ -74,7 +74,7 @@ class EditorScene : Scene() {
             )
         )
         engine.setOneTimeComponent(UIMapEComponent(uiMap))
-        engine.setOneTimeComponent(mouseDragKomponent)
+        engine.setOneTimeComponent(mouseDragState)
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
             centerXOnStage()

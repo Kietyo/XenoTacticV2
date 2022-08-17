@@ -20,6 +20,8 @@ const val LINE_WIDTH_RATIO = 0.035
 const val GAME_WIDTH = 20
 const val GAME_HEIGHT = 30
 
+const val ENTITY_LABEL_SIZE = 15.0
+
 val LEFT_CLICK_BUTTON = 0
 val RIGHT_CLICK_BUTTON = 0
 

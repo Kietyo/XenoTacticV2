@@ -6,29 +6,24 @@ import com.soywiz.korge.ui.uiHorizontalStack
 import com.soywiz.korge.view.Container
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
-import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
-import com.xenotactic.korge.input_processors.MouseDragKomponent
+import com.xenotactic.korge.input_processors.MouseDragState
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
-import com.xenotactic.korge.input_processors.SelectorMouseProcessor
+import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.state.EditorState
+import com.xenotactic.korge.state.GameMapState
 
 class UIEditorButtonsV2(
-    val gameWorld: World,
     val uiWorld: World,
     val engine: Engine
 ) : Container() {
-    val editorComponent = uiWorld.injections.getSingleton<EditorState>()
-    val uiMapComponent = gameWorld.injections.getSingleton<UIMapEComponent>()
-    val mouseDragKomponent = gameWorld.injections.getSingleton<MouseDragKomponent>()
-    val gameMapControllerEComponent = gameWorld.injections.getSingleton<GameMapControllerEComponent>()
-    val selectorMouseProcessor = gameWorld.injections.getSingleton<SelectorMouseProcessor>()
+    private val editorComponent = uiWorld.injections.getSingleton<EditorState>()
+    private val mouseDragState = uiWorld.injections.getSingleton<MouseDragState>()
+    private val gameMapState = uiWorld.injections.getSingleton<GameMapState>()
+    private val selectorMouseProcessor = uiWorld.injections.getSingleton<SelectorMouseProcessorV2>()
 
-    val uiMap = uiMapComponent.uiMap
-
-    val DEFAULT_NOTIFICATION_TEXT = "N/A"
+    private val DEFAULT_NOTIFICATION_TEXT = "N/A"
 
     init {
         uiHorizontalStack {
@@ -101,12 +96,11 @@ class UIEditorButtonsV2(
 
     fun switchToPlayingMode() {
         engine.eventBus.send(NotificationTextUpdateEvent(DEFAULT_NOTIFICATION_TEXT))
-        mouseDragKomponent.adjustSettings {
+        mouseDragState.adjustSettings {
             allowLeftClickDragging = true
         }
         editorComponent.isEditingEnabled = false
-        uiMap.hideHighlightRectangle()
-        uiMap.clearHighlightLayer()
+        TODO()
         selectorMouseProcessor.isEnabled = true
         println("selectorMouseProcessor is enabled")
     }
@@ -114,12 +108,12 @@ class UIEditorButtonsV2(
     fun switchToEditingMode(entityType: MapEntityType) {
         engine.eventBus.send(
             NotificationTextUpdateEvent(
-                gameMapControllerEComponent.getNotificationText(
+                gameMapState.getNotificationText(
                     entityType
                 )
             )
         )
-        mouseDragKomponent.adjustSettings {
+        mouseDragState.adjustSettings {
             allowLeftClickDragging = false
         }
         editorComponent.isEditingEnabled = true

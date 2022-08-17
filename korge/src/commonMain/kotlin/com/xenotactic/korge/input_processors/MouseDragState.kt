@@ -23,23 +23,23 @@ fun DraggableInfo.asString(): String {
     """.trimIndent()
 }
 
-enum class MouseDragState {
+enum class MouseDragStateType {
     UNKNOWN,
     START,
     DRAG,
     END
 }
 
-data class MouseDragKomponentSettings(
+data class MouseDragStateSettings(
     var isEnabled: Boolean = true,
     var allowLeftClickDragging: Boolean = true,
     var allowRightClickDragging: Boolean = true,
     var allowMiddleClickDragging: Boolean = true,
 )
 
-data class MouseDragKomponent(
+data class MouseDragState(
     override val view: View,
-    val settings: MouseDragKomponentSettings = MouseDragKomponentSettings()
+    val settings: MouseDragStateSettings = MouseDragStateSettings()
 ) : MouseComponent, EComponent {
     val autoMove = true
     val info = DraggableInfo(view)
@@ -50,7 +50,7 @@ data class MouseDragKomponent(
         MouseEvent.Type.UP,
     )
 
-    fun adjustSettings(fn: MouseDragKomponentSettings.() -> Unit) {
+    fun adjustSettings(fn: MouseDragStateSettings.() -> Unit) {
         fn(settings)
         reset()
     }
@@ -59,34 +59,34 @@ data class MouseDragKomponent(
     // drag state. For example, right clicking while doing a left click drag.
     private var activeButton = MouseButton.LEFT
 
-    private fun getState(event: MouseEvent): MouseDragState {
+    private fun getState(event: MouseEvent): MouseDragStateType {
         when (event.type) {
             MouseEvent.Type.DOWN -> {
                 if (event.button == MouseButton.LEFT) {
-                    return MouseDragState.START
+                    return MouseDragStateType.START
                 }
                 if (event.button == MouseButton.MIDDLE) {
-                    return MouseDragState.START
+                    return MouseDragStateType.START
                 }
                 if (event.button == MouseButton.RIGHT) {
-                    return MouseDragState.START
+                    return MouseDragStateType.START
                 }
-                return MouseDragState.UNKNOWN
+                return MouseDragStateType.UNKNOWN
             }
             MouseEvent.Type.UP -> {
                 if (event.button == MouseButton.LEFT) {
-                    return MouseDragState.END
+                    return MouseDragStateType.END
                 }
                 if (event.button == MouseButton.MIDDLE) {
-                    return MouseDragState.END
+                    return MouseDragStateType.END
                 }
                 if (event.button == MouseButton.RIGHT) {
-                    return MouseDragState.END
+                    return MouseDragStateType.END
                 }
-                return MouseDragState.UNKNOWN
+                return MouseDragStateType.UNKNOWN
             }
-            MouseEvent.Type.DRAG -> return MouseDragState.DRAG
-            else -> return MouseDragState.UNKNOWN
+            MouseEvent.Type.DRAG -> return MouseDragStateType.DRAG
+            else -> return MouseDragStateType.UNKNOWN
         }
     }
 
@@ -134,24 +134,24 @@ data class MouseDragKomponent(
 //        """.trimIndent()
 //        )
 
-        if (state == MouseDragState.UNKNOWN) {
+        if (state == MouseDragStateType.UNKNOWN) {
             require(!dragging)
             return
         }
 
-        require(state != MouseDragState.UNKNOWN)
+        require(state != MouseDragStateType.UNKNOWN)
 
         currentPosition.copyFrom(views.globalMouseXY)
 
         when (state) {
-            MouseDragState.START -> {
+            MouseDragStateType.START -> {
                 activeButton = event.button
                 dragging = true
                 startX = currentPosition.x
                 startY = currentPosition.y
                 info.reset()
             }
-            MouseDragState.END -> {
+            MouseDragStateType.END -> {
                 dragging = false
             }
             else -> Unit
@@ -163,8 +163,8 @@ data class MouseDragKomponent(
         info.set(
             deltaX,
             deltaY,
-            state == MouseDragState.START,
-            state == MouseDragState.END,
+            state == MouseDragStateType.START,
+            state == MouseDragStateType.END,
             TimeProvider.now()
         )
 
@@ -176,7 +176,7 @@ data class MouseDragKomponent(
     fun handle(event: MouseEvent) {
         val state = getState(event)
         val view = view
-        if (state == MouseDragState.START) {
+        if (state == MouseDragStateType.START) {
             info.viewStartXY.copyFrom(view.pos)
         }
         //println("localDXY=${info.localDX(view)},${info.localDY(view)}")

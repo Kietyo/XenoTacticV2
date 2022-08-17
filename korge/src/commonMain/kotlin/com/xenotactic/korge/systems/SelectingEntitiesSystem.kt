@@ -3,7 +3,7 @@ package com.xenotactic.korge.systems
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.korge.input_processors.SelectedUIEntitiesEvent
-import com.xenotactic.korge.ui.UIEntity
+import com.xenotactic.gamelogic.views.UIEntity
 
 class SelectingEntitiesSystem(
     val engine: Engine

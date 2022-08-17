@@ -1,4 +1,4 @@
-package com.xenotactic.korge.ui
+package com.xenotactic.gamelogic.views
 
 import com.soywiz.korge.view.Circle
 import com.soywiz.korge.view.Container
@@ -8,13 +8,12 @@ import com.soywiz.korge.view.centerOn
 import com.soywiz.korge.view.container
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korim.color.Colors
+import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.rectHole
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toWorldDimensions
-import com.xenotactic.korge.korge_utils.MaterialColors
-import com.xenotactic.korge.korge_utils.SpeedAreaColorUtil
+import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 
 class UIEntity(
     val entityType: MapEntityType,

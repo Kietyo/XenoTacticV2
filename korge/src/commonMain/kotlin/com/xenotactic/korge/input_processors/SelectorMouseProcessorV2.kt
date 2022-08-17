@@ -11,28 +11,23 @@ import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
+import com.xenotactic.ecs.World
 import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.state.GameMapState
 
-data class SelectedUIEntitiesEvent(
-    val type: SelectionType,
-    // Entities that were selected in the previous snapshot.
-    val previousSelectionSnapshot: List<UIEntity>,
-    // Entities that are selected in the newest snapshot.
-    val newSelectionSnapshot: List<UIEntity>
-)
-
-class SelectorMouseProcessor(
+class SelectorMouseProcessorV2(
     override val view: Container,
     val engine: Engine,
+    val uiWorld: World,
     var isEnabled: Boolean = true
 ) :
     MouseComponent, EComponent {
 
-    val uiMap = engine.getOneTimeComponent<UIMapEComponent>().uiMap
+    val gameMapState = uiWorld.injections.getSingleton<GameMapState>()
 
     val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 
@@ -87,7 +82,7 @@ class SelectorMouseProcessor(
             }
 
             val intersectingEntities =
-                uiMap.getIntersectingEntities(selectionRectangle.getGlobalBounds())
+                gameMapState.getIntersectingEntities(selectionRectangle.getGlobalBounds())
             println("intersectingEntities: $intersectingEntities")
 
             if (event.type == MouseEvent.Type.UP &&

@@ -18,6 +18,7 @@ import com.soywiz.korge.view.scaleWhileMaintainingAspect
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.text
 import com.soywiz.korim.color.Colors
+import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.VfsFile
@@ -26,7 +27,6 @@ import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
-import com.xenotactic.korge.korge_utils.MaterialColors
 import existsBlocking
 import kotlinx.coroutines.Dispatchers
 

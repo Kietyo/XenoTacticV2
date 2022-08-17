@@ -14,7 +14,7 @@ import com.xenotactic.korge.engine.EComponent
 
 data class MouseDragKomponentV2(
     override val view: View,
-    val settings: MouseDragKomponentSettings = MouseDragKomponentSettings()
+    val settings: MouseDragStateSettings = MouseDragStateSettings()
 ) : MouseComponent, EComponent {
     val autoMove = true
     val info = DraggableInfo(view)
@@ -25,7 +25,7 @@ data class MouseDragKomponentV2(
         MouseEvent.Type.UP,
     )
 
-    fun adjustSettings(fn: MouseDragKomponentSettings.() -> Unit) {
+    fun adjustSettings(fn: MouseDragStateSettings.() -> Unit) {
         fn(settings)
         reset()
     }
@@ -34,34 +34,34 @@ data class MouseDragKomponentV2(
     // drag state. For example, right clicking while doing a left click drag.
     private var activeButton = MouseButton.LEFT
 
-    private fun getState(event: MouseEvent): MouseDragState {
+    private fun getState(event: MouseEvent): MouseDragStateType {
         when (event.type) {
             MouseEvent.Type.DOWN -> {
                 if (event.button == MouseButton.LEFT) {
-                    return MouseDragState.START
+                    return MouseDragStateType.START
                 }
                 if (event.button == MouseButton.MIDDLE) {
-                    return MouseDragState.START
+                    return MouseDragStateType.START
                 }
                 if (event.button == MouseButton.RIGHT) {
-                    return MouseDragState.START
+                    return MouseDragStateType.START
                 }
-                return MouseDragState.UNKNOWN
+                return MouseDragStateType.UNKNOWN
             }
             MouseEvent.Type.UP -> {
                 if (event.button == MouseButton.LEFT) {
-                    return MouseDragState.END
+                    return MouseDragStateType.END
                 }
                 if (event.button == MouseButton.MIDDLE) {
-                    return MouseDragState.END
+                    return MouseDragStateType.END
                 }
                 if (event.button == MouseButton.RIGHT) {
-                    return MouseDragState.END
+                    return MouseDragStateType.END
                 }
-                return MouseDragState.UNKNOWN
+                return MouseDragStateType.UNKNOWN
             }
-            MouseEvent.Type.DRAG -> return MouseDragState.DRAG
-            else -> return MouseDragState.UNKNOWN
+            MouseEvent.Type.DRAG -> return MouseDragStateType.DRAG
+            else -> return MouseDragStateType.UNKNOWN
         }
     }
 
@@ -109,24 +109,24 @@ data class MouseDragKomponentV2(
 //        """.trimIndent()
 //        )
 
-        if (state == MouseDragState.UNKNOWN) {
+        if (state == MouseDragStateType.UNKNOWN) {
             require(!dragging)
             return
         }
 
-        require(state != MouseDragState.UNKNOWN)
+        require(state != MouseDragStateType.UNKNOWN)
 
         currentPosition.copyFrom(views.globalMouseXY)
 
         when (state) {
-            MouseDragState.START -> {
+            MouseDragStateType.START -> {
                 activeButton = event.button
                 dragging = true
                 startX = currentPosition.x
                 startY = currentPosition.y
                 info.reset()
             }
-            MouseDragState.END -> {
+            MouseDragStateType.END -> {
                 dragging = false
             }
             else -> Unit
@@ -138,8 +138,8 @@ data class MouseDragKomponentV2(
         info.set(
             deltaX,
             deltaY,
-            state == MouseDragState.START,
-            state == MouseDragState.END,
+            state == MouseDragStateType.START,
+            state == MouseDragStateType.END,
             TimeProvider.now()
         )
 
@@ -151,7 +151,7 @@ data class MouseDragKomponentV2(
     fun handle(event: MouseEvent) {
         val state = getState(event)
         val view = view
-        if (state == MouseDragState.START) {
+        if (state == MouseDragStateType.START) {
             info.viewStartXY.copyFrom(view.pos)
         }
         //println("localDXY=${info.localDX(view)},${info.localDY(view)}")

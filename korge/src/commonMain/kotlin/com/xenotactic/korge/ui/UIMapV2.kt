@@ -7,13 +7,13 @@ import com.soywiz.korge.view.filter.filter
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.text
 import com.soywiz.korge.view.xy
+import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.text.TextAlignment
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
 import com.xenotactic.gamelogic.globals.GRID_SIZE
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
-import com.xenotactic.korge.korge_utils.MaterialColors
 
 data class UIMapSettingsV2(
     val width: Int = 10,
@@ -54,12 +54,14 @@ class UIMapV2(
     val entityLayer = this.container().apply {
     }
 
+    val _entityLabelLayer = this.container()
+
     init {
         drawBoard()
         drawGridNumbers()
     }
 
-    fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int) =
+    fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int = 0) =
         Pair(x * gridSize, (_height - y - entityHeight) * gridSize)
 
     fun toWorldDimensions(width: Int, height: Int) = Pair(width * gridSize, height * gridSize)

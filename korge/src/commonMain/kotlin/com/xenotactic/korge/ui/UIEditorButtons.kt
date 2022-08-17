@@ -10,14 +10,14 @@ import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
-import com.xenotactic.korge.input_processors.MouseDragKomponent
+import com.xenotactic.korge.input_processors.MouseDragState
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.input_processors.SelectorMouseProcessor
 
 class UIEditorButtons(val engine: Engine) : Container() {
     val editorComponent = engine.getOneTimeComponent<EditorEComponent>()
     val uiMapComponent = engine.getOneTimeComponent<UIMapEComponent>()
-    val mouseDragKomponent = engine.getOneTimeComponent<MouseDragKomponent>()
+    val mouseDragState = engine.getOneTimeComponent<MouseDragState>()
     val gameMapControllerEComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
     val selectorMouseProcessor = engine.getOneTimeComponent<SelectorMouseProcessor>()
 
@@ -96,7 +96,7 @@ class UIEditorButtons(val engine: Engine) : Container() {
 
     fun switchToPlayingMode() {
         engine.eventBus.send(NotificationTextUpdateEvent(DEFAULT_NOTIFICATION_TEXT))
-        mouseDragKomponent.adjustSettings {
+        mouseDragState.adjustSettings {
             allowLeftClickDragging = true
         }
         editorComponent.isEditingEnabled = false
@@ -108,7 +108,7 @@ class UIEditorButtons(val engine: Engine) : Container() {
 
     fun switchToEditingMode(entityType: MapEntityType) {
         engine.eventBus.send(NotificationTextUpdateEvent(gameMapControllerEComponent.getNotificationText(entityType)))
-        mouseDragKomponent.adjustSettings {
+        mouseDragState.adjustSettings {
             allowLeftClickDragging = false
         }
         editorComponent.isEditingEnabled = true

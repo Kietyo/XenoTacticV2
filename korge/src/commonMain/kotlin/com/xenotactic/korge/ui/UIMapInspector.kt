@@ -18,9 +18,9 @@ import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.text
 import com.soywiz.korge.view.visible
 import com.soywiz.korim.color.Colors
+import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.korge.korge_utils.MaterialColors
 
 inline fun Container.uiMapInspector(): UIMapInspector =
     UIMapInspector().addTo(this)

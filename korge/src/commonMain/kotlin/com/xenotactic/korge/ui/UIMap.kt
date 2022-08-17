@@ -5,6 +5,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korge.view.vector.gpuGraphics
 import com.soywiz.korim.bitmap.effect.BitmapEffect
 import com.soywiz.korim.color.Colors
+import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
@@ -21,11 +22,12 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.RockCounterUtil
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
+import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.input_processors.PointerAction
-import com.xenotactic.korge.korge_utils.MaterialColors
+import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
@@ -340,14 +342,9 @@ class UIMap(
                 entity.centerPoint, gameMap.width,
                 gameMap.height
             )
-            val component = _entityLabelLayer.text(
-                text, textSize = 15.0, alignment = TextAlignment
-                    .MIDDLE_CENTER,
-                font = ENTITY_TEXT_FONT
-            ).xy(
-                worldX,
-                worldY
-            ).apply {
+            val component = makeEntityLabelText(text).apply {
+                addTo(_entityLabelLayer)
+                xy(worldX, worldY)
                 scaledHeight = _gridSize / 2
                 scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
             }

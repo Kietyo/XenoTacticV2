@@ -1,20 +1,21 @@
 package com.xenotactic.korge.scenes
 
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOnStage
+import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
+import com.xenotactic.gamelogic.components.MapEntityComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.MapEntityData
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.MapEntityComponent
-import com.xenotactic.korge.components.SizeComponent
-import com.xenotactic.korge.components.BottomLeftPositionComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.family_listeners.AddEntityToUIMapFamilyListener
-import com.xenotactic.korge.input_processors.MouseDragKomponent
+import com.xenotactic.korge.input_processors.MouseDragState
+import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
+import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.state.EditorState
+import com.xenotactic.korge.state.GameMapState
+import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
 
 class EditorSceneV2 : Scene() {
@@ -29,6 +30,9 @@ class EditorSceneV2 : Scene() {
 
         uiWorld.apply {
             this.injections.setSingleton(EditorState())
+            this.injections.setSingleton(MouseDragState(this@sceneInit))
+            this.injections.setSingleton(GameMapState(gameWorld))
+            this.injections.setSingleton(SelectorMouseProcessorV2(this@sceneInit, engine, uiWorld))
         }
         gameWorld.apply {
             injections.setSingleton(uiMapV2)
@@ -39,12 +43,21 @@ class EditorSceneV2 : Scene() {
                 addComponentOrThrow(BottomLeftPositionComponent(0, 0))
             }
 
+            addEntity {
+                addComponentOrThrow(MapEntityComponent(MapEntityData.Finish))
+                addComponentOrThrow(SizeComponent.SIZE_2X2_COMPONENT)
+                addComponentOrThrow(BottomLeftPositionComponent(5, 5))
+            }
+
         }
 
-//        val uiEditorButtonsV2 = UIEditorButtonsV2(gameWorld, uiWorld, engine)
+        val uiEditorButtonsV2 = UIEditorButtonsV2(uiWorld, engine).addTo(this).apply {
+            centerXOnStage()
+            alignBottomToBottomOfWindow()
+        }
 
 
-        val mouseDragKomponent = MouseDragKomponent(uiMapV2)
-        addComponent(mouseDragKomponent)
+        val mouseDragState = MouseDragState(uiMapV2)
+        addComponent(mouseDragState)
     }
 }

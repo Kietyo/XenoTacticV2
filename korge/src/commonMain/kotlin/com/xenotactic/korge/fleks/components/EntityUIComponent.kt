@@ -1,6 +1,6 @@
 package com.xenotactic.korge.fleks.components
 
-import com.xenotactic.korge.ui.UIEntity
+import com.xenotactic.gamelogic.views.UIEntity
 
 data class EntityUIComponent(
     var view: UIEntity
