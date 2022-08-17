@@ -7,7 +7,6 @@ import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korge.view.centerXOnStage
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.korge.ecomponents.EditorEComponent
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.NotificationTextEComponent
 import com.xenotactic.korge.ecomponents.UIMapEComponent
@@ -17,10 +16,11 @@ import com.xenotactic.korge.fleks.listeners.RenderEntityComponentListener
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.EditorPlacementMouseKomponent
 import com.xenotactic.korge.input_processors.KeyInputProcessor
-import com.xenotactic.korge.input_processors.MouseDragState
+import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessor
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.renderer.MapRendererUpdater
+import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.systems.SelectingEntitiesSystem
 import com.xenotactic.korge.ui.UIEditorButtons
 import com.xenotactic.korge.ui.UIMap
@@ -62,19 +62,19 @@ class EditorScene : Scene() {
         //            component(::PreSelectionComponent, ::PreSelectionComponentListener)
         //        }
 
-        val mouseDragState = MouseDragState(uiMap)
-        uiMap.addComponent(mouseDragState)
+        val mouseDragInputProcessor = MouseDragInputProcessor(uiMap)
+        uiMap.addComponent(mouseDragInputProcessor)
 
-        val editorComponent = EditorEComponent()
+        val editorState = EditorState()
 
-        engine.setOneTimeComponent(editorComponent)
+        engine.setOneTimeComponent(editorState)
         engine.setOneTimeComponent(
             GameMapControllerEComponent(
                 engine, eventBus, gameMap = gameMap
             )
         )
         engine.setOneTimeComponent(UIMapEComponent(uiMap))
-        engine.setOneTimeComponent(mouseDragState)
+        engine.setOneTimeComponent(mouseDragInputProcessor)
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
             centerXOnStage()

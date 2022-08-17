@@ -7,9 +7,9 @@ import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.ecomponents.EditorEComponent
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
 import com.xenotactic.korge.ui.UIMap
 import kotlin.math.ceil
@@ -31,8 +31,8 @@ class EditorPlacementMouseKomponent(
     val uiMap: UIMap,
     val engine: Engine
 ) : MouseComponent {
-    val editorComponent = engine.getOneTimeComponent<EditorEComponent>()
-    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+    private val editorState = engine.getOneTimeComponent<EditorState>()
+    private val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
 
     val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
@@ -52,7 +52,7 @@ class EditorPlacementMouseKomponent(
     var stagingTeleportIn: MapEntity.TeleportIn? = null
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
-        if (!editorComponent.isEditingEnabled ||
+        if (!editorState.isEditingEnabled ||
             !ALLOWED_EVENTS.contains(event.type)
         ) {
             return
@@ -75,9 +75,9 @@ class EditorPlacementMouseKomponent(
         val globalXY = views.globalMouseXY
         val (gridX, gridY) = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
-        if (editorComponent.entityTypeToPlace == MapEntityType.ROCK) {
+        if (editorState.entityTypeToPlace == MapEntityType.ROCK) {
             handleRockPlacement(event.type, gridX, gridY)
-        } else if (editorComponent.entityTypeToPlace in setOf(
+        } else if (editorState.entityTypeToPlace in setOf(
                 MapEntityType.START,
                 MapEntityType.FINISH,
                 MapEntityType.CHECKPOINT,
@@ -85,7 +85,7 @@ class EditorPlacementMouseKomponent(
                 MapEntityType.TELEPORT_OUT
             )
         ) {
-            val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorComponent.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
+            val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorState.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
             val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(
                 gridX,
                 gridY,
@@ -96,13 +96,13 @@ class EditorPlacementMouseKomponent(
             if (event.type == MouseEvent.Type.UP) {
                 val entityToAdd =
                     createEntityToAdd(
-                        editorComponent.entityTypeToPlace,
+                        editorState.entityTypeToPlace,
                         gridXInt,
                         gridYInt
                     )
-                if (editorComponent.entityTypeToPlace == MapEntityType.TELEPORT_IN) {
+                if (editorState.entityTypeToPlace == MapEntityType.TELEPORT_IN) {
                     stagingTeleportIn = entityToAdd as MapEntity.TeleportIn
-                    editorComponent.entityTypeToPlace = MapEntityType.TELEPORT_OUT
+                    editorState.entityTypeToPlace = MapEntityType.TELEPORT_OUT
                     uiMap.renderHighlightEntity(entityToAdd)
                     engine.eventBus.send(
                         NotificationTextUpdateEvent(
@@ -111,21 +111,21 @@ class EditorPlacementMouseKomponent(
                     )
                     return
                 }
-                if (editorComponent.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {
+                if (editorState.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {
                     require(stagingTeleportIn != null)
                     gameMapControllerComponent.placeEntities(
                         stagingTeleportIn!!,
                         entityToAdd
                     )
-                    engine.eventBus.send(PlacedEntityEvent(editorComponent.entityTypeToPlace))
+                    engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     uiMap.clearHighlightLayer()
                     return
                 }
                 gameMapControllerComponent.placeEntity(entityToAdd)
-                engine.eventBus.send(PlacedEntityEvent(editorComponent.entityTypeToPlace))
+                engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
             }
         } else {
-            TODO("Unsupported entity type: ${editorComponent.entityTypeToPlace}")
+            TODO("Unsupported entity type: ${editorState.entityTypeToPlace}")
         }
     }
 
@@ -133,7 +133,7 @@ class EditorPlacementMouseKomponent(
         return when(entityType) {
             MapEntityType.START,
             MapEntityType.FINISH -> MapEntityType.createEntity(
-                editorComponent.entityTypeToPlace,
+                editorState.entityTypeToPlace,
                 gridXInt,
                 gridYInt
             )

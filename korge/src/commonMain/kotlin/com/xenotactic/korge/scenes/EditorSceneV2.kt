@@ -10,13 +10,14 @@ import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.family_listeners.AddEntityToUIMapFamilyListener
-import com.xenotactic.korge.input_processors.MouseDragState
+import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
+import com.xenotactic.korge.ui.UINotificationText
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
@@ -28,9 +29,11 @@ class EditorSceneV2 : Scene() {
         val uiWorld = World()
         val engine = Engine(eventBus, gameWorld)
 
+        val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2)
+
         uiWorld.apply {
             this.injections.setSingleton(EditorState())
-            this.injections.setSingleton(MouseDragState(this@sceneInit))
+            this.injections.setSingleton(mouseDragInputProcessor)
             this.injections.setSingleton(GameMapState(gameWorld))
             this.injections.setSingleton(SelectorMouseProcessorV2(this@sceneInit, engine, uiWorld))
         }
@@ -57,7 +60,10 @@ class EditorSceneV2 : Scene() {
         }
 
 
-        val mouseDragState = MouseDragState(uiMapV2)
-        addComponent(mouseDragState)
+        addComponent(mouseDragInputProcessor)
+
+        val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
+            centerXOnStage()
+        }
     }
 }

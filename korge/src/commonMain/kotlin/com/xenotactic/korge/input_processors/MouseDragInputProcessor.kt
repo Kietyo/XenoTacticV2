@@ -37,7 +37,7 @@ data class MouseDragStateSettings(
     var allowMiddleClickDragging: Boolean = true,
 )
 
-data class MouseDragState(
+data class MouseDragInputProcessor(
     override val view: View,
     val settings: MouseDragStateSettings = MouseDragStateSettings()
 ) : MouseComponent, EComponent {
