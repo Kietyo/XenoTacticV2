@@ -1,5 +1,6 @@
 package com.xenotactic.gamelogic.model
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.protobuf.ProtoNumber
 
@@ -11,7 +12,7 @@ import kotlinx.serialization.protobuf.ProtoNumber
  * used for generating the ID from the actual model.
  */
 @Serializable
-data class GameMapForId(
+data class GameMapForId @OptIn(ExperimentalSerializationApi::class) constructor(
     @ProtoNumber(1)
     val width: Int,
     @ProtoNumber(2)

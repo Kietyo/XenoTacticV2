@@ -1,14 +1,15 @@
 package korge.model
 
-import GOLDENS_DATA_VFS
 import com.soywiz.klogger.Logger
 import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korio.async.suspendTest
 import com.soywiz.korio.file.baseName
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldensAsync
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import loadGameMapFromGoldensAsync
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair
@@ -181,7 +182,6 @@ internal class AStarSearcherTest {
 
     @Test
     fun getShortestPath() {
-        val searcher = AStarSearcher
         println(
             AStarSearcher.getUpdatablePath(
                 10, 10,
@@ -419,7 +419,7 @@ internal class AStarSearcherTest {
             return@ret
         }
 
-        val jsonFiles = GOLDENS_DATA_VFS.listSimple()
+        val jsonFiles = GOLDENS_DATA_VFS().listSimple()
 
         val expectedRegressions = setOf<String>(
             "sadfsaf",
@@ -486,7 +486,7 @@ internal class AStarSearcherTest {
     }
 
     @Test
-    fun regressionTest00001() = runBlockingNoJs {
+    fun regressionTest00001() = suspendTest {
         Logger.defaultLevel = Logger.Level.DEBUG
 
         val map = loadGameMapFromGoldensAsync("00001.json")

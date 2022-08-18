@@ -3,6 +3,7 @@ package pathing
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.GamePath
+import com.xenotactic.gamelogic.pathing.SearcherInterface
 
 class PathUpdater(
     val gameMap: GameMap,

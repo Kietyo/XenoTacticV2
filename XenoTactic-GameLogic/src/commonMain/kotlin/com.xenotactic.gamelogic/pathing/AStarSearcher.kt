@@ -5,7 +5,7 @@ import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.model.PathingBlockingEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.*
 import com.xenotactic.gamelogic.utils.horizontalDirectionTo
@@ -20,7 +20,7 @@ object AStarSearcher : SearcherInterface {
 
     fun getNextPoints(
         currentPoint: Point,
-        blockingEntities: List<MapEntity>,
+        blockingEntities: List<PathingBlockingEntity>,
         availablePathingPoints: Set<PathingPoint>,
     ): List<Point> {
         return availablePathingPoints.mapNotNull {
@@ -60,7 +60,7 @@ object AStarSearcher : SearcherInterface {
         mapHeight: Int,
         pathingEntities: List<MapEntity>,
         teleportPairs: List<TeleportPair>,
-        blockingEntities: List<MapEntity>,
+        blockingEntities: List<PathingBlockingEntity>,
         blockingPoints: BlockingPointContainer.View?
     ): GamePath? {
         val nonNullBlockingPoints =
@@ -79,10 +79,10 @@ object AStarSearcher : SearcherInterface {
     class FullPathSearcherInternal(
         mapWidth: Int,
         mapHeight: Int,
-        val _blockingEntities: List<MapEntity>,
-        val _blockingPoints: BlockingPointContainer.View
+        private val _blockingEntities: List<PathingBlockingEntity>,
+        private val _blockingPoints: BlockingPointContainer.View
     ) {
-        val cachedShortestPoints: MutableMap<Pair<Point, Point>, Point> =
+        private val cachedShortestPoints: MutableMap<Pair<Point, Point>, Point> =
             mutableMapOf<Pair<Point, Point>, Point>()
 
         val availablePathingPoints = getAvailablePathingPointsFromBlockingEntities(
@@ -161,18 +161,13 @@ object AStarSearcher : SearcherInterface {
                     continue
                 }
                 val teleportsUsedForThisPathSequence = mutableSetOf<Int>()
-                var shortestPath = measureTime(
-                    "Time it takes to get shortest path from " +
-                            "$prevEntity to $entity",
-                    printMessage = false
-                ) {
+                var shortestPath =
                     getShortestPathFromStartToFinish(
-                        prevEntity!!,
+                        prevEntity,
                         entity,
                         _blockingEntities,
                         _blockingPoints
                     )
-                }.second
 
 
                 // Check to see if the path intersects with any teleports
@@ -228,15 +223,12 @@ object AStarSearcher : SearcherInterface {
 
             return GamePath(
                 entityPaths,
-                //                pathSequenceInfos, teleportPairs.map {
-                //                it.sequenceNumber
-                //            }.toSet()
             )
         }
 
         private fun getShortestPathFromStartToFinish(
             start: MapEntity, finish: MapEntity,
-            blockingEntities: List<MapEntity>,
+            blockingEntities: List<PathingBlockingEntity>,
             blockingPoints: BlockingPointContainer.View
         ): Path? {
             val endCenter = finish.centerPoint

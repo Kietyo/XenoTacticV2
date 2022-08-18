@@ -18,7 +18,7 @@ enum class MapEntityType {
     sealed class EntitySize {
         // No fixed size
         object Varied : EntitySize()
-        data class Fixed(val width: Int, val height: Int): EntitySize()
+        data class Fixed(val width: Int, val height: Int) : EntitySize()
     }
 
     companion object {
@@ -58,7 +58,8 @@ enum class MapEntityType {
                 CHECKPOINT,
                 TOWER,
                 TELEPORT_IN,
-                TELEPORT_OUT-> EntitySize.Fixed(2, 2)
+                TELEPORT_OUT -> EntitySize.Fixed(2, 2)
+
                 ROCK, SPEED_AREA -> EntitySize.Varied
                 SMALL_BLOCKER -> EntitySize.Fixed(1, 1)
             }
@@ -66,11 +67,7 @@ enum class MapEntityType {
     }
 }
 
-sealed class MapEntity {
-    abstract val x: Int
-    abstract val y: Int
-    abstract val width: Int
-    abstract val height: Int
+sealed class MapEntity : PathingBlockingEntity {
     abstract val type: MapEntityType
     abstract val isBlockingEntity: Boolean
 
@@ -88,18 +85,6 @@ sealed class MapEntity {
     val centerPoint: Point
         get() = Point(x + width / 2f, y + height / 2f)
 
-    val topLeftUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x, y + height - 1)
-
-    val topRightUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x + width - 1, y + height - 1)
-
-    val bottomLeftUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x, y)
-
-    val bottomRightUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x + width - 1, y)
-
     val xRange by lazy { x..rightX }
     val yRange by lazy { y..topY }
 
@@ -109,16 +94,6 @@ sealed class MapEntity {
 
     fun getHeight2(): Int {
         return height
-    }
-
-    val blockIntPoints by lazy {
-        val intPoints = mutableSetOf<IntPoint>()
-        for (i in 0 until getWidth2()) {
-            for (j in 0 until getHeight2()) {
-                intPoints.add(IntPoint(x + i, y + j))
-            }
-        }
-        intPoints.toSet()
     }
 
     fun isFullyCoveredBy(entity: MapEntity): Boolean {
@@ -142,10 +117,6 @@ sealed class MapEntity {
             is SmallBlocker -> SmallBlocker(p.x, p.y)
             is SpeedArea -> SpeedArea(p.x, p.y, radius, speedEffect)
         }
-    }
-
-    fun getRectangle(): Rectangle {
-        return Rectangle(x, y, width, height)
     }
 
     fun getGRectInt(): GRectInt {
@@ -416,6 +387,7 @@ data class TeleportPair(
     init {
         require(teleportIn.sequenceNumber == teleportOut.sequenceNumber)
     }
+
     val sequenceNumber = teleportIn.sequenceNumber
 }
 

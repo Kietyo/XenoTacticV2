@@ -3,6 +3,7 @@ package com.xenotactic.gamelogic.containers
 import kotlinx.serialization.Serializable
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.PathingBlockingEntity
 
 /**
  * Container for storing number of blocking entities for a specific point.
@@ -10,7 +11,7 @@ import com.xenotactic.gamelogic.model.MapEntity
  */
 @Serializable
 sealed class BlockingPointContainer(
-    protected val pointToCounter: Map<Int, Map<Int, Int>>
+    private val pointToCounter: Map<Int, Map<Int, Int>>
 ) {
     var size = 0
         protected set
@@ -24,7 +25,7 @@ sealed class BlockingPointContainer(
         // Map of <x, y> to counter val
         private val mutablePointToCounter: MutableMap<Int, MutableMap<Int, Int>> = mutableMapOf()
     ) : BlockingPointContainer(mutablePointToCounter) {
-        fun add(entity: MapEntity) {
+        fun add(entity: PathingBlockingEntity) {
             addAll(entity.blockIntPoints)
         }
 
@@ -72,7 +73,7 @@ sealed class BlockingPointContainer(
         companion object {
             val EMPTY = View()
 
-            fun create(entities: Collection<MapEntity>): View {
+            fun create(entities: Collection<PathingBlockingEntity>): View {
                 val blockingPoints = Mutable()
                 for (entity in entities) {
                     blockingPoints.add(entity)

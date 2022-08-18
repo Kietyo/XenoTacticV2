@@ -135,7 +135,6 @@ class GameMapState(
 //            gameMap.placeEntity(placementEntity)
             eventBus.send(AddEntityEvent(placementEntity))
         }
-        TODO()
 //        updateShortestPath(PathFinder.getShortestPath(gameMap))
     }
 

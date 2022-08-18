@@ -6,7 +6,7 @@ import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.utils.measureTime
+import com.xenotactic.gamelogic.pathing.SearcherInterface
 
 
 /**

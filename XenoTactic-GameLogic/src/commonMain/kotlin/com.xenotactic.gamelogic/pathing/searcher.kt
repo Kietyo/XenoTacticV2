@@ -4,6 +4,7 @@ import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.contains
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.PathingBlockingEntity
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndRectangle
 
@@ -74,7 +75,7 @@ fun intersectSegmentRectangle(
     ) true else rectangle.contains(startPoint) || rectangle.contains(endPoint)
 }
 
-fun lineIntersectsEntity(p1: Point, p2: Point, entity: MapEntity): Boolean {
+fun lineIntersectsEntity(p1: Point, p2: Point, entity: PathingBlockingEntity): Boolean {
     return intersectSegmentRectangle(p1, p2, entity.getRectangle())
 }
 
@@ -449,7 +450,7 @@ data class GamePath(
 
 }
 
-fun lineIntersectsEntities(p1: Point, p2: Point, entities: List<MapEntity>): Boolean {
+fun lineIntersectsEntities(p1: Point, p2: Point, entities: List<PathingBlockingEntity>): Boolean {
     return entities.any { lineIntersectsEntity(p1, p2, it) }
 }
 

@@ -5,14 +5,16 @@ import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldensAsync
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.test_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.test_utils.loadGameMapFromGoldensAsync
+
+
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.utils.removeAllIndents
 import solver.*
@@ -69,7 +71,7 @@ internal class PathUpdaterTest {
     @Test
     @Ignore
     fun correctnessRegressionTest_solverPlacements() = runBlockingNoJs {
-        val jsonFiles = GOLDENS_DATA_VFS.listSimple()
+        val jsonFiles = GOLDENS_DATA_VFS().listSimple()
 
         val expectedRegressions = setOf<String>(
             "sadfsaf",
@@ -198,7 +200,7 @@ internal class PathUpdaterTest {
     @Ignore
     fun correctnessRegressionTest_randomPlacements() = runBlockingNoJs {
         val numRandomPlacements = 15
-        val jsonFiles = GOLDENS_DATA_VFS.listSimple()
+        val jsonFiles = GOLDENS_DATA_VFS().listSimple()
 
         val expectedRegressions = setOf<String>(
             "01997.json",
@@ -330,7 +332,7 @@ internal class PathUpdaterTest {
     fun correctnessRegressionTest_initialization() = runBlockingNoJs {
         val searcher1 = AStarSearcher
 
-        val jsonFiles = GOLDENS_DATA_VFS.listSimple()
+        val jsonFiles = GOLDENS_DATA_VFS().listSimple()
 
         val expectedRegressions = setOf<String>(
             "sadfsaf",

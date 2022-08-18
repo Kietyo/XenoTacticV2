@@ -6,7 +6,7 @@ import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.model.TeleportPair
 import pathing.AStarSearcher
 import pathing.PathFinder
-import pathing.SearcherInterface
+import com.xenotactic.gamelogic.pathing.SearcherInterface
 import kotlin.random.Random
 
 data class MapGeneratorConfiguration(

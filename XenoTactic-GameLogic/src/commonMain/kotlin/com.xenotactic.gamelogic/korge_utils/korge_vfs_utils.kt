@@ -1,5 +1,6 @@
 package com.xenotactic.gamelogic.korge_utils
 
+import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.async.runBlockingNoSuspensions
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.localCurrentDirVfs
@@ -9,31 +10,24 @@ import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 
-val TEST_TEMP_DATA_VFS = runBlockingNoSuspensions {
+suspend fun TEST_TEMP_DATA_VFS() =
     localCurrentDirVfs["src/commonTest/testdata/TEMP"].apply {
         mkdir()
     }
-}
 
-val TEST_DATA_VFS = runBlockingNoSuspensions {
+val TEST_DATA_VFS = runBlockingNoJs {
     localCurrentDirVfs["src/commonTest/testdata"].apply {
         mkdir()
     }
 }
 
-fun VfsFile.existsBlocking(): Boolean {
-    return runBlockingNoSuspensions { this.exists() }
-}
-
-inline fun <reified T> VfsFile.decodeJson(): T? {
-    if (existsBlocking()) {
-        return Json.decodeFromString<T>(this.readStringBlocking())
+suspend fun GOLDENS_DATA_VFS() =
+    localCurrentDirVfs["src/commonTest/testdata/goldens"].apply {
+        mkdir()
     }
-    return null
-}
 
-fun VfsFile.listSimpleBlocking(): List<VfsFile> {
-    return runBlockingNoSuspensions { listSimple() }
+fun VfsFile.existsBlocking(): Boolean {
+    return runBlockingNoJs { exists() }
 }
 
 fun VfsFile.readStringOrNull(): String? {
@@ -44,12 +38,52 @@ fun VfsFile.readStringOrNull(): String? {
 }
 
 fun VfsFile.readStringBlocking(): String {
-    return runBlockingNoSuspensions { readString() }
+    return runBlockingNoJs { readString() }
 }
 
 fun VfsFile.toGameMap(): GameMap? {
-    return this.decodeJson<GameMap>()
+    return decodeJsonBlocking<GameMap>()
 }
 
+inline fun <reified T> VfsFile.decodeJsonBlocking(): T? {
+    if (existsBlocking()) {
+        return Json.decodeFromString<T>(this.readStringBlocking())
+    }
+    return null
+}
 
+inline suspend fun <reified T> VfsFile.decodeJson(): T? {
+    if (exists()) {
+        return Json.decodeFromString<T>(this.readString())
+    }
+    return null
+}
+
+fun getGoldenJsonFiles(): List<VfsFile> {
+    return runBlockingNoJs { GOLDENS_DATA_VFS().listSimple() }
+}
+
+fun getAllGoldenMaps(): List<GameMap> {
+    return getGoldenJsonFiles().map { it.toGameMap()!! }
+}
+
+/**
+ * Loads game maps found in testdata/goldens.
+ *
+ * E.g: Given a fileName of "00001.json" loads the game map at
+ * testdata/goldens/00001.json
+ */
+suspend fun loadGameMapFromGoldensAsync(fileName: String): GameMap {
+    return Json.decodeFromString(GOLDENS_DATA_VFS()[fileName].readString())
+}
+
+/**
+ * Loads game maps found in testdata/goldens.
+ *
+ * E.g: Given a fileName of "00001.json" loads the game map at
+ * testdata/goldens/00001.json
+ */
+fun loadGameMapFromGoldensBlocking(fileName: String): GameMap {
+    return runBlockingNoJs { Json.decodeFromString<GameMap>(GOLDENS_DATA_VFS()["$fileName"].readString()) }
+}
 

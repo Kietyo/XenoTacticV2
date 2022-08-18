@@ -1,7 +1,7 @@
 package korge.model
 
-import korge_utils.MaterialColors
-import korge_utils.SpeedAreaColorUtil
+import com.soywiz.korim.color.MaterialColors
+import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -63,7 +63,7 @@ internal class SpeedAreaColorUtilTest {
     }
 
     @Test
-    fun `getSlowSpeedAreaColor low=0dot2 high=0dot6`() {
+    fun getSlowSpeedAreaColor() {
         val slowColors = listOf(
             MaterialColors.BLUE_100,
             MaterialColors.BLUE_200,

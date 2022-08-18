@@ -18,18 +18,6 @@ import kotlin.math.abs
 import kotlin.math.absoluteValue
 import kotlin.random.Random
 
-val TEST_DATA_VFS = runBlockingNoSuspensions {
-    localCurrentDirVfs["src/commonTest/testdata"].apply {
-        mkdir()
-    }
-}
-
-val GOLDENS_DATA_VFS = runBlockingNoSuspensions {
-    localCurrentDirVfs["src/commonTest/testdata/goldens"].apply {
-        mkdir()
-    }
-}
-
 val GOLDEN_IDS_FILE = com.xenotactic.gamelogic.korge_utils.TEST_DATA_VFS["golden_ids.json"]
 
 
@@ -48,8 +36,6 @@ data class MapIds private constructor(
     }
 }
 
-
-
 fun getGoldenMapIds(): MapIds {
     val data = GOLDEN_IDS_FILE.readStringOrNull() ?: return MapIds.create(emptyList())
     return Json.decodeFromString<MapIds>(data)
@@ -64,36 +50,6 @@ fun writeGoldenMapIds(mapIds: MapIds) {
         GOLDEN_IDS_FILE.writeString(json.encodeToString(mapIds))
     }
 }
-
-
-fun getGoldenJsonFiles(): List<VfsFile> {
-    return runBlockingNoSuspensions { GOLDENS_DATA_VFS.listSimple() }
-}
-
-fun getAllGoldenMaps(): List<GameMap> {
-    return getGoldenJsonFiles().map { it.toGameMap()!! }
-}
-
-/**
- * Loads game maps found in testdata/goldens.
- *
- * E.g: Given a fileName of "00001.json" loads the game map at
- * testdata/goldens/00001.json
- */
-suspend fun loadGameMapFromGoldensAsync(fileName: String): GameMap {
-    return Json.decodeFromString<GameMap>(GOLDENS_DATA_VFS["$fileName"].readString())
-}
-
-/**
- * Loads game maps found in testdata/goldens.
- *
- * E.g: Given a fileName of "00001.json" loads the game map at
- * testdata/goldens/00001.json
- */
-fun loadGameMapFromGoldensBlocking(fileName: String): GameMap {
-    return runBlockingNoSuspensions { Json.decodeFromString<GameMap>(GOLDENS_DATA_VFS["$fileName"].readString()) }
-}
-
 
 const val TEST_FLOAT_MAX_DELTA = 0.00001f
 const val TEST_DOUBLE_MAX_DELTA = 0.00001

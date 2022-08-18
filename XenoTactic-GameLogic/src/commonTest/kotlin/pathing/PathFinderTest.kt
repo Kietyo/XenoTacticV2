@@ -1,6 +1,6 @@
 package pathing
 
-import com.xenotactic.gamelogic.test_utils.loadGameMapFromGoldensBlocking
+import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldensBlocking
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 

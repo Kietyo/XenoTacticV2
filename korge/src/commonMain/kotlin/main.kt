@@ -62,7 +62,7 @@ object MainModule : Module() {
             GameScene(mapBridge)
         }
         mapPrototype { MapViewerScene(globalBus) }
-        mapPrototype { GoldensViewerScene(globalBus) }
+        mapPrototype { GoldensViewerScene() }
         mapPrototype { TestScene() }
         mapPrototype { EditorSceneV2() }
         mapPrototype {

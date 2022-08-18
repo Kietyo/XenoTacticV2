@@ -10,13 +10,14 @@ import com.soywiz.korge.component.KeyComponent
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.alignLeftToRightOf
 import com.soywiz.korge.view.alignTopToBottomOf
 import com.soywiz.korge.view.text
 import com.soywiz.korio.file.baseName
+import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
+import com.xenotactic.gamelogic.korge_utils.toGameMap
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
@@ -30,11 +31,9 @@ import com.xenotactic.korge.ui.UIMapOverlay
 import com.xenotactic.korge.ui.UIMapOverlayOutsideClickedEvent
 import com.xenotactic.korge.ui.uiDropdown
 import com.xenotactic.korge.ui.uiFixedGrid
-import getGoldenJsonFiles
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import pathing.PathFinder
-import toGameMap
 import verify
 
 enum class MapFilterOptions(val text: String) {
@@ -43,9 +42,7 @@ enum class MapFilterOptions(val text: String) {
     BAD_MAPS_ONLY("Bad maps"),
 }
 
-class GoldensViewerScene(
-    val globalEventBus: EventBus
-) : Scene() {
+class GoldensViewerScene : Scene() {
     companion object {
         val logger = Logger<GoldensViewerScene>()
     }

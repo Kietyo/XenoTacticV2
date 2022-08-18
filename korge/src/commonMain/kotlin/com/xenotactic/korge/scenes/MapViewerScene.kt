@@ -8,6 +8,8 @@ import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.alignTopToBottomOf
 import com.soywiz.korge.view.getVisibleGlobalArea
+import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
+import com.xenotactic.gamelogic.korge_utils.toGameMap
 import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.korge.daos.PlayerDataApi
 import com.xenotactic.korge.events.EventBus
@@ -22,9 +24,7 @@ import com.xenotactic.korge.ui.UIHeaderSection
 import com.xenotactic.korge.ui.UIMapEntry
 import com.xenotactic.korge.ui.uiFixedGrid
 import com.xenotactic.korge.ui.uiMapInspector
-import getGoldenJsonFiles
 import kotlinx.coroutines.launch
-import toGameMap
 import verify
 import kotlin.collections.component1
 import kotlin.collections.component2

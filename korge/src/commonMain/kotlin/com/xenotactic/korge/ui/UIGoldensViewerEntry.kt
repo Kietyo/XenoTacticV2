@@ -23,11 +23,11 @@ import com.soywiz.korim.color.RGBA
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
+import com.xenotactic.gamelogic.korge_utils.existsBlocking
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
-import existsBlocking
 import kotlinx.coroutines.Dispatchers
 
 data class MapWithMetadata(
@@ -35,13 +35,6 @@ data class MapWithMetadata(
     val map: GameMap,
     val verificationResult: MapVerificationResult
 )
-
-fun Container.uiGoldensViewerEntry(
-    eventBus: EventBus,
-    mapData: MapWithMetadata,
-    entryWidth: Double,
-    entryHeight: Double,
-) = UIGoldensViewerEntry(eventBus, mapData, entryWidth, entryHeight).addTo(this)
 
 private data class EntrySettings(
     val outlineRectangleColor: RGBA,

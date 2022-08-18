@@ -6,6 +6,7 @@ import com.soywiz.korma.geom.sin
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_POINT_PRECISION
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.PathingBlockingEntity
 import com.xenotactic.gamelogic.utils.MapBlockingUtil
 import com.xenotactic.gamelogic.utils.angleRadians
 import com.xenotactic.gamelogic.utils.horizontalDirectionTo
@@ -271,7 +272,7 @@ fun getPathingPointsForUnitSquare(
  * Returns all available pathing points from the blocking entities.
  */
 fun getAvailablePathingPointsFromBlockingEntities(
-    blockingEntities: List<MapEntity>,
+    blockingEntities: List<PathingBlockingEntity>,
     mapWidth: Int, mapHeight: Int,
     blockingPoints: BlockingPointContainer.View,
     cornerPathingPointConfiguration: CornerPathingPointConfiguration =

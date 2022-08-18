@@ -2,7 +2,6 @@ package com.xenotactic.gamelogic.utils
 
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.RectangleInt
 import com.soywiz.korma.geom.radians
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.GRectInt
@@ -81,7 +80,7 @@ fun toWorldCoordinates(
         Pair<Double, Double> =
     toWorldCoordinates(
         gridSize,
-        intPoint.x.toDouble(), intPoint.y.toDouble(), gameWidth, gameHeight, entityHeight
+        intPoint.x.toDouble(), intPoint.y.toDouble(), gameHeight, entityHeight
     )
 
 fun toWorldCoordinates(
@@ -91,12 +90,12 @@ fun toWorldCoordinates(
         Pair<Double, Double> =
     toWorldCoordinates(
         gridSize,
-        point.x, point.y, gameWidth, gameHeight, entityHeight
+        point.x, point.y, gameHeight, entityHeight
     )
 
 fun toWorldCoordinates(
     gridSize: Double,
-    x: Double, y: Double, gameWidth: Int, gameHeight: Int, entityHeight: Int = 0
+    x: Double, y: Double, gameHeight: Int, entityHeight: Int = 0
 ):
         Pair<Double, Double> =
     Pair(x * gridSize, (gameHeight - y - entityHeight) * gridSize)

@@ -1,5 +1,6 @@
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.runBlockingNoJs
+import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import random.MapGeneratorConfiguration
@@ -54,7 +55,7 @@ internal class GoldenTest {
                 launch {
                     val fileName = "${numOffset + numGoldensCreated}.json".padStart(10, '0')
                     println("File to write: $fileName")
-                    GOLDENS_DATA_VFS[fileName].writeString(jsonData)
+                    GOLDENS_DATA_VFS()[fileName].writeString(jsonData)
                 }
             }
             numGoldensCreated++

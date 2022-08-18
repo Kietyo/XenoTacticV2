@@ -1,21 +1,20 @@
 package scrap
 
-import GOLDENS_DATA_VFS
-import TEST_DATA_VFS
 import com.soywiz.kds.iterators.parallelMap
 import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.async.runBlockingNoSuspensions
+import com.soywiz.korio.async.suspendTest
 import com.soywiz.korio.file.VfsFile
+import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.korge_utils.TEST_DATA_VFS
+import com.xenotactic.gamelogic.korge_utils.toGameMap
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
-import listSimpleBlocking
 import pathing.PathFinder
 import random.MapGeneratorConfiguration
 import random.RandomMapGenerator
-import toGameMap
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -54,8 +53,8 @@ internal class ScrapTest {
     }
 
     @Test
-    fun verifyGoldens() {
-        val jsonFiles = GOLDENS_DATA_VFS.listSimpleBlocking()
+    fun verifyGoldens() = suspendTest {
+        val jsonFiles = GOLDENS_DATA_VFS().listSimple()
 
         val mutex = Mutex()
 
@@ -65,7 +64,9 @@ internal class ScrapTest {
             println("Testing: $json")
             val gameMap = json.toGameMap()!!
             if (PathFinder.getShortestPath(gameMap) == null) {
-                runBlockingNoSuspensions { mutex.lock() }
+                suspendTest {
+                    mutex.lock()
+                }
                 failures.add(json.toString())
                 mutex.unlock()
             }
