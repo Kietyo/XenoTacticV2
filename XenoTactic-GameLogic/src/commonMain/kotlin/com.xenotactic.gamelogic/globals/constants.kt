@@ -12,7 +12,8 @@ const val GRID_LINES_RATIO = 0.04
 const val GRID_NUMBERS_RATIO = 0.5
 
 // Path lines width based on ratio of the grid size.
-const val PATH_LINES_RATIO = 0.125
+//const val PATH_LINES_RATIO = 0.125
+const val PATH_LINES_RATIO = 0.25
 
 // The width of the line based on the ratio of the grid size.
 const val LINE_WIDTH_RATIO = 0.035

@@ -42,7 +42,7 @@ class RootScene(
             sceneContainer.pushTo<GameScene>()
         }
 
-        sceneContainer.changeTo<EditorSceneV2>()
+        sceneContainer.changeTo<EditorScene>()
 //        sceneContainer.changeTo<MapViewerScene>()
     }
 

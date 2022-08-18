@@ -85,17 +85,6 @@ sealed class MapEntity : PathingBlockingEntity {
     val centerPoint: Point
         get() = Point(x + width / 2f, y + height / 2f)
 
-    val xRange by lazy { x..rightX }
-    val yRange by lazy { y..topY }
-
-    fun getWidth2(): Int {
-        return width
-    }
-
-    fun getHeight2(): Int {
-        return height
-    }
-
     fun isFullyCoveredBy(entity: MapEntity): Boolean {
         return blockIntPoints.intersect(entity.blockIntPoints).size == blockIntPoints.size
     }

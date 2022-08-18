@@ -30,7 +30,7 @@ import com.xenotactic.korge.ui.UINotificationText
 class EditorScene : Scene() {
     override suspend fun SContainer.sceneInit() {
 
-        val gameMap = GameMap(20, 20)
+        val gameMap = GameMap(10, 10)
         val eventBus = EventBus(this@EditorScene)
 
         val uiMap =

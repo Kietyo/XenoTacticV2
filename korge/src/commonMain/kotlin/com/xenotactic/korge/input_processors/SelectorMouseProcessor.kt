@@ -47,10 +47,10 @@ class SelectorMouseProcessor(
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!isEnabled) return
         if (event.type == MouseEvent.Type.MOVE) return
-        println("""
-            selectorMouseComponent:
-            event: $event
-        """.trimIndent())
+//        println("""
+//            selectorMouseComponent:
+//            event: $event
+//        """.trimIndent())
 
         if (event.type == MouseEvent.Type.DOWN &&
             event.button == MouseButton.LEFT

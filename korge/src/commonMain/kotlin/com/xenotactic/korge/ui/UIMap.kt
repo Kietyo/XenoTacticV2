@@ -70,49 +70,49 @@ class UIMap(
     val initialRenderEntities: Boolean = true
 ) : Container(), EComponent {
     val _gridSize = uiMapSettings.gridSize
-    val _borderSize = uiMapSettings.borderSize
-    val _gridLineSize = uiMapSettings.gridLineSize
-    val _gridNumberFontSize = uiMapSettings.gridNumberFontSize
-    val _pathLinesWidth = uiMapSettings.pathLinesWidth
+    private val _borderSize = uiMapSettings.borderSize
+    private val _gridLineSize = uiMapSettings.gridLineSize
+    private val _gridNumberFontSize = uiMapSettings.gridNumberFontSize
+    private val _pathLinesWidth = uiMapSettings.pathLinesWidth
 
-    val _drawnEntities = mutableMapOf<MapEntity, MutableList<UIEntity>>()
-    val _entityToDrawnText = mutableMapOf<MapEntity, Text>()
+    private val _drawnEntities = mutableMapOf<MapEntity, MutableList<UIEntity>>()
+    private val _entityToDrawnText = mutableMapOf<MapEntity, Text>()
 
-    val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
+    private val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
 
     // Note that the order in which layers are initialized mattes here.
-    val _boardLayer = this.container {
+    private val _boardLayer = this.container {
         //        this.propagateEvents = false
         //        this.mouseChildren = false
         //        this.hitTestEnabled = false
     }
-    val _gridNumberLayer = this.container()
+    private val _gridNumberLayer = this.container()
 
-    val _gridLinesLayer = this.container()
-    val _gridLinesGraphics = _gridLinesLayer.gpuGraphics {
+    private val _gridLinesLayer = this.container()
+    private val _gridLinesGraphics = _gridLinesLayer.gpuGraphics {
         //        useNativeRendering = false
         //        visible(false)
     }
 
-    val _speedAreaLayer = this.container()
+    private val _speedAreaLayer = this.container()
 
-    val _entityLayer = this.container().apply {
+    private val _entityLayer = this.container().apply {
     }
 
     val _selectionLayer = this.container()
 
-    val _rockCountersLayer = this.container()
-    val _rockCountersLayerMutex = Mutex()
+    private val _rockCountersLayer = this.container()
+    private val _rockCountersLayerMutex = Mutex()
 
-    val _entityLabelLayer = this.container()
+    private val _entityLabelLayer = this.container()
 
-    val _pathingLinesLayer = this.container()
-    val _pathingLinesGraphics = _pathingLinesLayer.gpuGraphics {
+    private val _pathingLinesLayer = this.container()
+    private val _pathingLinesGraphics = _pathingLinesLayer.gpuGraphics {
         //        useNativeRendering = false
     }
 
-    val _highlightLayer = this.container()
-    val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
+    private val _highlightLayer = this.container()
+    private val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
 
     val mapHeight: Int
         get() = gameMap.height
@@ -170,8 +170,7 @@ class UIMap(
                 if (num > 0) {
                     val (worldX, worldY) = toWorldCoordinates(
                         _gridSize,
-                        Point(x + 0.5, y + 0.5), gameMap.width,
-                        gameMap.height
+                        Point(x + 0.5, y + 0.5), gameMap.height
                     )
                     val component = _rockCountersLayer.text(
                         num.toString(), textSize = 15.0, alignment = TextAlignment
@@ -339,8 +338,7 @@ class UIMap(
         if (text != null) {
             val (worldX, worldY) = toWorldCoordinates(
                 _gridSize,
-                entity.centerPoint, gameMap.width,
-                gameMap.height
+                entity.centerPoint, gameMap.height
             )
             val component = makeEntityLabelText(text).apply {
                 addTo(_entityLabelLayer)
@@ -369,6 +367,7 @@ class UIMap(
 
         // Draw path lines
         if (pathSequence != null) {
+            println("Got path sequence: $pathSequence")
             _pathingLinesGraphics.updateShape {
                 stroke(
                     Colors.YELLOW, info = StrokeInfo(
@@ -377,25 +376,12 @@ class UIMap(
                 ) {
                     for (path in pathSequence.paths) {
                         for (segment in path.getSegments()) {
-                            var (p1WorldX, p1WorldY) = toWorldCoordinates(
-                                _gridSize,
-                                segment.point1, gameMap.width,
-                                gameMap.height
+                            val (p1WorldX, p1WorldY) = toWorldCoordinates(
+                                _gridSize, segment.point1, gameMap.height
                             )
-                            var (p2WorldX, p2WorldY) = toWorldCoordinates(
-                                _gridSize,
-                                segment.point2, gameMap.width,
-                                gameMap.height
+                            val (p2WorldX, p2WorldY) = toWorldCoordinates(
+                                _gridSize, segment.point2, gameMap.height
                             )
-                            // TODO: This is a workaround since Korge cannot render vertical/horizontal
-                            // lines correctly. Follow bug here:
-                            // https://github.com/korlibs/korge-next/issues/392
-                            if (p1WorldX == p2WorldX) {
-                                p2WorldX += 1
-                            }
-                            if (p1WorldY == p2WorldY) {
-                                p2WorldY += 1
-                            }
                             this.line(p1WorldX, p1WorldY, p2WorldX, p2WorldY)
                         }
                     }

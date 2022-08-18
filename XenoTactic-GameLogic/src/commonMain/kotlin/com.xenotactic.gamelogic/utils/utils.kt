@@ -84,25 +84,16 @@ fun toWorldCoordinates(
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, point: Point, gameWidth: Int, gameHeight: Int,
-    entityHeight: Int = 1
-):
-        Pair<Double, Double> =
+    gridSize: Double, point: Point, gameHeight: Int, entityHeight: Int = 0
+): Pair<Double, Double> =
     toWorldCoordinates(
         gridSize,
         point.x, point.y, gameHeight, entityHeight
     )
 
 fun toWorldCoordinates(
-    gridSize: Double,
-    x: Double, y: Double, gameHeight: Int, entityHeight: Int = 0
-):
-        Pair<Double, Double> =
-    Pair(x * gridSize, (gameHeight - y - entityHeight) * gridSize)
-
-//fun toWorldCoordinates(entity: MonsterEntity) =
-//    Pair((entity.currentPoint.x) * GRID_SIZE, (entity.currentPoint.y) * GRID_SIZE)
-
+    gridSize: Double, x: Double, y: Double, gameHeight: Int, entityHeight: Int = 0
+) = Pair(x * gridSize, (gameHeight - y - entityHeight) * gridSize)
 
 fun toWorldDimensions(width: Int, height: Int, gridSize: Double) =
     Pair(width * gridSize, height * gridSize)

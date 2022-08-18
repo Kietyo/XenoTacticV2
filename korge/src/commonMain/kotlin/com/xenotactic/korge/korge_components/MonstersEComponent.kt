@@ -47,7 +47,7 @@ class MonstersEComponent(
             val (worldX, worldY) = toWorldCoordinates(
                 gridSize,
                 monsterEntity.currentPoint,
-                gameMapControllerComponent.width, gameMapControllerComponent.height
+                gameMapControllerComponent.height
             )
             val (worldWidth, worldHeight) = toWorldDimensions(MONSTER_WIDTH, MONSTER_HEIGHT, gridSize)
             val monsterRadius = worldWidth / 2
@@ -70,7 +70,7 @@ class MonstersEComponent(
             val (worldX, worldY) = toWorldCoordinates(
                 gridSize,
                 monsterEntity.currentPoint,
-                gameMapControllerComponent.width, gameMapControllerComponent.height
+                gameMapControllerComponent.height
             )
             monster.view.xy(
                 worldX - monster.monsterRadius,

@@ -77,6 +77,7 @@ class GameMapControllerEComponent(
             gameMap.placeEntity(placementEntity)
             eventBus.send(AddEntityEvent(placementEntity))
         }
+        println("new gamemap: $gameMap")
         updateShortestPath(PathFinder.getShortestPath(gameMap))
     }
 

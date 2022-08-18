@@ -154,7 +154,7 @@ object AStarSearcher : SearcherInterface {
             var prevEntity: MapEntity? = null
             val entityPaths = mutableListOf<EntityPath>()
             val pathSequenceInfos = mutableListOf<PathSequenceInfo>()
-            var activatedTeleportsThusFar = mutableSetOf<Int>()
+            val activatedTeleportsThusFar = mutableSetOf<Int>()
             for (entity in pathingEntities) {
                 if (prevEntity == null) {
                     prevEntity = entity
