@@ -6,7 +6,7 @@ import com.soywiz.korio.async.suspendTest
 import com.soywiz.korio.file.baseName
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldensAsync
+import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -489,7 +489,7 @@ internal class AStarSearcherTest {
     fun regressionTest00001() = suspendTest {
         Logger.defaultLevel = Logger.Level.DEBUG
 
-        val map = loadGameMapFromGoldensAsync("00001.json")
+        val map = loadGameMapFromGoldenAsync("00001.json")
 
         val path = PathFinder.getShortestPath(map, AStarSearcher)
         assertNotNull(path)

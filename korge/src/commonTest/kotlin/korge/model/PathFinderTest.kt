@@ -1,6 +1,6 @@
 package korge.model
 
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldensBlocking
+import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenBlocking
 import pathing.PathFinder
 import kotlin.test.Test
 import kotlin.test.assertNotNull
@@ -8,7 +8,7 @@ import kotlin.test.assertNotNull
 internal class PathFinderTest {
     @Test
     fun getShortestPathOnPathingPoints() {
-        val gameMap = loadGameMapFromGoldensBlocking("00019.json")
+        val gameMap = loadGameMapFromGoldenBlocking("00019.json")
         val teleportPair = gameMap.teleportPairs.first {
             it.teleportOut.sequenceNumber == 1
         }

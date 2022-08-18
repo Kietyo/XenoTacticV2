@@ -6,7 +6,7 @@ import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldensAsync
+import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -52,7 +52,7 @@ internal class PathUpdaterTest {
 
     @Test
     fun regressionTest2() {
-        val gameMap = runBlockingNoJs { loadGameMapFromGoldensAsync("00253.json") }
+        val gameMap = runBlockingNoJs { loadGameMapFromGoldenAsync("00253.json") }
 
         val pathUpdater = PathUpdater(gameMap)
         pathUpdater.placeEntities(

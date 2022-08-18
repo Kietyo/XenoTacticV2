@@ -1,6 +1,6 @@
 import com.soywiz.korio.async.runBlockingNoJs
 import com.xenotactic.gamelogic.korge_utils.TEST_TEMP_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldensAsync
+import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 
@@ -163,7 +163,7 @@ internal class KorgeGameMapTest {
 
     @Test
     fun testDecodeMap() = runBlockingNoJs {
-        val map = loadGameMapFromGoldensAsync("00001.json")
+        val map = loadGameMapFromGoldenAsync("00001.json")
         println(map)
         println(map.hashCode())
     }
