@@ -21,8 +21,8 @@ class ObjectPlacementInputProcessor(
     val engine: Engine,
     val eventBus: EventBus
 ) : MouseComponent {
-    val objectPlacementComponent = engine.getOneTimeComponent<ObjectPlacementEComponent>()
-    val gameMapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+    val objectPlacementComponent = engine.injections.getSingleton<ObjectPlacementEComponent>()
+    val gameMapComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
 
     val gridSize: Double
         get() = uiMapView._gridSize
@@ -58,9 +58,11 @@ class ObjectPlacementInputProcessor(
                 //                """.trimIndent()
                 //                )
             }
+
             MouseEvent.Type.MOVE -> {
                 mouseMoved(gridX, gridY)
             }
+
             else -> TODO()
         }
 
@@ -75,6 +77,7 @@ class ObjectPlacementInputProcessor(
                 PointerAction.Inactive -> {
                     return
                 }
+
                 is PointerAction.HighlightForPlacement -> {
                     if (pointerAction.placementLocation == null) {
                         return
@@ -90,6 +93,7 @@ class ObjectPlacementInputProcessor(
                                 pointerAction.mapEntity.at(pointerAction.placementLocation!!)
                             )
                         }
+
                         is MapEntity.Checkpoint -> TODO()
                         is MapEntity.Tower, is MapEntity.SmallBlocker -> {
                             val entityAtPlace =
@@ -100,9 +104,11 @@ class ObjectPlacementInputProcessor(
                                 )
                             }
                         }
+
                         else -> TODO()
                     }
                 }
+
                 is PointerAction.RemoveEntityAtPlace -> {
                     val data = pointerAction.data
                     if (data != null) {
@@ -111,6 +117,7 @@ class ObjectPlacementInputProcessor(
                         uiMapView.renderHighlightingForPointerAction(pointerAction)
                     }
                 }
+
                 else -> TODO("Unsupported: $pointerAction")
             }
         }
@@ -123,6 +130,7 @@ class ObjectPlacementInputProcessor(
             PointerAction.Inactive -> {
                 return
             }
+
             is PointerAction.HighlightForPlacement -> {
                 val currentEntity = pointerAction.mapEntity
                 val (gridXToInt, gridYToInt) =
@@ -143,6 +151,7 @@ class ObjectPlacementInputProcessor(
                 pointerAction.placementLocation = IntPoint(gridXToInt, gridYToInt)
                 uiMapView.renderHighlightingForPointerAction(pointerAction)
             }
+
             is PointerAction.RemoveEntityAtPlace -> {
                 val roundedGridX = floor(
                     gridX
@@ -167,10 +176,12 @@ class ObjectPlacementInputProcessor(
                         roundedGridX,
                         roundedGridY
                     )
+
                     MapEntityType.TOWER -> gameMapComponent.getFirstTowerAt(
                         roundedGridX,
                         roundedGridY
                     )
+
                     MapEntityType.TELEPORT_IN -> TODO()
                     MapEntityType.TELEPORT_OUT -> TODO()
                     MapEntityType.SMALL_BLOCKER -> TODO()
@@ -187,6 +198,7 @@ class ObjectPlacementInputProcessor(
                     )
                 }
             }
+
             else -> TODO("Unsupported: $pointerAction")
         }
     }

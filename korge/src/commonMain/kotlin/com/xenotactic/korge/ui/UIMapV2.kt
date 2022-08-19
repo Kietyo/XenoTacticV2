@@ -1,10 +1,13 @@
 package com.xenotactic.korge.ui
 
 import com.soywiz.korge.view.*
+import com.soywiz.korge.view.vector.gpuGraphics
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.vector.StrokeInfo
+import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
@@ -12,6 +15,7 @@ import com.xenotactic.gamelogic.globals.GRID_SIZE
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.views.UIEntity
 
@@ -40,6 +44,7 @@ class UIMapV2(
     val borderSize get() = uiMapSettingsV2.borderSize
     val mapWidth get() = uiMapSettingsV2.width
     val mapHeight get() = uiMapSettingsV2.height
+    val _pathLinesWidth = uiMapSettingsV2.pathLinesWidth
 
     val _boardLayer = this.container {
         //        this.propagateEvents = false
@@ -55,6 +60,10 @@ class UIMapV2(
     }
 
     val _entityLabelLayer = this.container()
+
+    private val _pathingLinesGraphics = this.gpuGraphics {
+        //        useNativeRendering = false
+    }
 
     val _highlightLayer = this.container()
     val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
@@ -219,5 +228,51 @@ class UIMapV2(
 
     fun clearHighlightLayer() {
         _highlightLayer.removeChildren()
+    }
+
+    fun hideHighlightRectangle() {
+        _highlightRectangle.visible(false)
+    }
+
+    fun renderPathLines(pathSequence: PathSequence?) {
+        //        _pathingLinesGraphics.clear()
+
+        // Draw path lines
+        if (pathSequence != null) {
+            println("Got path sequence: $pathSequence")
+            _pathingLinesGraphics.updateShape {
+                stroke(
+                    Colors.YELLOW, info = StrokeInfo(
+                        thickness = _pathLinesWidth,
+                    )
+                ) {
+                    for (path in pathSequence.paths) {
+                        for (segment in path.getSegments()) {
+                            val (p1WorldX, p1WorldY) = toWorldCoordinates(
+                                gridSize, segment.point1, mapHeight
+                            )
+                            val (p2WorldX, p2WorldY) = toWorldCoordinates(
+                                gridSize, segment.point2, mapHeight
+                            )
+                            this.line(p1WorldX, p1WorldY, p2WorldX, p2WorldY)
+                        }
+                    }
+                }
+            }
+
+            //            for (path in pathSequence.paths) {
+            //                for (segment in path.getSegments()) {
+            //                    val (p1WorldX, p1WorldY) = toWorldCoordinates(
+            //                        segment.point1, gameMap.width,
+            //                        gameMap.height
+            //                    )
+            //                    val (p2WorldX, p2WorldY) = toWorldCoordinates(
+            //                        segment.point2, gameMap.width,
+            //                        gameMap.height
+            //                    )
+            //                    _pathingLinesGraphics.line(p1WorldX, p1WorldY, p2WorldX, p2WorldY)
+            //                }
+            //            }
+        }
     }
 }

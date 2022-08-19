@@ -31,8 +31,9 @@ class EditorPlacementInputProcessor(
     val uiMap: UIMap,
     val engine: Engine
 ) : MouseComponent {
-    private val editorState = engine.getOneTimeComponent<EditorState>()
-    private val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+    private val editorState = engine.injections.getSingleton<EditorState>()
+    private val gameMapControllerComponent =
+        engine.injections.getSingleton<GameMapControllerEComponent>()
 
     val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
@@ -106,8 +107,8 @@ class EditorPlacementInputProcessor(
                     uiMap.renderHighlightEntity(entityToAdd)
                     engine.eventBus.send(
                         NotificationTextUpdateEvent(
-                        gameMapControllerComponent.getNotificationText(MapEntityType.TELEPORT_OUT)
-                    )
+                            gameMapControllerComponent.getNotificationText(MapEntityType.TELEPORT_OUT)
+                        )
                     )
                     return
                 }
@@ -130,24 +131,28 @@ class EditorPlacementInputProcessor(
     }
 
     fun createEntityToAdd(entityType: MapEntityType, gridXInt: Int, gridYInt: Int): MapEntity {
-        return when(entityType) {
+        return when (entityType) {
             MapEntityType.START,
             MapEntityType.FINISH -> MapEntityType.createEntity(
                 editorState.entityTypeToPlace,
                 gridXInt,
                 gridYInt
             )
+
             MapEntityType.CHECKPOINT -> {
                 MapEntity.Checkpoint(gameMapControllerComponent.numCheckpoints, gridXInt, gridYInt)
             }
+
             MapEntityType.ROCK -> TODO()
             MapEntityType.TOWER -> TODO()
             MapEntityType.TELEPORT_IN -> {
                 MapEntity.TeleportIn(gameMapControllerComponent.numTeleports, gridXInt, gridYInt)
             }
+
             MapEntityType.TELEPORT_OUT -> {
                 MapEntity.TeleportOut(gameMapControllerComponent.numTeleports, gridXInt, gridYInt)
             }
+
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
         }

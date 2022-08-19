@@ -16,7 +16,8 @@ import com.xenotactic.korge.state.GameMapState
 
 class UIEditorButtonsV2(
     val uiWorld: World,
-    val engine: Engine
+    val engine: Engine,
+    val uiMapV2: UIMapV2
 ) : Container() {
     private val editorState = uiWorld.injections.getSingleton<EditorState>()
     private val mouseDragInputProcessor = uiWorld.injections.getSingleton<MouseDragInputProcessor>()
@@ -100,8 +101,8 @@ class UIEditorButtonsV2(
             allowLeftClickDragging = true
         }
         editorState.isEditingEnabled = false
-//        uiMap.hideHighlightRectangle()
-//        uiMap.clearHighlightLayer()
+        uiMapV2.hideHighlightRectangle()
+        uiMapV2.clearHighlightLayer()
         selectorMouseProcessor.isEnabled = true
         println("selectorMouseProcessor is enabled")
     }

@@ -30,7 +30,7 @@ class MonstersEComponent(
         val monsterRadius: Double
     )
 
-    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+    val gameMapControllerComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
     val monsters = mutableListOf<MonsterWithView>()
 
     init {
@@ -49,7 +49,11 @@ class MonstersEComponent(
                 monsterEntity.currentPoint,
                 gameMapControllerComponent.height
             )
-            val (worldWidth, worldHeight) = toWorldDimensions(MONSTER_WIDTH, MONSTER_HEIGHT, gridSize)
+            val (worldWidth, worldHeight) = toWorldDimensions(
+                MONSTER_WIDTH,
+                MONSTER_HEIGHT,
+                gridSize
+            )
             val monsterRadius = worldWidth / 2
             monsters.add(
                 MonsterWithView(

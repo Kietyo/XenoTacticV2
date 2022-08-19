@@ -12,14 +12,16 @@ class RenderEntityComponentListener(
     val world: World,
     val engine: Engine
 ) : ComponentListener<EntityRenderComponent> {
-    val uiMap = engine.getOneTimeComponent<UIMapEComponent>().uiMap
+    val uiMap = engine.injections.getSingleton<UIMapEComponent>().uiMap
     val entityUIComponent = world.getComponentContainer<EntityUIComponent>()
 
     override fun onAdd(entity: Entity, component: EntityRenderComponent) {
         world.modifyEntity(entity) {
-            addOrReplaceComponent(EntityUIComponent(
-                uiMap.addEntity(component.entity)
-            ))
+            addOrReplaceComponent(
+                EntityUIComponent(
+                    uiMap.addEntity(component.entity)
+                )
+            )
         }
     }
 

@@ -32,7 +32,7 @@ class SelectorMouseProcessor(
 ) :
     MouseComponent, EComponent {
 
-    val uiMap = engine.getOneTimeComponent<UIMapEComponent>().uiMap
+    val uiMap = engine.injections.getSingleton<UIMapEComponent>().uiMap
 
     val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 

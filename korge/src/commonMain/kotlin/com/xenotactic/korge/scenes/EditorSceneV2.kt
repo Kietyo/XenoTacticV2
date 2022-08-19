@@ -3,13 +3,11 @@ package com.xenotactic.korge.scenes
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
-import com.xenotactic.gamelogic.components.MapEntityComponent
-import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
-import com.xenotactic.korge.family_listeners.AddEntityToUIMapFamilyListener
+import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
+import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessorV2
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
@@ -28,21 +26,24 @@ class EditorSceneV2 : Scene() {
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
         val uiWorld = World()
-        val engine = Engine(eventBus, gameWorld)
 
         val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2)
         addComponent(mouseDragInputProcessor)
 
+        val engine = Engine(eventBus, gameWorld).apply {
+            injections.setSingleton(EditorState())
+            injections.setSingleton(mouseDragInputProcessor)
+            injections.setSingleton(GameMapState(this, eventBus, uiMapV2, gameWorld))
+            injections.setSingleton(SelectorMouseProcessorV2(this@sceneInit, this, uiWorld))
+            injections.setSingleton(uiMapV2)
+        }
 
         uiWorld.apply {
-            this.injections.setSingleton(EditorState())
-            this.injections.setSingleton(mouseDragInputProcessor)
-            this.injections.setSingleton(GameMapState(eventBus, uiMapV2, gameWorld))
-            this.injections.setSingleton(SelectorMouseProcessorV2(this@sceneInit, engine, uiWorld))
+            injections = engine.injections
         }
         gameWorld.apply {
-            injections.setSingleton(uiMapV2)
-            addFamilyListener(AddEntityToUIMapFamilyListener(this))
+            injections = engine.injections
+            addFamilyListener(AddEntityFamilyListener(this))
 //            addEntity {
 //                addComponentOrThrow(MapEntityComponent(MapEntityData.Start))
 //                addComponentOrThrow(SizeComponent.SIZE_2X2_COMPONENT)
@@ -62,15 +63,19 @@ class EditorSceneV2 : Scene() {
         )
         addComponent(editorPlacementInputProcessor)
 
-        val uiEditorButtonsV2 = UIEditorButtonsV2(uiWorld, engine).addTo(this).apply {
+        addComponent(CameraInputProcessor(uiMapV2, engine))
+
+        val uiEditorButtonsV2 = UIEditorButtonsV2(uiWorld, engine, uiMapV2).addTo(this).apply {
             centerXOnStage()
             alignBottomToBottomOfWindow()
         }
 
-
-
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
             centerXOnStage()
+        }
+
+        eventBus.register<UpdatedPathLineEvent> {
+            uiMapV2.renderPathLines(it.pathSequence)
         }
     }
 }

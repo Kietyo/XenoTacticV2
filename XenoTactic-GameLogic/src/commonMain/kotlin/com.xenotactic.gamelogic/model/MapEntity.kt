@@ -1,7 +1,6 @@
 package com.xenotactic.gamelogic.model
 
 import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.Rectangle
 import kotlinx.serialization.Serializable
 
 enum class MapEntityType {
@@ -67,7 +66,7 @@ enum class MapEntityType {
     }
 }
 
-sealed class MapEntity : PathingBlockingEntity {
+sealed class MapEntity : RectangleEntity {
     abstract val type: MapEntityType
     abstract val isBlockingEntity: Boolean
 
@@ -81,9 +80,6 @@ sealed class MapEntity : PathingBlockingEntity {
 
     val rightX: Int
         get() = intPoint.x + width
-
-    val centerPoint: Point
-        get() = Point(x + width / 2f, y + height / 2f)
 
     fun isFullyCoveredBy(entity: MapEntity): Boolean {
         return blockIntPoints.intersect(entity.blockIntPoints).size == blockIntPoints.size

@@ -33,7 +33,7 @@ class DebugEComponent(val engine: Engine) : EComponent {
             pathingPoints.clear()
             return
         }
-        val mapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+        val mapComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
         val gameMap = mapComponent.getGameMapDebugOnly()
         pathingPoints.clear()
         pathingPoints.addAll(

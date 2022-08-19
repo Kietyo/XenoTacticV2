@@ -4,6 +4,7 @@ import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.RectangleEntity
 import kotlin.math.sqrt
 
 data class EntityMask(
@@ -57,7 +58,7 @@ class PathingPointUtil(val pathingRadius: Double = PATHING_RADIUS) {
             EntityMask(true, true, true, true) to emptyList(),
         )
 
-    fun calculate(entity: MapEntity, blockingPoints: BlockingPointContainer.View): Set<Point> {
+    fun calculate(entity: RectangleEntity, blockingPoints: BlockingPointContainer.View): Set<Point> {
         require(entity.width == 2 && entity.height == 2) {
             "Only works with 2x2 entities!"
         }

@@ -27,7 +27,7 @@ class SelectorMouseProcessorV2(
 ) :
     MouseComponent, EComponent {
 
-    val gameMapState = uiWorld.injections.getSingleton<GameMapState>()
+    val gameMapState = engine.injections.getSingleton<GameMapState>()
 
     val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 

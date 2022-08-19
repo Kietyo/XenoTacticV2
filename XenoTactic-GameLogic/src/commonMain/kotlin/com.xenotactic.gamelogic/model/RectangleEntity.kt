@@ -1,9 +1,9 @@
 package com.xenotactic.gamelogic.model
 
+import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
-import kotlinx.serialization.Serializable
 
-interface PathingBlockingEntity{
+interface RectangleEntity{
     val x: Int
     val y: Int
     val width: Int
@@ -30,6 +30,9 @@ interface PathingBlockingEntity{
 
     val bottomRightUnitSquareIntPoint: IntPoint
         get() = IntPoint(x + width - 1, y)
+
+    val centerPoint: Point
+        get() = Point(x + width / 2f, y + height / 2f)
 
     fun getRectangle(): Rectangle {
         return Rectangle(x, y, width, height)

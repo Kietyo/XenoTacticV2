@@ -17,7 +17,7 @@ import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.ExitGameSceneEvent
-import com.xenotactic.korge.events.UpdatedPathLengthEvent
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor
@@ -51,8 +51,8 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         val engine = Engine(eventBus)
         val gameMapControllerComponent = GameMapControllerEComponent(engine, eventBus)
         val objectPlacementComponent = ObjectPlacementEComponent()
-        engine.setOneTimeComponent(gameMapControllerComponent)
-        engine.setOneTimeComponent(objectPlacementComponent)
+        engine.injections.setSingleton(gameMapControllerComponent)
+        engine.injections.setSingleton(objectPlacementComponent)
 
         //        val gameMap = loadGameMapFromGoldensBlocking("00051.json")
         val gameMap = mapBridge.gameMap
@@ -66,7 +66,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
                 draggable()
             }
         MapRendererUpdater(engine, uiMap, eventBus)
-        engine.setOneTimeComponent(uiMap)
+        engine.injections.setSingleton(uiMap)
 
         val cameraInputProcessor = CameraInputProcessor(uiMap, engine)
         cameraInputProcessor.setZoomFactor(0.7)
@@ -104,7 +104,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
                 alignBottomToBottomOfWindow()
             }
 
-            eventBus.register<UpdatedPathLengthEvent> {
+            eventBus.register<UpdatedPathLineEvent> {
                 updatePathLength(it.newPathLength)
             }
 
@@ -117,7 +117,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         addComponent(monstersComponent)
 
         val goalComponent = GoalEComponent(engine, eventBus)
-        engine.setOneTimeComponent(goalComponent)
+        engine.injections.setSingleton(goalComponent)
         //        goalComponent.calculateGoalForMap()
 
         val MOVE_MAP_DELTA = 7

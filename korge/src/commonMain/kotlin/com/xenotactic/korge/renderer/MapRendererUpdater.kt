@@ -5,7 +5,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
-import com.xenotactic.korge.events.UpdatedPathLengthEvent
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.fleks.components.EntityRenderComponent
 import com.xenotactic.korge.ui.UIMap
 
@@ -14,11 +14,11 @@ class MapRendererUpdater(
     val uiMap: UIMap,
     val eventBus: EventBus
 ) {
-    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+    val gameMapControllerComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
 
     init {
         eventBus.register<AddEntityEvent> { event ->
-            engine.world.addEntity {
+            engine.gameWorld.addEntity {
                 addOrReplaceComponent(EntityRenderComponent(event.entity))
             }
         }
@@ -26,7 +26,7 @@ class MapRendererUpdater(
             TODO()
 //            renderer.handleRemoveEntityEvent(it)
         }
-        eventBus.register<UpdatedPathLengthEvent> {
+        eventBus.register<UpdatedPathLineEvent> {
 //            TODO()
             uiMap.renderPathLines(gameMapControllerComponent.shortestPath)
         }

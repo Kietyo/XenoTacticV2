@@ -14,7 +14,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
-import com.xenotactic.korge.events.UpdatedPathLengthEvent
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 import pathing.PathFinder
 import kotlin.math.max
 import kotlin.math.min
@@ -110,12 +110,14 @@ class GameMapControllerEComponent(
         //        updateShortestPath(pathUpdater.gamePath?.toPathSequence())
     }
 
-    fun updateShortestPath(path: PathSequence?) {
+    private fun updateShortestPath(path: PathSequence?) {
         shortestPath = path
 
-        engine.getOneTimeComponentNullable<DebugEComponent>()?.updatePathingPoints()
+        engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
 
-        eventBus.send(UpdatedPathLengthEvent(shortestPath?.pathLength))
+        eventBus.send(UpdatedPathLineEvent(
+            shortestPath,
+            shortestPath?.pathLength))
     }
 
     fun getGameMapDebugOnly(): GameMap {

@@ -40,7 +40,7 @@ class UIPlacement(
     val engine: Engine,
     val eventBus: EventBus
 ) : Container() {
-    val placementComponent = engine.getOneTimeComponent<ObjectPlacementEComponent>()
+    val placementComponent = engine.injections.getSingleton<ObjectPlacementEComponent>()
     val placementContainer: UIVerticalStack
 
     val onButtonClick = AsyncSignal<UIPlacementButton>()
@@ -112,7 +112,8 @@ class UIPlacement(
                             text = "Solve"
                             onClick {
                                 val solver = StandardSolver3(SolverSettings())
-                                val mapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+                                val mapComponent =
+                                    engine.injections.getSingleton<GameMapControllerEComponent>()
                                 val solution = solver.solve(
                                     mapComponent.getGameMapDebugOnly(),
                                     SolverParams(5, OptimizationGoal.MaxPath)

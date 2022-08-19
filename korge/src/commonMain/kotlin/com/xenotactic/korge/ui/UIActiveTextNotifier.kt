@@ -23,7 +23,7 @@ class UIActiveTextNotifier(
     val engine: Engine,
     val eventBus: EventBus
 ) : Container() {
-    val placementComponent = engine.getOneTimeComponent<ObjectPlacementEComponent>()
+    val placementComponent = engine.injections.getSingleton<ObjectPlacementEComponent>()
     val activeButtonText: Text
 
     init {
@@ -50,6 +50,7 @@ class UIActiveTextNotifier(
             is PointerAction.HighlightForPlacement -> {
                 activeButtonText.text = "Placing entity: ${pointerAction.mapEntity.friendlyName}"
             }
+
             is PointerAction.RemoveEntityAtPlace -> {
                 activeButtonText.text = when (pointerAction.entityType) {
                     MapEntityType.START -> TODO()

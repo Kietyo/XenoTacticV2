@@ -5,11 +5,14 @@ import com.soywiz.korge.view.View
 import com.soywiz.korio.file.VfsFile
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.korge.ecomponents.GoalData
 
 object EscapeButtonActionEvent
 
-data class UpdatedPathLengthEvent(val newPathLength: Double?)
+data class UpdatedPathLineEvent(
+    val pathSequence: PathSequence?,
+    val newPathLength: Double?)
 
 data class RemovedEntityEvent(val entity: MapEntity)
 

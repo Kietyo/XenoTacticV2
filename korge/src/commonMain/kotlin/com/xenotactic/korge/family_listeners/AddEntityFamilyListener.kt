@@ -13,7 +13,7 @@ import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.ui.UIMapV2
 
-class AddEntityToUIMapFamilyListener(
+class AddEntityFamilyListener(
     val world: World
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(

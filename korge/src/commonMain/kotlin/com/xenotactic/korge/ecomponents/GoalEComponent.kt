@@ -22,7 +22,7 @@ class GoalEComponent(val engine: Engine, val eventBus: EventBus) :
     private var solverResult: SolverResult.Success? = null
 
     fun calculateGoalForMap() {
-        val mapComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+        val mapComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
         val shortestPath = mapComponent.shortestPath
 
         if (shortestPath == null) {
@@ -40,6 +40,7 @@ class GoalEComponent(val engine: Engine, val eventBus: EventBus) :
                 goalData = null
                 solverResult = null
             }
+
             is SolverResult.Success -> {
                 solverResult = result
                 val goalPathLength = result.searchResult.pathSequence.pathLength.toInt()

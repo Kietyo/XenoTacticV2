@@ -11,16 +11,21 @@ import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.ecomponents.DebugEComponent
+import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
 import kotlin.math.max
 import kotlin.math.min
 
 class GameMapState(
+    val engine: Engine,
     val eventBus: EventBus,
     val uiMapV2: UIMapV2,
     val gameWorld: World
@@ -54,6 +59,9 @@ class GameMapState(
             }
             minOf(numTpIn, numTpOut)
         }
+
+    var shortestPath: PathSequence? = null
+        private set
 
     fun placeEntities(vararg entities: MapEntity) {
         val gameMapRect = GRectInt(0, 0, uiMapV2.mapWidth, uiMapV2.mapHeight)
@@ -135,7 +143,20 @@ class GameMapState(
 //            gameMap.placeEntity(placementEntity)
             eventBus.send(AddEntityEvent(placementEntity))
         }
+        TODO()
 //        updateShortestPath(PathFinder.getShortestPath(gameMap))
+    }
+
+    private fun updateShortestPath(path: PathSequence?) {
+        shortestPath = path
+
+        engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
+
+        eventBus.send(
+            UpdatedPathLineEvent(
+            shortestPath,
+            shortestPath?.pathLength)
+        )
     }
 
     fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {

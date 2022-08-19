@@ -12,13 +12,13 @@ import com.soywiz.korma.math.roundDecimalPlaces
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
-import com.xenotactic.korge.events.UpdatedPathLengthEvent
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 
 class InformationalUI(
     override val view: Container, val engine: Engine,
     val eventBus: EventBus
 ) : ResizeComponent {
-    val gameMapControllerComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
+    val gameMapControllerComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
     val pathText: Text
 
     init {
@@ -28,7 +28,7 @@ class InformationalUI(
 
         handlePathChanged()
 
-        eventBus.register<UpdatedPathLengthEvent> {
+        eventBus.register<UpdatedPathLineEvent> {
             updateTextWithPathLength(it.newPathLength)
         }
     }

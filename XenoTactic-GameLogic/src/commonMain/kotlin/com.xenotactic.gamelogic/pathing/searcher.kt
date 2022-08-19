@@ -4,7 +4,7 @@ import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.contains
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.PathingBlockingEntity
+import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndRectangle
 
@@ -75,7 +75,7 @@ fun intersectSegmentRectangle(
     ) true else rectangle.contains(startPoint) || rectangle.contains(endPoint)
 }
 
-fun lineIntersectsEntity(p1: Point, p2: Point, entity: PathingBlockingEntity): Boolean {
+fun lineIntersectsEntity(p1: Point, p2: Point, entity: RectangleEntity): Boolean {
     return intersectSegmentRectangle(p1, p2, entity.getRectangle())
 }
 
@@ -261,14 +261,14 @@ data class PathSequence constructor(val paths: List<Path> = listOf()) {
 
 sealed class EntityPath {
     data class EntityToEntityPath(
-        val startEntity: MapEntity,
-        val endEntity: MapEntity,
+        val startEntity: RectangleEntity,
+        val endEntity: RectangleEntity,
         val path: Path
     ) : EntityPath()
 
     data class EntityToEntityIntersectsTeleport(
-        val startEntity: MapEntity,
-        val endEntity: MapEntity,
+        val startEntity: RectangleEntity,
+        val endEntity: RectangleEntity,
         val intersectingTeleport: Int,
         val startToEndPath: Path,
         val startToTeleportPath: Path
@@ -450,7 +450,7 @@ data class GamePath(
 
 }
 
-fun lineIntersectsEntities(p1: Point, p2: Point, entities: List<PathingBlockingEntity>): Boolean {
+fun lineIntersectsEntities(p1: Point, p2: Point, entities: List<RectangleEntity>): Boolean {
     return entities.any { lineIntersectsEntity(p1, p2, it) }
 }
 

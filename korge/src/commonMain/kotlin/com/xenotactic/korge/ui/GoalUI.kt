@@ -23,7 +23,7 @@ import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
-import com.xenotactic.korge.events.UpdatedPathLengthEvent
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 
 class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeComponent {
     val goalContainer: UIContainer
@@ -101,7 +101,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         eventBus.register<UpdatedGoalDataEvent> {
             handleNewGoalDataEvent(it)
         }
-        eventBus.register<UpdatedPathLengthEvent> {
+        eventBus.register<UpdatedPathLineEvent> {
             handleNewPathLengthEvent(it)
         }
     }
@@ -117,7 +117,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         goalContainer.visible(true)
     }
 
-    fun handleNewPathLengthEvent(event: UpdatedPathLengthEvent) {
+    fun handleNewPathLengthEvent(event: UpdatedPathLineEvent) {
         if (event.newPathLength == null) {
             return
         }

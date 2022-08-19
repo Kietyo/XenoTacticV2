@@ -15,11 +15,12 @@ import com.xenotactic.korge.input_processors.SelectorMouseProcessor
 import com.xenotactic.korge.state.EditorState
 
 class UIEditorButtons(val engine: Engine) : Container() {
-    private val editorState = engine.getOneTimeComponent<EditorState>()
-    private val uiMapComponent = engine.getOneTimeComponent<UIMapEComponent>()
-    private val mouseDragInputProcessor = engine.getOneTimeComponent<MouseDragInputProcessor>()
-    private val gameMapControllerEComponent = engine.getOneTimeComponent<GameMapControllerEComponent>()
-    private val selectorMouseProcessor = engine.getOneTimeComponent<SelectorMouseProcessor>()
+    private val editorState = engine.injections.getSingleton<EditorState>()
+    private val uiMapComponent = engine.injections.getSingleton<UIMapEComponent>()
+    private val mouseDragInputProcessor = engine.injections.getSingleton<MouseDragInputProcessor>()
+    private val gameMapControllerEComponent =
+        engine.injections.getSingleton<GameMapControllerEComponent>()
+    private val selectorMouseProcessor = engine.injections.getSingleton<SelectorMouseProcessor>()
 
     val uiMap = uiMapComponent.uiMap
 
@@ -107,7 +108,13 @@ class UIEditorButtons(val engine: Engine) : Container() {
     }
 
     fun switchToEditingMode(entityType: MapEntityType) {
-        engine.eventBus.send(NotificationTextUpdateEvent(gameMapControllerEComponent.getNotificationText(entityType)))
+        engine.eventBus.send(
+            NotificationTextUpdateEvent(
+                gameMapControllerEComponent.getNotificationText(
+                    entityType
+                )
+            )
+        )
         mouseDragInputProcessor.adjustSettings {
             allowLeftClickDragging = false
         }
