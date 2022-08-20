@@ -3,7 +3,7 @@ package pathing
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.RectangleEntity
+import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.PathSequence
@@ -16,7 +16,7 @@ import com.xenotactic.gamelogic.pathing.SearcherInterface
 object PathFinder {
     fun getUpdatablePath(gameMap: GameMap, searcher: SearcherInterface = AStarSearcher):
             GamePath? {
-        return getUpdatablePathInternal(
+        return getUpdatablePath(
             gameMap.width,
             gameMap.height,
             gameMap.getStart(),
@@ -42,7 +42,7 @@ object PathFinder {
         searcher: SearcherInterface = AStarSearcher
     )
             : PathSequence? {
-        return getUpdatablePathInternal(
+        return getUpdatablePath(
             gameMap.width,
             gameMap.height,
             gameMap.getStart(),
@@ -61,7 +61,7 @@ object PathFinder {
         searcher: SearcherInterface = AStarSearcher
     ):
             PathSequence? {
-        return getUpdatablePathInternal(
+        return getUpdatablePath(
             gameMap.width,
             gameMap.height,
             gameMap.getStart(),
@@ -78,7 +78,7 @@ object PathFinder {
         gameMap: GameMap, teleportPair: TeleportPair,
         searcher: SearcherInterface = AStarSearcher
     ): GamePath? {
-        return getUpdatablePathInternal(
+        return getUpdatablePath(
             gameMap.width,
             gameMap.height,
             gameMap.getStart(),
@@ -98,7 +98,7 @@ object PathFinder {
         teleportPairs: List<TeleportPair> = gameMap.teleportPairs,
         searcher: SearcherInterface = AStarSearcher
     ): GamePath? {
-        return getUpdatablePathInternal(
+        return getUpdatablePath(
             gameMap.width,
             gameMap.height,
             gameMap.getStart(),
@@ -110,23 +110,27 @@ object PathFinder {
         )
     }
 
-    private fun getUpdatablePathInternal(
+    fun getUpdatablePath(
         width: Int,
         height: Int,
-        start: RectangleEntity?,
-        finish: RectangleEntity?,
-        blockingEntities: List<RectangleEntity>,
+        start: IRectangleEntity?,
+        finish: IRectangleEntity?,
+        blockingEntities: List<IRectangleEntity> = emptyList(),
         blockingPoints: BlockingPointContainer.View? = null,
-        pathingEntities: List<RectangleEntity>,
-        teleportPairs: List<TeleportPair>,
+        pathingEntities: List<IRectangleEntity> = emptyList(),
+        teleportPairs: List<TeleportPair> = emptyList(),
         additionalTeleportPairs: List<TeleportPair> = emptyList(),
-        searcher: SearcherInterface
+        searcher: SearcherInterface = AStarSearcher
     ): GamePath? {
         if (start == null || finish == null) return null
 
         return searcher.getUpdatablePath(
             width, height,
-            pathingEntities,
+            mutableListOf<IRectangleEntity>().apply {
+                add(start)
+                addAll(pathingEntities)
+                add(finish)
+            },
             teleportPairs + additionalTeleportPairs,
             blockingEntities,
             blockingPoints

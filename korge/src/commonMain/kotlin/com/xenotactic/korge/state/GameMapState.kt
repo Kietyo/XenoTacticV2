@@ -7,10 +7,7 @@ import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.MapEntityComponent
 import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.components.UIMapEntityComponent
-import com.xenotactic.gamelogic.model.GRectInt
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityData
-import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.views.UIEntity
@@ -34,22 +31,27 @@ class GameMapState(
         FamilyConfiguration(
             allOfComponents = setOf(
                 MapEntityComponent::class,
-                UIMapEntityComponent::class
+                UIMapEntityComponent::class,
+                SizeComponent::class,
+                BottomLeftPositionComponent::class,
             )
         )
     )
-    private val mapEntity = gameWorld.getComponentContainer<MapEntityComponent>()
-    private val uiMapEntity = gameWorld.getComponentContainer<UIMapEntityComponent>()
+    private val mapEntityComponent = gameWorld.getComponentContainer<MapEntityComponent>()
+    private val uiMapEntityComponent = gameWorld.getComponentContainer<UIMapEntityComponent>()
+    private val sizeComponent = gameWorld.getComponentContainer<SizeComponent>()
+    private val bottomLeftPositionComponent =
+        gameWorld.getComponentContainer<BottomLeftPositionComponent>()
     val numCheckpoints
         get() = entityFamily.getSequence().count {
-            mapEntity.getComponent(it).entityData is MapEntityData.Checkpoint
+            mapEntityComponent.getComponent(it).entityData is MapEntityData.Checkpoint
         }
     val numCompletedTeleports
         get() = run {
             var numTpIn = 0
             var numTpOut = 0
             entityFamily.getSequence().forEach {
-                val comp = mapEntity.getComponent(it)
+                val comp = mapEntityComponent.getComponent(it)
                 if (comp.entityData is MapEntityData.TeleportIn) {
                     numTpIn++
                 }
@@ -103,6 +105,7 @@ class GameMapState(
                             )
                         )
                     }
+
                     is MapEntity.Rock -> {
                         addComponentOrThrow(
                             MapEntityComponent(
@@ -110,6 +113,7 @@ class GameMapState(
                             )
                         )
                     }
+
                     is MapEntity.SmallBlocker -> TODO()
                     is MapEntity.SpeedArea -> TODO()
                     is MapEntity.Start -> {
@@ -119,6 +123,7 @@ class GameMapState(
                             )
                         )
                     }
+
                     is MapEntity.TeleportIn -> {
                         addComponentOrThrow(
                             MapEntityComponent(
@@ -126,6 +131,7 @@ class GameMapState(
                             )
                         )
                     }
+
                     is MapEntity.TeleportOut -> {
                         addComponentOrThrow(
                             MapEntityComponent(
@@ -133,35 +139,94 @@ class GameMapState(
                             )
                         )
                     }
+
                     is MapEntity.Tower -> TODO()
                 }
 
                 addComponentOrThrow(SizeComponent(placementEntity.width, placementEntity.height))
-                addComponentOrThrow(BottomLeftPositionComponent(placementEntity.x, placementEntity.y))
+                addComponentOrThrow(
+                    BottomLeftPositionComponent(
+                        placementEntity.x,
+                        placementEntity.y
+                    )
+                )
             }
 
 //            gameMap.placeEntity(placementEntity)
             eventBus.send(AddEntityEvent(placementEntity))
         }
-        TODO()
-//        updateShortestPath(PathFinder.getShortestPath(gameMap))
+        updateShortestPath()
     }
 
-    private fun updateShortestPath(path: PathSequence?) {
-        shortestPath = path
+    private fun updateShortestPath() {
+        var start: IRectangleEntity? = null
+        var finish: IRectangleEntity? = null
+
+        val sequenceNumToPathingEntity = mutableMapOf<Int, IRectangleEntity>()
+
+        entityFamily.getSequence().forEach {
+            val mapEntityComponent = mapEntityComponent.getComponent(it)
+            val sizeComponent = sizeComponent.getComponent(it)
+            val bottomLeftPositionComponent = bottomLeftPositionComponent.getComponent(it)
+            val entityData = mapEntityComponent.entityData
+            when (entityData) {
+                MapEntityData.Start -> {
+                    start = RectangleEntity(
+                        bottomLeftPositionComponent.x,
+                        bottomLeftPositionComponent.y,
+                        sizeComponent.width,
+                        sizeComponent.height
+                    )
+                }
+
+                MapEntityData.Finish -> {
+                    finish = RectangleEntity(
+                        bottomLeftPositionComponent.x,
+                        bottomLeftPositionComponent.y,
+                        sizeComponent.width,
+                        sizeComponent.height
+                    )
+                }
+
+                is MapEntityData.Checkpoint -> {
+                    sequenceNumToPathingEntity[entityData.sequenceNumber] =
+                        RectangleEntity(
+                            bottomLeftPositionComponent.x,
+                            bottomLeftPositionComponent.y,
+                            sizeComponent.width,
+                            sizeComponent.height
+                        )
+                }
+
+                MapEntityData.Rock -> TODO()
+                MapEntityData.SmallBlocker -> TODO()
+                is MapEntityData.SpeedArea -> TODO()
+                is MapEntityData.TeleportIn -> TODO()
+                is MapEntityData.TeleportOut -> TODO()
+                MapEntityData.Tower -> TODO()
+            }
+        }
+
+        shortestPath = PathFinder.getUpdatablePath(
+            uiMapV2.mapHeight, uiMapV2.mapHeight,
+            start, finish, pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {
+                it.first
+            }.map { it.second }
+        )?.toPathSequence()
 
         engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
 
         eventBus.send(
             UpdatedPathLineEvent(
-            shortestPath,
-            shortestPath?.pathLength)
+                shortestPath,
+                shortestPath?.pathLength
+            )
         )
     }
 
     fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
         return entityFamily.getSequence().mapNotNull {
-            val comp = uiMapEntity.getComponent(it)
+            val comp = uiMapEntityComponent.getComponent(it)
             if (rect.intersects(comp.entityView.getGlobalBounds())) {
                 comp.entityView
             } else {

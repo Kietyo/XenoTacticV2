@@ -1,6 +1,5 @@
 package com.xenotactic.gamelogic.model
 
-import com.soywiz.korma.geom.Point
 import kotlinx.serialization.Serializable
 
 enum class MapEntityType {
@@ -66,7 +65,7 @@ enum class MapEntityType {
     }
 }
 
-sealed class MapEntity : RectangleEntity {
+sealed class MapEntity : IRectangleEntity {
     abstract val type: MapEntityType
     abstract val isBlockingEntity: Boolean
 

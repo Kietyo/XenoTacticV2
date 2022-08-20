@@ -3,7 +3,7 @@ package com.xenotactic.gamelogic.model
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 
-interface RectangleEntity{
+interface IRectangleEntity{
     val x: Int
     val y: Int
     val width: Int
@@ -38,3 +38,10 @@ interface RectangleEntity{
         return Rectangle(x, y, width, height)
     }
 }
+
+data class RectangleEntity(
+    override val x: Int,
+    override val y: Int,
+    override val width: Int,
+    override val height: Int
+) : IRectangleEntity
