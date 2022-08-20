@@ -7,10 +7,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
-import com.xenotactic.korge.input_processors.CameraInputProcessor
-import com.xenotactic.korge.input_processors.EditorPlacementInputProcessorV2
-import com.xenotactic.korge.input_processors.MouseDragInputProcessor
-import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
+import com.xenotactic.korge.input_processors.*
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapState
@@ -64,6 +61,8 @@ class EditorSceneV2 : Scene() {
         addComponent(editorPlacementInputProcessor)
 
         addComponent(CameraInputProcessor(uiMapV2, engine))
+
+        addComponent(KeyInputProcessor(this, engine))
 
         val uiEditorButtonsV2 = UIEditorButtonsV2(uiWorld, engine, uiMapV2).addTo(this).apply {
             centerXOnStage()
