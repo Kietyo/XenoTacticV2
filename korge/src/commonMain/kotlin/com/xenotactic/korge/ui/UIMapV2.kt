@@ -86,6 +86,7 @@ class UIMapV2(
                 gridSize * mapHeight,
                 MaterialColors.GREEN_600
             )
+
             BoardType.CHECKERED_1X1 -> {
                 var altColorWidth = true
                 for (i in 0 until mapWidth) {
@@ -101,6 +102,7 @@ class UIMapV2(
                     altColorWidth = !altColorWidth
                 }
             }
+
             BoardType.CHECKERED_2X2 -> {
                 var altColorWidth = true
                 val gridSize = gridSize * 2
@@ -191,7 +193,12 @@ class UIMapV2(
             mapHeight
         )
 
-    fun renderEntityHighlightRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
+    fun renderEntityHighlightRectangle(
+        gridX: Int,
+        gridY: Int,
+        entityWidth: Int,
+        entityHeight: Int
+    ) {
         val (worldX, worldY) = toWorldCoordinates(
             gridSize,
             IntPoint(gridX, gridY),
@@ -235,7 +242,7 @@ class UIMapV2(
     }
 
     fun renderPathLines(pathSequence: PathSequence?) {
-        //        _pathingLinesGraphics.clear()
+        _pathingLinesGraphics.updateShape {  }
 
         // Draw path lines
         if (pathSequence != null) {

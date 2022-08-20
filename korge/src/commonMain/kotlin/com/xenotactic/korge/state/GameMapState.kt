@@ -165,6 +165,7 @@ class GameMapState(
         val sequenceNumToPathingEntity = mutableMapOf<Int, IRectangleEntity>()
         val sequenceNumToTpIn = mutableMapOf<Int, IRectangleEntity>()
         val sequenceNumToTpOut = mutableMapOf<Int, IRectangleEntity>()
+        val blockingEntities = mutableListOf<IRectangleEntity>()
 
         entityFamily.getSequence().forEach {
             val mapEntityComponent = mapEntityComponent.getComponent(it)
@@ -190,7 +191,9 @@ class GameMapState(
                     sequenceNumToPathingEntity[entityData.sequenceNumber] = rectangleEntity
                 }
 
-                MapEntityData.Rock -> TODO()
+                MapEntityData.Rock -> {
+                    blockingEntities.add(rectangleEntity)
+                }
                 MapEntityData.SmallBlocker -> TODO()
                 is MapEntityData.SpeedArea -> TODO()
                 is MapEntityData.TeleportIn -> {
@@ -209,7 +212,9 @@ class GameMapState(
 
         shortestPath = PathFinder.getUpdatablePath(
             uiMapV2.mapHeight, uiMapV2.mapHeight,
-            start, finish, pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {
+            start, finish,
+            blockingEntities = blockingEntities,
+            pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {
                 it.first
             }.map { it.second }, teleportPairs = sequenceNumToTpIn.toList().map {
                 TeleportPair(it.second, sequenceNumToTpOut[it.first]!!, it.first)

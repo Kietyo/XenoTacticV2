@@ -155,7 +155,7 @@ class EditorPlacementInputProcessorV2(
         }
     }
 
-    fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
+    private fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
         if (eventType == MouseEvent.Type.DOWN ||
             eventType == MouseEvent.Type.MOVE
         ) {
@@ -197,11 +197,14 @@ class EditorPlacementInputProcessorV2(
         //        )
 
         if (eventType == MouseEvent.Type.UP) {
-            gameWorld.addEntity {
-                addComponentOrThrow(MapEntityComponent(MapEntityData.Rock))
-                addComponentOrThrow(SizeComponent(width, height))
-                addComponentOrThrow(BottomLeftPositionComponent(roundedGridX, roundedGridY))
-            }
+            gameMapState.placeEntities(
+                MapEntity.Rock(roundedGridX, roundedGridY, width, height)
+            )
+//            gameWorld.addEntity {
+//                addComponentOrThrow(MapEntityComponent(MapEntityData.Rock))
+//                addComponentOrThrow(SizeComponent(width, height))
+//                addComponentOrThrow(BottomLeftPositionComponent(roundedGridX, roundedGridY))
+//            }
 
             // Resets the highlight rectangle to the current cursor position
             handleRockPlacement(MouseEvent.Type.MOVE, gridX, gridY)
