@@ -163,55 +163,59 @@ class GameMapState(
         var finish: IRectangleEntity? = null
 
         val sequenceNumToPathingEntity = mutableMapOf<Int, IRectangleEntity>()
+        val sequenceNumToTpIn = mutableMapOf<Int, IRectangleEntity>()
+        val sequenceNumToTpOut = mutableMapOf<Int, IRectangleEntity>()
 
         entityFamily.getSequence().forEach {
             val mapEntityComponent = mapEntityComponent.getComponent(it)
             val sizeComponent = sizeComponent.getComponent(it)
             val bottomLeftPositionComponent = bottomLeftPositionComponent.getComponent(it)
             val entityData = mapEntityComponent.entityData
+            val rectangleEntity = RectangleEntity(
+                bottomLeftPositionComponent.x,
+                bottomLeftPositionComponent.y,
+                sizeComponent.width,
+                sizeComponent.height
+            )
             when (entityData) {
                 MapEntityData.Start -> {
-                    start = RectangleEntity(
-                        bottomLeftPositionComponent.x,
-                        bottomLeftPositionComponent.y,
-                        sizeComponent.width,
-                        sizeComponent.height
-                    )
+                    start = rectangleEntity
                 }
 
                 MapEntityData.Finish -> {
-                    finish = RectangleEntity(
-                        bottomLeftPositionComponent.x,
-                        bottomLeftPositionComponent.y,
-                        sizeComponent.width,
-                        sizeComponent.height
-                    )
+                    finish = rectangleEntity
                 }
 
                 is MapEntityData.Checkpoint -> {
-                    sequenceNumToPathingEntity[entityData.sequenceNumber] =
-                        RectangleEntity(
-                            bottomLeftPositionComponent.x,
-                            bottomLeftPositionComponent.y,
-                            sizeComponent.width,
-                            sizeComponent.height
-                        )
+                    sequenceNumToPathingEntity[entityData.sequenceNumber] = rectangleEntity
                 }
 
                 MapEntityData.Rock -> TODO()
                 MapEntityData.SmallBlocker -> TODO()
                 is MapEntityData.SpeedArea -> TODO()
-                is MapEntityData.TeleportIn -> TODO()
-                is MapEntityData.TeleportOut -> TODO()
+                is MapEntityData.TeleportIn -> {
+                    sequenceNumToTpIn[entityData.sequenceNumber] = rectangleEntity
+                }
+
+                is MapEntityData.TeleportOut -> {
+                    sequenceNumToTpOut[entityData.sequenceNumber] = rectangleEntity
+                }
+
                 MapEntityData.Tower -> TODO()
             }
         }
+
+        require(sequenceNumToTpIn.size == sequenceNumToTpOut.size)
 
         shortestPath = PathFinder.getUpdatablePath(
             uiMapV2.mapHeight, uiMapV2.mapHeight,
             start, finish, pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {
                 it.first
-            }.map { it.second }
+            }.map { it.second }, teleportPairs = sequenceNumToTpIn.toList().map {
+                TeleportPair(it.second, sequenceNumToTpOut[it.first]!!, it.first)
+            }.sortedBy {
+                it.sequenceNumber
+            }
         )?.toPathSequence()
 
         engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()

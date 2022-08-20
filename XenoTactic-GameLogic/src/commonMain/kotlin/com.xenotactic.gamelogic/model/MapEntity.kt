@@ -80,10 +80,6 @@ sealed class MapEntity : IRectangleEntity {
     val rightX: Int
         get() = intPoint.x + width
 
-    fun isFullyCoveredBy(entity: MapEntity): Boolean {
-        return blockIntPoints.intersect(entity.blockIntPoints).size == blockIntPoints.size
-    }
-
     fun at(x: Int, y: Int): MapEntity {
         val p = IntPoint(x, y)
         return at(p)
@@ -215,7 +211,7 @@ sealed class MapEntity : IRectangleEntity {
         val radius: Double = 1.0
 
         infix fun to(tpOut: TeleportOut): TeleportPair {
-            return TeleportPair(this, tpOut)
+            return TeleportPair(this, tpOut, this.sequenceNumber)
         }
     }
 
@@ -365,25 +361,11 @@ sealed class MapEntity : IRectangleEntity {
 }
 
 data class TeleportPair(
-    val teleportIn: MapEntity.TeleportIn,
-    val teleportOut: MapEntity.TeleportOut
+    val teleportIn: IRectangleEntity,
+    val teleportOut: IRectangleEntity,
+    val sequenceNumber: Int
 ) {
-    init {
-        require(teleportIn.sequenceNumber == teleportOut.sequenceNumber)
-    }
-
-    val sequenceNumber = teleportIn.sequenceNumber
-}
-
-
-fun MapEntity.isFullyCoveredBy(
-    entities: List<MapEntity>
-): Boolean {
-    val visibleBlocks = this.blockIntPoints.toMutableSet()
-    for (mapEntity in entities) {
-        val intersect = visibleBlocks.intersect(mapEntity.blockIntPoints)
-        visibleBlocks.removeAll(intersect)
-        if (visibleBlocks.isEmpty()) return true
-    }
-    return false
+    constructor(teleportIn: MapEntity.TeleportIn, teleportOut: MapEntity.TeleportOut) : this(
+        teleportIn, teleportOut, teleportIn.sequenceNumber
+    )
 }

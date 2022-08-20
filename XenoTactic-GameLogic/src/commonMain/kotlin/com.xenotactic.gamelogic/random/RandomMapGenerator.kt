@@ -132,7 +132,8 @@ class RandomMapGenerator {
                 PathFinder.getShortestPathWithTeleportPair(
                     map, TeleportPair(
                         teleportIn,
-                        teleportOut
+                        teleportOut,
+                        teleportIn.sequenceNumber
                     )
                 ) == null
             )

@@ -11,6 +11,5 @@ interface SearcherInterface {
         pathingEntities: List<IRectangleEntity>,
         teleportPairs: List<TeleportPair> = emptyList(),
         blockingEntities: List<IRectangleEntity> = emptyList(),
-        blockingPoints: BlockingPointContainer.View? = null
     ): GamePath?
 }

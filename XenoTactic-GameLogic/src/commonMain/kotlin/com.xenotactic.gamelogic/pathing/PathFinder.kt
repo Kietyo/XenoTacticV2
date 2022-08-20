@@ -19,11 +19,7 @@ object PathFinder {
         return getUpdatablePath(
             gameMap.width,
             gameMap.height,
-            gameMap.getStart(),
-            gameMap.getFinish(),
             gameMap.getBlockingEntities(),
-            gameMap
-                .blockingPointsView(),
             gameMap.getSequentialPathingEntities(),
             gameMap.teleportPairs,
             searcher = searcher
@@ -39,7 +35,6 @@ object PathFinder {
 
     fun getShortestPathWithBlockingEntities(
         gameMap: GameMap, blockingEntities: List<MapEntity>,
-        searcher: SearcherInterface = AStarSearcher
     )
             : PathSequence? {
         return getUpdatablePath(
@@ -48,10 +43,8 @@ object PathFinder {
             gameMap.getStart(),
             gameMap.getFinish(),
             gameMap.getBlockingEntities() + blockingEntities,
-            null,
             gameMap.getSequentialPathingEntities(),
             gameMap.teleportPairs,
-            searcher = searcher
         )?.toPathSequence()
     }
 
@@ -64,10 +57,7 @@ object PathFinder {
         return getUpdatablePath(
             gameMap.width,
             gameMap.height,
-            gameMap.getStart(),
-            gameMap.getFinish(),
             gameMap.getBlockingEntities() + towers,
-            null,
             gameMap.getSequentialPathingEntities(),
             gameMap.teleportPairs,
             searcher = searcher
@@ -76,7 +66,6 @@ object PathFinder {
 
     fun getShortestPathWithTeleportPair(
         gameMap: GameMap, teleportPair: TeleportPair,
-        searcher: SearcherInterface = AStarSearcher
     ): GamePath? {
         return getUpdatablePath(
             gameMap.width,
@@ -84,26 +73,22 @@ object PathFinder {
             gameMap.getStart(),
             gameMap.getFinish(),
             gameMap.getBlockingEntities(),
-            gameMap.blockingPointsView(),
             gameMap.getSequentialPathingEntities(),
             gameMap.teleportPairs,
             additionalTeleportPairs = listOf(teleportPair),
-            searcher = searcher
         )
     }
 
     fun getShortestPathOnPathingPoints(
         gameMap: GameMap,
-        pathingEntities: List<MapEntity>,
+        pathingEntities: List<IRectangleEntity>,
         teleportPairs: List<TeleportPair> = gameMap.teleportPairs,
         searcher: SearcherInterface = AStarSearcher
     ): GamePath? {
         return getUpdatablePath(
             gameMap.width,
             gameMap.height,
-            gameMap.getStart(),
-            gameMap.getFinish(),
-            gameMap.getBlockingEntities(),
+            blockingEntities = gameMap.getBlockingEntities(),
             pathingEntities = pathingEntities,
             teleportPairs = teleportPairs,
             searcher = searcher
@@ -116,24 +101,37 @@ object PathFinder {
         start: IRectangleEntity?,
         finish: IRectangleEntity?,
         blockingEntities: List<IRectangleEntity> = emptyList(),
-        blockingPoints: BlockingPointContainer.View? = null,
         pathingEntities: List<IRectangleEntity> = emptyList(),
         teleportPairs: List<TeleportPair> = emptyList(),
         additionalTeleportPairs: List<TeleportPair> = emptyList(),
-        searcher: SearcherInterface = AStarSearcher
     ): GamePath? {
         if (start == null || finish == null) return null
 
-        return searcher.getUpdatablePath(
+        return getUpdatablePath(
             width, height,
+            blockingEntities,
             mutableListOf<IRectangleEntity>().apply {
                 add(start)
                 addAll(pathingEntities)
                 add(finish)
             },
             teleportPairs + additionalTeleportPairs,
-            blockingEntities,
-            blockingPoints
+        )
+    }
+
+    fun getUpdatablePath(
+        width: Int,
+        height: Int,
+        blockingEntities: List<IRectangleEntity> = emptyList(),
+        pathingEntities: List<IRectangleEntity> = emptyList(),
+        teleportPairs: List<TeleportPair> = emptyList(),
+        searcher: SearcherInterface = AStarSearcher
+    ): GamePath? {
+        return searcher.getUpdatablePath(
+            width, height,
+            pathingEntities,
+            teleportPairs,
+            blockingEntities
         )
     }
 }

@@ -42,7 +42,8 @@ data class GameMap(
     val teleportPairs: List<TeleportPair>
         get() = teleportIns.map {
             TeleportPair(
-                it.value, teleportOuts[it.key]!!
+                it.value, teleportOuts[it.key]!!,
+                it.value.sequenceNumber
             )
         }
 
@@ -267,8 +268,10 @@ data class GameMap(
     }
 
     fun toGameMapForId(): GameMapForId {
-        require(verify() == MapVerificationResult.Success) {
-            "Only verified maps are allowed for ID generation."
+        val verificationResult = verify()
+        require(verificationResult == MapVerificationResult.Success) {
+            "Only verified maps are allowed for ID generation.\n" +
+                    "verificationResult: $verificationResult"
         }
         return GameMapForId(
             width,

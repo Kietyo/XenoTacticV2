@@ -4,7 +4,6 @@ package model
 import kotlin.test.*
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IntPoint
-import com.xenotactic.gamelogic.model.isFullyCoveredBy
 import com.xenotactic.gamelogic.utils.measureTime
 
 internal class MapEntityTest {

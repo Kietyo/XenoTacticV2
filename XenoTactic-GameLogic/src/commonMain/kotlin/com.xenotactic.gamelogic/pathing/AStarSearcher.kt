@@ -59,10 +59,8 @@ object AStarSearcher : SearcherInterface {
         pathingEntities: List<IRectangleEntity>,
         teleportPairs: List<TeleportPair>,
         blockingEntities: List<IRectangleEntity>,
-        blockingPoints: BlockingPointContainer.View?
     ): GamePath? {
-        val nonNullBlockingPoints =
-            blockingPoints ?: BlockingPointContainer.View.create(blockingEntities)
+        val nonNullBlockingPoints = BlockingPointContainer.View.create(blockingEntities)
         return FullPathSearcherInternal(
             mapWidth,
             mapHeight,

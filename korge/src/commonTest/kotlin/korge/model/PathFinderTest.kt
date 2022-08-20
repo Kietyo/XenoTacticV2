@@ -10,7 +10,7 @@ internal class PathFinderTest {
     fun getShortestPathOnPathingPoints() {
         val gameMap = loadGameMapFromGoldenBlocking("00019.json")
         val teleportPair = gameMap.teleportPairs.first {
-            it.teleportOut.sequenceNumber == 1
+            it.sequenceNumber == 1
         }
         assertNotNull(
             PathFinder.getShortestPathOnPathingPoints(
