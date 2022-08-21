@@ -18,7 +18,7 @@ class MapRendererUpdater(
 
     init {
         eventBus.register<AddEntityEvent> { event ->
-            engine.gameWorld.addEntity {
+            engine.gameWorld.world.addEntity {
                 addOrReplaceComponent(EntityRenderComponent(event.entity))
             }
         }

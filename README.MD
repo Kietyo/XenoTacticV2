@@ -46,3 +46,6 @@ cocoyaxi[core]:x86-windows -> 2.0.3#2
   Could not locate a complete Visual Studio instance
 ```
 - Installed visual studio
+
+Issues
+- 22/8/21 - After using rock placement mode in editor, can no longer move map.

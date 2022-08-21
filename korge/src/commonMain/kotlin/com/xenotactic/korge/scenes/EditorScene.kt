@@ -19,6 +19,7 @@ import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessor
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.renderer.MapRendererUpdater
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.systems.SelectingEntitiesSystem
@@ -49,7 +50,7 @@ class EditorScene : Scene() {
             }
 
         val world = World()
-        val engine = Engine(eventBus, world)
+        val engine = Engine(eventBus, GameWorld(world))
 
         //        val world = World {
         //            system(::RenderEntitySystem)

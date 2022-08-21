@@ -16,6 +16,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
 import kotlin.math.max
@@ -24,34 +25,20 @@ import kotlin.math.min
 class GameMapApi(
     val engine: Engine,
     val eventBus: EventBus,
-    val gameWorld: World
 ) {
-    private val entityFamily = gameWorld.createFamily(
-        FamilyConfiguration(
-            allOfComponents = setOf(
-                MapEntityComponent::class,
-                UIMapEntityComponent::class,
-                SizeComponent::class,
-                BottomLeftPositionComponent::class,
-            )
-        )
-    )
+    val gameWorld: GameWorld = engine.gameWorld
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
-    private val mapEntityComponent = gameWorld.getComponentContainer<MapEntityComponent>()
-    private val uiMapEntityComponent = gameWorld.getComponentContainer<UIMapEntityComponent>()
-    private val sizeComponent = gameWorld.getComponentContainer<SizeComponent>()
-    private val bottomLeftPositionComponent =
-        gameWorld.getComponentContainer<BottomLeftPositionComponent>()
+
     val numCheckpoints
-        get() = entityFamily.getSequence().count {
-            mapEntityComponent.getComponent(it).entityData is MapEntityData.Checkpoint
+        get() = gameWorld.entityFamily.getSequence().count {
+            gameWorld.mapEntityComponent.getComponent(it).entityData is MapEntityData.Checkpoint
         }
     val numCompletedTeleports
         get() = run {
             var numTpIn = 0
             var numTpOut = 0
-            entityFamily.getSequence().forEach {
-                val comp = mapEntityComponent.getComponent(it)
+            gameWorld.entityFamily.getSequence().forEach {
+                val comp = gameWorld.mapEntityComponent.getComponent(it)
                 if (comp.entityData is MapEntityData.TeleportIn) {
                     numTpIn++
                 }
@@ -83,10 +70,9 @@ class GameMapApi(
                     val newHeight = min(gameMapDimensionsState.height, entity.y + entityHeight) - entity.y
                     MapEntity.Rock(newX, newY, newWidth, newHeight)
                 }
-
                 else -> entity
             }
-            gameWorld.addEntity {
+            gameWorld.world.addEntity {
                 when (placementEntity) {
                     is MapEntity.Checkpoint -> {
                         addComponentOrThrow(
@@ -167,10 +153,10 @@ class GameMapApi(
         val sequenceNumToTpOut = mutableMapOf<Int, IRectangleEntity>()
         val blockingEntities = mutableListOf<IRectangleEntity>()
 
-        entityFamily.getSequence().forEach {
-            val mapEntityComponent = mapEntityComponent.getComponent(it)
-            val sizeComponent = sizeComponent.getComponent(it)
-            val bottomLeftPositionComponent = bottomLeftPositionComponent.getComponent(it)
+        gameWorld.entityFamily.getSequence().forEach {
+            val mapEntityComponent = gameWorld.mapEntityComponent.getComponent(it)
+            val sizeComponent = gameWorld.sizeComponent.getComponent(it)
+            val bottomLeftPositionComponent = gameWorld.bottomLeftPositionComponent.getComponent(it)
             val entityData = mapEntityComponent.entityData
             val rectangleEntity = RectangleEntity(
                 bottomLeftPositionComponent.x,
@@ -234,8 +220,8 @@ class GameMapApi(
     }
 
     fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
-        return entityFamily.getSequence().mapNotNull {
-            val comp = uiMapEntityComponent.getComponent(it)
+        return gameWorld.entityFamily.getSequence().mapNotNull {
+            val comp = gameWorld.uiMapEntityComponentContainer.getComponent(it)
             if (rect.intersects(comp.entityView.getGlobalBounds())) {
                 comp.entityView
             } else {

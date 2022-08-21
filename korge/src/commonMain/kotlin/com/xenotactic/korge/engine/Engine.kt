@@ -3,10 +3,11 @@ package com.xenotactic.korge.engine
 import com.xenotactic.ecs.Injections
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.events.EventBus
+import com.xenotactic.korge.models.GameWorld
 import kotlin.reflect.KClass
 
 class Engine(val eventBus: EventBus,
-             val gameWorld: World = World()
+             val gameWorld: GameWorld = GameWorld()
 ) {
     val injections = Injections()
 }

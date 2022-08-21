@@ -26,6 +26,7 @@ import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
+import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 
@@ -48,6 +49,7 @@ class UIMapV2(
     val engine: Engine,
     private val uiMapSettingsV2: UIMapSettingsV2 = UIMapSettingsV2(),
 ) : Container() {
+    private val gameWorld: GameWorld = engine.gameWorld
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
     val gridSize get() = uiMapSettingsV2.gridSize
     val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
@@ -56,15 +58,6 @@ class UIMapV2(
     val mapHeight get() = gameMapDimensionsState.height
     val _pathLinesWidth = uiMapSettingsV2.pathLinesWidth
 
-    val uiEntityFamily = engine.gameWorld.createFamily(
-        FamilyConfiguration(
-            allOfComponents = setOf(UIMapEntityComponent::class)
-        )
-    )
-    val uiMapEntityComponentContainer =
-        engine.gameWorld.getComponentContainer<UIMapEntityComponent>()
-    val uiMapEntityTextComponentContainer =
-        engine.gameWorld.getComponentContainer<UIMapEntityTextComponent>()
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
 
     val _boardLayer = this.container {
@@ -105,11 +98,13 @@ class UIMapV2(
         )
         resetUIMap()
         val heightDiffWorldUnit = toWorldUnit(gridSize, event.newMapHeight - event.oldMapHeight)
-        uiEntityFamily.getSequence().forEach {
-            val uiMapEntityComponent = uiMapEntityComponentContainer.getComponent(it)
-            val uiMapEntityTextComponent = uiMapEntityTextComponentContainer.getComponent(it)
+        gameWorld.uiEntityFamily.getSequence().forEach {
+            val uiMapEntityComponent = gameWorld.uiMapEntityComponentContainer.getComponent(it)
             uiMapEntityComponent.entityView.y += heightDiffWorldUnit.value
-            uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.value
+            val uiMapEntityTextComponent = gameWorld.uiMapEntityTextComponentContainer.getComponentOrNull(it)
+            if (uiMapEntityTextComponent != null) {
+                uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.value
+            }
         }
         renderPathLines(gameMapApi.shortestPath)
     }

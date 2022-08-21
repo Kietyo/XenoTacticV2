@@ -10,6 +10,7 @@ import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.input_processors.*
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
@@ -24,9 +25,9 @@ class EditorSceneV2 : Scene() {
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
         val uiWorld = World()
-        val engine = Engine(eventBus, gameWorld).apply {
+        val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
             injections.setSingleton(GameMapDimensionsState(this, 10, 10))
-            injections.setSingleton(GameMapApi(this, eventBus, gameWorld))
+            injections.setSingleton(GameMapApi(this, eventBus))
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
@@ -61,10 +62,9 @@ class EditorSceneV2 : Scene() {
 
         }
 
-        val editorPlacementInputProcessor = EditorPlacementInputProcessorV2(
+        addComponent(EditorPlacementInputProcessorV2(
             this, uiMapV2, uiWorld, gameWorld, engine
-        )
-        addComponent(editorPlacementInputProcessor)
+        ))
 
         addComponent(CameraInputProcessor(uiMapV2, engine))
 
