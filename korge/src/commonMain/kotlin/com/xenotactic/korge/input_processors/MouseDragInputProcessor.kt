@@ -41,7 +41,7 @@ data class MouseDragInputProcessor(
     override val view: View,
     val settings: MouseDragStateSettings = MouseDragStateSettings()
 ) : MouseComponent, EComponent {
-    val autoMove = true
+    private val autoMove = true
     val info = DraggableInfo(view)
 
     private val ALLOWED_EVENTS = setOf(

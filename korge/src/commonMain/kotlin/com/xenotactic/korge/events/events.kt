@@ -48,3 +48,8 @@ data class UIEntityClickedEvent(
     val view: View,
     val entity: MapEntity
 )
+
+data class ResizeMapEvent(
+    val newMapWidth: Int,
+    val newMapHeight: Int
+)

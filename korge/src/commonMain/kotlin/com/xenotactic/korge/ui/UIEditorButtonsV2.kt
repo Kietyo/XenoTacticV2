@@ -1,23 +1,26 @@
 package com.xenotactic.korge.ui
 
+import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiHorizontalStack
-import com.soywiz.korge.view.Container
+import com.soywiz.korge.ui.*
+import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
+import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapState
 
+@OptIn(KorgeExperimental::class)
 class UIEditorButtonsV2(
     val uiWorld: World,
     val engine: Engine,
-    val uiMapV2: UIMapV2
+    val uiMapV2: UIMapV2,
+    val baseView: SContainer
 ) : Container() {
     private val editorState = uiWorld.injections.getSingleton<EditorState>()
     private val mouseDragInputProcessor = uiWorld.injections.getSingleton<MouseDragInputProcessor>()
@@ -70,6 +73,38 @@ class UIEditorButtonsV2(
                         switchToPlayingMode()
                     } else { // Switch to editing mode
                         switchToEditingMode(MapEntityType.ROCK)
+                    }
+                }
+            }
+            uiButton("Resize map") {
+                onClick {
+                    mouseDragInputProcessor.adjustSettings {
+                        isEnabled = false
+                    }
+                    baseView.uiWindow("Resize Map", 150.0, 150.0) {
+                        val thisWindow = it
+                        uiVerticalStack {
+                            uiText("Width:")
+                            val widthInput = uiTextInput(uiMapV2.mapWidth.toString())
+                            uiText("Height:")
+                            val heightInput = uiTextInput(uiMapV2.mapHeight.toString())
+                            uiButton("Apply") {
+                                onClick {
+                                    thisWindow.close()
+                                    mouseDragInputProcessor.adjustSettings {
+                                        isEnabled = true
+                                    }
+                                    engine.eventBus.send(
+                                        ResizeMapEvent(
+                                            widthInput.text.toInt(),
+                                            heightInput.text.toInt()
+                                        )
+                                    )
+                                }
+                            }
+                            centerXOn(it)
+                        }
+                        it.centerOn(baseView)
                     }
                 }
             }

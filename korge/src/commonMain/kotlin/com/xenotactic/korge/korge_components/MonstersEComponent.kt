@@ -10,6 +10,7 @@ import com.soywiz.korim.color.Colors
 import com.xenotactic.gamelogic.model.MONSTER_HEIGHT
 import com.xenotactic.gamelogic.model.MONSTER_WIDTH
 import com.xenotactic.gamelogic.model.MonsterEntity
+import com.xenotactic.gamelogic.utils.WorldUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
@@ -27,7 +28,7 @@ class MonstersEComponent(
 ) : UpdateComponent, EComponent {
     data class MonsterWithView(
         val monsterEntity: MonsterEntity, val view: View,
-        val monsterRadius: Double
+        val monsterRadius: WorldUnit
     )
 
     val gameMapControllerComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
@@ -58,8 +59,8 @@ class MonstersEComponent(
             monsters.add(
                 MonsterWithView(
                     monsterEntity,
-                    view.circle(monsterRadius, Colors.RED)
-                        .xy(worldX - monsterRadius, worldY - monsterRadius),
+                    view.circle(monsterRadius.value, Colors.RED)
+                        .xy((worldX - monsterRadius).value, (worldY - monsterRadius).value),
                     monsterRadius
                 )
             )
@@ -77,8 +78,8 @@ class MonstersEComponent(
                 gameMapControllerComponent.height
             )
             monster.view.xy(
-                worldX - monster.monsterRadius,
-                worldY - monster.monsterRadius
+                (worldX - monster.monsterRadius).value,
+                (worldY - monster.monsterRadius).value
             )
         }
 

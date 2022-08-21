@@ -14,11 +14,14 @@ import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
+import com.xenotactic.gamelogic.korge_utils.size
+import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.RockCounterUtil
+import com.xenotactic.gamelogic.utils.WorldUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEntity
@@ -177,8 +180,8 @@ class UIMap(
                             .MIDDLE_CENTER,
                         font = ENTITY_TEXT_FONT
                     ).xy(
-                        worldX,
-                        worldY
+                        worldX.value,
+                        worldY.value
                     ).apply {
                         scaledHeight = _gridSize / 2
                         scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
@@ -382,7 +385,7 @@ class UIMap(
                             val (p2WorldX, p2WorldY) = toWorldCoordinates(
                                 _gridSize, segment.point2, gameMap.height
                             )
-                            this.line(p1WorldX, p1WorldY, p2WorldX, p2WorldY)
+                            this.line(p1WorldX.value, p1WorldY.value, p2WorldX.value, p2WorldY.value)
                         }
                     }
                 }

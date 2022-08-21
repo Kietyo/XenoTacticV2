@@ -1,7 +1,4 @@
 
-//plugins {
-//    kotlin("multiplatform") version "1.7.0-RC" apply false
-//}
 
 buildscript {
     val korgePluginVersion: String by project
@@ -17,14 +14,3 @@ buildscript {
         classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
     }
 }
-
-
-
-//allprojects {
-//    repositories.apply {
-//        mavenCentral()
-//        mavenLocal()
-//        google()
-//        maven { url = uri("https://plugins.gradle.org/m2/") }
-//    }
-//}

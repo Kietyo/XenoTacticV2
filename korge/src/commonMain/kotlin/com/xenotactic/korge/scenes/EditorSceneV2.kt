@@ -5,6 +5,7 @@ import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
+import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.input_processors.*
@@ -17,17 +18,19 @@ import com.xenotactic.korge.ui.UINotificationText
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
-        val uiMapV2 = UIMapV2().addTo(this)
-        uiMapV2.centerOnStage()
+
 
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
         val uiWorld = World()
+        val engine = Engine(eventBus, gameWorld)
+        val uiMapV2 = UIMapV2(engine).addTo(this)
+        uiMapV2.centerOnStage()
 
         val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2)
         addComponent(mouseDragInputProcessor)
 
-        val engine = Engine(eventBus, gameWorld).apply {
+        engine.apply {
             injections.setSingleton(EditorState())
             injections.setSingleton(mouseDragInputProcessor)
             injections.setSingleton(GameMapState(this, eventBus, uiMapV2, gameWorld))
@@ -64,10 +67,11 @@ class EditorSceneV2 : Scene() {
 
         addComponent(KeyInputProcessor(this, engine))
 
-        val uiEditorButtonsV2 = UIEditorButtonsV2(uiWorld, engine, uiMapV2).addTo(this).apply {
-            centerXOnStage()
-            alignBottomToBottomOfWindow()
-        }
+        val uiEditorButtonsV2 =
+            UIEditorButtonsV2(uiWorld, engine, uiMapV2, this).addTo(this).apply {
+                centerXOnStage()
+                alignBottomToBottomOfWindow()
+            }
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
             centerXOnStage()
@@ -75,6 +79,16 @@ class EditorSceneV2 : Scene() {
 
         eventBus.register<UpdatedPathLineEvent> {
             uiMapV2.renderPathLines(it.pathSequence)
+        }
+        eventBus.register<ResizeMapEvent> {
+            if (it.newMapWidth == uiMapV2.mapWidth &&
+                it.newMapHeight == uiMapV2.mapHeight
+            ) return@register
+            uiMapV2.adjustSettings {
+                width = it.newMapWidth
+                height = it.newMapHeight
+            }
+//            uiMapV2.centerOnStage()
         }
     }
 }

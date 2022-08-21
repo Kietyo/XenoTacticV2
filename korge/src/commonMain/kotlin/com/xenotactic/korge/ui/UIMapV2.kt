@@ -8,20 +8,25 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
+import com.xenotactic.ecs.FamilyConfiguration
+import com.xenotactic.gamelogic.components.UIMapEntityComponent
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
 import com.xenotactic.gamelogic.globals.GRID_SIZE
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
+import com.xenotactic.gamelogic.korge_utils.size
+import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.engine.Engine
 
 data class UIMapSettingsV2(
-    val width: Int = 10,
-    val height: Int = 10,
+    var width: Int = 10,
+    var height: Int = 10,
     val gridSize: Double = GRID_SIZE,
     val borderRatio: Double = BORDER_RATIO,
     val gridLinesRatio: Double = GRID_LINES_RATIO,
@@ -37,7 +42,8 @@ data class UIMapSettingsV2(
 }
 
 class UIMapV2(
-    val uiMapSettingsV2: UIMapSettingsV2 = UIMapSettingsV2()
+    val engine: Engine,
+    private val uiMapSettingsV2: UIMapSettingsV2 = UIMapSettingsV2(),
 ) : Container() {
     val gridSize get() = uiMapSettingsV2.gridSize
     val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
@@ -45,6 +51,11 @@ class UIMapV2(
     val mapWidth get() = uiMapSettingsV2.width
     val mapHeight get() = uiMapSettingsV2.height
     val _pathLinesWidth = uiMapSettingsV2.pathLinesWidth
+
+    val uiEntityFamily = engine.gameWorld.createFamily(FamilyConfiguration(
+        allOfComponents = setOf(UIMapEntityComponent::class)
+    ))
+    val uiMapEntityComponentContainer = engine.gameWorld.getComponentContainer<UIMapEntityComponent>()
 
     val _boardLayer = this.container {
         //        this.propagateEvents = false
@@ -69,8 +80,17 @@ class UIMapV2(
     val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
 
     init {
+        resetUIMap()
+    }
+
+    fun resetUIMap() {
         drawBoard()
         drawGridNumbers()
+    }
+
+    fun adjustSettings(fn: UIMapSettingsV2.() -> Unit) {
+        fn(uiMapSettingsV2)
+        resetUIMap()
     }
 
     fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int = 0) =
@@ -80,6 +100,7 @@ class UIMapV2(
 
     private fun drawBoard() {
         println("Drawing board")
+        _boardLayer.removeChildren()
         when (uiMapSettingsV2.boardType) {
             BoardType.SOLID -> _boardLayer.solidRect(
                 gridSize * mapWidth,
@@ -261,7 +282,7 @@ class UIMapV2(
                             val (p2WorldX, p2WorldY) = toWorldCoordinates(
                                 gridSize, segment.point2, mapHeight
                             )
-                            this.line(p1WorldX, p1WorldY, p2WorldX, p2WorldY)
+                            this.line(p1WorldX.value, p1WorldY.value, p2WorldX.value, p2WorldY.value)
                         }
                     }
                 }

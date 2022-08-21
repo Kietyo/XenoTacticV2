@@ -28,47 +28,47 @@ class UIEntity(
         val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
         when (entityType) {
             MapEntityType.CHECKPOINT -> {
-                Circle(worldWidth / 2, Colors.MAROON).addTo(this)
+                Circle((worldWidth / 2).value, Colors.MAROON).addTo(this)
             }
             MapEntityType.FINISH -> {
-                Circle(worldWidth / 2, Colors.MAGENTA).addTo(this)
+                Circle((worldWidth / 2).value, Colors.MAGENTA).addTo(this)
             }
             MapEntityType.START -> {
-                Circle(worldWidth / 2, Colors.RED).addTo(this)
+                Circle((worldWidth / 2).value, Colors.RED).addTo(this)
             }
             MapEntityType.TOWER -> {
                 this.solidRect(
-                    worldWidth, worldHeight,
+                    worldWidth.value, worldHeight.value,
                     MaterialColors.YELLOW_500
                 )
                 this.solidRect(
-                    worldWidth - borderSize, worldHeight - borderSize,
+                    (worldWidth - borderSize).value, (worldHeight - borderSize).value,
                     MaterialColors.YELLOW_900
                 ).centerOn(this)
             }
             MapEntityType.ROCK -> {
                 this.solidRect(
-                    worldWidth, worldHeight,
+                    worldWidth.value, worldHeight.value,
                     MaterialColors.BROWN_500
                 )
                 this.solidRect(
-                    worldWidth - borderSize, worldHeight - borderSize,
+                    (worldWidth - borderSize).value, (worldHeight - borderSize).value,
                     MaterialColors.BROWN_900
                 ).centerOn(this)
             }
             MapEntityType.TELEPORT_IN -> {
-                Circle(worldWidth / 2, Colors.GREEN.withAd(0.6)).addTo(this)
+                Circle(worldWidth.value / 2, Colors.GREEN.withAd(0.6)).addTo(this)
             }
             MapEntityType.TELEPORT_OUT -> {
-                Circle(worldWidth / 2, Colors.RED.withAd(0.6)).addTo(this)
+                Circle(worldWidth.value / 2, Colors.RED.withAd(0.6)).addTo(this)
             }
             MapEntityType.SMALL_BLOCKER -> {
                 this.solidRect(
-                    worldWidth, worldHeight,
+                    worldWidth.value, worldHeight.value,
                     MaterialColors.YELLOW_500
                 )
                 this.solidRect(
-                    worldWidth - borderSize, worldHeight - borderSize,
+                    (worldWidth - borderSize).value, (worldHeight - borderSize).value,
                     MaterialColors.YELLOW_900
                 ).centerOn(this)
             }
@@ -77,7 +77,7 @@ class UIEntity(
                     speedEffect!!,
                     slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
                 ).withAd(0.7)
-                Circle(worldWidth / 2, speedAreaColor).addTo(this)
+                Circle(worldWidth.value / 2, speedAreaColor).addTo(this)
             }
         }
 
@@ -111,7 +111,7 @@ class UIEntity(
             selectionBox = Graphics().addTo(this).apply {
                 updateShape {
                     stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(6.0)) {
-                        this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                        this.rectHole(0.0, 0.0, worldWidth.value, worldHeight.value)
                     }
                 }
                 centerOn(this)
@@ -126,7 +126,7 @@ class UIEntity(
             selectionBox = Graphics().addTo(this).apply {
                 updateShape {
                     stroke(SELECTION_COLOR, StrokeInfo(6.0)) {
-                        this.rectHole(0.0, 0.0, worldWidth, worldHeight)
+                        this.rectHole(0.0, 0.0, worldWidth.value, worldHeight.value)
                     }
                 }
                 centerOn(this)
