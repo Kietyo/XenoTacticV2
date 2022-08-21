@@ -6,15 +6,11 @@ import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
-import com.xenotactic.gamelogic.components.MapEntityComponent
-import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapState
+import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.math.ceil
@@ -29,7 +25,7 @@ class EditorPlacementInputProcessorV2(
     val engine: Engine
 ) : MouseComponent {
     private val editorState = uiWorld.injections.getSingleton<EditorState>()
-    private val gameMapState = uiWorld.injections.getSingleton<GameMapState>()
+    private val gameMapApi = uiWorld.injections.getSingleton<GameMapApi>()
 
     val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
@@ -103,7 +99,7 @@ class EditorPlacementInputProcessorV2(
                     uiMap.renderHighlightEntity(entityToAdd)
                     engine.eventBus.send(
                         NotificationTextUpdateEvent(
-                            gameMapState.getNotificationText(MapEntityType.TELEPORT_OUT)
+                            gameMapApi.getNotificationText(MapEntityType.TELEPORT_OUT)
                         )
                     )
                     return
@@ -111,7 +107,7 @@ class EditorPlacementInputProcessorV2(
                 if (editorState.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {
                     require(stagingTeleportIn != null)
 
-                    gameMapState.placeEntities(
+                    gameMapApi.placeEntities(
                         stagingTeleportIn!!,
                         entityToAdd
                     )
@@ -119,7 +115,7 @@ class EditorPlacementInputProcessorV2(
                     uiMap.clearHighlightLayer()
                     return
                 }
-                gameMapState.placeEntities(entityToAdd)
+                gameMapApi.placeEntities(entityToAdd)
                 engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
             }
         } else {
@@ -137,17 +133,17 @@ class EditorPlacementInputProcessorV2(
             )
 
             MapEntityType.CHECKPOINT -> {
-                MapEntity.Checkpoint(gameMapState.numCheckpoints, gridXInt, gridYInt)
+                MapEntity.Checkpoint(gameMapApi.numCheckpoints, gridXInt, gridYInt)
             }
 
             MapEntityType.ROCK -> TODO()
             MapEntityType.TOWER -> TODO()
             MapEntityType.TELEPORT_IN -> {
-                MapEntity.TeleportIn(gameMapState.numCompletedTeleports, gridXInt, gridYInt)
+                MapEntity.TeleportIn(gameMapApi.numCompletedTeleports, gridXInt, gridYInt)
             }
 
             MapEntityType.TELEPORT_OUT -> {
-                MapEntity.TeleportOut(gameMapState.numCompletedTeleports, gridXInt, gridYInt)
+                MapEntity.TeleportOut(gameMapApi.numCompletedTeleports, gridXInt, gridYInt)
             }
 
             MapEntityType.SMALL_BLOCKER -> TODO()
@@ -197,7 +193,7 @@ class EditorPlacementInputProcessorV2(
         //        )
 
         if (eventType == MouseEvent.Type.UP) {
-            gameMapState.placeEntities(
+            gameMapApi.placeEntities(
                 MapEntity.Rock(roundedGridX, roundedGridY, width, height)
             )
 //            gameWorld.addEntity {

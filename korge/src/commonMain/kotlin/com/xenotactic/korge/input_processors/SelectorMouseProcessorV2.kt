@@ -12,12 +12,11 @@ import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
 import com.xenotactic.ecs.World
-import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.korge.state.GameMapState
+import com.xenotactic.korge.state.GameMapApi
 
 class SelectorMouseProcessorV2(
     override val view: Container,
@@ -27,7 +26,7 @@ class SelectorMouseProcessorV2(
 ) :
     MouseComponent, EComponent {
 
-    val gameMapState = engine.injections.getSingleton<GameMapState>()
+    val gameMapApi = engine.injections.getSingleton<GameMapApi>()
 
     val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 
@@ -82,7 +81,7 @@ class SelectorMouseProcessorV2(
             }
 
             val intersectingEntities =
-                gameMapState.getIntersectingEntities(selectionRectangle.getGlobalBounds())
+                gameMapApi.getIntersectingEntities(selectionRectangle.getGlobalBounds())
             println("intersectingEntities: $intersectingEntities")
 
             if (event.type == MouseEvent.Type.UP &&

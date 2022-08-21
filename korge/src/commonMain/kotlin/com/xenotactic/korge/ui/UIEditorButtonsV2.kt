@@ -13,7 +13,8 @@ import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapState
+import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.korge.state.GameMapDimensionsState
 
 @OptIn(KorgeExperimental::class)
 class UIEditorButtonsV2(
@@ -22,9 +23,10 @@ class UIEditorButtonsV2(
     val uiMapV2: UIMapV2,
     val baseView: SContainer
 ) : Container() {
+    private val gameMapDimensionsState = uiWorld.injections.getSingleton<GameMapDimensionsState>()
     private val editorState = uiWorld.injections.getSingleton<EditorState>()
     private val mouseDragInputProcessor = uiWorld.injections.getSingleton<MouseDragInputProcessor>()
-    private val gameMapState = uiWorld.injections.getSingleton<GameMapState>()
+    private val gameMapApi = uiWorld.injections.getSingleton<GameMapApi>()
     private val selectorMouseProcessor = uiWorld.injections.getSingleton<SelectorMouseProcessorV2>()
 
     private val DEFAULT_NOTIFICATION_TEXT = "N/A"
@@ -94,11 +96,9 @@ class UIEditorButtonsV2(
                                     mouseDragInputProcessor.adjustSettings {
                                         isEnabled = true
                                     }
-                                    engine.eventBus.send(
-                                        ResizeMapEvent(
-                                            widthInput.text.toInt(),
-                                            heightInput.text.toInt()
-                                        )
+                                    gameMapDimensionsState.changeDimensions(
+                                        widthInput.text.toInt(),
+                                        heightInput.text.toInt()
                                     )
                                 }
                             }
@@ -145,7 +145,7 @@ class UIEditorButtonsV2(
     fun switchToEditingMode(entityType: MapEntityType) {
         engine.eventBus.send(
             NotificationTextUpdateEvent(
-                gameMapState.getNotificationText(
+                gameMapApi.getNotificationText(
                     entityType
                 )
             )

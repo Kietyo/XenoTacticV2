@@ -11,7 +11,8 @@ import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.input_processors.*
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapState
+import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
@@ -23,7 +24,10 @@ class EditorSceneV2 : Scene() {
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
         val uiWorld = World()
-        val engine = Engine(eventBus, gameWorld)
+        val engine = Engine(eventBus, gameWorld).apply {
+            injections.setSingleton(GameMapDimensionsState(this, 10, 10))
+            injections.setSingleton(GameMapApi(this, eventBus, gameWorld))
+        }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
 
@@ -33,7 +37,6 @@ class EditorSceneV2 : Scene() {
         engine.apply {
             injections.setSingleton(EditorState())
             injections.setSingleton(mouseDragInputProcessor)
-            injections.setSingleton(GameMapState(this, eventBus, uiMapV2, gameWorld))
             injections.setSingleton(SelectorMouseProcessorV2(this@sceneInit, this, uiWorld))
             injections.setSingleton(uiMapV2)
         }
@@ -81,13 +84,7 @@ class EditorSceneV2 : Scene() {
             uiMapV2.renderPathLines(it.pathSequence)
         }
         eventBus.register<ResizeMapEvent> {
-            if (it.newMapWidth == uiMapV2.mapWidth &&
-                it.newMapHeight == uiMapV2.mapHeight
-            ) return@register
-            uiMapV2.adjustSettings {
-                width = it.newMapWidth
-                height = it.newMapHeight
-            }
+            uiMapV2.handleResizeMapEvent(it)
 //            uiMapV2.centerOnStage()
         }
     }

@@ -21,10 +21,9 @@ import pathing.PathFinder
 import kotlin.math.max
 import kotlin.math.min
 
-class GameMapState(
+class GameMapApi(
     val engine: Engine,
     val eventBus: EventBus,
-    val uiMapV2: UIMapV2,
     val gameWorld: World
 ) {
     private val entityFamily = gameWorld.createFamily(
@@ -37,6 +36,7 @@ class GameMapState(
             )
         )
     )
+    private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
     private val mapEntityComponent = gameWorld.getComponentContainer<MapEntityComponent>()
     private val uiMapEntityComponent = gameWorld.getComponentContainer<UIMapEntityComponent>()
     private val sizeComponent = gameWorld.getComponentContainer<SizeComponent>()
@@ -66,7 +66,7 @@ class GameMapState(
         private set
 
     fun placeEntities(vararg entities: MapEntity) {
-        val gameMapRect = GRectInt(0, 0, uiMapV2.mapWidth, uiMapV2.mapHeight)
+        val gameMapRect = GRectInt(0, 0, gameMapDimensionsState.width, gameMapDimensionsState.height)
         val allEntitiesIntersectMap = entities.all {
             rectangleIntersects(gameMapRect, it.getGRectInt())
         }
@@ -79,8 +79,8 @@ class GameMapState(
                     val newY = max(entity.y, 0)
                     val entityWidth = entity.width - (newX - entity.x)
                     val entityHeight = entity.height - (newY - entity.y)
-                    val newWidth = min(uiMapV2.mapWidth, entity.x + entityWidth) - entity.x
-                    val newHeight = min(uiMapV2.mapHeight, entity.y + entityHeight) - entity.y
+                    val newWidth = min(gameMapDimensionsState.width, entity.x + entityWidth) - entity.x
+                    val newHeight = min(gameMapDimensionsState.height, entity.y + entityHeight) - entity.y
                     MapEntity.Rock(newX, newY, newWidth, newHeight)
                 }
 
@@ -211,7 +211,7 @@ class GameMapState(
         require(sequenceNumToTpIn.size == sequenceNumToTpOut.size)
 
         shortestPath = PathFinder.getUpdatablePath(
-            uiMapV2.mapHeight, uiMapV2.mapHeight,
+            gameMapDimensionsState.height, gameMapDimensionsState.height,
             start, finish,
             blockingEntities = blockingEntities,
             pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {

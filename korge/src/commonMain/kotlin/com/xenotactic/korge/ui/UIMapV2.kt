@@ -10,6 +10,7 @@ import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.gamelogic.components.UIMapEntityComponent
+import com.xenotactic.gamelogic.components.UIMapEntityTextComponent
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
@@ -21,12 +22,14 @@ import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
+import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.events.ResizeMapEvent
+import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.korge.state.GameMapDimensionsState
 
 data class UIMapSettingsV2(
-    var width: Int = 10,
-    var height: Int = 10,
     val gridSize: Double = GRID_SIZE,
     val borderRatio: Double = BORDER_RATIO,
     val gridLinesRatio: Double = GRID_LINES_RATIO,
@@ -45,17 +48,24 @@ class UIMapV2(
     val engine: Engine,
     private val uiMapSettingsV2: UIMapSettingsV2 = UIMapSettingsV2(),
 ) : Container() {
+    private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
     val gridSize get() = uiMapSettingsV2.gridSize
     val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
     val borderSize get() = uiMapSettingsV2.borderSize
-    val mapWidth get() = uiMapSettingsV2.width
-    val mapHeight get() = uiMapSettingsV2.height
+    val mapWidth get() = gameMapDimensionsState.width
+    val mapHeight get() = gameMapDimensionsState.height
     val _pathLinesWidth = uiMapSettingsV2.pathLinesWidth
 
-    val uiEntityFamily = engine.gameWorld.createFamily(FamilyConfiguration(
-        allOfComponents = setOf(UIMapEntityComponent::class)
-    ))
-    val uiMapEntityComponentContainer = engine.gameWorld.getComponentContainer<UIMapEntityComponent>()
+    val uiEntityFamily = engine.gameWorld.createFamily(
+        FamilyConfiguration(
+            allOfComponents = setOf(UIMapEntityComponent::class)
+        )
+    )
+    val uiMapEntityComponentContainer =
+        engine.gameWorld.getComponentContainer<UIMapEntityComponent>()
+    val uiMapEntityTextComponentContainer =
+        engine.gameWorld.getComponentContainer<UIMapEntityTextComponent>()
+    val gameMapApi = engine.injections.getSingleton<GameMapApi>()
 
     val _boardLayer = this.container {
         //        this.propagateEvents = false
@@ -88,9 +98,20 @@ class UIMapV2(
         drawGridNumbers()
     }
 
-    fun adjustSettings(fn: UIMapSettingsV2.() -> Unit) {
-        fn(uiMapSettingsV2)
+    fun handleResizeMapEvent(event: ResizeMapEvent) {
+        require(
+            gameMapDimensionsState.width == event.newMapWidth &&
+                    gameMapDimensionsState.height == event.newMapHeight
+        )
         resetUIMap()
+        val heightDiffWorldUnit = toWorldUnit(gridSize, event.newMapHeight - event.oldMapHeight)
+        uiEntityFamily.getSequence().forEach {
+            val uiMapEntityComponent = uiMapEntityComponentContainer.getComponent(it)
+            val uiMapEntityTextComponent = uiMapEntityTextComponentContainer.getComponent(it)
+            uiMapEntityComponent.entityView.y += heightDiffWorldUnit.value
+            uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.value
+        }
+        renderPathLines(gameMapApi.shortestPath)
     }
 
     fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int = 0) =
@@ -263,7 +284,7 @@ class UIMapV2(
     }
 
     fun renderPathLines(pathSequence: PathSequence?) {
-        _pathingLinesGraphics.updateShape {  }
+        _pathingLinesGraphics.updateShape { }
 
         // Draw path lines
         if (pathSequence != null) {
@@ -282,7 +303,12 @@ class UIMapV2(
                             val (p2WorldX, p2WorldY) = toWorldCoordinates(
                                 gridSize, segment.point2, mapHeight
                             )
-                            this.line(p1WorldX.value, p1WorldY.value, p2WorldX.value, p2WorldY.value)
+                            this.line(
+                                p1WorldX.value,
+                                p1WorldY.value,
+                                p2WorldX.value,
+                                p2WorldY.value
+                            )
                         }
                     }
                 }
