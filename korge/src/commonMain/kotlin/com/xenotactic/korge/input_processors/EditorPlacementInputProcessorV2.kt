@@ -20,8 +20,7 @@ import kotlin.math.min
 class EditorPlacementInputProcessorV2(
     override val view: BaseView,
     val uiMap: UIMapV2,
-    val uiWorld: World,
-    val gameWorld: World,
+    uiWorld: World,
     val engine: Engine
 ) : MouseComponent {
     private val editorState = uiWorld.injections.getSingleton<EditorState>()

@@ -11,6 +11,7 @@ import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.input_processors.*
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
@@ -20,19 +21,19 @@ import com.xenotactic.korge.ui.UINotificationText
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
-
-
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
         val uiWorld = World()
+        val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
             injections.setSingleton(GameMapDimensionsState(this, 10, 10))
             injections.setSingleton(GameMapApi(this, eventBus))
+            injections.setSingleton(settingsContainer)
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
 
-        val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2)
+        val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2, settingsContainer.mouseDragStateSettings)
         addComponent(mouseDragInputProcessor)
 
         engine.apply {
@@ -63,7 +64,7 @@ class EditorSceneV2 : Scene() {
         }
 
         addComponent(EditorPlacementInputProcessorV2(
-            this, uiMapV2, uiWorld, gameWorld, engine
+            this, uiMapV2, uiWorld, engine
         ))
 
         addComponent(CameraInputProcessor(uiMapV2, engine))
@@ -78,6 +79,11 @@ class EditorSceneV2 : Scene() {
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
             centerXOnStage()
+        }
+
+        SelectorMouseProcessor(this, engine).let {
+            addComponent(it)
+            engine.injections.setSingleton(it)
         }
 
         eventBus.register<UpdatedPathLineEvent> {

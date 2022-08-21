@@ -133,7 +133,7 @@ class UIEditorButtonsV2(
     fun switchToPlayingMode() {
         engine.eventBus.send(NotificationTextUpdateEvent(DEFAULT_NOTIFICATION_TEXT))
         mouseDragInputProcessor.adjustSettings {
-            allowLeftClickDragging = true
+            isEnabled = true
         }
         editorState.isEditingEnabled = false
         uiMapV2.hideHighlightRectangle()
