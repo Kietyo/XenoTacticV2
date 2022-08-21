@@ -1,23 +1,19 @@
 package com.xenotactic.korge.state
 
 import com.soywiz.korma.geom.Rectangle
-import com.xenotactic.ecs.FamilyConfiguration
-import com.xenotactic.ecs.World
+import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.MapEntityComponent
 import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.gamelogic.components.UIMapEntityComponent
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.rectangleIntersects
-import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.ecomponents.DebugEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
 import kotlin.math.max
 import kotlin.math.min
@@ -219,11 +215,11 @@ class GameMapApi(
         )
     }
 
-    fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
+    fun getIntersectingEntities(rect: Rectangle): List<EntityId> {
         return gameWorld.entityFamily.getSequence().mapNotNull {
             val comp = gameWorld.uiMapEntityComponentContainer.getComponent(it)
             if (rect.intersects(comp.entityView.getGlobalBounds())) {
-                comp.entityView
+                it
             } else {
                 null
             }

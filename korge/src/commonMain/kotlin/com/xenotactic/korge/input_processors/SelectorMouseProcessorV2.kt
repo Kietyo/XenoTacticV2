@@ -21,7 +21,6 @@ import com.xenotactic.korge.state.GameMapApi
 class SelectorMouseProcessorV2(
     override val view: Container,
     val engine: Engine,
-    val uiWorld: World,
     var isEnabled: Boolean = true
 ) :
     MouseComponent, EComponent {
@@ -103,23 +102,28 @@ class SelectorMouseProcessorV2(
                 //                """.trimIndent())
                 //
                 //                println(uiMap.getIntersectingEntities(selectionRectangle.getGlobalBounds()))
-                engine.eventBus.send(
-                    SelectedUIEntitiesEvent(
-                        SelectionType.SELECTED,
-                        previousSelectionSnapshot,
-                        intersectingEntities
-                    )
-                )
+//                engine.eventBus.send(
+//                    SelectedUIEntitiesEvent(
+//                        SelectionType.SELECTED,
+//                        previousSelectionSnapshot,
+//                        intersectingEntities
+//                    )
+//                )
             } else {
-                engine.eventBus.send(
-                    SelectedUIEntitiesEvent(
-                        SelectionType.PRE_SELECTION,
-                        previousSelectionSnapshot,
-                        intersectingEntities
-                    )
-                )
+                intersectingEntities.forEach {
+                    engine.gameWorld.world.modifyEntity(it) {
+//                        addIfNotExists()
+                    }
+                }
+//                engine.eventBus.send(
+//                    SelectedUIEntitiesEvent(
+//                        SelectionType.PRE_SELECTION,
+//                        previousSelectionSnapshot,
+//                        intersectingEntities
+//                    )
+//                )
             }
-            previousSelectionSnapshot = intersectingEntities
+//            previousSelectionSnapshot = intersectingEntities
         }
 
     }

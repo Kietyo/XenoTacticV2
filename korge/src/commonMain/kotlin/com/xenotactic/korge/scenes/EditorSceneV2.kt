@@ -39,7 +39,6 @@ class EditorSceneV2 : Scene() {
         engine.apply {
             injections.setSingleton(EditorState())
             injections.setSingleton(mouseDragInputProcessor)
-            injections.setSingleton(SelectorMouseProcessorV2(this@sceneInit, this, uiWorld))
             injections.setSingleton(uiMapV2)
         }
 
@@ -71,8 +70,12 @@ class EditorSceneV2 : Scene() {
 
         addComponent(KeyInputProcessor(this, engine))
 
+        addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
+            engine.injections.setSingleton(this)
+        })
+
         val uiEditorButtonsV2 =
-            UIEditorButtonsV2(uiWorld, engine, uiMapV2, this).addTo(this).apply {
+            UIEditorButtonsV2(engine, uiMapV2, this).addTo(this).apply {
                 centerXOnStage()
                 alignBottomToBottomOfWindow()
             }
@@ -81,17 +84,16 @@ class EditorSceneV2 : Scene() {
             centerXOnStage()
         }
 
-        SelectorMouseProcessor(this, engine).let {
-            addComponent(it)
-            engine.injections.setSingleton(it)
-        }
-
         eventBus.register<UpdatedPathLineEvent> {
             uiMapV2.renderPathLines(it.pathSequence)
         }
         eventBus.register<ResizeMapEvent> {
             uiMapV2.handleResizeMapEvent(it)
 //            uiMapV2.centerOnStage()
+        }
+
+        eventBus.register<SelectedUIEntitiesEvent> {
+            println("SelectedUIEntitiesEvent: $it")
         }
     }
 }

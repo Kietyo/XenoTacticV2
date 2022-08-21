@@ -18,16 +18,15 @@ import com.xenotactic.korge.state.GameMapDimensionsState
 
 @OptIn(KorgeExperimental::class)
 class UIEditorButtonsV2(
-    val uiWorld: World,
     val engine: Engine,
     val uiMapV2: UIMapV2,
     val baseView: SContainer
 ) : Container() {
-    private val gameMapDimensionsState = uiWorld.injections.getSingleton<GameMapDimensionsState>()
-    private val editorState = uiWorld.injections.getSingleton<EditorState>()
-    private val mouseDragInputProcessor = uiWorld.injections.getSingleton<MouseDragInputProcessor>()
-    private val gameMapApi = uiWorld.injections.getSingleton<GameMapApi>()
-    private val selectorMouseProcessor = uiWorld.injections.getSingleton<SelectorMouseProcessorV2>()
+    private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
+    private val editorState = engine.injections.getSingleton<EditorState>()
+    private val mouseDragInputProcessor = engine.injections.getSingleton<MouseDragInputProcessor>()
+    private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    private val selectorMouseProcessor = engine.injections.getSingleton<SelectorMouseProcessorV2>()
 
     private val DEFAULT_NOTIFICATION_TEXT = "N/A"
 

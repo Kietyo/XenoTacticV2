@@ -2,7 +2,7 @@ package com.xenotactic.korge.family_listeners
 
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.xy
-import com.xenotactic.ecs.Entity
+import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
@@ -28,10 +28,10 @@ class AddEntityFamilyListener(
     val bottomLeftPositionComponentContainer =
         world.getComponentContainer<BottomLeftPositionComponent>()
 
-    override fun onAdd(entity: Entity) {
-        val mapEntityComponent = mapEntityTypeContainer.getComponent(entity)
-        val bottomLeftPositionComponent = bottomLeftPositionComponentContainer.getComponent(entity)
-        val sizeComponent = sizeComponentContainer.getComponent(entity)
+    override fun onAdd(entityId: EntityId) {
+        val mapEntityComponent = mapEntityTypeContainer.getComponent(entityId)
+        val bottomLeftPositionComponent = bottomLeftPositionComponentContainer.getComponent(entityId)
+        val sizeComponent = sizeComponentContainer.getComponent(entityId)
         val (worldX, worldY) = uiMapV2.getWorldCoordinates(
             bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
         )
@@ -67,21 +67,21 @@ class AddEntityFamilyListener(
                 scaledHeight = uiMapV2.gridSize / 2
                 scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
             }
-            world.modifyEntity(entity) {
+            world.modifyEntity(entityId) {
                 addComponentOrThrow(UIMapEntityTextComponent(textView))
             }
         }
 
-        world.modifyEntity(entity) {
+        world.modifyEntity(entityId) {
             addComponentOrThrow(UIMapEntityComponent(uiEntity))
         }
 
     }
 
-    override fun onRemove(entity: Entity) {
+    override fun onRemove(entityId: EntityId) {
     }
 
-    override fun onExisting(entity: Entity) {
+    override fun onExisting(entityId: EntityId) {
     }
 
 }

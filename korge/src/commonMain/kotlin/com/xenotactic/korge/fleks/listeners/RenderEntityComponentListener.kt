@@ -1,7 +1,7 @@
 package com.xenotactic.korge.fleks.listeners
 
 import com.xenotactic.ecs.ComponentListener
-import com.xenotactic.ecs.Entity
+import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.ecomponents.UIMapEComponent
 import com.xenotactic.korge.engine.Engine
@@ -15,8 +15,8 @@ class RenderEntityComponentListener(
     val uiMap = engine.injections.getSingleton<UIMapEComponent>().uiMap
     val entityUIComponent = world.getComponentContainer<EntityUIComponent>()
 
-    override fun onAdd(entity: Entity, component: EntityRenderComponent) {
-        world.modifyEntity(entity) {
+    override fun onAdd(entityId: EntityId, component: EntityRenderComponent) {
+        world.modifyEntity(entityId) {
             addOrReplaceComponent(
                 EntityUIComponent(
                     uiMap.addEntity(component.entity)
@@ -25,7 +25,7 @@ class RenderEntityComponentListener(
         }
     }
 
-    override fun onRemove(entity: Entity, component: EntityRenderComponent) {
+    override fun onRemove(entityId: EntityId, component: EntityRenderComponent) {
         TODO("Not yet implemented")
     }
 
