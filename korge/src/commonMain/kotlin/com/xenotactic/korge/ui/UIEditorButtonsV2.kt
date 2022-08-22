@@ -155,6 +155,7 @@ class UIEditorButtonsV2(
         editorState.isEditingEnabled = true
         editorState.entityTypeToPlace = entityType
         selectorMouseProcessor.isEnabled = false
+        selectorMouseProcessor.reset()
     }
 
 }

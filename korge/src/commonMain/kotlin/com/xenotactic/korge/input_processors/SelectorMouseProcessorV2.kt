@@ -32,13 +32,16 @@ class SelectorMouseProcessorV2(
 
     val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 
-    var dragging = false
-    var isInitialClick = false
+    private var dragging = false
+    private var isInitialClick = false
 
-    var startPosition = Point()
-    var currentPosition = Point()
+    private var startPosition = Point()
+    private var currentPosition = Point()
 
-    var previousSelectionSnapshot = emptySet<EntityId>()
+    fun reset() {
+        dragging = false
+        isInitialClick = false
+    }
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!isEnabled) return
@@ -59,8 +62,7 @@ class SelectorMouseProcessorV2(
         if (event.type == MouseEvent.Type.CLICK &&
             event.button == MouseButton.LEFT
         ) {
-            dragging = false
-            isInitialClick = false
+            reset()
             return
         }
 

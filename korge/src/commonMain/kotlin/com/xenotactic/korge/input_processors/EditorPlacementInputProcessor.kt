@@ -122,6 +122,7 @@ class EditorPlacementInputProcessor(
                     uiMap.clearHighlightLayer()
                     return
                 }
+
                 gameMapControllerComponent.placeEntity(entityToAdd)
                 engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
             }
@@ -130,7 +131,7 @@ class EditorPlacementInputProcessor(
         }
     }
 
-    fun createEntityToAdd(entityType: MapEntityType, gridXInt: Int, gridYInt: Int): MapEntity {
+    private fun createEntityToAdd(entityType: MapEntityType, gridXInt: Int, gridYInt: Int): MapEntity {
         return when (entityType) {
             MapEntityType.START,
             MapEntityType.FINISH -> MapEntityType.createEntity(
@@ -158,7 +159,7 @@ class EditorPlacementInputProcessor(
         }
     }
 
-    fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
+    private fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
         if (eventType == MouseEvent.Type.DOWN ||
             eventType == MouseEvent.Type.MOVE
         ) {
