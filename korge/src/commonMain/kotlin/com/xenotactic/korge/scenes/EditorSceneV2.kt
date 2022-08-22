@@ -18,6 +18,7 @@ import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
+import component_listeners.PreSelectionComponentListener
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
@@ -48,18 +49,7 @@ class EditorSceneV2 : Scene() {
         gameWorld.apply {
             injections = engine.injections
             addFamilyListener(AddEntityFamilyListener(this))
-//            addEntity {
-//                addComponentOrThrow(MapEntityComponent(MapEntityData.Start))
-//                addComponentOrThrow(SizeComponent.SIZE_2X2_COMPONENT)
-//                addComponentOrThrow(BottomLeftPositionComponent(0, 0))
-//            }
-//
-//            addEntity {
-//                addComponentOrThrow(MapEntityComponent(MapEntityData.Finish))
-//                addComponentOrThrow(SizeComponent.SIZE_2X2_COMPONENT)
-//                addComponentOrThrow(BottomLeftPositionComponent(5, 5))
-//            }
-
+            addComponentListener(PreSelectionComponentListener(engine))
         }
 
         addComponent(EditorPlacementInputProcessorV2(
@@ -90,10 +80,6 @@ class EditorSceneV2 : Scene() {
         eventBus.register<ResizeMapEvent> {
             uiMapV2.handleResizeMapEvent(it)
 //            uiMapV2.centerOnStage()
-        }
-
-        eventBus.register<SelectedUIEntitiesEvent> {
-            println("SelectedUIEntitiesEvent: $it")
         }
     }
 }

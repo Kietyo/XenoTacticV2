@@ -6,5 +6,5 @@ enum class SelectionType {
 }
 
 
-class PreSelectionComponent
+object PreSelectionComponent
 object SelectedComponent

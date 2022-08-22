@@ -93,8 +93,6 @@ class UIEntity(
 //        }
     }
 
-    var selectionLayer = this.container()
-
     var selectionBox: Graphics? = null
 
     fun cancelSelection() {

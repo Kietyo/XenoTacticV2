@@ -11,11 +11,13 @@ import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
+import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.fleks.components.PreSelectionComponent
 import com.xenotactic.korge.state.GameMapApi
 
 class SelectorMouseProcessorV2(
@@ -35,7 +37,7 @@ class SelectorMouseProcessorV2(
     var startPosition = Point()
     var currentPosition = Point()
 
-    var previousSelectionSnapshot = emptyList<UIEntity>()
+    var previousSelectionSnapshot = emptySet<EntityId>()
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!isEnabled) return
@@ -110,9 +112,14 @@ class SelectorMouseProcessorV2(
 //                    )
 //                )
             } else {
+                engine.gameWorld.preSelectionFamily.getNewList().forEach {
+                    engine.gameWorld.world.modifyEntity(it) {
+                        removeComponent<PreSelectionComponent>()
+                    }
+                }
                 intersectingEntities.forEach {
                     engine.gameWorld.world.modifyEntity(it) {
-//                        addIfNotExists()
+                        addIfNotExists(PreSelectionComponent)
                     }
                 }
 //                engine.eventBus.send(
@@ -123,7 +130,7 @@ class SelectorMouseProcessorV2(
 //                    )
 //                )
             }
-//            previousSelectionSnapshot = intersectingEntities
+            previousSelectionSnapshot = intersectingEntities
         }
 
     }

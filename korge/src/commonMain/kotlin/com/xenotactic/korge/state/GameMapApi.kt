@@ -215,7 +215,7 @@ class GameMapApi(
         )
     }
 
-    fun getIntersectingEntities(rect: Rectangle): List<EntityId> {
+    fun getIntersectingEntities(rect: Rectangle): Set<EntityId> {
         return gameWorld.entityFamily.getSequence().mapNotNull {
             val comp = gameWorld.uiMapEntityComponentContainer.getComponent(it)
             if (rect.intersects(comp.entityView.getGlobalBounds())) {
@@ -223,7 +223,7 @@ class GameMapApi(
             } else {
                 null
             }
-        }.toList()
+        }.toSet()
     }
 
     fun getNotificationText(entityType: MapEntityType): String {

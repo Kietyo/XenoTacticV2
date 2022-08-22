@@ -109,23 +109,23 @@ class SelectorMouseProcessor(
                 //                """.trimIndent())
                 //
                 //                println(uiMap.getIntersectingEntities(selectionRectangle.getGlobalBounds()))
-                engine.eventBus.send(
-                    SelectedUIEntitiesEvent(
-                        SelectionType.SELECTED,
-                        previousSelectionSnapshot,
-                        intersectingEntities
-                    )
-                )
+//                engine.eventBus.send(
+//                    SelectedUIEntitiesEvent(
+//                        SelectionType.SELECTED,
+//                        previousSelectionSnapshot,
+//                        intersectingEntities
+//                    )
+//                )
             } else {
-                engine.eventBus.send(
-                    SelectedUIEntitiesEvent(
-                        SelectionType.PRE_SELECTION,
-                        previousSelectionSnapshot,
-                        intersectingEntities
-                    )
-                )
+//                engine.eventBus.send(
+//                    SelectedUIEntitiesEvent(
+//                        SelectionType.PRE_SELECTION,
+//                        previousSelectionSnapshot,
+//                        intersectingEntities
+//                    )
+//                )
             }
-            previousSelectionSnapshot = intersectingEntities
+//            previousSelectionSnapshot = intersectingEntities
         }
 
     }

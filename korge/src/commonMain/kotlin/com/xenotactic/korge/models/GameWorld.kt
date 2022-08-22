@@ -3,6 +3,7 @@ package com.xenotactic.korge.models
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
+import com.xenotactic.korge.fleks.components.PreSelectionComponent
 
 class GameWorld(
     val world: World = World()
@@ -21,6 +22,11 @@ class GameWorld(
         FamilyConfiguration(
             allOfComponents = setOf(UIMapEntityComponent::class)
         )
+    )
+    val preSelectionFamily = world.createFamily(
+        FamilyConfiguration(
+        allOfComponents = setOf(PreSelectionComponent::class)
+    )
     )
     val bottomLeftPositionComponent =
         world.getComponentContainer<BottomLeftPositionComponent>()

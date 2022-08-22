@@ -29,4 +29,8 @@ class RenderEntityComponentListener(
         TODO("Not yet implemented")
     }
 
+    override fun onExisting(entityId: EntityId, component: EntityRenderComponent) {
+        TODO()
+    }
+
 }
