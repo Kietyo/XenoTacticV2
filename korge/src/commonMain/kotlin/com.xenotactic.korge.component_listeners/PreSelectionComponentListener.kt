@@ -1,4 +1,4 @@
-package component_listeners
+package com.xenotactic.korge.component_listeners
 
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
@@ -14,6 +14,7 @@ class PreSelectionComponentListener(
     }
 
     override fun onRemove(entityId: EntityId, component: PreSelectionComponent) {
+        if (engine.gameWorld.selectionComponentContainer.containsComponent(entityId)) return
         val uiMapEntityComponent = engine.gameWorld.uiMapEntityComponentContainer.getComponent(entityId)
         uiMapEntityComponent.entityView.cancelSelection()
     }

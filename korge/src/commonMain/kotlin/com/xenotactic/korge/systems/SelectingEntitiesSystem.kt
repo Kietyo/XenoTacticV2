@@ -20,7 +20,7 @@ class SelectingEntitiesSystem(
                 }
                 SelectionType.SELECTED -> {
                     it.previousSelectionSnapshot.forEach(UIEntity::cancelSelection)
-                    it.newSelectionSnapshot.forEach(UIEntity::doEndSelection)
+                    it.newSelectionSnapshot.forEach(UIEntity::doActiveSelection)
                 }
             }
 

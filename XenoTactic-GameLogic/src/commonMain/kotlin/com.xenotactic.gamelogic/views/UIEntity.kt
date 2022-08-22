@@ -5,7 +5,6 @@ import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.Graphics
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.container
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
@@ -117,7 +116,7 @@ class UIEntity(
         }
     }
 
-    fun doEndSelection() {
+    fun doActiveSelection() {
         if (selectionBox != null) cancelSelection()
         if (selectionBox == null) {
             val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)

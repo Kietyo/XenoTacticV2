@@ -18,7 +18,10 @@ import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
-import component_listeners.PreSelectionComponentListener
+import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
+import com.xenotactic.korge.component_listeners.SelectionComponentListener
+import com.xenotactic.korge.events.EscapeButtonActionEvent
+import com.xenotactic.korge.fleks.components.SelectedComponent
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
@@ -50,6 +53,7 @@ class EditorSceneV2 : Scene() {
             injections = engine.injections
             addFamilyListener(AddEntityFamilyListener(this))
             addComponentListener(PreSelectionComponentListener(engine))
+            addComponentListener(SelectionComponentListener(engine))
         }
 
         addComponent(EditorPlacementInputProcessorV2(

@@ -18,6 +18,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.fleks.components.PreSelectionComponent
+import com.xenotactic.korge.fleks.components.SelectedComponent
 import com.xenotactic.korge.state.GameMapApi
 
 class SelectorMouseProcessorV2(
@@ -84,6 +85,11 @@ class SelectorMouseProcessorV2(
             val intersectingEntities =
                 gameMapApi.getIntersectingEntities(selectionRectangle.getGlobalBounds())
             println("intersectingEntities: $intersectingEntities")
+            engine.gameWorld.preSelectionFamily.getNewList().forEach {
+                engine.gameWorld.world.modifyEntity(it) {
+                    removeComponent<PreSelectionComponent>()
+                }
+            }
 
             if (event.type == MouseEvent.Type.UP &&
                 event.button == MouseButton.LEFT
@@ -111,12 +117,19 @@ class SelectorMouseProcessorV2(
 //                        intersectingEntities
 //                    )
 //                )
-            } else {
-                engine.gameWorld.preSelectionFamily.getNewList().forEach {
+                println("kieto Went here?")
+                engine.gameWorld.selectionFamily.getNewList().forEach {
                     engine.gameWorld.world.modifyEntity(it) {
-                        removeComponent<PreSelectionComponent>()
+                        this.removeComponent<SelectedComponent>()
                     }
                 }
+
+                intersectingEntities.forEach {
+                    engine.gameWorld.world.modifyEntity(it) {
+                        addIfNotExists(SelectedComponent)
+                    }
+                }
+            } else {
                 intersectingEntities.forEach {
                     engine.gameWorld.world.modifyEntity(it) {
                         addIfNotExists(PreSelectionComponent)
@@ -130,7 +143,7 @@ class SelectorMouseProcessorV2(
 //                    )
 //                )
             }
-            previousSelectionSnapshot = intersectingEntities
+//            previousSelectionSnapshot = intersectingEntities
         }
 
     }

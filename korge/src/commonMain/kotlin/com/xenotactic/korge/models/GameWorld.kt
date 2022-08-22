@@ -4,6 +4,7 @@ import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.korge.fleks.components.PreSelectionComponent
+import com.xenotactic.korge.fleks.components.SelectedComponent
 
 class GameWorld(
     val world: World = World()
@@ -25,8 +26,13 @@ class GameWorld(
     )
     val preSelectionFamily = world.createFamily(
         FamilyConfiguration(
-        allOfComponents = setOf(PreSelectionComponent::class)
+            allOfComponents = setOf(PreSelectionComponent::class)
+        )
     )
+    val selectionFamily = world.createFamily(
+        FamilyConfiguration(
+            allOfComponents = setOf(SelectedComponent::class)
+        )
     )
     val bottomLeftPositionComponent =
         world.getComponentContainer<BottomLeftPositionComponent>()
@@ -36,4 +42,6 @@ class GameWorld(
         world.getComponentContainer<UIMapEntityComponent>()
     val uiMapEntityTextComponentContainer =
         world.getComponentContainer<UIMapEntityTextComponent>()
+    val selectionComponentContainer = world.getComponentContainer<SelectedComponent>()
+    val preSelectionComponentContainer = world.getComponentContainer<PreSelectionComponent>()
 }
