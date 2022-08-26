@@ -13,17 +13,8 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.state.GameMapApi
-
-data class SelectedUIEntitiesEvent(
-    val type: SelectionType,
-    // Entities that were selected in the previous snapshot.
-    val previousSelectionSnapshot: List<UIEntity>,
-    // Entities that are selected in the newest snapshot.
-    val newSelectionSnapshot: List<UIEntity>
-)
 
 class SelectorMouseProcessor(
     override val view: Container,

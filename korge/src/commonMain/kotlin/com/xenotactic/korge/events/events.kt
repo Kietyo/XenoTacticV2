@@ -55,3 +55,5 @@ data class ResizeMapEvent(
     val newMapWidth: Int,
     val newMapHeight: Int
 )
+
+object EntitySelectionChangedEvent

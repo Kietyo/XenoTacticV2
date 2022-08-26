@@ -4,14 +4,17 @@ import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
+import com.soywiz.korui.UiButton
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
+import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
@@ -31,7 +34,7 @@ class UIEditorButtonsV2(
     private val DEFAULT_NOTIFICATION_TEXT = "N/A"
 
     init {
-        uiHorizontalStack {
+        val buttonStack = uiHorizontalStack {
             val addStartButton = uiButton(text = "Add Start") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.START) { // Switching to playing mode
@@ -107,7 +110,6 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-
             engine.eventBus.register<PlacedEntityEvent> {
                 when (it.entityType) {
                     MapEntityType.START -> addStartButton.disable()
@@ -122,11 +124,30 @@ class UIEditorButtonsV2(
                 }
                 switchToPlayingMode()
             }
-
-            engine.eventBus.register<EscapeButtonActionEvent> {
-                switchToPlayingMode()
-            }
         }
+
+        engine.eventBus.register<EscapeButtonActionEvent> {
+            switchToPlayingMode()
+        }
+
+        val deleteEntitiesButton = UIButton(text="Delete entities")
+
+        engine.eventBus.register<EntitySelectionChangedEvent> {
+            println("EntitySelectionChangedEvent: Went in here?! ${engine.gameWorld.selectionFamily.getList()}")
+            if (engine.gameWorld.selectionFamily.getList().isEmpty()) {
+                deleteEntitiesButton.removeFromParent()
+            } else {
+                buttonStack.addChild(deleteEntitiesButton)
+            }
+
+            resize()
+        }
+    }
+
+    fun resize() {
+        centerXOn(this.baseView)
+        alignBottomToBottomOf(this.baseView)
+//        alignBottomToBottomOfWindow()
     }
 
     fun switchToPlayingMode() {

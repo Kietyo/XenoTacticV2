@@ -15,7 +15,6 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.fleks.components.SelectionType
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.fleks.components.PreSelectionComponent
 import com.xenotactic.korge.fleks.components.SelectedComponent
@@ -28,9 +27,9 @@ class SelectorMouseProcessorV2(
 ) :
     MouseComponent, EComponent {
 
-    val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
 
-    val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
+    private val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 
     private var dragging = false
     private var isInitialClick = false
@@ -119,7 +118,6 @@ class SelectorMouseProcessorV2(
 //                        intersectingEntities
 //                    )
 //                )
-                println("kieto Went here?")
                 engine.gameWorld.selectionFamily.getNewList().forEach {
                     engine.gameWorld.world.modifyEntity(it) {
                         this.removeComponent<SelectedComponent>()

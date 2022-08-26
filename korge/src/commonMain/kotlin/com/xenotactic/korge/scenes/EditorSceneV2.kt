@@ -70,8 +70,7 @@ class EditorSceneV2 : Scene() {
 
         val uiEditorButtonsV2 =
             UIEditorButtonsV2(engine, uiMapV2, this).addTo(this).apply {
-                centerXOnStage()
-                alignBottomToBottomOfWindow()
+                this.resize()
             }
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {

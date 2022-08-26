@@ -22,7 +22,6 @@ import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.renderer.MapRendererUpdater
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.systems.SelectingEntitiesSystem
 import com.xenotactic.korge.ui.UIEditorButtons
 import com.xenotactic.korge.ui.UIMap
 import com.xenotactic.korge.ui.UIMapSettings
@@ -104,8 +103,6 @@ class EditorScene : Scene() {
             centerXOnStage()
             alignBottomToBottomOfWindow()
         }
-
-        SelectingEntitiesSystem(engine)
 
         //        addUpdater {
         //            if (false && currentMode == Mode.EDITING) {
