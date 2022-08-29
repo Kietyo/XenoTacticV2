@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17">
-      <module name="Client.main" target="16" />
-      <module name="Client.test" target="16" />
-      <module name="Server.main" target="16" />
-      <module name="Server.test" target="16" />
-      <module name="XenoTactic-GameLogic" target="16" />
-      <module name="XenoTactic-GameLogic.main" target="16" />
-      <module name="XenoTactic-GameLogic.test" target="16" />
-      <module name="XenoTactic-Korge" target="16" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
 </project>

@@ -9,7 +9,7 @@ repositories {
     mavenCentral()
 }
 
-val korgeVersion = "2.0.0.999"
+//val korgeVersion = "2.0.0.999"
 
 //kotlin {
 //    jvm {

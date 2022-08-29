@@ -16,6 +16,7 @@ class SelectionComponentListener(
     }
 
     override fun onRemove(entityId: EntityId, component: SelectedComponent) {
+        println("Removed selection for entity: $entityId")
         val uiMapEntityComponent = engine.gameWorld.uiMapEntityComponentContainer.getComponent(entityId)
         uiMapEntityComponent.entityView.cancelSelection()
         engine.eventBus.send(EntitySelectionChangedEvent)
