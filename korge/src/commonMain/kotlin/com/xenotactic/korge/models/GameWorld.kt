@@ -9,7 +9,7 @@ import com.xenotactic.korge.fleks.components.SelectedComponent
 class GameWorld(
     val world: World = World()
 ) {
-    val entityFamily = world.createFamily(
+    val entityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
                 MapEntityComponent::class,
@@ -19,17 +19,17 @@ class GameWorld(
             )
         )
     )
-    val uiEntityFamily = world.createFamily(
+    val uiEntityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(UIMapEntityComponent::class)
         )
     )
-    val preSelectionFamily = world.createFamily(
+    val preSelectionFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(PreSelectionComponent::class)
         )
     )
-    val selectionFamily = world.createFamily(
+    val selectionFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(SelectedComponent::class)
         )
