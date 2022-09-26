@@ -60,6 +60,16 @@ object AStarSearcher : SearcherInterface {
         teleportPairs: List<TeleportPair>,
         blockingEntities: List<IRectangleEntity>,
     ): GamePath? {
+        return getUpdatablePathV2(mapWidth, mapHeight, pathingEntities, teleportPairs, blockingEntities).toGamePathOrNull()
+    }
+
+    override fun getUpdatablePathV2(
+        mapWidth: Int,
+        mapHeight: Int,
+        pathingEntities: List<IRectangleEntity>,
+        teleportPairs: List<TeleportPair>,
+        blockingEntities: List<IRectangleEntity>
+    ): PathFindingResult {
         val nonNullBlockingPoints = BlockingPointContainer.View.create(blockingEntities)
         return FullPathSearcherInternal(
             mapWidth,
@@ -136,12 +146,16 @@ object AStarSearcher : SearcherInterface {
             return intersectionPointCandidates.firstOrNull()
         }
 
+        private fun failure(errorMessage: String): PathFindingResult.Failure {
+            return PathFindingResult.Failure(Throwable(errorMessage).stackTraceToString())
+        }
+
         fun getShortestPath(
             pathingEntities: List<IRectangleEntity>,
             teleportPairs: List<TeleportPair>,
-        ): GamePath? {
+        ): PathFindingResult {
             if (pathingEntities.size < 2) {
-                return null
+                return failure("Requires at least 2 pathing entities.")
             }
             val sequenceNumToTeleportPair = teleportPairs.groupBy { it.sequenceNumber }.mapValues {
                 it.value.first()
@@ -168,7 +182,7 @@ object AStarSearcher : SearcherInterface {
 
                 // Check to see if the path intersects with any teleports
                 while (true) {
-                    if (shortestPath == null) return null
+                    if (shortestPath == null) return failure("No path found to start with.")
 
                     val teleportCandidate = getFirstTeleportIntersection(
                         shortestPath, teleportPairs, activatedTeleportsThusFar,
@@ -217,9 +231,9 @@ object AStarSearcher : SearcherInterface {
                 prevEntity = entity
             }
 
-            return GamePath(
+            return PathFindingResult.Success(GamePath(
                 entityPaths,
-            )
+            ))
         }
 
         private fun getShortestPathFromStartToFinish(

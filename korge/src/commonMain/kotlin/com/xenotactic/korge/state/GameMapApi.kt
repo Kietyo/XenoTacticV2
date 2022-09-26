@@ -203,7 +203,7 @@ class GameMapApi(
             }.sortedBy {
                 it.sequenceNumber
             }
-        )?.toPathSequence()
+        ).toGamePathOrNull()?.toPathSequence()
 
         engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
 

@@ -493,4 +493,17 @@ internal class AStarSearcherTest {
 
         Unit
     }
+
+    @Test
+    fun onlyOnePathingEntityProvided() {
+        val searcher = AStarSearcher
+        println(
+            searcher.getUpdatablePathV2(
+                10, 10,
+                listOf(
+                    MapEntity.Start(3, 8),
+                ),
+            )
+        )
+    }
 }

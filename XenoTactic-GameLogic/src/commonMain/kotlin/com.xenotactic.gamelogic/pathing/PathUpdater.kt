@@ -10,7 +10,7 @@ class PathUpdater(
     var searcher: SearcherInterface = AStarSearcher,
 ) {
     var gamePath: GamePath? = kotlin.run {
-        PathFinder.getUpdatablePath(gameMap, searcher)
+        PathFinder.getUpdatablePath(gameMap, searcher).toGamePathOrNull()
     }
         private set
 
@@ -38,7 +38,7 @@ class PathUpdater(
         } else {
             // Path is affected, recalulcate the whole path!
             val test = PathFinder.getUpdatablePath(gameMap)
-            gamePath = test
+            gamePath = test.toGamePathOrNull()
         }
         //
         //        gamePath = PathFinder.getUpdatablePath(gameMap)
