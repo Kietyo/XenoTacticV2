@@ -121,14 +121,16 @@ class RandomMapGenerator {
             addedTpIns.add(teleportIn)
 
             var teleportOut: MapEntity.TeleportOut
+            val attemptedPlacementPoints = mutableSetOf<IntPoint>()
             do {
                 numTotalAttempts++
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                    return failure("Failed to create place TELEPORT OUT $i.")
+                    return failure("Failed to place TELEPORT OUT $i. Attempted points: $attemptedPlacementPoints")
                 }
+                val randomPoint = getRandomPointWithinMapBounds(MapEntity.TELEPORT_OUT)
                 teleportOut =
-                    MapEntity.TeleportOut(i, getRandomPointWithinMapBounds(MapEntity.TELEPORT_OUT))
-
+                    MapEntity.TeleportOut(i, randomPoint)
+                attemptedPlacementPoints.add(randomPoint)
             } while (
                 start.intersectsEntity(teleportOut) ||
                 finish.intersectsEntity(teleportOut) ||

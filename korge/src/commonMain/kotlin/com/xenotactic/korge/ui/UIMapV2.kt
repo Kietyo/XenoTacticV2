@@ -336,7 +336,7 @@ class UIMapV2(
     }
 
     fun renderPathLines(pathSequence: PathSequence?) {
-        _pathingLinesGraphics.updateShape { }
+//        _pathingLinesGraphics.updateShape { }
 
         // Draw path lines
         if (pathSequence != null) {
