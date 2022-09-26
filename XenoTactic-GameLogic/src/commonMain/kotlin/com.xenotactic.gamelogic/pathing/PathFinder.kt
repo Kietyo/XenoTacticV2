@@ -6,6 +6,7 @@ import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.GamePath
+import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.pathing.SearcherInterface
 
@@ -15,7 +16,7 @@ import com.xenotactic.gamelogic.pathing.SearcherInterface
  */
 object PathFinder {
     fun getUpdatablePath(gameMap: GameMap, searcher: SearcherInterface = AStarSearcher):
-            GamePath? {
+            PathFindingResult {
         return getUpdatablePath(
             gameMap.width,
             gameMap.height,
@@ -30,7 +31,7 @@ object PathFinder {
         gameMap: GameMap,
         searcher: SearcherInterface = AStarSearcher
     ): PathSequence? {
-        return getUpdatablePath(gameMap, searcher)?.toPathSequence()
+        return getUpdatablePath(gameMap, searcher).toGamePathOrNull()?.toPathSequence()
     }
 
     fun getShortestPathWithBlockingEntities(
@@ -45,7 +46,7 @@ object PathFinder {
             gameMap.getBlockingEntities() + blockingEntities,
             gameMap.getSequentialPathingEntities(),
             gameMap.teleportPairs,
-        )?.toPathSequence()
+        ).toGamePathOrNull()?.toPathSequence()
     }
 
     fun getShortestPathWithTowers(
@@ -61,12 +62,12 @@ object PathFinder {
             gameMap.getSequentialPathingEntities(),
             gameMap.teleportPairs,
             searcher = searcher
-        )?.toPathSequence()
+        ).toGamePathOrNull()?.toPathSequence()
     }
 
     fun getShortestPathWithTeleportPair(
         gameMap: GameMap, teleportPair: TeleportPair,
-    ): GamePath? {
+    ): PathFindingResult {
         return getUpdatablePath(
             gameMap.width,
             gameMap.height,
@@ -92,7 +93,12 @@ object PathFinder {
             pathingEntities = pathingEntities,
             teleportPairs = teleportPairs,
             searcher = searcher
-        )
+        ).run {
+            when (this) {
+                is PathFindingResult.Failure -> null
+                is PathFindingResult.Success -> this.gamePath
+            }
+        }
     }
 
     fun getUpdatablePath(
@@ -104,8 +110,9 @@ object PathFinder {
         pathingEntities: List<IRectangleEntity> = emptyList(),
         teleportPairs: List<TeleportPair> = emptyList(),
         additionalTeleportPairs: List<TeleportPair> = emptyList(),
-    ): GamePath? {
-        if (start == null || finish == null) return null
+    ): PathFindingResult {
+        if (start == null) return PathFindingResult.Failure("Start is null")
+        if (finish == null) return PathFindingResult.Failure("Finish is null")
 
         return getUpdatablePath(
             width, height,
@@ -119,15 +126,15 @@ object PathFinder {
         )
     }
 
-    fun getUpdatablePath(
+    private fun getUpdatablePath(
         width: Int,
         height: Int,
         blockingEntities: List<IRectangleEntity> = emptyList(),
         pathingEntities: List<IRectangleEntity> = emptyList(),
         teleportPairs: List<TeleportPair> = emptyList(),
         searcher: SearcherInterface = AStarSearcher
-    ): GamePath? {
-        return searcher.getUpdatablePath(
+    ): PathFindingResult {
+        return searcher.getUpdatablePathV2(
             width, height,
             pathingEntities,
             teleportPairs,

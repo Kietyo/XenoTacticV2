@@ -5,6 +5,7 @@ import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.model.TeleportPair
+import com.xenotactic.gamelogic.pathing.PathFindingResult
 import pathing.AStarSearcher
 import pathing.PathFinder
 import com.xenotactic.gamelogic.pathing.SearcherInterface
@@ -125,7 +126,11 @@ class RandomMapGenerator {
             do {
                 numTotalAttempts++
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                    return failure("Failed to place TELEPORT OUT $i. Attempted points: $attemptedPlacementPoints")
+                    return failure("""
+                        Failed to place TELEPORT OUT $i.
+                        stagedTeleportIn: $teleportIn
+                        Attempted points: $attemptedPlacementPoints
+                    """.trimIndent())
                 }
                 val randomPoint = getRandomPointWithinMapBounds(MapEntity.TELEPORT_OUT)
                 teleportOut =
@@ -142,7 +147,7 @@ class RandomMapGenerator {
                         teleportOut,
                         teleportIn.sequenceNumber
                     )
-                ) == null
+                ) is PathFindingResult.Success
             )
             addedTpOuts.add(teleportOut)
 

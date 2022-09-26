@@ -12,4 +12,12 @@ interface SearcherInterface {
         teleportPairs: List<TeleportPair> = emptyList(),
         blockingEntities: List<IRectangleEntity> = emptyList(),
     ): GamePath?
+
+    fun getUpdatablePathV2(
+        mapWidth: Int,
+        mapHeight: Int,
+        pathingEntities: List<IRectangleEntity>,
+        teleportPairs: List<TeleportPair> = emptyList(),
+        blockingEntities: List<IRectangleEntity> = emptyList(),
+    ): PathFindingResult
 }

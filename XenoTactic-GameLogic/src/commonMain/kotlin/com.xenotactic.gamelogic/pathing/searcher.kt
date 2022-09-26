@@ -362,6 +362,18 @@ data class PathSequenceInfo(
 //    }
 //}
 
+sealed class PathFindingResult {
+    data class Success(val gamePath: GamePath) : PathFindingResult()
+    data class Failure(val errorMessage: String) : PathFindingResult()
+
+    fun toGamePathOrNull(): GamePath? {
+        return when (this) {
+            is Failure -> null
+            is Success -> gamePath
+        }
+    }
+}
+
 /**
  * Represents a game path between various different entities.
  *

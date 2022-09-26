@@ -73,7 +73,9 @@ class PlayScene : Scene() {
             MapEntity.Start(23, 17),
             MapEntity.Finish(21, 1),
             MapEntity.Checkpoint(0, 3, 7),
-            MapEntity.Checkpoint(1, 8, 14)
+            MapEntity.Checkpoint(1, 8, 14),
+            MapEntity.TeleportIn(0, 6, 3),
+            MapEntity.TeleportOut(0, 16, 14)
         )
 
         /**
