@@ -36,7 +36,6 @@ class PlayScene : Scene() {
 
         println(randomMap)
 
-
         val gameWorld = World()
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
@@ -66,14 +65,9 @@ class PlayScene : Scene() {
             addComponentListener(SelectionComponentListener(engine))
         }
 
-        gameMapApi.placeEntities(
-            MapEntity.Start(23, 17),
-            MapEntity.Finish(21, 1),
-            MapEntity.Checkpoint(0, 3, 7),
-            MapEntity.Checkpoint(1, 8, 14),
-            MapEntity.TeleportIn(0, 6, 3),
-            MapEntity.TeleportOut(0, 16, 14)
-        )
+        gameMapApi.placeEntities(randomMap.map.getAllEntities())
+
+
 
         /**
          * Failure(map=GameMap(
