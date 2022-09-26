@@ -19,6 +19,8 @@ sealed class MapEntityData {
         val speedText get() = "${(speedEffect * 100).toInt()}%"
     }
 
+    object Monster : MapEntityData()
+
     fun toMapEntityType(): MapEntityType {
         return when (this) {
             is Checkpoint -> MapEntityType.CHECKPOINT
@@ -30,6 +32,7 @@ sealed class MapEntityData {
             is TeleportIn -> MapEntityType.TELEPORT_IN
             is TeleportOut -> MapEntityType.TELEPORT_OUT
             Tower -> MapEntityType.TOWER
+            Monster -> TODO()
         }
     }
 
@@ -44,6 +47,7 @@ sealed class MapEntityData {
             is TeleportIn -> "TP ${ordinalSequenceNumber} IN"
             is TeleportOut -> "TP ${ordinalSequenceNumber} OUT"
             Tower -> null
+            Monster -> null
         }
     }
 }

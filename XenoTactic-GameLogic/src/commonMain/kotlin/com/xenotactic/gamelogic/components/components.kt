@@ -5,6 +5,7 @@ import com.soywiz.korge.view.View
 import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.views.UIEntity
+import pathing.PathSequenceTraversal
 
 data class MapEntityComponent(
     val entityData: MapEntityData
@@ -32,4 +33,12 @@ data class SizeComponent(
 // Component representing the bottom left position of an entity.
 data class BottomLeftPositionComponent(
     val x: Int, val y: Int
+)
+
+data class PathSequenceTraversalComponent(
+    val pathSequenceTraversal: PathSequenceTraversal
+)
+
+data class MovementSpeedComponent(
+    val movementSpeedGameUnits: Double = 20.0
 )

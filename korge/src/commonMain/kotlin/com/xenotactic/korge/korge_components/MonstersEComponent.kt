@@ -84,7 +84,7 @@ class MonstersEComponent(
         }
 
         monsters.removeAll {
-            if (it.monsterEntity.pathSequenceTraversal.finishedTraversal()) {
+            if (it.monsterEntity.pathSequenceTraversal.isTraversalFinished()) {
                 it.view.removeFromParent()
                 true
             } else {

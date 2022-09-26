@@ -192,6 +192,7 @@ class GameMapApi(
                 }
 
                 MapEntityData.Tower -> TODO()
+                MapEntityData.Monster -> TODO()
             }
         }
 

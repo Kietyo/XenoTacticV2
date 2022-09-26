@@ -1,6 +1,7 @@
 package com.xenotactic.korge.scenes
 
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
@@ -14,6 +15,7 @@ import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
+import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.state.GameMapApi
@@ -68,6 +70,9 @@ class PlayScene : Scene() {
         gameMapApi.placeEntities(randomMap.map.getAllEntities())
 
 
+        uiButton("Spawn creep") {
+            alignBottomToBottomOfWindow()
+        }
 
         /**
          * Failure(map=GameMap(

@@ -80,7 +80,7 @@ class PathTraversal(val path: Path) {
     }
 }
 
-class PathSequenceTraversal(private val pathSequence: PathSequence) {
+class PathSequenceTraversal(pathSequence: PathSequence) {
     var distanceTraversed = 0.0
     private val paths = pathSequence.paths
     private var currentPathIdx = 0
@@ -95,7 +95,7 @@ class PathSequenceTraversal(private val pathSequence: PathSequence) {
     }
 
     fun traverse(distance: Double) {
-        if (finishedTraversal()) return
+        if (isTraversalFinished()) return
         var remainingDistanceToTraverse = distance
 
         while (remainingDistanceToTraverse > 0.0f) {
@@ -111,7 +111,7 @@ class PathSequenceTraversal(private val pathSequence: PathSequence) {
         }
     }
 
-    fun finishedTraversal(): Boolean {
+    fun isTraversalFinished(): Boolean {
         return isLastPath() && currentPathTraversal.finishedTraversal()
     }
 
