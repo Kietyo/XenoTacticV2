@@ -22,17 +22,17 @@ class RootScene(
 
         this.text("Loading...", textSize = 50.0).centerOnStage()
 
-        val test = resourcesVfs["test.txt"]
-
-        logger.info {
-            """
-                test: $test
-                test.path: ${test.path}
-                test.absolutePath: ${test.absolutePath}
-            """.trimIndent()
-        }
-
-        test.writeString("test string")
+//        val test = resourcesVfs["test.txt"]
+//
+//        logger.info {
+//            """
+//                test: $test
+//                test.path: ${test.path}
+//                test.absolutePath: ${test.absolutePath}
+//            """.trimIndent()
+//        }
+//
+//        test.writeString("test string")
 
         globalEventBus.register<PlayMapEvent> {
             logger.info {
@@ -42,7 +42,9 @@ class RootScene(
             sceneContainer.pushTo<GameScene>()
         }
 
-        sceneContainer.changeTo<EditorSceneV2>()
+//        sceneContainer.changeTo<TestScene>()
+//        sceneContainer.changeTo<EditorSceneV2>()
+        sceneContainer.changeTo<PlayScene>()
 //        sceneContainer.changeTo<MapViewerScene>()
     }
 

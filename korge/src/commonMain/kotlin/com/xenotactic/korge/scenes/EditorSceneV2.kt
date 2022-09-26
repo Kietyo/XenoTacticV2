@@ -27,7 +27,6 @@ class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
-        val uiWorld = World()
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
             injections.setSingleton(GameMapDimensionsState(this, 10, 10))
@@ -46,9 +45,6 @@ class EditorSceneV2 : Scene() {
             injections.setSingleton(uiMapV2)
         }
 
-        uiWorld.apply {
-            injections = engine.injections
-        }
         gameWorld.apply {
             injections = engine.injections
             addFamilyListener(AddEntityFamilyListener(this))
@@ -57,7 +53,7 @@ class EditorSceneV2 : Scene() {
         }
 
         addComponent(EditorPlacementInputProcessorV2(
-            this, uiMapV2, uiWorld, engine
+            this, uiMapV2, engine
         ))
 
         addComponent(CameraInputProcessor(uiMapV2, engine))

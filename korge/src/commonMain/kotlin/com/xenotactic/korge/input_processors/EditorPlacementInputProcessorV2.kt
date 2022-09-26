@@ -20,11 +20,10 @@ import kotlin.math.min
 class EditorPlacementInputProcessorV2(
     override val view: BaseView,
     val uiMap: UIMapV2,
-    uiWorld: World,
     val engine: Engine
 ) : MouseComponent {
-    private val editorState = uiWorld.injections.getSingleton<EditorState>()
-    private val gameMapApi = uiWorld.injections.getSingleton<GameMapApi>()
+    private val editorState = engine.injections.getSingleton<EditorState>()
+    private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
 
     val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,

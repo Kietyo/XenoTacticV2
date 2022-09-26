@@ -8,9 +8,6 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
-import com.xenotactic.ecs.FamilyConfiguration
-import com.xenotactic.gamelogic.components.UIMapEntityComponent
-import com.xenotactic.gamelogic.components.UIMapEntityTextComponent
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
@@ -66,6 +63,8 @@ class UIMapV2(
         //        this.hitTestEnabled = false
     }
 
+    val _boardGraphicsLayer = this.graphics { }
+
     val _gridNumberLayer = this.container()
 
     val speedAreaLayer = this.container()
@@ -87,7 +86,8 @@ class UIMapV2(
     }
 
     fun resetUIMap() {
-        drawBoard()
+//        drawBoard()
+        drawBoardV2()
         drawGridNumbers()
     }
 
@@ -101,7 +101,8 @@ class UIMapV2(
         gameWorld.uiEntityFamily.getSequence().forEach {
             val uiMapEntityComponent = gameWorld.uiMapEntityComponentContainer.getComponent(it)
             uiMapEntityComponent.entityView.y += heightDiffWorldUnit.value
-            val uiMapEntityTextComponent = gameWorld.uiMapEntityTextComponentContainer.getComponentOrNull(it)
+            val uiMapEntityTextComponent =
+                gameWorld.uiMapEntityTextComponentContainer.getComponentOrNull(it)
             if (uiMapEntityTextComponent != null) {
                 uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.value
             }
@@ -159,6 +160,62 @@ class UIMapV2(
                 }
             }
         }
+        println("Finished drawing board!")
+    }
+
+    private fun drawBoardV2() {
+        println("Drawing board")
+        _boardGraphicsLayer.updateShape {
+
+            when (uiMapSettingsV2.boardType) {
+                BoardType.SOLID -> _boardLayer.solidRect(
+                    gridSize * mapWidth,
+                    gridSize * mapHeight,
+                    MaterialColors.GREEN_600
+                )
+
+                BoardType.CHECKERED_1X1 -> {
+                    var altColorWidth = true
+                    for (i in 0 until mapWidth) {
+                        var altColorHeight = altColorWidth
+                        val xGrid = i * gridSize
+                        for (j in 0 until mapHeight) {
+                            val currColor =
+                                if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
+                                    .GREEN_800
+                            this.fillStyle(currColor) {
+                                this.fillRect(xGrid, j * gridSize, gridSize, gridSize)
+                            }
+                            altColorHeight = !altColorHeight
+                        }
+                        altColorWidth = !altColorWidth
+                    }
+                }
+
+                BoardType.CHECKERED_2X2 -> {
+                    var altColorWidth = true
+                    val checkeredGridSize = gridSize * 2
+                    for (i in 0 until ((mapWidth + 1) / 2)) {
+                        var altColorHeight = altColorWidth
+                        val xGridPosition = i * checkeredGridSize
+                        for (j in 0 until ((mapHeight + 1) / 2)) {
+                            val gridWidth = if ((i + 1) * 2 > mapWidth) this@UIMapV2.gridSize else checkeredGridSize
+                            val gridHeight =
+                                if ((j + 1) * 2 > mapHeight) this@UIMapV2.gridSize else checkeredGridSize
+                            val currColor =
+                                if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
+                                    .GREEN_800
+                            fillStyle(currColor) {
+                                fillRect(xGridPosition, j * checkeredGridSize, gridWidth, gridHeight)
+                            }
+                            altColorHeight = !altColorHeight
+                        }
+                        altColorWidth = !altColorWidth
+                    }
+                }
+            }
+        }
+
         println("Finished drawing board!")
     }
 

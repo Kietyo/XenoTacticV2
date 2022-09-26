@@ -6,9 +6,9 @@ import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.utils.measureTime
 import pathing.AStarSearcher
-import random.MapGeneratorConfiguration
-import random.MapGeneratorResult
-import random.RandomMapGenerator
+import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
+import com.xenotactic.gamelogic.random.MapGeneratorResult
+import com.xenotactic.gamelogic.random.RandomMapGenerator
 import test_utils.STANDARD_MAP
 
 import kotlin.random.Random

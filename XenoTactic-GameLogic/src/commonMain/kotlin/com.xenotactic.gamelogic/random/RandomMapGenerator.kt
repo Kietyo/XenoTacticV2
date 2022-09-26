@@ -1,5 +1,6 @@
-package random
+package com.xenotactic.gamelogic.random
 
+import com.soywiz.klogger.Logger
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.*
@@ -28,7 +29,8 @@ sealed class MapGeneratorResult {
     ) : MapGeneratorResult()
 
     data class Failure(
-        override val map: GameMap
+        override val map: GameMap,
+        val errors: List<String>
     ) : MapGeneratorResult()
 }
 
@@ -45,8 +47,11 @@ class RandomMapGenerator {
          * Depending on whether or not `returnMapAsIsOnFailure` is true, the map may be null.
          */
         fun generate(config: MapGeneratorConfiguration): MapGeneratorResult {
+            logger.info { "Generating random map for config: $config" }
             return RandomMapGenerator(config).generateInternal()
         }
+
+        val logger = Logger<RandomMapGenerator>()
     }
 
     private constructor(config: MapGeneratorConfiguration) {
@@ -55,8 +60,8 @@ class RandomMapGenerator {
         this.random = Random(config.seed)
     }
 
-    private fun failure(): MapGeneratorResult.Failure {
-        return MapGeneratorResult.Failure(map)
+    private fun failure(errorString: String): MapGeneratorResult.Failure {
+        return MapGeneratorResult.Failure(map, listOf(errorString))
     }
 
     fun generateInternal(): MapGeneratorResult {
@@ -69,7 +74,7 @@ class RandomMapGenerator {
         do {
             numTotalAttempts++
             if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                return failure()
+                return failure("Failed to create FINISH entity in a spot that didn't intersect with START.")
             }
             finish = createEntity(MapEntity.Finish(0, 0))
         } while (start.intersectsEntity(finish))
@@ -81,7 +86,7 @@ class RandomMapGenerator {
             do {
                 numTotalAttempts++
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                    return failure()
+                    return failure("Failed to create place CHECKPOINT $i.")
                 }
                 checkpoint =
                     MapEntity.Checkpoint(i, getRandomPointWithinMapBounds(MapEntity.CHECKPOINT))
@@ -102,7 +107,7 @@ class RandomMapGenerator {
             do {
                 numTotalAttempts++
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                    return failure()
+                    return failure("Failed to create place TELEPORT IN $i.")
                 }
                 teleportIn =
                     MapEntity.TeleportIn(i, getRandomPointWithinMapBounds(MapEntity.TELEPORT_IN))
@@ -119,7 +124,7 @@ class RandomMapGenerator {
             do {
                 numTotalAttempts++
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                    return failure()
+                    return failure("Failed to create place TELEPORT OUT $i.")
                 }
                 teleportOut =
                     MapEntity.TeleportOut(i, getRandomPointWithinMapBounds(MapEntity.TELEPORT_OUT))
@@ -166,7 +171,7 @@ class RandomMapGenerator {
                 //                    )
                 //                }
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                    return failure()
+                    return failure("Failed to create place ROCK $i.")
                 }
                 val rockType = if (random.nextBoolean()) MapEntity.ROCK_2X4 else MapEntity.ROCK_4X2
                 rock = MapEntity.Rock(
@@ -197,7 +202,6 @@ class RandomMapGenerator {
             } while (true)
             addedRocks.add(rock)
             map.placeEntity(rock)
-            //            currentPath = map.getShortestPath()!!
         }
 
         return MapGeneratorResult.Success(map)

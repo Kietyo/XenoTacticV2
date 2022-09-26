@@ -13,8 +13,8 @@ import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.model.IntPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import pathing.PathFinder
-import random.MapGeneratorConfiguration
-import random.RandomMapGenerator
+import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
+import com.xenotactic.gamelogic.random.RandomMapGenerator
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

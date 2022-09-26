@@ -3,9 +3,9 @@ import com.soywiz.korio.async.runBlockingNoJs
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import random.MapGeneratorConfiguration
-import random.MapGeneratorResult
-import random.RandomMapGenerator
+import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
+import com.xenotactic.gamelogic.random.MapGeneratorResult
+import com.xenotactic.gamelogic.random.RandomMapGenerator
 import kotlin.random.Random
 import kotlin.test.Ignore
 import kotlin.test.Test
