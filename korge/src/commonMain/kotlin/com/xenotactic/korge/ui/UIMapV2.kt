@@ -23,9 +23,11 @@ import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
+import com.xenotactic.korge.state.GameMapPathState
 
 data class UIMapSettingsV2(
     val gridSize: Double = GRID_SIZE,
@@ -55,7 +57,7 @@ class UIMapV2(
     val mapHeight get() = gameMapDimensionsState.height
     val _pathLinesWidth = uiMapSettingsV2.pathLinesWidth
 
-    val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
 
     val _boardLayer = this.container {
         //        this.propagateEvents = false
@@ -83,6 +85,10 @@ class UIMapV2(
 
     init {
         resetUIMap()
+
+        engine.eventBus.register<UpdatedPathLineEvent> {
+            renderPathLines(it.pathSequence)
+        }
     }
 
     fun resetUIMap() {
@@ -107,7 +113,7 @@ class UIMapV2(
                 uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.value
             }
         }
-        renderPathLines(gameMapApi.shortestPath)
+        renderPathLines(gameMapPathState.shortestPath)
     }
 
     fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int = 0) =

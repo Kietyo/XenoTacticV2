@@ -51,8 +51,8 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         val engine = Engine(eventBus)
         val gameMapControllerComponent = GameMapControllerEComponent(engine, eventBus)
         val objectPlacementComponent = ObjectPlacementEComponent()
-        engine.injections.setSingleton(gameMapControllerComponent)
-        engine.injections.setSingleton(objectPlacementComponent)
+        engine.injections.setSingletonOrThrow(gameMapControllerComponent)
+        engine.injections.setSingletonOrThrow(objectPlacementComponent)
 
         //        val gameMap = loadGameMapFromGoldensBlocking("00051.json")
         val gameMap = mapBridge.gameMap
@@ -66,7 +66,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
                 draggable()
             }
         MapRendererUpdater(engine, uiMap, eventBus)
-        engine.injections.setSingleton(uiMap)
+        engine.injections.setSingletonOrThrow(uiMap)
 
         val cameraInputProcessor = CameraInputProcessor(uiMap, engine)
         cameraInputProcessor.setZoomFactor(0.7)
@@ -117,7 +117,7 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
         addComponent(monstersComponent)
 
         val goalComponent = GoalEComponent(engine, eventBus)
-        engine.injections.setSingleton(goalComponent)
+        engine.injections.setSingletonOrThrow(goalComponent)
         //        goalComponent.calculateGoalForMap()
 
         val MOVE_MAP_DELTA = 7

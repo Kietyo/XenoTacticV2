@@ -14,6 +14,7 @@ import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
 import kotlin.math.max
 import kotlin.math.min
@@ -23,6 +24,8 @@ class GameMapApi(
     val eventBus: EventBus,
 ) {
     val gameWorld: GameWorld = engine.gameWorld
+    val uiMap = engine.injections.getSingleton<UIMapV2>()
+    val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
 
     val numCheckpoints
@@ -45,8 +48,7 @@ class GameMapApi(
             minOf(numTpIn, numTpOut)
         }
 
-    var shortestPath: PathSequence? = null
-        private set
+
 
     fun placeEntities(vararg entities: MapEntity) {
         val gameMapRect = GRectInt(0, 0, gameMapDimensionsState.width, gameMapDimensionsState.height)
@@ -192,7 +194,7 @@ class GameMapApi(
 
         require(sequenceNumToTpIn.size == sequenceNumToTpOut.size)
 
-        shortestPath = PathFinder.getUpdatablePath(
+        val pathFinderResult = PathFinder.getUpdatablePath(
             gameMapDimensionsState.height, gameMapDimensionsState.height,
             start, finish,
             blockingEntities = blockingEntities,
@@ -203,16 +205,12 @@ class GameMapApi(
             }.sortedBy {
                 it.sequenceNumber
             }
-        ).toGamePathOrNull()?.toPathSequence()
+        )
+
+        println("pathFinderResult: $pathFinderResult")
+        gameMapPathState.updatePath(pathFinderResult.toGamePathOrNull()?.toPathSequence())
 
         engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
-
-        eventBus.send(
-            UpdatedPathLineEvent(
-                shortestPath,
-                shortestPath?.pathLength
-            )
-        )
     }
 
     fun getIntersectingEntities(rect: Rectangle): Set<EntityId> {

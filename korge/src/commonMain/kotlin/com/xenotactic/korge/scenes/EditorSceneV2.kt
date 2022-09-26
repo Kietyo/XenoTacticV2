@@ -9,7 +9,6 @@ import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.input_processors.*
-import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.state.EditorState
@@ -20,8 +19,6 @@ import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
 import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
-import com.xenotactic.korge.events.EscapeButtonActionEvent
-import com.xenotactic.korge.fleks.components.SelectedComponent
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
@@ -29,9 +26,9 @@ class EditorSceneV2 : Scene() {
         val gameWorld = World()
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
-            injections.setSingleton(GameMapDimensionsState(this, 10, 10))
-            injections.setSingleton(GameMapApi(this, eventBus))
-            injections.setSingleton(settingsContainer)
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, 10, 10))
+            injections.setSingletonOrThrow(GameMapApi(this, eventBus))
+            injections.setSingletonOrThrow(settingsContainer)
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
@@ -40,9 +37,9 @@ class EditorSceneV2 : Scene() {
         addComponent(mouseDragInputProcessor)
 
         engine.apply {
-            injections.setSingleton(EditorState())
-            injections.setSingleton(mouseDragInputProcessor)
-            injections.setSingleton(uiMapV2)
+            injections.setSingletonOrThrow(EditorState())
+            injections.setSingletonOrThrow(mouseDragInputProcessor)
+            injections.setSingletonOrThrow(uiMapV2)
         }
 
         gameWorld.apply {
@@ -61,7 +58,7 @@ class EditorSceneV2 : Scene() {
         addComponent(KeyInputProcessor(this, engine))
 
         addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
-            engine.injections.setSingleton(this)
+            engine.injections.setSingletonOrThrow(this)
         })
 
         val uiEditorButtonsV2 =

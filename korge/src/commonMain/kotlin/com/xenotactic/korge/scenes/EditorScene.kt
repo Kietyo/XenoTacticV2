@@ -67,19 +67,19 @@ class EditorScene : Scene() {
 
         val editorState = EditorState()
 
-        engine.injections.setSingleton(editorState)
-        engine.injections.setSingleton(
+        engine.injections.setSingletonOrThrow(editorState)
+        engine.injections.setSingletonOrThrow(
             GameMapControllerEComponent(
                 engine, eventBus, gameMap = gameMap
             )
         )
-        engine.injections.setSingleton(UIMapEComponent(uiMap))
-        engine.injections.setSingleton(mouseDragInputProcessor)
+        engine.injections.setSingletonOrThrow(UIMapEComponent(uiMap))
+        engine.injections.setSingletonOrThrow(mouseDragInputProcessor)
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
             centerXOnStage()
         }
-        engine.injections.setSingleton(NotificationTextEComponent(notificationText))
+        engine.injections.setSingletonOrThrow(NotificationTextEComponent(notificationText))
 
         world.apply {
             addComponentListener(RenderEntityComponentListener(world, engine))
@@ -93,7 +93,7 @@ class EditorScene : Scene() {
         addComponent(CameraInputProcessor(uiMap, engine))
         SelectorMouseProcessor(this, engine).let {
             addComponent(it)
-            engine.injections.setSingleton(it)
+            engine.injections.setSingletonOrThrow(it)
         }
         addComponent(editorPlacementInputProcessor)
 

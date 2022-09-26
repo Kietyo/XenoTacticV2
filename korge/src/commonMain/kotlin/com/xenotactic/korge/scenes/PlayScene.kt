@@ -5,11 +5,7 @@ import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
-import com.xenotactic.gamelogic.components.MapEntityComponent
-import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
@@ -22,8 +18,8 @@ import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
+import com.xenotactic.korge.state.GameMapPathState
 import com.xenotactic.korge.ui.UIMapV2
-import kotlin.random.Random
 
 class PlayScene : Scene() {
     override suspend fun SContainer.sceneInit() {
@@ -44,12 +40,14 @@ class PlayScene : Scene() {
         val gameWorld = World()
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
-            injections.setSingleton(GameMapDimensionsState(this, 30, 20))
-            injections.setSingleton(settingsContainer)
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30, 20))
+            injections.setSingletonOrThrow(settingsContainer)
+            injections.setSingletonOrThrow(GameMapPathState(this))
         }
-        val gameMapApi = GameMapApi(engine, eventBus)
-        engine.injections.setSingleton(gameMapApi)
         val uiMapV2 = UIMapV2(engine).addTo(this)
+        engine.injections.setSingletonOrThrow(uiMapV2)
+        val gameMapApi = GameMapApi(engine, eventBus)
+        engine.injections.setSingletonOrThrow(gameMapApi)
         uiMapV2.centerOnStage()
 
         val mouseDragInputProcessor =
@@ -57,8 +55,7 @@ class PlayScene : Scene() {
         addComponent(mouseDragInputProcessor)
 
         engine.apply {
-            injections.setSingleton(mouseDragInputProcessor)
-            injections.setSingleton(uiMapV2)
+            injections.setSingletonOrThrow(mouseDragInputProcessor)
         }
 
 
