@@ -5,10 +5,11 @@ import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.GRectInt
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
 import com.xenotactic.gamelogic.pathing.VerticalDirection
+import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
 
 import kotlin.math.*
@@ -24,7 +25,49 @@ value class WorldUnit(val value: Double) {
     operator fun minus(other: WorldUnit) = WorldUnit(value - other.value)
 }
 
-infix fun Int.to(that: Int): IntPoint = IntPoint(this, that)
+@JvmInline
+@Serializable
+value class GameUnit(val value: Int) {
+    operator fun plus(other: GameUnit): GameUnit {
+        return GameUnit(value + other.value)
+    }
+
+    operator fun plus(other: Int): GameUnit {
+        return GameUnit(value + other)
+    }
+
+    operator fun minus(y: GameUnit): GameUnit {
+        return GameUnit(value - y.value)
+    }
+
+    operator fun minus(y: Int): GameUnit {
+        return GameUnit(value - y)
+    }
+
+    operator fun times(i: GameUnit): GameUnit {
+        return GameUnit(value * i.value)
+    }
+    operator fun times(i: Int): GameUnit {
+        return GameUnit(value * i)
+    }
+
+    operator fun compareTo(i: Int): Int {
+        return value.compareTo(i)
+    }
+
+    operator fun compareTo(i: GameUnit): Int {
+        return value.compareTo(i.value)
+    }
+
+}
+
+fun Int.toGameUnit(): GameUnit = GameUnit(this)
+
+fun Double.toGameUnit(): GameUnit {
+    return GameUnit(this.toInt())
+}
+
+infix fun Int.to(that: Int): GameUnitPoint = GameUnitPoint(this, that)
 
 fun abs(f1: Float): Float {
     return if (f1 < 0) -f1 else f1
@@ -76,7 +119,7 @@ inline fun <T> measureTime(
 
 
 
-fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: Int, gameHeight: Int) =
+fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: GameUnit, gameHeight: GameUnit) =
     toWorldCoordinates(
         gridSize,
         entity.intPoint, gameWidth, gameHeight,
@@ -84,16 +127,16 @@ fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: Int, game
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, intPoint: IntPoint, gameWidth: Int, gameHeight: Int,
-    entityHeight: Int = 1
+    gridSize: Double, gameUnitPoint: GameUnitPoint, gameWidth: GameUnit, gameHeight: GameUnit,
+    entityHeight: GameUnit = GameUnit(1)
 ): Pair<WorldUnit, WorldUnit> =
     toWorldCoordinates(
         gridSize,
-        intPoint.x.toDouble(), intPoint.y.toDouble(), gameHeight, entityHeight
+        gameUnitPoint.x.value.toDouble(), gameUnitPoint.y.value.toDouble(), gameHeight, entityHeight
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, point: Point, gameHeight: Int, entityHeight: Int = 0
+    gridSize: Double, point: Point, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ): Pair<WorldUnit, WorldUnit> =
     toWorldCoordinates(
         gridSize,
@@ -101,14 +144,14 @@ fun toWorldCoordinates(
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, x: Double, y: Double, gameHeight: Int, entityHeight: Int = 0
-) = Pair(toWorldUnit(gridSize, x), toWorldUnit(gridSize, (gameHeight - y - entityHeight)))
+    gridSize: Double, x: Double, y: Double, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
+) = Pair(toWorldUnit(gridSize, x), toWorldUnit(gridSize, (gameHeight.value - y - entityHeight.value)))
 
 fun toWorldUnit(gridSize: Double, value: Int) = toWorldUnit(gridSize, value.toDouble())
 fun toWorldUnit(gridSize: Double, value: Double) = WorldUnit(gridSize * value)
 
-fun toWorldDimensions(width: Int, height: Int, gridSize: Double) =
-    Pair(WorldUnit(width * gridSize), WorldUnit(height * gridSize))
+fun toWorldDimensions(width: GameUnit, height: GameUnit, gridSize: Double) =
+    Pair(WorldUnit(width.value * gridSize), WorldUnit(height.value * gridSize))
 
 fun toWorldDimensions(entity: MapEntity, gridSize: Double) =
     toWorldDimensions(entity.width, entity.height, gridSize)

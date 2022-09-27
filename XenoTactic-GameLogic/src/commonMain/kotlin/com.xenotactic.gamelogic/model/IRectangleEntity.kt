@@ -2,41 +2,42 @@ package com.xenotactic.gamelogic.model
 
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
+import com.xenotactic.gamelogic.utils.GameUnit
 
 interface IRectangleEntity {
-    val x: Int
-    val y: Int
-    val width: Int
-    val height: Int
+    val x: GameUnit
+    val y: GameUnit
+    val width: GameUnit
+    val height: GameUnit
 
-    val blockIntPoints: Set<IntPoint>
+    val blockGameUnitPoints: Set<GameUnitPoint>
         get() {
-            val intPoints = mutableSetOf<IntPoint>()
-            for (i in 0 until width) {
-                for (j in 0 until height) {
-                    intPoints.add(IntPoint(x + i, y + j))
+            val gameUnitPoints = mutableSetOf<GameUnitPoint>()
+            for (i in 0 until width.value) {
+                for (j in 0 until height.value) {
+                    gameUnitPoints.add(GameUnitPoint(x.value + i, y.value + j))
                 }
             }
-            return intPoints.toSet()
+            return gameUnitPoints.toSet()
         }
 
-    val topLeftUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x, y + height - 1)
+    val topLeftUnitSquareGameUnitPoint: GameUnitPoint
+        get() = GameUnitPoint(x, y + height - 1)
 
-    val topRightUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x + width - 1, y + height - 1)
+    val topRightUnitSquareGameUnitPoint: GameUnitPoint
+        get() = GameUnitPoint(x + width - 1, y + height - 1)
 
-    val bottomLeftUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x, y)
+    val bottomLeftUnitSquareGameUnitPoint: GameUnitPoint
+        get() = GameUnitPoint(x, y)
 
-    val bottomRightUnitSquareIntPoint: IntPoint
-        get() = IntPoint(x + width - 1, y)
+    val bottomRightUnitSquareGameUnitPoint: GameUnitPoint
+        get() = GameUnitPoint(x + width - 1, y)
 
     val centerPoint: Point
-        get() = Point(x + width / 2f, y + height / 2f)
+        get() = Point(x.value + width.value / 2f, y.value + height.value / 2f)
 
     fun getRectangle(): Rectangle {
-        return Rectangle(x, y, width, height)
+        return Rectangle(x.value, y.value, width.value, height.value)
     }
 
     fun isFullyCoveredBy(
@@ -49,11 +50,11 @@ interface IRectangleEntity {
         entities: Iterable<IRectangleEntity>
     ): Boolean {
         if (entities.count() == 1) {
-            return blockIntPoints.intersect(entities.first().blockIntPoints).size == blockIntPoints.size
+            return blockGameUnitPoints.intersect(entities.first().blockGameUnitPoints).size == blockGameUnitPoints.size
         }
-        val visibleBlocks = this.blockIntPoints.toMutableSet()
+        val visibleBlocks = this.blockGameUnitPoints.toMutableSet()
         for (mapEntity in entities) {
-            val intersect = visibleBlocks.intersect(mapEntity.blockIntPoints)
+            val intersect = visibleBlocks.intersect(mapEntity.blockGameUnitPoints)
             visibleBlocks.removeAll(intersect)
             if (visibleBlocks.isEmpty()) return true
         }
@@ -62,8 +63,8 @@ interface IRectangleEntity {
 }
 
 data class RectangleEntity(
-    override val x: Int,
-    override val y: Int,
-    override val width: Int,
-    override val height: Int
+    override val x: GameUnit,
+    override val y: GameUnit,
+    override val width: GameUnit,
+    override val height: GameUnit
 ) : IRectangleEntity

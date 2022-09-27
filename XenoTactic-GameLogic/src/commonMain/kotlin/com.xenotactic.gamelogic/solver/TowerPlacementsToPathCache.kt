@@ -3,30 +3,30 @@ package solver
 import com.soywiz.kds.Array2
 import com.soywiz.kds.each
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.pathing.PathSequence
 import pathing.PathFinder
 
 import utils.TowerCache
 
 class TowerPlacementsToPathCache {
-    val cache = mutableMapOf<Set<IntPoint>, PathSequence?>()
+    val cache = mutableMapOf<Set<GameUnitPoint>, PathSequence?>()
 
     fun getShortestPath(
         map: GameMap, placementSpots: Array2<Boolean>,
         towerCache: TowerCache
     ): PathSequence? {
-        val spots = mutableSetOf<IntPoint>()
+        val spots = mutableSetOf<GameUnitPoint>()
         placementSpots.each { x, y, v ->
             if (v) {
-                spots.add(IntPoint(x, y))
+                spots.add(GameUnitPoint(x, y))
             }
         }
         return getShortestPath(map, spots, towerCache)
     }
 
     fun getShortestPath(
-        map: GameMap, placementSpots: Set<IntPoint>,
+        map: GameMap, placementSpots: Set<GameUnitPoint>,
         towerCache: TowerCache = TowerCache(map.width, map.height)
     ): PathSequence? {
         return cache.getOrPut(placementSpots) {

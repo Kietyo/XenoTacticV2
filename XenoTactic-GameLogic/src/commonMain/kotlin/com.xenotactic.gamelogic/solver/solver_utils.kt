@@ -1,11 +1,11 @@
 package solver
 
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 
-fun getAvailableTowerPlacementSpots(map: GameMap): List<IntPoint> {
-    val availableSpots = mutableListOf<IntPoint>()
+fun getAvailableTowerPlacementSpots(map: GameMap): List<GameUnitPoint> {
+    val availableSpots = mutableListOf<GameUnitPoint>()
     val pathingEntities = map.getPathingEntities()
     for (i in 0..(map.width - 2)) {
         for (j in 0..(map.height - 2)) {
@@ -16,7 +16,7 @@ fun getAvailableTowerPlacementSpots(map: GameMap): List<IntPoint> {
             if (pathingEntities.any { it.isFullyCoveredBy(candidate) }) {
                 continue
             }
-            availableSpots.add(candidate.intPoint)
+            availableSpots.add(candidate.gameUnitPoint)
         }
     }
     return availableSpots

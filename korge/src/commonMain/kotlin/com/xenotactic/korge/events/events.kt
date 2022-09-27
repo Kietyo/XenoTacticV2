@@ -6,6 +6,7 @@ import com.soywiz.korio.file.VfsFile
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GoalData
 
 object EscapeButtonActionEvent
@@ -50,10 +51,10 @@ data class UIEntityClickedEvent(
 )
 
 data class ResizeMapEvent(
-    val oldMapWidth: Int,
-    val oldMapHeight: Int,
-    val newMapWidth: Int,
-    val newMapHeight: Int
+    val oldMapWidth: GameUnit,
+    val oldMapHeight: GameUnit,
+    val newMapWidth: GameUnit,
+    val newMapHeight: GameUnit
 )
 
 object EntitySelectionChangedEvent

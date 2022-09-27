@@ -1,12 +1,16 @@
 package com.xenotactic.korge.scenes
 
+import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.components.MapEntityComponent
+import com.xenotactic.gamelogic.components.PathSequenceTraversalComponent
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
@@ -22,6 +26,7 @@ import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 import com.xenotactic.korge.ui.UIMapV2
+import pathing.PathSequenceTraversal
 
 class PlayScene : Scene() {
     override suspend fun SContainer.sceneInit() {
@@ -72,6 +77,24 @@ class PlayScene : Scene() {
 
         uiButton("Spawn creep") {
             alignBottomToBottomOfWindow()
+            onClick {
+                println("Spawn creep button clicked!")
+                gameWorld.addEntity {
+                    addComponentOrThrow(
+                        MapEntityComponent(
+                            MapEntityData.Monster
+                        )
+                    )
+                    val pathSequenceTraversal = PathSequenceTraversal(
+                        gameMapApi.gameMapPathState.shortestPath!!
+                    )
+                    addComponentOrThrow(
+                        PathSequenceTraversalComponent(
+                            pathSequenceTraversal
+                        )
+                    )
+                }
+            }
         }
 
         /**

@@ -15,9 +15,11 @@ import com.xenotactic.gamelogic.globals.GRID_SIZE
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.WorldUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.gamelogic.views.UIEntity
@@ -25,7 +27,6 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 
@@ -116,8 +117,8 @@ class UIMapV2(
         renderPathLines(gameMapPathState.shortestPath)
     }
 
-    fun getWorldCoordinates(x: Int, y: Int, entityHeight: Int = 0) =
-        Pair(x * gridSize, (mapHeight - y - entityHeight) * gridSize)
+    fun getWorldCoordinates(x: GameUnit, y: GameUnit, entityHeight: GameUnit = GameUnit(0)) =
+        Pair(WorldUnit(x * gridSize), WorldUnit((mapHeight - y - entityHeight) * gridSize))
 
     fun toWorldDimensions(width: Int, height: Int) = Pair(width * gridSize, height * gridSize)
 
@@ -301,7 +302,7 @@ class UIMapV2(
     ) {
         val (worldX, worldY) = toWorldCoordinates(
             gridSize,
-            IntPoint(gridX, gridY),
+            GameUnitPoint(gridX, gridY),
             mapWidth, mapHeight, entityHeight
         )
         val (worldWidth, worldHeight) = com.xenotactic.gamelogic.utils.toWorldDimensions(

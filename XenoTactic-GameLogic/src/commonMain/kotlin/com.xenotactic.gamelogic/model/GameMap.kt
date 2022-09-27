@@ -2,6 +2,7 @@ package com.xenotactic.gamelogic.model
 
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.firebase_models.FbGameMap
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.sequenceOfNullable
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -136,7 +137,7 @@ data class GameMap(
         }
 
         if (entity.isBlockingEntity) {
-            blockingPoints.removeAll(entity.blockIntPoints)
+            blockingPoints.removeAll(entity.blockGameUnitPoints)
         }
     }
 
@@ -161,10 +162,10 @@ data class GameMap(
         return intersectsBlockingEntities(entity.x, entity.y, entity.width, entity.height)
     }
 
-    fun intersectsBlockingEntities(x: Int, y: Int, width: Int, height: Int): Boolean {
-        for (i in 0 until width) {
-            for (j in 0 until height) {
-                if (blockingPoints.contains(x + i, y + j)) return true
+    fun intersectsBlockingEntities(x: GameUnit, y: GameUnit, width: GameUnit, height: GameUnit): Boolean {
+        for (i in 0 until width.value) {
+            for (j in 0 until height.value) {
+                if (blockingPoints.contains(x.value + i, y.value + j)) return true
             }
         }
         return false

@@ -9,7 +9,7 @@ fun getCenterPoint(
     sizeComponent: SizeComponent
 ): Point {
     return Point(
-        bottomLeftPositionComponent.x + sizeComponent.width / 2f,
-        bottomLeftPositionComponent.y + sizeComponent.height / 2f
+        bottomLeftPositionComponent.x.value + sizeComponent.width.value / 2f,
+        bottomLeftPositionComponent.y.value + sizeComponent.height.value / 2f
     )
 }

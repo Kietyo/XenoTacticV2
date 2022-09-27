@@ -2,7 +2,7 @@ package pathing
 
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.*
 import kotlin.math.sqrt
@@ -378,9 +378,9 @@ internal class SearcherTest {
             ),
             getAvailablePathingPointsFromBlockingEntities(
                 listOf(
-                    MapEntity.Rock(IntPoint(1, 1), 1, 1)
+                    MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)
                 ), 3, 3,
-                BlockingPointContainer.View.create(MapEntity.Rock(IntPoint(1, 1), 1, 1)),
+                BlockingPointContainer.View.create(MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)),
                 cornerPathingPointConfiguration = CornerPathingPointConfiguration.FULLY_ENABLED,
                 pathingPointPrecision = 0.1
             )
@@ -440,9 +440,9 @@ internal class SearcherTest {
             ),
             getAvailablePathingPointsFromBlockingEntities(
                 listOf(
-                    MapEntity.Rock(IntPoint(1, 1), 4, 2)
+                    MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)
                 ), 10, 10,
-                BlockingPointContainer.View.create(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+                BlockingPointContainer.View.create(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
                 cornerPathingPointConfiguration = CornerPathingPointConfiguration.FULLY_ENABLED,
                 pathingPointPrecision = 0.1
             )
@@ -454,14 +454,14 @@ internal class SearcherTest {
         assertTrue(
             lineIntersectsEntity(
                 Point(1.0, 1.0), Point(2.0, 2.0),
-                MapEntity.Rock(IntPoint(1, 1), 1, 1)
+                MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)
             )
         )
 
         assertTrue(
             lineIntersectsEntity(
                 Point(1.0, 1.0), Point(2.0, 2.0),
-                MapEntity.Rock(IntPoint(2, 2), 1, 1)
+                MapEntity.Rock(GameUnitPoint(2, 2), 1, 1)
             )
         )
     }

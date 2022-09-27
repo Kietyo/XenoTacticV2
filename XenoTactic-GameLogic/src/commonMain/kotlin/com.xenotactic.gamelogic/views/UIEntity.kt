@@ -13,11 +13,12 @@ import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
+import com.xenotactic.gamelogic.utils.GameUnit
 
 class UIEntity(
     val entityType: MapEntityType,
-    val entityWidth: Int,
-    val entityHeight: Int,
+    val entityWidth: GameUnit,
+    val entityHeight: GameUnit,
 //    val engine: Engine?,
     val gridSize: Double,
     val borderSize: Double,

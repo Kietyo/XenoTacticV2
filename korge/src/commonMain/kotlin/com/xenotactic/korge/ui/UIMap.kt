@@ -17,11 +17,10 @@ import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.RockCounterUtil
-import com.xenotactic.gamelogic.utils.WorldUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEntity
@@ -81,7 +80,7 @@ class UIMap(
     private val _drawnEntities = mutableMapOf<MapEntity, MutableList<UIEntity>>()
     private val _entityToDrawnText = mutableMapOf<MapEntity, Text>()
 
-    private val _drawnRockCounters = mutableMapOf<IntPoint, Text>()
+    private val _drawnRockCounters = mutableMapOf<GameUnitPoint, Text>()
 
     // Note that the order in which layers are initialized mattes here.
     private val _boardLayer = this.container {
@@ -186,7 +185,7 @@ class UIMap(
                         scaledHeight = _gridSize / 2
                         scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                     }
-                    _drawnRockCounters[IntPoint(x, y)] = component
+                    _drawnRockCounters[GameUnitPoint(x, y)] = component
                 }
             }
         }
@@ -410,7 +409,7 @@ class UIMap(
     fun renderEntityHighlightRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize,
-            IntPoint(gridX, gridY),
+            GameUnitPoint(gridX, gridY),
             gameMap.width, gameMap.height, entityHeight
         )
         val (worldWidth, worldHeight) = toWorldDimensions(
@@ -467,7 +466,7 @@ class UIMap(
                 } else {
                     val (worldX, worldY) = toWorldCoordinates(
                         _gridSize,
-                        data.entity.intPoint,
+                        data.entity.gameUnitPoint,
                         gameMap.width, gameMap.height, data.entity.height
                     )
                     val (worldWidth, worldHeight) = toWorldDimensions(data.entity, _gridSize)

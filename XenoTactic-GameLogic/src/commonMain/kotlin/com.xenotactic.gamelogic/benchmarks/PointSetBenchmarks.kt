@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.benchmarks
 
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import kotlinx.benchmark.*
 
 @State(Scope.Benchmark)
@@ -8,63 +8,63 @@ import kotlinx.benchmark.*
 @OutputTimeUnit(BenchmarkTimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
 class PointSetBenchmarks {
-    private val smallPointSet = setOf<IntPoint>(
-        IntPoint(1, 1),
-        IntPoint(2, 2),
-        IntPoint(3, 3),
+    private val smallPointSet = setOf<GameUnitPoint>(
+        GameUnitPoint(1, 1),
+        GameUnitPoint(2, 2),
+        GameUnitPoint(3, 3),
     )
 
-    private val mediumPointSet: Set<IntPoint> = mutableSetOf<IntPoint>().apply {
+    private val mediumPointSet: Set<GameUnitPoint> = mutableSetOf<GameUnitPoint>().apply {
         repeat(30) {
-            add(IntPoint(it, it))
+            add(GameUnitPoint(it, it))
         }
     }
 
     @Benchmark
-    fun init(): Set<IntPoint> {
-        return setOf<IntPoint>(
-            IntPoint(1, 1),
-            IntPoint(2, 2),
-            IntPoint(3, 3),
+    fun init(): Set<GameUnitPoint> {
+        return setOf<GameUnitPoint>(
+            GameUnitPoint(1, 1),
+            GameUnitPoint(2, 2),
+            GameUnitPoint(3, 3),
         )
     }
 
     @Benchmark
-    fun initMedium(): Set<IntPoint> {
-        return mutableSetOf<IntPoint>().apply {
+    fun initMedium(): Set<GameUnitPoint> {
+        return mutableSetOf<GameUnitPoint>().apply {
             repeat(30) {
-                add(IntPoint(it, it))
+                add(GameUnitPoint(it, it))
             }
         }
     }
 
     @Benchmark
-    fun addValueToImmutableSmallSet(): Set<IntPoint> {
-        return smallPointSet + IntPoint(50, 50)
+    fun addValueToImmutableSmallSet(): Set<GameUnitPoint> {
+        return smallPointSet + GameUnitPoint(50, 50)
     }
 
     @Benchmark
-    fun addValueToImmutableMediumSet(): Set<IntPoint> {
-        return mediumPointSet + IntPoint(50, 50)
+    fun addValueToImmutableMediumSet(): Set<GameUnitPoint> {
+        return mediumPointSet + GameUnitPoint(50, 50)
     }
 
     @Benchmark
     fun valueExists(): Boolean {
-        return smallPointSet.contains(IntPoint(1, 1))
+        return smallPointSet.contains(GameUnitPoint(1, 1))
     }
 
     @Benchmark
     fun valueDontExists(): Boolean {
-        return smallPointSet.contains(IntPoint(0, 0))
+        return smallPointSet.contains(GameUnitPoint(0, 0))
     }
 
     @Benchmark
-    fun clone(): Set<IntPoint> {
+    fun clone(): Set<GameUnitPoint> {
         return smallPointSet.toSet()
     }
 
     @Benchmark
-    fun cloneMedium(): Set<IntPoint> {
+    fun cloneMedium(): Set<GameUnitPoint> {
         return mediumPointSet.toSet()
     }
 }

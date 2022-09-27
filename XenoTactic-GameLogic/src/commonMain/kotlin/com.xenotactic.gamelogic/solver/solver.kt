@@ -2,7 +2,7 @@ package solver
 
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.EntitiesBlockingEntityUtil
 import com.xenotactic.gamelogic.utils.MapBlockingUtil
@@ -29,7 +29,7 @@ interface Solver {
 }
 
 data class SearchState(
-    val towerPlacements: Set<IntPoint>
+    val towerPlacements: Set<GameUnitPoint>
 ) {
     val numTowers: Int
         get() = towerPlacements.size
@@ -50,11 +50,11 @@ sealed class SearchResult {
 
 fun getNextTowerPlacementSpots(
     map: GameMap,
-    currentPlacements: Set<IntPoint>,
+    currentPlacements: Set<GameUnitPoint>,
     pathSequence: PathSequence,
-    towerPlacementSpots: List<IntPoint>,
+    towerPlacementSpots: List<GameUnitPoint>,
     towerCache: TowerCache
-): List<IntPoint> {
+): List<GameUnitPoint> {
     for (spot in currentPlacements) map.placeEntity(towerCache.getTower(spot.x, spot.y))
 
     val result = towerPlacementSpots.filter {
@@ -69,20 +69,20 @@ fun getNextTowerPlacementSpots(
 
 data class NextTowerPlacementSpotsOutput(
     // Points which neighbors a blocking entity or is touching the map walls on the sides
-    val neighborBlockingEntities: Set<IntPoint>,
+    val neighborBlockingEntities: Set<GameUnitPoint>,
     // Any remaining spots that are not categorized to the sets above.
-    val otherPlacementSpots: Set<IntPoint>
+    val otherPlacementSpots: Set<GameUnitPoint>
 )
 
 fun getNextTowerPlacementSpotsV2(
     map: GameMap,
-    currentPlacements: Set<IntPoint>,
+    currentPlacements: Set<GameUnitPoint>,
     pathSequence: PathSequence,
-    towerPlacementSpots: List<IntPoint>,
+    towerPlacementSpots: List<GameUnitPoint>,
     towerCache: TowerCache
 ): NextTowerPlacementSpotsOutput {
-    val neighborsBlockingEntities = mutableSetOf<IntPoint>()
-    val otherPlacementSpots = mutableSetOf<IntPoint>()
+    val neighborsBlockingEntities = mutableSetOf<GameUnitPoint>()
+    val otherPlacementSpots = mutableSetOf<GameUnitPoint>()
     for (spot in currentPlacements) map.placeEntity(towerCache.getTower(spot.x, spot.y))
 
     for (spot in towerPlacementSpots) {

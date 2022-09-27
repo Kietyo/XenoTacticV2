@@ -5,7 +5,7 @@ import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
@@ -148,7 +148,7 @@ class ObjectPlacementInputProcessor(
                     return
                 }
 
-                pointerAction.placementLocation = IntPoint(gridXToInt, gridYToInt)
+                pointerAction.placementLocation = GameUnitPoint(gridXToInt, gridYToInt)
                 uiMapView.renderHighlightingForPointerAction(pointerAction)
             }
 

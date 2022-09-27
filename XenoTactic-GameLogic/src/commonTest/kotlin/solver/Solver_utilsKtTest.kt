@@ -1,7 +1,7 @@
 package solver
 
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.to
@@ -16,7 +16,7 @@ internal class Solver_utilsKtTest {
         val map = GameMap(2 ,2)
 
         assertEquals(
-            listOf(IntPoint(0, 0)),
+            listOf(GameUnitPoint(0, 0)),
             solver.getAvailableTowerPlacementSpots(map)
         )
     }
@@ -70,7 +70,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.Start(0, 0))
 
                     assertEquals(
-                        emptyList<IntPoint>(),
+                        emptyList<GameUnitPoint>(),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
@@ -79,7 +79,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.Finish(0, 0))
 
                     assertEquals(
-                        emptyList<IntPoint>(),
+                        emptyList<GameUnitPoint>(),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
@@ -88,7 +88,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.CHECKPOINT.at(0, 0))
 
                     assertEquals(
-                        emptyList<IntPoint>(),
+                        emptyList<GameUnitPoint>(),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
@@ -97,7 +97,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.Rock(0, 0, 2, 2))
 
                     assertEquals(
-                        emptyList<IntPoint>(),
+                        emptyList<GameUnitPoint>(),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
@@ -106,7 +106,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.Tower(0, 0))
 
                     assertEquals(
-                        emptyList<IntPoint>(),
+                        emptyList<GameUnitPoint>(),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
@@ -115,7 +115,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.TELEPORT_IN.at(0, 0))
 
                     assertEquals(
-                        listOf(IntPoint(0, 0)),
+                        listOf(GameUnitPoint(0, 0)),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
@@ -124,7 +124,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.TELEPORT_OUT.at(0, 0))
 
                     assertEquals(
-                        emptyList<IntPoint>(),
+                        emptyList<GameUnitPoint>(),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
@@ -142,7 +142,7 @@ internal class Solver_utilsKtTest {
                     map.placeEntity(MapEntity.SpeedArea(1, 1, 1, 0.5))
 
                     assertEquals(
-                        listOf(IntPoint(0, 0)),
+                        listOf(GameUnitPoint(0, 0)),
                         getAvailableTowerPlacementSpots(map)
                     )
                 }

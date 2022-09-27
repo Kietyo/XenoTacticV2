@@ -4,6 +4,8 @@ import com.soywiz.korge.view.Text
 import com.soywiz.korge.view.View
 import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.views.UIEntity
 import pathing.PathSequenceTraversal
 
@@ -22,17 +24,17 @@ data class UIMapEntityTextComponent(
 object BlockingEntityComponent
 
 data class SizeComponent(
-    val width: Int,
-    val height: Int
+    val width: GameUnit,
+    val height: GameUnit
 ) {
     companion object {
-        val SIZE_2X2_COMPONENT = SizeComponent(2, 2)
+        val SIZE_2X2_COMPONENT = SizeComponent(2.toGameUnit(), 2.toGameUnit())
     }
 }
 
 // Component representing the bottom left position of an entity.
 data class BottomLeftPositionComponent(
-    val x: Int, val y: Int
+    val x: GameUnit, val y: GameUnit
 )
 
 data class PathSequenceTraversalComponent(

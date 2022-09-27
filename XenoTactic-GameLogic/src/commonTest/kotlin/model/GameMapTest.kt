@@ -2,7 +2,7 @@ package model
 
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.Path
@@ -23,9 +23,9 @@ internal class GameMapTest {
     @Test
     fun getAllRocksAtPoint_oneRock_1x1() {
         val map = GameMap(10, 10)
-        map.placeEntity(MapEntity.Rock(IntPoint(1, 1), 1, 1))
+        map.placeEntity(MapEntity.Rock(GameUnitPoint(1, 1), 1, 1))
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 1, 1)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)),
             map.getAllRocksAtPoint(1, 1)
         )
         assertTrue(map.getAllRocksAtPoint(0, 0).count() == 0)
@@ -41,37 +41,37 @@ internal class GameMapTest {
     @Test
     fun getAllRocksAtPoint_oneRock_4x2() {
         val map = GameMap(10, 10)
-        map.placeEntity(MapEntity.Rock(IntPoint(1, 1), 4, 2))
+        map.placeEntity(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2))
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(1, 1)
         )
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(2, 1)
         )
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(3, 1)
         )
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(4, 1)
         )
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(1, 2)
         )
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(2, 1)
         )
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(3, 1)
         )
         assertContentEquals(
-            sequenceOf(MapEntity.Rock(IntPoint(1, 1), 4, 2)),
+            sequenceOf(MapEntity.Rock(GameUnitPoint(1, 1), 4, 2)),
             map.getAllRocksAtPoint(4, 1)
         )
     }
@@ -79,11 +79,11 @@ internal class GameMapTest {
     @Test
     fun removeEntity_oneEntity() {
         val gameMap = GameMap(10, 10)
-        gameMap.placeEntity(MapEntity.Rock(IntPoint(1, 1), 2, 2))
+        gameMap.placeEntity(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2))
 
-        assertContentEquals(listOf(MapEntity.Rock(IntPoint(1, 1), 2, 2)), gameMap.getAllEntities())
+        assertContentEquals(listOf(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)), gameMap.getAllEntities())
 
-        gameMap.removeEntity(MapEntity.Rock(IntPoint(1, 1), 2, 2))
+        gameMap.removeEntity(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2))
 
         assertTrue(gameMap.getAllEntities().isEmpty())
     }
@@ -91,21 +91,21 @@ internal class GameMapTest {
     @Test
     fun removeEntity_twoOfSameEntity_removeOnlyOne() {
         val gameMap = GameMap(10, 10)
-        gameMap.placeEntity(MapEntity.Rock(IntPoint(1, 1), 2, 2))
-        gameMap.placeEntity(MapEntity.Rock(IntPoint(1, 1), 2, 2))
+        gameMap.placeEntity(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2))
+        gameMap.placeEntity(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2))
 
         assertContentEquals(
             listOf(
-                MapEntity.Rock(IntPoint(1, 1), 2, 2),
-                MapEntity.Rock(IntPoint(1, 1), 2, 2)
+                MapEntity.Rock(GameUnitPoint(1, 1), 2, 2),
+                MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
             ), gameMap.getAllEntities()
         )
 
-        gameMap.removeEntity(MapEntity.Rock(IntPoint(1, 1), 2, 2))
+        gameMap.removeEntity(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2))
 
         assertContentEquals(
             listOf(
-                MapEntity.Rock(IntPoint(1, 1), 2, 2)
+                MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
             ), gameMap.getAllEntities()
         )
     }

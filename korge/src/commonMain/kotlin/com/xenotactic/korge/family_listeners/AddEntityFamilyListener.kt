@@ -8,6 +8,7 @@ import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.MapEntityData
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.gamelogic.views.UIEntity
@@ -58,8 +59,8 @@ class AddEntityFamilyListener(
         if (text != null) {
             val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
             val (centerWorldX, centerWorldY) = uiMapV2.getWorldCoordinates(
-                centerPoint.x.toInt(),
-                centerPoint.y.toInt()
+                centerPoint.x.toGameUnit(),
+                centerPoint.y.toGameUnit()
             )
             val textView = makeEntityLabelText(text).apply {
                 addTo(uiMapV2._entityLabelLayer)
@@ -85,3 +86,5 @@ class AddEntityFamilyListener(
     }
 
 }
+
+

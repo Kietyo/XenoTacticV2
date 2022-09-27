@@ -285,8 +285,8 @@ fun getAvailablePathingPointsFromBlockingEntities(
         availablePoints.addAll(
             getPathingPointsForUnitSquare(
                 PathingPointsForUnitSquareConfiguration(
-                    entity.topLeftUnitSquareIntPoint.x,
-                    entity.topLeftUnitSquareIntPoint.y,
+                    entity.topLeftUnitSquareGameUnitPoint.x,
+                    entity.topLeftUnitSquareGameUnitPoint.y,
                     mapWidth,
                     mapHeight,
                     calculateTopLeft = cornerPathingPointConfiguration,
@@ -301,8 +301,8 @@ fun getAvailablePathingPointsFromBlockingEntities(
         availablePoints.addAll(
             getPathingPointsForUnitSquare(
                 PathingPointsForUnitSquareConfiguration(
-                    entity.topRightUnitSquareIntPoint.x,
-                    entity.topRightUnitSquareIntPoint.y,
+                    entity.topRightUnitSquareGameUnitPoint.x,
+                    entity.topRightUnitSquareGameUnitPoint.y,
                     mapWidth,
                     mapHeight,
                     calculateTopLeft = CornerPathingPointConfiguration.DISABLED,
@@ -317,8 +317,8 @@ fun getAvailablePathingPointsFromBlockingEntities(
         availablePoints.addAll(
             getPathingPointsForUnitSquare(
                 PathingPointsForUnitSquareConfiguration(
-                    entity.bottomLeftUnitSquareIntPoint.x,
-                    entity.bottomLeftUnitSquareIntPoint.y,
+                    entity.bottomLeftUnitSquareGameUnitPoint.x,
+                    entity.bottomLeftUnitSquareGameUnitPoint.y,
                     mapWidth,
                     mapHeight,
                     calculateTopLeft = CornerPathingPointConfiguration.DISABLED,
@@ -333,8 +333,8 @@ fun getAvailablePathingPointsFromBlockingEntities(
         availablePoints.addAll(
             getPathingPointsForUnitSquare(
                 PathingPointsForUnitSquareConfiguration(
-                    entity.bottomRightUnitSquareIntPoint.x,
-                    entity.bottomRightUnitSquareIntPoint.y,
+                    entity.bottomRightUnitSquareGameUnitPoint.x,
+                    entity.bottomRightUnitSquareGameUnitPoint.y,
                     mapWidth,
                     mapHeight,
                     calculateTopLeft = CornerPathingPointConfiguration.DISABLED,

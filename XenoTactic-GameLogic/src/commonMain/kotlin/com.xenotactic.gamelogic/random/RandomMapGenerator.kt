@@ -122,7 +122,7 @@ class RandomMapGenerator {
             addedTpIns.add(teleportIn)
 
             var teleportOut: MapEntity.TeleportOut
-            val attemptedPlacementPoints = mutableSetOf<IntPoint>()
+            val attemptedPlacementPoints = mutableSetOf<GameUnitPoint>()
             do {
                 numTotalAttempts++
                 if (numTotalAttempts >= config.failureAfterTotalAttempts) {
@@ -229,8 +229,8 @@ class RandomMapGenerator {
         }
     }
 
-    fun getRandomPointWithinMapBounds(entityType: MapEntity): IntPoint {
-        return IntPoint(
+    fun getRandomPointWithinMapBounds(entityType: MapEntity): GameUnitPoint {
+        return GameUnitPoint(
             random.nextInt(0, map.width - entityType.width + 1),
             random.nextInt(0, map.height - entityType.height + 1)
         )

@@ -1,13 +1,13 @@
 package test_utils
 
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 
 class TowerPlacementLogger {
-    var towerPlacements = mutableListOf<IntPoint>()
+    var towerPlacements = mutableListOf<GameUnitPoint>()
 
     fun logTowerPlacement(tower: MapEntity.Tower) {
-        towerPlacements.add(IntPoint(tower.x, tower.y))
+        towerPlacements.add(GameUnitPoint(tower.x, tower.y))
     }
 
     fun toTowerPlacementCodeString(): String {

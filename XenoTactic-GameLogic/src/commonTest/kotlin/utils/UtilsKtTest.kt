@@ -3,12 +3,9 @@ package utils
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.RectangleInt
 import com.xenotactic.gamelogic.model.GRectInt
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle
-import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndRectangle
-import com.xenotactic.gamelogic.utils.measureTime
-import com.xenotactic.gamelogic.utils.rectangleIntersects
+import com.xenotactic.gamelogic.utils.*
 import test_utils.assertPointSetEquals
 import test_utils.randomVector
 import kotlin.math.min
@@ -540,7 +537,7 @@ internal class UtilsKtTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest1() {
-        val tpIn = MapEntity.TeleportIn(0, IntPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
         assertPointSetEquals(
             setOf(
                 Point(3.9999115f, 3.0f),
@@ -556,7 +553,7 @@ internal class UtilsKtTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest1_reversed() {
-        val tpIn = MapEntity.TeleportIn(0, IntPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
         assertPointSetEquals(
             setOf(
                 Point(3.9999995f, 3.0f),
@@ -572,7 +569,7 @@ internal class UtilsKtTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest2() {
-        val tpIn = MapEntity.TeleportIn(0, IntPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
         assertEquals(
             setOf<Point>(),
             getIntersectionPointsOfLineSegmentAndCircle(
@@ -783,5 +780,10 @@ internal class UtilsKtTest {
             GRectInt(0, 0, 3, 3),
             GRectInt(0, 3, 3, 3),
         ))
+    }
+
+    @Test
+    fun gameUnit_minus() {
+        assertEquals(GameUnit(5) - GameUnit(2), GameUnit(3))
     }
 }

@@ -1,8 +1,7 @@
 package solver
 
-import com.soywiz.kds.PriorityQueue
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import pathing.PathFinder
 import utils.TowerCache
 import kotlin.math.sign
@@ -83,7 +82,7 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
                 return result
             }
 
-            val pointsOrderedByPathLength = PriorityQueue<Pair<Double, IntPoint>> { o1, o2 ->
+            val pointsOrderedByPathLength = PriorityQueue<Pair<Double, GameUnitPoint>> { o1, o2 ->
                 (o2.first - o1.first).sign.toInt()
             }
 

@@ -1,5 +1,7 @@
 package com.xenotactic.gamelogic.model
 
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlinx.serialization.Serializable
 
 enum class MapEntityType {
@@ -71,21 +73,21 @@ sealed class MapEntity : IRectangleEntity {
 
     abstract val friendlyName: String
 
-    val intPoint: IntPoint
-        get() = IntPoint(x, y)
+    val gameUnitPoint: GameUnitPoint
+        get() = GameUnitPoint(x, y)
 
-    val topY: Int
-        get() = intPoint.y + height
+    val topY: GameUnit
+        get() = gameUnitPoint.y + height
 
-    val rightX: Int
-        get() = intPoint.x + width
+    val rightX: GameUnit
+        get() = gameUnitPoint.x + width
 
     fun at(x: Int, y: Int): MapEntity {
-        val p = IntPoint(x, y)
+        val p = GameUnitPoint(x, y)
         return at(p)
     }
 
-    fun at(p: IntPoint): MapEntity {
+    fun at(p: GameUnitPoint): MapEntity {
         return when (this) {
             is Checkpoint -> Checkpoint(this.sequenceNumber, p.x, p.y)
             is Finish -> Finish(p.x, p.y)
@@ -120,7 +122,7 @@ sealed class MapEntity : IRectangleEntity {
 
     // Returns whether or not this entity intersects with the provided entity.
     fun intersectsEntity2(entity: MapEntity): Boolean {
-        return this.blockIntPoints.intersect(entity.blockIntPoints).isNotEmpty()
+        return this.blockGameUnitPoints.intersect(entity.blockGameUnitPoints).isNotEmpty()
     }
 
     fun intersectsEntity(entity: MapEntity): Boolean {
@@ -165,43 +167,43 @@ sealed class MapEntity : IRectangleEntity {
     }
 
     @Serializable
-    data class Start(override val x: Int, override val y: Int) : MapEntity() {
-        override val width: Int = 2
-        override val height: Int = 2
+    data class Start(override val x: GameUnit, override val y: GameUnit) : MapEntity() {
+        override val width: GameUnit = 2.toGameUnit()
+        override val height: GameUnit = 2.toGameUnit()
         override val type: MapEntityType = MapEntityType.START
         override val friendlyName: String = "Start"
         override val isBlockingEntity: Boolean = false
 
-        constructor(intPoint: IntPoint) : this(intPoint.x, intPoint.y)
+        constructor(gameUnitPoint: GameUnitPoint) : this(gameUnitPoint.x, gameUnitPoint.y)
     }
 
     @Serializable
-    data class Finish(override val x: Int, override val y: Int) : MapEntity() {
-        override val width: Int = 2
-        override val height: Int = 2
+    data class Finish(override val x: GameUnit, override val y: GameUnit) : MapEntity() {
+        override val width: GameUnit = 2.toGameUnit()
+        override val height: GameUnit = 2.toGameUnit()
         override val type: MapEntityType = MapEntityType.FINISH
         override val friendlyName: String = "Finish"
         override val isBlockingEntity: Boolean = false
 
-        constructor(intPoint: IntPoint) : this(intPoint.x, intPoint.y)
+        constructor(gameUnitPoint: GameUnitPoint) : this(gameUnitPoint.x, gameUnitPoint.y)
     }
 
     @Serializable
     data class TeleportIn(
         val sequenceNumber: Int,
-        override val x: Int,
-        override val y: Int
+        override val x: GameUnit,
+        override val y: GameUnit
     ) : MapEntity(
     ) {
-        override val width: Int = 2
-        override val height: Int = 2
+        override val width: GameUnit = 2.toGameUnit()
+        override val height: GameUnit = 2.toGameUnit()
         override val type: MapEntityType = MapEntityType.TELEPORT_IN
         override val friendlyName: String = "Teleport In $sequenceNumber"
         override val isBlockingEntity: Boolean = false
 
-        constructor(sequenceNumber: Int, intPoint: IntPoint) : this(
-            sequenceNumber, intPoint.x,
-            intPoint.y
+        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitPoint) : this(
+            sequenceNumber, gameUnitPoint.x,
+            gameUnitPoint.y
         )
 
         // The ordinal sequence number (starts at 1).
@@ -218,19 +220,19 @@ sealed class MapEntity : IRectangleEntity {
     @Serializable
     data class TeleportOut(
         val sequenceNumber: Int,
-        override val x: Int,
-        override val y: Int
+        override val x: GameUnit,
+        override val y: GameUnit
     ) : MapEntity(
     ) {
-        override val width: Int = 2
-        override val height: Int = 2
+        override val width: GameUnit = 2.toGameUnit()
+        override val height: GameUnit = 2.toGameUnit()
         override val type: MapEntityType = MapEntityType.TELEPORT_OUT
         override val friendlyName: String = "Teleport Out $sequenceNumber"
         override val isBlockingEntity: Boolean = false
 
-        constructor(sequenceNumber: Int, intPoint: IntPoint) : this(
-            sequenceNumber, intPoint.x,
-            intPoint.y
+        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitPoint) : this(
+            sequenceNumber, gameUnitPoint.x,
+            gameUnitPoint.y
         )
 
         // The ordinal sequence number (starts at 1).
@@ -240,9 +242,9 @@ sealed class MapEntity : IRectangleEntity {
 
     @Serializable
     data class Rock(
-        override val x: Int, override val y: Int,
-        override val width: Int,
-        override val height: Int,
+        override val x: GameUnit, override val y: GameUnit,
+        override val width: GameUnit,
+        override val height: GameUnit,
     ) : MapEntity(
     ) {
         override val type: MapEntityType = MapEntityType.ROCK
@@ -250,8 +252,8 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Rock (${width}x${height})"
         override val isBlockingEntity: Boolean = true
 
-        constructor(intPoint: IntPoint, width: Int, height: Int) : this(
-            intPoint.x, intPoint.y,
+        constructor(gameUnitPoint: GameUnitPoint, width: GameUnit, height: GameUnit) : this(
+            gameUnitPoint.x, gameUnitPoint.y,
             width, height
         )
 
@@ -267,19 +269,19 @@ sealed class MapEntity : IRectangleEntity {
     @Serializable
     data class Checkpoint(
         val sequenceNumber: Int,
-        override val x: Int,
-        override val y: Int
+        override val x: GameUnit,
+        override val y: GameUnit
     ) :
         MapEntity() {
-        override val width: Int = 2
-        override val height: Int = 2
+        override val width: GameUnit = 2.toGameUnit()
+        override val height: GameUnit = 2.toGameUnit()
         override val type: MapEntityType = MapEntityType.CHECKPOINT
         override val friendlyName: String = "Checkpoint $sequenceNumber"
         override val isBlockingEntity: Boolean = false
 
-        constructor(sequenceNumber: Int, intPoint: IntPoint) : this(
-            sequenceNumber, intPoint.x,
-            intPoint.y
+        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitPoint) : this(
+            sequenceNumber, gameUnitPoint.x,
+            gameUnitPoint.y
         )
 
         // The ordinal sequence number (starts at 1).
@@ -288,26 +290,26 @@ sealed class MapEntity : IRectangleEntity {
     }
 
     @Serializable
-    data class Tower(override val x: Int, override val y: Int) : MapEntity() {
-        override val width: Int = 2
-        override val height: Int = 2
+    data class Tower(override val x: GameUnit, override val y: GameUnit) : MapEntity() {
+        override val width: GameUnit = 2.toGameUnit()
+        override val height: GameUnit = 2.toGameUnit()
         override val type: MapEntityType = MapEntityType.TOWER
         override val friendlyName: String = "Tower"
         override val isBlockingEntity: Boolean = true
 
-        constructor(intPoint: IntPoint) : this(
-            intPoint.x,
-            intPoint.y
+        constructor(gameUnitPoint: GameUnitPoint) : this(
+            gameUnitPoint.x,
+            gameUnitPoint.y
         )
     }
 
     @Serializable
     data class SmallBlocker(
-        override val x: Int,
-        override val y: Int,
+        override val x: GameUnit,
+        override val y: GameUnit,
     ) : MapEntity() {
-        override val width: Int = 1
-        override val height: Int = 1
+        override val width: GameUnit = 1.toGameUnit()
+        override val height: GameUnit = 1.toGameUnit()
         override val type: MapEntityType = MapEntityType.SMALL_BLOCKER
         override val friendlyName: String = "Small Blocker"
         override val isBlockingEntity: Boolean = true
@@ -315,13 +317,13 @@ sealed class MapEntity : IRectangleEntity {
 
     @Serializable
     data class SpeedArea(
-        override val x: Int,
-        override val y: Int,
-        val radius: Int,
+        override val x: GameUnit,
+        override val y: GameUnit,
+        val radius: GameUnit,
         val speedEffect: Double
     ) : MapEntity() {
-        override val width: Int = radius * 2
-        override val height: Int = radius * 2
+        override val width: GameUnit = radius * 2
+        override val height: GameUnit = radius * 2
         override val type: MapEntityType = MapEntityType.SPEED_AREA
         override val isBlockingEntity: Boolean = false
         override val friendlyName: String = "Speed Area"
@@ -344,21 +346,21 @@ sealed class MapEntity : IRectangleEntity {
     }
 
     companion object {
-        val CHECKPOINT = Checkpoint(0, 0, 0)
-        val TELEPORT_IN = TeleportIn(0, 0, 0)
-        val TELEPORT_OUT = TeleportOut(0, 0, 0)
-        val ROCK_1X1 = Rock(0, 0, 1, 1)
-        val ROCK_2X4 = Rock(0, 0, 2, 4)
-        val ROCK_4X2 = Rock(0, 0, 4, 2)
+        val CHECKPOINT = Checkpoint(0, 0.toGameUnit(), 0.toGameUnit())
+        val TELEPORT_IN = TeleportIn(0, 0.toGameUnit(), 0.toGameUnit())
+        val TELEPORT_OUT = TeleportOut(0, 0.toGameUnit(), 0.toGameUnit())
+        val ROCK_1X1 = Rock(0.toGameUnit(), 0.toGameUnit(), 1.toGameUnit(), 1.toGameUnit())
+        val ROCK_2X4 = Rock(0.toGameUnit(), 0.toGameUnit(), 2.toGameUnit(), 4.toGameUnit())
+        val ROCK_4X2 = Rock(0.toGameUnit(), 0.toGameUnit(), 4.toGameUnit(), 2.toGameUnit())
 
         // Returns true if the `rhs` fully covers the `lhs`
         fun fullyCovers(lhs: MapEntity, rhs: MapEntity): Boolean {
-            val lhsPoints = lhs.blockIntPoints
-            val rhsPoints = rhs.blockIntPoints
+            val lhsPoints = lhs.blockGameUnitPoints
+            val rhsPoints = rhs.blockGameUnitPoints
             return lhsPoints.intersect(rhsPoints).size == lhsPoints.size
         }
     }
-}
+
 
 data class TeleportPair(
     val teleportIn: IRectangleEntity,

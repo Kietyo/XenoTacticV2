@@ -3,14 +3,14 @@ package model
 
 import kotlin.test.*
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.utils.measureTime
 
 internal class MapEntityTest {
     @Test
     @Ignore
     fun intersectsUnitBlock_profile() {
-        val rock = MapEntity.Rock(IntPoint(1,1), 2, 2)
+        val rock = MapEntity.Rock(GameUnitPoint(1,1), 2, 2)
         var timeA = 0L
         var timeB = 0L
         repeat (1000000) {
@@ -50,29 +50,29 @@ internal class MapEntityTest {
 
     @Test
     fun unitSquarePoints() {
-        val entity = MapEntity.Rock(IntPoint(1, 1), 1, 1)
+        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)
 
         assertEquals(
-            IntPoint(1, 1),
-            entity.topLeftUnitSquareIntPoint
+            GameUnitPoint(1, 1),
+            entity.topLeftUnitSquareGameUnitPoint
         )
         assertEquals(
-            IntPoint(1, 1),
-            entity.topRightUnitSquareIntPoint
+            GameUnitPoint(1, 1),
+            entity.topRightUnitSquareGameUnitPoint
         )
         assertEquals(
-            IntPoint(1, 1),
-            entity.bottomLeftUnitSquareIntPoint
+            GameUnitPoint(1, 1),
+            entity.bottomLeftUnitSquareGameUnitPoint
         )
         assertEquals(
-            IntPoint(1, 1),
-            entity.bottomRightUnitSquareIntPoint
+            GameUnitPoint(1, 1),
+            entity.bottomRightUnitSquareGameUnitPoint
         )
     }
 
     @Test
     fun intersectsBlock() {
-        val entity = MapEntity.Rock(IntPoint(1, 1), 1, 1)
+        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)
         assertFalse(entity.intersectsUnitBlock(0, 0))
         assertFalse(entity.intersectsUnitBlock(1, 0))
         assertFalse(entity.intersectsUnitBlock(1, 2))
@@ -86,7 +86,7 @@ internal class MapEntityTest {
 
     @Test
     fun intersectsBlock2() {
-        val entity = MapEntity.Rock(IntPoint(1, 1), 2, 2)
+        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
         assertFalse(entity.intersectsUnitBlock(0, 0))
         assertFalse(entity.intersectsUnitBlock(0, 1))
         assertFalse(entity.intersectsUnitBlock(0, 2))
@@ -111,50 +111,50 @@ internal class MapEntityTest {
 
     @Test
     fun intersectsEntity() {
-        val entity = MapEntity.Rock(IntPoint(1, 1), 2, 2)
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(0, 0), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(0, 1), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(0, 2), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(0, 3), 1, 1)))
+        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 0), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 1), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 2), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 3), 1, 1)))
 
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(3, 0), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(3, 1), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(3, 2), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(3, 3), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 0), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 1), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 2), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 3), 1, 1)))
 
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(1, 0), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(2, 0), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 0), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 0), 1, 1)))
 
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(1, 3), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(IntPoint(2, 3), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 3), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 3), 1, 1)))
 
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(IntPoint(1, 1), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(IntPoint(1, 2), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(IntPoint(2, 1), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(IntPoint(2, 2), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(IntPoint(1, 1), 2, 2)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 2), 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 1), 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 2), 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)))
     }
 
     @Test
     fun intersectsEntity2() {
-        val entity1 = MapEntity.Rock(IntPoint(1, 1), 2, 2)
-        val entity2 = MapEntity.Rock(IntPoint(2, 2), 2, 2)
+        val entity1 = MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
+        val entity2 = MapEntity.Rock(GameUnitPoint(2, 2), 2, 2)
         assertTrue(entity1.intersectsEntity(entity2))
         assertTrue(entity2.intersectsEntity(entity1))
     }
 
     @Test
     fun intersectsEntity3() {
-        val entity1 = MapEntity.Rock(IntPoint(7, 7), 2, 2)
-        val entity2 = MapEntity.Rock(IntPoint(8, 7), 2, 2)
+        val entity1 = MapEntity.Rock(GameUnitPoint(7, 7), 2, 2)
+        val entity2 = MapEntity.Rock(GameUnitPoint(8, 7), 2, 2)
         assertTrue(entity1.intersectsEntity(entity2))
         assertTrue(entity2.intersectsEntity(entity1))
     }
 
     @Test
     fun intersectsEntity4() {
-        val entity1 = MapEntity.Rock(IntPoint(3, 7), 2, 2)
-        val entity2 = MapEntity.Rock(IntPoint(3, 8), 2, 2)
+        val entity1 = MapEntity.Rock(GameUnitPoint(3, 7), 2, 2)
+        val entity2 = MapEntity.Rock(GameUnitPoint(3, 8), 2, 2)
         assertTrue(entity1.intersectsEntity(entity2))
         assertTrue(entity2.intersectsEntity(entity1))
     }
@@ -171,20 +171,20 @@ internal class MapEntityTest {
     fun fullyCovers() {
         assertFalse(
             MapEntity.fullyCovers(
-                MapEntity.Rock(IntPoint(3, 7), 2, 2),
-                MapEntity.Rock(IntPoint(3, 8), 2, 2)
+                MapEntity.Rock(GameUnitPoint(3, 7), 2, 2),
+                MapEntity.Rock(GameUnitPoint(3, 8), 2, 2)
             )
         )
         assertTrue(
             MapEntity.fullyCovers(
-                MapEntity.Rock(IntPoint(3, 7), 2, 2),
-                MapEntity.Rock(IntPoint(3, 7), 2, 2)
+                MapEntity.Rock(GameUnitPoint(3, 7), 2, 2),
+                MapEntity.Rock(GameUnitPoint(3, 7), 2, 2)
             )
         )
         assertFalse(
             MapEntity.fullyCovers(
-                MapEntity.Rock(IntPoint(1, 1), 4, 2),
-                MapEntity.Rock(IntPoint(2, 1), 2, 2)
+                MapEntity.Rock(GameUnitPoint(1, 1), 4, 2),
+                MapEntity.Rock(GameUnitPoint(2, 1), 2, 2)
             )
         )
     }

@@ -1,5 +1,7 @@
 package com.xenotactic.gamelogic.model
 
+import com.xenotactic.gamelogic.utils.GameUnit
+
 sealed class MapEntityData {
     object Start : MapEntityData()
     object Finish : MapEntityData()
@@ -15,7 +17,7 @@ sealed class MapEntityData {
     data class Checkpoint(val sequenceNumber: Int) : MapEntityData() {
         val ordinalSequenceNumber get() = sequenceNumber + 1
     }
-    data class SpeedArea(val radius: Int, val speedEffect: Double) : MapEntityData() {
+    data class SpeedArea(val radius: GameUnit, val speedEffect: Double) : MapEntityData() {
         val speedText get() = "${(speedEffect * 100).toInt()}%"
     }
 

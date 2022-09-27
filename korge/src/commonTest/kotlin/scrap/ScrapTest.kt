@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.korge_utils.toGameMap
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import pathing.PathFinder
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
@@ -22,7 +22,7 @@ internal class ScrapTest {
 
     @Test
     fun scrap1() {
-        val entity = MapEntity.TeleportIn(1, IntPoint(2, 3))
+        val entity = MapEntity.TeleportIn(1, GameUnitPoint(2, 3))
 
         println(Json.encodeToString(entity))
     }

@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.containers
 
 import kotlinx.serialization.Serializable
-import com.xenotactic.gamelogic.model.IntPoint
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
 
@@ -26,7 +26,7 @@ sealed class BlockingPointContainer(
         private val mutablePointToCounter: MutableMap<Int, MutableMap<Int, Int>> = mutableMapOf()
     ) : BlockingPointContainer(mutablePointToCounter) {
         fun add(entity: IRectangleEntity) {
-            addAll(entity.blockIntPoints)
+            addAll(entity.blockGameUnitPoints)
         }
 
         fun add(x: Int, y: Int) {
@@ -38,9 +38,9 @@ sealed class BlockingPointContainer(
 
         }
 
-        fun addAll(intPoints: Collection<IntPoint>) {
-            for (point in intPoints) {
-                add(point.x, point.y)
+        fun addAll(gameUnitPoints: Collection<GameUnitPoint>) {
+            for (point in gameUnitPoints) {
+                add(point.x.value, point.y.value)
             }
         }
 
@@ -56,9 +56,9 @@ sealed class BlockingPointContainer(
             }
         }
 
-        fun removeAll(intPoints: Collection<IntPoint>) {
-            for (point in intPoints) {
-                remove(point.x, point.y)
+        fun removeAll(gameUnitPoints: Collection<GameUnitPoint>) {
+            for (point in gameUnitPoints) {
+                remove(point.x.value, point.y.value)
             }
         }
 
