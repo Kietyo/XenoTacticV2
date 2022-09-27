@@ -37,7 +37,7 @@ enum class MapEntityType {
                 }
             }.toSet()
 
-        fun createEntity(entityType: MapEntityType, x: Int, y: Int): MapEntity {
+        fun createEntity(entityType: MapEntityType, x: GameUnit, y: GameUnit): MapEntity {
             return when (entityType) {
                 START -> MapEntity.Start(x, y)
                 FINISH -> MapEntity.Finish(x, y)
@@ -107,7 +107,7 @@ sealed class MapEntity : IRectangleEntity {
 
     // Returns whether or not this entity intersects with a 1x1 block
     // at the given x, y position
-    fun intersectsUnitBlock(unitX: Int, unitY: Int): Boolean {
+    fun intersectsUnitBlock(unitX: GameUnit, unitY: GameUnit): Boolean {
         return unitX >= this.x && unitX <= this.rightX &&
                 unitY >= this.y && unitY <= this.topY &&
                 run {
@@ -360,6 +360,7 @@ sealed class MapEntity : IRectangleEntity {
             return lhsPoints.intersect(rhsPoints).size == lhsPoints.size
         }
     }
+}
 
 
 data class TeleportPair(

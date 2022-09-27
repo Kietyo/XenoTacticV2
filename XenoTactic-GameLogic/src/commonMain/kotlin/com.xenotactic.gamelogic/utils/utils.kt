@@ -122,7 +122,7 @@ inline fun <T> measureTime(
 fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: GameUnit, gameHeight: GameUnit) =
     toWorldCoordinates(
         gridSize,
-        entity.intPoint, gameWidth, gameHeight,
+        entity.gameUnitPoint, gameWidth, gameHeight,
         entityHeight = entity.height
     )
 

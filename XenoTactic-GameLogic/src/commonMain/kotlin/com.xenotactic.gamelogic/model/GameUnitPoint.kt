@@ -8,10 +8,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GameUnitPoint(val x: GameUnit, val y: GameUnit) {
 
-    constructor(x: Int, y: Int) : this(x.toGameUnit(), y.toGameUnit())
-
     companion object {
         val ZERO = GameUnitPoint(0.toGameUnit(), 0.toGameUnit())
+
+        operator fun invoke(x: Int, y: Int): GameUnitPoint {
+            return GameUnitPoint(x.toGameUnit(), y.toGameUnit())
+        }
     }
 
     fun toPoint(): Point {

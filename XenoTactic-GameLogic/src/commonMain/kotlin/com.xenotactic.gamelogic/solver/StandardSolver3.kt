@@ -1,5 +1,6 @@
 package solver
 
+import com.soywiz.kds.PriorityQueue
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import pathing.PathFinder
@@ -22,7 +23,7 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
         val _solverParams: SolverParams
     ) {
         val _availableTowerPlacementSpots = getAvailableTowerPlacementSpots(_map)
-        var _towerCache = TowerCache(_map.width, _map.height)
+        var _towerCache = TowerCache(_map.width.value, _map.height.value)
         val _towerPlacementsToPathCache = TowerPlacementsToPathCache()
 
         var numTotalSolverInternalCalls = 0

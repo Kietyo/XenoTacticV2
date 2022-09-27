@@ -4,13 +4,14 @@ import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.firebase_models.FbGameMap
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.sequenceOfNullable
+import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import verify
 
 @Serializable
 data class GameMap(
-    val width: Int, val height: Int,
+    val width: GameUnit, val height: GameUnit,
     private var start: MapEntity.Start? = null,
     private var finish: MapEntity.Finish? = null,
     private val checkpoints: MutableList<MapEntity.Checkpoint> = mutableListOf(),
@@ -197,15 +198,15 @@ data class GameMap(
         }
     }
 
-    fun getAllRocksAtPoint(x: Int, y: Int): Sequence<MapEntity.Rock> {
+    fun getAllRocksAtPoint(x: GameUnit, y: GameUnit): Sequence<MapEntity.Rock> {
         return rocks.asSequence().filter { it.intersectsUnitBlock(x, y) }
     }
 
-    fun getFirstRockAt(x: Int, y: Int): MapEntity.Rock? {
+    fun getFirstRockAt(x: GameUnit, y: GameUnit): MapEntity.Rock? {
         return rocks.firstOrNull { it.intersectsUnitBlock(x, y) }
     }
 
-    fun getFirstTowerAt(x: Int, y: Int): MapEntity.Tower? {
+    fun getFirstTowerAt(x: GameUnit, y: GameUnit): MapEntity.Tower? {
         return towers.firstOrNull { it.intersectsUnitBlock(x, y) }
     }
 
@@ -213,7 +214,7 @@ data class GameMap(
         return checkpoints + listOfNotNull(start, finish) + teleportOuts.values
     }
 
-    fun getFirstPathingEntityAt(x: Int, y: Int): MapEntity? {
+    fun getFirstPathingEntityAt(x: GameUnit, y: GameUnit): MapEntity? {
         return getPathingEntities().firstOrNull { it.intersectsUnitBlock(x, y) }
     }
 
@@ -275,8 +276,8 @@ data class GameMap(
                     "verificationResult: $verificationResult"
         }
         return GameMapForId(
-            width,
-            height,
+            width.value,
+            height.value,
             checkpoints,
             teleportIns,
             teleportOuts,
@@ -289,8 +290,8 @@ data class GameMap(
 
     fun toFbGameMap(): FbGameMap {
         return FbGameMap(
-            width,
-            height,
+            width.value,
+            height.value,
             start,
             finish,
             checkpoints,
@@ -305,7 +306,7 @@ data class GameMap(
 
     companion object {
         fun create(width: Int, height: Int, vararg entities: MapEntity): GameMap {
-            val gameMap = GameMap(width, height)
+            val gameMap = GameMap(width.toGameUnit(), height.toGameUnit())
             entities.forEach {
                 gameMap.placeEntity(it)
             }

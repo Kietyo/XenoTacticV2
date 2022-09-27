@@ -1,5 +1,6 @@
 package pathing
 
+import com.soywiz.kds.PriorityQueue
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
@@ -114,8 +115,8 @@ object AStarSearcher : SearcherInterface {
                 val intersectionPoint =
                     shortestPath.getFirstIntersectionPointToRectangle(
                         teleportPair.teleportIn.bottomLeftUnitSquareGameUnitPoint.toPoint(),
-                        teleportPair.teleportIn.width.toFloat(),
-                        teleportPair.teleportIn.height.toFloat(),
+                        teleportPair.teleportIn.width.value.toFloat(),
+                        teleportPair.teleportIn.height.value.toFloat(),
                     )
                 if (intersectionPoint != null) {
                     intersectionPointCandidates.add(

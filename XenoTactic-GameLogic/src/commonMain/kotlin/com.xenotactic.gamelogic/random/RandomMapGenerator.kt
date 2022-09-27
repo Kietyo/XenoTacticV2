@@ -9,6 +9,7 @@ import com.xenotactic.gamelogic.pathing.PathFindingResult
 import pathing.AStarSearcher
 import pathing.PathFinder
 import com.xenotactic.gamelogic.pathing.SearcherInterface
+import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.random.Random
 
 data class MapGeneratorConfiguration(
@@ -56,7 +57,7 @@ class RandomMapGenerator {
     }
 
     private constructor(config: MapGeneratorConfiguration) {
-        this.map = GameMap(config.width, config.height)
+        this.map = GameMap(config.width.toGameUnit(), config.height.toGameUnit())
         this.config = config
         this.random = Random(config.seed)
     }
@@ -68,7 +69,7 @@ class RandomMapGenerator {
     fun generateInternal(): MapGeneratorResult {
         var numTotalAttempts = 0
 
-        val start = createEntity(MapEntity.Start(0, 0))
+        val start = createEntity(MapEntity.Start(0.toGameUnit(), 0.toGameUnit()))
         map.placeEntity(start)
 
         var finish: MapEntity
@@ -77,7 +78,7 @@ class RandomMapGenerator {
             if (numTotalAttempts >= config.failureAfterTotalAttempts) {
                 return failure("Failed to create FINISH entity in a spot that didn't intersect with START.")
             }
-            finish = createEntity(MapEntity.Finish(0, 0))
+            finish = createEntity(MapEntity.Finish(0.toGameUnit(), 0.toGameUnit()))
         } while (start.intersectsEntity(finish))
         map.placeEntity(finish)
 
@@ -231,8 +232,8 @@ class RandomMapGenerator {
 
     fun getRandomPointWithinMapBounds(entityType: MapEntity): GameUnitPoint {
         return GameUnitPoint(
-            random.nextInt(0, map.width - entityType.width + 1),
-            random.nextInt(0, map.height - entityType.height + 1)
+            random.nextInt(0, map.width.value - entityType.width.value + 1),
+            random.nextInt(0, map.height.value - entityType.height.value + 1)
         )
     }
 

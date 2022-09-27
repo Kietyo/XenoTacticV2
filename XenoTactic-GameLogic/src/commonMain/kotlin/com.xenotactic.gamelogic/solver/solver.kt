@@ -6,6 +6,7 @@ import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.EntitiesBlockingEntityUtil
 import com.xenotactic.gamelogic.utils.MapBlockingUtil
+import com.xenotactic.gamelogic.utils.toGameUnit
 import utils.TowerCache
 
 sealed class OptimizationGoal {
@@ -58,8 +59,8 @@ fun getNextTowerPlacementSpots(
     for (spot in currentPlacements) map.placeEntity(towerCache.getTower(spot.x, spot.y))
 
     val result = towerPlacementSpots.filter {
-        pathSequence.intersectsRectangle(Rectangle(it.x.toDouble(), it.y.toDouble(), 2.0, 2.0)) &&
-                !map.intersectsBlockingEntities(it.x, it.y, 2, 2)
+        pathSequence.intersectsRectangle(Rectangle(it.x.value.toDouble(), it.y.value.toDouble(), 2.0, 2.0)) &&
+                !map.intersectsBlockingEntities(it.x, it.y, 2.toGameUnit(), 2.toGameUnit())
     }
 
     for (spot in currentPlacements) map.removeEntity(towerCache.getTower(spot.x, spot.y))
@@ -88,12 +89,12 @@ fun getNextTowerPlacementSpotsV2(
     for (spot in towerPlacementSpots) {
         val tower = towerCache.getTower(spot.x, spot.y)
         val intersectsPath = pathSequence
-            .intersectsRectangle(Rectangle(spot.x.toDouble(), spot.y.toDouble(), 2.0, 2.0))
+            .intersectsRectangle(Rectangle(spot.x.value.toDouble(), spot.y.value.toDouble(), 2.0, 2.0))
         if (intersectsPath
-            && !map.intersectsBlockingEntities(spot.x, spot.y, 2, 2)
+            && !map.intersectsBlockingEntities(spot.x, spot.y, 2.toGameUnit(), 2.toGameUnit())
         ) {
             if (EntitiesBlockingEntityUtil(tower, map).anyPartiallyBlocking ||
-                MapBlockingUtil(tower, map.width, map.height).hasBlockingSide
+                MapBlockingUtil(tower, map.width.value, map.height.value).hasBlockingSide
             ) {
                 neighborsBlockingEntities.add(spot)
             } else {
