@@ -58,15 +58,15 @@ class PathingPointUtil(val pathingRadius: Double = PATHING_RADIUS) {
         )
 
     fun calculate(entity: IRectangleEntity, blockingPoints: BlockingPointContainer.View): Set<Point> {
-        require(entity.width == 2 && entity.height == 2) {
+        require(entity.width.value == 2 && entity.height.value == 2) {
             "Only works with 2x2 entities!"
         }
 
         val entityMask = EntityMask(
-            blockingPoints.contains(entity.x, entity.y + 1),
-            blockingPoints.contains(entity.x + 1, entity.y + 1),
-            blockingPoints.contains(entity.x, entity.y),
-            blockingPoints.contains(entity.x + 1, entity.y),
+            blockingPoints.contains(entity.x.value, entity.y.value + 1),
+            blockingPoints.contains(entity.x.value+ 1, entity.y.value + 1),
+            blockingPoints.contains(entity.x.value, entity.y.value),
+            blockingPoints.contains(entity.x.value + 1, entity.y.value),
         )
 
         return maskToPathingPointOffset[entityMask]!!.map {

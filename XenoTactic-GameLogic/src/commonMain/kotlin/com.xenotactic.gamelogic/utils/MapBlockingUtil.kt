@@ -17,7 +17,7 @@ data class MapBlockingUtilResults(
 object MapBlockingUtil {
     // Returns how the map is blocking the given entity.
     operator fun invoke(entity: MapEntity, mapWidth: Int, mapHeight: Int): MapBlockingUtilResults {
-        return invoke(entity.x, entity.y, entity.width, entity.height, mapWidth, mapHeight)
+        return invoke(entity.x.value, entity.y.value, entity.width.value, entity.height.value, mapWidth, mapHeight)
     }
 
     operator fun invoke(

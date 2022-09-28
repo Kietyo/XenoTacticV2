@@ -26,24 +26,24 @@ object EntitiesBlockingEntityUtil {
         val blockingPoints = gameMap.blockingPointsView()
 
         val topPartiallyBlocking = (entity.x until entity.rightX).any {
-            blockingPoints.contains(it, entity.topY)
+            blockingPoints.contains(it, entity.topY.value)
         }
         val bottomPartiallyBlocking = (entity.x until entity.rightX).any {
-            blockingPoints.contains(it, entity.y - 1)
+            blockingPoints.contains(it, entity.y.value - 1)
         }
         val leftPartiallyBlocking = (entity.y until entity.topY).any {
-            blockingPoints.contains(entity.x - 1, it)
+            blockingPoints.contains(entity.x.value - 1, it)
         }
         val rightPartiallyBlocking = (entity.y until entity.topY).any {
-            blockingPoints.contains(entity.rightX, it)
+            blockingPoints.contains(entity.rightX.value, it)
         }
 
 
         return EntitiesBlockingEntityResult(
-            blockingPoints.contains(entity.x - 1, entity.topY),
-            blockingPoints.contains(entity.rightX, entity.topY),
-            blockingPoints.contains(entity.x - 1, entity.y - 1),
-            blockingPoints.contains(entity.rightX, entity.y - 1),
+            blockingPoints.contains(entity.x.value - 1, entity.topY.value),
+            blockingPoints.contains(entity.rightX.value, entity.topY.value),
+            blockingPoints.contains(entity.x.value - 1, entity.y.value - 1),
+            blockingPoints.contains(entity.rightX.value, entity.y.value - 1),
             topPartiallyBlocking,
             bottomPartiallyBlocking,
             leftPartiallyBlocking,

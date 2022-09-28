@@ -12,39 +12,41 @@ import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
 fun getRoundedGridCoordinates(
     gridX: Double,
     gridY: Double,
-    entityWidth: Int,
-    entityHeight: Int,
-    mapWidth: Int,
-    mapHeight: Int
-): Pair<Int, Int> {
+    entityWidth: GameUnit,
+    entityHeight: GameUnit,
+    mapWidth: GameUnit,
+    mapHeight: GameUnit
+): Pair<GameUnit, GameUnit> {
     val roundedGridX = when {
-        entityWidth == 1 -> floor(
-            gridX - entityWidth / 2
+        entityWidth.value == 1 -> floor(
+            gridX - entityWidth.value / 2
         ).toInt()
-        else -> (gridX - entityWidth / 2).roundToInt()
+        else -> (gridX - entityWidth.value / 2).roundToInt()
     }
 
     val roundedGridY = when {
-        entityHeight == 1 -> floor(
-            gridY - entityHeight / 2
+        entityHeight.value == 1 -> floor(
+            gridY - entityHeight.value / 2
         ).toInt()
-        else -> (gridY - entityHeight / 2).roundToInt()
+        else -> (gridY - entityHeight.value / 2).roundToInt()
     }
 
     val gridXToInt = roundedGridX.clamp(
         0,
-        mapWidth - entityWidth
-    )
+        mapWidth.value - entityWidth.value
+    ).toGameUnit()
     val gridYToInt = roundedGridY.clamp(
         0,
-        mapHeight - entityHeight
-    )
+        mapHeight.value - entityHeight.value
+    ).toGameUnit()
     return gridXToInt to gridYToInt
 }
 

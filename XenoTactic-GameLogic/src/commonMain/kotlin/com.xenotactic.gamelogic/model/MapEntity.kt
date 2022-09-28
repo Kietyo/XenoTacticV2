@@ -18,7 +18,7 @@ enum class MapEntityType {
     sealed class EntitySize {
         // No fixed size
         object Varied : EntitySize()
-        data class Fixed(val width: Int, val height: Int) : EntitySize()
+        data class Fixed(val width: GameUnit, val height: GameUnit) : EntitySize()
     }
 
     companion object {
@@ -36,6 +36,10 @@ enum class MapEntityType {
                     SPEED_AREA -> false
                 }
             }.toSet()
+
+        fun createEntity(entityType: MapEntityType, x: Int, y: Int): MapEntity {
+            return createEntity(entityType, x.toGameUnit(), y.toGameUnit())
+        }
 
         fun createEntity(entityType: MapEntityType, x: GameUnit, y: GameUnit): MapEntity {
             return when (entityType) {
@@ -58,10 +62,10 @@ enum class MapEntityType {
                 CHECKPOINT,
                 TOWER,
                 TELEPORT_IN,
-                TELEPORT_OUT -> EntitySize.Fixed(2, 2)
+                TELEPORT_OUT -> EntitySize.Fixed(2.toGameUnit(), 2.toGameUnit())
 
                 ROCK, SPEED_AREA -> EntitySize.Varied
-                SMALL_BLOCKER -> EntitySize.Fixed(1, 1)
+                SMALL_BLOCKER -> EntitySize.Fixed(1.toGameUnit(), 1.toGameUnit())
             }
         }
     }
@@ -206,6 +210,10 @@ sealed class MapEntity : IRectangleEntity {
             gameUnitPoint.y
         )
 
+        operator fun invoke(sequenceNumber: Int, x: Int, y: Int): TeleportIn {
+            return TeleportIn(sequenceNumber, x.toGameUnit(), y.toGameUnit())
+        }
+
         // The ordinal sequence number (starts at 1).
         val ordinalSequenceNumber: Int
             get() = sequenceNumber + 1
@@ -235,6 +243,10 @@ sealed class MapEntity : IRectangleEntity {
             gameUnitPoint.y
         )
 
+        operator fun invoke(sequenceNumber: Int, x: Int, y: Int): TeleportOut {
+            return TeleportOut(sequenceNumber, x.toGameUnit(), y.toGameUnit())
+        }
+
         // The ordinal sequence number (starts at 1).
         val ordinalSequenceNumber: Int
             get() = sequenceNumber + 1
@@ -256,6 +268,10 @@ sealed class MapEntity : IRectangleEntity {
             gameUnitPoint.x, gameUnitPoint.y,
             width, height
         )
+
+        operator fun invoke(x: Int, y: Int, width: Int, height: Int): Rock {
+            return Rock(x.toGameUnit(), y.toGameUnit(), width.toGameUnit(), height.toGameUnit())
+        }
 
         init {
             require(width >= 0)
@@ -283,6 +299,17 @@ sealed class MapEntity : IRectangleEntity {
             sequenceNumber, gameUnitPoint.x,
             gameUnitPoint.y
         )
+
+        operator fun invoke(
+            sequenceNumber: Int,
+            x: Int,
+            y: Int
+        ): Checkpoint {
+            return Checkpoint(
+                sequenceNumber,
+                x.toGameUnit(), y.toGameUnit()
+            )
+        }
 
         // The ordinal sequence number (starts at 1).
         val ordinalSequenceNumber: Int

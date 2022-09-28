@@ -7,10 +7,10 @@ class TypedEntityContainer<T : MapEntity> : EntityContainer<T> {
     private val entities = mutableMapOf<Int, MutableMap<Int, T>>()
 
     override fun placeEntity(entity: T) {
-        for (i in 0 until entity.width) {
-            for (j in 0 until entity.height) {
+        for (i in 0 until entity.width.value) {
+            for (j in 0 until entity.height.value) {
                 println("i: $i, j: $j")
-                placeEntity(entity.x + i, entity.y + j, entity)
+                placeEntity(entity.x.value + i, entity.y.value + j, entity)
             }
         }
     }
@@ -30,7 +30,7 @@ class TypedEntityContainer<T : MapEntity> : EntityContainer<T> {
     }
 
     fun containsEntity(entity: MapEntity): Boolean {
-        return containsEntity(entity.x, entity.y, entity.width, entity.height)
+        return containsEntity(entity.x.value, entity.y.value, entity.width.value, entity.height.value)
     }
 
     /**

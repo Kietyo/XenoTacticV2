@@ -8,7 +8,7 @@ import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.utils.rectangleIntersects
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
@@ -16,8 +16,6 @@ import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import pathing.PathFinder
-import kotlin.math.max
-import kotlin.math.min
 
 // The game map controller.
 // All actions affecting the game map should go through this class.
@@ -28,11 +26,11 @@ class GameMapControllerEComponent(
     var shortestPath: PathSequence? = null
         private set
 
-    val height: Int
+    val height: GameUnit
         get() {
             return gameMap.height
         }
-    val width: Int
+    val width: GameUnit
         get() {
             return gameMap.width
         }
@@ -42,11 +40,11 @@ class GameMapControllerEComponent(
     val numTeleports: Int
         get() = gameMap.numTeleports
 
-    fun getFirstRockAt(x: Int, y: Int): MapEntity.Rock? {
+    fun getFirstRockAt(x: GameUnit, y: GameUnit): MapEntity.Rock? {
         return gameMap.getFirstRockAt(x, y)
     }
 
-    fun getFirstTowerAt(x: Int, y: Int): MapEntity.Tower? {
+    fun getFirstTowerAt(x: GameUnit, y: GameUnit): MapEntity.Tower? {
         return gameMap.getFirstTowerAt(x, y)
     }
 
@@ -55,7 +53,7 @@ class GameMapControllerEComponent(
     }
 
     fun placeEntities(vararg entities: MapEntity) {
-        val gameMapRect = GRectInt(0, 0, gameMap.width, gameMap.height)
+        val gameMapRect = GRectInt(0.toGameUnit(), 0.toGameUnit(), gameMap.width, gameMap.height)
         val allEntitiesIntersectMap = entities.all {
             rectangleIntersects(gameMapRect, it.getGRectInt())
         }
@@ -80,6 +78,8 @@ class GameMapControllerEComponent(
         println("new gamemap: $gameMap")
         updateShortestPath(PathFinder.getShortestPath(gameMap))
     }
+
+
 
     fun placeEntity(entity: MapEntity) {
         placeEntities(entity)

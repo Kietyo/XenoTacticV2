@@ -9,6 +9,7 @@ import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.pathing.SearcherInterface
+import com.xenotactic.gamelogic.utils.GameUnit
 
 
 /**
@@ -102,8 +103,8 @@ object PathFinder {
     }
 
     fun getUpdatablePath(
-        width: Int,
-        height: Int,
+        width: GameUnit,
+        height: GameUnit,
         start: IRectangleEntity?,
         finish: IRectangleEntity?,
         blockingEntities: List<IRectangleEntity> = emptyList(),
@@ -127,15 +128,15 @@ object PathFinder {
     }
 
     private fun getUpdatablePath(
-        width: Int,
-        height: Int,
+        width: GameUnit,
+        height: GameUnit,
         blockingEntities: List<IRectangleEntity> = emptyList(),
         pathingEntities: List<IRectangleEntity> = emptyList(),
         teleportPairs: List<TeleportPair> = emptyList(),
         searcher: SearcherInterface = AStarSearcher
     ): PathFindingResult {
         return searcher.getUpdatablePathV2(
-            width, height,
+            width.value, height.value,
             pathingEntities,
             teleportPairs,
             blockingEntities

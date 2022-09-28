@@ -40,8 +40,8 @@ class DebugEComponent(val engine: Engine) : EComponent {
             getAvailablePathingPointsFromBlockingEntities(
                 gameMap
                     .getBlockingEntities(),
-                gameMap.width,
-                gameMap.height,
+                gameMap.width.value,
+                gameMap.height.value,
                 gameMap.blockingPointsView()
             )
         )

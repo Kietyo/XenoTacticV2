@@ -239,7 +239,7 @@ data class PathSequence constructor(val paths: List<Path> = listOf()) {
         get() = paths.size
 
     fun intersectsTower(tower: MapEntity.Tower): Boolean {
-        return intersectsRectangle(Rectangle(tower.x, tower.y, tower.width, tower.height))
+        return intersectsRectangle(tower.getRectangle())
     }
 
     fun intersectsRectangle(rect: Rectangle): Boolean {

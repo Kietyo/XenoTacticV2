@@ -6,11 +6,11 @@ import com.xenotactic.gamelogic.model.GameMap
 
 object RockCounterUtil {
     fun calculate(gameMap: GameMap): IntArray2 {
-        val result = IntArray2(gameMap.width, gameMap.height, 0)
+        val result = IntArray2(gameMap.width.value, gameMap.height.value, 0)
 
-        repeat(gameMap.width) { x ->
-            repeat(gameMap.height) { y ->
-                val allRocks = gameMap.getAllRocksAtPoint(x, y)
+        repeat(result.width) { x ->
+            repeat(result.height) { y ->
+                val allRocks = gameMap.getAllRocksAtPoint(x.toGameUnit(), y.toGameUnit())
                 result[x, y] = allRocks.count()
             }
         }

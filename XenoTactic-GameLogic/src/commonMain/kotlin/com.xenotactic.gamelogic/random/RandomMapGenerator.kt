@@ -9,13 +9,14 @@ import com.xenotactic.gamelogic.pathing.PathFindingResult
 import pathing.AStarSearcher
 import pathing.PathFinder
 import com.xenotactic.gamelogic.pathing.SearcherInterface
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.random.Random
 
 data class MapGeneratorConfiguration(
     val seed: Long,
-    val width: Int = GAME_WIDTH,
-    val height: Int = GAME_HEIGHT,
+    val width: GameUnit = GAME_WIDTH,
+    val height: GameUnit = GAME_HEIGHT,
     val checkpoints: Int = 0,
     val rocks: Int = 0,
     val teleports: Int = 0,
@@ -57,7 +58,7 @@ class RandomMapGenerator {
     }
 
     private constructor(config: MapGeneratorConfiguration) {
-        this.map = GameMap(config.width.toGameUnit(), config.height.toGameUnit())
+        this.map = GameMap(config.width, config.height)
         this.config = config
         this.random = Random(config.seed)
     }

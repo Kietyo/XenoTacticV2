@@ -20,6 +20,7 @@ import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.RockCounterUtil
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
@@ -116,9 +117,9 @@ class UIMap(
     private val _highlightLayer = this.container()
     private val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
 
-    val mapHeight: Int
+    val mapHeight: GameUnit
         get() = gameMap.height
-    val mapWidth: Int
+    val mapWidth: GameUnit
         get() = gameMap.width
 
     init {
@@ -406,7 +407,7 @@ class UIMap(
         }
     }
 
-    fun renderEntityHighlightRectangle(gridX: Int, gridY: Int, entityWidth: Int, entityHeight: Int) {
+    fun renderEntityHighlightRectangle(gridX: GameUnit, gridY: GameUnit, entityWidth: GameUnit, entityHeight: GameUnit) {
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize,
             GameUnitPoint(gridX, gridY),
@@ -498,9 +499,9 @@ class UIMap(
     fun getRoundedGridCoordinates(
         gridX: Double,
         gridY: Double,
-        entityWidth: Int,
-        entityHeight: Int,
-    ): Pair<Int, Int> =
+        entityWidth: GameUnit,
+        entityHeight: GameUnit,
+    ): Pair<GameUnit, GameUnit> =
         getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight, mapWidth, mapHeight)
 
     fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
@@ -509,4 +510,3 @@ class UIMap(
         }.toList()
 
     }
-}

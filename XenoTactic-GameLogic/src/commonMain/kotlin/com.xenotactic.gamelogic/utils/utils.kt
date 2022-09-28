@@ -1,5 +1,7 @@
 package com.xenotactic.gamelogic.utils
 
+import com.soywiz.korge.view.View
+import com.soywiz.korge.view.xy
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
@@ -9,8 +11,6 @@ import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
 import com.xenotactic.gamelogic.pathing.VerticalDirection
-import kotlinx.serialization.Serializable
-import kotlin.jvm.JvmInline
 
 import kotlin.math.*
 import kotlin.time.ExperimentalTime
@@ -18,56 +18,16 @@ import kotlin.time.measureTimedValue
 
 const val LINE_INTERSECTION_DIFF_THRESHOLD = 0.01
 
-@JvmInline
-value class WorldUnit(val value: Double) {
-    operator fun div(i: Int): WorldUnit = WorldUnit(value / i)
-    operator fun minus(borderSize: Double) = WorldUnit(value - borderSize)
-    operator fun minus(other: WorldUnit) = WorldUnit(value - other.value)
+fun View.xy(centerWorldX: WorldUnit, centerWorldY: WorldUnit) {
+    xy(centerWorldX.value, centerWorldY.value)
 }
 
-@JvmInline
-@Serializable
-value class GameUnit(val value: Int) {
-    operator fun plus(other: GameUnit): GameUnit {
-        return GameUnit(value + other.value)
-    }
-
-    operator fun plus(other: Int): GameUnit {
-        return GameUnit(value + other)
-    }
-
-    operator fun minus(y: GameUnit): GameUnit {
-        return GameUnit(value - y.value)
-    }
-
-    operator fun minus(y: Int): GameUnit {
-        return GameUnit(value - y)
-    }
-
-    operator fun times(i: GameUnit): GameUnit {
-        return GameUnit(value * i.value)
-    }
-    operator fun times(i: Int): GameUnit {
-        return GameUnit(value * i)
-    }
-
-    operator fun compareTo(i: Int): Int {
-        return value.compareTo(i)
-    }
-
-    operator fun compareTo(i: GameUnit): Int {
-        return value.compareTo(i.value)
-    }
-
-}
-
-fun Int.toGameUnit(): GameUnit = GameUnit(this)
-
-fun Double.toGameUnit(): GameUnit {
-    return GameUnit(this.toInt())
-}
 
 infix fun Int.to(that: Int): GameUnitPoint = GameUnitPoint(this, that)
+
+infix fun Int.until(mapWidth: GameUnit): IntRange {
+    return this until mapWidth.value
+}
 
 fun abs(f1: Float): Float {
     return if (f1 < 0) -f1 else f1
