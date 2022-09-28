@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.MapGeneratorResult
 import com.xenotactic.gamelogic.random.RandomMapGenerator
+import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.random.Random
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -43,8 +44,8 @@ internal class GoldenTest {
             val map = RandomMapGenerator.generate(
                 MapGeneratorConfiguration(
                     random.nextLong(),
-                    width = random.nextInt(10, 51),
-                    height = random.nextInt(10, 51),
+                    width = random.nextInt(10, 51).toGameUnit(),
+                    height = random.nextInt(10, 51).toGameUnit(),
                     checkpoints = random.nextInt(0, 6),
                     rocks = random.nextInt(0, 50),
                     teleports = random.nextInt(0, 5),

@@ -10,7 +10,7 @@ internal class MapEntityTest {
     @Test
     @Ignore
     fun intersectsUnitBlock_profile() {
-        val rock = MapEntity.Rock(GameUnitPoint(1,1), 2, 2)
+        val rock = MapEntity.Rock(1,1, 2, 2)
         var timeA = 0L
         var timeB = 0L
         repeat (1000000) {
@@ -50,7 +50,7 @@ internal class MapEntityTest {
 
     @Test
     fun unitSquarePoints() {
-        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)
+        val entity = MapEntity.Rock(1, 1, 1, 1)
 
         assertEquals(
             GameUnitPoint(1, 1),
@@ -72,7 +72,7 @@ internal class MapEntityTest {
 
     @Test
     fun intersectsBlock() {
-        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)
+        val entity = MapEntity.Rock(1, 1, 1, 1)
         assertFalse(entity.intersectsUnitBlock(0, 0))
         assertFalse(entity.intersectsUnitBlock(1, 0))
         assertFalse(entity.intersectsUnitBlock(1, 2))
@@ -86,7 +86,7 @@ internal class MapEntityTest {
 
     @Test
     fun intersectsBlock2() {
-        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
+        val entity = MapEntity.Rock(1, 1, 2, 2)
         assertFalse(entity.intersectsUnitBlock(0, 0))
         assertFalse(entity.intersectsUnitBlock(0, 1))
         assertFalse(entity.intersectsUnitBlock(0, 2))
@@ -111,50 +111,50 @@ internal class MapEntityTest {
 
     @Test
     fun intersectsEntity() {
-        val entity = MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 0), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 1), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 2), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(0, 3), 1, 1)))
+        val entity = MapEntity.Rock(1, 1, 2, 2)
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(0, 0, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(0, 1, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(0, 2, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(0, 3, 1, 1)))
 
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 0), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 1), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 2), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(3, 3), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(3, 0, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(3, 1, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(3, 2, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(3, 3, 1, 1)))
 
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 0), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 0), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(1, 0, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(2, 0, 1, 1)))
 
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 3), 1, 1)))
-        assertFalse(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 3), 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(1, 3, 1, 1)))
+        assertFalse(entity.intersectsEntity(MapEntity.Rock(2, 3, 1, 1)))
 
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 1), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 2), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 1), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(2, 2), 1, 1)))
-        assertTrue(entity.intersectsEntity(MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(1, 1, 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(1, 2, 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(2, 1, 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(2, 2, 1, 1)))
+        assertTrue(entity.intersectsEntity(MapEntity.Rock(1, 1, 2, 2)))
     }
 
     @Test
     fun intersectsEntity2() {
-        val entity1 = MapEntity.Rock(GameUnitPoint(1, 1), 2, 2)
-        val entity2 = MapEntity.Rock(GameUnitPoint(2, 2), 2, 2)
+        val entity1 = MapEntity.Rock(1, 1, 2, 2)
+        val entity2 = MapEntity.Rock(2, 2, 2, 2)
         assertTrue(entity1.intersectsEntity(entity2))
         assertTrue(entity2.intersectsEntity(entity1))
     }
 
     @Test
     fun intersectsEntity3() {
-        val entity1 = MapEntity.Rock(GameUnitPoint(7, 7), 2, 2)
-        val entity2 = MapEntity.Rock(GameUnitPoint(8, 7), 2, 2)
+        val entity1 = MapEntity.Rock(7, 7, 2, 2)
+        val entity2 = MapEntity.Rock(8, 7, 2, 2)
         assertTrue(entity1.intersectsEntity(entity2))
         assertTrue(entity2.intersectsEntity(entity1))
     }
 
     @Test
     fun intersectsEntity4() {
-        val entity1 = MapEntity.Rock(GameUnitPoint(3, 7), 2, 2)
-        val entity2 = MapEntity.Rock(GameUnitPoint(3, 8), 2, 2)
+        val entity1 = MapEntity.Rock(3, 7, 2, 2)
+        val entity2 = MapEntity.Rock(3, 8, 2, 2)
         assertTrue(entity1.intersectsEntity(entity2))
         assertTrue(entity2.intersectsEntity(entity1))
     }
@@ -171,20 +171,20 @@ internal class MapEntityTest {
     fun fullyCovers() {
         assertFalse(
             MapEntity.fullyCovers(
-                MapEntity.Rock(GameUnitPoint(3, 7), 2, 2),
-                MapEntity.Rock(GameUnitPoint(3, 8), 2, 2)
+                MapEntity.Rock(3, 7, 2, 2),
+                MapEntity.Rock(3, 8, 2, 2)
             )
         )
         assertTrue(
             MapEntity.fullyCovers(
-                MapEntity.Rock(GameUnitPoint(3, 7), 2, 2),
-                MapEntity.Rock(GameUnitPoint(3, 7), 2, 2)
+                MapEntity.Rock(3, 7, 2, 2),
+                MapEntity.Rock(3, 7, 2, 2)
             )
         )
         assertFalse(
             MapEntity.fullyCovers(
-                MapEntity.Rock(GameUnitPoint(1, 1), 4, 2),
-                MapEntity.Rock(GameUnitPoint(2, 1), 2, 2)
+                MapEntity.Rock(1, 1, 4, 2),
+                MapEntity.Rock(2, 1, 2, 2)
             )
         )
     }

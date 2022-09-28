@@ -183,8 +183,9 @@ class RandomMapGenerator {
                     return failure("Failed to create place ROCK $i.")
                 }
                 val rockType = if (random.nextBoolean()) MapEntity.ROCK_2X4 else MapEntity.ROCK_4X2
+                val (rockX, rockY) = getRandomPointWithinMapBounds(rockType)
                 rock = MapEntity.Rock(
-                    getRandomPointWithinMapBounds(rockType), rockType.width,
+                    rockX, rockY, rockType.width,
                     rockType.height
                 )
                 newRockList = addedRocks + rock

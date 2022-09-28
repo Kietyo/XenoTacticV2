@@ -15,6 +15,7 @@ import com.xenotactic.gamelogic.model.MapEntity
 import pathing.PathFinder
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.RandomMapGenerator
+import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -36,8 +37,8 @@ internal class ScrapTest {
         val map = RandomMapGenerator.generate(
             MapGeneratorConfiguration(
                 20,
-                30,
-                3,
+                30.toGameUnit(),
+                3.toGameUnit(),
                 30,
                 2
             )

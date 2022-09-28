@@ -9,6 +9,7 @@ import pathing.AStarSearcher
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.MapGeneratorResult
 import com.xenotactic.gamelogic.random.RandomMapGenerator
+import com.xenotactic.gamelogic.utils.toGameUnit
 import test_utils.STANDARD_MAP
 
 import kotlin.random.Random
@@ -48,7 +49,7 @@ internal class SolverKtTest {
             val genMap = RandomMapGenerator.generate(
                 MapGeneratorConfiguration(
                     Random.nextLong(),
-                    30, 20,
+                    30.toGameUnit(), 20.toGameUnit(),
                     6,
                     20,
                     0,
@@ -89,7 +90,7 @@ internal class SolverKtTest {
             val genMap = RandomMapGenerator.generate(
                 MapGeneratorConfiguration(
                     Random.nextLong(),
-                    30, 20,
+                    30.toGameUnit(), 20.toGameUnit(),
                     6,
                     20,
                     0,

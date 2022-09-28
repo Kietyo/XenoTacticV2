@@ -109,6 +109,9 @@ sealed class MapEntity : IRectangleEntity {
         return GRectInt(x, y, width, height)
     }
 
+    fun intersectsUnitBlock(unitX: Int, unitY: Int): Boolean {
+        return intersectsUnitBlock(unitX.toGameUnit(), unitY.toGameUnit())
+    }
     // Returns whether or not this entity intersects with a 1x1 block
     // at the given x, y position
     fun intersectsUnitBlock(unitX: GameUnit, unitY: GameUnit): Boolean {
@@ -179,6 +182,11 @@ sealed class MapEntity : IRectangleEntity {
         override val isBlockingEntity: Boolean = false
 
         constructor(gameUnitPoint: GameUnitPoint) : this(gameUnitPoint.x, gameUnitPoint.y)
+
+        companion object {
+            operator fun invoke(x: Int, y: Int) = Start(x.toGameUnit(), y.toGameUnit())
+
+        }
     }
 
     @Serializable
@@ -190,6 +198,10 @@ sealed class MapEntity : IRectangleEntity {
         override val isBlockingEntity: Boolean = false
 
         constructor(gameUnitPoint: GameUnitPoint) : this(gameUnitPoint.x, gameUnitPoint.y)
+
+        companion object {
+            operator fun invoke(x: Int, y: Int) = Finish(x.toGameUnit(), y.toGameUnit())
+        }
     }
 
     @Serializable
@@ -210,10 +222,6 @@ sealed class MapEntity : IRectangleEntity {
             gameUnitPoint.y
         )
 
-        operator fun invoke(sequenceNumber: Int, x: Int, y: Int): TeleportIn {
-            return TeleportIn(sequenceNumber, x.toGameUnit(), y.toGameUnit())
-        }
-
         // The ordinal sequence number (starts at 1).
         val ordinalSequenceNumber: Int
             get() = sequenceNumber + 1
@@ -222,6 +230,12 @@ sealed class MapEntity : IRectangleEntity {
 
         infix fun to(tpOut: TeleportOut): TeleportPair {
             return TeleportPair(this, tpOut, this.sequenceNumber)
+        }
+
+        companion object {
+            operator fun invoke(sequenceNumber: Int, x: Int, y: Int): TeleportIn {
+                return TeleportIn(sequenceNumber, x.toGameUnit(), y.toGameUnit())
+            }
         }
     }
 
@@ -243,13 +257,17 @@ sealed class MapEntity : IRectangleEntity {
             gameUnitPoint.y
         )
 
-        operator fun invoke(sequenceNumber: Int, x: Int, y: Int): TeleportOut {
-            return TeleportOut(sequenceNumber, x.toGameUnit(), y.toGameUnit())
-        }
+
 
         // The ordinal sequence number (starts at 1).
         val ordinalSequenceNumber: Int
             get() = sequenceNumber + 1
+
+        companion object {
+            operator fun invoke(sequenceNumber: Int, x: Int, y: Int): TeleportOut {
+                return TeleportOut(sequenceNumber, x.toGameUnit(), y.toGameUnit())
+            }
+        }
     }
 
     @Serializable
@@ -264,18 +282,15 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Rock (${width}x${height})"
         override val isBlockingEntity: Boolean = true
 
-        constructor(gameUnitPoint: GameUnitPoint, width: GameUnit, height: GameUnit) : this(
-            gameUnitPoint.x, gameUnitPoint.y,
-            width, height
-        )
-
-        operator fun invoke(x: Int, y: Int, width: Int, height: Int): Rock {
-            return Rock(x.toGameUnit(), y.toGameUnit(), width.toGameUnit(), height.toGameUnit())
-        }
-
         init {
             require(width >= 0)
             require(height >= 0)
+        }
+
+        companion object {
+            operator fun invoke(x: Int, y: Int, width: Int, height: Int): Rock {
+                return Rock(x.toGameUnit(), y.toGameUnit(), width.toGameUnit(), height.toGameUnit())
+            }
         }
     }
 
@@ -300,20 +315,22 @@ sealed class MapEntity : IRectangleEntity {
             gameUnitPoint.y
         )
 
-        operator fun invoke(
-            sequenceNumber: Int,
-            x: Int,
-            y: Int
-        ): Checkpoint {
-            return Checkpoint(
-                sequenceNumber,
-                x.toGameUnit(), y.toGameUnit()
-            )
-        }
-
         // The ordinal sequence number (starts at 1).
         val ordinalSequenceNumber: Int
             get() = sequenceNumber + 1
+
+        companion object {
+            operator fun invoke(
+                sequenceNumber: Int,
+                x: Int,
+                y: Int
+            ): Checkpoint {
+                return Checkpoint(
+                    sequenceNumber,
+                    x.toGameUnit(), y.toGameUnit()
+                )
+            }
+        }
     }
 
     @Serializable
@@ -328,6 +345,10 @@ sealed class MapEntity : IRectangleEntity {
             gameUnitPoint.x,
             gameUnitPoint.y
         )
+
+        companion object {
+            operator fun invoke(x: Int, y: Int) = Tower(x.toGameUnit(), y.toGameUnit())
+        }
     }
 
     @Serializable
@@ -340,6 +361,9 @@ sealed class MapEntity : IRectangleEntity {
         override val type: MapEntityType = MapEntityType.SMALL_BLOCKER
         override val friendlyName: String = "Small Blocker"
         override val isBlockingEntity: Boolean = true
+        companion object {
+            operator fun invoke(x: Int, y: Int) = SmallBlocker(x.toGameUnit(), y.toGameUnit())
+        }
     }
 
     @Serializable

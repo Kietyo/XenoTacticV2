@@ -1,6 +1,7 @@
 package com.xenotactic.gamelogic.model
 
 import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 
 // A game version of the rectangle.
 // The (x, y) coordinate represents the bottom left of the rectangle.
@@ -20,4 +21,13 @@ data class GRectInt(
         get() = y
     val top: GameUnit
         get() = y + height
+
+    companion object {
+        operator fun invoke(x: Int, y: Int, width: Int, height: Int) = GRectInt(
+            x.toGameUnit(),
+            y.toGameUnit(),
+            width.toGameUnit(),
+            height.toGameUnit()
+        )
+    }
 }

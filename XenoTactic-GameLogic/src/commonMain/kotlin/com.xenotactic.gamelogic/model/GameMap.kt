@@ -199,6 +199,9 @@ data class GameMap(
         }
     }
 
+    fun getAllRocksAtPoint(x: Int, y: Int): Sequence<MapEntity.Rock> {
+        return getAllRocksAtPoint(x.toGameUnit(), y.toGameUnit())
+    }
     fun getAllRocksAtPoint(x: GameUnit, y: GameUnit): Sequence<MapEntity.Rock> {
         return rocks.asSequence().filter { it.intersectsUnitBlock(x, y) }
     }
