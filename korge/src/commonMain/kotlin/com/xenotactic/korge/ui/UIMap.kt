@@ -167,8 +167,8 @@ class UIMap(
 
     private fun renderRockCounters() {
         val rockCounters = RockCounterUtil.calculate(gameMap)
-        for (x in 0 until gameMap.width) {
-            for (y in 0 until gameMap.height) {
+        for (x in 0 until gameMap.width.value) {
+            for (y in 0 until gameMap.height.value) {
                 val num = rockCounters[x, y]
                 if (num > 0) {
                     val (worldX, worldY) = toWorldCoordinates(
@@ -197,15 +197,15 @@ class UIMap(
         println("Drawing board")
         when (uiMapSettings.boardType) {
             BoardType.SOLID -> _boardLayer.solidRect(
-                _gridSize * gameMap.width, _gridSize * gameMap.height,
+                _gridSize * gameMap.width.value, _gridSize * gameMap.height.value,
                 MaterialColors.GREEN_600
             )
 
             BoardType.CHECKERED_1X1 -> {
                 var altColorWidth = true
-                for (i in 0 until gameMap.width) {
+                for (i in 0 until gameMap.width.value) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until gameMap.height) {
+                    for (j in 0 until gameMap.height.value) {
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -259,7 +259,7 @@ class UIMap(
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
                 for (i in 0..gameMap.width.value) {
-                    this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height * _gridSize)
+                    this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height.value * _gridSize)
                 }
                 for (j in 0..gameMap.height.value) {
                     this.line(0.0, j * _gridSize, gameMap.width.value * _gridSize, j * _gridSize)
@@ -275,7 +275,7 @@ class UIMap(
             return
         }
 
-        for (i in 0 until gameMap.width) {
+        for (i in 0 until gameMap.width.value) {
             _gridNumberLayer.text(
                 i.toString(),
                 textSize = _gridNumberFontSize,
@@ -284,23 +284,23 @@ class UIMap(
                 i * _gridSize, 0.0
             )
             _gridNumberLayer.text(i.toString(), textSize = _gridNumberFontSize).xy(
-                i * _gridSize, gameMap.height * _gridSize
+                i * _gridSize, gameMap.height.value * _gridSize
             )
         }
-        for (j in 0 until gameMap.height) {
+        for (j in 0 until gameMap.height.value) {
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = _gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_RIGHT
             ).xy(
-                -10.0, gameMap.height * _gridSize - j * _gridSize
+                -10.0, gameMap.height.value * _gridSize - j * _gridSize
             )
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = _gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_LEFT
             ).xy(
-                gameMap.width * _gridSize + 10.0, gameMap.height * _gridSize - j * _gridSize
+                gameMap.width.value * _gridSize + 10.0, gameMap.height.value * _gridSize - j * _gridSize
             )
         }
     }

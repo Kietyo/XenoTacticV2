@@ -3,6 +3,7 @@ package com.xenotactic.korge.scenes
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.ResizeMapEvent
@@ -26,7 +27,7 @@ class EditorSceneV2 : Scene() {
         val gameWorld = World()
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, 10, 10))
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, 10.toGameUnit(), 10.toGameUnit()))
             injections.setSingletonOrThrow(GameMapApi(this, eventBus))
             injections.setSingletonOrThrow(settingsContainer)
         }

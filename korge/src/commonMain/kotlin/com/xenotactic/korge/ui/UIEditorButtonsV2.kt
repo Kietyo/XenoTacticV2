@@ -7,6 +7,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korui.UiButton
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.EscapeButtonActionEvent
@@ -99,8 +100,8 @@ class UIEditorButtonsV2(
                                         isEnabled = true
                                     }
                                     gameMapDimensionsState.changeDimensions(
-                                        widthInput.text.toInt(),
-                                        heightInput.text.toInt()
+                                        widthInput.text.toInt().toGameUnit(),
+                                        heightInput.text.toInt().toGameUnit()
                                     )
                                 }
                             }

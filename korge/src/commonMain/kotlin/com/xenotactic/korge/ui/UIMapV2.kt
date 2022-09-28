@@ -118,7 +118,7 @@ class UIMapV2(
     }
 
     fun getWorldCoordinates(x: GameUnit, y: GameUnit, entityHeight: GameUnit = GameUnit(0)) =
-        Pair(WorldUnit(x * gridSize), WorldUnit((mapHeight - y - entityHeight) * gridSize))
+        Pair(WorldUnit(x.value * gridSize), WorldUnit((mapHeight - y - entityHeight).value * gridSize))
 
     fun toWorldDimensions(width: Int, height: Int) = Pair(width * gridSize, height * gridSize)
 
@@ -127,16 +127,16 @@ class UIMapV2(
         _boardLayer.removeChildren()
         when (uiMapSettingsV2.boardType) {
             BoardType.SOLID -> _boardLayer.solidRect(
-                gridSize * mapWidth,
-                gridSize * mapHeight,
+                gridSize * mapWidth.value,
+                gridSize * mapHeight.value,
                 MaterialColors.GREEN_600
             )
 
             BoardType.CHECKERED_1X1 -> {
                 var altColorWidth = true
-                for (i in 0 until mapWidth) {
+                for (i in 0 until mapWidth.value) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until mapHeight) {
+                    for (j in 0 until mapHeight.value) {
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -151,11 +151,11 @@ class UIMapV2(
             BoardType.CHECKERED_2X2 -> {
                 var altColorWidth = true
                 val gridSize = gridSize * 2
-                for (i in 0 until ((mapWidth + 1) / 2)) {
+                for (i in 0 until ((mapWidth.value + 1) / 2)) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until ((mapHeight + 1) / 2)) {
-                        val gridWidth = if ((i + 1) * 2 > mapWidth) this.gridSize else gridSize
-                        val gridHeight = if ((j + 1) * 2 > mapHeight) this.gridSize else gridSize
+                    for (j in 0 until ((mapHeight.value + 1) / 2)) {
+                        val gridWidth = if ((i + 1) * 2 > mapWidth.value) this.gridSize else gridSize
+                        val gridHeight = if ((j + 1) * 2 > mapHeight.value) this.gridSize else gridSize
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -176,17 +176,17 @@ class UIMapV2(
 
             when (uiMapSettingsV2.boardType) {
                 BoardType.SOLID -> _boardLayer.solidRect(
-                    gridSize * mapWidth,
-                    gridSize * mapHeight,
+                    gridSize * mapWidth.value,
+                    gridSize * mapHeight.value,
                     MaterialColors.GREEN_600
                 )
 
                 BoardType.CHECKERED_1X1 -> {
                     var altColorWidth = true
-                    for (i in 0 until mapWidth) {
+                    for (i in 0 until mapWidth.value) {
                         var altColorHeight = altColorWidth
                         val xGrid = i * gridSize
-                        for (j in 0 until mapHeight) {
+                        for (j in 0 until mapHeight.value) {
                             val currColor =
                                 if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                     .GREEN_800
@@ -202,13 +202,13 @@ class UIMapV2(
                 BoardType.CHECKERED_2X2 -> {
                     var altColorWidth = true
                     val checkeredGridSize = gridSize * 2
-                    for (i in 0 until ((mapWidth + 1) / 2)) {
+                    for (i in 0 until ((mapWidth.value + 1) / 2)) {
                         var altColorHeight = altColorWidth
                         val xGridPosition = i * checkeredGridSize
-                        for (j in 0 until ((mapHeight + 1) / 2)) {
-                            val gridWidth = if ((i + 1) * 2 > mapWidth) this@UIMapV2.gridSize else checkeredGridSize
+                        for (j in 0 until ((mapHeight.value + 1) / 2)) {
+                            val gridWidth = if ((i + 1) * 2 > mapWidth.value) this@UIMapV2.gridSize else checkeredGridSize
                             val gridHeight =
-                                if ((j + 1) * 2 > mapHeight) this@UIMapV2.gridSize else checkeredGridSize
+                                if ((j + 1) * 2 > mapHeight.value) this@UIMapV2.gridSize else checkeredGridSize
                             val currColor =
                                 if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                     .GREEN_800
@@ -233,7 +233,7 @@ class UIMapV2(
             return
         }
 
-        for (i in 0 until mapWidth) {
+        for (i in 0 until mapWidth.value) {
             _gridNumberLayer.text(
                 i.toString(),
                 textSize = gridNumberFontSize,
@@ -242,23 +242,23 @@ class UIMapV2(
                 i * gridSize, 0.0
             )
             _gridNumberLayer.text(i.toString(), textSize = gridNumberFontSize).xy(
-                i * gridSize, mapHeight * gridSize
+                i * gridSize, mapHeight.value * gridSize
             )
         }
-        for (j in 0 until mapHeight) {
+        for (j in 0 until mapHeight.value) {
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_RIGHT
             ).xy(
-                -10.0, mapHeight * gridSize - j * gridSize
+                -10.0, mapHeight.value * gridSize - j * gridSize
             )
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_LEFT
             ).xy(
-                mapWidth * gridSize + 10.0, mapHeight * gridSize - j * gridSize
+                mapWidth.value * gridSize + 10.0, mapHeight.value * gridSize - j * gridSize
             )
         }
     }
@@ -270,7 +270,7 @@ class UIMapV2(
         val localXY = globalToLocalXY(globalMouseX, globalMouseY)
         val unprojected = Point(
             localXY.x,
-            mapHeight * gridSize - localXY.y
+            mapHeight.value * gridSize - localXY.y
         )
 
         val gridX = unprojected.x / gridSize

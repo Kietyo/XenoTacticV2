@@ -22,6 +22,7 @@ data class GameMap(
     private val smallBlockers: MutableList<MapEntity.SmallBlocker> = mutableListOf(),
     private val speedAreas: MutableList<MapEntity.SpeedArea> = mutableListOf()
 ) {
+
     @Transient
     private val blockingPoints: BlockingPointContainer.Mutable = BlockingPointContainer.Mutable()
 
@@ -305,6 +306,9 @@ data class GameMap(
     }
 
     companion object {
+        operator fun invoke(width: Int, height: Int): GameMap {
+            return GameMap(width.toGameUnit(), height.toGameUnit())
+        }
         fun create(width: Int, height: Int, vararg entities: MapEntity): GameMap {
             val gameMap = GameMap(width.toGameUnit(), height.toGameUnit())
             entities.forEach {

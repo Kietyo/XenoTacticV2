@@ -59,8 +59,8 @@ class UIMapBox(
     }
 
     fun updateMap(gameMap: GameMap, calculateMapPath: Boolean) {
-        val currentMapContainerHeight = gameMap.height * gameMapGridSize
-        val currentMapContainerWidth = gameMap.width * gameMapGridSize
+        val currentMapContainerHeight = gameMap.height.value * gameMapGridSize
+        val currentMapContainerWidth = gameMap.width.value * gameMapGridSize
 
         val maxMapHeight = boxHeight - paddingTopAndBottom * 2
         val maxMapWidth = boxWidth - paddingLeftAndRight * 2

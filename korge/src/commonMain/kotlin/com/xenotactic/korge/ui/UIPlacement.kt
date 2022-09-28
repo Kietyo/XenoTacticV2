@@ -14,6 +14,7 @@ import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korio.async.AsyncSignal
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.korge.engine.Engine
@@ -61,7 +62,7 @@ class UIPlacement(
                 text = "Tower"
                 onClick {
                     placementComponent.pointerAction =
-                        PointerAction.HighlightForPlacement(MapEntity.Tower(0, 0))
+                        PointerAction.HighlightForPlacement(MapEntity.Tower(0.toGameUnit(), 0.toGameUnit()))
                     afterPointerActionChange()
                 }
             }
@@ -69,7 +70,7 @@ class UIPlacement(
                 text = "Small Blocker"
                 onClick {
                     placementComponent.pointerAction =
-                        PointerAction.HighlightForPlacement(MapEntity.SmallBlocker(0, 0))
+                        PointerAction.HighlightForPlacement(MapEntity.SmallBlocker(0.toGameUnit(), 0.toGameUnit()))
                     afterPointerActionChange()
                 }
             }
