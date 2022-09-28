@@ -1,10 +1,11 @@
 package com.xenotactic.gamelogic.model
 
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.utils.GameUnit
 import pathing.PathSequenceTraversal
 
-const val MONSTER_WIDTH = 1
-const val MONSTER_HEIGHT = 1
+val MONSTER_WIDTH = GameUnit(1)
+val MONSTER_HEIGHT = GameUnit(1)
 
 class MonsterEntity(
     val pathSequenceTraversal: PathSequenceTraversal,

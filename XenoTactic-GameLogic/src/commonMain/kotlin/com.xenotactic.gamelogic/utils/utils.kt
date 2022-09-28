@@ -25,10 +25,6 @@ fun View.xy(centerWorldX: WorldUnit, centerWorldY: WorldUnit) {
 
 infix fun Int.to(that: Int): GameUnitPoint = GameUnitPoint(this, that)
 
-infix fun Int.until(mapWidth: GameUnit): IntRange {
-    return this until mapWidth.value
-}
-
 fun abs(f1: Float): Float {
     return if (f1 < 0) -f1 else f1
 }

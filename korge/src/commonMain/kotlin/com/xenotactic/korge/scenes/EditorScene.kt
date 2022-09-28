@@ -7,6 +7,7 @@ import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korge.view.centerXOnStage
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.NotificationTextEComponent
 import com.xenotactic.korge.ecomponents.UIMapEComponent
@@ -30,7 +31,7 @@ import com.xenotactic.korge.ui.UINotificationText
 class EditorScene : Scene() {
     override suspend fun SContainer.sceneInit() {
 
-        val gameMap = GameMap(10, 10)
+        val gameMap = GameMap(10.toGameUnit(), 10.toGameUnit())
         val eventBus = EventBus(this@EditorScene)
 
         val uiMap =

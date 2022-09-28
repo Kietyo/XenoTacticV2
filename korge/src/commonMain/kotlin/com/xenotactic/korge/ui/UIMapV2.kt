@@ -282,9 +282,9 @@ class UIMapV2(
     fun getRoundedGridCoordinates(
         gridX: Double,
         gridY: Double,
-        entityWidth: Int,
-        entityHeight: Int,
-    ): Pair<Int, Int> =
+        entityWidth: GameUnit,
+        entityHeight: GameUnit,
+    ): Pair<GameUnit, GameUnit> =
         com.xenotactic.korge.korge_utils.getRoundedGridCoordinates(
             gridX,
             gridY,
@@ -295,10 +295,10 @@ class UIMapV2(
         )
 
     fun renderEntityHighlightRectangle(
-        gridX: Int,
-        gridY: Int,
-        entityWidth: Int,
-        entityHeight: Int
+        gridX: GameUnit,
+        gridY: GameUnit,
+        entityWidth: GameUnit,
+        entityHeight: GameUnit
     ) {
         val (worldX, worldY) = toWorldCoordinates(
             gridSize,

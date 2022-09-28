@@ -14,6 +14,7 @@ import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.engine.Engine
@@ -37,7 +38,7 @@ class PlayScene : Scene() {
         val randomMap = RandomMapGenerator.generate(
             MapGeneratorConfiguration(
                 seed,
-                30, 20, 2, 10, 2
+                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2
             )
         )
 
@@ -46,7 +47,7 @@ class PlayScene : Scene() {
         val gameWorld = World()
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30, 20))
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30.toGameUnit(), 20.toGameUnit()))
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
         }

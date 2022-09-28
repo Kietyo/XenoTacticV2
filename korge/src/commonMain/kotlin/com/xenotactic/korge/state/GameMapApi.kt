@@ -6,18 +6,17 @@ import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.MapEntityComponent
 import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.*
-import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.utils.max
+import com.xenotactic.gamelogic.utils.min
 import com.xenotactic.gamelogic.utils.rectangleIntersects
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ecomponents.DebugEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
-import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
-import kotlin.math.max
-import kotlin.math.min
 
 class GameMapApi(
     val engine: Engine,
@@ -54,7 +53,7 @@ class GameMapApi(
     }
 
     fun placeEntities(entities: Iterable<MapEntity>) {
-        val gameMapRect = GRectInt(0, 0, gameMapDimensionsState.width, gameMapDimensionsState.height)
+        val gameMapRect = GRectInt(0.toGameUnit(), 0.toGameUnit(), gameMapDimensionsState.width, gameMapDimensionsState.height)
         val allEntitiesIntersectMap = entities.all {
             rectangleIntersects(gameMapRect, it.getGRectInt())
         }

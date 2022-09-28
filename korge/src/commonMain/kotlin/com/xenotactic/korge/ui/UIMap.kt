@@ -220,11 +220,11 @@ class UIMap(
             BoardType.CHECKERED_2X2 -> {
                 var altColorWidth = true
                 val gridSize = _gridSize * 2
-                for (i in 0 until ((gameMap.width + 1) / 2)) {
+                for (i in 0 until ((gameMap.width.value + 1) / 2)) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until ((gameMap.height + 1) / 2)) {
-                        val gridWidth = if ((i + 1) * 2 > gameMap.width) _gridSize else gridSize
-                        val gridHeight = if ((j + 1) * 2 > gameMap.height) _gridSize else gridSize
+                    for (j in 0 until ((gameMap.height.value + 1) / 2)) {
+                        val gridWidth = if ((i + 1) * 2 > gameMap.width.value) _gridSize else gridSize
+                        val gridHeight = if ((j + 1) * 2 > gameMap.height.value) _gridSize else gridSize
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -258,11 +258,11 @@ class UIMap(
         //        _gridLinesGraphics.clear()
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
-                for (i in 0..gameMap.width) {
+                for (i in 0..gameMap.width.value) {
                     this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height * _gridSize)
                 }
-                for (j in 0..gameMap.height) {
-                    this.line(0.0, j * _gridSize, gameMap.width * _gridSize, j * _gridSize)
+                for (j in 0..gameMap.height.value) {
+                    this.line(0.0, j * _gridSize, gameMap.width.value * _gridSize, j * _gridSize)
                 }
             }
         }
@@ -407,7 +407,12 @@ class UIMap(
         }
     }
 
-    fun renderEntityHighlightRectangle(gridX: GameUnit, gridY: GameUnit, entityWidth: GameUnit, entityHeight: GameUnit) {
+    fun renderEntityHighlightRectangle(
+        gridX: GameUnit,
+        gridY: GameUnit,
+        entityWidth: GameUnit,
+        entityHeight: GameUnit
+    ) {
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize,
             GameUnitPoint(gridX, gridY),
@@ -487,7 +492,7 @@ class UIMap(
         val localXY = _boardLayer.globalToLocalXY(globalMouseX, globalMouseY)
         val unprojected = Point(
             localXY.x,
-            mapHeight * _gridSize - localXY.y
+            mapHeight.value * _gridSize - localXY.y
         )
 
         val gridX = unprojected.x / _gridSize
@@ -510,3 +515,4 @@ class UIMap(
         }.toList()
 
     }
+}

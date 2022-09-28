@@ -3,8 +3,9 @@ package com.xenotactic.korge.input_processors
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.GameUnit
 
-data class RemoveEntityData(val x: Int, val y: Int, val entity: MapEntity)
+data class RemoveEntityData(val x: GameUnit, val y: GameUnit, val entity: MapEntity)
 
 sealed class PointerAction {
     object Inactive : PointerAction()

@@ -56,4 +56,8 @@ fun min(width: GameUnit, gameUnit: GameUnit): GameUnit {
 operator fun Int.rangeTo(o: GameUnit): IntRange {
     return this..o.value
 }
+infix fun Int.until(o: GameUnit): IntRange {
+    return this until o.value
+}
+
 

@@ -8,6 +8,8 @@ import com.soywiz.korge.view.Views
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
@@ -121,7 +123,7 @@ class EditorPlacementInputProcessorV2(
         }
     }
 
-    fun createEntityToAdd(entityType: MapEntityType, gridXInt: Int, gridYInt: Int): MapEntity {
+    fun createEntityToAdd(entityType: MapEntityType, gridXInt: GameUnit, gridYInt: GameUnit): MapEntity {
         return when (entityType) {
             MapEntityType.START,
             MapEntityType.FINISH -> MapEntityType.createEntity(
@@ -166,11 +168,11 @@ class EditorPlacementInputProcessorV2(
         val highGridX = ceil(max(downGridX, currentGridX))
         val highGridY = ceil(max(downGridY, currentGridY))
 
-        val width = max(highGridX.toInt() - lowGridX.toInt(), 1)
-        val height = max(highGridY.toInt() - lowGridY.toInt(), 1)
+        val width = max(highGridX.toInt() - lowGridX.toInt(), 1).toGameUnit()
+        val height = max(highGridY.toInt() - lowGridY.toInt(), 1).toGameUnit()
 
-        val roundedGridX = lowGridX.toInt()
-        val roundedGridY = lowGridY.toInt()
+        val roundedGridX = lowGridX.toInt().toGameUnit()
+        val roundedGridY = lowGridY.toInt().toGameUnit()
 
         //        println(
         //            """

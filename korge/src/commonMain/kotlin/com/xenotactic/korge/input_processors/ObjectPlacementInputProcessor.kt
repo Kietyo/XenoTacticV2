@@ -8,6 +8,8 @@ import com.soywiz.korge.view.Views
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.utils.until
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.korge.engine.Engine
@@ -141,8 +143,8 @@ class ObjectPlacementInputProcessor(
                         currentEntity.height
                     )
 
-                if ((gridXToInt !in 0 until gameMapComponent.width)
-                    || gridYToInt !in 0 until gameMapComponent.height
+                if ((gridXToInt.value !in 0 until  gameMapComponent.width)
+                    || gridYToInt.value !in 0 until gameMapComponent.height
                 ) {
                     pointerAction.placementLocation = null
                     return
@@ -155,11 +157,11 @@ class ObjectPlacementInputProcessor(
             is PointerAction.RemoveEntityAtPlace -> {
                 val roundedGridX = floor(
                     gridX
-                ).toInt()
+                ).toInt().toGameUnit()
 
                 val roundedGridY = floor(
                     gridY
-                ).toInt()
+                ).toInt().toGameUnit()
 
                 if (pointerAction.data != null) {
                     val removeEntityData = pointerAction.data!!
