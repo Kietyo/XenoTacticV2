@@ -411,7 +411,7 @@ internal class AStarSearcherTest {
     }
 
     @Test
-    fun regressionTest() = runBlockingNoJs ret@{
+    fun regressionTest() = suspendTest ret@{
         val searcher1 = AStarSearcher
         val searcher2 = AStarSearcher
 

@@ -380,6 +380,12 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Speed Area"
 
         fun getSpeedText() = "${(speedEffect * 100).toInt()}%"
+
+        companion object {
+            operator fun invoke(x: Int, y: Int, radius: Int, speedEffect: Double) = SpeedArea(
+                x.toGameUnit(), y.toGameUnit(), radius.toGameUnit(), speedEffect
+            )
+        }
     }
 
     fun toMapEntityData(): MapEntityData {
