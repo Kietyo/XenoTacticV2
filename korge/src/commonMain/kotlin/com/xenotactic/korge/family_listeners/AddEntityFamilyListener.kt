@@ -3,6 +3,7 @@ package com.xenotactic.korge.family_listeners
 import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.addTo
+import com.soywiz.korge.view.centerOn
 import com.soywiz.korge.view.xy
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
@@ -58,16 +59,11 @@ class AddEntityFamilyListener(
 
         val text = mapEntityComponent.entityData.getText()
         if (text != null) {
-            val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
-            val (centerWorldX, centerWorldY) = uiMapV2.getWorldCoordinates(
-                centerPoint.x.toGameUnit(),
-                centerPoint.y.toGameUnit()
-            )
             val textView = makeEntityLabelText(text).apply {
                 addTo(uiMapV2._entityLabelLayer)
-                xy(centerWorldX, centerWorldY)
                 scaledHeight = uiMapV2.gridSize / 2
                 scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
+                centerOn(uiEntity)
             }
             world.modifyEntity(entityId) {
                 addComponentOrThrow(UIMapEntityTextComponent(textView))

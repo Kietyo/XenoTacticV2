@@ -6,6 +6,7 @@ import com.xenotactic.gamelogic.globals.ENTITY_LABEL_SIZE
 import com.xenotactic.korge.ui.ENTITY_TEXT_FONT
 
 fun makeEntityLabelText(text: String): Text {
-    return Text(text, textSize = ENTITY_LABEL_SIZE, alignment = TextAlignment.MIDDLE_CENTER,
+    return Text(text, textSize = ENTITY_LABEL_SIZE,
+//        alignment = TextAlignment.MIDDLE_LEFT,
     font = ENTITY_TEXT_FONT)
 }
