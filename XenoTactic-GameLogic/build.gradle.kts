@@ -71,6 +71,9 @@ kotlin {
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
+            testTask {
+                enabled = false
+            }
         }
     }
 
@@ -116,6 +119,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+//                implementation(kotlin("test-js"))
             }
         }
         val jvmMain by getting {

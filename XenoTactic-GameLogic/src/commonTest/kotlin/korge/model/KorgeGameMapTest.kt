@@ -1,6 +1,7 @@
-import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korio.async.suspendTest
+import com.soywiz.korio.file.std.MemoryVfs
+import com.soywiz.korio.file.std.localCurrentDirVfs
 import com.xenotactic.gamelogic.korge_utils.TEST_TEMP_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 
@@ -14,7 +15,7 @@ import kotlin.test.assertTrue
 
 internal class KorgeGameMapTest {
     @Test
-    fun serialization_assureThatBlockingPointsGetReinitializedForRock() = runBlockingNoJs {
+    fun serialization_assureThatBlockingPointsGetReinitializedForRock() = suspendTest {
         val jsonFormatter = Json {
             prettyPrint = true
         }
@@ -88,7 +89,7 @@ internal class KorgeGameMapTest {
     }
 
     @Test
-    fun serialization_assureThatBlockingPointsGetReinitializedForTower() = runBlockingNoJs {
+    fun serialization_assureThatBlockingPointsGetReinitializedForTower() = suspendTest {
         val jsonFormatter = Json {
             prettyPrint = true
         }
@@ -162,8 +163,12 @@ internal class KorgeGameMapTest {
     }
 
     @Test
-    fun testDecodeMap() = runBlockingNoJs {
-        val map = loadGameMapFromGoldenAsync("00001.json")
+    fun testDecodeMap() = suspendTest {
+        val dir = localCurrentDirVfs["src/commonTest/testdata/goldens"].apply {
+            mkdir()
+        }
+
+        val map = Json.decodeFromString<GameMap>(dir["00001.json"].readString())
         println(map)
         println(map.hashCode())
     }
