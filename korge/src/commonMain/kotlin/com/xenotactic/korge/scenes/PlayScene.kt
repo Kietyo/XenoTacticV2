@@ -1,9 +1,12 @@
 package com.xenotactic.korge.scenes
 
+import com.soywiz.klock.Frequency
+import com.soywiz.klock.TimeSpan
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.SContainer
+import com.soywiz.korge.view.addFixedUpdater
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.xenotactic.ecs.World
@@ -29,8 +32,11 @@ import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
+import com.xenotactic.korge.systems.MonsterMoveSystem
 import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathSequenceTraversal
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 class PlayScene : Scene() {
     override suspend fun SContainer.sceneInit() {
@@ -75,6 +81,7 @@ class PlayScene : Scene() {
             addFamilyListener(SetInitialPositionFamilyListener(this))
             addComponentListener(PreSelectionComponentListener(engine))
             addComponentListener(SelectionComponentListener(engine))
+            addSystem(MonsterMoveSystem(this))
         }
 
         gameMapApi.placeEntities(randomMap.map.getAllEntities())
@@ -102,6 +109,11 @@ class PlayScene : Scene() {
                     )
                 }
             }
+        }
+
+        val deltaTime = TimeSpan(1000.0 / 60)
+        addFixedUpdater(deltaTime) {
+            gameWorld.update(deltaTime.milliseconds.milliseconds)
         }
 
         /**
