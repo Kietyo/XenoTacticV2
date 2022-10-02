@@ -234,8 +234,8 @@ class RandomMapGenerator {
 
     fun getRandomPointWithinMapBounds(entityType: MapEntity): GameUnitPoint {
         return GameUnitPoint(
-            random.nextInt(0, map.width.value - entityType.width.value + 1),
-            random.nextInt(0, map.height.value - entityType.height.value + 1)
+            random.nextInt(0, map.width.toInt() - entityType.width.toInt() + 1),
+            random.nextInt(0, map.height.toInt() - entityType.height.toInt() + 1)
         )
     }
 

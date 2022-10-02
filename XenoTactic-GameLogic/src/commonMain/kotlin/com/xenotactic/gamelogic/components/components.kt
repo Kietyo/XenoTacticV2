@@ -23,6 +23,7 @@ data class UIMapEntityTextComponent(
 
 object BlockingEntityComponent
 
+object MonsterComponent
 data class SizeComponent(
     val width: GameUnit,
     val height: GameUnit

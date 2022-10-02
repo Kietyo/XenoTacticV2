@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
+import com.xenotactic.gamelogic.utils.GameUnit
 
 /**
  * Container for storing number of blocking entities for a specific point.
@@ -16,6 +17,7 @@ sealed class BlockingPointContainer(
     var size = 0
         protected set
 
+    fun contains(x: GameUnit, y: GameUnit): Boolean = contains(x.toInt(), y.toInt())
     fun contains(x: Int, y: Int): Boolean {
         return pointToCounter.containsKey(x) && pointToCounter[x]!!.getOrElse(y) {0} > 0
     }
@@ -40,7 +42,7 @@ sealed class BlockingPointContainer(
 
         fun addAll(gameUnitPoints: Collection<GameUnitPoint>) {
             for (point in gameUnitPoints) {
-                add(point.x.value, point.y.value)
+                add(point.x.toInt(), point.y.toInt())
             }
         }
 
@@ -58,7 +60,7 @@ sealed class BlockingPointContainer(
 
         fun removeAll(gameUnitPoints: Collection<GameUnitPoint>) {
             for (point in gameUnitPoints) {
-                remove(point.x.value, point.y.value)
+                remove(point.x.toInt(), point.y.toInt())
             }
         }
 

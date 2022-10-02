@@ -5,7 +5,10 @@ import kotlin.jvm.JvmInline
 
 @JvmInline
 @Serializable
-value class GameUnit(val value: Int) {
+value class GameUnit(val value: Double) {
+    constructor(v: Int) : this(v.toDouble())
+    fun toInt() = value.toInt()
+    fun toDouble() = value
     operator fun plus(other: GameUnit): GameUnit {
         return GameUnit(value + other.value)
     }
@@ -30,7 +33,7 @@ value class GameUnit(val value: Int) {
     }
 
     operator fun compareTo(i: Int): Int {
-        return value.compareTo(i)
+        return value.compareTo(i.toDouble())
     }
 
     operator fun compareTo(i: GameUnit): Int {
@@ -38,26 +41,30 @@ value class GameUnit(val value: Int) {
     }
 
     infix fun until(o: GameUnit): IntRange {
-        return value until o.value
+        return value.toInt() until o.value.toInt()
+    }
+
+    operator fun times(o: Double): GameUnit {
+        return GameUnit(value * o)
     }
 
 }
 
-fun Int.toGameUnit(): GameUnit = GameUnit(this)
+fun Int.toGameUnit(): GameUnit = GameUnit(this.toDouble())
 fun Double.toGameUnit(): GameUnit {
-    return GameUnit(this.toInt())
+    return GameUnit(this)
 }
 fun max(a: GameUnit, b: Int): GameUnit {
-    return GameUnit(kotlin.math.max(a.value, b))
+    return GameUnit(kotlin.math.max(a.value, b.toDouble()))
 }
 fun min(width: GameUnit, gameUnit: GameUnit): GameUnit {
     return GameUnit(kotlin.math.min(width.value, gameUnit.value))
 }
 operator fun Int.rangeTo(o: GameUnit): IntRange {
-    return this..o.value
+    return this..o.value.toInt()
 }
 infix fun Int.until(o: GameUnit): IntRange {
-    return this until o.value
+    return this until o.value.toInt()
 }
 
 

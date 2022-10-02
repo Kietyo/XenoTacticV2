@@ -5,6 +5,7 @@ import com.xenotactic.gamelogic.firebase_models.FbGameMap
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.sequenceOfNullable
 import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.utils.until
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import verify
@@ -166,9 +167,9 @@ data class GameMap(
     }
 
     fun intersectsBlockingEntities(x: GameUnit, y: GameUnit, width: GameUnit, height: GameUnit): Boolean {
-        for (i in 0 until width.value) {
-            for (j in 0 until height.value) {
-                if (blockingPoints.contains(x.value + i, y.value + j)) return true
+        for (i in 0 until  width) {
+            for (j in 0 until height) {
+                if (blockingPoints.contains(x + i, y + j)) return true
             }
         }
         return false
@@ -281,8 +282,8 @@ data class GameMap(
                     "verificationResult: $verificationResult"
         }
         return GameMapForId(
-            width.value,
-            height.value,
+            width.toInt(),
+            height.toInt(),
             checkpoints,
             teleportIns,
             teleportOuts,
@@ -295,8 +296,8 @@ data class GameMap(
 
     fun toFbGameMap(): FbGameMap {
         return FbGameMap(
-            width.value,
-            height.value,
+            width.toInt(),
+            height.toInt(),
             start,
             finish,
             checkpoints,

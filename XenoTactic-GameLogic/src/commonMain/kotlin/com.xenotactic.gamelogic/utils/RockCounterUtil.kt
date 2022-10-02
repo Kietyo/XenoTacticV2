@@ -6,7 +6,7 @@ import com.xenotactic.gamelogic.model.GameMap
 
 object RockCounterUtil {
     fun calculate(gameMap: GameMap): IntArray2 {
-        val result = IntArray2(gameMap.width.value, gameMap.height.value, 0)
+        val result = IntArray2(gameMap.width.toInt(), gameMap.height.toInt(), 0)
 
         repeat(result.width) { x ->
             repeat(result.height) { y ->

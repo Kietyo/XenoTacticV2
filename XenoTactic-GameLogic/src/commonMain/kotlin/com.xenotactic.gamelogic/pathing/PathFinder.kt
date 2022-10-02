@@ -136,7 +136,7 @@ object PathFinder {
         searcher: SearcherInterface = AStarSearcher
     ): PathFindingResult {
         return searcher.getUpdatablePathV2(
-            width.value, height.value,
+            width.toInt(), height.toInt(),
             pathingEntities,
             teleportPairs,
             blockingEntities

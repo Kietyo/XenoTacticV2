@@ -20,10 +20,7 @@ import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.RockCounterUtil
-import com.xenotactic.gamelogic.utils.toWorldCoordinates
-import com.xenotactic.gamelogic.utils.toWorldDimensions
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
@@ -34,6 +31,7 @@ import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
+import kotlin.ranges.until
 
 enum class BoardType {
     SOLID,
@@ -167,8 +165,8 @@ class UIMap(
 
     private fun renderRockCounters() {
         val rockCounters = RockCounterUtil.calculate(gameMap)
-        for (x in 0 until gameMap.width.value) {
-            for (y in 0 until gameMap.height.value) {
+        for (x in 0 until gameMap.width) {
+            for (y in 0 until gameMap.height) {
                 val num = rockCounters[x, y]
                 if (num > 0) {
                     val (worldX, worldY) = toWorldCoordinates(
@@ -203,9 +201,9 @@ class UIMap(
 
             BoardType.CHECKERED_1X1 -> {
                 var altColorWidth = true
-                for (i in 0 until gameMap.width.value) {
+                for (i in 0 until gameMap.width) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until gameMap.height.value) {
+                    for (j in 0 until gameMap.height) {
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -220,9 +218,9 @@ class UIMap(
             BoardType.CHECKERED_2X2 -> {
                 var altColorWidth = true
                 val gridSize = _gridSize * 2
-                for (i in 0 until ((gameMap.width.value + 1) / 2)) {
+                for (i in 0 until ((gameMap.width.toInt() + 1) / 2)) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until ((gameMap.height.value + 1) / 2)) {
+                    for (j in 0 until ((gameMap.height.toInt() + 1) / 2)) {
                         val gridWidth = if ((i + 1) * 2 > gameMap.width.value) _gridSize else gridSize
                         val gridHeight = if ((j + 1) * 2 > gameMap.height.value) _gridSize else gridSize
                         val currColor =
@@ -258,10 +256,10 @@ class UIMap(
         //        _gridLinesGraphics.clear()
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
-                for (i in 0..gameMap.width.value) {
+                for (i in 0..gameMap.width) {
                     this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height.value * _gridSize)
                 }
-                for (j in 0..gameMap.height.value) {
+                for (j in 0..gameMap.height) {
                     this.line(0.0, j * _gridSize, gameMap.width.value * _gridSize, j * _gridSize)
                 }
             }
@@ -275,7 +273,7 @@ class UIMap(
             return
         }
 
-        for (i in 0 until gameMap.width.value) {
+        for (i in 0 until gameMap.width) {
             _gridNumberLayer.text(
                 i.toString(),
                 textSize = _gridNumberFontSize,
@@ -287,7 +285,7 @@ class UIMap(
                 i * _gridSize, gameMap.height.value * _gridSize
             )
         }
-        for (j in 0 until gameMap.height.value) {
+        for (j in 0 until gameMap.height) {
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = _gridNumberFontSize,

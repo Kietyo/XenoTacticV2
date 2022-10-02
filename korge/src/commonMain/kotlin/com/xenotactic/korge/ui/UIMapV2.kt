@@ -18,10 +18,7 @@ import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.WorldUnit
-import com.xenotactic.gamelogic.utils.toWorldCoordinates
-import com.xenotactic.gamelogic.utils.toWorldUnit
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
@@ -29,6 +26,7 @@ import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
+import kotlin.ranges.until
 
 data class UIMapSettingsV2(
     val gridSize: Double = GRID_SIZE,
@@ -120,7 +118,8 @@ class UIMapV2(
     fun getWorldCoordinates(x: GameUnit, y: GameUnit, entityHeight: GameUnit = GameUnit(0)) =
         Pair(WorldUnit(x.value * gridSize), WorldUnit((mapHeight - y - entityHeight).value * gridSize))
 
-    fun toWorldDimensions(width: Int, height: Int) = Pair(width * gridSize, height * gridSize)
+    fun toWorldDimensions(width: GameUnit, height: GameUnit) = Pair(
+        WorldUnit(width * gridSize), WorldUnit(height * gridSize))
 
     private fun drawBoard() {
         println("Drawing board")
@@ -134,9 +133,9 @@ class UIMapV2(
 
             BoardType.CHECKERED_1X1 -> {
                 var altColorWidth = true
-                for (i in 0 until mapWidth.value) {
+                for (i in 0 until mapWidth) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until mapHeight.value) {
+                    for (j in 0 until mapHeight) {
                         val currColor =
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
@@ -151,9 +150,9 @@ class UIMapV2(
             BoardType.CHECKERED_2X2 -> {
                 var altColorWidth = true
                 val gridSize = gridSize * 2
-                for (i in 0 until ((mapWidth.value + 1) / 2)) {
+                for (i in 0 until ((mapWidth.toInt() + 1) / 2)) {
                     var altColorHeight = altColorWidth
-                    for (j in 0 until ((mapHeight.value + 1) / 2)) {
+                    for (j in 0 until ((mapHeight.toInt() + 1) / 2)) {
                         val gridWidth = if ((i + 1) * 2 > mapWidth.value) this.gridSize else gridSize
                         val gridHeight = if ((j + 1) * 2 > mapHeight.value) this.gridSize else gridSize
                         val currColor =
@@ -183,10 +182,10 @@ class UIMapV2(
 
                 BoardType.CHECKERED_1X1 -> {
                     var altColorWidth = true
-                    for (i in 0 until mapWidth.value) {
+                    for (i in 0 until mapWidth) {
                         var altColorHeight = altColorWidth
                         val xGrid = i * gridSize
-                        for (j in 0 until mapHeight.value) {
+                        for (j in 0 until mapHeight) {
                             val currColor =
                                 if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                     .GREEN_800
@@ -202,10 +201,10 @@ class UIMapV2(
                 BoardType.CHECKERED_2X2 -> {
                     var altColorWidth = true
                     val checkeredGridSize = gridSize * 2
-                    for (i in 0 until ((mapWidth.value + 1) / 2)) {
+                    for (i in 0 until ((mapWidth.toInt() + 1) / 2)) {
                         var altColorHeight = altColorWidth
                         val xGridPosition = i * checkeredGridSize
-                        for (j in 0 until ((mapHeight.value + 1) / 2)) {
+                        for (j in 0 until ((mapHeight.toInt() + 1) / 2)) {
                             val gridWidth = if ((i + 1) * 2 > mapWidth.value) this@UIMapV2.gridSize else checkeredGridSize
                             val gridHeight =
                                 if ((j + 1) * 2 > mapHeight.value) this@UIMapV2.gridSize else checkeredGridSize
@@ -233,7 +232,7 @@ class UIMapV2(
             return
         }
 
-        for (i in 0 until mapWidth.value) {
+        for (i in 0 until mapWidth) {
             _gridNumberLayer.text(
                 i.toString(),
                 textSize = gridNumberFontSize,
@@ -245,7 +244,7 @@ class UIMapV2(
                 i * gridSize, mapHeight.value * gridSize
             )
         }
-        for (j in 0 until mapHeight.value) {
+        for (j in 0 until mapHeight) {
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = gridNumberFontSize,
@@ -389,5 +388,6 @@ class UIMapV2(
         }
     }
 }
+
 
 

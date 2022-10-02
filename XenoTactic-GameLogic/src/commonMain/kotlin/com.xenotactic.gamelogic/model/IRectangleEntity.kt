@@ -3,6 +3,7 @@ package com.xenotactic.gamelogic.model
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.until
 
 interface IRectangleEntity {
     val x: GameUnit
@@ -13,9 +14,9 @@ interface IRectangleEntity {
     val blockGameUnitPoints: Set<GameUnitPoint>
         get() {
             val gameUnitPoints = mutableSetOf<GameUnitPoint>()
-            for (i in 0 until width.value) {
-                for (j in 0 until height.value) {
-                    gameUnitPoints.add(GameUnitPoint(x.value + i, y.value + j))
+            for (i in 0 until  width) {
+                for (j in 0 until height) {
+                    gameUnitPoints.add(GameUnitPoint(x + i, y + j))
                 }
             }
             return gameUnitPoints.toSet()

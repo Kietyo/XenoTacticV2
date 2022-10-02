@@ -26,14 +26,14 @@ fun getRoundedGridCoordinates(
     mapHeight: GameUnit
 ): Pair<GameUnit, GameUnit> {
     val roundedGridX = when {
-        entityWidth.value == 1 -> floor(
+        entityWidth.toInt() == 1 -> floor(
             gridX - entityWidth.value / 2
         ).toInt()
         else -> (gridX - entityWidth.value / 2).roundToInt()
     }
 
     val roundedGridY = when {
-        entityHeight.value == 1 -> floor(
+        entityHeight.toInt() == 1 -> floor(
             gridY - entityHeight.value / 2
         ).toInt()
         else -> (gridY - entityHeight.value / 2).roundToInt()
@@ -41,11 +41,11 @@ fun getRoundedGridCoordinates(
 
     val gridXToInt = roundedGridX.clamp(
         0,
-        mapWidth.value - entityWidth.value
+        mapWidth.toInt() - entityWidth.toInt()
     ).toGameUnit()
     val gridYToInt = roundedGridY.clamp(
         0,
-        mapHeight.value - entityHeight.value
+        mapHeight.toInt() - entityHeight.toInt()
     ).toGameUnit()
     return gridXToInt to gridYToInt
 }

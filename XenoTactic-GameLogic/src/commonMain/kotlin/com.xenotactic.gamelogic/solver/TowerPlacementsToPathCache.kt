@@ -27,11 +27,11 @@ class TowerPlacementsToPathCache {
 
     fun getShortestPath(
         map: GameMap, placementSpots: Set<GameUnitPoint>,
-        towerCache: TowerCache = TowerCache(map.width.value, map.height.value)
+        towerCache: TowerCache = TowerCache(map.width.toInt(), map.height.toInt())
     ): PathSequence? {
         return cache.getOrPut(placementSpots) {
             PathFinder.getShortestPathWithTowers(map, placementSpots.map {
-                towerCache.getTower(it.x.value, it.y.value)
+                towerCache.getTower(it.x.toInt(), it.y.toInt())
             })
         }
     }

@@ -11,7 +11,7 @@ class TowerCache(width: Int, height: Int) {
     }
 
     fun getTower(x: GameUnit, y: GameUnit): MapEntity.Tower {
-        return getTower(x.value, y.value)
+        return getTower(x.toInt(), y.toInt())
     }
 
     fun getTower(x: Int, y: Int): MapEntity.Tower {

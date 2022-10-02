@@ -94,7 +94,7 @@ fun getNextTowerPlacementSpotsV2(
             && !map.intersectsBlockingEntities(spot.x, spot.y, 2.toGameUnit(), 2.toGameUnit())
         ) {
             if (EntitiesBlockingEntityUtil(tower, map).anyPartiallyBlocking ||
-                MapBlockingUtil(tower, map.width.value, map.height.value).hasBlockingSide
+                MapBlockingUtil(tower, map.width.toInt(), map.height.toInt()).hasBlockingSide
             ) {
                 neighborsBlockingEntities.add(spot)
             } else {

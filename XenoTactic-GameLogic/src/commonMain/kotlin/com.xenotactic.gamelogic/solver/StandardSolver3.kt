@@ -23,7 +23,7 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
         val _solverParams: SolverParams
     ) {
         val _availableTowerPlacementSpots = getAvailableTowerPlacementSpots(_map)
-        var _towerCache = TowerCache(_map.width.value, _map.height.value)
+        var _towerCache = TowerCache(_map.width.toInt(), _map.height.toInt())
         val _towerPlacementsToPathCache = TowerPlacementsToPathCache()
 
         var numTotalSolverInternalCalls = 0

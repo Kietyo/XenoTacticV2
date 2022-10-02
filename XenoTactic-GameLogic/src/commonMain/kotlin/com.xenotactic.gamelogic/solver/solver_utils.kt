@@ -8,8 +8,8 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 fun getAvailableTowerPlacementSpots(map: GameMap): List<GameUnitPoint> {
     val availableSpots = mutableListOf<GameUnitPoint>()
     val pathingEntities = map.getPathingEntities()
-    for (i in 0..(map.width.value - 2)) {
-        for (j in 0..(map.height.value - 2)) {
+    for (i in 0..(map.width.toInt() - 2)) {
+        for (j in 0..(map.height.toInt() - 2)) {
             val candidate = MapEntity.Tower(i.toGameUnit(), j.toGameUnit())
             if (map.intersectsBlockingEntities(candidate)) {
                 continue

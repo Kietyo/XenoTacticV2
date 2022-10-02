@@ -18,11 +18,6 @@ import kotlin.time.measureTimedValue
 
 const val LINE_INTERSECTION_DIFF_THRESHOLD = 0.01
 
-fun View.xy(centerWorldX: WorldUnit, centerWorldY: WorldUnit) {
-    xy(centerWorldX.value, centerWorldY.value)
-}
-
-
 infix fun Int.to(that: Int): GameUnitPoint = GameUnitPoint(this, that)
 
 fun abs(f1: Float): Float {
