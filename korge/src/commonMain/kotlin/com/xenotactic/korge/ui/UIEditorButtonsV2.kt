@@ -122,6 +122,7 @@ class UIEditorButtonsV2(
                     MapEntityType.TELEPORT_OUT -> Unit
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
+                    MapEntityType.MONSTER -> TODO()
                 }
                 switchToPlayingMode()
             }

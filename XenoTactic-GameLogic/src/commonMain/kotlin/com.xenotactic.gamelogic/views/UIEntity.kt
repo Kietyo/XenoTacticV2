@@ -79,6 +79,10 @@ class UIEntity(
                 ).withAd(0.7)
                 Circle(worldWidth.value / 2, speedAreaColor).addTo(this)
             }
+
+            MapEntityType.MONSTER -> {
+                Circle((worldWidth / 2).value, Colors.RED).addTo(this)
+            }
         }
 
 //        onClick {

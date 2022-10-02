@@ -9,6 +9,7 @@ import com.soywiz.korge.view.centerOnStage
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.MapEntityComponent
 import com.xenotactic.gamelogic.components.PathSequenceTraversalComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
@@ -88,6 +89,7 @@ class PlayScene : Scene() {
                             MapEntityData.Monster
                         )
                     )
+                    addComponentOrThrow(SizeComponent(1.toGameUnit(), 1.toGameUnit()))
                     val pathSequenceTraversal = PathSequenceTraversal(
                         gameMapApi.gameMapPathState.shortestPath!!
                     )

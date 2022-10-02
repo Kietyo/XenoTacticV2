@@ -135,6 +135,7 @@ class GameMapControllerEComponent(
             MapEntityType.TELEPORT_OUT -> "Teleport Out ${numTeleports + 1}"
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
+            MapEntityType.MONSTER -> TODO()
         }
 
         return "Placement Mode: $entityName"

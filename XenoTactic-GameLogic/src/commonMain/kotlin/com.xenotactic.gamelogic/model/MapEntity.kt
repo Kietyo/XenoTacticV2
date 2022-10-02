@@ -13,7 +13,8 @@ enum class MapEntityType {
     TELEPORT_IN,
     TELEPORT_OUT,
     SMALL_BLOCKER,
-    SPEED_AREA;
+    SPEED_AREA,
+    MONSTER;
 
     sealed class EntitySize {
         // No fixed size
@@ -34,6 +35,7 @@ enum class MapEntityType {
                     TELEPORT_OUT -> false
                     SMALL_BLOCKER -> true
                     SPEED_AREA -> false
+                    MONSTER -> false
                 }
             }.toSet()
 
@@ -52,6 +54,7 @@ enum class MapEntityType {
                 TELEPORT_OUT -> TODO()
                 SMALL_BLOCKER -> TODO()
                 SPEED_AREA -> TODO()
+                MONSTER -> TODO()
             }
         }
 
@@ -66,6 +69,7 @@ enum class MapEntityType {
 
                 ROCK, SPEED_AREA -> EntitySize.Varied
                 SMALL_BLOCKER -> EntitySize.Fixed(1.toGameUnit(), 1.toGameUnit())
+                MONSTER -> EntitySize.Varied
             }
         }
     }

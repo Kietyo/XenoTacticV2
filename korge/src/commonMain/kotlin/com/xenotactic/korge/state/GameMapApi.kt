@@ -241,6 +241,7 @@ class GameMapApi(
             MapEntityType.TELEPORT_OUT -> "Teleport Out ${numCompletedTeleports + 1}"
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
+            MapEntityType.MONSTER -> TODO()
         }
 
         return "Placement Mode: $entityName"

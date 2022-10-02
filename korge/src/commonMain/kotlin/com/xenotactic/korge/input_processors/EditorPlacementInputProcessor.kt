@@ -158,6 +158,7 @@ class EditorPlacementInputProcessor(
 
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
+            MapEntityType.MONSTER -> TODO()
         }
     }
 

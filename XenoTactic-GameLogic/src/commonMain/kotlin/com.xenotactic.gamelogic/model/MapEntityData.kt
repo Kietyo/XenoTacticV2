@@ -34,7 +34,7 @@ sealed class MapEntityData {
             is TeleportIn -> MapEntityType.TELEPORT_IN
             is TeleportOut -> MapEntityType.TELEPORT_OUT
             Tower -> MapEntityType.TOWER
-            Monster -> TODO()
+            Monster -> MapEntityType.MONSTER
         }
     }
 

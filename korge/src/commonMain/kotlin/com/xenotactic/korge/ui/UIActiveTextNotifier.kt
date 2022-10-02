@@ -62,6 +62,7 @@ class UIActiveTextNotifier(
                     MapEntityType.TELEPORT_OUT -> TODO()
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
+                    MapEntityType.MONSTER -> TODO()
                 }
             }
         }

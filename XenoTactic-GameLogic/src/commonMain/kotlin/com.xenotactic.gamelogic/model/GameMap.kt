@@ -75,6 +75,7 @@ data class GameMap(
             MapEntityType.TELEPORT_OUT -> teleportOuts.values.asSequence()
             MapEntityType.SMALL_BLOCKER -> smallBlockers.asSequence()
             MapEntityType.SPEED_AREA -> speedAreas.asSequence()
+            MapEntityType.MONSTER -> emptySequence()
         }
     }
 

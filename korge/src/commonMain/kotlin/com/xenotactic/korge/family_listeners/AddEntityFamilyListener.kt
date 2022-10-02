@@ -21,15 +21,13 @@ class AddEntityFamilyListener(
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            MapEntityComponent::class, SizeComponent::class, BottomLeftPositionComponent::class
+            MapEntityComponent::class, SizeComponent::class
         ),
     )
 
     val uiMapV2 = world.injections.getSingleton<UIMapV2>()
     val mapEntityTypeContainer = world.getComponentContainer<MapEntityComponent>()
     val sizeComponentContainer = world.getComponentContainer<SizeComponent>()
-    val bottomLeftPositionComponentContainer =
-        world.getComponentContainer<BottomLeftPositionComponent>()
 
     override fun onAdd(entityId: EntityId) {
         val mapEntityComponent = mapEntityTypeContainer.getComponent(entityId)
