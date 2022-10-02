@@ -53,9 +53,6 @@ object MainModule : Module() {
         mapPrototype { TestScene() }
         mapPrototype { EditorSceneV2() }
         mapPrototype { PlayScene() }
-        mapPrototype {
-            EditorScene()
-        }
 
     }
 }
