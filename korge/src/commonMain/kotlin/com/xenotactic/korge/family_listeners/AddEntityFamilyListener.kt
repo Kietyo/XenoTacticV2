@@ -33,12 +33,7 @@ class AddEntityFamilyListener(
 
     override fun onAdd(entityId: EntityId) {
         val mapEntityComponent = mapEntityTypeContainer.getComponent(entityId)
-        val bottomLeftPositionComponent = bottomLeftPositionComponentContainer.getComponent(entityId)
         val sizeComponent = sizeComponentContainer.getComponent(entityId)
-        val (worldX, worldY) = uiMapV2.getWorldCoordinates(
-            bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
-        )
-
         println("onAdd. mapEntityComponent: $mapEntityComponent")
 
         val uiEntity = UIEntity(
@@ -54,13 +49,12 @@ class AddEntityFamilyListener(
             } else {
                 addTo(uiMapV2.entityLayer)
             }
-            xy(worldX, worldY)
         }
 
         val text = mapEntityComponent.entityData.getText()
         if (text != null) {
             val textView = makeEntityLabelText(text).apply {
-                addTo(uiMapV2._entityLabelLayer)
+                addTo(uiEntity)
                 scaledHeight = uiMapV2.gridSize / 2
                 scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                 centerOn(uiEntity)
