@@ -19,6 +19,7 @@ import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
+import pathing.PathSequenceTraversal
 
 class GameMapApi(
     val engine: Engine,
@@ -119,7 +120,6 @@ class GameMapApi(
                     is MapEntity.Tower -> TODO()
                 }
 
-
                 addComponentOrThrow(mapEntityComponent)
                 val sizeComponent = SizeComponent(placementEntity.width, placementEntity.height).also {
                     addComponentOrThrow(it)
@@ -132,27 +132,8 @@ class GameMapApi(
                     )
                 )
 
-                val uiEntity = UIEntity(
-                    mapEntityComponent.entityData.toMapEntityType(),
-                    sizeComponent.width,
-                    sizeComponent.height,
-                    uiMap.gridSize,
-                    uiMap.borderSize,
-                    if (mapEntityComponent.entityData is MapEntityData.SpeedArea) (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect else null
-                ).apply {
-                    when (mapEntityComponent.entityData) {
-                        is MapEntityData.SpeedArea -> addTo(uiMap.speedAreaLayer)
-                        is MapEntityData.Checkpoint,
-                        MapEntityData.Finish,
-                        MapEntityData.SmallBlocker,
-                        MapEntityData.Start,
-                        is MapEntityData.TeleportIn,
-                        is MapEntityData.TeleportOut,
-                        MapEntityData.Tower,
-                        MapEntityData.Rock -> addTo(uiMap.entityLayer)
-                        MapEntityData.Monster -> addTo(uiMap.monsterLayer)
-                    }
-                }
+                val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
+                addComponentOrThrow(UIMapEntityComponent(uiEntity))
 
                 val text = mapEntityComponent.entityData.getText()
                 if (text != null) {
@@ -165,13 +146,67 @@ class GameMapApi(
                         addComponentOrThrow(UIMapEntityTextComponent(textView))
                 }
 
-                addComponentOrThrow(UIMapEntityComponent(uiEntity))
+
             }
 
 //            gameMap.placeEntity(placementEntity)
             eventBus.send(AddEntityEvent(placementEntity))
         }
         updateShortestPath()
+    }
+
+    fun spawnCreep() {
+        gameWorld.world.addEntity {
+            val mapEntityComponent = MapEntityComponent(
+                MapEntityData.Monster
+            ).also { addComponentOrThrow(it) }
+            val sizeComponent = SizeComponent(1.toGameUnit(), 1.toGameUnit()).also {
+                addComponentOrThrow(it)
+            }
+            addComponentOrThrow(MonsterComponent)
+            addComponentOrThrow(MovementSpeedComponent())
+
+            val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
+            addComponentOrThrow(UIMapEntityComponent(uiEntity))
+
+            val pathSequenceTraversal = PathSequenceTraversal(
+                gameMapPathState.shortestPath!!
+            )
+            addComponentOrThrow(
+                PathSequenceTraversalComponent(
+                    pathSequenceTraversal
+                )
+            )
+        }
+    }
+
+    fun createUiEntity(
+        mapEntityComponent: MapEntityComponent,
+        sizeComponent: SizeComponent
+    ): UIEntity {
+        val uiEntity = UIEntity(
+            mapEntityComponent.entityData.toMapEntityType(),
+            sizeComponent.width,
+            sizeComponent.height,
+            uiMap.gridSize,
+            uiMap.borderSize,
+            if (mapEntityComponent.entityData is MapEntityData.SpeedArea) (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect else null
+        ).apply {
+            when (mapEntityComponent.entityData) {
+                is MapEntityData.SpeedArea -> addTo(uiMap.speedAreaLayer)
+                is MapEntityData.Checkpoint,
+                MapEntityData.Finish,
+                MapEntityData.SmallBlocker,
+                MapEntityData.Start,
+                is MapEntityData.TeleportIn,
+                is MapEntityData.TeleportOut,
+                MapEntityData.Tower,
+                MapEntityData.Rock -> addTo(uiMap.entityLayer)
+
+                MapEntityData.Monster -> addTo(uiMap.monsterLayer)
+            }
+        }
+        return uiEntity
     }
 
     private fun updateShortestPath() {

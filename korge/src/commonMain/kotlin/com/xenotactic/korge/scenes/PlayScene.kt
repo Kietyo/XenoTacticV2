@@ -84,24 +84,8 @@ class PlayScene : Scene() {
             alignBottomToBottomOfWindow()
             onClick {
                 println("Spawn creep button clicked!")
-                gameWorld.addEntity {
-                    addComponentOrThrow(
-                        MapEntityComponent(
-                            MapEntityData.Monster
-                        )
-                    )
-                    addComponentOrThrow(SizeComponent(1.toGameUnit(), 1.toGameUnit()))
-                    addComponentOrThrow(MonsterComponent)
-                    addComponentOrThrow(MovementSpeedComponent())
-                    val pathSequenceTraversal = PathSequenceTraversal(
-                        gameMapApi.gameMapPathState.shortestPath!!
-                    )
-                    addComponentOrThrow(
-                        PathSequenceTraversalComponent(
-                            pathSequenceTraversal
-                        )
-                    )
-                }
+                gameMapApi.spawnCreep()
+
             }
         }
 
