@@ -1,19 +1,21 @@
 package com.xenotactic.korge.state
 
+import com.soywiz.korge.view.addTo
+import com.soywiz.korge.view.centerOn
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
-import com.xenotactic.gamelogic.components.MapEntityComponent
-import com.xenotactic.gamelogic.components.SizeComponent
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.max
 import com.xenotactic.gamelogic.utils.min
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.ecomponents.DebugEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
+import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
@@ -73,69 +75,97 @@ class GameMapApi(
                 else -> entity
             }
             gameWorld.world.addEntity {
-                when (placementEntity) {
+                val mapEntityComponent: MapEntityComponent = when (placementEntity) {
                     is MapEntity.Checkpoint -> {
-                        addComponentOrThrow(
                             MapEntityComponent(
                                 MapEntityData.Checkpoint(
                                     placementEntity.sequenceNumber
                                 )
                             )
-                        )
                     }
 
                     is MapEntity.Finish -> {
-                        addComponentOrThrow(
                             MapEntityComponent(
                                 MapEntityData.Finish
                             )
-                        )
                     }
 
                     is MapEntity.Rock -> {
-                        addComponentOrThrow(
                             MapEntityComponent(
                                 MapEntityData.Rock
                             )
-                        )
                     }
 
                     is MapEntity.SmallBlocker -> TODO()
                     is MapEntity.SpeedArea -> TODO()
                     is MapEntity.Start -> {
-                        addComponentOrThrow(
                             MapEntityComponent(
                                 MapEntityData.Start
                             )
-                        )
                     }
 
                     is MapEntity.TeleportIn -> {
-                        addComponentOrThrow(
                             MapEntityComponent(
                                 MapEntityData.TeleportIn(placementEntity.sequenceNumber)
                             )
-                        )
                     }
 
                     is MapEntity.TeleportOut -> {
-                        addComponentOrThrow(
                             MapEntityComponent(
                                 MapEntityData.TeleportOut(placementEntity.sequenceNumber)
                             )
-                        )
                     }
 
                     is MapEntity.Tower -> TODO()
                 }
 
-                addComponentOrThrow(SizeComponent(placementEntity.width, placementEntity.height))
+
+                addComponentOrThrow(mapEntityComponent)
+                val sizeComponent = SizeComponent(placementEntity.width, placementEntity.height).also {
+                    addComponentOrThrow(it)
+                }
+
                 addComponentOrThrow(
                     BottomLeftPositionComponent(
                         placementEntity.x,
                         placementEntity.y
                     )
                 )
+
+                val uiEntity = UIEntity(
+                    mapEntityComponent.entityData.toMapEntityType(),
+                    sizeComponent.width,
+                    sizeComponent.height,
+                    uiMap.gridSize,
+                    uiMap.borderSize,
+                    if (mapEntityComponent.entityData is MapEntityData.SpeedArea) (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect else null
+                ).apply {
+                    when (mapEntityComponent.entityData) {
+                        is MapEntityData.SpeedArea -> addTo(uiMap.speedAreaLayer)
+                        is MapEntityData.Checkpoint,
+                        MapEntityData.Finish,
+                        MapEntityData.SmallBlocker,
+                        MapEntityData.Start,
+                        is MapEntityData.TeleportIn,
+                        is MapEntityData.TeleportOut,
+                        MapEntityData.Tower,
+                        MapEntityData.Rock -> addTo(uiMap.entityLayer)
+                        MapEntityData.Monster -> addTo(uiMap.monsterLayer)
+                    }
+                }
+
+                val text = mapEntityComponent.entityData.getText()
+                if (text != null) {
+                    val textView = makeEntityLabelText(text).apply {
+                        addTo(uiEntity)
+                        scaledHeight = uiMap.gridSize / 2
+                        scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
+                        centerOn(uiEntity)
+                    }
+                        addComponentOrThrow(UIMapEntityTextComponent(textView))
+                }
+
+                addComponentOrThrow(UIMapEntityComponent(uiEntity))
             }
 
 //            gameMap.placeEntity(placementEntity)

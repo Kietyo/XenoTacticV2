@@ -4,10 +4,7 @@ import com.soywiz.klock.TimeSpan
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.addFixedUpdater
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOnStage
+import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.MapEntityData
@@ -19,7 +16,6 @@ import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
@@ -73,7 +69,6 @@ class PlayScene : Scene() {
 
         gameWorld.apply {
             injections = engine.injections
-            addFamilyListener(AddEntityFamilyListener(this))
             addFamilyListener(SetInitialPositionFamilyListener(this))
             addComponentListener(PreSelectionComponentListener(engine))
             addComponentListener(SelectionComponentListener(engine))
@@ -85,7 +80,7 @@ class PlayScene : Scene() {
         gameMapApi.placeEntities(randomMap.map.getAllEntities())
 
 
-        uiButton("Spawn creep") {
+        val spawnCreepButton = uiButton("Spawn creep") {
             alignBottomToBottomOfWindow()
             onClick {
                 println("Spawn creep button clicked!")
@@ -107,6 +102,14 @@ class PlayScene : Scene() {
                         )
                     )
                 }
+            }
+        }
+
+        val addTowerButton = uiButton("Add tower") {
+            alignBottomToBottomOfWindow()
+            alignLeftToRightOf(spawnCreepButton)
+            onClick {
+                println("Add tower button clicked!")
             }
         }
 
