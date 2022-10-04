@@ -4,6 +4,7 @@ import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.MonsterComponent
+import com.xenotactic.gamelogic.components.MovementSpeedComponent
 import com.xenotactic.gamelogic.components.PathSequenceTraversalComponent
 import com.xenotactic.gamelogic.components.UIMapEntityComponent
 import com.xenotactic.gamelogic.korge_utils.xy
@@ -15,7 +16,8 @@ class MonsterMoveSystem(val world: World) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
             MonsterComponent::class, UIMapEntityComponent::class,
-            PathSequenceTraversalComponent::class
+            PathSequenceTraversalComponent::class,
+            MovementSpeedComponent::class
         )
     )
 
@@ -26,6 +28,7 @@ class MonsterMoveSystem(val world: World) : System() {
             val traversal = world[it, PathSequenceTraversalComponent::class].pathSequenceTraversal
             val currentPoint = traversal.currentPosition
             val uiMapEntityComponent = world[it, UIMapEntityComponent::class]
+            val movementSpeedComponent = world[it, MovementSpeedComponent::class]
 
             println("""
                 currentPoint: $currentPoint
@@ -38,7 +41,7 @@ class MonsterMoveSystem(val world: World) : System() {
 
             uiMapEntityComponent.entityView.xy(worldX, worldY)
 
-            traversal.traverse(0.5)
+            traversal.traverse(movementSpeedComponent.movementSpeed)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.klock.Frequency
 import com.soywiz.klock.TimeSpan
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
@@ -10,11 +9,7 @@ import com.soywiz.korge.view.addFixedUpdater
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.MapEntityComponent
-import com.xenotactic.gamelogic.components.MonsterComponent
-import com.xenotactic.gamelogic.components.PathSequenceTraversalComponent
-import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
@@ -22,6 +17,7 @@ import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
+import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.family_listeners.AddEntityFamilyListener
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
@@ -32,10 +28,10 @@ import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
+import com.xenotactic.korge.systems.MonsterRemoveSystem
 import com.xenotactic.korge.systems.MonsterMoveSystem
 import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathSequenceTraversal
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 class PlayScene : Scene() {
@@ -81,7 +77,9 @@ class PlayScene : Scene() {
             addFamilyListener(SetInitialPositionFamilyListener(this))
             addComponentListener(PreSelectionComponentListener(engine))
             addComponentListener(SelectionComponentListener(engine))
+            addComponentListener(UIMapEntityComponentListener())
             addSystem(MonsterMoveSystem(this))
+            addSystem(MonsterRemoveSystem(this))
         }
 
         gameMapApi.placeEntities(randomMap.map.getAllEntities())
@@ -99,6 +97,7 @@ class PlayScene : Scene() {
                     )
                     addComponentOrThrow(SizeComponent(1.toGameUnit(), 1.toGameUnit()))
                     addComponentOrThrow(MonsterComponent)
+                    addComponentOrThrow(MovementSpeedComponent())
                     val pathSequenceTraversal = PathSequenceTraversal(
                         gameMapApi.gameMapPathState.shortestPath!!
                     )

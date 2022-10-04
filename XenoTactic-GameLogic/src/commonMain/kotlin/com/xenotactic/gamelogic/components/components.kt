@@ -1,9 +1,7 @@
 package com.xenotactic.gamelogic.components
 
 import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.View
 import com.xenotactic.gamelogic.model.MapEntityData
-import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.views.UIEntity
@@ -43,5 +41,5 @@ data class PathSequenceTraversalComponent(
 )
 
 data class MovementSpeedComponent(
-    val movementSpeedGameUnits: Double = 20.0
+    val movementSpeed: Double = 0.1
 )
