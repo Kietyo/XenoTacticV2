@@ -33,7 +33,7 @@ class MonsterMoveSystem(val world: World) : System() {
 
             val (worldX, worldY) = uiMapV2.getWorldCoordinates(
                 currentPoint.x.toGameUnit(), currentPoint.y.toGameUnit(),
-                1.toGameUnit()
+                0.toGameUnit()
             )
 
             uiMapEntityComponent.entityView.xy(worldX, worldY)

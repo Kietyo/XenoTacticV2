@@ -42,10 +42,17 @@ class AddEntityFamilyListener(
             uiMapV2.borderSize,
             if (mapEntityComponent.entityData is MapEntityData.SpeedArea) (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect else null
         ).apply {
-            if (mapEntityComponent.entityData is MapEntityData.SpeedArea) {
-                addTo(uiMapV2.speedAreaLayer)
-            } else {
-                addTo(uiMapV2.entityLayer)
+            when (mapEntityComponent.entityData) {
+                is MapEntityData.SpeedArea -> addTo(uiMapV2.speedAreaLayer)
+                is MapEntityData.Checkpoint,
+                MapEntityData.Finish,
+                MapEntityData.SmallBlocker,
+                MapEntityData.Start,
+                is MapEntityData.TeleportIn,
+                is MapEntityData.TeleportOut,
+                MapEntityData.Tower,
+                MapEntityData.Rock -> addTo(uiMapV2.entityLayer)
+                MapEntityData.Monster -> addTo(uiMapV2.monsterLayer)
             }
         }
 

@@ -58,15 +58,15 @@ class UIMapV2(
 
     val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
 
-    val _boardLayer = this.container {
+    private val _boardLayer = this.container {
         //        this.propagateEvents = false
         //        this.mouseChildren = false
         //        this.hitTestEnabled = false
     }
 
-    val _boardGraphicsLayer = this.graphics { }
+    private val _boardGraphicsLayer = this.graphics { }
 
-    val _gridNumberLayer = this.container()
+    private val _gridNumberLayer = this.container()
 
     val speedAreaLayer = this.container()
 
@@ -77,6 +77,9 @@ class UIMapV2(
 
     private val _pathingLinesGraphics = this.gpuGraphics {
         //        useNativeRendering = false
+    }
+
+    val monsterLayer = this.container().apply {
     }
 
     val _highlightLayer = this.container()

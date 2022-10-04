@@ -32,6 +32,10 @@ class SetInitialPositionFamilyListener(
             bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
         )
 
+        println("""
+            entityId: $entityId, bottomLeftPositionComponent: $bottomLeftPositionComponent, sizeComponent: $sizeComponent, worldX: $worldX, worldY: $worldY 
+        """.trimIndent())
+
         uiMapEntityComponent.entityView.xy(worldX, worldY)
     }
 

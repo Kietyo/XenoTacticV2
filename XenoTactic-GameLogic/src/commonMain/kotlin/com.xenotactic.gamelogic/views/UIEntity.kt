@@ -1,13 +1,10 @@
 package com.xenotactic.gamelogic.views
 
-import com.soywiz.korge.view.Circle
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Graphics
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.solidRect
+import com.soywiz.korge.component.docking.dockedTo
+import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
+import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -26,15 +23,22 @@ class UIEntity(
 ) : Container() {
     init {
         val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
+        println("""
+            rendering: entityType: $entityType, worldWidth: $worldWidth, worldHeight: $worldHeight
+        """.trimIndent())
         when (entityType) {
             MapEntityType.CHECKPOINT -> {
-                Circle((worldWidth / 2).value, Colors.MAROON).addTo(this)
+                Circle((worldWidth / 2).value, Colors.MAROON).apply {
+                    addTo(this@UIEntity)
+                }
             }
             MapEntityType.FINISH -> {
                 Circle((worldWidth / 2).value, Colors.MAGENTA).addTo(this)
             }
             MapEntityType.START -> {
-                Circle((worldWidth / 2).value, Colors.RED).addTo(this)
+                Circle((worldWidth / 2).value, Colors.RED).apply {
+                    addTo(this@UIEntity)
+                }
             }
             MapEntityType.TOWER -> {
                 this.solidRect(
@@ -81,7 +85,10 @@ class UIEntity(
             }
 
             MapEntityType.MONSTER -> {
-                Circle((worldWidth / 2).value, Colors.RED).addTo(this)
+                Circle((worldWidth / 2).value, Colors.RED).apply {
+                    addTo(this@UIEntity)
+                    anchor(Anchor.CENTER)
+                }
             }
         }
 
