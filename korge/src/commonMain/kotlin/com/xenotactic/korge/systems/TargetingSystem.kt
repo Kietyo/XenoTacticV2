@@ -16,8 +16,10 @@ class TargetingSystem(
     val gameWorld: GameWorld
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
-        allOfComponents = setOf(TowerComponent::class, BottomLeftPositionComponent::class, SizeComponent::class,
-        RangeComponent::class),
+        allOfComponents = setOf(
+            TowerComponent::class, BottomLeftPositionComponent::class, SizeComponent::class,
+            RangeComponent::class
+        ),
         noneOfComponents = setOf(TargetingComponent::class)
     )
 
@@ -29,7 +31,8 @@ class TargetingSystem(
             val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
 
             val nearestMonster = gameWorld.monsterFamily.getSequence().map {
-                val monsterCenterPoint = gameWorld.world[it, PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
+                val monsterCenterPoint =
+                    gameWorld.world[it, PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
                 it to distance(centerPoint, monsterCenterPoint)
             }.minByOrNull {
                 it.second
