@@ -23,61 +23,57 @@ import com.xenotactic.korge.state.GameMapDimensionsState
 @OptIn(KorgeExperimental::class)
 class UIEditorButtonsV2(
     val engine: Engine,
-    val uiMapV2: UIMapV2,
     val baseView: SContainer
 ) : Container() {
+    private val uiMapV2 = engine.injections.getSingleton<UIMapV2>()
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
     private val editorState = engine.injections.getSingleton<EditorState>()
     private val mouseDragInputProcessor = engine.injections.getSingleton<MouseDragInputProcessor>()
-    private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
-    private val selectorMouseProcessor = engine.injections.getSingleton<SelectorMouseProcessorV2>()
-
-    private val DEFAULT_NOTIFICATION_TEXT = "N/A"
 
     init {
         val buttonStack = uiHorizontalStack {
             val addStartButton = uiButton(text = "Add Start") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.START) { // Switching to playing mode
-                        switchToPlayingMode()
+                        editorState.switchToPlayingMode()
                     } else { // Switch to editing mode
-                        switchToEditingMode(MapEntityType.START)
+                        editorState.switchToEditingMode(MapEntityType.START)
                     }
                 }
             }
             val addFinishButton = uiButton(text = "Add Finish") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
-                        switchToPlayingMode()
+                        editorState.switchToPlayingMode()
                     } else { // Switch to editing mode
-                        switchToEditingMode(MapEntityType.FINISH)
+                        editorState.switchToEditingMode(MapEntityType.FINISH)
                     }
                 }
             }
             val addCheckpoint = uiButton(text = "Add Checkpoint") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
-                        switchToPlayingMode()
+                        editorState.switchToPlayingMode()
                     } else { // Switch to editing mode
-                        switchToEditingMode(MapEntityType.CHECKPOINT)
+                        editorState.switchToEditingMode(MapEntityType.CHECKPOINT)
                     }
                 }
             }
             val addTeleport = uiButton(text = "Add Teleport") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
-                        switchToPlayingMode()
+                        editorState.switchToPlayingMode()
                     } else { // Switch to editing mode
-                        switchToEditingMode(MapEntityType.TELEPORT_IN)
+                        editorState.switchToEditingMode(MapEntityType.TELEPORT_IN)
                     }
                 }
             }
             uiButton(text = "Add rocks") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
-                        switchToPlayingMode()
+                        editorState.switchToPlayingMode()
                     } else { // Switch to editing mode
-                        switchToEditingMode(MapEntityType.ROCK)
+                        editorState.switchToEditingMode(MapEntityType.ROCK)
                     }
                 }
             }
@@ -124,12 +120,12 @@ class UIEditorButtonsV2(
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
                 }
-                switchToPlayingMode()
+                editorState.switchToPlayingMode()
             }
         }
 
         engine.eventBus.register<EscapeButtonActionEvent> {
-            switchToPlayingMode()
+            editorState.switchToPlayingMode()
         }
 
         val deleteEntitiesButton = UIButton(text="Delete entities")
@@ -150,35 +146,6 @@ class UIEditorButtonsV2(
         centerXOn(this.baseView)
         alignBottomToBottomOf(this.baseView)
 //        alignBottomToBottomOfWindow()
-    }
-
-    fun switchToPlayingMode() {
-        engine.eventBus.send(NotificationTextUpdateEvent(DEFAULT_NOTIFICATION_TEXT))
-        mouseDragInputProcessor.adjustSettings {
-            isEnabled = true
-        }
-        editorState.isEditingEnabled = false
-        uiMapV2.hideHighlightRectangle()
-        uiMapV2.clearHighlightLayer()
-        selectorMouseProcessor.isEnabled = true
-        println("selectorMouseProcessor is enabled")
-    }
-
-    fun switchToEditingMode(entityType: MapEntityType) {
-        engine.eventBus.send(
-            NotificationTextUpdateEvent(
-                gameMapApi.getNotificationText(
-                    entityType
-                )
-            )
-        )
-        mouseDragInputProcessor.adjustSettings {
-            allowLeftClickDragging = false
-        }
-        editorState.isEditingEnabled = true
-        editorState.entityTypeToPlace = entityType
-        selectorMouseProcessor.isEnabled = false
-        selectorMouseProcessor.reset()
     }
 
 }

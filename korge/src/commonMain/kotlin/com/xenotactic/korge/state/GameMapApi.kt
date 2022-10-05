@@ -56,7 +56,8 @@ class GameMapApi(
     }
 
     fun placeEntities(entities: Iterable<MapEntity>) {
-        val gameMapRect = GRectInt(0.toGameUnit(), 0.toGameUnit(), gameMapDimensionsState.width, gameMapDimensionsState.height)
+        val gameMapRect =
+            GRectInt(0.toGameUnit(), 0.toGameUnit(), gameMapDimensionsState.width, gameMapDimensionsState.height)
         val allEntitiesIntersectMap = entities.all {
             rectangleIntersects(gameMapRect, it.getGRectInt())
         }
@@ -73,51 +74,54 @@ class GameMapApi(
                     val newHeight = min(gameMapDimensionsState.height, entity.y + entityHeight) - entity.y
                     MapEntity.Rock(newX, newY, newWidth, newHeight)
                 }
+
                 else -> entity
             }
             gameWorld.world.addEntity {
                 val mapEntityComponent: MapEntityComponent = when (placementEntity) {
                     is MapEntity.Checkpoint -> {
-                            MapEntityComponent(
-                                MapEntityData.Checkpoint(
-                                    placementEntity.sequenceNumber
-                                )
+                        MapEntityComponent(
+                            MapEntityData.Checkpoint(
+                                placementEntity.sequenceNumber
                             )
+                        )
                     }
 
                     is MapEntity.Finish -> {
-                            MapEntityComponent(
-                                MapEntityData.Finish
-                            )
+                        MapEntityComponent(
+                            MapEntityData.Finish
+                        )
                     }
 
                     is MapEntity.Rock -> {
-                            MapEntityComponent(
-                                MapEntityData.Rock
-                            )
+                        MapEntityComponent(
+                            MapEntityData.Rock
+                        )
                     }
 
                     is MapEntity.SmallBlocker -> TODO()
                     is MapEntity.SpeedArea -> TODO()
                     is MapEntity.Start -> {
-                            MapEntityComponent(
-                                MapEntityData.Start
-                            )
+                        MapEntityComponent(
+                            MapEntityData.Start
+                        )
                     }
 
                     is MapEntity.TeleportIn -> {
-                            MapEntityComponent(
-                                MapEntityData.TeleportIn(placementEntity.sequenceNumber)
-                            )
+                        MapEntityComponent(
+                            MapEntityData.TeleportIn(placementEntity.sequenceNumber)
+                        )
                     }
 
                     is MapEntity.TeleportOut -> {
-                            MapEntityComponent(
-                                MapEntityData.TeleportOut(placementEntity.sequenceNumber)
-                            )
+                        MapEntityComponent(
+                            MapEntityData.TeleportOut(placementEntity.sequenceNumber)
+                        )
                     }
 
-                    is MapEntity.Tower -> TODO()
+                    is MapEntity.Tower -> MapEntityComponent(
+                        MapEntityData.Tower
+                    )
                 }
 
                 addComponentOrThrow(mapEntityComponent)
@@ -143,7 +147,7 @@ class GameMapApi(
                         scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                         centerOn(uiEntity)
                     }
-                        addComponentOrThrow(UIMapEntityTextComponent(textView))
+                    addComponentOrThrow(UIMapEntityTextComponent(textView))
                 }
 
 
@@ -245,6 +249,7 @@ class GameMapApi(
                 MapEntityData.Rock -> {
                     blockingEntities.add(rectangleEntity)
                 }
+
                 MapEntityData.SmallBlocker -> TODO()
                 is MapEntityData.SpeedArea -> TODO()
                 is MapEntityData.TeleportIn -> {
@@ -255,7 +260,7 @@ class GameMapApi(
                     sequenceNumToTpOut[entityData.sequenceNumber] = rectangleEntity
                 }
 
-                MapEntityData.Tower -> TODO()
+                MapEntityData.Tower -> blockingEntities.add(rectangleEntity)
                 MapEntityData.Monster -> TODO()
             }
         }
@@ -301,7 +306,7 @@ class GameMapApi(
             }
 
             MapEntityType.ROCK -> "Rock"
-            MapEntityType.TOWER -> TODO()
+            MapEntityType.TOWER -> "Tower"
             MapEntityType.TELEPORT_IN -> "Teleport In ${numCompletedTeleports + 1}"
             MapEntityType.TELEPORT_OUT -> "Teleport Out ${numCompletedTeleports + 1}"
             MapEntityType.SMALL_BLOCKER -> TODO()

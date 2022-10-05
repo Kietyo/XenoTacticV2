@@ -21,11 +21,11 @@ import kotlin.math.min
 
 class EditorPlacementInputProcessorV2(
     override val view: BaseView,
-    val uiMap: UIMapV2,
     val engine: Engine
 ) : MouseComponent {
     private val editorState = engine.injections.getSingleton<EditorState>()
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    private val uiMap = engine.injections.getSingleton<UIMapV2>()
 
     val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
@@ -75,7 +75,8 @@ class EditorPlacementInputProcessorV2(
                 MapEntityType.FINISH,
                 MapEntityType.CHECKPOINT,
                 MapEntityType.TELEPORT_IN,
-                MapEntityType.TELEPORT_OUT
+                MapEntityType.TELEPORT_OUT,
+                MapEntityType.TOWER
             )
         ) {
             val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorState.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
@@ -137,7 +138,7 @@ class EditorPlacementInputProcessorV2(
             }
 
             MapEntityType.ROCK -> TODO()
-            MapEntityType.TOWER -> TODO()
+            MapEntityType.TOWER -> MapEntity.Tower(gridXInt, gridYInt)
             MapEntityType.TELEPORT_IN -> {
                 MapEntity.TeleportIn(gameMapApi.numCompletedTeleports, gridXInt, gridYInt)
             }

@@ -37,7 +37,7 @@ class EditorSceneV2 : Scene() {
         addComponent(mouseDragInputProcessor)
 
         engine.apply {
-            injections.setSingletonOrThrow(EditorState())
+            injections.setSingletonOrThrow(EditorState(engine))
             injections.setSingletonOrThrow(mouseDragInputProcessor)
             injections.setSingletonOrThrow(uiMapV2)
         }
@@ -49,7 +49,7 @@ class EditorSceneV2 : Scene() {
         }
 
         addComponent(EditorPlacementInputProcessorV2(
-            this, uiMapV2, engine
+            this, engine
         ))
 
         addComponent(CameraInputProcessor(uiMapV2, engine))
@@ -61,7 +61,7 @@ class EditorSceneV2 : Scene() {
         })
 
         val uiEditorButtonsV2 =
-            UIEditorButtonsV2(engine, uiMapV2, this).addTo(this).apply {
+            UIEditorButtonsV2(engine, this).addTo(this).apply {
                 this.resize()
             }
 

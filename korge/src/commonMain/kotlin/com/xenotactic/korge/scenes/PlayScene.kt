@@ -8,6 +8,7 @@ import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.MapEntityData
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
@@ -17,16 +18,20 @@ import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
+import com.xenotactic.korge.input_processors.EditorPlacementInputProcessorV2
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
+import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.models.SettingsContainer
+import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 import com.xenotactic.korge.systems.MonsterRemoveSystem
 import com.xenotactic.korge.systems.MonsterMoveSystem
 import com.xenotactic.korge.ui.UIMapV2
+import com.xenotactic.korge.ui.UINotificationText
 import pathing.PathSequenceTraversal
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -61,10 +66,12 @@ class PlayScene : Scene() {
         val mouseDragInputProcessor =
             MouseDragInputProcessor(uiMapV2, settingsContainer.mouseDragStateSettings)
         addComponent(mouseDragInputProcessor)
-
-        engine.apply {
-            injections.setSingletonOrThrow(mouseDragInputProcessor)
-        }
+        engine.injections.setSingletonOrThrow(mouseDragInputProcessor)
+        addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
+            engine.injections.setSingletonOrThrow(this)
+        })
+        val editorState = EditorState(engine)
+        engine.injections.setSingletonOrThrow(editorState)
 
 
         gameWorld.apply {
@@ -94,13 +101,33 @@ class PlayScene : Scene() {
             alignLeftToRightOf(spawnCreepButton)
             onClick {
                 println("Add tower button clicked!")
+                editorState.switchToEditingMode(MapEntityType.TOWER)
             }
         }
+
+        val printWorldButton = uiButton("Print world") {
+            alignBottomToBottomOfWindow()
+            alignLeftToRightOf(addTowerButton)
+            onClick {
+                println("print world button clicked!")
+            }
+        }
+
+        val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
+            centerXOnStage()
+        }
+
+        addComponent(
+            EditorPlacementInputProcessorV2(
+                this, engine
+            )
+        )
 
         val deltaTime = TimeSpan(1000.0 / 60)
         addFixedUpdater(deltaTime) {
             gameWorld.update(deltaTime.milliseconds.milliseconds)
         }
+
 
         /**
          * Failure(map=GameMap(
