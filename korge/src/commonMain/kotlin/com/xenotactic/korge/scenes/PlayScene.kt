@@ -110,6 +110,7 @@ class PlayScene : Scene() {
             alignLeftToRightOf(addTowerButton)
             onClick {
                 println("print world button clicked!")
+                println(gameWorld)
             }
         }
 
