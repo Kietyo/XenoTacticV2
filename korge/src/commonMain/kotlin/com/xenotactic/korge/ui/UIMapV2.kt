@@ -305,7 +305,7 @@ class UIMapV2(
         val (worldX, worldY) = toWorldCoordinates(
             gridSize,
             GameUnitPoint(gridX, gridY),
-            mapWidth, mapHeight, entityHeight
+            mapHeight, entityHeight
         )
         val (worldWidth, worldHeight) = com.xenotactic.gamelogic.utils.toWorldDimensions(
             entityWidth,

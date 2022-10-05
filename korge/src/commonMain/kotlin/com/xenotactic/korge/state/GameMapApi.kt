@@ -137,7 +137,9 @@ class GameMapApi(
                 )
 
                 if (placementEntity is MapEntity.Tower) {
-//                    addComponentOrThrow()
+                    addComponentOrThrow(TowerComponent)
+                    addComponentOrThrow(RangeComponent(7.toGameUnit()))
+                    addComponentOrThrow(ReloadComponent(1000.0, 0.0))
                 }
 
                 val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)

@@ -11,6 +11,7 @@ import com.xenotactic.gamelogic.model.MONSTER_HEIGHT
 import com.xenotactic.gamelogic.model.MONSTER_WIDTH
 import com.xenotactic.gamelogic.model.MonsterEntity
 import com.xenotactic.gamelogic.utils.WorldUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
@@ -71,10 +72,10 @@ class MonstersEComponent(
         for (monster in monsters) {
             val gameUnitDeltaDistance = dt.seconds * monster.monsterEntity.movementSpeedGameUnits
             val monsterEntity = monster.monsterEntity
-            monsterEntity.pathSequenceTraversal.traverse(gameUnitDeltaDistance)
+            monsterEntity.pathSequenceTraversal.traverse(gameUnitDeltaDistance.toGameUnit())
             val (worldX, worldY) = toWorldCoordinates(
                 gridSize,
-                monsterEntity.currentPoint,
+                monsterEntity.currentPoint.toPoint(),
                 gameMapControllerComponent.height
             )
             monster.view.xy(

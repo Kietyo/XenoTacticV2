@@ -3,10 +3,14 @@ package com.xenotactic.gamelogic.pathing
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.contains
+import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
+import com.xenotactic.gamelogic.model.toGameUnitPoint
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndRectangle
+import com.xenotactic.gamelogic.utils.sumOf
 
 
 enum class SearcherType {
@@ -84,12 +88,12 @@ sealed class PathAttribute {
 }
 
 data class Segment(
-    val point1: Point,
-    val point2: Point,
+    val point1: GameUnitPoint,
+    val point2: GameUnitPoint,
     private val attributes: MutableList<PathAttribute> = mutableListOf()
 ) {
     val length = point1.distanceTo(point2)
-    val effectiveLength: Double
+    val effectiveLength: GameUnit
         get() {
             var speedEffect = 1.0
             for (attribute in attributes) {
@@ -105,53 +109,54 @@ data class Segment(
     }
 
     fun intersectsRectangle(rect: Rectangle): Boolean {
-        return intersectSegmentRectangle(point1, point2, rect)
+        return intersectSegmentRectangle(point1.toPoint(), point2.toPoint(), rect)
     }
 
     fun getFirstIntersectionPointToCircle(circleCenter: Point, radius: Double): Point? {
         val points =
-            getIntersectionPointsOfLineSegmentAndCircle(point1, point2, circleCenter, radius)
+            getIntersectionPointsOfLineSegmentAndCircle(point1.toPoint(), point2.toPoint(), circleCenter, radius)
         if (points.isEmpty()) return null
-        return points.minByOrNull { point1.distanceTo(it) }
+        return points.minByOrNull { point1.distanceTo(it.toGameUnitPoint()) }
     }
 
     fun getFirstIntersectionPointToRectangle(rectBottomLeft: Point, width: Float, height: Float):
             Point? {
         val points =
             getIntersectionPointsOfLineSegmentAndRectangle(
-                point1,
-                point2,
+                point1.toPoint(),
+                point2.toPoint(),
                 rectBottomLeft,
                 width,
                 height
             )
         if (points.isEmpty()) return null
-        return points.minByOrNull { point1.distanceTo(it) }
+        return points.minByOrNull { point1.distanceTo(it.toGameUnitPoint()) }
     }
 }
 
-data class Path(val points: List<Point>) {
-    data class CircleIntersectionResult(val segmentIdx: Int, val intersectionPoint: Point)
+
+data class Path(val points: List<GameUnitPoint>) {
+    data class CircleIntersectionResult(val segmentIdx: Int, val intersectionPoint: GameUnitPoint)
     companion object {
         fun create(): Path {
             return Path(listOf())
         }
 
         fun create(vararg vectors: Point): Path {
-            return Path(vectors.toList())
+            return Path(vectors.map { it.toGameUnitPoint() }.toList())
         }
 
         fun create(vararg vectors: Pair<Number, Number>): Path {
-            return Path(vectors.map { Point(it.first.toDouble(), it.second.toDouble()) })
+            return Path(vectors.map { GameUnitPoint(it.first.toDouble(), it.second.toDouble()) })
         }
     }
 
     val numPoints: Int
         get() = points.size
 
-    val pathLength: Double = run {
-        var sum = 0.0
-        var prevPoint: Point? = null
+    val pathLength: GameUnit = run {
+        var sum = GameUnit(0.0)
+        var prevPoint: GameUnitPoint? = null
         for (p in points) {
             if (prevPoint == null) {
                 prevPoint = p
@@ -166,7 +171,7 @@ data class Path(val points: List<Point>) {
     val numSegments: Int
         get() = points.size - 1
 
-    fun getLastPoint(): Point {
+    fun getLastPoint(): GameUnitPoint {
         return points.last()
     }
 
@@ -178,7 +183,7 @@ data class Path(val points: List<Point>) {
 
     fun getSegments(): List<Segment> {
         val segments = mutableListOf<Segment>()
-        var previousPoint: Point? = null
+        var previousPoint: GameUnitPoint? = null
         for (point in points) {
             if (previousPoint == null) {
                 previousPoint = point
@@ -196,7 +201,7 @@ data class Path(val points: List<Point>) {
         for ((idx, segment) in segments.withIndex()) {
             val intersect = segment.getFirstIntersectionPointToCircle(circleCenter, radius)
             if (intersect != null) {
-                return CircleIntersectionResult(idx, intersect)
+                return CircleIntersectionResult(idx, intersect.toGameUnitPoint())
             }
         }
         return null
@@ -209,13 +214,13 @@ data class Path(val points: List<Point>) {
             val intersect =
                 segment.getFirstIntersectionPointToRectangle(rectBottomLeft, width, height)
             if (intersect != null) {
-                return CircleIntersectionResult(idx, intersect)
+                return CircleIntersectionResult(idx, intersect.toGameUnitPoint())
             }
         }
         return null
     }
-
-    fun addSegment(point: Point): Path {
+    fun addSegment(point: Point): Path = addSegment(point.toGameUnitPoint())
+    fun addSegment(point: GameUnitPoint): Path {
         val newPoints = points.toMutableList()
         newPoints.add(point)
         return Path(newPoints)
@@ -226,15 +231,14 @@ data class Path(val points: List<Point>) {
         require(intersect.segmentIdx >= 0)
         return Path(
             points.dropLast(points.size - (intersect.segmentIdx + 1)).plus(
-                intersect
-                    .intersectionPoint
+                intersect.intersectionPoint
             )
         )
     }
 }
 
 data class PathSequence constructor(val paths: List<Path> = listOf()) {
-    val pathLength: Double = paths.sumOf { it.pathLength }
+    val pathLength: GameUnit = paths.sumOf { it.pathLength }
     val numPaths: Int
         get() = paths.size
 
@@ -258,6 +262,8 @@ data class PathSequence constructor(val paths: List<Path> = listOf()) {
         }
     }
 }
+
+
 
 sealed class EntityPath {
     data class EntityToEntityPath(
@@ -389,7 +395,7 @@ data class GamePath(
     //    val pathSequenceInfos: List<PathSequenceInfo>,
     //    val availableTeleports: Set<Int>
 ) {
-    val pathLength: Double = entityPaths.sumOf {
+    val pathLength: GameUnit = entityPaths.sumOf {
         when (it) {
             is EntityPath.EntityToEntityPath -> it.path.pathLength
             is EntityPath.EntityToEntityIntersectsTeleport -> it.startToTeleportPath.pathLength

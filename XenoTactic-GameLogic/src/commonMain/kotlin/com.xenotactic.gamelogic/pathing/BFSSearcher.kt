@@ -3,6 +3,7 @@ package pathing
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.toGameUnitPoint
 import com.xenotactic.gamelogic.pathing.*
 import com.xenotactic.gamelogic.utils.measureTime
 
@@ -27,7 +28,7 @@ object BFSSearcher {
             if (currentIndex == entitySequence.size) {
                 if (currentPath.pathLength < shortestPathLength) {
                     shortestPath = currentPath
-                    shortestPathLength = currentPath.pathLength
+                    shortestPathLength = currentPath.pathLength.toDouble()
                 }
                 return
             }
@@ -38,7 +39,7 @@ object BFSSearcher {
                 return
             }
 
-            val lastPointOfCurrentPath = currentPath.getLastPoint()
+            val lastPointOfCurrentPath = currentPath.getLastPoint().toPoint()
 
             val currentEntity = entitySequence[currentIndex]
             val points = listOf(currentEntity.centerPoint)
@@ -50,7 +51,7 @@ object BFSSearcher {
                 if (lineIntersectsEntities(lastPointOfCurrentPath, point, blockingEntities)) {
                     continue
                 }
-                if (lastPointOfCurrentPath.distanceTo(point) + currentPath.pathLength >
+                if (lastPointOfCurrentPath.distanceTo(point) + currentPath.pathLength.toDouble() >
                     shortestPathLength) {
                     continue
                 }
@@ -68,7 +69,7 @@ object BFSSearcher {
                         continue
                     }
 
-                    if (lastPointOfCurrentPath.distanceTo(point) + currentPath.pathLength >
+                    if (lastPointOfCurrentPath.distanceTo(point) + currentPath.pathLength.toDouble() >
                         shortestPathLength) {
                         continue
                     }
@@ -122,7 +123,7 @@ object BFSSearcher {
             searcher.getPathInternal(
                 0,
                 Path(
-                    listOf(startPoint)
+                    listOf(startPoint.toGameUnitPoint())
                 ),
                 availablePathingPoints
             )

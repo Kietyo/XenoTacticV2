@@ -30,12 +30,8 @@ class MonsterMoveSystem(val world: World) : System() {
             val uiMapEntityComponent = world[it, UIMapEntityComponent::class]
             val movementSpeedComponent = world[it, MovementSpeedComponent::class]
 
-            println("""
-                currentPoint: $currentPoint
-            """.trimIndent())
-
             val (worldX, worldY) = uiMapV2.getWorldCoordinates(
-                currentPoint.x.toGameUnit(), currentPoint.y.toGameUnit(),
+                currentPoint.x, currentPoint.y,
                 0.toGameUnit()
             )
 

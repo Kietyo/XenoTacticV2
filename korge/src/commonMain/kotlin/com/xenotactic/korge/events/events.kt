@@ -13,7 +13,7 @@ object EscapeButtonActionEvent
 
 data class UpdatedPathLineEvent(
     val pathSequence: PathSequence?,
-    val newPathLength: Double?)
+    val newPathLength: GameUnit?)
 
 data class RemovedEntityEvent(val entity: MapEntity)
 

@@ -12,6 +12,6 @@ class MonsterEntity(
     val radiusGameUnits: Float = 0.5f,
     val movementSpeedGameUnits: Float = 20f
 ) {
-    val currentPoint: Point
+    val currentPoint: GameUnitPoint
         get() = pathSequenceTraversal.currentPosition
 }

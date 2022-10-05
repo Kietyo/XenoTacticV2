@@ -414,7 +414,7 @@ class UIMap(
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize,
             GameUnitPoint(gridX, gridY),
-            gameMap.width, gameMap.height, entityHeight
+            gameMap.height, entityHeight
         )
         val (worldWidth, worldHeight) = toWorldDimensions(
             entityWidth,
@@ -471,7 +471,7 @@ class UIMap(
                     val (worldX, worldY) = toWorldCoordinates(
                         _gridSize,
                         data.entity.gameUnitPoint,
-                        gameMap.width, gameMap.height, data.entity.height
+                        gameMap.height, data.entity.height
                     )
                     val (worldWidth, worldHeight) = toWorldDimensions(data.entity, _gridSize)
                     _highlightRectangle

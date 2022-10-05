@@ -6,6 +6,7 @@ import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
+import com.xenotactic.gamelogic.model.toGameUnitPoint
 import com.xenotactic.gamelogic.pathing.*
 import com.xenotactic.gamelogic.utils.horizontalDirectionTo
 import com.xenotactic.gamelogic.utils.verticalDirectionTo
@@ -321,7 +322,7 @@ object AStarSearcher : SearcherInterface {
                     resultingPath.add(currentPoint)
                     resultingPath.reverse()
 
-                    return Path(resultingPath)
+                    return Path(resultingPath.map { it.toGameUnitPoint() })
                 }
             }
 

@@ -56,7 +56,7 @@ object CircleIntersectionUtil {
         circleCenter: Point,
         radius: Double
     ): Result {
-        return invoke(segment.point1, segment.point2, circleCenter, radius)
+        return invoke(segment.point1.toPoint(), segment.point2.toPoint(), circleCenter, radius)
     }
 
     operator fun invoke(

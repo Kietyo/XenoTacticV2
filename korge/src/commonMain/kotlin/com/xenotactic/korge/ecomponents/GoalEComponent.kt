@@ -44,7 +44,7 @@ class GoalEComponent(val engine: Engine, val eventBus: EventBus) :
             is SolverResult.Success -> {
                 solverResult = result
                 val goalPathLength = result.searchResult.pathSequence.pathLength.toInt()
-                val currentPathLength = ceil(shortestPath.pathLength).toInt()
+                val currentPathLength = ceil(shortestPath.pathLength.toDouble()).toInt()
                 val delta = goalPathLength - currentPathLength
                 goalData = GoalData(
                     bronzeGoal = currentPathLength + (delta * 0.4).toInt(),

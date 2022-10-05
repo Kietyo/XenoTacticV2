@@ -2,6 +2,7 @@ package com.xenotactic.gamelogic.model
 
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.distance
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlinx.serialization.Serializable
 
@@ -14,9 +15,20 @@ data class GameUnitPoint(val x: GameUnit, val y: GameUnit) {
         operator fun invoke(x: Int, y: Int): GameUnitPoint {
             return GameUnitPoint(x.toGameUnit(), y.toGameUnit())
         }
+        operator fun invoke(x: Double, y: Double): GameUnitPoint {
+            return GameUnitPoint(x.toGameUnit(), y.toGameUnit())
+        }
     }
 
     fun toPoint(): Point {
         return Point(x.value, y.value)
     }
+
+    fun distanceTo(point2: GameUnitPoint): GameUnit {
+        return distance(x, y, point2.x, point2.y)
+    }
+}
+
+fun Point.toGameUnitPoint(): GameUnitPoint {
+    return GameUnitPoint(x.toGameUnit(), y.toGameUnit())
 }

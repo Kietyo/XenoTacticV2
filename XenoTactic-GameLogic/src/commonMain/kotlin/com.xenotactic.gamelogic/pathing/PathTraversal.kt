@@ -1,29 +1,32 @@
 package pathing
 
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.toGameUnitPoint
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.pathing.Segment
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.lerp
+import com.xenotactic.gamelogic.utils.toGameUnit
 
 class SegmentTraversal(private val segment: Segment) {
-    var distanceTraversed = 0.0
+    var distanceTraversed = GameUnit(0.0)
     var currentPosition = segment.point1.copy()
         private set
 
     // This is only set once we've traversed passed the current segment length
-    var nonTraversedDistance = 0.0
+    var nonTraversedDistance = GameUnit.ZERO
         private set
 
-    fun traverse(distance: Double) {
+    fun traverse(distance: GameUnit) {
         if (finishedTraversal()) return
         val newDistanceTraversed = distanceTraversed + distance
         if (newDistanceTraversed < segment.length) {
             distanceTraversed = newDistanceTraversed
-            currentPosition = segment.point1.lerp(
-                segment.point2, newDistanceTraversed /
-                        segment.length
-            )
+            currentPosition = segment.point1.toPoint().lerp(
+                segment.point2.toPoint(), (newDistanceTraversed / segment.length).value
+            ).toGameUnitPoint()
         } else {
             nonTraversedDistance = (distance + distanceTraversed) - segment.length
             distanceTraversed = segment.length
@@ -37,15 +40,15 @@ class SegmentTraversal(private val segment: Segment) {
 }
 
 class PathTraversal(val path: Path) {
-    var distanceTraversed = 0.0
+    var distanceTraversed = GameUnit.ZERO
         private set
     private val segments = path.getSegments()
     private var currentSegmentIdx = 0
     private var currentSegmentTraversal = SegmentTraversal(segments.first())
-    val currentPosition: Point
+    val currentPosition: GameUnitPoint
         get() = currentSegmentTraversal.currentPosition
 
-    val nonTraversedDistance: Double
+    val nonTraversedDistance: GameUnit
         get() = currentSegmentTraversal.nonTraversedDistance
 
     /**
@@ -54,11 +57,11 @@ class PathTraversal(val path: Path) {
      * - If the provided distance traverses past the path, then any non traversed distance will
      *   be stored in the `nonTraversedDistance` field.
      */
-    fun traverse(distance: Double) {
+    fun traverse(distance: GameUnit) {
         if (finishedTraversal()) return
         var remainingDistanceToTraverse = distance
 
-        while (remainingDistanceToTraverse > 0.0f) {
+        while (remainingDistanceToTraverse > GameUnit.ZERO) {
             currentSegmentTraversal.traverse(remainingDistanceToTraverse)
             distanceTraversed += remainingDistanceToTraverse - currentSegmentTraversal.nonTraversedDistance
             remainingDistanceToTraverse = currentSegmentTraversal.nonTraversedDistance
@@ -81,24 +84,24 @@ class PathTraversal(val path: Path) {
 }
 
 class PathSequenceTraversal(pathSequence: PathSequence) {
-    var distanceTraversed = 0.0
+    var distanceTraversed = GameUnit.ZERO
     private val paths = pathSequence.paths
     private var currentPathIdx = 0
     private var currentPathTraversal = PathTraversal(paths.first())
-    val currentPosition: Point
+    val currentPosition: GameUnitPoint
         get() = currentPathTraversal.currentPosition
-    val nonTraversedDistance: Double
+    val nonTraversedDistance: GameUnit
         get() = currentPathTraversal.nonTraversedDistance
 
     fun traverse(distance: Float) {
-        traverse(distance.toDouble())
+        traverse(distance.toGameUnit())
     }
 
-    fun traverse(distance: Double) {
+    fun traverse(distance: GameUnit) {
         if (isTraversalFinished()) return
         var remainingDistanceToTraverse = distance
 
-        while (remainingDistanceToTraverse > 0.0f) {
+        while (remainingDistanceToTraverse > GameUnit.ZERO) {
             currentPathTraversal.traverse(remainingDistanceToTraverse)
             distanceTraversed += remainingDistanceToTraverse - currentPathTraversal.nonTraversedDistance
             remainingDistanceToTraverse = currentPathTraversal.nonTraversedDistance
@@ -119,3 +122,4 @@ class PathSequenceTraversal(pathSequence: PathSequence) {
         return currentPathIdx == (paths.size - 1)
     }
 }
+

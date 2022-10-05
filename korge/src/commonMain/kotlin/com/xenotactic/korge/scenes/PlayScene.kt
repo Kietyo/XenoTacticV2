@@ -6,8 +6,6 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
@@ -30,9 +28,9 @@ import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 import com.xenotactic.korge.systems.MonsterRemoveSystem
 import com.xenotactic.korge.systems.MonsterMoveSystem
+import com.xenotactic.korge.systems.TargetingSystem
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
-import pathing.PathSequenceTraversal
 import kotlin.time.Duration.Companion.milliseconds
 
 class PlayScene : Scene() {
@@ -50,9 +48,10 @@ class PlayScene : Scene() {
 
         println(randomMap)
 
-        val gameWorld = World()
+        val world = World()
+        val gameWorld = GameWorld(world)
         val settingsContainer = SettingsContainer()
-        val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
+        val engine = Engine(eventBus, gameWorld).apply {
             injections.setSingletonOrThrow(GameMapDimensionsState(this, 30.toGameUnit(), 20.toGameUnit()))
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
@@ -74,7 +73,7 @@ class PlayScene : Scene() {
         engine.injections.setSingletonOrThrow(editorState)
 
 
-        gameWorld.apply {
+        world.apply {
             injections = engine.injections
             addFamilyListener(SetInitialPositionFamilyListener(this))
             addComponentListener(PreSelectionComponentListener(engine))
@@ -82,6 +81,7 @@ class PlayScene : Scene() {
             addComponentListener(UIMapEntityComponentListener())
             addSystem(MonsterMoveSystem(this))
             addSystem(MonsterRemoveSystem(this))
+            addSystem(TargetingSystem(gameWorld))
         }
 
         gameMapApi.placeEntities(randomMap.map.getAllEntities())
@@ -110,7 +110,7 @@ class PlayScene : Scene() {
             alignLeftToRightOf(addTowerButton)
             onClick {
                 println("print world button clicked!")
-                println(gameWorld)
+                println(world)
             }
         }
 
@@ -126,7 +126,7 @@ class PlayScene : Scene() {
 
         val deltaTime = TimeSpan(1000.0 / 60)
         addFixedUpdater(deltaTime) {
-            gameWorld.update(deltaTime.milliseconds.milliseconds)
+            world.update(deltaTime.milliseconds.milliseconds)
         }
 
 

@@ -98,7 +98,7 @@ class StandardSolver3(val solverSettings: SolverSettings = SolverSettings()) : S
                     _towerCache
                 )
                     ?: continue
-                pointsOrderedByPathLength.add(Pair(pathWithSpot.pathLength, spot))
+                pointsOrderedByPathLength.add(Pair(pathWithSpot.pathLength.toDouble(), spot))
                 numSpotsConsidered++
                 if (numSpotsConsidered >= _solverSettings.numSpotsToConsider) {
                     break

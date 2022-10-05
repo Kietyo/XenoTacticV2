@@ -34,6 +34,11 @@ class GameWorld(
             allOfComponents = setOf(SelectedComponent::class)
         )
     )
+    val monsterFamily = world.getOrCreateFamily(
+        FamilyConfiguration(
+            allOfComponents = setOf(MonsterComponent::class, PathSequenceTraversalComponent::class)
+        )
+    )
     val bottomLeftPositionComponent =
         world.getComponentContainer<BottomLeftPositionComponent>()
     val sizeComponent = world.getComponentContainer<SizeComponent>()

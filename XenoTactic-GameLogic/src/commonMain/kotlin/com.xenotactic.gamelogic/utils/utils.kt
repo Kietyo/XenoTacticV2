@@ -1,7 +1,5 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korge.view.View
-import com.soywiz.korge.view.xy
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
@@ -69,17 +67,14 @@ inline fun <T> measureTime(
 }
 
 
-
 fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: GameUnit, gameHeight: GameUnit) =
     toWorldCoordinates(
         gridSize,
-        entity.gameUnitPoint, gameWidth, gameHeight,
-        entityHeight = entity.height
+        entity.gameUnitPoint, gameHeight, entityHeight = entity.height
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, gameUnitPoint: GameUnitPoint, gameWidth: GameUnit, gameHeight: GameUnit,
-    entityHeight: GameUnit = GameUnit(1)
+    gridSize: Double, gameUnitPoint: GameUnitPoint, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ): Pair<WorldUnit, WorldUnit> =
     toWorldCoordinates(
         gridSize,
@@ -112,13 +107,13 @@ fun angleRadians(v1: Point, v2: Point): Angle {
     return atan2(v2.y - v1.y, v2.x - v1.x).radians
 }
 
-fun <E> Collection<E>.sumOf(selector: (E) -> Float): Float {
-    var sum: Float = 0f
-    for (element in this) {
-        sum += selector(element)
-    }
-    return sum
-}
+//fun <E> Iterable<E>.sumOf(selector: (E) -> Float): Float {
+//    var sum = 0f
+//    for (element in this) {
+//        sum += selector(element)
+//    }
+//    return sum
+//}
 
 fun Point.lerp(target: Point, alpha: Double): Point {
     val invAlpha = (1.0f - alpha).toFloat()

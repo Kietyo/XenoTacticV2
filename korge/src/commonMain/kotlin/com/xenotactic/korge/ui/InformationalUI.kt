@@ -9,6 +9,7 @@ import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korge.view.text
 import com.soywiz.korge.view.xy
 import com.soywiz.korma.math.roundDecimalPlaces
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
@@ -37,11 +38,11 @@ class InformationalUI(
         updateTextWithPathLength(gameMapControllerComponent.shortestPath?.pathLength)
     }
 
-    fun updateTextWithPathLength(pathLength: Double?) {
+    fun updateTextWithPathLength(pathLength: GameUnit?) {
         if (pathLength == null) {
             pathText.text = "Path Length: N/A"
         } else {
-            pathText.text = "Path Length: ${pathLength.roundDecimalPlaces(2)}"
+            pathText.text = "Path Length: ${pathLength.toDouble().roundDecimalPlaces(2)}"
         }
     }
 
