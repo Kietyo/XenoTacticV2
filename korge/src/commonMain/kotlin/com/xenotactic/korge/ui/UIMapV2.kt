@@ -82,6 +82,8 @@ class UIMapV2(
     val monsterLayer = this.container().apply {
     }
 
+    val targetingLinesLayer = this.graphics {  }
+
     val _highlightLayer = this.container()
     val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
 
