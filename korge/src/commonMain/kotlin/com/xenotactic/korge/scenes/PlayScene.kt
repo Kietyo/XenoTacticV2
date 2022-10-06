@@ -79,8 +79,8 @@ class PlayScene : Scene() {
             addComponentListener(UIMapEntityComponentListener())
             addSystem(MonsterMoveSystem(this))
             addSystem(MonsterRemoveSystem(this))
-            addSystem(RemoveTargetingSystem(gameWorld.world))
-            addSystem(AddTargetingSystem(gameWorld))
+            addSystem(TargetingRemoveSystem(gameWorld.world))
+            addSystem(TargetingAddSystem(gameWorld))
             addSystem(TargetingRenderSystem(engine))
         }
 

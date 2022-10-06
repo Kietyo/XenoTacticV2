@@ -8,7 +8,7 @@ import com.xenotactic.gamelogic.utils.distance
 import com.xenotactic.gamelogic.utils.getCenterPoint
 import kotlin.time.Duration
 
-class RemoveTargetingSystem(
+class TargetingRemoveSystem(
     val world: World
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(

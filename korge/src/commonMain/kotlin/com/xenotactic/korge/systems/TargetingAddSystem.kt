@@ -11,7 +11,7 @@ import kotlin.time.Duration
 /**
  * System which adds a TargetingComponent to towers that do not yet have a targeting component.
  */
-class AddTargetingSystem(
+class TargetingAddSystem(
     val gameWorld: GameWorld
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
