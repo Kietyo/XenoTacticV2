@@ -24,7 +24,7 @@ class TargetingSystem(
     )
 
     override fun update(deltaTime: Duration) {
-        getFamily().getSequence().forEach { towerId ->
+        getFamily().getNewList().forEach { towerId ->
             val sizeComponent = gameWorld.world[towerId, SizeComponent::class]
             val bottomLeftPositionComponent = gameWorld.world[towerId, BottomLeftPositionComponent::class]
             val rangeComponent = gameWorld.world[towerId, RangeComponent::class]
