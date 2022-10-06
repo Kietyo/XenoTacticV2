@@ -2,7 +2,6 @@ package com.xenotactic.korge.systems
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
-import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.utils.distance
 import com.xenotactic.gamelogic.utils.getCenterPoint
@@ -12,7 +11,7 @@ import kotlin.time.Duration
 /**
  * System which adds a TargetingComponent to towers that do not yet have a targeting component.
  */
-class TargetingSystem(
+class AddTargetingSystem(
     val gameWorld: GameWorld
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(

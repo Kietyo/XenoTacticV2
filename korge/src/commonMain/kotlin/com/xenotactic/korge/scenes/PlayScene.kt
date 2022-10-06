@@ -28,7 +28,8 @@ import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 import com.xenotactic.korge.systems.MonsterRemoveSystem
 import com.xenotactic.korge.systems.MonsterMoveSystem
-import com.xenotactic.korge.systems.TargetingSystem
+import com.xenotactic.korge.systems.AddTargetingSystem
+import com.xenotactic.korge.systems.RemoveTargetingSystem
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
 import kotlin.time.Duration.Companion.milliseconds
@@ -81,7 +82,8 @@ class PlayScene : Scene() {
             addComponentListener(UIMapEntityComponentListener())
             addSystem(MonsterMoveSystem(this))
             addSystem(MonsterRemoveSystem(this))
-            addSystem(TargetingSystem(gameWorld))
+            addSystem(RemoveTargetingSystem(gameWorld.world))
+            addSystem(AddTargetingSystem(gameWorld))
         }
 
         gameMapApi.placeEntities(randomMap.map.getAllEntities())
