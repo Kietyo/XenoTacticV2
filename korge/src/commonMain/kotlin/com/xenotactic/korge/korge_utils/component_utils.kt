@@ -1,9 +1,8 @@
-package com.xenotactic.gamelogic.utils
+package com.xenotactic.korge.korge_utils
 
-import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
-import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.korge.components.BottomLeftPositionComponent
+import com.xenotactic.korge.components.SizeComponent
 
 fun getCenterPoint(
     bottomLeftPositionComponent: BottomLeftPositionComponent,

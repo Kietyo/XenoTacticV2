@@ -2,7 +2,7 @@ package com.xenotactic.korge.models
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.*
+import com.xenotactic.korge.components.*
 import com.xenotactic.korge.fleks.components.PreSelectionComponent
 import com.xenotactic.korge.fleks.components.SelectedComponent
 

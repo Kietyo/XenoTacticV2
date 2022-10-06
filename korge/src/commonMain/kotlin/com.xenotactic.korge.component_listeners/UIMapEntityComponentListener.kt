@@ -2,7 +2,7 @@ package com.xenotactic.korge.component_listeners
 
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.components.UIMapEntityComponent
+import com.xenotactic.korge.components.UIMapEntityComponent
 
 class UIMapEntityComponentListener : ComponentListener<UIMapEntityComponent> {
     override fun onAdd(entityId: EntityId, component: UIMapEntityComponent) {

@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.components
+package com.xenotactic.korge.components
 
 data class ReloadComponent(
     val reloadTimeMillis: Double,

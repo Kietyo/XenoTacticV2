@@ -3,9 +3,9 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.MonsterComponent
-import com.xenotactic.gamelogic.components.PathSequenceTraversalComponent
-import com.xenotactic.gamelogic.components.UIMapEntityComponent
+import com.xenotactic.korge.components.MonsterComponent
+import com.xenotactic.korge.components.PathSequenceTraversalComponent
+import com.xenotactic.korge.components.UIMapEntityComponent
 import kotlin.time.Duration
 
 class MonsterRemoveSystem(val world: World) : System() {

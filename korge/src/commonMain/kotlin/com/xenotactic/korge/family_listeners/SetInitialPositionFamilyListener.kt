@@ -4,10 +4,10 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
-import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.gamelogic.components.UIMapEntityComponent
+import com.xenotactic.korge.components.UIMapEntityComponent
 import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.korge.components.BottomLeftPositionComponent
+import com.xenotactic.korge.components.SizeComponent
 import com.xenotactic.korge.ui.UIMapV2
 
 class SetInitialPositionFamilyListener(

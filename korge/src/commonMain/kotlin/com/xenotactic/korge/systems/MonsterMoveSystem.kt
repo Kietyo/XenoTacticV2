@@ -3,10 +3,10 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.MonsterComponent
-import com.xenotactic.gamelogic.components.MovementSpeedComponent
-import com.xenotactic.gamelogic.components.PathSequenceTraversalComponent
-import com.xenotactic.gamelogic.components.UIMapEntityComponent
+import com.xenotactic.korge.components.MonsterComponent
+import com.xenotactic.korge.components.MovementSpeedComponent
+import com.xenotactic.korge.components.PathSequenceTraversalComponent
+import com.xenotactic.korge.components.UIMapEntityComponent
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ui.UIMapV2

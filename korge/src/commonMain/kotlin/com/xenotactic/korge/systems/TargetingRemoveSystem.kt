@@ -3,9 +3,9 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.utils.distance
-import com.xenotactic.gamelogic.utils.getCenterPoint
+import com.xenotactic.korge.components.*
+import com.xenotactic.korge.korge_utils.getCenterPoint
 import kotlin.time.Duration
 
 class TargetingRemoveSystem(

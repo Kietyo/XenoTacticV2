@@ -4,13 +4,13 @@ import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOn
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.max
 import com.xenotactic.gamelogic.utils.min
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.components.*
 import com.xenotactic.korge.ecomponents.DebugEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
