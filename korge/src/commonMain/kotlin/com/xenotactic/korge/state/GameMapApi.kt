@@ -1,14 +1,12 @@
 package com.xenotactic.korge.state
 
+import com.soywiz.korge.ui.UIProgressBar
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOn
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.model.*
-import com.xenotactic.gamelogic.utils.max
-import com.xenotactic.gamelogic.utils.min
-import com.xenotactic.gamelogic.utils.rectangleIntersects
-import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.components.*
 import com.xenotactic.korge.ecomponents.DebugEComponent
@@ -179,6 +177,16 @@ class GameMapApi(
             val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
             addComponentOrThrow(UIMapEntityComponent(uiEntity))
 
+            val maxHealthComponent = MaxHealthComponent(100.0)
+            addComponentOrThrow(maxHealthComponent)
+            addComponentOrThrow(HealthComponent(maxHealthComponent.maxHealth))
+
+            val healthBar = createHealthBar(sizeComponent.width, maxHealthComponent.maxHealth).apply {
+                addTo(uiEntity)
+            }
+            addComponentOrThrow(UIHealthBarComponent(healthBar))
+
+
             val pathSequenceTraversal = PathSequenceTraversal(
                 gameMapPathState.shortestPath!!
             )
@@ -217,6 +225,20 @@ class GameMapApi(
             }
         }
         return uiEntity
+    }
+
+    fun createHealthBar(
+        diameterGameUnit: GameUnit,
+        maxHealth: Double
+    ): UIProgressBar {
+        val diameter = diameterGameUnit.toWorldUnit(uiMap.gridSize)
+        return UIProgressBar(
+            diameter.toDouble(), diameter.toDouble() / 4.0,
+            current = maxHealth, maximum = maxHealth
+        ).apply {
+            x -= diameter.toDouble() / 2.0
+            y -= diameter.toDouble() / 5.0 * 4.0
+        }
     }
 
     private fun updateShortestPath() {

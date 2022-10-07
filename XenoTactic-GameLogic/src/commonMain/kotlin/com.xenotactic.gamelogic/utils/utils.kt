@@ -93,8 +93,7 @@ fun toWorldCoordinates(
     gridSize: Double, x: Double, y: Double, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ) = Pair(toWorldUnit(gridSize, x), toWorldUnit(gridSize, (gameHeight.value - y - entityHeight.value)))
 
-fun toWorldUnit(gridSize: Double, value: GameUnit) = toWorldUnit(gridSize, value.value.toDouble())
-fun toWorldUnit(gridSize: Double, value: Double) = WorldUnit(gridSize * value)
+fun toWorldUnit(gridSize: Double, value: Double) = value.toGameUnit().toWorldUnit(gridSize)
 
 fun toWorldDimensions(width: GameUnit, height: GameUnit, gridSize: Double) =
     Pair(WorldUnit(width.value * gridSize), WorldUnit(height.value * gridSize))

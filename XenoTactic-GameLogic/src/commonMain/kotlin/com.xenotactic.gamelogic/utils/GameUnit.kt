@@ -66,6 +66,10 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return value.compareTo(o.toDouble())
     }
 
+    fun toWorldUnit(gridSize: Double): WorldUnit {
+        return WorldUnit(value * gridSize)
+    }
+
     companion object {
         val ZERO = GameUnit(0)
     }

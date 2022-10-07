@@ -1,6 +1,7 @@
 package com.xenotactic.gamelogic.views
 
 import com.soywiz.korge.component.docking.dockedTo
+import com.soywiz.korge.ui.UIProgressBar
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
@@ -23,23 +24,28 @@ class UIEntity(
 ) : Container() {
     init {
         val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
-        println("""
+        println(
+            """
             rendering: entityType: $entityType, worldWidth: $worldWidth, worldHeight: $worldHeight
-        """.trimIndent())
+        """.trimIndent()
+        )
         when (entityType) {
             MapEntityType.CHECKPOINT -> {
                 Circle((worldWidth / 2).value, Colors.MAROON).apply {
                     addTo(this@UIEntity)
                 }
             }
+
             MapEntityType.FINISH -> {
                 Circle((worldWidth / 2).value, Colors.MAGENTA).addTo(this)
             }
+
             MapEntityType.START -> {
                 Circle((worldWidth / 2).value, Colors.RED).apply {
                     addTo(this@UIEntity)
                 }
             }
+
             MapEntityType.TOWER -> {
                 this.solidRect(
                     worldWidth.value, worldHeight.value,
@@ -50,6 +56,7 @@ class UIEntity(
                     MaterialColors.YELLOW_900
                 ).centerOn(this)
             }
+
             MapEntityType.ROCK -> {
                 this.solidRect(
                     worldWidth.value, worldHeight.value,
@@ -60,12 +67,15 @@ class UIEntity(
                     MaterialColors.BROWN_900
                 ).centerOn(this)
             }
+
             MapEntityType.TELEPORT_IN -> {
                 Circle(worldWidth.value / 2, Colors.GREEN.withAd(0.6)).addTo(this)
             }
+
             MapEntityType.TELEPORT_OUT -> {
                 Circle(worldWidth.value / 2, Colors.RED.withAd(0.6)).addTo(this)
             }
+
             MapEntityType.SMALL_BLOCKER -> {
                 this.solidRect(
                     worldWidth.value, worldHeight.value,
@@ -76,6 +86,7 @@ class UIEntity(
                     MaterialColors.YELLOW_900
                 ).centerOn(this)
             }
+
             MapEntityType.SPEED_AREA -> {
                 val speedAreaColor = SpeedAreaColorUtil(
                     speedEffect!!,
@@ -85,7 +96,8 @@ class UIEntity(
             }
 
             MapEntityType.MONSTER -> {
-                Circle((worldWidth / 2).value, Colors.RED).apply {
+                val diameter = worldWidth
+                Circle((diameter / 2).value, Colors.RED).apply {
                     addTo(this@UIEntity)
                     anchor(Anchor.CENTER)
                 }
