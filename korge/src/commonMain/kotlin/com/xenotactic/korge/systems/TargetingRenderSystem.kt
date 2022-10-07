@@ -25,8 +25,6 @@ class TargetingRenderSystem(val engine: Engine) : System() {
     override fun update(deltaTime: Duration) {
         uiMap.targetingLinesLayer.updateShape {
             getFamily().getSequence().forEach {
-
-
                 val targetingComponent = world[it, TargetingComponent::class]
                 val sizeComponent = world[it, SizeComponent::class]
                 val bottomLeftPositionComponent = world[it, BottomLeftPositionComponent::class]

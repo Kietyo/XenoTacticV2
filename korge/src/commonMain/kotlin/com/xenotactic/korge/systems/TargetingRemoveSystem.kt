@@ -19,7 +19,7 @@ class TargetingRemoveSystem(
     )
 
     override fun update(deltaTime: Duration) {
-        getFamily().getSequence().forEach {
+        getFamily().getNewList().forEach {
             val targetingComponent = world[it, TargetingComponent::class]
 
             // Monster was already removed.
