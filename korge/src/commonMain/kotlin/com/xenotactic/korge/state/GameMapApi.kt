@@ -172,7 +172,7 @@ class GameMapApi(
                 addComponentOrThrow(it)
             }
             addComponentOrThrow(MonsterComponent)
-            addComponentOrThrow(MovementSpeedComponent())
+            addComponentOrThrow(VelocityComponent())
 
             val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
             addComponentOrThrow(UIMapEntityComponent(uiEntity))

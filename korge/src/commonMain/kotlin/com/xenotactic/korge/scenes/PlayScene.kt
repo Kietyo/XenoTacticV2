@@ -82,6 +82,9 @@ class PlayScene : Scene() {
             addSystem(TargetingRemoveSystem(gameWorld.world))
             addSystem(TargetingAddSystem(gameWorld))
             addSystem(TargetingRenderSystem(engine))
+            addSystem(ProjectileMoveSystem(world))
+            addSystem(ProjectileRenderSystem(engine))
+            addSystem(TowerAttackSystem(world))
         }
 
         gameMapApi.placeEntities(randomMap.map.getAllEntities())
