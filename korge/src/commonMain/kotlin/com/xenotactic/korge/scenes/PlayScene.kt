@@ -83,6 +83,7 @@ class PlayScene : Scene() {
             addSystem(TargetingAddSystem(gameWorld))
             addSystem(TargetingRenderSystem(engine))
             addSystem(ProjectileMoveSystem(world))
+            addSystem(ProjectileCollideSystem(world))
             addSystem(ProjectileRenderSystem(engine))
             addSystem(TowerAttackSystem(world))
         }
