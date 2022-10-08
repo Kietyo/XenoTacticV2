@@ -1,7 +1,6 @@
 package com.xenotactic.korge.components
 
-data class ReloadComponent(
-    val reloadTimeMillis: Double,
+data class ReloadDowntimeComponent(
     var currentDowntimeMillis: Double
 ) {
 }

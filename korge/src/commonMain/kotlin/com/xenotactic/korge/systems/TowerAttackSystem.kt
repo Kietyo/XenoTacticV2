@@ -19,25 +19,14 @@ class TowerAttackSystem(
         allOfComponents = setOf(
             TowerComponent::class, BottomLeftPositionComponent::class, SizeComponent::class,
             RangeComponent::class, TargetingComponent::class,
-            ReloadComponent::class
+            ReloadTimeComponent::class,
+            ReadyToAttackComponent::class
         ),
     )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach { towerId ->
 //            logger.info { "update: tower id: $towerId" }
-            val reloadComponent = world[towerId, ReloadComponent::class]
-            reloadComponent.currentDowntimeMillis += deltaTime.inWholeMilliseconds
-            require(reloadComponent.currentDowntimeMillis / reloadComponent.reloadTimeMillis < 2.0) {
-                "Is eligible for 2 attacks in the same tick, which is weird..."
-            }
-            if (reloadComponent.currentDowntimeMillis < reloadComponent.reloadTimeMillis) {
-                return@forEach
-            }
-
-            // Can attack on this tick!
-            reloadComponent.currentDowntimeMillis -= reloadComponent.reloadTimeMillis
-
             val sizeComponent = world[towerId, SizeComponent::class]
             val bottomLeftPositionComponent = world[towerId, BottomLeftPositionComponent::class]
             val towerCenterPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
@@ -50,6 +39,11 @@ class TowerAttackSystem(
                 addComponentOrThrow(VelocityComponent(0.2.toGameUnit()))
                 addComponentOrThrow(MutableCenterPositionComponent(towerCenterPoint.x, towerCenterPoint.y))
                 addComponentOrThrow(DamageComponent(10.0))
+            }
+
+            world.modifyEntity(towerId) {
+                addComponentOrThrow(ReloadDowntimeComponent(0.0))
+                removeComponent<ReadyToAttackComponent>()
             }
         }
     }
