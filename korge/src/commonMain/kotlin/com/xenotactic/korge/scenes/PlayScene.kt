@@ -109,7 +109,7 @@ class PlayScene : Scene() {
             alignLeftToRightOf(spawnCreepButton)
             onClick {
                 println("Add tower button clicked!")
-                editorState.switchToEditingMode(MapEntityType.TOWER)
+                editorState.toggle(MapEntityType.TOWER)
             }
         }
 

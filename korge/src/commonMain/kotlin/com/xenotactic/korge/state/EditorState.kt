@@ -20,6 +20,14 @@ class EditorState(
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val selectorMouseProcessor = engine.injections.getSingleton<SelectorMouseProcessorV2>()
 
+    fun toggle(entityType: MapEntityType) {
+        if (isEditingEnabled) {
+            switchToPlayingMode()
+        } else {
+            switchToEditingMode(entityType)
+        }
+    }
+
     fun switchToPlayingMode() {
         engine.eventBus.send(NotificationTextUpdateEvent(DEFAULT_NOTIFICATION_TEXT))
         mouseDragInputProcessor.adjustSettings {
