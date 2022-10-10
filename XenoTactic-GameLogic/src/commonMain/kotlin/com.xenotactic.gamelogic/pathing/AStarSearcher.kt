@@ -183,7 +183,12 @@ object AStarSearcher : SearcherInterface {
 
                 // Check to see if the path intersects with any teleports
                 while (true) {
-                    if (shortestPath == null) return failure("No path found to start with.")
+                    if (shortestPath == null) return failure("""
+                        No path found to start with.
+                            prevEntity: $prevEntity,
+                            entity: $entity
+                            pathingEntities: $pathingEntities
+                    """.trimIndent())
 
                     val teleportCandidate = getFirstTeleportIntersection(
                         shortestPath, teleportPairs, activatedTeleportsThusFar,

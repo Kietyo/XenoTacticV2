@@ -8,7 +8,7 @@ import com.xenotactic.korge.components.*
 import com.xenotactic.korge.korge_utils.getCenterPoint
 import kotlin.time.Duration
 
-class TargetingRemoveSystem(
+class TowerTargetingRemoveSystem(
     val world: World
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
