@@ -27,7 +27,7 @@ class TowerTargetingRemoveSystem(
                 world.modifyEntity(it) {
                     removeComponent<TargetingComponent>()
                 }
-                return
+                return@forEach
             }
 
             val rangeComponent = world[it, RangeComponent::class]

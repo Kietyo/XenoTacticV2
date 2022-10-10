@@ -58,3 +58,7 @@ data class ResizeMapEvent(
 )
 
 object EntitySelectionChangedEvent
+
+data class MonsterDeathsEvent(
+    val deaths: Int
+)
