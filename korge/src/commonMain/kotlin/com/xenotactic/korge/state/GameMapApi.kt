@@ -98,7 +98,10 @@ class GameMapApi(
                     }
 
                     is MapEntity.SmallBlocker -> TODO()
-                    is MapEntity.SpeedArea -> TODO()
+                    is MapEntity.SpeedArea -> MapEntityComponent(
+                        MapEntityData.SpeedArea(placementEntity.radius, placementEntity.speedEffect)
+                    )
+
                     is MapEntity.Start -> {
                         MapEntityComponent(
                             MapEntityData.Start

@@ -68,6 +68,11 @@ class UIMapV2(
 
     private val _gridNumberLayer = this.container()
 
+//    val speedAreaLayer = this.clipContainer(
+//        mapWidth.toWorldUnit(gridSize).toDouble(),
+//        mapHeight.toWorldUnit(gridSize).toDouble()
+//    )
+
     val speedAreaLayer = this.container()
 
     val entityLayer = this.container().apply {
@@ -82,8 +87,8 @@ class UIMapV2(
     val monsterLayer = this.container().apply {
     }
 
-    val targetingLinesLayer = this.graphics {  }
-    val projectileLayer = this.graphics {  }
+    val targetingLinesLayer = this.graphics { }
+    val projectileLayer = this.graphics { }
 
     val _highlightLayer = this.container()
     val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
@@ -125,7 +130,8 @@ class UIMapV2(
         Pair(WorldUnit(x.value * gridSize), WorldUnit((mapHeight - y - entityHeight).value * gridSize))
 
     fun toWorldDimensions(width: GameUnit, height: GameUnit) = Pair(
-        WorldUnit(width * gridSize), WorldUnit(height * gridSize))
+        WorldUnit(width * gridSize), WorldUnit(height * gridSize)
+    )
 
     private fun drawBoard() {
         println("Drawing board")
@@ -211,7 +217,8 @@ class UIMapV2(
                         var altColorHeight = altColorWidth
                         val xGridPosition = i * checkeredGridSize
                         for (j in 0 until ((mapHeight.toInt() + 1) / 2)) {
-                            val gridWidth = if ((i + 1) * 2 > mapWidth.value) this@UIMapV2.gridSize else checkeredGridSize
+                            val gridWidth =
+                                if ((i + 1) * 2 > mapWidth.value) this@UIMapV2.gridSize else checkeredGridSize
                             val gridHeight =
                                 if ((j + 1) * 2 > mapHeight.value) this@UIMapV2.gridSize else checkeredGridSize
                             val currColor =

@@ -20,6 +20,7 @@ data class MapGeneratorConfiguration(
     val checkpoints: Int = 0,
     val rocks: Int = 0,
     val teleports: Int = 0,
+    val speedAreas: Int= 0,
     val searcher: SearcherInterface = AStarSearcher,
     val failureAfterTotalAttempts: Int = 2000
 )
@@ -184,10 +185,7 @@ class RandomMapGenerator {
                 }
                 val rockType = if (random.nextBoolean()) MapEntity.ROCK_2X4 else MapEntity.ROCK_4X2
                 val (rockX, rockY) = getRandomPointWithinMapBounds(rockType)
-                rock = MapEntity.Rock(
-                    rockX, rockY, rockType.width,
-                    rockType.height
-                )
+                rock = rockType.copy(x = rockX, y = rockY)
                 newRockList = addedRocks + rock
                 if (
                     start.isFullyCoveredBy(newRockList) ||
@@ -214,6 +212,15 @@ class RandomMapGenerator {
             map.placeEntity(rock)
         }
 
+        repeat(config.speedAreas) {
+            val radius = random.nextInt(1, 11)
+            val diameter = radius * 2
+            val speedEffect = random.nextDouble(0.25, 1.90)
+
+            val (speedX, speedY) = getRandomPointPartiallyInMap(diameter, diameter)
+            map.placeEntity(MapEntity.SpeedArea(speedX, speedY, radius.toGameUnit(), speedEffect))
+        }
+
         return MapGeneratorResult.Success(map)
     }
 
@@ -230,6 +237,13 @@ class RandomMapGenerator {
             is MapEntity.SmallBlocker -> TODO()
             is MapEntity.SpeedArea -> TODO()
         }
+    }
+
+    fun getRandomPointPartiallyInMap(entityWidth: Int, entityHeight: Int): GameUnitPoint {
+        return GameUnitPoint(
+            random.nextInt(-entityWidth + 1, map.width.toInt() - 1),
+            random.nextInt(-entityHeight + 1, map.height.toInt() - 1)
+        )
     }
 
     fun getRandomPointWithinMapBounds(entityType: MapEntity): GameUnitPoint {

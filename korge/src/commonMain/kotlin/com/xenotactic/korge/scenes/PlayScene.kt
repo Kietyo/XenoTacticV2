@@ -38,12 +38,13 @@ class PlayScene : Scene() {
     override suspend fun SContainer.sceneInit() {
         val eventBus = EventBus(this@PlayScene)
 
-        val seed = 1337L
+//        val seed = 1337L
+        val seed = 1338L
 
         val randomMap = RandomMapGenerator.generate(
             MapGeneratorConfiguration(
                 seed,
-                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2
+                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2, 5
             )
         )
 
