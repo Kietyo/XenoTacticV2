@@ -30,8 +30,11 @@ import com.xenotactic.korge.systems.*
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 class PlayScene : Scene() {
+    @OptIn(ExperimentalTime::class)
     override suspend fun SContainer.sceneInit() {
         val eventBus = EventBus(this@PlayScene)
 
@@ -126,6 +129,8 @@ class PlayScene : Scene() {
             centerXOnStage()
         }
 
+        val infoText = text("Hello world")
+
         addComponent(
             EditorPlacementInputProcessorV2(
                 this, engine
@@ -133,8 +138,17 @@ class PlayScene : Scene() {
         )
 
         val deltaTime = TimeSpan(1000.0 / 60)
+        var accumulatedTime = TimeSpan.ZERO
+        val updateInfoTextFrequency = TimeSpan(250.0)
         addFixedUpdater(deltaTime) {
-            world.update(deltaTime.milliseconds.milliseconds)
+            val updateTime = measureTime {
+                world.update(deltaTime.milliseconds.milliseconds)
+            }
+            accumulatedTime += deltaTime
+            if (accumulatedTime >= updateInfoTextFrequency) {
+                infoText.text = "Update time: $updateTime"
+                accumulatedTime = TimeSpan.ZERO
+            }
         }
 
     }
