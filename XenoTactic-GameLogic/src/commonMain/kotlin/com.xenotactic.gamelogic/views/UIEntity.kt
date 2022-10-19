@@ -91,7 +91,7 @@ class UIEntity(
                 val speedAreaColor = SpeedAreaColorUtil(
                     speedEffect!!,
                     slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
-                ).withAd(0.7)
+                ).withAd(0.4)
                 Circle(worldWidth.value / 2, speedAreaColor).addTo(this)
             }
 
