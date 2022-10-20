@@ -1,18 +1,17 @@
 package com.xenotactic.korge.ui
 
 import EightDirection
-import com.soywiz.korge.view.Anchorable
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.anchor
+import com.soywiz.korge.view.*
 import com.soywiz.korge.view.animation.imageAnimationView
-import com.soywiz.korge.view.centerOnStage
+import com.soywiz.korim.bitmap.slice
+import com.soywiz.korim.format.ImageAnimation
 import com.soywiz.korim.format.ImageData
 import com.soywiz.korim.format.ImageDataContainer
 import com.soywiz.korma.geom.Anchor
 
 class EightDirectionalSpriteUI(
     val imageDataContainer: ImageDataContainer,
-): Container(), Anchorable {
+): RectBase() {
     override var anchorX: Double = 0.0
         set(value) {
             field = value
@@ -35,8 +34,33 @@ class EightDirectionalSpriteUI(
     val downRight = imageDataContainer.imageDatasByName["down_right"]!!
 
     var currentDirection = EightDirection.DOWN
-    val animationView = imageAnimationView(down.defaultAnimation) {
+//    val animationView = imageAnimationView(down.defaultAnimation) {
+//        smoothing = false
+//    }
+
+    init {
+        baseBitmap = down.defaultAnimation.frames.first().slice
+    }
+
+    override val bwidth: Double = baseBitmap.width.toDouble()
+    override val bheight: Double = baseBitmap.height.toDouble()
+
+    init {
+//        baseBitmap = down.defaultAnimation.frames.first().bitmap.slice()
+        println("""
+            EightDirectionalSpriteUI
+            baseBitmap: $baseBitmap
+            baseBitmap.width: ${baseBitmap.width}
+            baseBitmap.height: ${baseBitmap.height}
+        """.trimIndent())
         smoothing = false
+//        dirtyVertices = true
+//        invalidateRender()
+    }
+
+    fun changeToDirection(direction: EightDirection) {
+        val imageData = getImageDataForDirection(direction)
+        baseBitmap = imageData.defaultAnimation.frames.first().slice
     }
 
     fun getImageDataForDirection(direction: EightDirection): ImageData {

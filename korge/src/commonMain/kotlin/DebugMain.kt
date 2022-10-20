@@ -90,7 +90,7 @@ object DebugMain {
             val sprite = EightDirectionalSpriteUI(asp).addTo(this) {
                 scale = 4.0
                 anchor(Anchor.CENTER)
-                centerOnXY(0.0, 0.0)
+//                centerOnXY(0.0, 0.0)
 //                xy(0, 0)
             }
 

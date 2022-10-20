@@ -1,9 +1,14 @@
 import com.soywiz.korge.Korge
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
+import com.soywiz.korim.format.ASE
 import com.soywiz.korim.format.ImageDataContainer
+import com.soywiz.korim.format.readImageDataContainer
+import com.soywiz.korim.format.toProps
 import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.*
+import com.xenotactic.korge.ui.EightDirectionalSpriteUI
 import kotlin.jvm.JvmStatic
 
 // Returns the angle from one point to another, with respect to
@@ -53,7 +58,7 @@ object DebugMain2 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 1280, height = 720) {
+        Korge(width = 1280, height = 720, bgcolor = Colors.LIGHTGRAY) {
 //            text("Hello world")
 
             val midCircle = circle(radius = 20.0) {
@@ -65,7 +70,18 @@ object DebugMain2 {
                 anchor(Anchor.CENTER)
             }
 
-            val info = text("", textSize = 100.0)
+            val info = text("", textSize = 50.0)
+
+            val asp = resourcesVfs["8_directional_character.aseprite"].readImageDataContainer(ASE.toProps())
+
+            val sprite = EightDirectionalSpriteUI(asp).addTo(this) {
+                scale = 8.0
+                anchor(Anchor.CENTER)
+                xy(640, 360)
+//                centerOnStage()
+//                centerOnXY(0.0, 0.0)
+//                xy(0, 0)
+            }
 
 
             addUpdater {
@@ -73,7 +89,9 @@ object DebugMain2 {
                 mouseCircle.xy(mouseX, mouseY)
                 val angle = midCircle.pos.kAngleTo(mouseCircle.pos)
                 val direction = getDirection8(angle)
+                sprite.changeToDirection(direction)
                 info.text = """
+                    mouseX: $mouseX, mouseY: $mouseY
                     angle: ${angle}
                     direction: ${direction}
                 """.trimIndent()
