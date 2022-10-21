@@ -8,7 +8,7 @@ import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.file.std.rootLocalVfs
 import com.soywiz.korma.geom.Anchor
-import com.xenotactic.gamelogic.views.EightDirectionalSpriteUI
+import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import kotlin.jvm.JvmStatic
 
 object DebugMain {
@@ -82,7 +82,7 @@ object DebugMain {
 //                centerOnStage()
 //            }
 
-            val sprite = EightDirectionalSpriteUI(asp).addTo(this) {
+            val sprite = UIEightDirectionalSprite(asp).addTo(this) {
                 scale = 4.0
                 anchor(Anchor.CENTER)
 //                centerOnXY(0.0, 0.0)

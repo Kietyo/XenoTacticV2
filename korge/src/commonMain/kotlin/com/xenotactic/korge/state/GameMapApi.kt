@@ -2,11 +2,15 @@ package com.xenotactic.korge.state
 
 import com.soywiz.korge.ui.UIProgressBar
 import com.soywiz.korge.view.addTo
+import com.soywiz.korge.view.anchor
 import com.soywiz.korge.view.centerOn
+import com.soywiz.korge.view.container
+import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.*
+import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.components.*
 import com.xenotactic.korge.ecomponents.DebugEComponent
@@ -145,7 +149,7 @@ class GameMapApi(
                 }
 
                 val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
-                addComponentOrThrow(UIMapEntityComponent(uiEntity))
+                addComponentOrThrow(UIEntityViewComponent(uiEntity))
 
                 val text = mapEntityComponent.entityData.getText()
                 if (text != null) {
@@ -178,15 +182,28 @@ class GameMapApi(
             addComponentOrThrow(MonsterComponent)
             addComponentOrThrow(VelocityComponent())
 
-            val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
-            addComponentOrThrow(UIMapEntityComponent(uiEntity))
+//            val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
+
+            val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
+            val spriteContainer = uiMap.monsterLayer.container {
+
+            }
+            val uiSprite = UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(spriteContainer) {
+                anchor(Anchor.CENTER)
+                scaledWidth = worldWidth.toDouble()
+                scaledHeight = worldHeight.toDouble()
+            }
+
+
+            addComponentOrThrow(UIEntityViewComponent(spriteContainer))
+            addComponentOrThrow(UIEightDirectionalSpriteComponent(uiSprite))
 
             val maxHealthComponent = MaxHealthComponent(100.0)
             addComponentOrThrow(maxHealthComponent)
             addComponentOrThrow(HealthComponent(maxHealthComponent.maxHealth))
 
             val healthBar = createHealthBar(sizeComponent.width, maxHealthComponent.maxHealth).apply {
-                addTo(uiEntity)
+                addTo(spriteContainer)
             }
             addComponentOrThrow(UIHealthBarComponent(healthBar))
 
@@ -320,7 +337,7 @@ class GameMapApi(
 
     fun getIntersectingEntities(rect: Rectangle): Set<EntityId> {
         return gameWorld.entityFamily.getSequence().mapNotNull {
-            val comp = gameWorld.uiMapEntityComponentContainer.getComponent(it)
+            val comp = gameWorld.uiEntityViewComponentContainer.getComponent(it)
             if (rect.intersects(comp.entityView.getGlobalBounds())) {
                 it
             } else {

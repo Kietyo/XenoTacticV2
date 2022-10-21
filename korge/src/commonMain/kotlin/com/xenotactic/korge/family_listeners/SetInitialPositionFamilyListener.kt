@@ -4,7 +4,7 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
-import com.xenotactic.korge.components.UIMapEntityComponent
+import com.xenotactic.korge.components.UIEntityViewComponent
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.korge.components.BottomLeftPositionComponent
 import com.xenotactic.korge.components.SizeComponent
@@ -15,7 +15,7 @@ class SetInitialPositionFamilyListener(
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            UIMapEntityComponent::class,
+            UIEntityViewComponent::class,
             BottomLeftPositionComponent::class,
             SizeComponent::class
         )
@@ -24,7 +24,7 @@ class SetInitialPositionFamilyListener(
     val uiMapV2 = world.injections.getSingleton<UIMapV2>()
 
     override fun onAdd(entityId: EntityId) {
-        val uiMapEntityComponent = world[entityId, UIMapEntityComponent::class]
+        val uiEntityViewComponent = world[entityId, UIEntityViewComponent::class]
         val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
         val sizeComponent = world[entityId, SizeComponent::class]
 
@@ -36,7 +36,7 @@ class SetInitialPositionFamilyListener(
             entityId: $entityId, bottomLeftPositionComponent: $bottomLeftPositionComponent, sizeComponent: $sizeComponent, worldX: $worldX, worldY: $worldY 
         """.trimIndent())
 
-        uiMapEntityComponent.entityView.xy(worldX, worldY)
+        uiEntityViewComponent.entityView.xy(worldX, worldY)
     }
 
     override fun onRemove(entityId: EntityId) {

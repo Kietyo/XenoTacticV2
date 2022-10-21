@@ -11,14 +11,14 @@ class SelectionComponentListener(
 ) : ComponentListener<SelectedComponent> {
     override fun onAdd(entityId: EntityId, component: SelectedComponent) {
         val uiMapEntityComponent = engine.gameWorld.uiMapEntityComponentContainer.getComponent(entityId)
-        uiMapEntityComponent.entityView.doActiveSelection()
+        uiMapEntityComponent.uiEntity.doActiveSelection()
         engine.eventBus.send(EntitySelectionChangedEvent)
     }
 
     override fun onRemove(entityId: EntityId, component: SelectedComponent) {
         println("Removed selection for entity: $entityId")
         val uiMapEntityComponent = engine.gameWorld.uiMapEntityComponentContainer.getComponent(entityId)
-        uiMapEntityComponent.entityView.cancelSelection()
+        uiMapEntityComponent.uiEntity.cancelSelection()
         engine.eventBus.send(EntitySelectionChangedEvent)
     }
 

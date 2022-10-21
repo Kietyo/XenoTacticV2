@@ -9,7 +9,7 @@ import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.*
 import com.xenotactic.gamelogic.views.EightDirection
-import com.xenotactic.gamelogic.views.EightDirectionalSpriteUI
+import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import kotlin.jvm.JvmStatic
 
 // Returns the angle from one point to another, with respect to
@@ -66,7 +66,7 @@ object DebugMain2 {
 
             val asp = resourcesVfs["8_directional_character.aseprite"].readImageDataContainer(ASE.toProps())
 
-            val sprite = EightDirectionalSpriteUI(asp).addTo(this) {
+            val sprite = UIEightDirectionalSprite(asp).addTo(this) {
                 scale = 8.0
                 anchor(Anchor.CENTER)
                 xy(640, 360)

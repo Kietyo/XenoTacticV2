@@ -1,7 +1,5 @@
 package com.xenotactic.gamelogic.views
 
-import com.soywiz.korge.component.docking.dockedTo
-import com.soywiz.korge.ui.UIProgressBar
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
@@ -98,7 +96,7 @@ class UIEntity(
 
             MapEntityType.MONSTER -> {
 //                val diameter = worldWidth
-                EightDirectionalSpriteUI(GlobalResources.MONSTER_SPRITE).addTo(this@UIEntity) {
+                UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(this@UIEntity) {
                     anchor(Anchor.CENTER)
                     scaledWidth = worldWidth.toDouble()
                     scaledHeight = worldHeight.toDouble()

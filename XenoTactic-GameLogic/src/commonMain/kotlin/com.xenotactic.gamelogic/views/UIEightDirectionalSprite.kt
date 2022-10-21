@@ -15,7 +15,7 @@ enum class EightDirection {
     DOWN_RIGHT
 }
 
-class EightDirectionalSpriteUI(
+class UIEightDirectionalSprite(
     val imageDataContainer: ImageDataContainer,
 ): RectBase() {
 //    override var anchorX: Double = 0.0

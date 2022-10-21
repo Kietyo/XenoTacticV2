@@ -5,13 +5,13 @@ import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.components.MonsterComponent
 import com.xenotactic.korge.components.PathSequenceTraversalComponent
-import com.xenotactic.korge.components.UIMapEntityComponent
+import com.xenotactic.korge.components.UIEntityViewComponent
 import kotlin.time.Duration
 
 class MonsterRemoveSystem(val world: World) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            MonsterComponent::class, UIMapEntityComponent::class,
+            MonsterComponent::class, UIEntityViewComponent::class,
             PathSequenceTraversalComponent::class
         )
     )

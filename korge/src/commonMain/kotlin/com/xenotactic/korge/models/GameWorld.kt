@@ -13,7 +13,7 @@ class GameWorld(
         FamilyConfiguration(
             allOfComponents = setOf(
                 MapEntityComponent::class,
-                UIMapEntityComponent::class,
+                UIEntityViewComponent::class,
                 SizeComponent::class,
                 BottomLeftPositionComponent::class,
             )
@@ -21,7 +21,7 @@ class GameWorld(
     )
     val uiEntityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
-            allOfComponents = setOf(UIMapEntityComponent::class)
+            allOfComponents = setOf(UIEntityViewComponent::class)
         )
     )
     val preSelectionFamily = world.getOrCreateFamily(
@@ -43,6 +43,8 @@ class GameWorld(
         world.getComponentContainer<BottomLeftPositionComponent>()
     val sizeComponent = world.getComponentContainer<SizeComponent>()
     val mapEntityComponent = world.getComponentContainer<MapEntityComponent>()
+    val uiEntityViewComponentContainer =
+        world.getComponentContainer<UIEntityViewComponent>()
     val uiMapEntityComponentContainer =
         world.getComponentContainer<UIMapEntityComponent>()
     val uiMapEntityTextComponentContainer =

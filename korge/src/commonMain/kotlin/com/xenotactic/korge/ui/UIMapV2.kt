@@ -115,7 +115,7 @@ class UIMapV2(
         resetUIMap()
         val heightDiffWorldUnit = (event.newMapHeight - event.oldMapHeight).toWorldUnit(gridSize)
         gameWorld.uiEntityFamily.getSequence().forEach {
-            val uiMapEntityComponent = gameWorld.uiMapEntityComponentContainer.getComponent(it)
+            val uiMapEntityComponent = gameWorld.uiEntityViewComponentContainer.getComponent(it)
             uiMapEntityComponent.entityView.y += heightDiffWorldUnit.value
             val uiMapEntityTextComponent =
                 gameWorld.uiMapEntityTextComponentContainer.getComponentOrNull(it)
