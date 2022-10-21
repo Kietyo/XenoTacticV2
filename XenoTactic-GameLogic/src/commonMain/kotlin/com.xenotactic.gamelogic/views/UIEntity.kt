@@ -12,6 +12,7 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.GlobalResources
 
 class UIEntity(
     val entityType: MapEntityType,
@@ -96,11 +97,17 @@ class UIEntity(
             }
 
             MapEntityType.MONSTER -> {
-                val diameter = worldWidth
-                Circle((diameter / 2).value, Colors.RED).apply {
-                    addTo(this@UIEntity)
+//                val diameter = worldWidth
+                EightDirectionalSpriteUI(GlobalResources.MONSTER_SPRITE).addTo(this@UIEntity) {
                     anchor(Anchor.CENTER)
+                    scaledWidth = worldWidth.toDouble()
+                    scaledHeight = worldHeight.toDouble()
                 }
+//                Circle((diameter / 2).value, Colors.RED).apply {
+//                    addTo(this@UIEntity)
+//                    anchor(Anchor.CENTER)
+//                }
+
             }
         }
 

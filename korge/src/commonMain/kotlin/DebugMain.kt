@@ -1,19 +1,14 @@
 import com.soywiz.korge.Korge
-import com.soywiz.korge.animate.serialization.readAnimation
-import com.soywiz.korge.baseview.BaseView
-import com.soywiz.korge.component.docking.dockedTo
 import com.soywiz.korge.view.*
-import com.soywiz.korge.view.animation.imageAnimationView
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.ImageAnimation
 import com.soywiz.korim.format.readImageDataContainer
 import com.soywiz.korim.format.toProps
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.file.std.rootLocalVfs
 import com.soywiz.korma.geom.Anchor
-import com.xenotactic.korge.ui.EightDirectionalSpriteUI
+import com.xenotactic.gamelogic.views.EightDirectionalSpriteUI
 import kotlin.jvm.JvmStatic
 
 object DebugMain {

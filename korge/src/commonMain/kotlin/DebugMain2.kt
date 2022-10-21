@@ -1,14 +1,15 @@
+import com.soywiz.klock.Frequency
 import com.soywiz.korge.Korge
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.ImageDataContainer
 import com.soywiz.korim.format.readImageDataContainer
 import com.soywiz.korim.format.toProps
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.*
-import com.xenotactic.korge.ui.EightDirectionalSpriteUI
+import com.xenotactic.gamelogic.views.EightDirection
+import com.xenotactic.gamelogic.views.EightDirectionalSpriteUI
 import kotlin.jvm.JvmStatic
 
 // Returns the angle from one point to another, with respect to
@@ -18,16 +19,7 @@ fun IPoint.kAngleTo(other: IPoint): Angle {
     return Angle.between(this.x, this.y, other.x, this.y - yDiff)
 }
 
-enum class EightDirection {
-    UP_LEFT,
-    UP,
-    UP_RIGHT,
-    LEFT,
-    RIGHT,
-    DOWN_LEFT,
-    DOWN,
-    DOWN_RIGHT
-}
+
 
 data class DirectionMatcher(
     val closedRange: ClosedRange<Angle>,
@@ -78,10 +70,15 @@ object DebugMain2 {
                 scale = 8.0
                 anchor(Anchor.CENTER)
                 xy(640, 360)
-//                centerOnStage()
 //                centerOnXY(0.0, 0.0)
 //                xy(0, 0)
             }
+
+//            val rect = solidRect(16, 16, Colors.RED) {
+//                scale = 8.0
+//                centerOnStage()
+//                anchor(Anchor.CENTER)
+//            }
 
 
             addUpdater {
@@ -95,6 +92,10 @@ object DebugMain2 {
                     angle: ${angle}
                     direction: ${direction}
                 """.trimIndent()
+            }
+
+            addFixedUpdater(Frequency(2.0)) {
+                sprite.incrementFrame()
             }
 
             val angleRange1 = Angle.fromDegrees(30.0) until Angle.fromDegrees(-30.0)

@@ -283,7 +283,7 @@ class GameMapApi(
                 }
 
                 MapEntityData.SmallBlocker -> TODO()
-                is MapEntityData.SpeedArea -> TODO()
+                is MapEntityData.SpeedArea -> Unit
                 is MapEntityData.TeleportIn -> {
                     sequenceNumToTpIn[entityData.sequenceNumber] = rectangleEntity
                 }

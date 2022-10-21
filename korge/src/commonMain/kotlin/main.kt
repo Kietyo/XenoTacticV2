@@ -11,6 +11,7 @@ import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.SizeInt
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.scenes.*
@@ -36,6 +37,8 @@ object MainModule : Module() {
         val globalBus = EventBus(CoroutineScope(Dispatchers.Default))
         println("Preparing main module")
         println(views)
+
+        GlobalResources.init()
 
         val mapBridge = MapBridge()
 

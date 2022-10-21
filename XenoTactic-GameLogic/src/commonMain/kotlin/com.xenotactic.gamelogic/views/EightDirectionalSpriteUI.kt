@@ -1,27 +1,33 @@
-package com.xenotactic.korge.ui
+package com.xenotactic.gamelogic.views
 
-import EightDirection
 import com.soywiz.korge.view.*
-import com.soywiz.korge.view.animation.imageAnimationView
-import com.soywiz.korim.bitmap.slice
-import com.soywiz.korim.format.ImageAnimation
 import com.soywiz.korim.format.ImageData
 import com.soywiz.korim.format.ImageDataContainer
-import com.soywiz.korma.geom.Anchor
+
+enum class EightDirection {
+    UP_LEFT,
+    UP,
+    UP_RIGHT,
+    LEFT,
+    RIGHT,
+    DOWN_LEFT,
+    DOWN,
+    DOWN_RIGHT
+}
 
 class EightDirectionalSpriteUI(
     val imageDataContainer: ImageDataContainer,
 ): RectBase() {
-    override var anchorX: Double = 0.0
-        set(value) {
-            field = value
-            invalidateRender()
-        }
-    override var anchorY: Double = 0.0
-        set(value) {
-            field = value
-            invalidateRender()
-        }
+//    override var anchorX: Double = 0.0
+//        set(value) {
+//            field = value
+//            invalidateRender()
+//        }
+//    override var anchorY: Double = 0.0
+//        set(value) {
+//            field = value
+//            invalidateRender()
+//        }
     val upLeft = imageDataContainer.imageDatasByName["up_left"]!!
     val up = imageDataContainer.imageDatasByName["up"]!!
     val upRight = imageDataContainer.imageDatasByName["up_right"]!!
@@ -33,6 +39,10 @@ class EightDirectionalSpriteUI(
     val down = imageDataContainer.imageDatasByName["down"]!!
     val downRight = imageDataContainer.imageDatasByName["down_right"]!!
 
+    private val allSprites = listOf(
+        upLeft, up, upRight, left, right, downLeft, down, downRight
+    )
+
     var currentDirection = EightDirection.DOWN
 //    val animationView = imageAnimationView(down.defaultAnimation) {
 //        smoothing = false
@@ -40,10 +50,29 @@ class EightDirectionalSpriteUI(
 
     init {
         baseBitmap = down.defaultAnimation.frames.first().slice
+
     }
 
-    override val bwidth: Double = baseBitmap.width.toDouble()
-    override val bheight: Double = baseBitmap.height.toDouble()
+    override var width: Double = baseBitmap.width.toDouble(); set(v) {
+        if (field != v) {
+            field = v
+            dirtyVertices = true
+            invalidateRender()
+        }
+    }
+    override var height: Double = baseBitmap.height.toDouble(); set(v) {
+        if (field != v) {
+            field = v
+            dirtyVertices = true
+            invalidateRender()
+        }
+    }
+
+    override val bwidth: Double get() = width
+    override val bheight: Double get() = height
+
+    private val frameCount = down.frames.size
+    var currentFrame = 0
 
     init {
 //        baseBitmap = down.defaultAnimation.frames.first().bitmap.slice()
@@ -52,7 +81,13 @@ class EightDirectionalSpriteUI(
             baseBitmap: $baseBitmap
             baseBitmap.width: ${baseBitmap.width}
             baseBitmap.height: ${baseBitmap.height}
+            down: $down
         """.trimIndent())
+        require(allSprites.all {
+            it.frames.size == frameCount
+        }) {
+            "Expected all sprites to have the same number of walking frames."
+        }
         smoothing = false
 //        dirtyVertices = true
 //        invalidateRender()
@@ -60,7 +95,13 @@ class EightDirectionalSpriteUI(
 
     fun changeToDirection(direction: EightDirection) {
         val imageData = getImageDataForDirection(direction)
-        baseBitmap = imageData.defaultAnimation.frames.first().slice
+        baseBitmap = imageData.defaultAnimation.frames[currentFrame].slice
+        currentDirection = direction
+    }
+
+    fun incrementFrame() {
+        currentFrame = (currentFrame + 1) % frameCount
+        changeToDirection(currentDirection)
     }
 
     fun getImageDataForDirection(direction: EightDirection): ImageData {
