@@ -83,6 +83,8 @@ class PlayScene : Scene() {
             addComponentListener(UIMapEntityComponentListener())
             addSystem(MonsterMoveSystem(this))
             addSystem(MonsterRemoveSystem(this))
+            addSystem(EightDirectionalMonsterSpriteDirectionSystem(this))
+            addSystem(EightDirectionalMonsterAnimationSystem(this))
             addSystem(ProjectileRemoveSystem(this))
             addSystem(TowerTargetingRemoveSystem(gameWorld.world))
             addSystem(TargetingAddSystem(gameWorld))

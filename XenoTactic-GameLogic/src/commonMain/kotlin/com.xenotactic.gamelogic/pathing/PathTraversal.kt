@@ -11,6 +11,7 @@ import com.xenotactic.gamelogic.utils.lerp
 import com.xenotactic.gamelogic.utils.toGameUnit
 
 class SegmentTraversal(private val segment: Segment) {
+    val currentDestinationPoint: GameUnitPoint get() = segment.point2
     var distanceTraversed = GameUnit(0.0)
     var currentPosition = segment.point1.copy()
         private set
@@ -45,6 +46,7 @@ class PathTraversal(val path: Path) {
     private val segments = path.getSegments()
     private var currentSegmentIdx = 0
     private var currentSegmentTraversal = SegmentTraversal(segments.first())
+    val currentDestinationPoint: GameUnitPoint get() = currentSegmentTraversal.currentDestinationPoint
     val currentPosition: GameUnitPoint
         get() = currentSegmentTraversal.currentPosition
 
@@ -88,6 +90,7 @@ class PathSequenceTraversal(pathSequence: PathSequence) {
     private val paths = pathSequence.paths
     private var currentPathIdx = 0
     private var currentPathTraversal = PathTraversal(paths.first())
+    val currentDestinationPoint: GameUnitPoint get() = currentPathTraversal.currentDestinationPoint
     val currentPosition: GameUnitPoint
         get() = currentPathTraversal.currentPosition
     val nonTraversedDistance: GameUnit

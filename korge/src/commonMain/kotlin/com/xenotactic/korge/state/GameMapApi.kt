@@ -201,6 +201,7 @@ class GameMapApi(
             val maxHealthComponent = MaxHealthComponent(100.0)
             addComponentOrThrow(maxHealthComponent)
             addComponentOrThrow(HealthComponent(maxHealthComponent.maxHealth))
+            addComponentOrThrow(AnimationComponent(100.0, 0.0))
 
             val healthBar = createHealthBar(sizeComponent.width, maxHealthComponent.maxHealth).apply {
                 addTo(spriteContainer)
