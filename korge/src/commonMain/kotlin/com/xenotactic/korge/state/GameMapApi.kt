@@ -102,9 +102,13 @@ class GameMapApi(
                     }
 
                     is MapEntity.SmallBlocker -> TODO()
-                    is MapEntity.SpeedArea -> MapEntityComponent(
-                        MapEntityData.SpeedArea(placementEntity.radius, placementEntity.speedEffect)
-                    )
+                    is MapEntity.SpeedArea -> {
+                        val data = MapEntityData.SpeedArea(placementEntity.radius, placementEntity.speedEffect)
+                        addComponentOrThrow(SpeedAreaEffectComponent(data))
+                        MapEntityComponent(
+                            data
+                        )
+                    }
 
                     is MapEntity.Start -> {
                         MapEntityComponent(
@@ -124,9 +128,15 @@ class GameMapApi(
                         )
                     }
 
-                    is MapEntity.Tower -> MapEntityComponent(
-                        MapEntityData.Tower
-                    )
+                    is MapEntity.Tower -> {
+                        addComponentOrThrow(TowerComponent)
+                        addComponentOrThrow(RangeComponent(7.toGameUnit()))
+                        addComponentOrThrow(ReloadTimeComponent(1000.0))
+                        addComponentOrThrow(ReloadDowntimeComponent(0.0))
+                        MapEntityComponent(
+                            MapEntityData.Tower
+                        )
+                    }
                 }
 
                 addComponentOrThrow(mapEntityComponent)
@@ -140,13 +150,6 @@ class GameMapApi(
                         placementEntity.y
                     )
                 )
-
-                if (placementEntity is MapEntity.Tower) {
-                    addComponentOrThrow(TowerComponent)
-                    addComponentOrThrow(RangeComponent(7.toGameUnit()))
-                    addComponentOrThrow(ReloadTimeComponent(1000.0))
-                    addComponentOrThrow(ReloadDowntimeComponent(0.0))
-                }
 
                 val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
                 addComponentOrThrow(UIEntityViewComponent(uiEntity))
@@ -202,6 +205,7 @@ class GameMapApi(
             addComponentOrThrow(maxHealthComponent)
             addComponentOrThrow(HealthComponent(maxHealthComponent.maxHealth))
             addComponentOrThrow(AnimationComponent(100.0, 0.0))
+            addComponentOrThrow(ComputedSpeedEffectComponent(1.0))
 
             val healthBar = createHealthBar(sizeComponent.width, maxHealthComponent.maxHealth).apply {
                 addTo(spriteContainer)

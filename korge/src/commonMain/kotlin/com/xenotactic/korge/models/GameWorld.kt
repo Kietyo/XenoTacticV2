@@ -39,6 +39,15 @@ class GameWorld(
             allOfComponents = setOf(MonsterComponent::class, PathSequenceTraversalComponent::class)
         )
     )
+    val speedAreaFamily = world.getOrCreateFamily(
+        FamilyConfiguration(
+            allOfComponents = setOf(
+                SpeedAreaEffectComponent::class,
+                BottomLeftPositionComponent::class,
+                SizeComponent::class
+            )
+        )
+    )
     val bottomLeftPositionComponent =
         world.getComponentContainer<BottomLeftPositionComponent>()
     val sizeComponent = world.getComponentContainer<SizeComponent>()
