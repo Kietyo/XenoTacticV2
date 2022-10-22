@@ -39,12 +39,13 @@ class PlayScene : Scene() {
         val eventBus = EventBus(this@PlayScene)
 
 //        val seed = 1337L
-        val seed = 1338L
+//        val seed = 1338L
+        val seed = 1339L
 
         val randomMap = RandomMapGenerator.generate(
             MapGeneratorConfiguration(
                 seed,
-                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2, 5
+                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2, 10
             )
         )
 

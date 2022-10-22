@@ -9,7 +9,7 @@ class PreSelectionComponentListener(
     val engine: Engine
 ) : ComponentListener<PreSelectionComponent> {
     override fun onAdd(entityId: EntityId, component: PreSelectionComponent) {
-        val uiMapEntityComponent = engine.gameWorld.uiMapEntityComponentContainer.getComponent(entityId)
+        val uiMapEntityComponent = engine.gameWorld.uiMapEntityComponentContainer.getComponentOrNull(entityId) ?: return
         uiMapEntityComponent.uiEntity.doInProcessSelection()
     }
 
