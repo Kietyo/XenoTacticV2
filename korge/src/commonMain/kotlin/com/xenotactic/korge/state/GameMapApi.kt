@@ -224,7 +224,7 @@ class GameMapApi(
         }
     }
 
-    fun createUiEntity(
+    private fun createUiEntity(
         mapEntityComponent: MapEntityComponent,
         sizeComponent: SizeComponent
     ): UIEntity {
@@ -253,7 +253,7 @@ class GameMapApi(
         return uiEntity
     }
 
-    fun createHealthBar(
+    private fun createHealthBar(
         diameterGameUnit: GameUnit,
         maxHealth: Double
     ): UIProgressBar {

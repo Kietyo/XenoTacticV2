@@ -6,6 +6,7 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
@@ -55,7 +56,7 @@ class PlayScene : Scene() {
         val gameWorld = GameWorld(world)
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, gameWorld).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30.toGameUnit(), 20.toGameUnit()))
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30.toGameUnit(), 11.toGameUnit()))
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
         }
@@ -100,7 +101,14 @@ class PlayScene : Scene() {
             addSystem(TowerAttackSystem(world))
         }
 
-        gameMapApi.placeEntities(randomMap.map.getAllEntities())
+//        gameMapApi.placeEntities(randomMap.map.getAllEntities())
+        gameMapApi.placeEntities(
+            MapEntity.Start(22, 0),
+            MapEntity.Finish(3, 2),
+            MapEntity.ROCK_2X4.at(22, 6),
+            MapEntity.ROCK_4X2.at(10, 3),
+            MapEntity.Tower(20, 0)
+        )
 
 
         val spawnCreepButton = uiButton("Spawn creep") {
