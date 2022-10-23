@@ -18,7 +18,7 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 
 
 import com.xenotactic.gamelogic.utils.measureTime
-import test_utils.doublesSimilar
+import com.xenotactic.gamelogic.test_utils.doublesSimilar
 import utils.StatCounterMap
 
 import kotlin.test.*

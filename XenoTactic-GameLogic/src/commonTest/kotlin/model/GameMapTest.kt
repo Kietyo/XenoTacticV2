@@ -7,9 +7,9 @@ import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.test_utils.assertPathSequenceEquals
 import pathing.PathFinder
 
-import test_utils.assertPathSequenceEquals
 import kotlin.test.*
 
 internal class GameMapTest {

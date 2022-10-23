@@ -20,7 +20,6 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.measureTime
 import pathing.AStarSearcher
 import pathing.PathFinder
-import test_utils.doublesSimilar
 import utils.StatCounterMap
 
 import kotlin.test.*
@@ -460,7 +459,7 @@ internal class AStarSearcherTest {
                 )
             }
 
-            if (!doublesSimilar(path1!!.pathLength, path2!!.pathLength, 0.5)) {
+            if (!doublesSimilar(path1!!.pathLength.toDouble(), path2!!.pathLength.toDouble(), 0.5)) {
                 fail(
                     """
                         Path lengths are not similar!

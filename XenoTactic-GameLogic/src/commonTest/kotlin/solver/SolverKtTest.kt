@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.MapGeneratorResult
 import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
-import test_utils.STANDARD_MAP
+import com.xenotactic.gamelogic.test_utils.STANDARD_MAP
 
 import kotlin.random.Random
 import kotlin.test.*

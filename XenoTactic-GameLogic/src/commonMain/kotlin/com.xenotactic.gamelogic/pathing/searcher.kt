@@ -92,6 +92,8 @@ data class Segment(
     val point2: GameUnitPoint,
     private val attributes: MutableList<PathAttribute> = mutableListOf()
 ) {
+    constructor(p1: Point, p2: Point) : this(p1.toGameUnitPoint(), p2.toGameUnitPoint())
+
     val length = point1.distanceTo(point2)
     val effectiveLength: GameUnit
         get() {

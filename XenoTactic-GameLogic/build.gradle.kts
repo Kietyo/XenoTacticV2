@@ -101,6 +101,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
                 implementation(project(":XenoECS"))
 
+                implementation(kotlin("test"))
+
 //                implementation("io.ktor:ktor-client-core:$ktorVersion")
 //                implementation("com.google.firebase:firebase-admin:8.1.0")
 //                compileOnly("com.google.api-client:google-api-client:1.31.5")

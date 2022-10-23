@@ -3,8 +3,8 @@ package pathing
 import com.soywiz.korio.lang.assert
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.pathing.Path
-import test_utils.assertDoubleEquals
-import test_utils.assertPointEquals
+import com.xenotactic.gamelogic.test_utils.assertDoubleEquals
+import com.xenotactic.gamelogic.test_utils.assertPointEquals
 import kotlin.test.Test
 import kotlin.test.assertFalse
 
