@@ -20,7 +20,7 @@ internal class SearcherTest {
             10, 10, listOf(MapEntity.Start(0, 0), MapEntity.Finish(2, 0)),
         )
 
-        val expectedPath = PathSequence.create(Path(listOf(Point(1.0, 1.0), Point(3.0, 1.0))))
+        val expectedPath = PathSequence.create(Path(listOf(GameUnitPoint(1.0, 1.0), GameUnitPoint(3.0, 1.0))))
 
         assertEquals(expectedPath, path)
     }

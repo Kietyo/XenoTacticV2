@@ -107,6 +107,11 @@ fun assertDoubleEquals(expected: GameUnit, actual: GameUnit) {
     assertDoubleEquals(expected.toDouble(), actual.toDouble())
 }
 
+fun assertDoubleEquals(expected: Double, actual: GameUnit) {
+    assertDoubleEquals(expected, actual.toDouble())
+}
+
+
 fun assertPointEquals(expected: GameUnitPoint, actual: GameUnitPoint) {
     assertPointEquals(expected.toPoint(), actual.toPoint())
 }

@@ -146,6 +146,10 @@ internal class Solver_utilsKtTest {
                         getAvailableTowerPlacementSpots(map)
                     )
                 }
+
+                MapEntityType.MONSTER -> {
+
+                }
             }
         }
     }

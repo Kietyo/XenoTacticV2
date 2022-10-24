@@ -4,13 +4,14 @@ import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.pathing.PathAttribute
 import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.test_utils.assertPointEquals
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.testing.assertThat
 import kotlin.math.sqrt
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 internal class SegmentTest {
-
     @Test
     fun getFirstIntersectionPoint_standard() {
         val segment = Segment(Point(0f, 0f), Point(8.0, 8.0))
@@ -70,5 +71,9 @@ internal class SegmentTest {
             segment.addAttribute(PathAttribute.SpeedEffect(2.0))
             assertEquals(0.75, segment.effectiveLength)
         }
+    }
+
+    fun assertEquals(expected: Double, actual: GameUnit) {
+        assertThat(actual).almostEqualsTo(expected)
     }
 }

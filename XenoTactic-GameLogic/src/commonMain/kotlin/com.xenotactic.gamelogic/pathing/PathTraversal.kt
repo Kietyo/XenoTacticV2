@@ -57,6 +57,8 @@ class PathTraversal(val path: Path) {
     val nonTraversedDistance: GameUnit
         get() = currentSegmentTraversal.nonTraversedDistance
 
+    fun traverse(distance: Double) = traverse(distance.toGameUnit())
+
     /**
      * Traverses the path by the given distance.
      * - If we've already finish traversing the path then nothing is done.

@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.MapGeneratorResult
 import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.test_utils.STANDARD_MAP
+import test_utils.STANDARD_MAP
 
 import kotlin.random.Random
 import kotlin.test.*
@@ -53,8 +53,8 @@ internal class SolverKtTest {
                     6,
                     20,
                     0,
-                    AStarSearcher,
-                    1000,
+                    searcher = AStarSearcher,
+                    failureAfterTotalAttempts = 1000,
                 )
             )
             when (genMap) {
@@ -94,8 +94,8 @@ internal class SolverKtTest {
                     6,
                     20,
                     0,
-                    AStarSearcher,
-                    1000,
+                    searcher = AStarSearcher,
+                    failureAfterTotalAttempts = 1000,
                 )
             )
             when (genMap) {

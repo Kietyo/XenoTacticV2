@@ -18,8 +18,8 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.utils.removeAllIndents
 import solver.*
-import com.xenotactic.gamelogic.test_utils.TowerPlacementLogger
 import com.xenotactic.gamelogic.test_utils.doublesSimilar
+import test_utils.TowerPlacementLogger
 import utils.StatCounterMap
 
 import kotlin.random.Random
