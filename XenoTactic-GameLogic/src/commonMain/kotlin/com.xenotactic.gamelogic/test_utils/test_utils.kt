@@ -95,12 +95,24 @@ fun assertFloatEquals(expected: Float, actual: Double) {
     kotlin.test.assertEquals(expected.toDouble(), actual, TEST_DOUBLE_MAX_DELTA)
 }
 
+fun assertFloatEquals(expected: Float, actual: GameUnit) {
+    assertFloatEquals(expected, actual.toDouble())
+}
+
 fun assertDoubleEquals(expected: Double, actual: Double) {
     kotlin.test.assertEquals(expected, actual, TEST_DOUBLE_MAX_DELTA)
 }
 
+fun assertDoubleEquals(expected: GameUnit, actual: GameUnit) {
+    assertDoubleEquals(expected.toDouble(), actual.toDouble())
+}
+
 fun assertPointEquals(expected: GameUnitPoint, actual: GameUnitPoint) {
     assertPointEquals(expected.toPoint(), actual.toPoint())
+}
+
+fun assertPointEquals(expected: Point, actual: GameUnitPoint) {
+    assertPointEquals(expected, actual.toPoint())
 }
 
 fun assertPointEquals(expected: Point, actual: Point) {

@@ -15,9 +15,13 @@ data class GameUnitPoint(val x: GameUnit, val y: GameUnit) {
         operator fun invoke(x: Int, y: Int): GameUnitPoint {
             return GameUnitPoint(x.toGameUnit(), y.toGameUnit())
         }
+        operator fun invoke(x: Float, y: Float): GameUnitPoint {
+            return GameUnitPoint(x.toGameUnit(), y.toGameUnit())
+        }
         operator fun invoke(x: Double, y: Double): GameUnitPoint {
             return GameUnitPoint(x.toGameUnit(), y.toGameUnit())
         }
+
     }
 
     fun toPoint(): Point {

@@ -17,6 +17,7 @@ import com.xenotactic.gamelogic.pathing.EntityPath
 import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.test_utils.doublesSimilar
 import com.xenotactic.gamelogic.utils.measureTime
 import pathing.AStarSearcher
 import pathing.PathFinder

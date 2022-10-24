@@ -20,6 +20,10 @@ class SegmentTraversal(private val segment: Segment) {
     var nonTraversedDistance = GameUnit.ZERO
         private set
 
+    fun traverse(distance: Double) {
+        traverse(distance.toGameUnit())
+    }
+
     fun traverse(distance: GameUnit) {
         if (finishedTraversal()) return
         val newDistanceTraversed = distanceTraversed + distance
