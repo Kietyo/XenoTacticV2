@@ -17,6 +17,7 @@ object MapToId {
      */
     @OptIn(ExperimentalSerializationApi::class)
     fun calculateId(gameMap: GameMap): String {
+        TODO()
         val asBytes = ProtoBuf.encodeToByteArray(gameMap.toGameMapForId())
 
         val digest = asBytes.sha1()

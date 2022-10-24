@@ -55,8 +55,6 @@ internal class SegmentTraversalTest {
             1.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertEquals(1.0, 2.0)
-//        assertEquals(1.0, segmentTraversal.distanceTraversed)
         assertThat(segmentTraversal.distanceTraversed).almostEqualsTo(1.0)
         assertFalse { segmentTraversal.finishedTraversal() }
 

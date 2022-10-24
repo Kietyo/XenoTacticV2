@@ -193,7 +193,7 @@ fun assertEquals(expected: CircleIntersectionUtil.Result, actual: CircleIntersec
             assertPointEquals(expected.secondIntersectionPoint, a.secondIntersectionPoint)
         }
         is CircleIntersectionUtil.Result.Touching -> {
-            assertEquals(expected, actual)
+            kotlin.test.assertEquals(expected, actual)
         }
         is CircleIntersectionUtil.Result.Tangent -> {
             val a = actual as CircleIntersectionUtil.Result.Tangent
