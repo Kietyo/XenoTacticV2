@@ -17,14 +17,15 @@ internal fun checkDoublesAreEqual(
     val equal = expected.toBits() == actual.toBits() || abs(expected - actual) <= absoluteTolerance
 
     if (shouldFail && !equal) {
-        println("absolute difference: $absoluteTolerance")
-        throw AssertionError("expected:<$expected> but was:<$actual>")
+        throw AssertionError("""
+            absolute difference: $absoluteTolerance
+            expected:<$expected> but was:<$actual>
+        """.trimIndent())
     }
 }
 
 class DoubleSubject(val actual: Double) {
     fun isEqualTo(e: Double, absoluteTolerance: Double = 0.00001) {
-//        assertEquals(e, actual, absoluteTolerance)
         checkDoublesAreEqual(e, actual, absoluteTolerance, shouldFail = true)
     }
 }
