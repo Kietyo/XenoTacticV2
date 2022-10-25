@@ -8,7 +8,6 @@ import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.testing.assertThat
 import kotlin.math.sqrt
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 internal class SegmentTest {
@@ -74,6 +73,6 @@ internal class SegmentTest {
     }
 
     fun assertEquals(expected: Double, actual: GameUnit) {
-        assertThat(actual).almostEqualsTo(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 }

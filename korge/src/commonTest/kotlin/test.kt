@@ -9,6 +9,11 @@ import kotlin.test.*
 
 class MyTest : ViewsForTesting() {
 	@Test
+	fun assertionTest() {
+		assertEquals(1.5, 2.0)
+	}
+
+	@Test
 	fun test() = viewsTest {
 		val log = arrayListOf<String>()
 		val rect = solidRect(100, 100, Colors.RED)

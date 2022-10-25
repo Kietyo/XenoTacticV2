@@ -8,7 +8,6 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.testing.assertThat
 import kotlin.math.sqrt
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 
@@ -18,22 +17,22 @@ internal class SegmentTraversalTest {
     fun traverse() {
         val segment = Segment(Point(1.0, 1.0), Point(3.0, 3.0))
         val segmentTraversal = SegmentTraversal(segment)
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             1.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(
             1.0,
             TEST_DOUBLE_MAX_DELTA
         )
 
         segmentTraversal.traverse(2.0)
 
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             1.0 + sqrt(2.0),
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(
             1.0 + sqrt(2.0),
             TEST_DOUBLE_MAX_DELTA
         )
@@ -47,61 +46,61 @@ internal class SegmentTraversalTest {
 
         segmentTraversal.traverse(1.0)
 
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             0.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(
             1.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.distanceTraversed).almostEqualsTo(1.0)
+        assertThat(segmentTraversal.distanceTraversed).isEqualTo(1.0)
         assertFalse { segmentTraversal.finishedTraversal() }
 
         segmentTraversal.traverse(0.5.toGameUnit())
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             0.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(
             1.5,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.distanceTraversed).almostEqualsTo(1.5)
+        assertThat(segmentTraversal.distanceTraversed).isEqualTo(1.5)
         assertFalse { segmentTraversal.finishedTraversal() }
 
         segmentTraversal.traverse(1.0)
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             0.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(2.5)
-        assertThat(segmentTraversal.distanceTraversed).almostEqualsTo(2.5)
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(2.5)
+        assertThat(segmentTraversal.distanceTraversed).isEqualTo(2.5)
         assertFalse { segmentTraversal.finishedTraversal() }
 
         segmentTraversal.traverse(0.5)
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             0.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(
             3.0,
             TEST_DOUBLE_MAX_DELTA
         )
         assert(segmentTraversal.finishedTraversal())
-        assertThat(segmentTraversal.distanceTraversed).almostEqualsTo(3.0)
+        assertThat(segmentTraversal.distanceTraversed).isEqualTo(3.0)
 
         segmentTraversal.traverse(0.5)
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             0.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(
             3.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.nonTraversedDistance).almostEqualsTo(0.0)
-        assertThat(segmentTraversal.distanceTraversed).almostEqualsTo(3.0)
+        assertThat(segmentTraversal.nonTraversedDistance).isEqualTo(0.0)
+        assertThat(segmentTraversal.distanceTraversed).isEqualTo(3.0)
     }
 
     @Test
@@ -110,15 +109,15 @@ internal class SegmentTraversalTest {
         val segmentTraversal = SegmentTraversal(segment)
 
         segmentTraversal.traverse(10.0)
-        assertThat(segmentTraversal.currentPosition.x).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             0.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.currentPosition.y).almostEqualsTo(
+        assertThat(segmentTraversal.currentPosition.y).isEqualTo(
             3.0,
             TEST_DOUBLE_MAX_DELTA
         )
-        assertThat(segmentTraversal.distanceTraversed).almostEqualsTo(3.0)
-        assertThat(segmentTraversal.nonTraversedDistance).almostEqualsTo(7.0)
+        assertThat(segmentTraversal.distanceTraversed).isEqualTo(3.0)
+        assertThat(segmentTraversal.nonTraversedDistance).isEqualTo(7.0)
     }
 }

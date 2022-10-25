@@ -10,7 +10,7 @@ internal class PathSequenceTest {
 
     @Test
     fun pathLength() {
-        assertThat(PathSequence.create(Path.create(Point(0f, 0f), Point(0f, 1f))).pathLength).almostEqualsTo(1.0)
-        assertThat(PathSequence(listOf()).pathLength).almostEqualsTo(0.0)
+        assertThat(PathSequence.create(Path.create(Point(0f, 0f), Point(0f, 1f))).pathLength).isEqualTo(1.0)
+        assertThat(PathSequence(listOf()).pathLength).isEqualTo(0.0)
     }
 }
