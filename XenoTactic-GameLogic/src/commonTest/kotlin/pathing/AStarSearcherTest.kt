@@ -11,14 +11,12 @@ import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair
-import com.xenotactic.gamelogic.pathing.EntityPath
-import com.xenotactic.gamelogic.pathing.GamePath
-import com.xenotactic.gamelogic.pathing.Path
-import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.pathing.*
 
 
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.test_utils.doublesSimilar
+import com.xenotactic.testing.assertThat
 import utils.StatCounterMap
 
 import kotlin.test.*
@@ -406,7 +404,7 @@ internal class AStarSearcherTest {
     @Test
     fun regressionTest3() {
         val searcher = AStarSearcher
-        println(
+        assertThat(
             searcher.getUpdatablePathV2(
                 30, 11,
                 listOf(
@@ -417,6 +415,22 @@ internal class AStarSearcherTest {
                     MapEntity.ROCK_2X4.at(22, 6),
                     MapEntity.ROCK_4X2.at(10, 3),
                     MapEntity.Tower(20, 0)
+                )
+            )
+        ).isEqualTo(
+            PathFindingResult.Success(
+                GamePath(
+                    listOf(
+                        EntityPath.EntityToEntityPath(
+                            MapEntity.Start(22, 0),
+                            MapEntity.Finish(3, 2),
+                            Path.create(
+                                23 to 1,
+                                22.007071067811864 to 2.0070710678118653,
+                                4 to 3
+                            )
+                        )
+                    )
                 )
             )
         )
