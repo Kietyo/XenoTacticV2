@@ -107,7 +107,7 @@ class PlayScene : Scene() {
             MapEntity.Finish(3, 2),
             MapEntity.ROCK_2X4.at(22, 6),
             MapEntity.ROCK_4X2.at(10, 3),
-            MapEntity.Tower(20, 0)
+//            MapEntity.Tower(20, 0)
         )
 
 

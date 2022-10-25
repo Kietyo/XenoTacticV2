@@ -120,7 +120,7 @@ object PathFinder {
             blockingEntities,
             mutableListOf<IRectangleEntity>().apply {
                 add(start)
-                addAll(pathingEntities)
+            addAll(pathingEntities)
                 add(finish)
             },
             teleportPairs + additionalTeleportPairs,
@@ -137,9 +137,9 @@ object PathFinder {
     ): PathFindingResult {
         return searcher.getUpdatablePathV2(
             width.toInt(), height.toInt(),
-            pathingEntities,
-            teleportPairs,
-            blockingEntities
+            pathingEntities = pathingEntities,
+            teleportPairs = teleportPairs,
+            blockingEntities = blockingEntities
         )
     }
 }

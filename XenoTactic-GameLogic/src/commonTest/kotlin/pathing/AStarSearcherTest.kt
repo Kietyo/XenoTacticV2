@@ -404,6 +404,25 @@ internal class AStarSearcherTest {
     }
 
     @Test
+    fun regressionTest3() {
+        val searcher = AStarSearcher
+        println(
+            searcher.getUpdatablePathV2(
+                30, 11,
+                listOf(
+                    MapEntity.Start(22, 0),
+                    MapEntity.Finish(3, 2),
+                ),
+                blockingEntities = listOf(
+                    MapEntity.ROCK_2X4.at(22, 6),
+                    MapEntity.ROCK_4X2.at(10, 3),
+                    MapEntity.Tower(20, 0)
+                )
+            )
+        )
+    }
+
+    @Test
     fun regressionTest() = runBlockingNoJs ret@{
         val searcher1 = AStarSearcher
         val searcher2 = AStarSearcher
@@ -506,4 +525,6 @@ internal class AStarSearcherTest {
             )
         )
     }
+
+
 }

@@ -321,13 +321,24 @@ class GameMapApi(
 
         require(sequenceNumToTpIn.size == sequenceNumToTpOut.size)
 
+        val t1 = sequenceNumToPathingEntity.toList().sortedBy {
+            it.first
+        }.map { it.second }
+
+        val t2 = sequenceNumToTpIn.toList().map {
+            TeleportPair(it.second, sequenceNumToTpOut[it.first]!!, it.first)
+        }.sortedBy {
+            it.sequenceNumber
+        }
+
         val pathFinderResult = PathFinder.getUpdatablePath(
-            gameMapDimensionsState.height, gameMapDimensionsState.height,
+            gameMapDimensionsState.width, gameMapDimensionsState.height,
             start, finish,
             blockingEntities = blockingEntities,
             pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {
                 it.first
-            }.map { it.second }, teleportPairs = sequenceNumToTpIn.toList().map {
+            }.map { it.second },
+            teleportPairs = sequenceNumToTpIn.toList().map {
                 TeleportPair(it.second, sequenceNumToTpOut[it.first]!!, it.first)
             }.sortedBy {
                 it.sequenceNumber
