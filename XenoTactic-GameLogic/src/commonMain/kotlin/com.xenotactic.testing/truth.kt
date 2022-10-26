@@ -6,8 +6,7 @@ import kotlin.test.assertEquals
 
 fun assertThat(actual: Double) = DoubleSubject(actual)
 fun assertThat(actual: GameUnit) = DoubleSubject(actual.toDouble())
-
-fun assertThat(actual: PathFindingResult) = PathFindingResultSubject(actual)
+fun <T: Any> assertThat(actual: T) = AnySubject(actual)
 
 fun testAssertFailsWithMessage(expectedErrorMessage: String, block: () -> Unit) {
     try {

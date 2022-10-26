@@ -62,7 +62,7 @@ class PlayScene : Scene() {
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
-        val gameMapApi = GameMapApi(engine, eventBus)
+        val gameMapApi = GameMapApi(engine)
         engine.injections.setSingletonOrThrow(gameMapApi)
         uiMapV2.centerOnStage()
 

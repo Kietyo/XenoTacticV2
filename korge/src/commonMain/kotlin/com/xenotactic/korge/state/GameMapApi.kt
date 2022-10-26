@@ -25,11 +25,11 @@ import pathing.PathSequenceTraversal
 
 class GameMapApi(
     val engine: Engine,
-    val eventBus: EventBus,
 ) {
     val gameWorld: GameWorld = engine.gameWorld
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
+    val eventBus: EventBus = engine.eventBus
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
 
     val numCheckpoints
@@ -57,7 +57,7 @@ class GameMapApi(
         return placeEntities(entities.asIterable())
     }
 
-    fun placeEntities(entities: Iterable<MapEntity>) {
+    private fun placeEntities(entities: Iterable<MapEntity>) {
         val gameMapRect =
             GRectInt(0.toGameUnit(), 0.toGameUnit(), gameMapDimensionsState.width, gameMapDimensionsState.height)
         val allEntitiesIntersectMap = entities.all {
@@ -320,16 +320,6 @@ class GameMapApi(
         }
 
         require(sequenceNumToTpIn.size == sequenceNumToTpOut.size)
-
-        val t1 = sequenceNumToPathingEntity.toList().sortedBy {
-            it.first
-        }.map { it.second }
-
-        val t2 = sequenceNumToTpIn.toList().map {
-            TeleportPair(it.second, sequenceNumToTpOut[it.first]!!, it.first)
-        }.sortedBy {
-            it.sequenceNumber
-        }
 
         val pathFinderResult = PathFinder.getUpdatablePath(
             gameMapDimensionsState.width, gameMapDimensionsState.height,

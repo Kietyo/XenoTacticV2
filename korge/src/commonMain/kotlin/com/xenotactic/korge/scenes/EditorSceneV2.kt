@@ -27,7 +27,7 @@ class EditorSceneV2 : Scene() {
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
             injections.setSingletonOrThrow(GameMapDimensionsState(this, 10.toGameUnit(), 10.toGameUnit()))
-            injections.setSingletonOrThrow(GameMapApi(this, eventBus))
+            injections.setSingletonOrThrow(GameMapApi(this))
             injections.setSingletonOrThrow(settingsContainer)
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
