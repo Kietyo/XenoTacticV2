@@ -339,7 +339,6 @@ class UIMapV2(
     }
 
     private fun createEntityView(entity: MapEntity): UIEntity {
-        //        return UIEntity(entity, engine, _gridSize, _borderSize)
         return UIEntity(
             entity.type, entity.width, entity.height, gridSize, borderSize,
             if (entity is MapEntity.SpeedArea) entity.speedEffect else null

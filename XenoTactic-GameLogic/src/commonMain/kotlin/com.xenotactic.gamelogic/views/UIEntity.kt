@@ -109,16 +109,6 @@ class UIEntity(
             }
         }
 
-//        onClick {
-//            engine?.eventBus?.send(
-//                UIEntityClickedEvent(this, entity)
-//            )
-//            println(
-//                """
-//                    entity clicked: $entity
-//                """.trimIndent()
-//            )
-//        }
     }
 
     var selectionBox: Graphics? = null

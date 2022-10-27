@@ -1,6 +1,8 @@
 package com.xenotactic.korge.scenes
 
 import com.soywiz.klock.TimeSpan
+import com.soywiz.korev.Key
+import com.soywiz.korge.input.keys
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
@@ -47,7 +49,7 @@ class PlayScene : Scene() {
         val randomMap = RandomMapGenerator.generate(
             MapGeneratorConfiguration(
                 seed,
-                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2, 10
+                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2, 5
             )
         )
 
@@ -57,7 +59,7 @@ class PlayScene : Scene() {
         val gameWorld = GameWorld(world)
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, gameWorld).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30.toGameUnit(), 11.toGameUnit()))
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30.toGameUnit(), 20.toGameUnit()))
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
         }
@@ -104,14 +106,14 @@ class PlayScene : Scene() {
             addSystem(TowerAttackSystem(world))
         }
 
-//        gameMapApi.placeEntities(randomMap.map.getAllEntities())
-        gameMapApi.placeEntities(
-            MapEntity.Start(22, 0),
-            MapEntity.Finish(3, 2),
-            MapEntity.ROCK_2X4.at(22, 6),
-            MapEntity.ROCK_4X2.at(10, 3),
-//            MapEntity.Tower(20, 0)
-        )
+        gameMapApi.placeEntities(randomMap.map.getAllEntities())
+//        gameMapApi.placeEntities(
+//            MapEntity.Start(22, 0),
+//            MapEntity.Finish(3, 2),
+//            MapEntity.ROCK_2X4.at(22, 6),
+//            MapEntity.ROCK_4X2.at(10, 3),
+////            MapEntity.Tower(20, 0)
+//        )
 
 
         val spawnCreepButton = uiButton("Spawn creep") {
@@ -138,6 +140,12 @@ class PlayScene : Scene() {
             onClick {
                 println("print world button clicked!")
                 println(world)
+            }
+        }
+
+        keys {
+            this.down(Key.ESCAPE) {
+                editorState.switchToPlayingMode()
             }
         }
 

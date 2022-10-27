@@ -107,13 +107,6 @@ class SelectorMouseProcessorV2(
                 //                """.trimIndent())
                 //
                 //                println(uiMap.getIntersectingEntities(selectionRectangle.getGlobalBounds()))
-//                engine.eventBus.send(
-//                    SelectedUIEntitiesEvent(
-//                        SelectionType.SELECTED,
-//                        previousSelectionSnapshot,
-//                        intersectingEntities
-//                    )
-//                )
                 engine.gameWorld.selectionFamily.getNewList().forEach {
                     engine.gameWorld.world.modifyEntity(it) {
                         this.removeComponent<SelectedComponent>()
