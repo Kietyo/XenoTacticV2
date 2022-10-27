@@ -13,7 +13,6 @@ class GameWorld(
         FamilyConfiguration(
             allOfComponents = setOf(
                 MapEntityComponent::class,
-                UIEntityViewComponent::class,
                 SizeComponent::class,
                 BottomLeftPositionComponent::class,
             )

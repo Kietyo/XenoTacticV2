@@ -1,25 +1,20 @@
 package com.xenotactic.korge.state
 
-import com.soywiz.korge.ui.UIProgressBar
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.anchor
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.container
-import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.model.*
-import com.xenotactic.gamelogic.utils.*
-import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.gamelogic.utils.max
+import com.xenotactic.gamelogic.utils.min
+import com.xenotactic.gamelogic.utils.rectangleIntersects
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.*
 import com.xenotactic.korge.ecomponents.DebugEComponent
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.event_listeners.AddedMonsterEntityEvent
+import com.xenotactic.korge.event_listeners.AddedUIEntityEvent
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
-import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.ui.UIMapV2
 import pathing.PathFinder
 import pathing.PathSequenceTraversal
 
@@ -27,7 +22,6 @@ class GameMapApi(
     val engine: Engine,
 ) {
     val gameWorld: GameWorld = engine.gameWorld
-    val uiMap = engine.injections.getSingleton<UIMapV2>()
     val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
     val eventBus: EventBus = engine.eventBus
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
@@ -140,9 +134,7 @@ class GameMapApi(
                 }
 
                 addComponentOrThrow(mapEntityComponent)
-                val sizeComponent = SizeComponent(placementEntity.width, placementEntity.height).also {
-                    addComponentOrThrow(it)
-                }
+                addComponentOrThrow(SizeComponent(placementEntity.width, placementEntity.height))
 
                 addComponentOrThrow(
                     BottomLeftPositionComponent(
@@ -151,21 +143,7 @@ class GameMapApi(
                     )
                 )
 
-                val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
-                addComponentOrThrow(UIEntityViewComponent(uiEntity))
-
-                val text = mapEntityComponent.entityData.getText()
-                if (text != null) {
-                    val textView = makeEntityLabelText(text).apply {
-                        addTo(uiEntity)
-                        scaledHeight = uiMap.gridSize / 2
-                        scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
-                        centerOn(uiEntity)
-                    }
-                    addComponentOrThrow(UIMapEntityTextComponent(textView))
-                }
-
-
+                engine.eventBus.send(AddedUIEntityEvent(entityId))
             }
 
 //            gameMap.placeEntity(placementEntity)
@@ -176,30 +154,12 @@ class GameMapApi(
 
     fun spawnCreep() {
         gameWorld.world.addEntity {
-            val mapEntityComponent = MapEntityComponent(
+            addComponentOrThrow(MapEntityComponent(
                 MapEntityData.Monster
-            ).also { addComponentOrThrow(it) }
-            val sizeComponent = SizeComponent(1.toGameUnit(), 1.toGameUnit()).also {
-                addComponentOrThrow(it)
-            }
+            ))
+            addComponentOrThrow(SizeComponent(1.toGameUnit(), 1.toGameUnit()))
             addComponentOrThrow(MonsterComponent)
             addComponentOrThrow(VelocityComponent())
-
-//            val uiEntity = createUiEntity(mapEntityComponent, sizeComponent)
-
-            val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
-            val spriteContainer = uiMap.monsterLayer.container {
-
-            }
-            val uiSprite = UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(spriteContainer) {
-                anchor(Anchor.CENTER)
-                scaledWidth = worldWidth.toDouble()
-                scaledHeight = worldHeight.toDouble()
-            }
-
-
-            addComponentOrThrow(UIEntityViewComponent(spriteContainer))
-            addComponentOrThrow(UIEightDirectionalSpriteComponent(uiSprite))
 
             val maxHealthComponent = MaxHealthComponent(100.0)
             addComponentOrThrow(maxHealthComponent)
@@ -207,11 +167,7 @@ class GameMapApi(
             addComponentOrThrow(AnimationComponent(100.0, 0.0))
             addComponentOrThrow(ComputedSpeedEffectComponent(1.0))
 
-            val healthBar = createHealthBar(sizeComponent.width, maxHealthComponent.maxHealth).apply {
-                addTo(spriteContainer)
-            }
-            addComponentOrThrow(UIHealthBarComponent(healthBar))
-
+            engine.eventBus.send(AddedMonsterEntityEvent(entityId))
 
             val pathSequenceTraversal = PathSequenceTraversal(
                 gameMapPathState.shortestPath!!
@@ -221,49 +177,6 @@ class GameMapApi(
                     pathSequenceTraversal
                 )
             )
-        }
-    }
-
-    private fun createUiEntity(
-        mapEntityComponent: MapEntityComponent,
-        sizeComponent: SizeComponent
-    ): UIEntity {
-        val uiEntity = UIEntity(
-            mapEntityComponent.entityData.toMapEntityType(),
-            sizeComponent.width,
-            sizeComponent.height,
-            uiMap.gridSize,
-            uiMap.borderSize,
-            if (mapEntityComponent.entityData is MapEntityData.SpeedArea) (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect else null
-        ).apply {
-            when (mapEntityComponent.entityData) {
-                is MapEntityData.SpeedArea -> addTo(uiMap.speedAreaLayer)
-                is MapEntityData.Checkpoint,
-                MapEntityData.Finish,
-                MapEntityData.SmallBlocker,
-                MapEntityData.Start,
-                is MapEntityData.TeleportIn,
-                is MapEntityData.TeleportOut,
-                MapEntityData.Tower,
-                MapEntityData.Rock -> addTo(uiMap.entityLayer)
-
-                MapEntityData.Monster -> addTo(uiMap.monsterLayer)
-            }
-        }
-        return uiEntity
-    }
-
-    private fun createHealthBar(
-        diameterGameUnit: GameUnit,
-        maxHealth: Double
-    ): UIProgressBar {
-        val diameter = diameterGameUnit.toWorldUnit(uiMap.gridSize)
-        return UIProgressBar(
-            diameter.toDouble(), diameter.toDouble() / 4.0,
-            current = maxHealth, maximum = maxHealth
-        ).apply {
-            x -= diameter.toDouble() / 2.0
-            y -= diameter.toDouble() / 5.0 * 4.0
         }
     }
 

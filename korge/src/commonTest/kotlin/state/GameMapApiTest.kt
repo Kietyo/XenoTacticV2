@@ -6,10 +6,13 @@ import com.xenotactic.gamelogic.pathing.EntityPath
 import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathFindingResult
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.korge.state.GameMapDimensionsState
+import com.xenotactic.korge.state.GameMapPathState
 import com.xenotactic.testing.assertThat
 import pathing.AStarSearcher
 import kotlin.test.Test
@@ -20,13 +23,22 @@ internal class GameMapApiTest {
         val gameWorld = GameWorld()
         val eventBus = EventBus(this)
         val engine = Engine(eventBus, gameWorld)
+        engine.injections.setSingletonOrThrow(GameMapPathState(engine))
+        engine.injections.setSingletonOrThrow(
+            GameMapDimensionsState(
+                engine,
+                30.toGameUnit(), 11.toGameUnit()
+            )
+        )
         val gameMapApi = GameMapApi(engine)
+
 
         gameMapApi.placeEntities(
             MapEntity.Start(22, 0),
             MapEntity.Finish(3, 2),
             MapEntity.ROCK_2X4.at(22, 6),
             MapEntity.ROCK_4X2.at(10, 3),
+            MapEntity.TOWER.at(20, 0)
         )
 
         assertThat(

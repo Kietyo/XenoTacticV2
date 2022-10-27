@@ -413,6 +413,9 @@ sealed class MapEntity : IRectangleEntity {
         val ROCK_1X1 = Rock(0.toGameUnit(), 0.toGameUnit(), 1.toGameUnit(), 1.toGameUnit())
         val ROCK_2X4 = Rock(0.toGameUnit(), 0.toGameUnit(), 2.toGameUnit(), 4.toGameUnit())
         val ROCK_4X2 = Rock(0.toGameUnit(), 0.toGameUnit(), 4.toGameUnit(), 2.toGameUnit())
+        val TOWER = Tower(0.toGameUnit(), 0.toGameUnit())
+        val START = Start(0.toGameUnit(), 0.toGameUnit())
+        val FINISH = Finish(0.toGameUnit(), 0.toGameUnit())
 
         // Returns true if the `rhs` fully covers the `lhs`
         fun fullyCovers(lhs: MapEntity, rhs: MapEntity): Boolean {

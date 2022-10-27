@@ -16,6 +16,7 @@ import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.event_listeners.UIMapEventListeners
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessorV2
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
@@ -75,6 +76,8 @@ class PlayScene : Scene() {
         })
         val editorState = EditorState(engine)
         engine.injections.setSingletonOrThrow(editorState)
+
+        val uiMapEventListener = UIMapEventListeners(engine)
 
 
         world.apply {
