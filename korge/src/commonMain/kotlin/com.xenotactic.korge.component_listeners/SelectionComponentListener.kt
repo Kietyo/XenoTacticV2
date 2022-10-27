@@ -23,7 +23,7 @@ class SelectionComponentListener(
 ) : ComponentListener<SelectedComponent> {
     val world = engine.gameWorld.world
     val uiMap = engine.injections.getSingleton<UIMapV2>()
-    val SELECTION_COLOR = Colors.YELLOW
+    private val SELECTION_COLOR = Colors.YELLOW
 
     override fun onAdd(entityId: EntityId, component: SelectedComponent) {
         val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
@@ -48,10 +48,6 @@ class SelectionComponentListener(
 
     override fun onRemove(entityId: EntityId, component: SelectedComponent) {
         println("Removed selection for entity: $entityId")
-//        val uiMapEntityComponent = engine.gameWorld.uiMapEntityComponentContainer.getComponent(entityId)
-//        uiMapEntityComponent.uiEntity.cancelSelection()
-
-
         val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
         val uiSelectionComponent = world[entityId, UISelectionComponent::class]
         uiEntityContainerComponent.container.removeChild(uiSelectionComponent.graphics)
