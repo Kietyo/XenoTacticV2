@@ -111,42 +111,4 @@ class UIEntity(
 
     }
 
-    var selectionBox: Graphics? = null
-
-    fun cancelSelection() {
-        selectionBox?.removeFromParent()
-        selectionBox = null
-    }
-
-    val IN_PROCESS_SELECTION_COLOR = Colors.YELLOW.withAd(0.5)
-    val SELECTION_COLOR = Colors.YELLOW
-
-    fun doInProcessSelection() {
-        if (selectionBox == null) {
-            val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
-            selectionBox = Graphics().addTo(this).apply {
-                updateShape {
-                    stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(6.0)) {
-                        this.rectHole(0.0, 0.0, worldWidth.value, worldHeight.value)
-                    }
-                }
-                centerOn(this)
-            }
-        }
-    }
-
-    fun doActiveSelection() {
-        if (selectionBox != null) cancelSelection()
-        if (selectionBox == null) {
-            val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
-            selectionBox = Graphics().addTo(this).apply {
-                updateShape {
-                    stroke(SELECTION_COLOR, StrokeInfo(6.0)) {
-                        this.rectHole(0.0, 0.0, worldWidth.value, worldHeight.value)
-                    }
-                }
-                centerOn(this)
-            }
-        }
-    }
 }
