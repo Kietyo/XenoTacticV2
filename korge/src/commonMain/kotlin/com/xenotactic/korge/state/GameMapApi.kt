@@ -90,6 +90,7 @@ class GameMapApi(
                     }
 
                     is MapEntity.Rock -> {
+                        addComponentOrThrow(IsSelectableComponent)
                         MapEntityComponent(
                             MapEntityData.Rock
                         )
@@ -255,7 +256,7 @@ class GameMapApi(
     }
 
     fun getIntersectingEntities(rect: Rectangle): Set<EntityId> {
-        return gameWorld.entityFamily.getSequence().mapNotNull {
+        return gameWorld.selectableEntitiesFamily.getSequence().mapNotNull {
             val comp = gameWorld.uiEntityViewComponentContainer.getComponent(it)
             if (rect.intersects(comp.entityView.getGlobalBounds())) {
                 it

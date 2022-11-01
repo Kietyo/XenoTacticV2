@@ -3,8 +3,6 @@ package com.xenotactic.korge.models
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.components.*
-import com.xenotactic.korge.fleks.components.PreSelectionComponent
-import com.xenotactic.korge.fleks.components.SelectedComponent
 
 class GameWorld(
     val world: World = World()
@@ -15,6 +13,16 @@ class GameWorld(
                 MapEntityComponent::class,
                 SizeComponent::class,
                 BottomLeftPositionComponent::class,
+            )
+        )
+    )
+    val selectableEntitiesFamily = world.getOrCreateFamily(
+        FamilyConfiguration(
+            allOfComponents = setOf(
+                MapEntityComponent::class,
+                SizeComponent::class,
+                BottomLeftPositionComponent::class,
+                IsSelectableComponent::class
             )
         )
     )

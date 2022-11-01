@@ -9,13 +9,9 @@ import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.utils.toWorldDimensions
-import com.xenotactic.korge.components.SizeComponent
-import com.xenotactic.korge.components.UIEntityContainerComponent
-import com.xenotactic.korge.components.UIPreSelectionComponent
-import com.xenotactic.korge.components.UISelectionComponent
+import com.xenotactic.korge.components.*
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
-import com.xenotactic.korge.fleks.components.SelectedComponent
 import com.xenotactic.korge.ui.UIMapV2
 
 class SelectionComponentListener(

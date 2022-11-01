@@ -1,4 +1,0 @@
-package com.xenotactic.korge.fleks.components
-
-object PreSelectionComponent
-object SelectedComponent

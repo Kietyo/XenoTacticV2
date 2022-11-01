@@ -1,4 +1,4 @@
-package com.xenotactic.korge.fleks.components
+package com.xenotactic.korge.components
 
 import com.xenotactic.gamelogic.model.MapEntity
 

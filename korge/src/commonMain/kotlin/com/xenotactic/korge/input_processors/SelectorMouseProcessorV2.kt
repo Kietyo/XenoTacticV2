@@ -13,11 +13,10 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
+import com.xenotactic.korge.components.PreSelectionComponent
+import com.xenotactic.korge.components.SelectedComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.korge.fleks.components.PreSelectionComponent
-import com.xenotactic.korge.fleks.components.SelectedComponent
 import com.xenotactic.korge.state.GameMapApi
 
 class SelectorMouseProcessorV2(

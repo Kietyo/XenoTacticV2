@@ -1,12 +1,12 @@
 package com.xenotactic.korge.renderer
 
+import com.xenotactic.korge.components.EntityRenderComponent
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
-import com.xenotactic.korge.fleks.components.EntityRenderComponent
 import com.xenotactic.korge.ui.UIMap
 
 class MapRendererUpdater(
