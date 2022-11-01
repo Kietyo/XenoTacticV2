@@ -7,6 +7,7 @@ import com.xenotactic.korge.components.*
 class GameWorld(
     val world: World = World()
 ) {
+
     val entityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(

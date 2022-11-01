@@ -20,7 +20,8 @@ data class MapGeneratorConfiguration(
     val checkpoints: Int = 0,
     val rocks: Int = 0,
     val teleports: Int = 0,
-    val speedAreas: Int= 0,
+    val speedAreas: Int = 0,
+    val mineralSpots: Int = 0,
     val searcher: SearcherInterface = AStarSearcher,
     val failureAfterTotalAttempts: Int = 2000
 )
@@ -48,7 +49,7 @@ class RandomMapGenerator {
          * Returns a pair where the first value is a boolean representing whether the generator was
          * successful or not and the second value is the game map.
          *
-         * Depending on whether or not `returnMapAsIsOnFailure` is true, the map may be null.
+         * Depending on whether `returnMapAsIsOnFailure` is true, the map may be null.
          */
         fun generate(config: MapGeneratorConfiguration): MapGeneratorResult {
             logger.info { "Generating random map for config: $config" }

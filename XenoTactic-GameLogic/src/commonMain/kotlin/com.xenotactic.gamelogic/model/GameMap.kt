@@ -21,7 +21,7 @@ data class GameMap(
     private val towers: MutableList<MapEntity.Tower> = mutableListOf(),
     private val rocks: MutableList<MapEntity.Rock> = mutableListOf(),
     private val smallBlockers: MutableList<MapEntity.SmallBlocker> = mutableListOf(),
-    private val speedAreas: MutableList<MapEntity.SpeedArea> = mutableListOf()
+    private val speedAreas: MutableList<MapEntity.SpeedArea> = mutableListOf(),
 ) {
 
     @Transient
