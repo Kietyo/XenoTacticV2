@@ -92,6 +92,8 @@ sealed class MapGeneratorResultV2 {
     abstract val height: GameUnit
     abstract val gameWorld: GameWorld
 
+    val world get() = gameWorld.world
+
     data class Success(
         override val width: GameUnit,
         override val height: GameUnit,
