@@ -1,6 +1,7 @@
 package com.xenotactic.gamelogic.model
 
 import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlinx.serialization.Serializable
 
@@ -136,45 +137,21 @@ sealed class MapEntity : IRectangleEntity {
         return this.blockGameUnitPoints.intersect(entity.blockGameUnitPoints).isNotEmpty()
     }
 
-    fun intersectsEntity(entity: MapEntity): Boolean {
-        // I hate this code
-        if (this.x == entity.x && this.y == entity.y) {
-            return true
-        }
-        val xProjIntersect =
-            (entity.x > this.x && entity.x < this.rightX) ||
-                    (this.x > entity.x && this.x < entity.rightX)
-
-        val xRightProjIntersect =
-            (entity.rightX > this.x && entity.rightX < this.rightX) ||
-                    (this.rightX > entity.x && this.rightX < entity.rightX)
-
-        val yProjIntersect =
-            (entity.y > this.y && entity.y < this.topY) ||
-                    (this.y > entity.y && this.y < entity.topY)
-
-        val yTopProjIntersect =
-            (entity.topY > this.y && entity.topY < this.topY) ||
-                    (this.topY > entity.y && this.topY < entity.topY)
-
-        val xEquals = this.x == entity.x
-        val yEquals = this.y == entity.y
-
-        //        println(
-        //            """
-        //            xProjIntersect: $xProjIntersect
-        //            xRightProjIntersect: $xRightProjIntersect
-        //            yProjIntersect: $yProjIntersect
-        //            yTopProjIntersect: $yTopProjIntersect
-        //            xEquals: $xEquals
-        //            yEquals: $yEquals
-        //            \n
-        //        """.trimIndent()
-        //        )
-
-        return ((xProjIntersect || xRightProjIntersect) && (yProjIntersect || yTopProjIntersect))
-                || (yEquals && xProjIntersect)
-                || (xEquals && yProjIntersect)
+    fun intersectsEntity(other: MapEntity): Boolean {
+//        return this.x < other.rightX &&
+//                this.y < other.topY &&
+//                this.rightX > other.x &&
+//                this.topY > other.y
+        return intersectRectangles(
+            this.x.toDouble(),
+            this.y.toDouble(),
+            this.width.toDouble(),
+            this.height.toDouble(),
+            other.x.toDouble(),
+            other.y.toDouble(),
+            other.width.toDouble(),
+            other.height.toDouble(),
+        )
     }
 
     @Serializable

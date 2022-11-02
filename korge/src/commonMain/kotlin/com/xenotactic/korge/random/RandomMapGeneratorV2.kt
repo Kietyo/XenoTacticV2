@@ -1,21 +1,26 @@
 package com.xenotactic.korge.random
 
 import com.soywiz.klogger.Logger
+import com.xenotactic.ecs.FamilyConfiguration
+import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.*
-import com.xenotactic.gamelogic.model.TeleportPair
-import com.xenotactic.gamelogic.pathing.PathFindingResult
 import pathing.AStarSearcher
-import pathing.PathFinder
 import com.xenotactic.gamelogic.pathing.SearcherInterface
 import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.BottomLeftPositionComponent
+import com.xenotactic.korge.components.EntityFinishComponent
 import com.xenotactic.korge.components.EntityStartComponent
 import com.xenotactic.korge.components.SizeComponent
 import com.xenotactic.korge.models.GameWorld
 import kotlin.random.Random
+
+class RandomMapGeneratorMaxAttemptsError(
+    messageFn: () -> String
+) : RuntimeException(messageFn())
 
 data class MapGeneratorConfigurationV2(
     val seed: Long,
@@ -32,9 +37,13 @@ data class GenerationContext(
     val width: GameUnit,
     val height: GameUnit,
     val gameWorld: GameWorld,
-    val random: Random
+    val random: Random,
+    val failureAfterTotalAttempts: Int
 ) {
     val world = gameWorld.world
+    var numTotalAttempts = 0
+        private set
+
     fun getSizeOfEntity(entityType: MapEntityType): Pair<GameUnit, GameUnit> {
         return when (entityType) {
             MapEntityType.START -> 2.toGameUnit() to 2.toGameUnit()
@@ -49,9 +58,18 @@ data class GenerationContext(
             MapEntityType.MONSTER -> TODO()
         }
     }
+
+    fun incrementNumAttempts(errorMessageFn: () -> String) {
+        numTotalAttempts++
+        if (numTotalAttempts > failureAfterTotalAttempts) {
+            throw RandomMapGeneratorMaxAttemptsError(errorMessageFn)
+        }
+    }
+
     fun getRandomPointWithinMapBounds(entitySize: Pair<GameUnit, GameUnit>): GameUnitPoint {
         return getRandomPointWithinMapBounds(entitySize.first, entitySize.second)
     }
+
     fun getRandomPointWithinMapBounds(entityWidth: GameUnit, entityHeight: GameUnit): GameUnitPoint {
         return GameUnitPoint(
             random.nextInt(0, width.toInt() - entityWidth.toInt() + 1),
@@ -76,6 +94,45 @@ object StartGenerator : IGenerator {
             addComponentOrThrow(EntityStartComponent)
         }
     }
+}
+
+object FinishGenerator : IGenerator {
+    override fun run(context: GenerationContext) {
+        val startEntity = context.world.getFirstStatefulEntityMatching(
+            FamilyConfiguration.allOf(
+                EntityStartComponent::class
+            )
+        )
+        val size = context.getSizeOfEntity(MapEntityType.FINISH)
+        var point: GameUnitPoint
+        do {
+            context.incrementNumAttempts {
+                "Failed to create FINISH entity in a spot that didn't intersect with START."
+            }
+            point = context.getRandomPointWithinMapBounds(size)
+        } while (startEntity.intersectsEntity(point, size))
+
+        context.world.addEntity {
+            addComponentOrThrow(size.toSizeComponent())
+            addComponentOrThrow(point.toBottomLeftPositionComponent())
+            addComponentOrThrow(EntityFinishComponent)
+        }
+    }
+}
+
+private fun StatefulEntity.intersectsEntity(position: GameUnitPoint, size: Pair<GameUnit, GameUnit>): Boolean {
+    val thisPosition = get(BottomLeftPositionComponent::class)
+    val thisSize = get(SizeComponent::class)
+    return intersectRectangles(
+        thisPosition.x.toDouble(),
+        thisPosition.y.toDouble(),
+        thisSize.width.toDouble(),
+        thisSize.height.toDouble(),
+        position.x.toDouble(),
+        position.y.toDouble(),
+        size.first.toDouble(),
+        size.second.toDouble()
+    )
 }
 
 private fun GameUnitPoint.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
@@ -132,7 +189,7 @@ class RandomMapGeneratorV2 {
     private constructor(config: MapGeneratorConfigurationV2) {
         this.config = config
         this.random = Random(config.seed)
-        context = GenerationContext(config.width, config.height, gameWorld, random)
+        context = GenerationContext(config.width, config.height, gameWorld, random, config.failureAfterTotalAttempts)
     }
 
     private fun failure(errorString: String): MapGeneratorResultV2.Failure {
@@ -140,15 +197,10 @@ class RandomMapGeneratorV2 {
     }
 
     fun generateInternal(): MapGeneratorResultV2 {
-        var numTotalAttempts = 0
-
         config.generators.forEach {
             it.run(context)
         }
 
-//        val start = createEntity(MapEntity.Start(0.toGameUnit(), 0.toGameUnit()))
-//        gameWorld.placeEntity(start)
-//
 //        var finish: MapEntity
 //        do {
 //            numTotalAttempts++

@@ -22,6 +22,22 @@ fun abs(f1: Float): Float {
     return if (f1 < 0) -f1 else f1
 }
 
+fun intersectRectangles(
+    x1: Double,
+    y1: Double,
+    w1: Double,
+    h1: Double,
+    x2: Double,
+    y2: Double,
+    w2: Double,
+    h2: Double,
+): Boolean {
+    return x1 < (x2 + w2) &&
+            y1 < (y2 + h2) &&
+            (x1 + w1) > x2 &&
+            (y1 + h1) > y2
+}
+
 fun Point.verticalDirectionTo(v: Point, allowableDifference: Double = ALLOWABLE_DIRECTION_DIFF):
         VerticalDirection {
     if (abs(this.y - v.y) < allowableDifference) {

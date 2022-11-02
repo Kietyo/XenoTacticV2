@@ -10,7 +10,7 @@ import kotlin.test.Test
 
 internal class RandomMapGeneratorV2Test {
     @Test
-    fun generate() {
+    fun generateStart() {
         val result = RandomMapGeneratorV2.generate(
             MapGeneratorConfigurationV2(
                 1337, listOf(
@@ -28,7 +28,35 @@ internal class RandomMapGeneratorV2Test {
 
         val entity = result.world.getStatefulEntitySnapshot(entities.first())
 
-        println(entity)
+        assertThat(entity).containsExactlyComponents(
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(17.toGameUnit(), 17.toGameUnit()),
+            EntityStartComponent
+        )
+    }
+
+    @Test
+    fun generateStartFinish() {
+        val result = RandomMapGeneratorV2.generate(
+            MapGeneratorConfigurationV2(
+                1337, listOf(
+                    StartGenerator,
+                    FinishGenerator
+                ), 20.toGameUnit(), 20.toGameUnit()
+            )
+        )
+        assertThat(result).isInstanceOf<MapGeneratorResultV2.Success>()
+
+        println(result.world)
+
+        assertThat(result.world.numEntities).isEqualTo(2)
+
+        val entities = result.world.getEntities(
+            FamilyConfiguration.allOf(EntityStartComponent::class)
+        )
+
+
+        val entity = result.world.getStatefulEntitySnapshot(entities.first())
 
         assertThat(entity).containsExactlyComponents(
             SizeComponent(2.toGameUnit(), 2.toGameUnit()),
