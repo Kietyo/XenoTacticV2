@@ -197,8 +197,14 @@ class RandomMapGeneratorV2 {
     }
 
     fun generateInternal(): MapGeneratorResultV2 {
-        config.generators.forEach {
-            it.run(context)
+        for (it in config.generators) {
+            try {
+                it.run(context)
+            } catch (e: RandomMapGeneratorMaxAttemptsError) {
+                return MapGeneratorResultV2.Failure(
+                    config.width, config.height, gameWorld, listOf(e.message!!)
+                )
+            }
         }
 
 //        var finish: MapEntity
