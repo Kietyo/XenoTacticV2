@@ -6,6 +6,7 @@ import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.inBetween
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
@@ -44,6 +45,28 @@ fun StatefulEntity.intersectsEntity(position: GameUnitPoint, size: Pair<GameUnit
         size.second.toDouble()
     )
 }
+
+fun intersectRectangles(thisPosition: GameUnitPoint, thisSize: Pair<GameUnit, GameUnit>,
+                         otherPosition: GameUnitPoint, otherSize: Pair<GameUnit, GameUnit>
+): Boolean {
+    return intersectRectangles(
+        thisPosition.x.toDouble(),
+        thisPosition.y.toDouble(),
+        thisSize.first.toDouble(),
+        thisSize.second.toDouble(),
+        otherPosition.x.toDouble(),
+        otherPosition.y.toDouble(),
+        otherSize.first.toDouble(),
+        otherSize.second.toDouble()
+    )
+}
+
+fun StatefulEntity.toRectangleEntity(): RectangleEntity {
+    val thisPosition = get(BottomLeftPositionComponent::class)
+    val thisSize = get(SizeComponent::class)
+    return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
+}
+
 
 // Returns the angle from one point to another, with respect to
 // bottom left coordinate system rather than top left coordinate system.

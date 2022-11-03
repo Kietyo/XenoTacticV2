@@ -117,7 +117,7 @@ internal class RandomMapGeneratorV2Test {
             EntityFinishComponent
         )
 
-        val checkpointEntities = result.world.getStatefulEntities(
+        val checkpointEntities = result.world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(EntityCheckpointComponent::class)
         )
         assertThat(checkpointEntities).hasSize(3)

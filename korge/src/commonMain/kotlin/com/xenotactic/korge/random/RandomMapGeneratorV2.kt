@@ -142,25 +142,6 @@ class RandomMapGeneratorV2 {
             }
         }
 //
-//        val addedCheckpoints = mutableListOf<MapEntity.Checkpoint>()
-//        for (i in 0 until config.checkpoints) {
-//            var checkpoint: MapEntity.Checkpoint
-//            do {
-//                numTotalAttempts++
-//                if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-//                    return failure("Failed to create place CHECKPOINT $i.")
-//                }
-//                checkpoint =
-//                    MapEntity.Checkpoint(i, getRandomPointWithinMapBounds(MapEntity.CHECKPOINT))
-//            } while (
-//                start.intersectsEntity(checkpoint) ||
-//                finish.intersectsEntity(checkpoint) ||
-//                addedCheckpoints.any { it.intersectsEntity(checkpoint) }
-//            )
-//            addedCheckpoints.add(checkpoint)
-//            gameWorld.placeEntity(checkpoint)
-//        }
-//
 //        val addedTpIns = mutableListOf<MapEntity.TeleportIn>()
 //        val addedTpOuts = mutableListOf<MapEntity.TeleportOut>()
 //
