@@ -4,7 +4,10 @@ import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.inBetween
+import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.korge.components.BottomLeftPositionComponent
 import com.xenotactic.korge.components.SizeComponent
@@ -16,6 +19,29 @@ fun getCenterPoint(
     return GameUnitPoint(
         bottomLeftPositionComponent.x + sizeComponent.width / 2.0,
         bottomLeftPositionComponent.y + sizeComponent.height / 2.0
+    )
+}
+
+fun GameUnitPoint.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
+    return BottomLeftPositionComponent(x, y)
+}
+
+fun Pair<GameUnit, GameUnit>.toSizeComponent(): SizeComponent {
+    return SizeComponent(first, second)
+}
+
+fun StatefulEntity.intersectsEntity(position: GameUnitPoint, size: Pair<GameUnit, GameUnit>): Boolean {
+    val thisPosition = get(BottomLeftPositionComponent::class)
+    val thisSize = get(SizeComponent::class)
+    return intersectRectangles(
+        thisPosition.x.toDouble(),
+        thisPosition.y.toDouble(),
+        thisSize.width.toDouble(),
+        thisSize.height.toDouble(),
+        position.x.toDouble(),
+        position.y.toDouble(),
+        size.first.toDouble(),
+        size.second.toDouble()
     )
 }
 

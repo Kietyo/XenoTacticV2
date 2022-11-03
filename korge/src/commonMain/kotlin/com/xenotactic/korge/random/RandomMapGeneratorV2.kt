@@ -1,7 +1,6 @@
 package com.xenotactic.korge.random
 
 import com.soywiz.klogger.Logger
-import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
@@ -12,8 +11,6 @@ import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.BottomLeftPositionComponent
-import com.xenotactic.korge.components.EntityFinishComponent
-import com.xenotactic.korge.components.EntityStartComponent
 import com.xenotactic.korge.components.SizeComponent
 import com.xenotactic.korge.models.GameWorld
 import kotlin.random.Random
@@ -70,7 +67,7 @@ data class GenerationContext(
         return getRandomPointWithinMapBounds(entitySize.first, entitySize.second)
     }
 
-    fun getRandomPointWithinMapBounds(entityWidth: GameUnit, entityHeight: GameUnit): GameUnitPoint {
+    private fun getRandomPointWithinMapBounds(entityWidth: GameUnit, entityHeight: GameUnit): GameUnitPoint {
         return GameUnitPoint(
             random.nextInt(0, width.toInt() - entityWidth.toInt() + 1),
             random.nextInt(0, height.toInt() - entityHeight.toInt() + 1)
@@ -81,68 +78,6 @@ data class GenerationContext(
 interface IGenerator {
     fun run(context: GenerationContext)
 }
-
-
-object StartGenerator : IGenerator {
-    override fun run(context: GenerationContext) {
-        val size = context.getSizeOfEntity(MapEntityType.START)
-        val point = context.getRandomPointWithinMapBounds(size)
-
-        context.world.addEntity {
-            addComponentOrThrow(size.toSizeComponent())
-            addComponentOrThrow(point.toBottomLeftPositionComponent())
-            addComponentOrThrow(EntityStartComponent)
-        }
-    }
-}
-
-object FinishGenerator : IGenerator {
-    override fun run(context: GenerationContext) {
-        val startEntity = context.world.getFirstStatefulEntityMatching(
-            FamilyConfiguration.allOf(
-                EntityStartComponent::class
-            )
-        )
-        val size = context.getSizeOfEntity(MapEntityType.FINISH)
-        var point: GameUnitPoint
-        do {
-            context.incrementNumAttempts {
-                "Failed to create FINISH entity in a spot that didn't intersect with START."
-            }
-            point = context.getRandomPointWithinMapBounds(size)
-        } while (startEntity.intersectsEntity(point, size))
-
-        context.world.addEntity {
-            addComponentOrThrow(size.toSizeComponent())
-            addComponentOrThrow(point.toBottomLeftPositionComponent())
-            addComponentOrThrow(EntityFinishComponent)
-        }
-    }
-}
-
-private fun StatefulEntity.intersectsEntity(position: GameUnitPoint, size: Pair<GameUnit, GameUnit>): Boolean {
-    val thisPosition = get(BottomLeftPositionComponent::class)
-    val thisSize = get(SizeComponent::class)
-    return intersectRectangles(
-        thisPosition.x.toDouble(),
-        thisPosition.y.toDouble(),
-        thisSize.width.toDouble(),
-        thisSize.height.toDouble(),
-        position.x.toDouble(),
-        position.y.toDouble(),
-        size.first.toDouble(),
-        size.second.toDouble()
-    )
-}
-
-private fun GameUnitPoint.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
-    return BottomLeftPositionComponent(x, y)
-}
-
-private fun Pair<GameUnit, GameUnit>.toSizeComponent(): SizeComponent {
-    return SizeComponent(first, second)
-}
-
 
 sealed class MapGeneratorResultV2 {
     abstract val width: GameUnit
@@ -206,16 +141,6 @@ class RandomMapGeneratorV2 {
                 )
             }
         }
-
-//        var finish: MapEntity
-//        do {
-//            numTotalAttempts++
-//            if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-//                return failure("Failed to create FINISH entity in a spot that didn't intersect with START.")
-//            }
-//            finish = createEntity(MapEntity.Finish(0.toGameUnit(), 0.toGameUnit()))
-//        } while (start.intersectsEntity(finish))
-//        gameWorld.placeEntity(finish)
 //
 //        val addedCheckpoints = mutableListOf<MapEntity.Checkpoint>()
 //        for (i in 0 until config.checkpoints) {

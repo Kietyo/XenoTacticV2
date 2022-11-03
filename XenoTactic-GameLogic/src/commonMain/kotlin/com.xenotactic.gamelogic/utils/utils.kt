@@ -22,6 +22,7 @@ fun abs(f1: Float): Float {
     return if (f1 < 0) -f1 else f1
 }
 
+
 fun intersectRectangles(
     x1: Double,
     y1: Double,
