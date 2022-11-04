@@ -141,62 +141,7 @@ class RandomMapGeneratorV2 {
                 )
             }
         }
-//
-//        val addedTpIns = mutableListOf<MapEntity.TeleportIn>()
-//        val addedTpOuts = mutableListOf<MapEntity.TeleportOut>()
-//
-//        for (i in 0 until config.teleports) {
-//            var teleportIn: MapEntity.TeleportIn
-//            do {
-//                numTotalAttempts++
-//                if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-//                    return failure("Failed to create place TELEPORT IN $i.")
-//                }
-//                teleportIn =
-//                    MapEntity.TeleportIn(i, getRandomPointWithinMapBounds(MapEntity.TELEPORT_IN))
-//            } while (
-//                start.intersectsEntity(teleportIn) ||
-//                finish.intersectsEntity(teleportIn) ||
-//                addedCheckpoints.any { it.intersectsEntity(teleportIn) } ||
-//                addedTpIns.any { it.intersectsEntity(teleportIn) } ||
-//                addedTpOuts.any { it.intersectsEntity(teleportIn) }
-//            )
-//            addedTpIns.add(teleportIn)
-//
-//            var teleportOut: MapEntity.TeleportOut
-//            val attemptedPlacementPoints = mutableSetOf<GameUnitPoint>()
-//            do {
-//                numTotalAttempts++
-//                if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-//                    return failure("""
-//                        Failed to place TELEPORT OUT $i.
-//                        stagedTeleportIn: $teleportIn
-//                        Attempted points: $attemptedPlacementPoints
-//                    """.trimIndent())
-//                }
-//                val randomPoint = getRandomPointWithinMapBounds(MapEntity.TELEPORT_OUT)
-//                teleportOut =
-//                    MapEntity.TeleportOut(i, randomPoint)
-//                attemptedPlacementPoints.add(randomPoint)
-//            } while (
-//                start.intersectsEntity(teleportOut) ||
-//                finish.intersectsEntity(teleportOut) ||
-//                addedTpIns.any { it.intersectsEntity(teleportOut) } ||
-//                addedCheckpoints.any { it.intersectsEntity(teleportOut) } ||
-//                PathFinder.getShortestPathWithTeleportPair(
-//                    gameWorld, TeleportPair(
-//                        teleportIn,
-//                        teleportOut,
-//                        teleportIn.sequenceNumber
-//                    )
-//                ) is PathFindingResult.Success
-//            )
-//            addedTpOuts.add(teleportOut)
-//
-//            gameWorld.placeEntity(teleportIn)
-//            gameWorld.placeEntity(teleportOut)
-//        }
-//
+
 //        var currentPath = PathFinder.getShortestPath(gameWorld, config.searcher)!!
 //        var attemptNum = 0
 //        val addedRocks = mutableListOf<MapEntity.Rock>()

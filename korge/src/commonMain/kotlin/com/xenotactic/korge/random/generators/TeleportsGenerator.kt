@@ -36,7 +36,6 @@ class TeleportsGenerator(
 
         val teleportInSize = context.getSizeOfEntity(MapEntityType.TELEPORT_IN)
         val teleportOutSize = context.getSizeOfEntity(MapEntityType.TELEPORT_OUT)
-        var path: PathFindingResult
         for (i in 0 until numTeleports) {
             var teleportInPosition: GameUnitPoint
             do {
@@ -72,27 +71,6 @@ class TeleportsGenerator(
                     attemptedPlacementPoints.contains(teleportOutPosition)
                 )
                 attemptedPlacementPoints.add(teleportOutPosition)
-
-                path = PathFinder.getUpdatablePath(
-                    context.width,
-                    context.height,
-                    startEntity.toRectangleEntity(),
-                    finishEntity.toRectangleEntity(),
-                    blockingEntities = emptyList(),
-                    pathingEntities = addedCheckpoints.map { it.toRectangleEntity() },
-                    teleportPairs = addedTpIns.mapIndexed { ii, it ->
-                        TeleportPair(it.toRectangleEntity(), addedTpOuts[ii].toRectangleEntity(), ii)
-                    } + TeleportPair(
-                        RectangleEntity(
-                            teleportInPosition.x, teleportInPosition.y,
-                            teleportInSize.first, teleportInSize.second
-                        ),
-                        RectangleEntity(
-                            teleportOutPosition.x, teleportOutPosition.y,
-                            teleportOutSize.first, teleportOutSize.second
-                        ), i
-                    )
-                )
             } while (
                 intersectRectangles(
                     teleportInPosition, teleportInSize,
@@ -109,17 +87,17 @@ class TeleportsGenerator(
                     finishEntity.toRectangleEntity(),
                     blockingEntities = emptyList(),
                     pathingEntities = addedCheckpoints.map { it.toRectangleEntity() },
-                    teleportPairs = addedTpIns.mapIndexed { ii, it ->
-                        TeleportPair(it.toRectangleEntity(), addedTpOuts[ii].toRectangleEntity(), ii)
-                    } + TeleportPair(
-                        RectangleEntity(
-                            teleportInPosition.x, teleportInPosition.y,
-                            teleportInSize.first, teleportInSize.second
-                        ),
-                        RectangleEntity(
-                            teleportOutPosition.x, teleportOutPosition.y,
-                            teleportOutSize.first, teleportOutSize.second
-                        ), i
+                    teleportPairs = listOf(
+                        TeleportPair(
+                            RectangleEntity(
+                                teleportInPosition.x, teleportInPosition.y,
+                                teleportInSize.first, teleportInSize.second
+                            ),
+                            RectangleEntity(
+                                teleportOutPosition.x, teleportOutPosition.y,
+                                teleportOutSize.first, teleportOutSize.second
+                            ), i
+                        )
                     )
                 ) is PathFindingResult.Failure
             )

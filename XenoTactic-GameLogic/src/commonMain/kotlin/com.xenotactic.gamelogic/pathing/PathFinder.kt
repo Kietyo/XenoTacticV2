@@ -16,8 +16,10 @@ import com.xenotactic.gamelogic.utils.GameUnit
  * Finds the shortest path for the given game map.
  */
 object PathFinder {
-    fun getUpdatablePath(gameMap: GameMap, searcher: SearcherInterface = AStarSearcher):
-            PathFindingResult {
+    fun getUpdatablePath(
+        gameMap: GameMap,
+        searcher: SearcherInterface = AStarSearcher
+    ): PathFindingResult {
         return getUpdatablePath(
             gameMap.width,
             gameMap.height,
@@ -120,7 +122,7 @@ object PathFinder {
             blockingEntities,
             mutableListOf<IRectangleEntity>().apply {
                 add(start)
-            addAll(pathingEntities)
+                addAll(pathingEntities)
                 add(finish)
             },
             teleportPairs + additionalTeleportPairs,

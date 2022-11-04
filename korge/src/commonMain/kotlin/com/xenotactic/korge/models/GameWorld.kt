@@ -2,12 +2,16 @@ package com.xenotactic.korge.models
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.components.*
+import com.xenotactic.korge.korge_utils.toRectangleEntity
+import pathing.PathFinder
 
 class GameWorld(
+    val width: GameUnit,
+    val height: GameUnit,
     val world: World = World()
 ) {
-
     val entityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
@@ -68,4 +72,33 @@ class GameWorld(
         world.getComponentContainer<UIMapEntityTextComponent>()
     val selectionComponentContainer = world.getComponentContainer<SelectedComponent>()
     val preSelectionComponentContainer = world.getComponentContainer<PreSelectionComponent>()
+
+    fun getShortestPath() {
+        val startEntity = world.getFirstStatefulEntityMatching(
+            FamilyConfiguration.allOf(
+                EntityStartComponent::class
+            )
+        )
+        val finishEntity = world.getFirstStatefulEntityMatching(
+            FamilyConfiguration.allOf(
+                EntityFinishComponent::class
+            )
+        )
+        val addedCheckpoints = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(EntityCheckpointComponent::class)
+        )
+
+        val blockingEntities = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(EntityBlockingComponent::class)
+        )
+
+        val path = PathFinder.getUpdatablePath(
+            width,
+            height,
+            startEntity.toRectangleEntity(),
+            finishEntity.toRectangleEntity(),
+            blockingEntities.map { it.toRectangleEntity() },
+            addedCheckpoints.map { it.toRectangleEntity() }
+        )
+    }
 }

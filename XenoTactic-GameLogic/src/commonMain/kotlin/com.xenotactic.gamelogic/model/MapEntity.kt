@@ -117,6 +117,7 @@ sealed class MapEntity : IRectangleEntity {
     fun intersectsUnitBlock(unitX: Int, unitY: Int): Boolean {
         return intersectsUnitBlock(unitX.toGameUnit(), unitY.toGameUnit())
     }
+
     // Returns whether or not this entity intersects with a 1x1 block
     // at the given x, y position
     fun intersectsUnitBlock(unitX: GameUnit, unitY: GameUnit): Boolean {
@@ -239,7 +240,6 @@ sealed class MapEntity : IRectangleEntity {
         )
 
 
-
         // The ordinal sequence number (starts at 1).
         val ordinalSequenceNumber: Int
             get() = sequenceNumber + 1
@@ -342,6 +342,7 @@ sealed class MapEntity : IRectangleEntity {
         override val type: MapEntityType = MapEntityType.SMALL_BLOCKER
         override val friendlyName: String = "Small Blocker"
         override val isBlockingEntity: Boolean = true
+
         companion object {
             operator fun invoke(x: Int, y: Int) = SmallBlocker(x.toGameUnit(), y.toGameUnit())
         }
