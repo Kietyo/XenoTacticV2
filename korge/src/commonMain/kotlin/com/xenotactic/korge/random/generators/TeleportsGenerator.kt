@@ -36,6 +36,7 @@ class TeleportsGenerator(
 
         val teleportInSize = context.getSizeOfEntity(MapEntityType.TELEPORT_IN)
         val teleportOutSize = context.getSizeOfEntity(MapEntityType.TELEPORT_OUT)
+        var path: PathFindingResult
         for (i in 0 until numTeleports) {
             var teleportInPosition: GameUnitPoint
             do {
@@ -53,16 +54,45 @@ class TeleportsGenerator(
 
             var teleportOutPosition: GameUnitPoint
             val attemptedPlacementPoints = mutableSetOf<GameUnitPoint>()
+            var isFirstAttempt = true
             do {
-                context.incrementNumAttempts {
-                    """
-                        Failed to place TELEPORT OUT $i.
-                        stagedTeleportIn: $teleportInPosition
-                        Attempted points: $attemptedPlacementPoints
-                    """.trimIndent()
-                }
-                teleportOutPosition = context.getRandomPointWithinMapBounds(teleportOutSize)
+                do {
+                    if (!isFirstAttempt) {
+                        context.incrementNumAttempts {
+                            """
+                                Failed to place TELEPORT OUT $i.
+                                stagedTeleportIn: $teleportInPosition
+                                Attempted points: $attemptedPlacementPoints
+                            """.trimIndent()
+                        }
+                    }
+                    teleportOutPosition = context.getRandomPointWithinMapBounds(teleportOutSize)
+                    isFirstAttempt = false
+                } while (
+                    attemptedPlacementPoints.contains(teleportOutPosition)
+                )
                 attemptedPlacementPoints.add(teleportOutPosition)
+
+                path = PathFinder.getUpdatablePath(
+                    context.width,
+                    context.height,
+                    startEntity.toRectangleEntity(),
+                    finishEntity.toRectangleEntity(),
+                    blockingEntities = emptyList(),
+                    pathingEntities = addedCheckpoints.map { it.toRectangleEntity() },
+                    teleportPairs = addedTpIns.mapIndexed { ii, it ->
+                        TeleportPair(it.toRectangleEntity(), addedTpOuts[ii].toRectangleEntity(), ii)
+                    } + TeleportPair(
+                        RectangleEntity(
+                            teleportInPosition.x, teleportInPosition.y,
+                            teleportInSize.first, teleportInSize.second
+                        ),
+                        RectangleEntity(
+                            teleportOutPosition.x, teleportOutPosition.y,
+                            teleportOutSize.first, teleportOutSize.second
+                        ), i
+                    )
+                )
             } while (
                 intersectRectangles(
                     teleportInPosition, teleportInSize,
@@ -91,7 +121,7 @@ class TeleportsGenerator(
                             teleportOutSize.first, teleportOutSize.second
                         ), i
                     )
-                ) is PathFindingResult.Success
+                ) is PathFindingResult.Failure
             )
 
             val addedTeleportIn = context.world.addEntityReturnStateful {
