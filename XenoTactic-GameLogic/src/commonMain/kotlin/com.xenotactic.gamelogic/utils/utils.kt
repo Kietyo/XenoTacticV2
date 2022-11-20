@@ -39,6 +39,23 @@ fun intersectRectangles(
             (y1 + h1) > y2
 }
 
+fun isFullyCoveredBy(
+    x1: Double,
+    y1: Double,
+    w1: Double,
+    h1: Double,
+    x2: Double,
+    y2: Double,
+    w2: Double,
+    h2: Double,
+): Boolean {
+    if (w1 > w2) return false
+    if (h1 > h2) return false
+
+    return x1 >= x2 && (x1 + w1) <= (x2 + w2) &&
+            y1 >= y2 && (y1 + h1) <= (y2 + h2)
+}
+
 fun Point.verticalDirectionTo(v: Point, allowableDifference: Double = ALLOWABLE_DIRECTION_DIFF):
         VerticalDirection {
     if (abs(this.y - v.y) < allowableDifference) {

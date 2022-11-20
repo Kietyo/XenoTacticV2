@@ -55,11 +55,16 @@ interface IRectangleEntity {
     fun isFullyCoveredBy(
         other: IRectangleEntity
     ): Boolean {
-        if (this.width > other.width) return false
-        if (this.height > other.height) return false
-
-        return this.x >= other.x && this.right <= other.right &&
-                this.y >= other.y && this.top <= other.top
+        return com.xenotactic.gamelogic.utils.isFullyCoveredBy(
+            this.x.toDouble(),
+            this.y.toDouble(),
+            this.width.toDouble(),
+            this.height.toDouble(),
+            other.x.toDouble(),
+            other.y.toDouble(),
+            other.width.toDouble(),
+            other.height.toDouble(),
+        )
     }
 }
 

@@ -2,6 +2,7 @@ package com.xenotactic.korge.models
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -74,41 +75,52 @@ class GameWorld(
     val selectionComponentContainer = world.getComponentContainer<SelectedComponent>()
     val preSelectionComponentContainer = world.getComponentContainer<PreSelectionComponent>()
 
-    val startEntity get() = world.getFirstStatefulEntityMatching(
-        FamilyConfiguration.allOf(
-            EntityStartComponent::class
-        )
-    )
-    val finishEntity get() = world.getFirstStatefulEntityMatching(
-        FamilyConfiguration.allOf(
-            EntityFinishComponent::class
-        )
-    )
-
-    val addedCheckpoints get() = world.getStatefulEntitySnapshots(
-        FamilyConfiguration.allOf(
-            EntityCheckpointComponent::class
-        )
-    )
-
-    fun getPathFindingResult(width: GameUnit, height: GameUnit): PathFindingResult {
-        val startEntity = world.getFirstStatefulEntityMatching(
+    val startEntity
+        get() = world.getFirstStatefulEntityMatching(
             FamilyConfiguration.allOf(
                 EntityStartComponent::class
             )
         )
-        val finishEntity = world.getFirstStatefulEntityMatching(
+    val finishEntity
+        get() = world.getFirstStatefulEntityMatching(
             FamilyConfiguration.allOf(
                 EntityFinishComponent::class
             )
         )
-        val addedCheckpoints = world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(EntityCheckpointComponent::class)
+
+    val addedCheckpoints
+        get() = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(
+                EntityCheckpointComponent::class
+            )
         )
 
-        val blockingEntities = world.getStatefulEntitySnapshots(
+    val addedTeleportIns
+        get() = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(
+                EntityTeleportInComponent::class
+            )
+        )
+
+    val blockingEntities
+        get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(EntityBlockingComponent::class)
         )
+
+    val addedTeleportOuts
+        get() = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(
+                EntityTeleportOutComponent::class
+            )
+        )
+
+    fun getPathFindingResult(
+        width: GameUnit, height: GameUnit,
+        blockingEntities: List<IRectangleEntity> = this.blockingEntities.map { it.toRectangleEntity() }
+    ): PathFindingResult {
+        val startEntity = this.startEntity
+        val finishEntity = this.finishEntity
+        val addedCheckpoints = this.addedCheckpoints
 
         val sequenceNumToTeleportInEntities = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(EntityTeleportInComponent::class)
@@ -137,7 +149,7 @@ class GameWorld(
             height,
             startEntity.toRectangleEntity(),
             finishEntity.toRectangleEntity(),
-            blockingEntities.map { it.toRectangleEntity() },
+            blockingEntities,
             addedCheckpoints.sortedBy { it.get(EntityCheckpointComponent::class).sequenceNum }
                 .map { it.toRectangleEntity() },
             teleportPairs

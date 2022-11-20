@@ -6,6 +6,7 @@ import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.inBetween
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.intersectRectangles
@@ -46,6 +47,27 @@ fun StatefulEntity.intersectsEntity(position: GameUnitPoint, size: Pair<GameUnit
     )
 }
 
+fun StatefulEntity.isFullyCoveredBy(entities: Iterable<IRectangleEntity>): Boolean {
+    return entities.any {
+        this.isFullyCoveredBy(it)
+    }
+}
+
+fun StatefulEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
+    val thisPosition = get(BottomLeftPositionComponent::class)
+    val thisSize = get(SizeComponent::class)
+    return com.xenotactic.gamelogic.utils.isFullyCoveredBy(
+        thisPosition.x.toDouble(),
+        thisPosition.y.toDouble(),
+        thisSize.width.toDouble(),
+        thisSize.height.toDouble(),
+        other.x.toDouble(),
+        other.y.toDouble(),
+        other.width.toDouble(),
+        other.height.toDouble(),
+    )
+}
+
 fun intersectRectangles(thisPosition: GameUnitPoint, thisSize: Pair<GameUnit, GameUnit>,
                          otherPosition: GameUnitPoint, otherSize: Pair<GameUnit, GameUnit>
 ): Boolean {
@@ -60,6 +82,8 @@ fun intersectRectangles(thisPosition: GameUnitPoint, thisSize: Pair<GameUnit, Ga
         otherSize.second.toDouble()
     )
 }
+
+
 
 fun StatefulEntity.toRectangleEntity(): RectangleEntity {
     val thisPosition = get(BottomLeftPositionComponent::class)
