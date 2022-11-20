@@ -8,10 +8,10 @@ import com.soywiz.korma.geom.*
 import kotlin.test.*
 
 class MyTest : ViewsForTesting() {
-	@Test
-	fun assertionTest() {
-		assertEquals(1.5, 2.0)
-	}
+//	@Test
+//	fun assertionTest() {
+//		assertEquals(1.5, 2.0)
+//	}
 
 	@Test
 	fun test() = viewsTest {

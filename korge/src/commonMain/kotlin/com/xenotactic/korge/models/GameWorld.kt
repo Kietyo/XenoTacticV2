@@ -2,14 +2,15 @@ package com.xenotactic.korge.models
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.model.TeleportPair
+import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.*
 import com.xenotactic.korge.korge_utils.toRectangleEntity
 import pathing.PathFinder
 
 class GameWorld(
-    val width: GameUnit,
-    val height: GameUnit,
     val world: World = World()
 ) {
     val entityFamily = world.getOrCreateFamily(
@@ -73,7 +74,24 @@ class GameWorld(
     val selectionComponentContainer = world.getComponentContainer<SelectedComponent>()
     val preSelectionComponentContainer = world.getComponentContainer<PreSelectionComponent>()
 
-    fun getShortestPath() {
+    val startEntity get() = world.getFirstStatefulEntityMatching(
+        FamilyConfiguration.allOf(
+            EntityStartComponent::class
+        )
+    )
+    val finishEntity get() = world.getFirstStatefulEntityMatching(
+        FamilyConfiguration.allOf(
+            EntityFinishComponent::class
+        )
+    )
+
+    val addedCheckpoints get() = world.getStatefulEntitySnapshots(
+        FamilyConfiguration.allOf(
+            EntityCheckpointComponent::class
+        )
+    )
+
+    fun getPathFindingResult(width: GameUnit, height: GameUnit): PathFindingResult {
         val startEntity = world.getFirstStatefulEntityMatching(
             FamilyConfiguration.allOf(
                 EntityStartComponent::class
@@ -92,13 +110,37 @@ class GameWorld(
             FamilyConfiguration.allOf(EntityBlockingComponent::class)
         )
 
-        val path = PathFinder.getUpdatablePath(
+        val sequenceNumToTeleportInEntities = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(EntityTeleportInComponent::class)
+        ).associateBy({
+            it[EntityTeleportInComponent::class].sequenceNum
+        }) {
+            it
+        }
+        val sequenceNumToTeleportOutEntities = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(EntityTeleportOutComponent::class)
+        ).associateBy({
+            it[EntityTeleportOutComponent::class].sequenceNum
+        }) {
+            it
+        }
+        val teleportPairs = sequenceNumToTeleportInEntities.map {
+            TeleportPair(
+                it.value.toRectangleEntity(),
+                sequenceNumToTeleportOutEntities[it.key]!!.toRectangleEntity(),
+                it.key
+            )
+        }
+
+        return PathFinder.getUpdatablePath(
             width,
             height,
             startEntity.toRectangleEntity(),
             finishEntity.toRectangleEntity(),
             blockingEntities.map { it.toRectangleEntity() },
-            addedCheckpoints.map { it.toRectangleEntity() }
+            addedCheckpoints.sortedBy { it.get(EntityCheckpointComponent::class).sequenceNum }
+                .map { it.toRectangleEntity() },
+            teleportPairs
         )
     }
 }

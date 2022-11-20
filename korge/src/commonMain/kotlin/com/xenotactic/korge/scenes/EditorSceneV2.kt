@@ -25,8 +25,10 @@ class EditorSceneV2 : Scene() {
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
         val settingsContainer = SettingsContainer()
-        val engine = Engine(eventBus, GameWorld(gameWorld)).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, 10.toGameUnit(), 10.toGameUnit()))
+        val width = 10.toGameUnit()
+        val height = 10.toGameUnit()
+        val engine = Engine(eventBus, GameWorld(world = gameWorld)).apply {
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
             injections.setSingletonOrThrow(GameMapApi(this))
             injections.setSingletonOrThrow(settingsContainer)
         }

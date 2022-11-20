@@ -54,12 +54,14 @@ class PlayScene : Scene() {
         )
 
         println(randomMap)
+        val width = 30.toGameUnit()
+        val height = 20.toGameUnit()
 
         val world = World()
         val gameWorld = GameWorld(world)
         val settingsContainer = SettingsContainer()
         val engine = Engine(eventBus, gameWorld).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, 30.toGameUnit(), 20.toGameUnit()))
+            injections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
         }

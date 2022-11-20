@@ -139,10 +139,6 @@ sealed class MapEntity : IRectangleEntity {
     }
 
     fun intersectsEntity(other: MapEntity): Boolean {
-//        return this.x < other.rightX &&
-//                this.y < other.topY &&
-//                this.rightX > other.x &&
-//                this.topY > other.y
         return intersectRectangles(
             this.x.toDouble(),
             this.y.toDouble(),

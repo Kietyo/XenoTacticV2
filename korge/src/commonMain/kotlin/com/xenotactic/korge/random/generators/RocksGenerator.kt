@@ -1,6 +1,8 @@
 package com.xenotactic.korge.random.generators
 
 import com.xenotactic.ecs.StatefulEntity
+import com.xenotactic.gamelogic.pathing.PathFindingResult
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
 import pathing.PathFinder
@@ -8,60 +10,58 @@ import pathing.PathFinder
 class RocksGenerator(
     val numRocks: Int
 ) : IGenerator {
+    val ROCK_2X4_DIMENSIONS = 2.toGameUnit() to 4.toGameUnit()
+    val ROCK_4X2_DIMENSIONS = 4.toGameUnit() to 2.toGameUnit()
+
     override fun run(context: GenerationContext) {
-        var currentPath = PathFinder.getShortestPath(gameWorld)!!
-        var attemptNum = 0
-        val addedRocks = mutableListOf<StatefulEntity>()
-        for (i in 0 until config.rocks) {
-            var rock: MapEntity.Rock
-            var newRockList: List<MapEntity.Rock>
+        val width = context.width
+        val height = context.height
+        val startEntity = context.gameWorld.startEntity
+        val finishEntity = context.gameWorld.finishEntity
+        val addedCheckpoints = context.gameWorld.addedCheckpoints
 
-            // Keep generating candidates for the rock
-            do {
-                numTotalAttempts++
-                attemptNum++
-                //                if (attemptNum > 100) {
-                //                    println(
-                //                        """
-                //                        start: $start,
-                //                        finish: $finish,
-                //                        addedCheckPoints: $addedCheckPoints,
-                //                        addedTpOut: $addedTpOut,
-                //                        addedRocks: $addedRocks
-                //                    """.trimIndent()
-                //                    )
-                //                }
-                if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-                    return failure("Failed to create place ROCK $i.")
-                }
-                val rockType = if (random.nextBoolean()) MapEntity.ROCK_2X4 else MapEntity.ROCK_4X2
-                val (rockX, rockY) = getRandomPointWithinMapBounds(rockType)
-                rock = rockType.copy(x = rockX, y = rockY)
-                newRockList = addedRocks + rock
-                if (
-                    start.isFullyCoveredBy(newRockList) ||
-                    finish.isFullyCoveredBy(newRockList) ||
-                    addedCheckpoints.any { it.isFullyCoveredBy(newRockList) } ||
-                    // TODO: This is not enough, rocks still get placed on top of tp in/outs
-                    addedTpIns.any { it.isFullyCoveredBy(newRockList) } ||
-                    addedTpOuts.any { it.isFullyCoveredBy(newRockList) }
-                ) {
-                    continue
-                }
-
-                if (currentPath.intersectsRectangle(rock.getRectangle())
-                ) {
-                    val possibleNewPath = PathFinder.getShortestPathWithBlockingEntities(
-                        gameWorld,
-                        listOf(rock)
-                    ) ?: continue
-                    currentPath = possibleNewPath
-                }
-                break
-            } while (true)
-            addedRocks.add(rock)
-            gameWorld.placeEntity(rock)
+        var currentPath = context.gameWorld.getPathFindingResult(width, height).let {
+            require(it is PathFindingResult.Success)
+            it.gamePath.toPathSequence()
         }
+//        val addedRocks = mutableListOf<StatefulEntity>()
+//        for (i in 0 until numRocks) {
+//            var rock: MapEntity.Rock
+//            var newRockList: List<MapEntity.Rock>
+//
+//            // Keep generating candidates for the rock
+//            do {
+//                context.incrementNumAttempts {
+//                    "Failed to create place ROCK $i."
+//                }
+//                val rockDimensions = if (context.random.nextBoolean()) ROCK_2X4_DIMENSIONS else ROCK_4X2_DIMENSIONS
+//                val (rockX, rockY) = context.getRandomPointWithinMapBounds(rockDimensions)
+//                rock = rockDimensions.copy(x = rockX, y = rockY)
+//                newRockList = addedRocks + rock
+//                if (
+//                    startEntity.isFullyCoveredBy(newRockList) ||
+//                    finishEntity.isFullyCoveredBy(newRockList) ||
+//                    addedCheckpoints.any { it.isFullyCoveredBy(newRockList) } ||
+//                    // TODO: This is not enough, rocks still get placed on top of tp in/outs
+//                    addedTpIns.any { it.isFullyCoveredBy(newRockList) } ||
+//                    addedTpOuts.any { it.isFullyCoveredBy(newRockList) }
+//                ) {
+//                    continue
+//                }
+//
+//                if (currentPath.intersectsRectangle(rock.getRectangle())
+//                ) {
+//                    val possibleNewPath = PathFinder.getShortestPathWithBlockingEntities(
+//                        gameWorld,
+//                        listOf(rock)
+//                    ) ?: continue
+//                    currentPath = possibleNewPath
+//                }
+//                break
+//            } while (true)
+//            addedRocks.add(rock)
+//            gameWorld.placeEntity(rock)
+//        }
     }
 
 }

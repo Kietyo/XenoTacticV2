@@ -2,6 +2,7 @@ package com.xenotactic.korge.engine
 
 import com.xenotactic.ecs.Injections
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.models.GameWorld
 import kotlin.reflect.KClass

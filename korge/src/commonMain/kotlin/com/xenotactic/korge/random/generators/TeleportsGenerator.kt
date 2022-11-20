@@ -17,19 +17,9 @@ class TeleportsGenerator(
     val numTeleports: Int
 ) : IGenerator {
     override fun run(context: GenerationContext) {
-        val startEntity = context.world.getFirstStatefulEntityMatching(
-            FamilyConfiguration.allOf(
-                EntityStartComponent::class
-            )
-        )
-        val finishEntity = context.world.getFirstStatefulEntityMatching(
-            FamilyConfiguration.allOf(
-                EntityFinishComponent::class
-            )
-        )
-        val addedCheckpoints = context.world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(EntityCheckpointComponent::class)
-        )
+        val startEntity = context.gameWorld.startEntity
+        val finishEntity = context.gameWorld.finishEntity
+        val addedCheckpoints = context.gameWorld.addedCheckpoints
 
         val addedTpIns = mutableListOf<StatefulEntity>()
         val addedTpOuts = mutableListOf<StatefulEntity>()

@@ -100,11 +100,10 @@ sealed class MapGeneratorResultV2 {
     ) : MapGeneratorResultV2()
 }
 
-class RandomMapGeneratorV2 {
+class RandomMapGeneratorV2 private constructor(private val config: MapGeneratorConfigurationV2) {
     private val gameWorld: GameWorld = GameWorld()
-    private val random: Random
-    private val config: MapGeneratorConfigurationV2
-    private val context: GenerationContext
+    private val random: Random = Random(config.seed)
+    private val context: GenerationContext = GenerationContext(config.width, config.height, gameWorld, random, config.failureAfterTotalAttempts)
 
     companion object {
         /**
@@ -119,12 +118,6 @@ class RandomMapGeneratorV2 {
         }
 
         val logger = Logger<RandomMapGeneratorV2>()
-    }
-
-    private constructor(config: MapGeneratorConfigurationV2) {
-        this.config = config
-        this.random = Random(config.seed)
-        context = GenerationContext(config.width, config.height, gameWorld, random, config.failureAfterTotalAttempts)
     }
 
     private fun failure(errorString: String): MapGeneratorResultV2.Failure {

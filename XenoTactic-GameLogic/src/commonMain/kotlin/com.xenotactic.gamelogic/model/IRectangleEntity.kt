@@ -61,6 +61,12 @@ interface IRectangleEntity {
         }
         return false
     }
+
+//    fun isFullyCoveredBy(
+//        entity: IRectangleEntity
+//    ): Boolean {
+//        return
+//    }
 }
 
 data class RectangleEntity(

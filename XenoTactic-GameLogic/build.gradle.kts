@@ -1,20 +1,3 @@
-//import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-//apply<KorgeGradlePlugin>()
-
-//apply(plugin = "kotlin")
-
-//val main_class = "CoolMainKt"
-//
-//project.setProperty("mainClassName", main_class)
-
-//repositories {
-//    mavenLocal()
-//    mavenCentral()
-//    google()
-//    maven { url = uri("https://plugins.gradle.org/m2/") }
-//}
-
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")

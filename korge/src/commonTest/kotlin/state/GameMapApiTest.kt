@@ -20,6 +20,8 @@ import kotlin.test.Test
 internal class GameMapApiTest {
     @Test
     fun regressionTest1() = suspendTest {
+        val width = 30.toGameUnit()
+        val height = 11.toGameUnit()
         val gameWorld = GameWorld()
         val eventBus = EventBus(this)
         val engine = Engine(eventBus, gameWorld)
@@ -27,7 +29,7 @@ internal class GameMapApiTest {
         engine.injections.setSingletonOrThrow(
             GameMapDimensionsState(
                 engine,
-                30.toGameUnit(), 11.toGameUnit()
+                width, height
             )
         )
         val gameMapApi = GameMapApi(engine)
