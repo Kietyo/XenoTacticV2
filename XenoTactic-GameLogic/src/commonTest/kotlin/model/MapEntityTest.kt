@@ -7,46 +7,46 @@ import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.utils.measureTime
 
 internal class MapEntityTest {
-    @Test
-    @Ignore
-    fun intersectsUnitBlock_profile() {
-        val rock = MapEntity.Rock(1,1, 2, 2)
-        var timeA = 0L
-        var timeB = 0L
-        repeat (1000000) {
-            for (i in 0..4) {
-                for (j in 0..4) {
+//    @Test
+////    @Ignore
+//    fun intersectsUnitBlock_profile() {
+//        val rock = MapEntity.Rock(1,1, 2, 2)
+//        var timeA = 0L
+//        var timeB = 0L
+//        repeat (1000000) {
+//            for (i in 0..4) {
+//                for (j in 0..4) {
+////                    run {
+////                        val resultA = measureTime(printMessage = false) {
+////                            rock.intersectsUnitBlock(i, j)
+////                        }
+////                        val resultB = measureTime(printMessage = false) {
+////                            rock.intersectsUnitBlock2(i, j)
+////                        }
+////                        assertEquals(resultA.second, resultB.second)
+////                        timeA += resultA.first
+////                        timeB += resultB.first
+////                    }
 //                    run {
-//                        val resultA = measureTime(printMessage = false) {
-//                            rock.intersectsUnitBlock(i, j)
-//                        }
 //                        val resultB = measureTime(printMessage = false) {
 //                            rock.intersectsUnitBlock2(i, j)
+////                            false
+//                        }
+//                        val resultA = measureTime(printMessage = false) {
+//                            rock.intersectsUnitBlock(i, j)
 //                        }
 //                        assertEquals(resultA.second, resultB.second)
 //                        timeA += resultA.first
 //                        timeB += resultB.first
 //                    }
-                    run {
-                        val resultB = measureTime(printMessage = false) {
-//                            rock.intersectsUnitBlock2(i, j)
-                            false
-                        }
-                        val resultA = measureTime(printMessage = false) {
-                            rock.intersectsUnitBlock(i, j)
-                        }
-                        assertEquals(resultA.second, resultB.second)
-                        timeA += resultA.first
-                        timeB += resultB.first
-                    }
-                }
-            }
-        }
-        println("""
-            timeA: $timeA,
-            timeB: $timeB
-        """.trimIndent())
-    }
+//                }
+//            }
+//        }
+//        println("""
+//            timeA: $timeA,
+//            timeB: $timeB
+//        """.trimIndent())
+//    }
 
     @Test
     fun unitSquarePoints() {

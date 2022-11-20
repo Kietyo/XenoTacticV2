@@ -133,9 +133,17 @@ sealed class MapEntity : IRectangleEntity {
                 }
     }
 
-    // Returns whether or not this entity intersects with the provided entity.
-    fun intersectsEntity2(entity: MapEntity): Boolean {
-        return this.blockGameUnitPoints.intersect(entity.blockGameUnitPoints).isNotEmpty()
+    fun intersectsUnitBlock2(unitX: Int, unitY: Int): Boolean {
+        return intersectRectangles(
+            this.x.toDouble(),
+            this.y.toDouble(),
+            this.width.toDouble(),
+            this.height.toDouble(),
+            unitX.toDouble(),
+            unitY.toDouble(),
+            1.0,
+            1.0,
+        )
     }
 
     fun intersectsEntity(other: MapEntity): Boolean {

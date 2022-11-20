@@ -11,6 +11,9 @@ interface IRectangleEntity {
     val width: GameUnit
     val height: GameUnit
 
+    val right get() = x + width
+    val top get() = y + height
+
     val blockGameUnitPoints: Set<GameUnitPoint>
         get() {
             val gameUnitPoints = mutableSetOf<GameUnitPoint>()
@@ -42,31 +45,22 @@ interface IRectangleEntity {
     }
 
     fun isFullyCoveredBy(
-        vararg entities: IRectangleEntity
+        entities: Iterable<IRectangleEntity>
     ): Boolean {
-        return isFullyCoveredBy(entities.asIterable())
+        return entities.any {
+            isFullyCoveredBy(it)
+        }
     }
 
     fun isFullyCoveredBy(
-        entities: Iterable<IRectangleEntity>
+        other: IRectangleEntity
     ): Boolean {
-        if (entities.count() == 1) {
-            return blockGameUnitPoints.intersect(entities.first().blockGameUnitPoints).size == blockGameUnitPoints.size
-        }
-        val visibleBlocks = this.blockGameUnitPoints.toMutableSet()
-        for (mapEntity in entities) {
-            val intersect = visibleBlocks.intersect(mapEntity.blockGameUnitPoints)
-            visibleBlocks.removeAll(intersect)
-            if (visibleBlocks.isEmpty()) return true
-        }
-        return false
-    }
+        if (this.width > other.width) return false
+        if (this.height > other.height) return false
 
-//    fun isFullyCoveredBy(
-//        entity: IRectangleEntity
-//    ): Boolean {
-//        return
-//    }
+        return this.x >= other.x && this.right <= other.right &&
+                this.y >= other.y && this.top <= other.top
+    }
 }
 
 data class RectangleEntity(
