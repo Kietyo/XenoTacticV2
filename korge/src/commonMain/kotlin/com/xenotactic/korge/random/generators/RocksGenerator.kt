@@ -17,8 +17,8 @@ import pathing.PathFinder
 class RocksGenerator(
     val numRocks: Int
 ) : IGenerator {
-    val ROCK_2X4_DIMENSIONS = 2.toGameUnit() to 4.toGameUnit()
-    val ROCK_4X2_DIMENSIONS = 4.toGameUnit() to 2.toGameUnit()
+    private val ROCK_2X4_DIMENSIONS = 2.toGameUnit() to 4.toGameUnit()
+    private val ROCK_4X2_DIMENSIONS = 4.toGameUnit() to 2.toGameUnit()
 
     override fun run(context: GenerationContext) {
         val width = context.width

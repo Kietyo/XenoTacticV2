@@ -7,6 +7,7 @@ data class SizeComponent(
     val width: GameUnit,
     val height: GameUnit
 ) {
+    constructor(width: Int, height: Int): this(width.toGameUnit(), height.toGameUnit())
     fun toRadius(): GameUnit {
         require(width == height)
         return width / 2.0

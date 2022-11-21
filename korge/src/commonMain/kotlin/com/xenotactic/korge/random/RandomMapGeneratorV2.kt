@@ -73,6 +73,13 @@ data class GenerationContext(
             random.nextInt(0, height.toInt() - entityHeight.toInt() + 1)
         )
     }
+
+    fun getRandomPointPartiallyInMap(entityWidth: Int, entityHeight: Int): GameUnitPoint {
+        return GameUnitPoint(
+            random.nextInt(-entityWidth + 1, width.toInt() - 1),
+            random.nextInt(-entityHeight + 1, height.toInt() - 1)
+        )
+    }
 }
 
 interface IGenerator {

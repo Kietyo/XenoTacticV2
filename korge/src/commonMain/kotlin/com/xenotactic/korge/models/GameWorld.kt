@@ -102,16 +102,30 @@ class GameWorld(
             )
         )
 
-    val blockingEntities
-        get() = world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(EntityBlockingComponent::class)
-        )
-
     val addedTeleportOuts
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
                 EntityTeleportOutComponent::class
             )
+        )
+
+    val rocks
+        get() = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(
+                EntityRockComponent::class
+            )
+        )
+
+    val speedAreas
+        get() = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(
+                EntitySpeedAreaComponent::class
+            )
+        )
+
+    val blockingEntities
+        get() = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(EntityBlockingComponent::class)
         )
 
     fun getPathFindingResult(
