@@ -39,6 +39,7 @@ sealed class MapGeneratorResult {
     ) : MapGeneratorResult()
 }
 
+@Deprecated("Please use RandomMapGeneratorV2 instead.")
 class RandomMapGenerator {
     private val map: GameMap
     private val random: Random

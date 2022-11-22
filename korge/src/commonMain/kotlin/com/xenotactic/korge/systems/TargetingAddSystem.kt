@@ -16,7 +16,7 @@ class TargetingAddSystem(
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            TowerComponent::class, BottomLeftPositionComponent::class, SizeComponent::class,
+            EntityTowerComponent::class, BottomLeftPositionComponent::class, SizeComponent::class,
             RangeComponent::class
         ),
         noneOfComponents = setOf(TargetingComponent::class)

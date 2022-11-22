@@ -8,19 +8,15 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 // x increases from left to right
 // y increases from bottom to top
 data class GRectInt(
-    val x: GameUnit,
-    val y: GameUnit,
-    val width: GameUnit,
-    val height: GameUnit
-) {
+    override val x: GameUnit,
+    override val y: GameUnit,
+    override val width: GameUnit,
+    override val height: GameUnit
+): IRectangleEntity {
     val left: GameUnit
         get() = x
-    val right: GameUnit
-        get() = x + width
     val bottom: GameUnit
         get() = y
-    val top: GameUnit
-        get() = y + height
 
     companion object {
         operator fun invoke(x: Int, y: Int, width: Int, height: Int) = GRectInt(

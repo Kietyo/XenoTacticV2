@@ -5,6 +5,7 @@ import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.components.EntityFinishComponent
 import com.xenotactic.korge.components.EntityStartComponent
+import com.xenotactic.korge.components.EntityTypeComponent
 import com.xenotactic.korge.korge_utils.intersectsEntity
 import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
 import com.xenotactic.korge.korge_utils.toSizeComponent
@@ -31,6 +32,7 @@ object FinishGenerator : IGenerator {
             addComponentOrThrow(size.toSizeComponent())
             addComponentOrThrow(position.toBottomLeftPositionComponent())
             addComponentOrThrow(EntityFinishComponent)
+            addComponentOrThrow(EntityTypeComponent(MapEntityType.FINISH))
         }
     }
 }

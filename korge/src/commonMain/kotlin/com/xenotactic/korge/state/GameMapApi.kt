@@ -46,6 +46,17 @@ class GameMapApi(
             minOf(numTpIn, numTpOut)
         }
 
+    fun placeEntitiesV2(otherGameWorld: GameWorld) {
+        val statefulEntity = otherGameWorld.world.getStatefulEntities()
+        for (entity in statefulEntity) {
+            gameWorld.world.addEntity {
+                entity.allComponents.forEach {
+                    addComponentOrThrow(it!!)
+                }
+            }
+        }
+
+    }
 
     fun placeEntities(vararg entities: MapEntity) {
         return placeEntities(entities.asIterable())
@@ -124,7 +135,7 @@ class GameMapApi(
                     }
 
                     is MapEntity.Tower -> {
-                        addComponentOrThrow(TowerComponent)
+                        addComponentOrThrow(EntityTowerComponent)
                         addComponentOrThrow(RangeComponent(7.toGameUnit()))
                         addComponentOrThrow(ReloadTimeComponent(1000.0))
                         addComponentOrThrow(ReloadDowntimeComponent(0.0))

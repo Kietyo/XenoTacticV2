@@ -2,13 +2,11 @@ package com.xenotactic.korge.random.generators
 
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.components.BottomLeftPositionComponent
-import com.xenotactic.korge.components.EntityBlockingComponent
-import com.xenotactic.korge.components.EntityRockComponent
-import com.xenotactic.korge.components.SizeComponent
+import com.xenotactic.korge.components.*
 import com.xenotactic.korge.korge_utils.isFullyCoveredBy
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
@@ -77,6 +75,7 @@ class RocksGenerator(
                 addComponentOrThrow(rock.getBottomLeftPositionComponent())
                 addComponentOrThrow(EntityRockComponent)
                 addComponentOrThrow(EntityBlockingComponent)
+                addComponentOrThrow(EntityTypeComponent(MapEntityType.ROCK))
             }
         }
     }

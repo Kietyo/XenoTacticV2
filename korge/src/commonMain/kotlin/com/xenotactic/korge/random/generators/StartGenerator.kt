@@ -2,6 +2,7 @@ package com.xenotactic.korge.random.generators
 
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.components.EntityStartComponent
+import com.xenotactic.korge.components.EntityTypeComponent
 import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
 import com.xenotactic.korge.korge_utils.toSizeComponent
 import com.xenotactic.korge.random.GenerationContext
@@ -16,6 +17,7 @@ object StartGenerator : IGenerator {
             addComponentOrThrow(size.toSizeComponent())
             addComponentOrThrow(point.toBottomLeftPositionComponent())
             addComponentOrThrow(EntityStartComponent)
+            addComponentOrThrow(EntityTypeComponent(MapEntityType.START))
         }
     }
 }

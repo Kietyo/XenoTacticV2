@@ -96,6 +96,7 @@ class TeleportsGenerator(
                 addComponentOrThrow(teleportInSize.toSizeComponent())
                 addComponentOrThrow(teleportInPosition.toBottomLeftPositionComponent())
                 addComponentOrThrow(EntityTeleportInComponent(i))
+                addComponentOrThrow(EntityTypeComponent(MapEntityType.TELEPORT_IN))
             }
             addedTpIns.add(addedTeleportIn)
 
@@ -103,6 +104,7 @@ class TeleportsGenerator(
                 addComponentOrThrow(teleportOutSize.toSizeComponent())
                 addComponentOrThrow(teleportOutPosition.toBottomLeftPositionComponent())
                 addComponentOrThrow(EntityTeleportOutComponent(i))
+                addComponentOrThrow(EntityTypeComponent(MapEntityType.TELEPORT_OUT))
             }
             addedTpOuts.add(addedTeleportOut)
         }

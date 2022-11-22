@@ -26,6 +26,9 @@ import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.models.SettingsContainer
+import com.xenotactic.korge.random.MapGeneratorConfigurationV2
+import com.xenotactic.korge.random.RandomMapGeneratorV2
+import com.xenotactic.korge.random.generators.*
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
@@ -46,16 +49,33 @@ class PlayScene : Scene() {
 //        val seed = 1338L
         val seed = 1339L
 
+        val width = 30.toGameUnit()
+        val height = 20.toGameUnit()
+
         val randomMap = RandomMapGenerator.generate(
             MapGeneratorConfiguration(
                 seed,
-                30.toGameUnit(), 20.toGameUnit(), 2, 10, 2, 5
+                width, height, 2, 10, 2, 5
+            )
+        )
+
+        val randomMap2 = RandomMapGeneratorV2.generate(
+            MapGeneratorConfigurationV2(
+                seed,
+                listOf(
+                    StartGenerator,
+                    FinishGenerator,
+                    CheckpointsGenerator(2),
+                    RocksGenerator(10),
+                    TeleportsGenerator(2),
+                    SpeedAreaGenerator(5)
+                ),
+                width, height
             )
         )
 
         println(randomMap)
-        val width = 30.toGameUnit()
-        val height = 20.toGameUnit()
+
 
         val world = World()
         val gameWorld = GameWorld(world)
@@ -83,7 +103,6 @@ class PlayScene : Scene() {
 
         val uiMapEventListener = UIMapEventListeners(engine)
 
-
         world.apply {
             injections = engine.injections
             addFamilyListener(SetInitialPositionFamilyListener(this))
@@ -108,7 +127,8 @@ class PlayScene : Scene() {
             addSystem(TowerAttackSystem(world))
         }
 
-        gameMapApi.placeEntities(randomMap.map.getAllEntities())
+//        gameMapApi.placeEntities(randomMap.map.getAllEntities())
+        gameMapApi.placeEntitiesV2(randomMap2.gameWorld)
 //        gameMapApi.placeEntities(
 //            MapEntity.Start(22, 0),
 //            MapEntity.Finish(3, 2),
