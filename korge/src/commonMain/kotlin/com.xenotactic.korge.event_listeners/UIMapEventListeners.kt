@@ -12,9 +12,9 @@ import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.components.*
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.korge_utils.getText
 import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.korge.ui.UIMapV2
 
@@ -48,14 +48,14 @@ class UIMapEventListeners(
 
     private fun handleAddedUIEntityEvent(entityId: EntityId) {
         world.modifyEntity(entityId) {
-            val mapEntityComponent = gameWorld.mapEntityComponent.getComponent(entityId)
+            val entityTypeComponent = gameWorld.entityTypeComponents.getComponent(entityId)
             val sizeComponent = gameWorld.sizeComponent.getComponent(entityId)
             val uiEntityContainer = Container()
 
             val borderSize = uiMap.borderSize
             val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
 
-            when (mapEntityComponent.entityData.toMapEntityType()) {
+            when (entityTypeComponent.type) {
                 MapEntityType.CHECKPOINT -> {
                     Circle((worldWidth / 2).value, Colors.MAROON).addTo(uiEntityContainer)
                 }
@@ -112,7 +112,7 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.SPEED_AREA -> {
-                    val speedEffect = (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect
+                    val speedEffect = world[entityId, EntitySpeedAreaComponent::class].speedEffect
                     val speedAreaColor = com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil(
                         speedEffect,
                         slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
@@ -159,18 +159,17 @@ class UIMapEventListeners(
 //            }
 
             uiEntityContainer.apply {
-                when (mapEntityComponent.entityData) {
-                    is MapEntityData.SpeedArea -> addTo(uiMap.speedAreaLayer)
-                    is MapEntityData.Checkpoint,
-                    MapEntityData.Finish,
-                    MapEntityData.SmallBlocker,
-                    MapEntityData.Start,
-                    is MapEntityData.TeleportIn,
-                    is MapEntityData.TeleportOut,
-                    MapEntityData.Tower,
-                    MapEntityData.Rock -> addTo(uiMap.entityLayer)
-
-                    MapEntityData.Monster -> addTo(uiMap.monsterLayer)
+                when (entityTypeComponent.type) {
+                    MapEntityType.START,
+                    MapEntityType.FINISH,
+                    MapEntityType.CHECKPOINT,
+                    MapEntityType.ROCK,
+                    MapEntityType.TOWER,
+                    MapEntityType.TELEPORT_IN,
+                    MapEntityType.TELEPORT_OUT,
+                    MapEntityType.SMALL_BLOCKER -> addTo(uiMap.entityLayer)
+                    MapEntityType.SPEED_AREA -> addTo(uiMap.speedAreaLayer)
+                    MapEntityType.MONSTER -> addTo(uiMap.monsterLayer)
                 }
             }
 
@@ -179,7 +178,7 @@ class UIMapEventListeners(
             addComponentOrThrow(UIEntityViewComponent(uiEntityContainer))
             addComponentOrThrow(UIEntityContainerComponent(uiEntityContainer))
 
-            val text = mapEntityComponent.entityData.getText()
+            val text = entityTypeComponent.type.getText(entityId, world)
             if (text != null) {
                 val textView = makeEntityLabelText(text).apply {
                     addTo(uiEntityContainer)

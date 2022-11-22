@@ -49,13 +49,14 @@ class GameMapApi(
     fun placeEntitiesV2(otherGameWorld: GameWorld) {
         val statefulEntity = otherGameWorld.world.getStatefulEntities()
         for (entity in statefulEntity) {
-            gameWorld.world.addEntity {
+            val entityId = gameWorld.world.addEntity {
                 entity.allComponents.forEach {
                     addComponentOrThrow(it!!)
                 }
             }
+            engine.eventBus.send(AddedUIEntityEvent(entityId))
         }
-
+        updateShortestPath()
     }
 
     fun placeEntities(vararg entities: MapEntity) {

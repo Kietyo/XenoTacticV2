@@ -1,5 +1,7 @@
 package com.xenotactic.gamelogic.model
 
+import com.xenotactic.ecs.EntityId
+import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.utils.toGameUnit
@@ -75,6 +77,7 @@ enum class MapEntityType {
         }
     }
 }
+
 
 sealed class MapEntity : IRectangleEntity {
     abstract val type: MapEntityType

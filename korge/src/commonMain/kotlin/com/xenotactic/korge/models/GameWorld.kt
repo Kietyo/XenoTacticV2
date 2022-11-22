@@ -66,6 +66,7 @@ class GameWorld(
         world.getComponentContainer<BottomLeftPositionComponent>()
     val sizeComponent = world.getComponentContainer<SizeComponent>()
     val mapEntityComponent = world.getComponentContainer<MapEntityComponent>()
+    val entityTypeComponents = world.getComponentContainer<EntityTypeComponent>()
     val uiEntityViewComponentContainer =
         world.getComponentContainer<UIEntityViewComponent>()
     val uiMapEntityComponentContainer =
