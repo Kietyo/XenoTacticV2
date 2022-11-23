@@ -1,17 +1,13 @@
 package com.xenotactic.korge.random
 
 import com.soywiz.klogger.Logger
-import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.*
 import pathing.AStarSearcher
 import com.xenotactic.gamelogic.pathing.SearcherInterface
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.components.BottomLeftPositionComponent
-import com.xenotactic.korge.components.SizeComponent
 import com.xenotactic.korge.models.GameWorld
 import kotlin.random.Random
 
@@ -41,16 +37,16 @@ data class GenerationContext(
     var numTotalAttempts = 0
         private set
 
-    fun getSizeOfEntity(entityType: MapEntityType): Pair<GameUnit, GameUnit> {
+    fun getSizeOfEntity(entityType: MapEntityType): GameUnitTuple {
         return when (entityType) {
-            MapEntityType.START -> 2.toGameUnit() to 2.toGameUnit()
-            MapEntityType.FINISH -> 2.toGameUnit() to 2.toGameUnit()
-            MapEntityType.CHECKPOINT -> 2.toGameUnit() to 2.toGameUnit()
+            MapEntityType.START -> GameUnitTuple(2, 2)
+            MapEntityType.FINISH -> GameUnitTuple(2, 2)
+            MapEntityType.CHECKPOINT -> GameUnitTuple(2, 2)
             MapEntityType.ROCK -> TODO()
-            MapEntityType.TOWER -> 2.toGameUnit() to 2.toGameUnit()
-            MapEntityType.TELEPORT_IN -> 2.toGameUnit() to 2.toGameUnit()
-            MapEntityType.TELEPORT_OUT -> 2.toGameUnit() to 2.toGameUnit()
-            MapEntityType.SMALL_BLOCKER -> 1.toGameUnit() to 1.toGameUnit()
+            MapEntityType.TOWER -> GameUnitTuple(2, 2)
+            MapEntityType.TELEPORT_IN -> GameUnitTuple(2, 2)
+            MapEntityType.TELEPORT_OUT -> GameUnitTuple(2, 2)
+            MapEntityType.SMALL_BLOCKER -> GameUnitTuple(1, 1)
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
         }
@@ -63,21 +59,21 @@ data class GenerationContext(
         }
     }
 
-    fun getRandomPointWithinMapBounds(entitySize: Pair<GameUnit, GameUnit>): GameUnitPoint {
+    fun getRandomPointWithinMapBounds(entitySize: GameUnitTuple): GameUnitTuple {
         return getRandomPointWithinMapBounds(entitySize.first, entitySize.second)
     }
 
-    private fun getRandomPointWithinMapBounds(entityWidth: GameUnit, entityHeight: GameUnit): GameUnitPoint {
-        return GameUnitPoint(
+    private fun getRandomPointWithinMapBounds(entityWidth: GameUnit, entityHeight: GameUnit): GameUnitTuple {
+        return GameUnitTuple(
             random.nextInt(0, width.toInt() - entityWidth.toInt() + 1),
             random.nextInt(0, height.toInt() - entityHeight.toInt() + 1)
         )
     }
 
-    fun getRandomPointPartiallyInMap(entityWidth: Int, entityHeight: Int): GameUnitPoint {
-        return GameUnitPoint(
-            random.nextInt(-entityWidth + 1, width.toInt() - 1),
-            random.nextInt(-entityHeight + 1, height.toInt() - 1)
+    fun getRandomPointPartiallyInMap(entityWidth: GameUnit, entityHeight: GameUnit): GameUnitTuple {
+        return GameUnitTuple(
+            random.nextInt(-entityWidth.toInt() + 1, width.toInt() - 1),
+            random.nextInt(-entityHeight.toInt() + 1, height.toInt() - 1)
         )
     }
 }

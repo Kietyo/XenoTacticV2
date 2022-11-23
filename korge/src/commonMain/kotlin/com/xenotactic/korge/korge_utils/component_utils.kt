@@ -5,7 +5,7 @@ import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.inBetween
 import com.xenotactic.ecs.StatefulEntity
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -17,22 +17,22 @@ import com.xenotactic.korge.components.SizeComponent
 fun getCenterPoint(
     bottomLeftPositionComponent: BottomLeftPositionComponent,
     sizeComponent: SizeComponent
-): GameUnitPoint {
-    return GameUnitPoint(
+): GameUnitTuple {
+    return GameUnitTuple(
         bottomLeftPositionComponent.x + sizeComponent.width / 2.0,
         bottomLeftPositionComponent.y + sizeComponent.height / 2.0
     )
 }
 
-fun GameUnitPoint.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
+fun GameUnitTuple.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
     return BottomLeftPositionComponent(x, y)
 }
 
-fun Pair<GameUnit, GameUnit>.toSizeComponent(): SizeComponent {
+fun GameUnitTuple.toSizeComponent(): SizeComponent {
     return SizeComponent(first, second)
 }
 
-fun StatefulEntity.intersectsEntity(position: GameUnitPoint, size: Pair<GameUnit, GameUnit>): Boolean {
+fun StatefulEntity.intersectsEntity(position: GameUnitTuple, size: GameUnitTuple): Boolean {
     val thisPosition = get(BottomLeftPositionComponent::class)
     val thisSize = get(SizeComponent::class)
     return intersectRectangles(
@@ -68,8 +68,8 @@ fun StatefulEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
     )
 }
 
-fun intersectRectangles(thisPosition: GameUnitPoint, thisSize: Pair<GameUnit, GameUnit>,
-                         otherPosition: GameUnitPoint, otherSize: Pair<GameUnit, GameUnit>
+fun intersectRectangles(thisPosition: GameUnitTuple, thisSize: GameUnitTuple,
+                        otherPosition: GameUnitTuple, otherSize: GameUnitTuple
 ): Boolean {
     return intersectRectangles(
         thisPosition.x.toDouble(),
@@ -120,4 +120,12 @@ fun getDirection8(angle: Angle): EightDirection {
         angle.inBetween(it.closedRange)
     }
     return matcher.direction
+}
+
+fun IRectangleEntity.getBottomLeftPositionComponent(): BottomLeftPositionComponent {
+    return BottomLeftPositionComponent(x, y)
+}
+
+fun IRectangleEntity.getSizeComponent(): SizeComponent {
+    return SizeComponent(width, height)
 }

@@ -2,7 +2,6 @@ package model
 
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.GameUnitPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.Path

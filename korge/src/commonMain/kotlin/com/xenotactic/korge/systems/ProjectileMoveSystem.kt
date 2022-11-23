@@ -3,7 +3,7 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.korge.components.*
 import pathing.SegmentTraversal
@@ -28,7 +28,7 @@ class ProjectileMoveSystem(val world: World) : System() {
 
             val segmentTraversal = SegmentTraversal(
                 Segment(
-                    GameUnitPoint(mutableCenterPositionComponent.x, mutableCenterPositionComponent.y),
+                    GameUnitTuple(mutableCenterPositionComponent.x, mutableCenterPositionComponent.y),
                     monsterCenterPoint
                 )
             )

@@ -2,7 +2,7 @@ package pathing
 
 import com.soywiz.korio.lang.assert
 import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.test_utils.assertDoubleEquals
 import com.xenotactic.gamelogic.test_utils.assertPointEquals
@@ -122,9 +122,9 @@ internal class PathTraversalTest {
 
     @Test
     fun traverse_pathWith100Segments() {
-        val vectorList = mutableListOf<GameUnitPoint>()
+        val vectorList = mutableListOf<GameUnitTuple>()
         for (i in 0..100) {
-            vectorList.add(GameUnitPoint(i.toDouble(), 0.0))
+            vectorList.add(GameUnitTuple(i.toDouble(), 0.0))
         }
 
         val path = Path(vectorList.toList())

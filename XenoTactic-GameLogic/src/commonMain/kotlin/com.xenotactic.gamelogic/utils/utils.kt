@@ -5,7 +5,7 @@ import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.GRectInt
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
 import com.xenotactic.gamelogic.pathing.VerticalDirection
@@ -16,7 +16,7 @@ import kotlin.time.measureTimedValue
 
 const val LINE_INTERSECTION_DIFF_THRESHOLD = 0.01
 
-infix fun Int.to(that: Int): GameUnitPoint = GameUnitPoint(this, that)
+infix fun Int.to(that: Int): GameUnitTuple = GameUnitTuple(this, that)
 
 fun abs(f1: Float): Float {
     return if (f1 < 0) -f1 else f1
@@ -108,7 +108,7 @@ fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: GameUnit,
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, gameUnitPoint: GameUnitPoint, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
+    gridSize: Double, gameUnitPoint: GameUnitTuple, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ): Pair<WorldUnit, WorldUnit> =
     toWorldCoordinates(
         gridSize,

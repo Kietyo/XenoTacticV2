@@ -1,11 +1,13 @@
 package com.xenotactic.korge.random.generators
 
 import com.xenotactic.ecs.FamilyConfiguration
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.components.EntityFinishComponent
 import com.xenotactic.korge.components.EntityStartComponent
 import com.xenotactic.korge.components.EntityTypeComponent
+import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.korge.korge_utils.intersectsEntity
 import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
 import com.xenotactic.korge.korge_utils.toSizeComponent
@@ -20,7 +22,7 @@ object FinishGenerator : IGenerator {
             )
         )
         val size = context.getSizeOfEntity(MapEntityType.FINISH)
-        var position: GameUnitPoint
+        var position: GameUnitTuple
         do {
             context.incrementNumAttempts {
                 "Failed to create FINISH entity in a spot that didn't intersect with START."
@@ -29,10 +31,7 @@ object FinishGenerator : IGenerator {
         } while (startEntity.intersectsEntity(position, size))
 
         context.world.addEntity {
-            addComponentOrThrow(size.toSizeComponent())
-            addComponentOrThrow(position.toBottomLeftPositionComponent())
-            addComponentOrThrow(EntityFinishComponent)
-            addComponentOrThrow(EntityTypeComponent(MapEntityType.FINISH))
+            addFromStagingEntity(StagingEntityUtils.createFinish(position, size))
         }
     }
 }

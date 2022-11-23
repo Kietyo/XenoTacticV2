@@ -1,8 +1,7 @@
 package com.xenotactic.korge.random.generators
 
-import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.StatefulEntity
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
@@ -27,7 +26,7 @@ class TeleportsGenerator(
         val teleportInSize = context.getSizeOfEntity(MapEntityType.TELEPORT_IN)
         val teleportOutSize = context.getSizeOfEntity(MapEntityType.TELEPORT_OUT)
         for (i in 0 until numTeleports) {
-            var teleportInPosition: GameUnitPoint
+            var teleportInPosition: GameUnitTuple
             do {
                 context.incrementNumAttempts {
                     "Failed to create place TELEPORT IN $i."
@@ -41,8 +40,8 @@ class TeleportsGenerator(
                 addedTpOuts.any { it.intersectsEntity(teleportInPosition, teleportInSize) }
             )
 
-            var teleportOutPosition: GameUnitPoint
-            val attemptedPlacementPoints = mutableSetOf<GameUnitPoint>()
+            var teleportOutPosition: GameUnitTuple
+            val attemptedPlacementPoints = mutableSetOf<GameUnitTuple>()
             var isFirstAttempt = true
             do {
                 do {
@@ -93,18 +92,18 @@ class TeleportsGenerator(
             )
 
             val addedTeleportIn = context.world.addEntityReturnStateful {
-                addComponentOrThrow(teleportInSize.toSizeComponent())
-                addComponentOrThrow(teleportInPosition.toBottomLeftPositionComponent())
-                addComponentOrThrow(EntityTeleportInComponent(i))
-                addComponentOrThrow(EntityTypeComponent(MapEntityType.TELEPORT_IN))
+                addFromStagingEntity(StagingEntityUtils.createTeleportIn(
+                    teleportInPosition, teleportInSize, i
+                ))
             }
             addedTpIns.add(addedTeleportIn)
 
             val addedTeleportOut = context.world.addEntityReturnStateful {
-                addComponentOrThrow(teleportOutSize.toSizeComponent())
-                addComponentOrThrow(teleportOutPosition.toBottomLeftPositionComponent())
-                addComponentOrThrow(EntityTeleportOutComponent(i))
-                addComponentOrThrow(EntityTypeComponent(MapEntityType.TELEPORT_OUT))
+                addFromStagingEntity(StagingEntityUtils.createTeleportOut(
+                    teleportOutPosition,
+                    teleportOutSize,
+                    i
+                ))
             }
             addedTpOuts.add(addedTeleportOut)
         }

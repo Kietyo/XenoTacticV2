@@ -1,7 +1,5 @@
 package scrap
 
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.async.suspendTest
 import com.soywiz.korio.file.VfsFile
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
@@ -10,20 +8,19 @@ import com.xenotactic.gamelogic.korge_utils.toGameMap
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import pathing.PathFinder
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 internal class ScrapTest {
 
     @Test
     fun scrap1() {
-        val entity = MapEntity.TeleportIn(1, GameUnitPoint(2, 3))
+        val entity = MapEntity.TeleportIn(1, GameUnitTuple(2, 3))
 
         println(Json.encodeToString(entity))
     }

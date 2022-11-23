@@ -1,7 +1,7 @@
 package pathing
 
 import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Path
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -15,7 +15,7 @@ internal class PathTest {
 
         assertEquals(
             Path.create(Point(0f, 0f), Point(2f, 2f)),
-            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(0, GameUnitPoint(2f, 2f)))
+            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(0, GameUnitTuple(2f, 2f)))
         )
     }
 
@@ -30,28 +30,28 @@ internal class PathTest {
 
         assertEquals(
             Path.create(Point(0f, 0f), Point(2f, 2f)),
-            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(0, GameUnitPoint(2f, 2f)))
+            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(0, GameUnitTuple(2f, 2f)))
         )
 
         assertEquals(
             Path.create(Point(0f, 0f), Point(3f, 3f), Point(2f, 2f)),
-            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(1, GameUnitPoint(2f, 2f)))
+            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(1, GameUnitTuple(2f, 2f)))
         )
 
         assertEquals(
             Path.create(Point(0f, 0f), Point(3f, 3f), Point(5f ,5f), Point(2f, 2f)),
-            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(2, GameUnitPoint(2f, 2f)))
+            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(2, GameUnitTuple(2f, 2f)))
         )
 
         assertEquals(
             Path.create(Point(0f, 0f), Point(3f, 3f), Point(5f ,5f), Point(7f ,7f),
                 Point(2f, 2f)),
-            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(3, GameUnitPoint(2f, 2f)))
+            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(3, GameUnitTuple(2f, 2f)))
         )
 
         // Outside of segment idx
         assertFailsWith<IllegalArgumentException> {
-            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(4, GameUnitPoint(2f, 2f)))
+            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(4, GameUnitTuple(2f, 2f)))
         }
     }
 
@@ -60,7 +60,7 @@ internal class PathTest {
         val path = Path.create(Point(0f, 0f))
 
         assertFailsWith<IllegalArgumentException> {
-            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(0, GameUnitPoint(2f, 2f)))
+            path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(0, GameUnitTuple(2f, 2f)))
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.xenotactic.gamelogic.model
 
-import com.xenotactic.ecs.EntityId
-import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.utils.toGameUnit
@@ -85,8 +83,8 @@ sealed class MapEntity : IRectangleEntity {
 
     abstract val friendlyName: String
 
-    val gameUnitPoint: GameUnitPoint
-        get() = GameUnitPoint(x, y)
+    val gameUnitPoint: GameUnitTuple
+        get() = GameUnitTuple(x, y)
 
     val topY: GameUnit
         get() = gameUnitPoint.y + height
@@ -95,11 +93,11 @@ sealed class MapEntity : IRectangleEntity {
         get() = gameUnitPoint.x + width
 
     fun at(x: Int, y: Int): MapEntity {
-        val p = GameUnitPoint(x, y)
+        val p = GameUnitTuple(x, y)
         return at(p)
     }
 
-    fun at(p: GameUnitPoint): MapEntity {
+    fun at(p: GameUnitTuple): MapEntity {
         return when (this) {
             is Checkpoint -> Checkpoint(this.sequenceNumber, p.x, p.y)
             is Finish -> Finish(p.x, p.y)
@@ -170,7 +168,7 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Start"
         override val isBlockingEntity: Boolean = false
 
-        constructor(gameUnitPoint: GameUnitPoint) : this(gameUnitPoint.x, gameUnitPoint.y)
+        constructor(gameUnitPoint: GameUnitTuple) : this(gameUnitPoint.x, gameUnitPoint.y)
 
         companion object {
             operator fun invoke(x: Int, y: Int) = Start(x.toGameUnit(), y.toGameUnit())
@@ -186,7 +184,7 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Finish"
         override val isBlockingEntity: Boolean = false
 
-        constructor(gameUnitPoint: GameUnitPoint) : this(gameUnitPoint.x, gameUnitPoint.y)
+        constructor(gameUnitPoint: GameUnitTuple) : this(gameUnitPoint.x, gameUnitPoint.y)
 
         companion object {
             operator fun invoke(x: Int, y: Int) = Finish(x.toGameUnit(), y.toGameUnit())
@@ -206,7 +204,7 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Teleport In $sequenceNumber"
         override val isBlockingEntity: Boolean = false
 
-        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitPoint) : this(
+        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitTuple) : this(
             sequenceNumber, gameUnitPoint.x,
             gameUnitPoint.y
         )
@@ -241,7 +239,7 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Teleport Out $sequenceNumber"
         override val isBlockingEntity: Boolean = false
 
-        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitPoint) : this(
+        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitTuple) : this(
             sequenceNumber, gameUnitPoint.x,
             gameUnitPoint.y
         )
@@ -298,7 +296,7 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Checkpoint $sequenceNumber"
         override val isBlockingEntity: Boolean = false
 
-        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitPoint) : this(
+        constructor(sequenceNumber: Int, gameUnitPoint: GameUnitTuple) : this(
             sequenceNumber, gameUnitPoint.x,
             gameUnitPoint.y
         )
@@ -329,7 +327,7 @@ sealed class MapEntity : IRectangleEntity {
         override val friendlyName: String = "Tower"
         override val isBlockingEntity: Boolean = true
 
-        constructor(gameUnitPoint: GameUnitPoint) : this(
+        constructor(gameUnitPoint: GameUnitTuple) : this(
             gameUnitPoint.x,
             gameUnitPoint.y
         )

@@ -17,7 +17,7 @@ import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
@@ -79,7 +79,7 @@ class UIMap(
     private val _drawnEntities = mutableMapOf<MapEntity, MutableList<UIEntity>>()
     private val _entityToDrawnText = mutableMapOf<MapEntity, Text>()
 
-    private val _drawnRockCounters = mutableMapOf<GameUnitPoint, Text>()
+    private val _drawnRockCounters = mutableMapOf<GameUnitTuple, Text>()
 
     // Note that the order in which layers are initialized mattes here.
     private val _boardLayer = this.container {
@@ -184,7 +184,7 @@ class UIMap(
                         scaledHeight = _gridSize / 2
                         scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                     }
-                    _drawnRockCounters[GameUnitPoint(x, y)] = component
+                    _drawnRockCounters[GameUnitTuple(x, y)] = component
                 }
             }
         }
@@ -413,7 +413,7 @@ class UIMap(
     ) {
         val (worldX, worldY) = toWorldCoordinates(
             _gridSize,
-            GameUnitPoint(gridX, gridY),
+            GameUnitTuple(gridX, gridY),
             gameMap.height, entityHeight
         )
         val (worldWidth, worldHeight) = toWorldDimensions(
@@ -504,7 +504,7 @@ class UIMap(
         gridY: Double,
         entityWidth: GameUnit,
         entityHeight: GameUnit,
-    ): Pair<GameUnit, GameUnit> =
+    ): GameUnitTuple =
         getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight, mapWidth, mapHeight)
 
     fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {

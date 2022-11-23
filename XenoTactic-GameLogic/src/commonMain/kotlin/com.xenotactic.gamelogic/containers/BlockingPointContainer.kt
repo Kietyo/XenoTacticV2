@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.containers
 
 import kotlinx.serialization.Serializable
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -40,7 +40,7 @@ sealed class BlockingPointContainer(
 
         }
 
-        fun addAll(gameUnitPoints: Collection<GameUnitPoint>) {
+        fun addAll(gameUnitPoints: Collection<GameUnitTuple>) {
             for (point in gameUnitPoints) {
                 add(point.x.toInt(), point.y.toInt())
             }
@@ -58,7 +58,7 @@ sealed class BlockingPointContainer(
             }
         }
 
-        fun removeAll(gameUnitPoints: Collection<GameUnitPoint>) {
+        fun removeAll(gameUnitPoints: Collection<GameUnitTuple>) {
             for (point in gameUnitPoints) {
                 remove(point.x.toInt(), point.y.toInt())
             }

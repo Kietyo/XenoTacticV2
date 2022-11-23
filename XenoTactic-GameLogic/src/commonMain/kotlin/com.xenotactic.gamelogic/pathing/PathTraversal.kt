@@ -1,7 +1,6 @@
 package pathing
 
-import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.toGameUnitPoint
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
@@ -11,7 +10,7 @@ import com.xenotactic.gamelogic.utils.lerp
 import com.xenotactic.gamelogic.utils.toGameUnit
 
 class SegmentTraversal(private val segment: Segment) {
-    val currentDestinationPoint: GameUnitPoint get() = segment.point2
+    val currentDestinationPoint: GameUnitTuple get() = segment.point2
     var distanceTraversed = GameUnit(0.0)
     var currentPosition = segment.point1.copy()
         private set
@@ -50,8 +49,8 @@ class PathTraversal(val path: Path) {
     private val segments = path.getSegments()
     private var currentSegmentIdx = 0
     private var currentSegmentTraversal = SegmentTraversal(segments.first())
-    val currentDestinationPoint: GameUnitPoint get() = currentSegmentTraversal.currentDestinationPoint
-    val currentPosition: GameUnitPoint
+    val currentDestinationPoint: GameUnitTuple get() = currentSegmentTraversal.currentDestinationPoint
+    val currentPosition: GameUnitTuple
         get() = currentSegmentTraversal.currentPosition
 
     val nonTraversedDistance: GameUnit
@@ -96,8 +95,8 @@ class PathSequenceTraversal(pathSequence: PathSequence) {
     private val paths = pathSequence.paths
     private var currentPathIdx = 0
     private var currentPathTraversal = PathTraversal(paths.first())
-    val currentDestinationPoint: GameUnitPoint get() = currentPathTraversal.currentDestinationPoint
-    val currentPosition: GameUnitPoint
+    val currentDestinationPoint: GameUnitTuple get() = currentPathTraversal.currentDestinationPoint
+    val currentPosition: GameUnitTuple
         get() = currentPathTraversal.currentPosition
     val nonTraversedDistance: GameUnit
         get() = currentPathTraversal.nonTraversedDistance

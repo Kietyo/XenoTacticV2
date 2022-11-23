@@ -1,6 +1,6 @@
 package com.xenotactic.korge.input_processors
 
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -10,7 +10,7 @@ data class RemoveEntityData(val x: GameUnit, val y: GameUnit, val entity: MapEnt
 sealed class PointerAction {
     object Inactive : PointerAction()
     data class HighlightForPlacement(
-        val mapEntity: MapEntity, var placementLocation: GameUnitPoint? =
+        val mapEntity: MapEntity, var placementLocation: GameUnitTuple? =
             null
     ) : PointerAction()
 
@@ -27,7 +27,7 @@ sealed class PointerActionInputConfig {
 
 sealed class PointerActionData {
     object Inactive : PointerActionData()
-    data class HighlightForPlacement(val gameUnitPoint: GameUnitPoint, val entity: MapEntity) : PointerActionData()
+    data class HighlightForPlacement(val gameUnitPoint: GameUnitTuple, val entity: MapEntity) : PointerActionData()
     data class RemoveEntityAtPlace(val x: Int, val y: Int, val entity: MapEntity) :
         PointerActionData()
 }

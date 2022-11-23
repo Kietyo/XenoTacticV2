@@ -3,8 +3,7 @@ package model
 
 import kotlin.test.*
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.GameUnitPoint
-import com.xenotactic.gamelogic.utils.measureTime
+import com.xenotactic.gamelogic.model.GameUnitTuple
 
 internal class MapEntityTest {
 //    @Test
@@ -53,19 +52,19 @@ internal class MapEntityTest {
         val entity = MapEntity.Rock(1, 1, 1, 1)
 
         assertEquals(
-            GameUnitPoint(1, 1),
+            GameUnitTuple(1, 1),
             entity.topLeftUnitSquareGameUnitPoint
         )
         assertEquals(
-            GameUnitPoint(1, 1),
+            GameUnitTuple(1, 1),
             entity.topRightUnitSquareGameUnitPoint
         )
         assertEquals(
-            GameUnitPoint(1, 1),
+            GameUnitTuple(1, 1),
             entity.bottomLeftUnitSquareGameUnitPoint
         )
         assertEquals(
-            GameUnitPoint(1, 1),
+            GameUnitTuple(1, 1),
             entity.bottomRightUnitSquareGameUnitPoint
         )
     }

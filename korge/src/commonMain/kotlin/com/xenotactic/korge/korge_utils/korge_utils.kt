@@ -12,6 +12,7 @@ import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korma.geom.Point
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.math.floor
@@ -24,7 +25,7 @@ fun getRoundedGridCoordinates(
     entityHeight: GameUnit,
     mapWidth: GameUnit,
     mapHeight: GameUnit
-): Pair<GameUnit, GameUnit> {
+): GameUnitTuple {
     val roundedGridX = when {
         entityWidth.toInt() == 1 -> floor(
             gridX - entityWidth.value / 2
@@ -47,7 +48,7 @@ fun getRoundedGridCoordinates(
         0,
         mapHeight.toInt() - entityHeight.toInt()
     ).toGameUnit()
-    return gridXToInt to gridYToInt
+    return GameUnitTuple(gridXToInt, gridYToInt)
 }
 
 fun getTopLeft(p1: Point, p2: Point): Point {

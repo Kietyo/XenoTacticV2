@@ -8,7 +8,7 @@ import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.*
@@ -182,8 +182,8 @@ internal class AStarSearcherTest {
                 ),
                 teleportPairs = listOf(
                     TeleportPair(
-                        MapEntity.TeleportIn(0, GameUnitPoint(3, 3)),
-                        MapEntity.TeleportOut(0, GameUnitPoint(7, 7))
+                        MapEntity.TeleportIn(0, GameUnitTuple(3, 3)),
+                        MapEntity.TeleportOut(0, GameUnitTuple(7, 7))
                     )
                 ), blockingEntities = listOf(
                     MapEntity.ROCK_1X1.at(3, 4),
@@ -208,8 +208,8 @@ internal class AStarSearcherTest {
                 ),
                 teleportPairs = listOf(
                     TeleportPair(
-                        MapEntity.TeleportIn(0, GameUnitPoint(3, 3)),
-                        MapEntity.TeleportOut(0, GameUnitPoint(7, 7))
+                        MapEntity.TeleportIn(0, GameUnitTuple(3, 3)),
+                        MapEntity.TeleportOut(0, GameUnitTuple(7, 7))
                     )
                 )
             )?.toPathSequence()
@@ -243,8 +243,8 @@ internal class AStarSearcherTest {
                 ),
                 teleportPairs = listOf(
                     TeleportPair(
-                        MapEntity.TeleportIn(0, GameUnitPoint(3, 3)),
-                        MapEntity.TeleportOut(0, GameUnitPoint(7, 7))
+                        MapEntity.TeleportIn(0, GameUnitTuple(3, 3)),
+                        MapEntity.TeleportOut(0, GameUnitTuple(7, 7))
                     )
                 )
             )

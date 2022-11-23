@@ -1,12 +1,17 @@
 package com.xenotactic.korge.random.generators
 
+import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.ecs.StatefulEntity
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.*
+import com.xenotactic.korge.korge_utils.StagingEntityUtils
+import com.xenotactic.korge.korge_utils.getBottomLeftPositionComponent
+import com.xenotactic.korge.korge_utils.getSizeComponent
 import com.xenotactic.korge.korge_utils.isFullyCoveredBy
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
@@ -15,8 +20,8 @@ import pathing.PathFinder
 class RocksGenerator(
     val numRocks: Int
 ) : IGenerator {
-    private val ROCK_2X4_DIMENSIONS = 2.toGameUnit() to 4.toGameUnit()
-    private val ROCK_4X2_DIMENSIONS = 4.toGameUnit() to 2.toGameUnit()
+    private val ROCK_2X4_DIMENSIONS = GameUnitTuple(2, 4)
+    private val ROCK_4X2_DIMENSIONS = GameUnitTuple(4, 2)
 
     override fun run(context: GenerationContext) {
         val width = context.width
@@ -71,21 +76,10 @@ class RocksGenerator(
             } while (true)
             addedRocks.add(rock)
             context.world.addEntity {
-                addComponentOrThrow(rock.getSizeComponent())
-                addComponentOrThrow(rock.getBottomLeftPositionComponent())
-                addComponentOrThrow(EntityRockComponent)
-                addComponentOrThrow(EntityBlockingComponent)
-                addComponentOrThrow(EntityTypeComponent(MapEntityType.ROCK))
+                addFromStagingEntity(StagingEntityUtils.createRock(rock))
             }
         }
     }
 
 }
 
-private fun IRectangleEntity.getBottomLeftPositionComponent(): BottomLeftPositionComponent {
-    return BottomLeftPositionComponent(x, y)
-}
-
-private fun IRectangleEntity.getSizeComponent(): SizeComponent {
-    return SizeComponent(width, height)
-}

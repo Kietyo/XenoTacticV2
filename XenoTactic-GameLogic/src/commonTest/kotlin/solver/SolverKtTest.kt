@@ -3,7 +3,7 @@ package solver
 import com.soywiz.klogger.Logger
 import com.xenotactic.gamelogic.globals.COUNTERS
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.utils.measureTime
 import pathing.AStarSearcher
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
@@ -24,7 +24,7 @@ internal class SolverKtTest {
 
         val towerPlacementsToPathCache = TowerPlacementsToPathCache()
 
-        assertNotNull(towerPlacementsToPathCache.getShortestPath(map, setOf(GameUnitPoint(0, 4))))
+        assertNotNull(towerPlacementsToPathCache.getShortestPath(map, setOf(GameUnitTuple(0, 4))))
         assertEquals(map, mapBefore)
     }
 

@@ -3,7 +3,7 @@ package com.xenotactic.gamelogic.pathing
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.contains
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.toGameUnitPoint
@@ -88,8 +88,8 @@ sealed class PathAttribute {
 }
 
 data class Segment(
-    val point1: GameUnitPoint,
-    val point2: GameUnitPoint,
+    val point1: GameUnitTuple,
+    val point2: GameUnitTuple,
     private val attributes: MutableList<PathAttribute> = mutableListOf()
 ) {
     constructor(p1: Point, p2: Point) : this(p1.toGameUnitPoint(), p2.toGameUnitPoint())
@@ -137,8 +137,8 @@ data class Segment(
 }
 
 
-data class Path(val points: List<GameUnitPoint>) {
-    data class CircleIntersectionResult(val segmentIdx: Int, val intersectionPoint: GameUnitPoint)
+data class Path(val points: List<GameUnitTuple>) {
+    data class CircleIntersectionResult(val segmentIdx: Int, val intersectionPoint: GameUnitTuple)
     companion object {
         fun create(): Path {
             return Path(listOf())
@@ -149,7 +149,7 @@ data class Path(val points: List<GameUnitPoint>) {
         }
 
         fun create(vararg vectors: Pair<Number, Number>): Path {
-            return Path(vectors.map { GameUnitPoint(it.first.toDouble(), it.second.toDouble()) })
+            return Path(vectors.map { GameUnitTuple(it.first.toDouble(), it.second.toDouble()) })
         }
     }
 
@@ -158,7 +158,7 @@ data class Path(val points: List<GameUnitPoint>) {
 
     val pathLength: GameUnit = run {
         var sum = GameUnit(0.0)
-        var prevPoint: GameUnitPoint? = null
+        var prevPoint: GameUnitTuple? = null
         for (p in points) {
             if (prevPoint == null) {
                 prevPoint = p
@@ -173,7 +173,7 @@ data class Path(val points: List<GameUnitPoint>) {
     val numSegments: Int
         get() = points.size - 1
 
-    fun getLastPoint(): GameUnitPoint {
+    fun getLastPoint(): GameUnitTuple {
         return points.last()
     }
 
@@ -185,7 +185,7 @@ data class Path(val points: List<GameUnitPoint>) {
 
     fun getSegments(): List<Segment> {
         val segments = mutableListOf<Segment>()
-        var previousPoint: GameUnitPoint? = null
+        var previousPoint: GameUnitTuple? = null
         for (point in points) {
             if (previousPoint == null) {
                 previousPoint = point
@@ -222,7 +222,7 @@ data class Path(val points: List<GameUnitPoint>) {
         return null
     }
     fun addSegment(point: Point): Path = addSegment(point.toGameUnitPoint())
-    fun addSegment(point: GameUnitPoint): Path {
+    fun addSegment(point: GameUnitTuple): Path {
         val newPoints = points.toMutableList()
         newPoints.add(point)
         return Path(newPoints)

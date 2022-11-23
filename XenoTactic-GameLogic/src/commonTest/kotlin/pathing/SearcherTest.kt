@@ -2,7 +2,7 @@ package pathing
 
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.*
 import kotlin.math.sqrt
@@ -20,7 +20,7 @@ internal class SearcherTest {
             10, 10, listOf(MapEntity.Start(0, 0), MapEntity.Finish(2, 0)),
         )
 
-        val expectedPath = PathSequence.create(Path(listOf(GameUnitPoint(1.0, 1.0), GameUnitPoint(3.0, 1.0))))
+        val expectedPath = PathSequence.create(Path(listOf(GameUnitTuple(1.0, 1.0), GameUnitTuple(3.0, 1.0))))
 
         assertEquals(expectedPath, path)
     }

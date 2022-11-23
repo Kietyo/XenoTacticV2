@@ -14,28 +14,28 @@ interface IRectangleEntity {
     val right get() = x + width
     val top get() = y + height
 
-    val blockGameUnitPoints: Set<GameUnitPoint>
+    val blockGameUnitPoints: Set<GameUnitTuple>
         get() {
-            val gameUnitPoints = mutableSetOf<GameUnitPoint>()
+            val gameUnitPoints = mutableSetOf<GameUnitTuple>()
             for (i in 0 until  width) {
                 for (j in 0 until height) {
-                    gameUnitPoints.add(GameUnitPoint(x + i, y + j))
+                    gameUnitPoints.add(GameUnitTuple(x + i, y + j))
                 }
             }
             return gameUnitPoints.toSet()
         }
 
-    val topLeftUnitSquareGameUnitPoint: GameUnitPoint
-        get() = GameUnitPoint(x, y + height - 1)
+    val topLeftUnitSquareGameUnitPoint: GameUnitTuple
+        get() = GameUnitTuple(x, y + height - 1)
 
-    val topRightUnitSquareGameUnitPoint: GameUnitPoint
-        get() = GameUnitPoint(x + width - 1, y + height - 1)
+    val topRightUnitSquareGameUnitPoint: GameUnitTuple
+        get() = GameUnitTuple(x + width - 1, y + height - 1)
 
-    val bottomLeftUnitSquareGameUnitPoint: GameUnitPoint
-        get() = GameUnitPoint(x, y)
+    val bottomLeftUnitSquareGameUnitPoint: GameUnitTuple
+        get() = GameUnitTuple(x, y)
 
-    val bottomRightUnitSquareGameUnitPoint: GameUnitPoint
-        get() = GameUnitPoint(x + width - 1, y)
+    val bottomRightUnitSquareGameUnitPoint: GameUnitTuple
+        get() = GameUnitTuple(x + width - 1, y)
 
     val centerPoint: Point
         get() = Point(x.value + width.value / 2f, y.value + height.value / 2f)

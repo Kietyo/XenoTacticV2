@@ -4,7 +4,7 @@ import com.soywiz.korio.async.runBlockingNoSuspensions
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.korge_utils.readStringOrNull
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.CircleIntersectionUtil
@@ -112,11 +112,11 @@ fun assertDoubleEquals(expected: Double, actual: GameUnit) {
 }
 
 
-fun assertPointEquals(expected: GameUnitPoint, actual: GameUnitPoint) {
+fun assertPointEquals(expected: GameUnitTuple, actual: GameUnitTuple) {
     assertPointEquals(expected.toPoint(), actual.toPoint())
 }
 
-fun assertPointEquals(expected: Point, actual: GameUnitPoint) {
+fun assertPointEquals(expected: Point, actual: GameUnitTuple) {
     assertPointEquals(expected, actual.toPoint())
 }
 

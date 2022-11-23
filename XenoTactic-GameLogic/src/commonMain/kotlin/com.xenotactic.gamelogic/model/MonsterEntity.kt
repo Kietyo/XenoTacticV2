@@ -1,6 +1,5 @@
 package com.xenotactic.gamelogic.model
 
-import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.utils.GameUnit
 import pathing.PathSequenceTraversal
 
@@ -12,6 +11,6 @@ class MonsterEntity(
     val radiusGameUnits: Float = 0.5f,
     val movementSpeedGameUnits: Float = 20f
 ) {
-    val currentPoint: GameUnitPoint
+    val currentPoint: GameUnitTuple
         get() = pathSequenceTraversal.currentPosition
 }

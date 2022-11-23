@@ -63,7 +63,7 @@ class GameMapApi(
         return placeEntities(entities.asIterable())
     }
 
-    fun placeEntities(entities: Iterable<MapEntity>) {
+    private fun placeEntities(entities: Iterable<MapEntity>) {
         val gameMapRect =
             GRectInt(0.toGameUnit(), 0.toGameUnit(), gameMapDimensionsState.width, gameMapDimensionsState.height)
         val allEntitiesIntersectMap = entities.all {
@@ -136,6 +136,7 @@ class GameMapApi(
                     }
 
                     is MapEntity.Tower -> {
+                        addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
                         addComponentOrThrow(EntityTowerComponent)
                         addComponentOrThrow(RangeComponent(7.toGameUnit()))
                         addComponentOrThrow(ReloadTimeComponent(1000.0))

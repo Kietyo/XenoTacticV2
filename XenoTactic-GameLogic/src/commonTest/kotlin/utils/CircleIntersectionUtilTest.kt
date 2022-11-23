@@ -1,7 +1,7 @@
 package utils
 
 import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.test_utils.assertEquals
 import com.xenotactic.gamelogic.utils.CircleIntersectionUtil
@@ -527,7 +527,7 @@ internal class CircleIntersectionUtilTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest1() {
-        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
                 Point(3.9999115f, 5.0f),
@@ -543,7 +543,7 @@ internal class CircleIntersectionUtilTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest1_reversed() {
-        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
                 Point(3.9999995f, 3.0f),
@@ -558,7 +558,7 @@ internal class CircleIntersectionUtilTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest2() {
-        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(

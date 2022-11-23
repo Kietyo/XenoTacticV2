@@ -1,11 +1,9 @@
 package com.xenotactic.gamelogic.utils
 
 import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 @JvmInline
 @Serializable
@@ -100,7 +98,7 @@ infix fun Int.until(o: GameUnit): IntRange {
     return this until o.value.toInt()
 }
 
-fun distance(p1: GameUnitPoint, p2: GameUnitPoint) =
+fun distance(p1: GameUnitTuple, p2: GameUnitTuple) =
     com.xenotactic.gamelogic.utils.distance(p1.x, p1.y, p2.x, p2.y)
 
 fun distance(x1: GameUnit, y1: GameUnit, x2: GameUnit, y2: GameUnit) =

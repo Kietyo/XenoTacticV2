@@ -6,6 +6,7 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.EntitySpeedAreaComponent
 import com.xenotactic.korge.components.EntityTypeComponent
 import com.xenotactic.korge.components.SizeComponent
+import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
@@ -16,15 +17,14 @@ class SpeedAreaGenerator(
     override fun run(context: GenerationContext) {
         repeat(numSpeedAreas) {
             val radius = context.random.nextInt(1, 11)
-            val diameter = radius * 2
+            val diameter = (radius * 2).toGameUnit()
             val speedEffect = context.random.nextDouble(0.25, 1.90)
 
             val position = context.getRandomPointPartiallyInMap(diameter, diameter)
             context.world.addEntity {
-                addComponentOrThrow(position.toBottomLeftPositionComponent())
-                addComponentOrThrow(SizeComponent(diameter, diameter))
-                addComponentOrThrow(EntitySpeedAreaComponent(speedEffect))
-                addComponentOrThrow(EntityTypeComponent(MapEntityType.SPEED_AREA))
+                addFromStagingEntity(StagingEntityUtils.createSpeedArea(
+                    position, diameter, speedEffect
+                ))
             }
         }
     }

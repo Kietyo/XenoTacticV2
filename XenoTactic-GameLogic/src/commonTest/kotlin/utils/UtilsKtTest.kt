@@ -3,7 +3,7 @@ package utils
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.RectangleInt
 import com.xenotactic.gamelogic.model.GRectInt
-import com.xenotactic.gamelogic.model.GameUnitPoint
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.test_utils.assertPointSetEquals
@@ -537,7 +537,7 @@ internal class UtilsKtTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest1() {
-        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertPointSetEquals(
             setOf(
                 Point(3.9999115f, 3.0f),
@@ -553,7 +553,7 @@ internal class UtilsKtTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest1_reversed() {
-        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertPointSetEquals(
             setOf(
                 Point(3.9999995f, 3.0f),
@@ -569,7 +569,7 @@ internal class UtilsKtTest {
 
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_regressionTest2() {
-        val tpIn = MapEntity.TeleportIn(0, GameUnitPoint(3, 3))
+        val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertEquals(
             setOf<Point>(),
             getIntersectionPointsOfLineSegmentAndCircle(
