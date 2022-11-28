@@ -55,7 +55,7 @@ class GameWorld(
     val speedAreaFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                SpeedAreaEffectComponent::class,
+                EntitySpeedAreaComponent::class,
                 BottomLeftPositionComponent::class,
                 SizeComponent::class
             )

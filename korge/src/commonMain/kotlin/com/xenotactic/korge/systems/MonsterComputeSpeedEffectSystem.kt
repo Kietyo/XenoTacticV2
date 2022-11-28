@@ -28,14 +28,14 @@ class MonsterComputeSpeedEffectSystem(
 
             computedSpeedEffectComponent.computedSpeedEffect =
                 engine.gameWorld.speedAreaFamily.getSequence().fold(1.0) { acc, it ->
-                    val speedAreaEffectComponent = world[it, SpeedAreaEffectComponent::class]
+                    val speedAreaEffectComponent = world[it, EntitySpeedAreaComponent::class]
                     val bottomLeftPositionComponent = world[it, BottomLeftPositionComponent::class]
                     val sizeComponent = world[it, SizeComponent::class]
                     val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
                     val radius = sizeComponent.toRadius()
                     val distance = currentPosition.distanceTo(centerPoint)
                     if (distance <= radius) {
-                        acc * speedAreaEffectComponent.speedArea.speedEffect
+                        acc * speedAreaEffectComponent.speedEffect
                     } else {
                         acc
                     }

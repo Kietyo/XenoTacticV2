@@ -47,6 +47,27 @@ class GameMapApi(
                 entity.allComponents.forEach {
                     addComponentOrThrow(it)
                 }
+                val entityTypeComponent = entity[EntityTypeComponent::class]
+                when (entityTypeComponent.type) {
+                    MapEntityType.START -> Unit
+                    MapEntityType.FINISH -> Unit
+                    MapEntityType.CHECKPOINT -> Unit
+                    MapEntityType.ROCK -> {
+                        addComponentOrThrow(IsSelectableComponent)
+                    }
+
+                    MapEntityType.TOWER -> {
+                        addComponentOrThrow(RangeComponent(7.toGameUnit()))
+                        addComponentOrThrow(ReloadTimeComponent(1000.0))
+                        addComponentOrThrow(ReloadDowntimeComponent(0.0))
+                    }
+
+                    MapEntityType.TELEPORT_IN -> Unit
+                    MapEntityType.TELEPORT_OUT -> Unit
+                    MapEntityType.SMALL_BLOCKER -> Unit
+                    MapEntityType.SPEED_AREA -> Unit
+                    MapEntityType.MONSTER -> Unit
+                }
             }
             engine.eventBus.send(AddedUIEntityEvent(entityId))
         }
@@ -80,76 +101,10 @@ class GameMapApi(
 //                else -> entity
 //            }
 //            gameWorld.world.addEntity {
-//                val mapEntityComponent: MapEntityComponent = when (placementEntity) {
-//                    is MapEntity.Checkpoint -> {
-//                        MapEntityComponent(
-//                            MapEntityData.Checkpoint(
-//                                placementEntity.sequenceNumber
-//                            )
-//                        )
-//                    }
-//
-//                    is MapEntity.Finish -> {
-//                        MapEntityComponent(
-//                            MapEntityData.Finish
-//                        )
-//                    }
-//
-//                    is MapEntity.Rock -> {
-//                        addComponentOrThrow(IsSelectableComponent)
-//                        MapEntityComponent(
-//                            MapEntityData.Rock
-//                        )
-//                    }
-//
-//                    is MapEntity.SmallBlocker -> TODO()
-//                    is MapEntity.SpeedArea -> {
-//                        val data = MapEntityData.SpeedArea(placementEntity.radius, placementEntity.speedEffect)
-//                        addComponentOrThrow(SpeedAreaEffectComponent(data))
-//                        MapEntityComponent(
-//                            data
-//                        )
-//                    }
-//
-//                    is MapEntity.Start -> {
-//                        MapEntityComponent(
-//                            MapEntityData.Start
-//                        )
-//                    }
-//
-//                    is MapEntity.TeleportIn -> {
-//                        MapEntityComponent(
-//                            MapEntityData.TeleportIn(placementEntity.sequenceNumber)
-//                        )
-//                    }
-//
-//                    is MapEntity.TeleportOut -> {
-//                        MapEntityComponent(
-//                            MapEntityData.TeleportOut(placementEntity.sequenceNumber)
-//                        )
-//                    }
-//
-//                    is MapEntity.Tower -> {
-//                        addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
-//                        addComponentOrThrow(EntityTowerComponent)
-//                        addComponentOrThrow(RangeComponent(7.toGameUnit()))
-//                        addComponentOrThrow(ReloadTimeComponent(1000.0))
-//                        addComponentOrThrow(ReloadDowntimeComponent(0.0))
-//                        MapEntityComponent(
-//                            MapEntityData.Tower
-//                        )
-//                    }
-//                }
+
 //
 //                addComponentOrThrow(mapEntityComponent)
-//                addComponentOrThrow(SizeComponent(placementEntity.width, placementEntity.height))
 //
-//                addComponentOrThrow(
-//                    BottomLeftPositionComponent(
-//                        placementEntity.x,
-//                        placementEntity.y
-//                    )
-//                )
 //
 //                engine.eventBus.send(AddedUIEntityEvent(entityId))
 //            }
@@ -162,9 +117,11 @@ class GameMapApi(
 
     fun spawnCreep() {
         gameWorld.world.addEntity {
-            addComponentOrThrow(EntityTypeComponent(
-                MapEntityType.MONSTER
-            ))
+            addComponentOrThrow(
+                EntityTypeComponent(
+                    MapEntityType.MONSTER
+                )
+            )
             addComponentOrThrow(SizeComponent(1.toGameUnit(), 1.toGameUnit()))
             addComponentOrThrow(MonsterComponent)
             addComponentOrThrow(VelocityComponent())
@@ -214,16 +171,19 @@ class GameMapApi(
                     val data = gameWorld.world[it, EntityCheckpointComponent::class]
                     sequenceNumToPathingEntity[data.sequenceNumber] = rectangleEntity
                 }
+
                 MapEntityType.ROCK -> blockingEntities.add(rectangleEntity)
                 MapEntityType.TOWER -> blockingEntities.add(rectangleEntity)
                 MapEntityType.TELEPORT_IN -> {
                     val data = gameWorld.world[it, EntityTeleportInComponent::class]
                     sequenceNumToTpIn[data.sequenceNumber] = rectangleEntity
                 }
+
                 MapEntityType.TELEPORT_OUT -> {
                     val data = gameWorld.world[it, EntityTeleportOutComponent::class]
                     sequenceNumToTpOut[data.sequenceNumber] = rectangleEntity
                 }
+
                 MapEntityType.SMALL_BLOCKER -> TODO()
                 MapEntityType.SPEED_AREA -> Unit
                 MapEntityType.MONSTER -> TODO()

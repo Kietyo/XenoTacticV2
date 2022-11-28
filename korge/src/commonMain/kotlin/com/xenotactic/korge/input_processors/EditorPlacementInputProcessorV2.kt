@@ -131,7 +131,7 @@ class EditorPlacementInputProcessorV2(
         }
     }
 
-    fun createEntityToAdd(entityType: MapEntityType, gridXInt: GameUnit, gridYInt: GameUnit): StagingEntity {
+    private fun createEntityToAdd(entityType: MapEntityType, gridXInt: GameUnit, gridYInt: GameUnit): StagingEntity {
         val position = gridXInt tup gridYInt
         return when (entityType) {
             MapEntityType.START -> StagingEntityUtils.createStart(position)
