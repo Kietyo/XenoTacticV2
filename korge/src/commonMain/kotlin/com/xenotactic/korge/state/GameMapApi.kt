@@ -2,6 +2,7 @@ package com.xenotactic.korge.state
 
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
+import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.*
@@ -32,30 +33,21 @@ class GameMapApi(
         }
 
     fun placeEntitiesV2(otherGameWorld: GameWorld) {
-        val entities = otherGameWorld.world.getStatefulEntities()
+        val entities = otherGameWorld.world.getStagingEntities()
+        placeEntitiesV2(entities)
+    }
+
+    fun placeEntitiesV2(entities: Iterable<StagingEntity>) {
         for (entity in entities) {
             val entityId = gameWorld.world.addEntity {
                 entity.allComponents.forEach {
-                    addComponentOrThrow(it!!)
+                    addComponentOrThrow(it)
                 }
             }
             engine.eventBus.send(AddedUIEntityEvent(entityId))
         }
         updateShortestPath()
     }
-
-//    fun placeEntitiesV2(vararg entities: StagingEntity) {
-//        val statefulEntity = otherGameWorld.world.getStatefulEntities()
-//        for (entity in statefulEntity) {
-//            val entityId = gameWorld.world.addEntity {
-//                entity.allComponents.forEach {
-//                    addComponentOrThrow(it!!)
-//                }
-//            }
-//            engine.eventBus.send(AddedUIEntityEvent(entityId))
-//        }
-//        updateShortestPath()
-//    }
 
 //    fun placeEntities(vararg entities: MapEntity) {
 //        return placeEntities(entities.asIterable())

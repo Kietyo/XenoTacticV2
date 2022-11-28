@@ -28,6 +28,8 @@ import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.input_processors.PointerAction
 import com.xenotactic.korge.korge_utils.getRoundedGridCoordinates
 import com.xenotactic.korge.korge_utils.makeEntityLabelText
+import com.xenotactic.korge.korge_utils.toWorldCoordinates
+import com.xenotactic.korge.korge_utils.toWorldDimensions
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex

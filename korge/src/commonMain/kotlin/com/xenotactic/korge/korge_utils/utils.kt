@@ -1,14 +1,20 @@
-package com.xenotactic.gamelogic.utils
+package com.xenotactic.korge.korge_utils
 
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
+import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
 import com.xenotactic.gamelogic.pathing.VerticalDirection
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.WorldUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.korge.components.BottomLeftPositionComponent
+import com.xenotactic.korge.components.SizeComponent
 
 import kotlin.math.*
 import kotlin.time.ExperimentalTime
@@ -101,11 +107,15 @@ inline fun <T> measureTime(
 }
 
 
-fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: GameUnit, gameHeight: GameUnit) =
-    toWorldCoordinates(
+fun toWorldCoordinates(gridSize: Double, entity: StagingEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
+    val position = entity[BottomLeftPositionComponent::class]
+    val size = entity[SizeComponent::class]
+    return toWorldCoordinates(
         gridSize,
-        entity.gameUnitPoint, gameHeight, entityHeight = entity.height
+        position.toTuple(), gameHeight, entityHeight = size.height
     )
+}
+
 
 fun toWorldCoordinates(
     gridSize: Double, gameUnitPoint: GameUnitTuple, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
@@ -395,8 +405,6 @@ fun String.removeAllIndents(): String {
 }
 
 
-fun <T> sequenceOfNullable(element: T?) =
-    if (element == null) emptySequence<T>() else sequenceOf(element)
 
 fun rectangleIntersects(a: GRectInt, b: GRectInt): Boolean {
     return a.left < b.right && a.right > b.left &&

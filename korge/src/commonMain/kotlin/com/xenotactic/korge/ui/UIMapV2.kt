@@ -8,6 +8,7 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
+import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
@@ -17,12 +18,17 @@ import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.components.EntitySpeedAreaComponent
+import com.xenotactic.korge.components.EntityTypeComponent
+import com.xenotactic.korge.components.SizeComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.korge.korge_utils.toWorldCoordinates
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
@@ -328,7 +334,7 @@ class UIMapV2(
             .visible(true)
     }
 
-    fun renderHighlightEntity(entity: MapEntity) {
+    fun renderHighlightEntity(entity: StagingEntity) {
         val (worldX, worldY) = toWorldCoordinates(
             gridSize, entity, mapWidth, mapHeight
         )
@@ -338,10 +344,14 @@ class UIMapV2(
         }
     }
 
-    private fun createEntityView(entity: MapEntity): UIEntity {
+    private fun createEntityView(entity: StagingEntity): UIEntity {
+        val entityType = entity[EntityTypeComponent::class]
+        val size = entity[SizeComponent::class]
         return UIEntity(
-            entity.type, entity.width, entity.height, gridSize, borderSize,
-            if (entity is MapEntity.SpeedArea) entity.speedEffect else null
+            entityType.type, size.width, size.height, gridSize, borderSize,
+            if (entityType.type == MapEntityType.SPEED_AREA) {
+                entity[EntitySpeedAreaComponent::class].speedEffect
+            } else null
         )
     }
 
