@@ -6,7 +6,6 @@ import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.*
 import com.xenotactic.korge.korge_utils.toRectangleEntity
 import pathing.PathFinder
@@ -17,7 +16,7 @@ class GameWorld(
     val entityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                MapEntityComponent::class,
+                EntityTypeComponent::class,
                 SizeComponent::class,
                 BottomLeftPositionComponent::class,
             )
@@ -26,7 +25,7 @@ class GameWorld(
     val selectableEntitiesFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                MapEntityComponent::class,
+                EntityTypeComponent::class,
                 SizeComponent::class,
                 BottomLeftPositionComponent::class,
                 IsSelectableComponent::class
@@ -65,7 +64,6 @@ class GameWorld(
     val bottomLeftPositionComponent =
         world.getComponentContainer<BottomLeftPositionComponent>()
     val sizeComponent = world.getComponentContainer<SizeComponent>()
-    val mapEntityComponent = world.getComponentContainer<MapEntityComponent>()
     val entityTypeComponents = world.getComponentContainer<EntityTypeComponent>()
     val uiEntityViewComponentContainer =
         world.getComponentContainer<UIEntityViewComponent>()
@@ -140,14 +138,14 @@ class GameWorld(
         val sequenceNumToTeleportInEntities = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(EntityTeleportInComponent::class)
         ).associateBy({
-            it[EntityTeleportInComponent::class].sequenceNum
+            it[EntityTeleportInComponent::class].sequenceNumber
         }) {
             it
         }
         val sequenceNumToTeleportOutEntities = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(EntityTeleportOutComponent::class)
         ).associateBy({
-            it[EntityTeleportOutComponent::class].sequenceNum
+            it[EntityTeleportOutComponent::class].sequenceNumber
         }) {
             it
         }
@@ -165,7 +163,7 @@ class GameWorld(
             startEntity.toRectangleEntity(),
             finishEntity.toRectangleEntity(),
             blockingEntities,
-            addedCheckpoints.sortedBy { it.get(EntityCheckpointComponent::class).sequenceNum }
+            addedCheckpoints.sortedBy { it.get(EntityCheckpointComponent::class).sequenceNumber }
                 .map { it.toRectangleEntity() },
             teleportPairs
         )

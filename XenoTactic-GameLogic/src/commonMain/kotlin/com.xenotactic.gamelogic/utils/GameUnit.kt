@@ -68,6 +68,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return WorldUnit(value * gridSize)
     }
 
+    infix fun tup(gridYInt: GameUnit): GameUnitTuple = GameUnitTuple(this, gridYInt)
+
     companion object {
         val ZERO = GameUnit(0)
     }

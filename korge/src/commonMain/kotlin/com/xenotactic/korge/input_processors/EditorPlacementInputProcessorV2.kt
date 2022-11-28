@@ -5,12 +5,14 @@ import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
-import com.xenotactic.ecs.World
+import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
@@ -42,7 +44,7 @@ class EditorPlacementInputProcessorV2(
 
     var isRightClickDrag = false
 
-    var stagingTeleportIn: MapEntity.TeleportIn? = null
+    var stagingTeleportIn: StagingEntity? = null
 
     override fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!editorState.isEditingEnabled ||
@@ -95,7 +97,7 @@ class EditorPlacementInputProcessorV2(
                         gridYInt
                     )
                 if (editorState.entityTypeToPlace == MapEntityType.TELEPORT_IN) {
-                    stagingTeleportIn = entityToAdd as MapEntity.TeleportIn
+                    stagingTeleportIn = entityToAdd
                     editorState.entityTypeToPlace = MapEntityType.TELEPORT_OUT
                     uiMap.renderHighlightEntity(entityToAdd)
                     engine.eventBus.send(
@@ -124,29 +126,19 @@ class EditorPlacementInputProcessorV2(
         }
     }
 
-    fun createEntityToAdd(entityType: MapEntityType, gridXInt: GameUnit, gridYInt: GameUnit): MapEntity {
+    fun createEntityToAdd(entityType: MapEntityType, gridXInt: GameUnit, gridYInt: GameUnit): StagingEntity {
+        val position = gridXInt tup gridYInt
         return when (entityType) {
-            MapEntityType.START,
-            MapEntityType.FINISH -> MapEntityType.createEntity(
-                editorState.entityTypeToPlace,
-                gridXInt,
-                gridYInt
+            MapEntityType.START -> StagingEntityUtils.createStart(position)
+            MapEntityType.FINISH -> StagingEntityUtils.createFinish(position)
+            MapEntityType.CHECKPOINT -> StagingEntityUtils.createCheckpoint(
+                gameMapApi.numCheckpoints,
+                position
             )
-
-            MapEntityType.CHECKPOINT -> {
-                MapEntity.Checkpoint(gameMapApi.numCheckpoints, gridXInt, gridYInt)
-            }
-
             MapEntityType.ROCK -> TODO()
-            MapEntityType.TOWER -> MapEntity.Tower(gridXInt, gridYInt)
-            MapEntityType.TELEPORT_IN -> {
-                MapEntity.TeleportIn(gameMapApi.numCompletedTeleports, gridXInt, gridYInt)
-            }
-
-            MapEntityType.TELEPORT_OUT -> {
-                MapEntity.TeleportOut(gameMapApi.numCompletedTeleports, gridXInt, gridYInt)
-            }
-
+            MapEntityType.TOWER -> StagingEntityUtils.createTower(position)
+            MapEntityType.TELEPORT_IN -> StagingEntityUtils.createTeleportIn(gameMapApi.numCompletedTeleports, position)
+            MapEntityType.TELEPORT_OUT -> StagingEntityUtils.createTeleportOut(gameMapApi.numCompletedTeleports, position)
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
@@ -198,11 +190,6 @@ class EditorPlacementInputProcessorV2(
             gameMapApi.placeEntities(
                 MapEntity.Rock(roundedGridX, roundedGridY, width, height)
             )
-//            gameWorld.addEntity {
-//                addComponentOrThrow(MapEntityComponent(MapEntityData.Rock))
-//                addComponentOrThrow(SizeComponent(width, height))
-//                addComponentOrThrow(BottomLeftPositionComponent(roundedGridX, roundedGridY))
-//            }
 
             // Resets the highlight rectangle to the current cursor position
             handleRockPlacement(MouseEvent.Type.MOVE, gridX, gridY)

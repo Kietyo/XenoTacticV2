@@ -40,24 +40,24 @@ enum class MapEntityType {
                 }
             }.toSet()
 
-        fun createEntity(entityType: MapEntityType, x: Int, y: Int): MapEntity {
-            return createEntity(entityType, x.toGameUnit(), y.toGameUnit())
-        }
-
-        fun createEntity(entityType: MapEntityType, x: GameUnit, y: GameUnit): MapEntity {
-            return when (entityType) {
-                START -> MapEntity.Start(x, y)
-                FINISH -> MapEntity.Finish(x, y)
-                CHECKPOINT -> TODO()
-                ROCK -> TODO()
-                TOWER -> TODO()
-                TELEPORT_IN -> TODO()
-                TELEPORT_OUT -> TODO()
-                SMALL_BLOCKER -> TODO()
-                SPEED_AREA -> TODO()
-                MONSTER -> TODO()
-            }
-        }
+//        fun createEntity(entityType: MapEntityType, x: Int, y: Int): MapEntity {
+//            return createEntity(entityType, x.toGameUnit(), y.toGameUnit())
+//        }
+//
+//        fun createEntity(entityType: MapEntityType, x: GameUnit, y: GameUnit): MapEntity {
+//            return when (entityType) {
+//                START -> MapEntity.Start(x, y)
+//                FINISH -> MapEntity.Finish(x, y)
+//                CHECKPOINT -> TODO()
+//                ROCK -> TODO()
+//                TOWER -> TODO()
+//                TELEPORT_IN -> TODO()
+//                TELEPORT_OUT -> TODO()
+//                SMALL_BLOCKER -> TODO()
+//                SPEED_AREA -> TODO()
+//                MONSTER -> TODO()
+//            }
+//        }
 
         fun getEntitySize(entityType: MapEntityType): EntitySize {
             return when (entityType) {

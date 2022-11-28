@@ -69,7 +69,7 @@ internal class RandomMapGeneratorV2Test {
         )
         assertThat(checkpointEntities).hasSize(3)
         val sequenceNumToCheckpointEntity = checkpointEntities.associateBy({
-            it[EntityCheckpointComponent::class].sequenceNum
+            it[EntityCheckpointComponent::class].sequenceNumber
         }) {
             it
         }
@@ -102,12 +102,12 @@ internal class RandomMapGeneratorV2Test {
         assertThat(teleportOutEntities).hasSize(2)
 
         val sequenceNumToTeleportIn = teleportInEntities.associateBy({
-            it[EntityTeleportInComponent::class].sequenceNum
+            it[EntityTeleportInComponent::class].sequenceNumber
         }) {
             it
         }
         val sequenceNumToTeleportOut = teleportOutEntities.associateBy({
-            it[EntityTeleportOutComponent::class].sequenceNum
+            it[EntityTeleportOutComponent::class].sequenceNumber
         }) {
             it
         }
