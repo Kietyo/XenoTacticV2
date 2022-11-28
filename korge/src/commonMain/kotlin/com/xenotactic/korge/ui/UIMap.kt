@@ -29,7 +29,6 @@ import com.xenotactic.korge.input_processors.PointerAction
 import com.xenotactic.korge.korge_utils.getRoundedGridCoordinates
 import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.korge.korge_utils.toWorldCoordinates
-import com.xenotactic.korge.korge_utils.toWorldDimensions
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
@@ -429,16 +428,16 @@ class UIMap(
             .visible(true)
     }
 
-    fun renderHighlightEntity(entity: MapEntity) {
-        val (worldX, worldY) = toWorldCoordinates(
-            _gridSize, entity, gameMap.width, gameMap
-                .height
-        )
-        createEntityView(entity).apply {
-            addTo(_highlightLayer)
-            xy(worldX, worldY)
-        }
-    }
+//    fun renderHighlightEntity(entity: MapEntity) {
+//        val (worldX, worldY) = toWorldCoordinates(
+//            _gridSize, entity, gameMap.width, gameMap
+//                .height
+//        )
+//        createEntityView(entity).apply {
+//            addTo(_highlightLayer)
+//            xy(worldX, worldY)
+//        }
+//    }
 
     fun clearHighlightLayer() {
         _highlightLayer.removeChildren()

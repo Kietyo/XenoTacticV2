@@ -9,6 +9,7 @@ import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.engine.Engine
@@ -20,6 +21,10 @@ import com.xenotactic.korge.ui.UIMapV2
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
+
+
+data class PlacedEntityEvent(val entityType: MapEntityType)
+
 
 class EditorPlacementInputProcessorV2(
     override val view: BaseView,
@@ -110,7 +115,7 @@ class EditorPlacementInputProcessorV2(
                 if (editorState.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {
                     require(stagingTeleportIn != null)
 
-                    gameMapApi.placeEntities(
+                    gameMapApi.placeEntitiesV2(
                         stagingTeleportIn!!,
                         entityToAdd
                     )
@@ -118,7 +123,7 @@ class EditorPlacementInputProcessorV2(
                     uiMap.clearHighlightLayer()
                     return
                 }
-                gameMapApi.placeEntities(entityToAdd)
+                gameMapApi.placeEntitiesV2(entityToAdd)
                 engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
             }
         } else {
@@ -187,8 +192,10 @@ class EditorPlacementInputProcessorV2(
         //        )
 
         if (eventType == MouseEvent.Type.UP) {
-            gameMapApi.placeEntities(
-                MapEntity.Rock(roundedGridX, roundedGridY, width, height)
+            gameMapApi.placeEntitiesV2(
+                StagingEntityUtils.createRock(
+                    RectangleEntity(roundedGridX, roundedGridY, width, height)
+                )
             )
 
             // Resets the highlight rectangle to the current cursor position

@@ -37,7 +37,11 @@ class GameMapApi(
         placeEntitiesV2(entities)
     }
 
-    fun placeEntitiesV2(entities: Iterable<StagingEntity>) {
+    fun placeEntitiesV2(vararg entities: StagingEntity) {
+        placeEntitiesV2(entities.asIterable())
+    }
+
+    private fun placeEntitiesV2(entities: Iterable<StagingEntity>) {
         for (entity in entities) {
             val entityId = gameWorld.world.addEntity {
                 entity.allComponents.forEach {

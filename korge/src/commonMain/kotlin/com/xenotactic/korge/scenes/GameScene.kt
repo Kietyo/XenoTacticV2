@@ -21,7 +21,7 @@ import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor
-import com.xenotactic.korge.korge_components.MonstersEComponent
+//import com.xenotactic.korge.korge_components.MonstersEComponent
 import com.xenotactic.korge.korge_components.ResizeDebugComponent
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
@@ -113,8 +113,8 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
 
         addComponent(KeyInputProcessor(this, engine))
-        val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
-        addComponent(monstersComponent)
+//        val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
+//        addComponent(monstersComponent)
 
         val goalComponent = GoalEComponent(engine, eventBus)
         engine.injections.setSingletonOrThrow(goalComponent)
