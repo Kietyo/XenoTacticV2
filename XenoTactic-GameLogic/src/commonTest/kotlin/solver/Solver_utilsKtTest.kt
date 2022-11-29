@@ -1,10 +1,6 @@
 package solver
 
-import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.utils.to
+import com.xenotactic.gamelogic.model.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -17,7 +13,7 @@ internal class Solver_utilsKtTest {
 
         assertEquals(
             listOf(GameUnitTuple(0, 0)),
-            solver.getAvailableTowerPlacementSpots(map)
+            getAvailableTowerPlacementSpots(map)
         )
     }
 
@@ -28,36 +24,36 @@ internal class Solver_utilsKtTest {
 
         assertEquals(
             listOf(
-                0 to 0,
-                0 to 1,
-                0 to 2,
-                0 to 3,
-                1 to 0,
-                1 to 3,
-                2 to 0,
-                2 to 3,
-                3 to 0,
-                3 to 1,
-                3 to 2,
-                3 to 3
+                0 tup 0,
+                0 tup 1,
+                0 tup 2,
+                0 tup 3,
+                1 tup 0,
+                1 tup 3,
+                2 tup 0,
+                2 tup 3,
+                3 tup 0,
+                3 tup 1,
+                3 tup 2,
+                3 tup 3
             ),
-            solver.getAvailableTowerPlacementSpots(map)
+            getAvailableTowerPlacementSpots(map)
         )
 
         map.placeEntity(MapEntity.Rock(0, 0, 2, 2))
         assertEquals(
             listOf(
-                0 to 2,
-                0 to 3,
-                1 to 3,
-                2 to 0,
-                2 to 3,
-                3 to 0,
-                3 to 1,
-                3 to 2,
-                3 to 3
+                0 tup 2,
+                0 tup 3,
+                1 tup 3,
+                2 tup 0,
+                2 tup 3,
+                3 tup 0,
+                3 tup 1,
+                3 tup 2,
+                3 tup 3
             ),
-            solver.getAvailableTowerPlacementSpots(map)
+            getAvailableTowerPlacementSpots(map)
         )
     }
 

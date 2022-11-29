@@ -37,15 +37,6 @@ internal class GameMapApiTest {
         )
         val gameMapApi = GameMapApi(engine)
 
-
-//        gameMapApi.placeEntities(
-//            MapEntity.Start(22, 0),
-//            MapEntity.Finish(3, 2),
-//            MapEntity.ROCK_2X4.at(22, 6),
-//            MapEntity.ROCK_4X2.at(10, 3),
-//            MapEntity.TOWER.at(20, 0)
-//        )
-
         gameMapApi.placeEntitiesV2(
             StagingEntityUtils.createStart(22 tup 0),
             StagingEntityUtils.createFinish(3 tup 2),
