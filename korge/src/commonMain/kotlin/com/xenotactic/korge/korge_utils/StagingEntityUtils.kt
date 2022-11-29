@@ -82,6 +82,7 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
+        addComponentOrThrow(EntityBlockingComponent)
         addComponentOrThrow(EntityTowerComponent)
         addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
     }

@@ -87,21 +87,21 @@ class GameWorld(
             )
         )
 
-    val addedCheckpoints
+    val checkpoints
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
                 EntityCheckpointComponent::class
             )
         )
 
-    val addedTeleportIns
+    val teleportIns
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
                 EntityTeleportInComponent::class
             )
         )
 
-    val addedTeleportOuts
+    val teleportOuts
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
                 EntityTeleportOutComponent::class
@@ -133,7 +133,7 @@ class GameWorld(
     ): PathFindingResult {
         val startEntity = this.startEntity
         val finishEntity = this.finishEntity
-        val addedCheckpoints = this.addedCheckpoints
+        val addedCheckpoints = this.checkpoints
 
         val sequenceNumToTeleportInEntities = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(EntityTeleportInComponent::class)
@@ -149,6 +149,13 @@ class GameWorld(
         }) {
             it
         }
+
+        require(
+            sequenceNumToTeleportInEntities.keys.equals(
+                sequenceNumToTeleportOutEntities.keys
+            )
+        )
+
         val teleportPairs = sequenceNumToTeleportInEntities.map {
             TeleportPair(
                 it.value.toRectangleEntity(),

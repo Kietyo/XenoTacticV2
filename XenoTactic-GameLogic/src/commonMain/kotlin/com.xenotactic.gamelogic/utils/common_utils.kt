@@ -3,11 +3,8 @@ package com.xenotactic.gamelogic.utils
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
-import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
-import com.xenotactic.gamelogic.model.GRectInt
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
 import com.xenotactic.gamelogic.pathing.VerticalDirection
 import kotlin.math.abs
@@ -395,4 +392,17 @@ fun toWorldDimensions(width: GameUnit, height: GameUnit, gridSize: Double) =
 fun toWorldDimensions(entity: MapEntity, gridSize: Double) =
     toWorldDimensions(entity.width, entity.height, gridSize)
 
+data class RectangleEntityBuilder(
+    val position: GameUnitTuple,
+    val width: GameUnit
+)
 
+// wW = with Width
+infix fun GameUnitTuple.wW(width: Number) = RectangleEntityBuilder(
+    this, width.toGameUnit()
+)
+
+// wH = with Height
+infix fun RectangleEntityBuilder.wH(height: Number): IRectangleEntity = RectangleEntity(
+    position.x, position.y, width, height.toGameUnit()
+)

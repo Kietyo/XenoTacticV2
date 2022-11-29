@@ -1,21 +1,13 @@
 package com.xenotactic.korge.random.generators
 
-import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
-import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.pathing.PathFindingResult
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.components.*
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
-import com.xenotactic.korge.korge_utils.getBottomLeftPositionComponent
-import com.xenotactic.korge.korge_utils.getSizeComponent
 import com.xenotactic.korge.korge_utils.isFullyCoveredBy
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
-import pathing.PathFinder
 
 class RocksGenerator(
     val numRocks: Int
@@ -28,9 +20,9 @@ class RocksGenerator(
         val height = context.height
         val startEntity = context.gameWorld.startEntity
         val finishEntity = context.gameWorld.finishEntity
-        val addedCheckpoints = context.gameWorld.addedCheckpoints
-        val addedTpIns = context.gameWorld.addedTeleportIns
-        val addedTpOuts = context.gameWorld.addedTeleportOuts
+        val addedCheckpoints = context.gameWorld.checkpoints
+        val addedTpIns = context.gameWorld.teleportIns
+        val addedTpOuts = context.gameWorld.teleportOuts
 
         var currentPath = context.gameWorld.getPathFindingResult(width, height).let {
             require(it is PathFindingResult.Success)

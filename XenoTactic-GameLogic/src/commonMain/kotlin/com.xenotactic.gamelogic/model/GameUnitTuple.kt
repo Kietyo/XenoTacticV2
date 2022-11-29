@@ -37,3 +37,6 @@ data class GameUnitTuple(val x: GameUnit, val y: GameUnit) {
 fun Point.toGameUnitPoint(): GameUnitTuple {
     return GameUnitTuple(x.toGameUnit(), y.toGameUnit())
 }
+
+infix fun Number.tup(i: Number): GameUnitTuple = GameUnitTuple(this.toDouble(), i.toDouble())
+

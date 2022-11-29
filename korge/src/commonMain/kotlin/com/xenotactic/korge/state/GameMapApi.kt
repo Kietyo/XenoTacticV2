@@ -12,7 +12,6 @@ import com.xenotactic.korge.event_listeners.AddedMonsterEntityEvent
 import com.xenotactic.korge.event_listeners.AddedUIEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.models.GameWorld
-import pathing.PathFinder
 import pathing.PathSequenceTraversal
 
 class GameMapApi(
@@ -24,11 +23,11 @@ class GameMapApi(
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
 
     val numCheckpoints
-        get() = gameWorld.addedCheckpoints.size
+        get() = gameWorld.checkpoints.size
     val numCompletedTeleports
         get() = run {
-            val numTpIn = gameWorld.addedTeleportIns.size
-            val numTpOut = gameWorld.addedTeleportOuts.size
+            val numTpIn = gameWorld.teleportIns.size
+            val numTpOut = gameWorld.teleportOuts.size
             minOf(numTpIn, numTpOut)
         }
 
@@ -146,64 +145,69 @@ class GameMapApi(
     }
 
     private fun updateShortestPath() {
-        var start: IRectangleEntity? = null
-        var finish: IRectangleEntity? = null
+//        var start: IRectangleEntity? = null
+//        var finish: IRectangleEntity? = null
+//
+//        val sequenceNumToPathingEntity = mutableMapOf<Int, IRectangleEntity>()
+//        val sequenceNumToTpIn = mutableMapOf<Int, IRectangleEntity>()
+//        val sequenceNumToTpOut = mutableMapOf<Int, IRectangleEntity>()
+//        val blockingEntities = mutableListOf<IRectangleEntity>()
+//
+//        gameWorld.entityFamily.getSequence().forEach {
+//            val mapEntityComponent = gameWorld.entityTypeComponents.getComponent(it)
+//            val sizeComponent = gameWorld.sizeComponent.getComponent(it)
+//            val bottomLeftPositionComponent = gameWorld.bottomLeftPositionComponent.getComponent(it)
+//            val rectangleEntity = RectangleEntity(
+//                bottomLeftPositionComponent.x,
+//                bottomLeftPositionComponent.y,
+//                sizeComponent.width,
+//                sizeComponent.height
+//            )
+//            when (mapEntityComponent.type) {
+//                MapEntityType.START -> start = rectangleEntity
+//                MapEntityType.FINISH -> finish = rectangleEntity
+//                MapEntityType.CHECKPOINT -> {
+//                    val data = gameWorld.world[it, EntityCheckpointComponent::class]
+//                    sequenceNumToPathingEntity[data.sequenceNumber] = rectangleEntity
+//                }
+//
+//                MapEntityType.ROCK -> blockingEntities.add(rectangleEntity)
+//                MapEntityType.TOWER -> blockingEntities.add(rectangleEntity)
+//                MapEntityType.TELEPORT_IN -> {
+//                    val data = gameWorld.world[it, EntityTeleportInComponent::class]
+//                    sequenceNumToTpIn[data.sequenceNumber] = rectangleEntity
+//                }
+//
+//                MapEntityType.TELEPORT_OUT -> {
+//                    val data = gameWorld.world[it, EntityTeleportOutComponent::class]
+//                    sequenceNumToTpOut[data.sequenceNumber] = rectangleEntity
+//                }
+//
+//                MapEntityType.SMALL_BLOCKER -> TODO()
+//                MapEntityType.SPEED_AREA -> Unit
+//                MapEntityType.MONSTER -> TODO()
+//            }
+//        }
+//
+//        require(sequenceNumToTpIn.size == sequenceNumToTpOut.size)
 
-        val sequenceNumToPathingEntity = mutableMapOf<Int, IRectangleEntity>()
-        val sequenceNumToTpIn = mutableMapOf<Int, IRectangleEntity>()
-        val sequenceNumToTpOut = mutableMapOf<Int, IRectangleEntity>()
-        val blockingEntities = mutableListOf<IRectangleEntity>()
+//        val pathFinderResult = PathFinder.getUpdatablePath(
+//            gameMapDimensionsState.width, gameMapDimensionsState.height,
+//            start, finish,
+//            blockingEntities = blockingEntities,
+//            pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {
+//                it.first
+//            }.map { it.second },
+//            teleportPairs = sequenceNumToTpIn.toList().map {
+//                TeleportPair(it.second, sequenceNumToTpOut[it.first]!!, it.first)
+//            }.sortedBy {
+//                it.sequenceNumber
+//            }
+//        )
 
-        gameWorld.entityFamily.getSequence().forEach {
-            val mapEntityComponent = gameWorld.entityTypeComponents.getComponent(it)
-            val sizeComponent = gameWorld.sizeComponent.getComponent(it)
-            val bottomLeftPositionComponent = gameWorld.bottomLeftPositionComponent.getComponent(it)
-            val rectangleEntity = RectangleEntity(
-                bottomLeftPositionComponent.x,
-                bottomLeftPositionComponent.y,
-                sizeComponent.width,
-                sizeComponent.height
-            )
-            when (mapEntityComponent.type) {
-                MapEntityType.START -> start = rectangleEntity
-                MapEntityType.FINISH -> finish = rectangleEntity
-                MapEntityType.CHECKPOINT -> {
-                    val data = gameWorld.world[it, EntityCheckpointComponent::class]
-                    sequenceNumToPathingEntity[data.sequenceNumber] = rectangleEntity
-                }
-
-                MapEntityType.ROCK -> blockingEntities.add(rectangleEntity)
-                MapEntityType.TOWER -> blockingEntities.add(rectangleEntity)
-                MapEntityType.TELEPORT_IN -> {
-                    val data = gameWorld.world[it, EntityTeleportInComponent::class]
-                    sequenceNumToTpIn[data.sequenceNumber] = rectangleEntity
-                }
-
-                MapEntityType.TELEPORT_OUT -> {
-                    val data = gameWorld.world[it, EntityTeleportOutComponent::class]
-                    sequenceNumToTpOut[data.sequenceNumber] = rectangleEntity
-                }
-
-                MapEntityType.SMALL_BLOCKER -> TODO()
-                MapEntityType.SPEED_AREA -> Unit
-                MapEntityType.MONSTER -> TODO()
-            }
-        }
-
-        require(sequenceNumToTpIn.size == sequenceNumToTpOut.size)
-
-        val pathFinderResult = PathFinder.getUpdatablePath(
-            gameMapDimensionsState.width, gameMapDimensionsState.height,
-            start, finish,
-            blockingEntities = blockingEntities,
-            pathingEntities = sequenceNumToPathingEntity.toList().sortedBy {
-                it.first
-            }.map { it.second },
-            teleportPairs = sequenceNumToTpIn.toList().map {
-                TeleportPair(it.second, sequenceNumToTpOut[it.first]!!, it.first)
-            }.sortedBy {
-                it.sequenceNumber
-            }
+        val pathFinderResult = gameWorld.getPathFindingResult(
+            gameMapDimensionsState.width,
+            gameMapDimensionsState.height,
         )
 
         println("pathFinderResult: $pathFinderResult")
