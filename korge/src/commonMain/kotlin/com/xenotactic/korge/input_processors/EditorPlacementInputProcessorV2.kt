@@ -6,10 +6,7 @@ import com.soywiz.korge.baseview.BaseView
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.Views
 import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.model.RectangleEntity
+import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.engine.Engine
@@ -24,6 +21,7 @@ import kotlin.math.min
 
 
 data class PlacedEntityEvent(val entityType: MapEntityType)
+data class PlaceEntityErrorEvent(val errorMsg: String)
 
 
 class EditorPlacementInputProcessorV2(
@@ -107,7 +105,7 @@ class EditorPlacementInputProcessorV2(
                     uiMap.renderHighlightEntity(entityToAdd)
                     engine.eventBus.send(
                         NotificationTextUpdateEvent(
-                            gameMapApi.getNotificationText(MapEntityType.TELEPORT_OUT)
+                            editorState.entityTypeToPlace.getNotificationText()
                         )
                     )
                     return
@@ -123,8 +121,13 @@ class EditorPlacementInputProcessorV2(
                     uiMap.clearHighlightLayer()
                     return
                 }
-                gameMapApi.placeEntitiesV2(entityToAdd)
-                engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
+                if (gameMapApi.checkNewEntitiesBlocksPath(entityToAdd)) {
+                    engine.eventBus.send(PlaceEntityErrorEvent(
+                        "Unable to place '${editorState.entityTypeToPlace}': Blocks path"))
+                } else {
+                    gameMapApi.placeEntitiesV2(entityToAdd)
+                    engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
+                }
             }
         } else {
             TODO("Unsupported entity type: ${editorState.entityTypeToPlace}")

@@ -129,31 +129,26 @@ class GameWorld(
 
     fun getPathFindingResult(
         width: GameUnit, height: GameUnit,
-        blockingEntities: List<IRectangleEntity> = this.blockingEntities.map { it.toRectangleEntity() }
+        blockingEntities: List<IRectangleEntity> = this.blockingEntities.map { it.toRectangleEntity() },
+        additionalBlockingEntities: List<IRectangleEntity> = emptyList()
     ): PathFindingResult {
         val startEntity = this.startEntity
         val finishEntity = this.finishEntity
         val addedCheckpoints = this.checkpoints
 
-        val sequenceNumToTeleportInEntities = world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(EntityTeleportInComponent::class)
-        ).associateBy({
+        val sequenceNumToTeleportInEntities = this.teleportIns.associateBy({
             it[EntityTeleportInComponent::class].sequenceNumber
         }) {
             it
         }
-        val sequenceNumToTeleportOutEntities = world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(EntityTeleportOutComponent::class)
-        ).associateBy({
+        val sequenceNumToTeleportOutEntities = this.teleportOuts.associateBy({
             it[EntityTeleportOutComponent::class].sequenceNumber
         }) {
             it
         }
 
         require(
-            sequenceNumToTeleportInEntities.keys.equals(
-                sequenceNumToTeleportOutEntities.keys
-            )
+            sequenceNumToTeleportInEntities.keys == sequenceNumToTeleportOutEntities.keys
         )
 
         val teleportPairs = sequenceNumToTeleportInEntities.map {
@@ -169,8 +164,8 @@ class GameWorld(
             height,
             startEntity.toRectangleEntity(),
             finishEntity.toRectangleEntity(),
-            blockingEntities,
-            addedCheckpoints.sortedBy { it.get(EntityCheckpointComponent::class).sequenceNumber }
+            blockingEntities + additionalBlockingEntities,
+            addedCheckpoints.sortedBy { it[EntityCheckpointComponent::class].sequenceNumber }
                 .map { it.toRectangleEntity() },
             teleportPairs
         )

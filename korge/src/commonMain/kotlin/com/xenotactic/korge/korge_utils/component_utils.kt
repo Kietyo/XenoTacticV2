@@ -4,6 +4,7 @@ import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.inBetween
+import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
@@ -83,7 +84,11 @@ fun intersectRectangles(thisPosition: GameUnitTuple, thisSize: GameUnitTuple,
     )
 }
 
-
+fun StagingEntity.toRectangleEntity(): RectangleEntity {
+    val thisPosition = get(BottomLeftPositionComponent::class)
+    val thisSize = get(SizeComponent::class)
+    return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
+}
 
 fun StatefulEntity.toRectangleEntity(): RectangleEntity {
     val thisPosition = get(BottomLeftPositionComponent::class)
