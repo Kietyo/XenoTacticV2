@@ -2,11 +2,13 @@ package com.xenotactic.korge.scenes
 
 import com.soywiz.klock.TimeSpan
 import com.soywiz.korev.Key
+import com.soywiz.korge.component.docking.dockedTo
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
+import com.soywiz.korma.geom.Anchor
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -172,6 +174,8 @@ class PlayScene : Scene() {
         }
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
+//            centerXOnStage()
+//            dockedTo(Anchor.CENTER)
             centerXOnStage()
         }
 

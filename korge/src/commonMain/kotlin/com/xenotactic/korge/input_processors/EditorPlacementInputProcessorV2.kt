@@ -105,7 +105,7 @@ class EditorPlacementInputProcessorV2(
                     uiMap.renderHighlightEntity(entityToAdd)
                     engine.eventBus.send(
                         NotificationTextUpdateEvent(
-                            editorState.entityTypeToPlace.getNotificationText()
+                            gameMapApi.getNotificationText(editorState.entityTypeToPlace)
                         )
                     )
                     return

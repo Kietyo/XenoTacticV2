@@ -135,5 +135,24 @@ class GameMapApi(
         }.toSet()
     }
 
+    fun getNotificationText(entityType: MapEntityType): String {
+        val entityName = when (entityType) {
+            MapEntityType.START -> "Start"
+            MapEntityType.FINISH -> "Finish"
+            MapEntityType.CHECKPOINT -> {
+                "Checkpoint ${numCheckpoints + 1}"
+            }
+
+            MapEntityType.ROCK -> "Rock"
+            MapEntityType.TOWER -> "Tower"
+            MapEntityType.TELEPORT_IN -> "Teleport In ${numCompletedTeleports + 1}"
+            MapEntityType.TELEPORT_OUT -> "Teleport Out ${numCompletedTeleports + 1}"
+            MapEntityType.SMALL_BLOCKER -> TODO()
+            MapEntityType.SPEED_AREA -> TODO()
+            MapEntityType.MONSTER -> TODO()
+        }
+
+        return "Placement Mode: $entityName"
+    }
 
 }
