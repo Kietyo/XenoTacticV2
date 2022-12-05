@@ -17,7 +17,6 @@ import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
@@ -84,7 +83,7 @@ class UIMapV2(
     val entityLayer = this.container().apply {
     }
 
-    val _entityLabelLayer = this.container()
+    val entityLabelLayer = this.container()
 
     private val _pathingLinesGraphics = this.gpuGraphics {
         //        useNativeRendering = false

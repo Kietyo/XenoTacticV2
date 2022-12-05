@@ -6,7 +6,6 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korma.geom.Anchor
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources
@@ -149,29 +148,6 @@ class UIMapEventListeners(
                 }
             }
 
-//            val uiEntity = UIEntity(
-//                mapEntityComponent.entityData.toMapEntityType(),
-//                sizeComponent.width,
-//                sizeComponent.height,
-//                uiMap.gridSize,
-//                uiMap.borderSize,
-//                if (mapEntityComponent.entityData is MapEntityData.SpeedArea) (mapEntityComponent.entityData as MapEntityData.SpeedArea).speedEffect else null
-//            ).apply {
-//                when (mapEntityComponent.entityData) {
-//                    is MapEntityData.SpeedArea -> addTo(uiMap.speedAreaLayer)
-//                    is MapEntityData.Checkpoint,
-//                    MapEntityData.Finish,
-//                    MapEntityData.SmallBlocker,
-//                    MapEntityData.Start,
-//                    is MapEntityData.TeleportIn,
-//                    is MapEntityData.TeleportOut,
-//                    MapEntityData.Tower,
-//                    MapEntityData.Rock -> addTo(uiMap.entityLayer)
-//
-//                    MapEntityData.Monster -> addTo(uiMap.monsterLayer)
-//                }
-//            }
-
             uiEntityContainer.apply {
                 when (entityTypeComponent.type) {
                     MapEntityType.START,
@@ -195,7 +171,7 @@ class UIMapEventListeners(
             val text = entityTypeComponent.type.getText(entityId, world)
             if (text != null) {
                 val textView = makeEntityLabelText(text).apply {
-                    addTo(uiEntityContainer)
+                    addTo(uiMap.entityLabelLayer)
                     scaledHeight = uiMap.gridSize / 2
                     scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                     centerOn(uiEntityContainer)

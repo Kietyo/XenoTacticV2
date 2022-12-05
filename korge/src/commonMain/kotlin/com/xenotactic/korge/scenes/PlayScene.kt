@@ -19,6 +19,7 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
+import com.xenotactic.korge.component_listeners.UIMapEntityTextComponentListener
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
@@ -115,6 +116,7 @@ class PlayScene : Scene() {
             addComponentListener(PreSelectionComponentListener(engine))
             addComponentListener(SelectionComponentListener(engine))
             addComponentListener(UIMapEntityComponentListener())
+            addComponentListener(UIMapEntityTextComponentListener(engine))
             addSystem(MonsterMoveSystem(this))
             addSystem(MonsterRemoveSystem(this))
             addSystem(MonsterComputeSpeedEffectSystem(engine))
