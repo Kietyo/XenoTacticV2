@@ -23,6 +23,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
+import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessorV2
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
@@ -132,6 +133,14 @@ class PlayScene : Scene() {
             addSystem(TowerAttackSystem(world))
         }
 
+        val infoText = text("Hello world")
+        val pathLengthText = text("Hello world") {
+            alignTopToBottomOf(infoText)
+            eventBus.register<UpdatedPathLineEvent> {
+                text = "Path length: ${it.newPathLength?.toInt()}"
+            }
+        }
+
 //        gameMapApi.placeEntities(randomMap.map.getAllEntities())
         gameMapApi.placeEntitiesV2(randomMap2.gameWorld)
 //        gameMapApi.placeEntities(
@@ -200,7 +209,7 @@ class PlayScene : Scene() {
             centerXOnStage()
         }
 
-        val infoText = text("Hello world")
+
 
         addComponent(
             EditorPlacementInputProcessorV2(
