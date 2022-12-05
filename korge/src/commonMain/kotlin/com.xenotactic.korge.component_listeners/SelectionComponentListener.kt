@@ -22,7 +22,7 @@ class SelectionComponentListener(
     private val SELECTION_COLOR = Colors.YELLOW
 
     override fun onAdd(entityId: EntityId, component: SelectedComponent) {
-        val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
+        val uiEntityContainerComponent = world.get(entityId, UIEntityContainerComponent::class)
         val sizeComponent = world[entityId, SizeComponent::class]
 
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
@@ -44,7 +44,11 @@ class SelectionComponentListener(
 
     override fun onRemove(entityId: EntityId, component: SelectedComponent) {
         println("Removed selection for entity: $entityId")
-        val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
+        val uiEntityContainerComponent = world.getOrNull(entityId, UIEntityContainerComponent::class)
+        if (uiEntityContainerComponent == null) {
+            // This entity was already removed.
+            return
+        }
         val uiSelectionComponent = world[entityId, UISelectionComponent::class]
         uiEntityContainerComponent.container.removeChild(uiSelectionComponent.graphics)
         world.modifyEntity(entityId) {

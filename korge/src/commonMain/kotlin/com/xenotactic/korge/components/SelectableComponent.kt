@@ -1,4 +1,4 @@
 package com.xenotactic.korge.components
 
-object IsSelectableComponent {
+object SelectableComponent {
 }

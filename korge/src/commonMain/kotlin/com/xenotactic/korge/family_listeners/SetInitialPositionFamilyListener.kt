@@ -39,9 +39,7 @@ class SetInitialPositionFamilyListener(
         uiEntityViewComponent.entityView.xy(worldX, worldY)
     }
 
-    override fun onRemove(entityId: EntityId) {
-        TODO("Not yet implemented")
-    }
+    override fun onRemove(entityId: EntityId) = Unit
 
     override fun onExisting(entityId: EntityId) {
         TODO("Not yet implemented")

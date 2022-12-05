@@ -20,12 +20,15 @@ import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
+import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessorV2
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
@@ -167,6 +170,24 @@ class PlayScene : Scene() {
             }
         }
 
+        val deleteEntitiesButton = uiButton("Delete Entities") {
+            disable()
+            alignBottomToBottomOfWindow()
+            alignLeftToRightOf(printWorldButton)
+            onClick {
+                println("delete entities button clicked!")
+                eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
+                disable()
+            }
+            eventBus.register<EntitySelectionChangedEvent> {
+                if (gameWorld.selectionFamily.getSequence().isEmpty()) {
+                    disable()
+                } else {
+                    enable()
+                }
+            }
+        }
+
         keys {
             this.down(Key.ESCAPE) {
                 editorState.switchToPlayingMode()
@@ -203,3 +224,4 @@ class PlayScene : Scene() {
 
     }
 }
+

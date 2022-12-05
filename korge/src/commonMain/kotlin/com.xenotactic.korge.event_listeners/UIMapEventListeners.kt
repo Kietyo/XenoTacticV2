@@ -16,6 +16,7 @@ import com.xenotactic.korge.components.*
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.korge_utils.getText
 import com.xenotactic.korge.korge_utils.makeEntityLabelText
+import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.ui.UIMapV2
 
 interface TestEventListenerI<T> {
@@ -26,6 +27,11 @@ data class AddedUIEntityEvent(
     val entityId: EntityId
 )
 
+data class RemoveUIEntitiesEvent(
+    val entities: Set<EntityId>
+)
+
+
 data class AddedMonsterEntityEvent(
     val entityId: EntityId
 )
@@ -34,6 +40,7 @@ class UIMapEventListeners(
     val engine: Engine
 ) {
     val uiMap = engine.injections.getSingleton<UIMapV2>()
+    val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     val gameWorld = engine.gameWorld
     val world = gameWorld.world
 
@@ -41,9 +48,16 @@ class UIMapEventListeners(
         engine.eventBus.register<AddedUIEntityEvent> {
             handleAddedUIEntityEvent(it.entityId)
         }
+        engine.eventBus.register<RemoveUIEntitiesEvent> {
+            handleRemoveUIEntitiesEvent(it.entities)
+        }
         engine.eventBus.register<AddedMonsterEntityEvent> {
             handleAddedMonsterEntityEvent(it.entityId)
         }
+    }
+
+    private fun handleRemoveUIEntitiesEvent(entities: Set<EntityId>) {
+        gameMapApi.removeEntities(entities)
     }
 
     private fun handleAddedUIEntityEvent(entityId: EntityId) {

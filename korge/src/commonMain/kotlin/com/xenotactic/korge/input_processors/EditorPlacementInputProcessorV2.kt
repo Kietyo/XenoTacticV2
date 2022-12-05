@@ -32,7 +32,7 @@ class EditorPlacementInputProcessorV2(
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val uiMap = engine.injections.getSingleton<UIMapV2>()
 
-    val ALLOWED_EVENTS = setOf(
+    private val ALLOWED_EVENTS = setOf(
         MouseEvent.Type.DOWN,
         MouseEvent.Type.DRAG,
         MouseEvent.Type.UP,

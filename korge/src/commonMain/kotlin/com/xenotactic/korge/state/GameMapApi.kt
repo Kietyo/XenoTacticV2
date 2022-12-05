@@ -61,13 +61,14 @@ class GameMapApi(
                     MapEntityType.FINISH -> Unit
                     MapEntityType.CHECKPOINT -> Unit
                     MapEntityType.ROCK -> {
-                        addComponentOrThrow(IsSelectableComponent)
+                        addComponentOrThrow(SelectableComponent)
                     }
 
                     MapEntityType.TOWER -> {
                         addComponentOrThrow(RangeComponent(7.toGameUnit()))
                         addComponentOrThrow(ReloadTimeComponent(1000.0))
                         addComponentOrThrow(ReloadDowntimeComponent(0.0))
+                        addComponentOrThrow(SelectableComponent)
                     }
 
                     MapEntityType.TELEPORT_IN -> Unit
@@ -76,6 +77,7 @@ class GameMapApi(
                     MapEntityType.SPEED_AREA -> Unit
                     MapEntityType.MONSTER -> Unit
                 }
+                addOrReplaceComponent(SelectableComponent)
             }
             engine.eventBus.send(AddedUIEntityEvent(entityId))
         }
@@ -153,6 +155,11 @@ class GameMapApi(
         }
 
         return "Placement Mode: $entityName"
+    }
+
+    fun removeEntities(entities: Set<EntityId>) {
+        entities.forEach { gameWorld.world.removeEntity(it) }
+        updateShortestPath()
     }
 
 }

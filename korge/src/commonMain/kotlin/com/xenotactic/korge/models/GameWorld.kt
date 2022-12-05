@@ -28,7 +28,7 @@ class GameWorld(
                 EntityTypeComponent::class,
                 SizeComponent::class,
                 BottomLeftPositionComponent::class,
-                IsSelectableComponent::class
+                SelectableComponent::class
             )
         )
     )

@@ -25,6 +25,10 @@ import kotlin.time.measureTimedValue
 
 infix fun Int.to(that: Int): GameUnitTuple = GameUnitTuple(this, that)
 
+fun <T> Sequence<T>.isEmpty(): Boolean {
+    return this.firstOrNull() == null
+}
+
 
 fun toWorldCoordinates(gridSize: Double, entity: StagingEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
     val position = entity[BottomLeftPositionComponent::class]
