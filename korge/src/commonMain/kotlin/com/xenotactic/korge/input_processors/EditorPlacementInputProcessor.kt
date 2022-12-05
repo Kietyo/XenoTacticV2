@@ -24,7 +24,7 @@ data class PlacedEntityEvent(val entityType: MapEntityType)
 data class PlaceEntityErrorEvent(val errorMsg: String)
 
 
-class EditorPlacementInputProcessorV2(
+class EditorPlacementInputProcessor(
     override val view: BaseView,
     val engine: Engine
 ) : MouseComponent {

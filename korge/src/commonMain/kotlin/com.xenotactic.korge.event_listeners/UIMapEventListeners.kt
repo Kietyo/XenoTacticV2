@@ -134,17 +134,11 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.MONSTER -> {
-//                val diameter = worldWidth
                     UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(uiEntityContainer) {
                         anchor(Anchor.CENTER)
                         scaledWidth = worldWidth.toDouble()
                         scaledHeight = worldHeight.toDouble()
                     }
-//                Circle((diameter / 2).value, Colors.RED).apply {
-//                    addTo(this@UIEntity)
-//                    anchor(Anchor.CENTER)
-//                }
-
                 }
             }
 

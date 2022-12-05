@@ -2,15 +2,12 @@ package com.xenotactic.korge.scenes
 
 import com.soywiz.klock.TimeSpan
 import com.soywiz.korev.Key
-import com.soywiz.korge.component.docking.dockedTo
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
-import com.soywiz.korma.geom.Anchor
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
@@ -26,7 +23,7 @@ import com.xenotactic.korge.event_listeners.UIMapEventListeners
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
-import com.xenotactic.korge.input_processors.EditorPlacementInputProcessorV2
+import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
@@ -214,7 +211,7 @@ class PlayScene : Scene() {
 
 
         addComponent(
-            EditorPlacementInputProcessorV2(
+            EditorPlacementInputProcessor(
                 this, engine
             )
         )

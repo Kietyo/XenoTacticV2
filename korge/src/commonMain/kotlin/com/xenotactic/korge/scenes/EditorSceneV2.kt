@@ -50,7 +50,7 @@ class EditorSceneV2 : Scene() {
             addComponentListener(SelectionComponentListener(engine))
         }
 
-        addComponent(EditorPlacementInputProcessorV2(
+        addComponent(EditorPlacementInputProcessor(
             this, engine
         ))
 
