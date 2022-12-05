@@ -61,6 +61,14 @@ class GameWorld(
             )
         )
     )
+    val blockingEntitiesFamily = world.getOrCreateFamily(
+        FamilyConfiguration(
+            allOfComponents = setOf(
+                EntityBlockingComponent::class,
+            )
+        )
+    )
+
     val bottomLeftPositionComponent =
         world.getComponentContainer<BottomLeftPositionComponent>()
     val sizeComponent = world.getComponentContainer<SizeComponent>()

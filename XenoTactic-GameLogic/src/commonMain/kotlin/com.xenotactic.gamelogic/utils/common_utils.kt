@@ -105,7 +105,7 @@ fun String.removeAllIndents(): String {
 
 
 
-fun rectangleIntersects(a: GRectInt, b: GRectInt): Boolean {
+fun rectangleIntersects(a: IRectangleEntity, b: IRectangleEntity): Boolean {
     return a.left < b.right && a.right > b.left &&
             a.bottom < b.top && a.top > b.bottom
 }

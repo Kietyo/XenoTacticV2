@@ -5,6 +5,7 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.PathFindingResult
+import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.components.*
 import com.xenotactic.korge.ecomponents.DebugEComponent
@@ -42,6 +43,13 @@ class GameMapApi(
         ) is PathFindingResult.Failure
     }
 
+    fun checkNewEntityIntersectsExistingBlockingEntities(entity: StagingEntity): Boolean {
+        val asRect = entity.toRectangleEntity()
+        return gameWorld.blockingEntities.any {
+            rectangleIntersects(asRect, it.toRectangleEntity())
+        }
+    }
+
     fun placeEntitiesV2(otherGameWorld: GameWorld) {
         val entities = otherGameWorld.world.getStagingEntities()
         placeEntitiesV2(entities)
@@ -77,7 +85,6 @@ class GameMapApi(
                     MapEntityType.SPEED_AREA -> Unit
                     MapEntityType.MONSTER -> Unit
                 }
-                addOrReplaceComponent(SelectableComponent)
             }
             engine.eventBus.send(AddedUIEntityEvent(entityId))
         }

@@ -23,7 +23,7 @@ class UINotificationText(
         alignTopToBottomOf(notificationText)
         visible = false
     }
-    private val DEFAULT_DISPLAY_TIME_MILLIS = 5000L
+    private val DEFAULT_DISPLAY_TIME_MILLIS = 3000L
     private val DISPLAY_TIME_UNTIL_FADE_MILLIS = 2000L
     private var errorTextDisplayTimeMillis = DEFAULT_DISPLAY_TIME_MILLIS
     private val TICK_RATE_MILLIS = 100L

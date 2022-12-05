@@ -99,34 +99,58 @@ class EditorPlacementInputProcessorV2(
                         gridXInt,
                         gridYInt
                     )
-                if (editorState.entityTypeToPlace == MapEntityType.TELEPORT_IN) {
-                    stagingTeleportIn = entityToAdd
-                    editorState.entityTypeToPlace = MapEntityType.TELEPORT_OUT
-                    uiMap.renderHighlightEntity(entityToAdd)
-                    engine.eventBus.send(
-                        NotificationTextUpdateEvent(
-                            gameMapApi.getNotificationText(editorState.entityTypeToPlace)
+                when (editorState.entityTypeToPlace) {
+                    MapEntityType.START -> TODO()
+                    MapEntityType.FINISH -> TODO()
+                    MapEntityType.CHECKPOINT -> TODO()
+                    MapEntityType.ROCK -> TODO()
+                    MapEntityType.TELEPORT_IN -> {
+                        stagingTeleportIn = entityToAdd
+                        editorState.entityTypeToPlace = MapEntityType.TELEPORT_OUT
+                        uiMap.renderHighlightEntity(entityToAdd)
+                        engine.eventBus.send(
+                            NotificationTextUpdateEvent(
+                                gameMapApi.getNotificationText(editorState.entityTypeToPlace)
+                            )
                         )
-                    )
-                    return
-                }
-                if (editorState.entityTypeToPlace == MapEntityType.TELEPORT_OUT) {
-                    require(stagingTeleportIn != null)
+                        return
+                    }
 
-                    gameMapApi.placeEntitiesV2(
-                        stagingTeleportIn!!,
-                        entityToAdd
-                    )
-                    engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
-                    uiMap.clearHighlightLayer()
-                    return
-                }
-                if (gameMapApi.checkNewEntitiesBlocksPath(entityToAdd)) {
-                    engine.eventBus.send(PlaceEntityErrorEvent(
-                        "Unable to place '${editorState.entityTypeToPlace}': Blocks path"))
-                } else {
-                    gameMapApi.placeEntitiesV2(entityToAdd)
-                    engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
+                    MapEntityType.TELEPORT_OUT -> {
+                        require(stagingTeleportIn != null)
+
+                        gameMapApi.placeEntitiesV2(
+                            stagingTeleportIn!!,
+                            entityToAdd
+                        )
+                        engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
+                        uiMap.clearHighlightLayer()
+                        return
+                    }
+
+                    MapEntityType.SMALL_BLOCKER -> TODO()
+                    MapEntityType.SPEED_AREA -> TODO()
+                    MapEntityType.MONSTER -> TODO()
+                    MapEntityType.TOWER -> {
+                        if (gameMapApi.checkNewEntitiesBlocksPath(entityToAdd)) {
+                            engine.eventBus.send(
+                                PlaceEntityErrorEvent(
+                                    "Unable to place '${editorState.entityTypeToPlace}': Blocks path"
+                                )
+                            )
+                            return
+                        }
+                        if (gameMapApi.checkNewEntityIntersectsExistingBlockingEntities(entityToAdd)) {
+                            engine.eventBus.send(
+                                PlaceEntityErrorEvent(
+                                    "Unable to place '${editorState.entityTypeToPlace}': Intersects with another blocking entity"
+                                )
+                            )
+                            return
+                        }
+                        gameMapApi.placeEntitiesV2(entityToAdd)
+                        engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
+                    }
                 }
             }
         } else {
@@ -143,10 +167,15 @@ class EditorPlacementInputProcessorV2(
                 gameMapApi.numCheckpoints,
                 position
             )
+
             MapEntityType.ROCK -> TODO()
             MapEntityType.TOWER -> StagingEntityUtils.createTower(position)
             MapEntityType.TELEPORT_IN -> StagingEntityUtils.createTeleportIn(gameMapApi.numCompletedTeleports, position)
-            MapEntityType.TELEPORT_OUT -> StagingEntityUtils.createTeleportOut(gameMapApi.numCompletedTeleports, position)
+            MapEntityType.TELEPORT_OUT -> StagingEntityUtils.createTeleportOut(
+                gameMapApi.numCompletedTeleports,
+                position
+            )
+
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()

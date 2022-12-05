@@ -13,11 +13,6 @@ data class GRectInt(
     override val width: GameUnit,
     override val height: GameUnit
 ): IRectangleEntity {
-    val left: GameUnit
-        get() = x
-    val bottom: GameUnit
-        get() = y
-
     companion object {
         operator fun invoke(x: Int, y: Int, width: Int, height: Int) = GRectInt(
             x.toGameUnit(),

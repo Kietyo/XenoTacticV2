@@ -11,7 +11,9 @@ interface IRectangleEntity {
     val width: GameUnit
     val height: GameUnit
 
+    val left get() = x
     val right get() = x + width
+    val bottom get() = y
     val top get() = y + height
 
     val blockGameUnitPoints: Set<GameUnitTuple>
