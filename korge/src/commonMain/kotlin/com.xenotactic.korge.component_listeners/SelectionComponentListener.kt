@@ -16,14 +16,14 @@ import com.xenotactic.korge.ui.UIMapV2
 
 class SelectionComponentListener(
     val engine: Engine
-) : ComponentListener<SelectedComponent> {
+) : ComponentListener<com.xenotactic.gamelogic.components.SelectedComponent> {
     val world = engine.gameWorld.world
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     private val SELECTION_COLOR = Colors.YELLOW
 
-    override fun onAdd(entityId: EntityId, component: SelectedComponent) {
-        val uiEntityContainerComponent = world.get(entityId, UIEntityContainerComponent::class)
-        val sizeComponent = world[entityId, SizeComponent::class]
+    override fun onAdd(entityId: EntityId, component: com.xenotactic.gamelogic.components.SelectedComponent) {
+        val uiEntityContainerComponent = world.get(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
+        val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
 
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
         val selectionBox = Graphics().addTo(uiEntityContainerComponent.container).apply {
@@ -36,29 +36,29 @@ class SelectionComponentListener(
         }
 
         world.modifyEntity(entityId) {
-            addComponentOrThrow(UISelectionComponent(selectionBox))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.UISelectionComponent(selectionBox))
         }
 
         engine.eventBus.send(EntitySelectionChangedEvent)
     }
 
-    override fun onRemove(entityId: EntityId, component: SelectedComponent) {
+    override fun onRemove(entityId: EntityId, component: com.xenotactic.gamelogic.components.SelectedComponent) {
         println("Removed selection for entity: $entityId")
-        val uiEntityContainerComponent = world.getOrNull(entityId, UIEntityContainerComponent::class)
+        val uiEntityContainerComponent = world.getOrNull(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
         if (uiEntityContainerComponent == null) {
             // This entity was already removed.
             return
         }
-        val uiSelectionComponent = world[entityId, UISelectionComponent::class]
+        val uiSelectionComponent = world[entityId, com.xenotactic.gamelogic.components.UISelectionComponent::class]
         uiEntityContainerComponent.container.removeChild(uiSelectionComponent.graphics)
         world.modifyEntity(entityId) {
-            removeComponent<UISelectionComponent>()
+            removeComponent<com.xenotactic.gamelogic.components.UISelectionComponent>()
         }
 
         engine.eventBus.send(EntitySelectionChangedEvent)
     }
 
-    override fun onExisting(entityId: EntityId, component: SelectedComponent) {
+    override fun onExisting(entityId: EntityId, component: com.xenotactic.gamelogic.components.SelectedComponent) {
         TODO("Not yet implemented")
     }
 }

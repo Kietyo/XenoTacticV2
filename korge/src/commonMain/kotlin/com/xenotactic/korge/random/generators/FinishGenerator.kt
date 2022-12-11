@@ -4,9 +4,9 @@ import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.EntityFinishComponent
-import com.xenotactic.korge.components.EntityStartComponent
-import com.xenotactic.korge.components.EntityTypeComponent
+import com.xenotactic.gamelogic.components.EntityFinishComponent
+import com.xenotactic.gamelogic.components.EntityStartComponent
+import com.xenotactic.gamelogic.components.EntityTypeComponent
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.korge.korge_utils.intersectsEntity
 import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
@@ -18,7 +18,7 @@ object FinishGenerator : IGenerator {
     override fun run(context: GenerationContext) {
         val startEntity = context.world.getFirstStatefulEntityMatching(
             FamilyConfiguration.allOf(
-                EntityStartComponent::class
+                com.xenotactic.gamelogic.components.EntityStartComponent::class
             )
         )
         val size = context.getSizeOfEntity(MapEntityType.FINISH)

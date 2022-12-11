@@ -12,8 +12,8 @@ class MonsterComputeSpeedEffectSystem(
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            MonsterComponent::class,
-            PathSequenceTraversalComponent::class,
+            com.xenotactic.gamelogic.components.MonsterComponent::class,
+            com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class,
         )
     )
 
@@ -21,16 +21,16 @@ class MonsterComputeSpeedEffectSystem(
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach { entityId ->
-            val pathSequenceTraversalComponent = world[entityId, PathSequenceTraversalComponent::class]
-            val computedSpeedEffectComponent = world[entityId, ComputedSpeedEffectComponent::class]
+            val pathSequenceTraversalComponent = world[entityId, com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class]
+            val computedSpeedEffectComponent = world[entityId, com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent::class]
 
             val currentPosition = pathSequenceTraversalComponent.pathSequenceTraversal.currentPosition
 
             computedSpeedEffectComponent.computedSpeedEffect =
                 engine.gameWorld.speedAreaFamily.getSequence().fold(1.0) { acc, it ->
-                    val speedAreaEffectComponent = world[it, EntitySpeedAreaComponent::class]
-                    val bottomLeftPositionComponent = world[it, BottomLeftPositionComponent::class]
-                    val sizeComponent = world[it, SizeComponent::class]
+                    val speedAreaEffectComponent = world[it, com.xenotactic.gamelogic.components.EntitySpeedAreaComponent::class]
+                    val bottomLeftPositionComponent = world[it, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
+                    val sizeComponent = world[it, com.xenotactic.gamelogic.components.SizeComponent::class]
                     val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
                     val radius = sizeComponent.toRadius()
                     val distance = currentPosition.distanceTo(centerPoint)

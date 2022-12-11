@@ -14,8 +14,8 @@ import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.WorldUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
-import com.xenotactic.korge.components.BottomLeftPositionComponent
-import com.xenotactic.korge.components.SizeComponent
+import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 
 import kotlin.math.*
 import kotlin.time.ExperimentalTime
@@ -31,8 +31,8 @@ fun <T> Sequence<T>.isEmpty(): Boolean {
 
 
 fun toWorldCoordinates(gridSize: Double, entity: StagingEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
-    val position = entity[BottomLeftPositionComponent::class]
-    val size = entity[SizeComponent::class]
+    val position = entity[com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
+    val size = entity[com.xenotactic.gamelogic.components.SizeComponent::class]
     return toWorldCoordinates(
         gridSize,
         position.toTuple(), gameHeight, entityHeight = size.height

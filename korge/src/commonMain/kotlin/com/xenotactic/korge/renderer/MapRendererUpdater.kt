@@ -1,6 +1,6 @@
 package com.xenotactic.korge.renderer
 
-import com.xenotactic.korge.components.EntityRenderComponent
+import com.xenotactic.gamelogic.components.EntityRenderComponent
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
@@ -19,7 +19,7 @@ class MapRendererUpdater(
     init {
         eventBus.register<AddEntityEvent> { event ->
             engine.gameWorld.world.addEntity {
-                addOrReplaceComponent(EntityRenderComponent(event.entity))
+                addOrReplaceComponent(com.xenotactic.gamelogic.components.EntityRenderComponent(event.entity))
             }
         }
         eventBus.register<RemovedEntityEvent> {

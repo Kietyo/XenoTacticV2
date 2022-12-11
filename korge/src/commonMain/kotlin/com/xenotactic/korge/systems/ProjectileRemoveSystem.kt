@@ -11,14 +11,14 @@ class ProjectileRemoveSystem(
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            ProjectileComponent::class, MutableCenterPositionComponent::class,
-            TargetingComponent::class, VelocityComponent::class
+            com.xenotactic.gamelogic.components.ProjectileComponent::class, com.xenotactic.gamelogic.components.MutableCenterPositionComponent::class,
+            com.xenotactic.gamelogic.components.TargetingComponent::class, com.xenotactic.gamelogic.components.VelocityComponent::class
         ),
     )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach {
-            val targetingComponent = world[it, TargetingComponent::class]
+            val targetingComponent = world[it, com.xenotactic.gamelogic.components.TargetingComponent::class]
 
             // The target no longer exists in the world.
             if (!world.containsEntity(targetingComponent.targetEntityId)) {

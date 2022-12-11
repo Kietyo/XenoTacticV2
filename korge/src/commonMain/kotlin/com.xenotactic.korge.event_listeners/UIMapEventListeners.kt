@@ -125,7 +125,7 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.SPEED_AREA -> {
-                    val speedEffect = world[entityId, EntitySpeedAreaComponent::class].speedEffect
+                    val speedEffect = world[entityId, com.xenotactic.gamelogic.components.EntitySpeedAreaComponent::class].speedEffect
                     val speedAreaColor = com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil(
                         speedEffect,
                         slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
@@ -159,8 +159,8 @@ class UIMapEventListeners(
 
 
 
-            addComponentOrThrow(UIEntityViewComponent(uiEntityContainer))
-            addComponentOrThrow(UIEntityContainerComponent(uiEntityContainer))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEntityViewComponent(uiEntityContainer))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEntityContainerComponent(uiEntityContainer))
 
             val text = entityTypeComponent.type.getText(entityId, world)
             if (text != null) {
@@ -170,14 +170,14 @@ class UIMapEventListeners(
                     scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                     centerOn(uiEntityContainer)
                 }
-                addComponentOrThrow(UIMapEntityTextComponent(textView))
+                addComponentOrThrow(com.xenotactic.gamelogic.components.UIMapEntityTextComponent(textView))
             }
         }
     }
 
     fun handleAddedMonsterEntityEvent(entityId: EntityId) {
-        val sizeComponent = world[entityId, SizeComponent::class]
-        val maxHealthComponent = world[entityId, MaxHealthComponent::class]
+        val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
+        val maxHealthComponent = world[entityId, com.xenotactic.gamelogic.components.MaxHealthComponent::class]
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
         val spriteContainer = uiMap.monsterLayer.container()
         val uiSprite = UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(spriteContainer) {
@@ -189,9 +189,9 @@ class UIMapEventListeners(
             addTo(spriteContainer)
         }
         world.modifyEntity(entityId) {
-            addComponentOrThrow(UIEntityViewComponent(spriteContainer))
-            addComponentOrThrow(UIEightDirectionalSpriteComponent(uiSprite))
-            addComponentOrThrow(UIHealthBarComponent(healthBar))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEntityViewComponent(spriteContainer))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEightDirectionalSpriteComponent(uiSprite))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.UIHealthBarComponent(healthBar))
 
         }
     }

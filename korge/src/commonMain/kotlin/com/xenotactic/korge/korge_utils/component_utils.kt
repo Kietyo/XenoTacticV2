@@ -12,12 +12,12 @@ import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
-import com.xenotactic.korge.components.BottomLeftPositionComponent
-import com.xenotactic.korge.components.SizeComponent
+import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 
 fun getCenterPoint(
-    bottomLeftPositionComponent: BottomLeftPositionComponent,
-    sizeComponent: SizeComponent
+    bottomLeftPositionComponent: com.xenotactic.gamelogic.components.BottomLeftPositionComponent,
+    sizeComponent: com.xenotactic.gamelogic.components.SizeComponent
 ): GameUnitTuple {
     return GameUnitTuple(
         bottomLeftPositionComponent.x + sizeComponent.width / 2.0,
@@ -25,17 +25,17 @@ fun getCenterPoint(
     )
 }
 
-fun GameUnitTuple.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
-    return BottomLeftPositionComponent(x, y)
+fun GameUnitTuple.toBottomLeftPositionComponent(): com.xenotactic.gamelogic.components.BottomLeftPositionComponent {
+    return com.xenotactic.gamelogic.components.BottomLeftPositionComponent(x, y)
 }
 
-fun GameUnitTuple.toSizeComponent(): SizeComponent {
-    return SizeComponent(first, second)
+fun GameUnitTuple.toSizeComponent(): com.xenotactic.gamelogic.components.SizeComponent {
+    return com.xenotactic.gamelogic.components.SizeComponent(first, second)
 }
 
 fun StatefulEntity.intersectsEntity(position: GameUnitTuple, size: GameUnitTuple): Boolean {
-    val thisPosition = get(BottomLeftPositionComponent::class)
-    val thisSize = get(SizeComponent::class)
+    val thisPosition = get(com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class)
+    val thisSize = get(com.xenotactic.gamelogic.components.SizeComponent::class)
     return intersectRectangles(
         thisPosition.x.toDouble(),
         thisPosition.y.toDouble(),
@@ -55,8 +55,8 @@ fun StatefulEntity.isFullyCoveredBy(entities: Iterable<IRectangleEntity>): Boole
 }
 
 fun StatefulEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
-    val thisPosition = get(BottomLeftPositionComponent::class)
-    val thisSize = get(SizeComponent::class)
+    val thisPosition = get(com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class)
+    val thisSize = get(com.xenotactic.gamelogic.components.SizeComponent::class)
     return com.xenotactic.gamelogic.utils.isFullyCoveredBy(
         thisPosition.x.toDouble(),
         thisPosition.y.toDouble(),
@@ -85,14 +85,14 @@ fun intersectRectangles(thisPosition: GameUnitTuple, thisSize: GameUnitTuple,
 }
 
 fun StagingEntity.toRectangleEntity(): RectangleEntity {
-    val thisPosition = get(BottomLeftPositionComponent::class)
-    val thisSize = get(SizeComponent::class)
+    val thisPosition = get(com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class)
+    val thisSize = get(com.xenotactic.gamelogic.components.SizeComponent::class)
     return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
 }
 
 fun StatefulEntity.toRectangleEntity(): RectangleEntity {
-    val thisPosition = get(BottomLeftPositionComponent::class)
-    val thisSize = get(SizeComponent::class)
+    val thisPosition = get(com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class)
+    val thisSize = get(com.xenotactic.gamelogic.components.SizeComponent::class)
     return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
 }
 
@@ -127,10 +127,10 @@ fun getDirection8(angle: Angle): EightDirection {
     return matcher.direction
 }
 
-fun IRectangleEntity.getBottomLeftPositionComponent(): BottomLeftPositionComponent {
-    return BottomLeftPositionComponent(x, y)
+fun IRectangleEntity.getBottomLeftPositionComponent(): com.xenotactic.gamelogic.components.BottomLeftPositionComponent {
+    return com.xenotactic.gamelogic.components.BottomLeftPositionComponent(x, y)
 }
 
-fun IRectangleEntity.getSizeComponent(): SizeComponent {
-    return SizeComponent(width, height)
+fun IRectangleEntity.getSizeComponent(): com.xenotactic.gamelogic.components.SizeComponent {
+    return com.xenotactic.gamelogic.components.SizeComponent(width, height)
 }

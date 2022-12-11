@@ -7,10 +7,10 @@ import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.globals.ENTITY_LABEL_SIZE
 import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.EntityCheckpointComponent
-import com.xenotactic.korge.components.EntitySpeedAreaComponent
-import com.xenotactic.korge.components.EntityTeleportInComponent
-import com.xenotactic.korge.components.EntityTeleportOutComponent
+import com.xenotactic.gamelogic.components.EntityCheckpointComponent
+import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
+import com.xenotactic.gamelogic.components.EntityTeleportInComponent
+import com.xenotactic.gamelogic.components.EntityTeleportOutComponent
 import com.xenotactic.korge.ui.ENTITY_TEXT_FONT
 
 fun makeEntityLabelText(text: String): Text {
@@ -23,21 +23,21 @@ fun MapEntityType.getText(entityId: EntityId, world: World): String? {
         MapEntityType.START -> "START"
         MapEntityType.FINISH -> "FINISH"
         MapEntityType.CHECKPOINT -> {
-            val entityCheckpointComponent = world[entityId, EntityCheckpointComponent::class]
+            val entityCheckpointComponent = world[entityId, com.xenotactic.gamelogic.components.EntityCheckpointComponent::class]
             "CP ${entityCheckpointComponent.ordinalSequenceNumber}"
         }
         MapEntityType.ROCK -> null
         MapEntityType.TOWER -> null
         MapEntityType.TELEPORT_IN -> {
-            val entityTeleportInComponent = world[entityId, EntityTeleportInComponent::class]
+            val entityTeleportInComponent = world[entityId, com.xenotactic.gamelogic.components.EntityTeleportInComponent::class]
             "TP ${entityTeleportInComponent.ordinalSequenceNumber} IN"}
         MapEntityType.TELEPORT_OUT -> {
-            val entityTeleportOutComponent = world[entityId, EntityTeleportOutComponent::class]
+            val entityTeleportOutComponent = world[entityId, com.xenotactic.gamelogic.components.EntityTeleportOutComponent::class]
             "TP ${entityTeleportOutComponent.ordinalSequenceNumber} OUT"
         }
         MapEntityType.SMALL_BLOCKER -> null
         MapEntityType.SPEED_AREA -> {
-            val entitySpeedAreaComponent = world[entityId, EntitySpeedAreaComponent::class]
+            val entitySpeedAreaComponent = world[entityId, com.xenotactic.gamelogic.components.EntitySpeedAreaComponent::class]
             entitySpeedAreaComponent.speedText
         }
         MapEntityType.MONSTER -> null

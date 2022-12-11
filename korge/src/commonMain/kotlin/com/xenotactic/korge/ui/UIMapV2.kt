@@ -21,9 +21,9 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.korge.components.EntitySpeedAreaComponent
-import com.xenotactic.korge.components.EntityTypeComponent
-import com.xenotactic.korge.components.SizeComponent
+import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
+import com.xenotactic.gamelogic.components.EntityTypeComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
@@ -344,12 +344,12 @@ class UIMapV2(
     }
 
     private fun createEntityView(entity: StagingEntity): UIEntity {
-        val entityType = entity[EntityTypeComponent::class]
-        val size = entity[SizeComponent::class]
+        val entityType = entity[com.xenotactic.gamelogic.components.EntityTypeComponent::class]
+        val size = entity[com.xenotactic.gamelogic.components.SizeComponent::class]
         return UIEntity(
             entityType.type, size.width, size.height, gridSize, borderSize,
             if (entityType.type == MapEntityType.SPEED_AREA) {
-                entity[EntitySpeedAreaComponent::class].speedEffect
+                entity[com.xenotactic.gamelogic.components.EntitySpeedAreaComponent::class].speedEffect
             } else null
         )
     }

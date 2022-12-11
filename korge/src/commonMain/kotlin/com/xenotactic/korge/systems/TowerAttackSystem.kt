@@ -17,33 +17,38 @@ class TowerAttackSystem(
     }
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            EntityTowerComponent::class, BottomLeftPositionComponent::class, SizeComponent::class,
-            RangeComponent::class, TargetingComponent::class,
-            ReloadTimeComponent::class,
-            ReadyToAttackComponent::class
+            com.xenotactic.gamelogic.components.EntityTowerComponent::class, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class, com.xenotactic.gamelogic.components.SizeComponent::class,
+            com.xenotactic.gamelogic.components.RangeComponent::class, com.xenotactic.gamelogic.components.TargetingComponent::class,
+            com.xenotactic.gamelogic.components.ReloadTimeComponent::class,
+            com.xenotactic.gamelogic.components.ReadyToAttackComponent::class
         ),
     )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach { towerId ->
 //            logger.info { "update: tower id: $towerId" }
-            val sizeComponent = world[towerId, SizeComponent::class]
-            val bottomLeftPositionComponent = world[towerId, BottomLeftPositionComponent::class]
+            val sizeComponent = world[towerId, com.xenotactic.gamelogic.components.SizeComponent::class]
+            val bottomLeftPositionComponent = world[towerId, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
             val towerCenterPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
 
-            val targetingComponent = world[towerId, TargetingComponent::class]
+            val targetingComponent = world[towerId, com.xenotactic.gamelogic.components.TargetingComponent::class]
 
             world.addEntity {
-                addComponentOrThrow(ProjectileComponent)
+                addComponentOrThrow(com.xenotactic.gamelogic.components.ProjectileComponent)
                 addComponentOrThrow(targetingComponent)
-                addComponentOrThrow(VelocityComponent(0.2.toGameUnit()))
-                addComponentOrThrow(MutableCenterPositionComponent(towerCenterPoint.x, towerCenterPoint.y))
-                addComponentOrThrow(DamageComponent(10.0))
+                addComponentOrThrow(com.xenotactic.gamelogic.components.VelocityComponent(0.2.toGameUnit()))
+                addComponentOrThrow(
+                    com.xenotactic.gamelogic.components.MutableCenterPositionComponent(
+                        towerCenterPoint.x,
+                        towerCenterPoint.y
+                    )
+                )
+                addComponentOrThrow(com.xenotactic.gamelogic.components.DamageComponent(10.0))
             }
 
             world.modifyEntity(towerId) {
-                addComponentOrThrow(ReloadDowntimeComponent(0.0))
-                removeComponent<ReadyToAttackComponent>()
+                addComponentOrThrow(com.xenotactic.gamelogic.components.ReloadDowntimeComponent(0.0))
+                removeComponent<com.xenotactic.gamelogic.components.ReadyToAttackComponent>()
             }
         }
     }

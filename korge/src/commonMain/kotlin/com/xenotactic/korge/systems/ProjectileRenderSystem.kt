@@ -4,8 +4,8 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.vector.circle
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
-import com.xenotactic.korge.components.MutableCenterPositionComponent
-import com.xenotactic.korge.components.ProjectileComponent
+import com.xenotactic.gamelogic.components.MutableCenterPositionComponent
+import com.xenotactic.gamelogic.components.ProjectileComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration
@@ -15,8 +15,8 @@ class ProjectileRenderSystem(
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            ProjectileComponent::class,
-            MutableCenterPositionComponent::class
+            com.xenotactic.gamelogic.components.ProjectileComponent::class,
+            com.xenotactic.gamelogic.components.MutableCenterPositionComponent::class
         )
     )
 
@@ -26,7 +26,7 @@ class ProjectileRenderSystem(
     override fun update(deltaTime: Duration) {
         uiMap.projectileLayer.updateShape {
             getFamily().getSequence().forEach {
-                val mutableCenterPositionComponent = world[it, MutableCenterPositionComponent::class]
+                val mutableCenterPositionComponent = world[it, com.xenotactic.gamelogic.components.MutableCenterPositionComponent::class]
                 val (worldX, worldY) = uiMap.getWorldCoordinates(
                     mutableCenterPositionComponent.x,
                     mutableCenterPositionComponent.y

@@ -26,9 +26,9 @@ group = "com.xenotactic.gamelogic"
 version = "1.0.0"
 
 val gitliveVersion = "1.4.3"
-val ktorVersion = "2.0.1"
 
 val korgePluginVersion: String by project
+val kotlinxSerialization: String by project
 
 //dependencies {
 //    add("commonMainImplementation","com.soywiz.korlibs.korma:korma:$korgeVersion")
@@ -76,8 +76,8 @@ kotlin {
                 implementation("com.soywiz.korlibs.korma:korma:$korgePluginVersion")
                 implementation("com.soywiz.korlibs.korio:korio:$korgePluginVersion")
                 implementation("com.soywiz.korlibs.korge2:korge:$korgePluginVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerialization")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$kotlinxSerialization")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
 
 

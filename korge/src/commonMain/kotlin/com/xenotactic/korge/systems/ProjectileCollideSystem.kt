@@ -11,19 +11,19 @@ class ProjectileCollideSystem(
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            ProjectileComponent::class, MutableCenterPositionComponent::class,
-            TargetingComponent::class, VelocityComponent::class,
-            DamageComponent::class,
-            CollideWithTargetComponent::class
+            com.xenotactic.gamelogic.components.ProjectileComponent::class, com.xenotactic.gamelogic.components.MutableCenterPositionComponent::class,
+            com.xenotactic.gamelogic.components.TargetingComponent::class, com.xenotactic.gamelogic.components.VelocityComponent::class,
+            com.xenotactic.gamelogic.components.DamageComponent::class,
+            com.xenotactic.gamelogic.components.CollideWithTargetComponent::class
         ),
     )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach {
-            val targetingComponent = world[it, TargetingComponent::class]
-            val damageComponent = world[it, DamageComponent::class]
+            val targetingComponent = world[it, com.xenotactic.gamelogic.components.TargetingComponent::class]
+            val damageComponent = world[it, com.xenotactic.gamelogic.components.DamageComponent::class]
 
-            val monsterHealthComponent = world[targetingComponent.targetEntityId, HealthComponent::class]
+            val monsterHealthComponent = world[targetingComponent.targetEntityId, com.xenotactic.gamelogic.components.HealthComponent::class]
             monsterHealthComponent.health -= damageComponent.damage
 
             world.modifyEntity(it) {

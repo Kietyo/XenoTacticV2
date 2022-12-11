@@ -3,9 +3,9 @@ package com.xenotactic.korge.random.generators
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.components.EntitySpeedAreaComponent
-import com.xenotactic.korge.components.EntityTypeComponent
-import com.xenotactic.korge.components.SizeComponent
+import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
+import com.xenotactic.gamelogic.components.EntityTypeComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
 import com.xenotactic.korge.random.GenerationContext

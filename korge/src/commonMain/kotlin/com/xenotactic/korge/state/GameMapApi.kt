@@ -7,7 +7,6 @@ import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.components.*
 import com.xenotactic.korge.ecomponents.DebugEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.AddedMonsterEntityEvent
@@ -63,20 +62,20 @@ class GameMapApi(
         for (entity in entities) {
             val entityId = gameWorld.world.addEntity {
                 addFromStagingEntity(entity)
-                val entityTypeComponent = entity[EntityTypeComponent::class]
+                val entityTypeComponent = entity[com.xenotactic.gamelogic.components.EntityTypeComponent::class]
                 when (entityTypeComponent.type) {
                     MapEntityType.START -> Unit
                     MapEntityType.FINISH -> Unit
                     MapEntityType.CHECKPOINT -> Unit
                     MapEntityType.ROCK -> {
-                        addComponentOrThrow(SelectableComponent)
+                        addComponentOrThrow(com.xenotactic.gamelogic.components.SelectableComponent)
                     }
 
                     MapEntityType.TOWER -> {
-                        addComponentOrThrow(RangeComponent(7.toGameUnit()))
-                        addComponentOrThrow(ReloadTimeComponent(1000.0))
-                        addComponentOrThrow(ReloadDowntimeComponent(0.0))
-                        addComponentOrThrow(SelectableComponent)
+                        addComponentOrThrow(com.xenotactic.gamelogic.components.RangeComponent(7.toGameUnit()))
+                        addComponentOrThrow(com.xenotactic.gamelogic.components.ReloadTimeComponent(1000.0))
+                        addComponentOrThrow(com.xenotactic.gamelogic.components.ReloadDowntimeComponent(0.0))
+                        addComponentOrThrow(com.xenotactic.gamelogic.components.SelectableComponent)
                     }
 
                     MapEntityType.TELEPORT_IN -> Unit
@@ -95,19 +94,20 @@ class GameMapApi(
     fun spawnCreep() {
         gameWorld.world.addEntity {
             addComponentOrThrow(
-                EntityTypeComponent(
+                com.xenotactic.gamelogic.components.EntityTypeComponent(
                     MapEntityType.MONSTER
                 )
             )
-            addComponentOrThrow(SizeComponent(1.toGameUnit(), 1.toGameUnit()))
-            addComponentOrThrow(MonsterComponent)
-            addComponentOrThrow(VelocityComponent())
+            addComponentOrThrow(com.xenotactic.gamelogic.components.SizeComponent(1.toGameUnit(), 1.toGameUnit()))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.MonsterComponent)
+            addComponentOrThrow(com.xenotactic.gamelogic.components.VelocityComponent())
 
-            val maxHealthComponent = MaxHealthComponent(100.0)
+            val maxHealthComponent = com.xenotactic.gamelogic.components.MaxHealthComponent(100.0)
             addComponentOrThrow(maxHealthComponent)
-            addComponentOrThrow(HealthComponent(maxHealthComponent.maxHealth))
-            addComponentOrThrow(AnimationComponent(100.0, 0.0))
-            addComponentOrThrow(ComputedSpeedEffectComponent(1.0))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.HealthComponent(maxHealthComponent.maxHealth))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.AnimationComponent(100.0, 0.0))
+            addComponentOrThrow(com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent(1.0))
+
 
             engine.eventBus.send(AddedMonsterEntityEvent(entityId))
 
@@ -115,7 +115,7 @@ class GameMapApi(
                 gameMapPathState.shortestPath!!
             )
             addComponentOrThrow(
-                PathSequenceTraversalComponent(
+                com.xenotactic.gamelogic.components.PathSequenceTraversalComponent(
                     pathSequenceTraversal
                 )
             )

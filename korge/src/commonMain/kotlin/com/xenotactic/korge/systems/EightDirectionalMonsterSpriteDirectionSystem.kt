@@ -13,15 +13,15 @@ class EightDirectionalMonsterSpriteDirectionSystem(
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            UIEightDirectionalSpriteComponent::class,
-            PathSequenceTraversalComponent::class
+            com.xenotactic.gamelogic.components.UIEightDirectionalSpriteComponent::class,
+            com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class
         )
     )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach { entityId ->
-            val uiEightDirectionalSpriteComponent = world[entityId, UIEightDirectionalSpriteComponent::class]
-            val pathSequenceTraversalComponent = world[entityId, PathSequenceTraversalComponent::class]
+            val uiEightDirectionalSpriteComponent = world[entityId, com.xenotactic.gamelogic.components.UIEightDirectionalSpriteComponent::class]
+            val pathSequenceTraversalComponent = world[entityId, com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class]
 
             val angle = pathSequenceTraversalComponent.pathSequenceTraversal.let {
                 it.currentPosition.toPoint().angleTo(it.currentDestinationPoint.toPoint())

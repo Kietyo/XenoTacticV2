@@ -13,8 +13,8 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
-import com.xenotactic.korge.components.PreSelectionComponent
-import com.xenotactic.korge.components.SelectedComponent
+import com.xenotactic.gamelogic.components.PreSelectionComponent
+import com.xenotactic.gamelogic.components.SelectedComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.state.GameMapApi
@@ -83,7 +83,7 @@ class SelectorMouseProcessorV2(
             println("intersectingEntities: $intersectingEntities")
             engine.gameWorld.preSelectionFamily.getNewList().forEach {
                 engine.gameWorld.world.modifyEntity(it) {
-                    removeComponent<PreSelectionComponent>()
+                    removeComponent<com.xenotactic.gamelogic.components.PreSelectionComponent>()
                 }
             }
 
@@ -108,19 +108,19 @@ class SelectorMouseProcessorV2(
                 //                println(uiMap.getIntersectingEntities(selectionRectangle.getGlobalBounds()))
                 engine.gameWorld.selectionFamily.getNewList().forEach {
                     engine.gameWorld.world.modifyEntity(it) {
-                        this.removeComponent<SelectedComponent>()
+                        this.removeComponent<com.xenotactic.gamelogic.components.SelectedComponent>()
                     }
                 }
 
                 intersectingEntities.forEach {
                     engine.gameWorld.world.modifyEntity(it) {
-                        addIfNotExists(SelectedComponent)
+                        addIfNotExists(com.xenotactic.gamelogic.components.SelectedComponent)
                     }
                 }
             } else {
                 intersectingEntities.forEach {
                     engine.gameWorld.world.modifyEntity(it) {
-                        addIfNotExists(PreSelectionComponent)
+                        addIfNotExists(com.xenotactic.gamelogic.components.PreSelectionComponent)
                     }
                 }
 //                engine.eventBus.send(

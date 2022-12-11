@@ -12,19 +12,19 @@ import kotlin.time.Duration
 class ProjectileMoveSystem(val world: World) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            ProjectileComponent::class, MutableCenterPositionComponent::class,
-            TargetingComponent::class, VelocityComponent::class
+            com.xenotactic.gamelogic.components.ProjectileComponent::class, com.xenotactic.gamelogic.components.MutableCenterPositionComponent::class,
+            com.xenotactic.gamelogic.components.TargetingComponent::class, com.xenotactic.gamelogic.components.VelocityComponent::class
         ),
-        noneOfComponents = setOf(CollideWithTargetComponent::class)
+        noneOfComponents = setOf(com.xenotactic.gamelogic.components.CollideWithTargetComponent::class)
     )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach {
-            val mutableCenterPositionComponent = world[it, MutableCenterPositionComponent::class]
-            val targetingComponent = world[it, TargetingComponent::class]
-            val velocityComponent = world[it, VelocityComponent::class]
+            val mutableCenterPositionComponent = world[it, com.xenotactic.gamelogic.components.MutableCenterPositionComponent::class]
+            val targetingComponent = world[it, com.xenotactic.gamelogic.components.TargetingComponent::class]
+            val velocityComponent = world[it, com.xenotactic.gamelogic.components.VelocityComponent::class]
             val monsterCenterPoint =
-                world[targetingComponent.targetEntityId, PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
+                world[targetingComponent.targetEntityId, com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
 
             val segmentTraversal = SegmentTraversal(
                 Segment(
@@ -40,7 +40,7 @@ class ProjectileMoveSystem(val world: World) : System() {
 
             if (segmentTraversal.finishedTraversal()) {
                 world.modifyEntity(it) {
-                    addComponentOrThrow(CollideWithTargetComponent)
+                    addComponentOrThrow(com.xenotactic.gamelogic.components.CollideWithTargetComponent)
                 }
             }
 

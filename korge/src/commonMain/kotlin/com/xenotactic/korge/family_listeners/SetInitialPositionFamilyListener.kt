@@ -4,10 +4,10 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
-import com.xenotactic.korge.components.UIEntityViewComponent
+import com.xenotactic.gamelogic.components.UIEntityViewComponent
 import com.xenotactic.gamelogic.korge_utils.xy
-import com.xenotactic.korge.components.BottomLeftPositionComponent
-import com.xenotactic.korge.components.SizeComponent
+import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.korge.ui.UIMapV2
 
 class SetInitialPositionFamilyListener(
@@ -15,18 +15,18 @@ class SetInitialPositionFamilyListener(
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            UIEntityViewComponent::class,
-            BottomLeftPositionComponent::class,
-            SizeComponent::class
+            com.xenotactic.gamelogic.components.UIEntityViewComponent::class,
+            com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class,
+            com.xenotactic.gamelogic.components.SizeComponent::class
         )
     )
 
     val uiMapV2 = world.injections.getSingleton<UIMapV2>()
 
     override fun onAdd(entityId: EntityId) {
-        val uiEntityViewComponent = world[entityId, UIEntityViewComponent::class]
-        val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
-        val sizeComponent = world[entityId, SizeComponent::class]
+        val uiEntityViewComponent = world[entityId, com.xenotactic.gamelogic.components.UIEntityViewComponent::class]
+        val bottomLeftPositionComponent = world[entityId, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
+        val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
 
         val (worldX, worldY) = uiMapV2.getWorldCoordinates(
             bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
