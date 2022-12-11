@@ -1,5 +1,6 @@
 import com.soywiz.klock.Frequency
 import com.soywiz.korge.Korge
+import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
@@ -48,6 +49,8 @@ object DebugMain2 {
 //                centerOnXY(0.0, 0.0)
 //                xy(0, 0)
             }
+
+            uiButton()
 
 //            val rect = solidRect(16, 16, Colors.RED) {
 //                scale = 8.0

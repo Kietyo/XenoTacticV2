@@ -85,7 +85,7 @@ class GameMapApi(
                     MapEntityType.SPEED_AREA -> Unit
                     MapEntityType.MONSTER -> Unit
                 }
-                addOrReplaceComponent(SelectableComponent)
+//                addOrReplaceComponent(SelectableComponent)
             }
             engine.eventBus.send(AddedUIEntityEvent(entityId))
         }

@@ -1,4 +1,5 @@
 import com.soywiz.korge.Korge
+import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
@@ -87,6 +88,10 @@ object DebugMain {
                 anchor(Anchor.CENTER)
 //                centerOnXY(0.0, 0.0)
 //                xy(0, 0)
+            }
+
+            uiButton("asdf") {
+
             }
 
         }
