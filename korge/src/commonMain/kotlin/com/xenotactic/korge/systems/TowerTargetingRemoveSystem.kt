@@ -4,7 +4,6 @@ import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.distance
-import com.xenotactic.korge.components.*
 import com.xenotactic.korge.korge_utils.getCenterPoint
 import kotlin.time.Duration
 

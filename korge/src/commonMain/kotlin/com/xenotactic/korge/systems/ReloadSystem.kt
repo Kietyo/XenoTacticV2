@@ -3,7 +3,6 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.korge.components.*
 import kotlin.time.Duration
 
 class ReloadSystem(

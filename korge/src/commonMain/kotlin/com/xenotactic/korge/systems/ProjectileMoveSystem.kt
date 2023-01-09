@@ -5,7 +5,6 @@ import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Segment
-import com.xenotactic.korge.components.*
 import pathing.SegmentTraversal
 import kotlin.time.Duration
 

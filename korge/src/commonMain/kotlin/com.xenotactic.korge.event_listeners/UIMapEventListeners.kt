@@ -11,7 +11,6 @@ import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.korge.components.*
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.korge_utils.getText
 import com.xenotactic.korge.korge_utils.makeEntityLabelText

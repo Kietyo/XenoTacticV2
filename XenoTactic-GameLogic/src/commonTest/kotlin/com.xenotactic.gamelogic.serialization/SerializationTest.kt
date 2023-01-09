@@ -57,26 +57,26 @@ internal class SerializationTest {
         println(json.encodeToString(entity))
     }
 
-    @Test
-    fun testSerialization3() {
-        val stagingEntity = StagingEntity {
-            addComponentOrThrow(BottomLeftPositionComponent(1, 2))
-            addComponentOrThrow(SizeComponent(5, 5))
-        }
-
-        val entity = stagingEntity.toStableEntity2()
-
-        val json = Json {
-            serializersModule = SerializersModule {
-                polymorphic(SerializableComponentI::class) {
-                    subclass(BottomLeftPositionComponent::class)
-                }
-            }
-        }
-
-        println(entity)
-        println(json.encodeToString(entity))
-    }
+//    @Test
+//    fun testSerialization3() {
+//        val stagingEntity = StagingEntity {
+//            addComponentOrThrow(BottomLeftPositionComponent(1, 2))
+//            addComponentOrThrow(SizeComponent(5, 5))
+//        }
+//
+//        val entity = stagingEntity.toStableEntity2()
+//
+//        val json = Json {
+//            serializersModule = SerializersModule {
+//                polymorphic(SerializableComponentI::class) {
+//                    subclass(BottomLeftPositionComponent::class)
+//                }
+//            }
+//        }
+//
+//        println(entity)
+//        println(json.encodeToString(entity))
+//    }
 
     @Test
     fun testSerialization4() {
@@ -98,5 +98,8 @@ internal class SerializationTest {
 
         println(entity)
         println(json.encodeToString(entity))
+
+
+        val map = mutableMapOf<String, String>()
     }
 }

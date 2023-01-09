@@ -6,7 +6,6 @@ import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.korge.components.*
 import com.xenotactic.korge.korge_utils.toRectangleEntity
 import pathing.PathFinder
 

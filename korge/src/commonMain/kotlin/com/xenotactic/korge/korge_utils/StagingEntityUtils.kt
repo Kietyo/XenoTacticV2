@@ -5,7 +5,6 @@ import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.korge.components.*
 
 object StagingEntityUtils {
     fun createStart(
