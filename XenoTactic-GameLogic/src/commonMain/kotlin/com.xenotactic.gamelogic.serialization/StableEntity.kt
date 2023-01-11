@@ -21,34 +21,34 @@ sealed class SerializableComponents {
 
 }
 
-@Serializable(with = SerializableComponentISerializer::class)
-interface SerializableComponentI<T: Any> {
-    val klassName: String
-    val data: T
-}
+//@Serializable(with = SerializableComponentISerializer::class)
+//interface SerializableComponentI<T: Any> {
+//    val klassName: String
+//    val data: T
+//}
 
 interface SerializableComponentI2
 
-class SerializableComponentISerializer<T : Any>(
-    private val dataSerializer: KSerializer<T>
-) : KSerializer<SerializableComponentI<T>> {
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor(
-        "SerializedComponent"
-    ) {
-        element<String>("TypeName")
-        this.element("Data", dataSerializer.descriptor)
-    }
-
-    override fun deserialize(decoder: Decoder): SerializableComponentI<T> {
-        TODO("Not yet implemented")
-    }
-
-    override fun serialize(encoder: Encoder, value: SerializableComponentI<T>) {
-        encoder.encodeString(value.klassName)
-        dataSerializer.serialize(encoder, value.data)
-    }
-
-}
+//class SerializableComponentISerializer<T : Any>(
+//    private val dataSerializer: KSerializer<T>
+//) : KSerializer<SerializableComponentI<T>> {
+//    override val descriptor: SerialDescriptor = buildClassSerialDescriptor(
+//        "SerializedComponent"
+//    ) {
+//        element<String>("TypeName")
+//        this.element("Data", dataSerializer.descriptor)
+//    }
+//
+//    override fun deserialize(decoder: Decoder): SerializableComponentI<T> {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun serialize(encoder: Encoder, value: SerializableComponentI<T>) {
+//        encoder.encodeString(value.klassName)
+//        dataSerializer.serialize(encoder, value.data)
+//    }
+//
+//}
 
 @Serializable
 data class StableEntity(
@@ -60,11 +60,10 @@ data class StableEntity(
     }
 }
 
-@Serializable
-data class StableEntityV2(
-    val objs: List<SerializableComponentI<@Polymorphic Any>>
-) {
-}
+//@Serializable
+//data class StableEntityV2(
+//    val objs: List<SerializableComponentI<@Polymorphic Any>>
+//)
 
 @Serializable
 data class StableEntityV3 private constructor(
@@ -73,7 +72,10 @@ data class StableEntityV3 private constructor(
 
     companion object {
         fun create(objs: List<SerializableComponentI2>): StableEntityV3 {
-            return StableEntityV3(objs.sortedBy { it::class.qualifiedName })
+            // TODO: Make this sorted. Can't used `it::class.qualifiedName`
+            // because reflection api not supported yet in JS.
+//            return StableEntityV3(objs.sortedBy { it::class.qualifiedName })
+            return StableEntityV3(objs)
         }
     }
 }

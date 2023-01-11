@@ -18,10 +18,10 @@ internal class SerializationTest {
             listOf())
     }
 
-    fun StagingEntity.toStableEntity2(): StableEntityV2 {
-        val bottomLeftPositionComponent = get(BottomLeftPositionComponent::class)
-        return StableEntityV2(listOf(bottomLeftPositionComponent as SerializableComponentI<Any>))
-    }
+//    fun StagingEntity.toStableEntity2(): StableEntityV2 {
+//        val bottomLeftPositionComponent = get(BottomLeftPositionComponent::class)
+//        return StableEntityV2(listOf(bottomLeftPositionComponent as SerializableComponentI<Any>))
+//    }
 
     fun StagingEntity.toStableEntity3(): StableEntityV3 {
         val bottomLeftPositionComponent = get(BottomLeftPositionComponent::class)

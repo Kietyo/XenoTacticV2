@@ -2,7 +2,6 @@ package com.xenotactic.server
 
 import io.ktor.server.engine.*
 import io.ktor.server.cio.*
-import com.example.plugins.*
 import com.xenotactic.server.plugins.configureHTTP
 import com.xenotactic.server.plugins.configureRouting
 import com.xenotactic.server.plugins.configureSecurity

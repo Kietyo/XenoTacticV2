@@ -50,7 +50,6 @@ class UIEightDirectionalSprite(
 
     init {
         baseBitmap = down.defaultAnimation.frames.first().slice
-
     }
 
     override var width: Double = baseBitmap.width.toDouble(); set(v) {

@@ -69,6 +69,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerialization")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDateTime")
+    implementation("io.ktor:ktor-server-default-headers-jvm:2.2.1")
+    implementation("io.ktor:ktor-server-cors-jvm:2.2.1")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 }
