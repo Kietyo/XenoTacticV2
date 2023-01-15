@@ -1,6 +1,7 @@
 import com.soywiz.kds.setExtra
 import com.soywiz.korge.Korge
 import com.soywiz.korge.view.*
+import com.soywiz.korim.bitmap.rotatedRight
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
 import com.soywiz.korim.format.readImageDataContainer
@@ -34,7 +35,7 @@ object DebugMain3 {
                 anchor(Anchor.CENTER)
             }
 
-            val info = text("", textSize = 50.0)
+            val info = text("", textSize = 25.0)
 
             val props = ASE.toProps()
             props.setExtra("disableSlicing", false)
@@ -59,10 +60,13 @@ object DebugMain3 {
             val aseModel = asp.toAsepriteModel()
 
             val gunFrames = aseModel.getAsepriteLayerWithAllFrames("gun3")
+            val gunBmp = gunFrames.frames.first().bitmapSlice.rotatedRight()
 
-            image(gunFrames.frames.first().bitmapSlice.bmp) {
+            val gun = image(gunBmp) {
                 smoothing = false
-                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(300.0, 300.0))
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(100.0, 100.0))
+                xy(320, 240)
+                anchor(Anchor.CENTER)
             }
 
 
@@ -74,15 +78,21 @@ object DebugMain3 {
 
 // Want output: "a=111,b=test string,c=0.15,b.length=11"
 
+            val angleOffset = Angle.fromDegrees(90)
 
             addUpdater {
                 val (mouseX, mouseY) = views.globalMouseXY
                 mouseCircle.xy(mouseX, mouseY)
-                val angle = midCircle.pos.kAngleTo(mouseCircle.pos)
-                val direction = getDirection8(angle)
+
+
+                val bottomLeftAngle = midCircle.pos.kAngleTo(mouseCircle.pos)
+                val direction = getDirection8(bottomLeftAngle)
+                val topLeftAngle = midCircle.pos.angleTo(mouseCircle.pos)
+                gun.rotation(topLeftAngle)
                 info.text = """
                     mouseX: $mouseX, mouseY: $mouseY
-                    angle: ${angle}
+                    bottomLeftAngle: ${bottomLeftAngle}
+                    topLeftAngle: $topLeftAngle
                     direction: ${direction}
                 """.trimIndent()
             }
