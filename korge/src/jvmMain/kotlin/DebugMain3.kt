@@ -1,6 +1,8 @@
 import com.soywiz.kds.setExtra
 import com.soywiz.korge.Korge
 import com.soywiz.korge.view.*
+import com.soywiz.korim.bitmap.Bitmap32
+import com.soywiz.korim.bitmap.Bitmap32Context2d
 import com.soywiz.korim.bitmap.rotatedRight
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
@@ -60,9 +62,11 @@ object DebugMain3 {
             val aseModel = asp.toAsepriteModel()
 
             val gunFrames = aseModel.getAsepriteLayerWithAllFrames("gun3")
-            val gunBmp = gunFrames.frames.first().bitmapSlice.rotatedRight()
+            val gunBmp = gunFrames.frames.first()
 
-            val gun = image(gunBmp) {
+            val uncroppedBitmap = gunBmp.computeUncroppedBitmap()
+
+            val gun = image(uncroppedBitmap) {
                 smoothing = false
                 scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(100.0, 100.0))
                 xy(320, 240)

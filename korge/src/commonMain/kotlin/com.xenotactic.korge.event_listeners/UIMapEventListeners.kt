@@ -97,7 +97,8 @@ class UIMapEventListeners(
                         smoothing = false
                         anchor(Anchor.CENTER)
                         xy(worldWidth / 2, worldHeight / 2)
-                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble() * 20.0/32, worldHeight.toDouble() * 8.0/32))
+//                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble() * 20.0/32, worldHeight.toDouble() * 8.0/32))
+                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble(), worldHeight.toDouble()))
                     }
                     addComponentOrThrow(UIGunBarrelComponent(gunImage))
                 }

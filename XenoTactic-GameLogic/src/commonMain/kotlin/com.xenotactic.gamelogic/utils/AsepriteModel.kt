@@ -9,16 +9,26 @@ import com.soywiz.korim.format.ImageDataContainer
 data class AsepriteLayer(
     val id: Int,
     val name: String,
+    val baseWidth: Int,
+    val baseHeight: Int,
     val bitmapSlice: BmpSlice,
     val offsetX: Int,
     val offsetY: Int,
-)
+) {
+    fun computeUncroppedBitmap(): Bitmap32 {
+        val uncroppedBitmap = Bitmap32(baseWidth, baseHeight)
+        uncroppedBitmap.draw(bitmapSlice.bmp.toBMP32(), offsetX, offsetY)
+        return uncroppedBitmap
+    }
+}
 
 data class AsepriteFrame(
     val layers: List<AsepriteLayer>
 )
 
 data class AsepriteLayerWithAllFrames(
+    val baseWidth: Int,
+    val baseHeight: Int,
     val frames: List<AsepriteLayer>
 )
 
@@ -28,8 +38,8 @@ data class AsepriteModel(
     val frames: List<AsepriteFrame>
 ) {
     fun getAsepriteLayerWithAllFrames(name: String): AsepriteLayerWithAllFrames {
-        val frames = frames.map { it.layers.first { it.name == name } }
-        return AsepriteLayerWithAllFrames(frames)
+        val frames = frames.map { frame -> frame.layers.first { it.name == name } }
+        return AsepriteLayerWithAllFrames(baseWidth, baseHeight, frames)
     }
 }
 
@@ -47,7 +57,7 @@ fun ImageDataContainer.toAsepriteModel(): AsepriteModel {
             val offsetX = layer.targetX
             val offsetY = layer.targetY
             val slice = layer.slice!!
-            AsepriteLayer(id, name, slice, offsetX, offsetY)
+            AsepriteLayer(id, name, baseWidth, baseHeight, slice, offsetX, offsetY)
         }
         AsepriteFrame(aseLayers)
     }
