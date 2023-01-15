@@ -18,13 +18,13 @@ import com.xenotactic.korge.ui.UIMapV2
 
 class PreSelectionComponentListener(
     val engine: Engine
-) : ComponentListener<com.xenotactic.gamelogic.components.PreSelectionComponent> {
+) : ComponentListener<PreSelectionComponent> {
     val world = engine.gameWorld.world
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     val IN_PROCESS_SELECTION_COLOR = Colors.YELLOW.withAd(0.5)
 
 
-    override fun onAdd(entityId: EntityId, component: com.xenotactic.gamelogic.components.PreSelectionComponent) {
+    override fun onAdd(entityId: EntityId, component: PreSelectionComponent) {
         val uiEntityContainerComponent = world[entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class]
         val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
 
@@ -43,7 +43,7 @@ class PreSelectionComponentListener(
         }
     }
 
-    override fun onRemove(entityId: EntityId, component: com.xenotactic.gamelogic.components.PreSelectionComponent) {
+    override fun onRemove(entityId: EntityId, component: PreSelectionComponent) {
         val uiEntityContainerComponent = world[entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class]
         val uiPreSelectionComponent = world[entityId, com.xenotactic.gamelogic.components.UIPreSelectionComponent::class]
         uiEntityContainerComponent.container.removeChild(uiPreSelectionComponent.graphics)
@@ -52,7 +52,7 @@ class PreSelectionComponentListener(
         }
     }
 
-    override fun onExisting(entityId: EntityId, component: com.xenotactic.gamelogic.components.PreSelectionComponent) {
+    override fun onExisting(entityId: EntityId, component: PreSelectionComponent) {
         TODO("Not yet implemented")
     }
 

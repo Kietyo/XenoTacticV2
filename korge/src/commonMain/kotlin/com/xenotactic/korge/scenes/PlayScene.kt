@@ -123,6 +123,7 @@ class PlayScene : Scene() {
             addSystem(TowerTargetingRemoveSystem(gameWorld.world))
             addSystem(TargetingAddSystem(gameWorld))
             addSystem(TargetingRenderSystem(engine))
+            addSystem(TowerGunRotatingSystem(engine))
             addSystem(ProjectileMoveSystem(world))
             addSystem(ProjectileCollideSystem(world))
             addSystem(ProjectileRenderSystem(engine))

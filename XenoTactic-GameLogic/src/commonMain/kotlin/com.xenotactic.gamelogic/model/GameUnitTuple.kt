@@ -1,5 +1,6 @@
 package com.xenotactic.gamelogic.model
 
+import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.distance
@@ -31,6 +32,10 @@ data class GameUnitTuple(val x: GameUnit, val y: GameUnit) {
 
     fun distanceTo(point2: GameUnitTuple): GameUnit {
         return distance(x, y, point2.x, point2.y)
+    }
+
+    fun angleTo(other: GameUnitTuple): Angle {
+        return Angle.between(x.toDouble(), y.toDouble(), other.x.toDouble(), other.y.toDouble())
     }
 }
 

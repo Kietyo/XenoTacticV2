@@ -6,6 +6,8 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korma.geom.Anchor
 import com.xenotactic.ecs.EntityId
+import com.xenotactic.gamelogic.components.UIGunBarrelComponent
+import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources
@@ -91,6 +93,13 @@ class UIMapEventListeners(
                         (worldWidth - borderSize).value, (worldHeight - borderSize).value,
                         MaterialColors.YELLOW_900
                     ).centerOn(uiEntityContainer)
+                    val gunImage = uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
+                        smoothing = false
+                        anchor(Anchor.CENTER)
+                        xy(worldWidth / 2, worldHeight / 2)
+                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble() * 20.0/32, worldHeight.toDouble() * 8.0/32))
+                    }
+                    addComponentOrThrow(UIGunBarrelComponent(gunImage))
                 }
 
                 MapEntityType.ROCK -> {
