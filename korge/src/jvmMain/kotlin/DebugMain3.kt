@@ -1,9 +1,6 @@
 import com.soywiz.kds.setExtra
-import com.soywiz.klock.Frequency
 import com.soywiz.korge.Korge
-import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
-import com.soywiz.korge.view.animation.imageDataView
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
 import com.soywiz.korim.format.readImageDataContainer
@@ -11,12 +8,15 @@ import com.soywiz.korim.format.toProps
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.*
-import com.xenotactic.gamelogic.views.EightDirection
-import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
+import com.xenotactic.gamelogic.utils.toAsepriteModel
 import com.xenotactic.korge.korge_utils.getDirection8
 import com.xenotactic.korge.korge_utils.kAngleTo
 import kotlin.jvm.JvmStatic
 
+fun coolPrint(vararg objs: Any) {
+    val test = Throwable()
+    println(test)
+}
 
 object DebugMain3 {
 
@@ -53,13 +53,26 @@ object DebugMain3 {
             println(turretLayer)
             println(turretLayer.width)
             println(turretLayer.height)
+            println(turretLayer.targetX)
+            println(turretLayer.targetY)
 
-            image(asp.imageDatas.first().frames.first().layerData.last().bitmap) {
+            val aseModel = asp.toAsepriteModel()
+
+            val gunFrames = aseModel.getAsepriteLayerWithAllFrames("gun3")
+
+            image(gunFrames.frames.first().bitmapSlice.bmp) {
                 smoothing = false
                 scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(300.0, 300.0))
             }
 
 
+            val a = 111
+            val b = "test string"
+            val c = 0.15
+
+            coolPrint(a, b, c)
+
+// Want output: "a=111,b=test string,c=0.15,b.length=11"
 
 
             addUpdater {

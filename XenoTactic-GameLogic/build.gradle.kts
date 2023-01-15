@@ -1,3 +1,8 @@
+val korgePluginVersion: String by project
+val kotlinxSerialization: String by project
+val kotlinxBenchmark: String by project
+val kotlinVersion: String by project
+
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
@@ -12,8 +17,6 @@ repositories {
     mavenCentral()
 }
 
-//apply(plugin = "plugin.serialization")
-
 //application {
 //    mainClass.set(main_class)
 //}
@@ -26,18 +29,6 @@ group = "com.xenotactic.gamelogic"
 version = "1.0.0"
 
 val gitliveVersion = "1.4.3"
-
-val korgePluginVersion: String by project
-val kotlinxSerialization: String by project
-
-//dependencies {
-//    add("commonMainImplementation","com.soywiz.korlibs.korma:korma:$korgeVersion")
-//    add("commonMainImplementation","com.soywiz.korlibs.korio:korio:$korgeVersion")
-//    add("commonMainImplementation","org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-//    add("commonMainImplementation","org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.3.2")
-//    add("commonMainImplementation","org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
-//    add("commonMainImplementation","org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
-//}
 
 kotlin {
     jvm {
@@ -78,10 +69,10 @@ kotlin {
                 implementation("com.soywiz.korlibs.korge2:korge:$korgePluginVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerialization")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$kotlinxSerialization")
-                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
 
-                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:$kotlinxBenchmark")
                 implementation(project(":XenoECS"))
 
                 implementation(kotlin("test"))

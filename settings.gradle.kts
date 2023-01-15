@@ -18,7 +18,7 @@
 //}
 
 //include(":Client")
-include(":Server")
+//include(":Server")
 include(":korge")
 include(":XenoTactic-GameLogic")
 //include(":Fleks")
