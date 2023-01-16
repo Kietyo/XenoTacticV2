@@ -77,7 +77,6 @@ class UIMapEventListeners(
                     speedEffect,
                     slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
                 ).withAd(0.4)
-//                val speedAreaColor = Colors.YELLOW
                 val radius = worldWidth.value / 2
                 val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
                 val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
@@ -94,8 +93,9 @@ class UIMapEventListeners(
     private fun handleAddedUIEntityEvent(entityId: EntityId) {
         val entityTypeComponent = gameWorld.entityTypeComponents.getComponent(entityId)
         if (entityTypeComponent.type == MapEntityType.SPEED_AREA) {
+            // For speed areas we render them on a graphics layer in order to reduce the amount of vertexes drawn.
+            // It's becomes more optimal to just re-render all speed areas in the graphics layer.
             handleSpeedAreasRender()
-//            return
         }
 
         world.modifyEntity(entityId) {

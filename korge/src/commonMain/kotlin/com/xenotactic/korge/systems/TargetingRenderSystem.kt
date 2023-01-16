@@ -34,7 +34,7 @@ class TargetingRenderSystem(val engine: Engine) : System() {
                 val (towerWorldX, towerWorldY) = uiMap.getWorldCoordinates(centerPoint.x, centerPoint.y)
                 val (monsterWorldX, monsterWorldY) = uiMap.getWorldCoordinates(monsterCenterPoint.x, monsterCenterPoint.y)
 
-                stroke(Colors.YELLOW, StrokeInfo(thickness = 3.0)) {
+                stroke(Colors.RED.withAd(0.5), StrokeInfo(thickness = 2.0)) {
                     line(
                         towerWorldX.toDouble(),
                         towerWorldY.toDouble(),
