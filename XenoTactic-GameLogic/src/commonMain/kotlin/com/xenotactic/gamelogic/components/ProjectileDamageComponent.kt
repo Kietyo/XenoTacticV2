@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.components
 
-data class DamageComponent(
+data class ProjectileDamageComponent(
     val damage: Double
 ) {
 }

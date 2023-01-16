@@ -4,6 +4,7 @@ import com.soywiz.klogger.Logger
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.components.ProjectileDamageComponent
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.korge_utils.getCenterPoint
 import kotlin.time.Duration
@@ -42,7 +43,7 @@ class TowerAttackSystem(
                         towerCenterPoint.y
                     )
                 )
-                addComponentOrThrow(com.xenotactic.gamelogic.components.DamageComponent(10.0))
+                addComponentOrThrow(ProjectileDamageComponent(10.0))
             }
 
             world.modifyEntity(towerId) {
