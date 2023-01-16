@@ -29,6 +29,7 @@ korge {
 	entrypoint("Debug", "DebugMain")
 	entrypoint("DebugMain2", "DebugMain2")
 	entrypoint("DebugMain3", "DebugMain3")
+	entrypoint("DebugMain4", "DebugMain4")
 
 }
 
