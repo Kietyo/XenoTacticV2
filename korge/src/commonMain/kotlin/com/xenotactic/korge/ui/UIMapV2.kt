@@ -79,6 +79,7 @@ class UIMapV2(
 //    )
 
     val speedAreaLayer = this.container()
+    val speedAreaLayerGraphics = this.graphics()
 
     val entityLayer = this.container().apply {
     }
@@ -189,7 +190,6 @@ class UIMapV2(
     private fun drawBoardV2() {
         println("Drawing board")
         _boardGraphicsLayer.updateShape {
-
             when (uiMapSettingsV2.boardType) {
                 BoardType.SOLID -> _boardLayer.solidRect(
                     gridSize * mapWidth.value,
@@ -370,7 +370,7 @@ class UIMapV2(
             println("Got path sequence: $pathSequence")
             _pathingLinesGraphics.updateShape {
                 stroke(
-                    Colors.YELLOW, info = StrokeInfo(
+                    Colors.YELLOW.withAd(0.75), info = StrokeInfo(
                         thickness = _pathLinesWidth,
                     )
                 ) {

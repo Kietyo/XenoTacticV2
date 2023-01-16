@@ -51,7 +51,8 @@ class PlayScene : Scene() {
 
 //        val seed = 1337L
 //        val seed = 1338L
-        val seed = 1349L
+//        val seed = 1349L
+        val seed = 1350L
 
         val width = 30.toGameUnit()
         val height = 20.toGameUnit()

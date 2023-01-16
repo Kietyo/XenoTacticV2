@@ -15,18 +15,18 @@ class SetInitialPositionFamilyListener(
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            com.xenotactic.gamelogic.components.UIEntityViewComponent::class,
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class,
-            com.xenotactic.gamelogic.components.SizeComponent::class
+            UIEntityViewComponent::class,
+            BottomLeftPositionComponent::class,
+            SizeComponent::class
         )
     )
 
     val uiMapV2 = world.injections.getSingleton<UIMapV2>()
 
     override fun onAdd(entityId: EntityId) {
-        val uiEntityViewComponent = world[entityId, com.xenotactic.gamelogic.components.UIEntityViewComponent::class]
-        val bottomLeftPositionComponent = world[entityId, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
-        val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
+        val uiEntityViewComponent = world[entityId, UIEntityViewComponent::class]
+        val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
+        val sizeComponent = world[entityId, SizeComponent::class]
 
         val (worldX, worldY) = uiMapV2.getWorldCoordinates(
             bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height

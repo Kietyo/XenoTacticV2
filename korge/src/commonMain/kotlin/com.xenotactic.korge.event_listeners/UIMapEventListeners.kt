@@ -5,8 +5,9 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korma.geom.Anchor
+import com.soywiz.korma.geom.vector.circle
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.components.UIGunBarrelComponent
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -60,9 +61,18 @@ class UIMapEventListeners(
         gameMapApi.removeEntities(entities)
     }
 
+    private fun handleSpeedAreasRender() {
+
+    }
+
     private fun handleAddedUIEntityEvent(entityId: EntityId) {
+        val entityTypeComponent = gameWorld.entityTypeComponents.getComponent(entityId)
+        if (entityTypeComponent.type == MapEntityType.SPEED_AREA) {
+            handleSpeedAreasRender()
+            return
+        }
+
         world.modifyEntity(entityId) {
-            val entityTypeComponent = gameWorld.entityTypeComponents.getComponent(entityId)
             val sizeComponent = gameWorld.sizeComponent.getComponent(entityId)
             val uiEntityContainer = Container()
 
@@ -85,14 +95,16 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.TOWER -> {
-                    uiEntityContainer.solidRect(
-                        worldWidth.value, worldHeight.value,
-                        MaterialColors.YELLOW_500
-                    )
-                    uiEntityContainer.solidRect(
-                        (worldWidth - borderSize).value, (worldHeight - borderSize).value,
-                        MaterialColors.YELLOW_900
-                    ).centerOn(uiEntityContainer)
+                    uiEntityContainer.image(GlobalResources.TOWER_BASE_SPRITE) {
+                        smoothing = false
+                        scaledWidth = worldWidth.toDouble()
+                        scaledHeight = worldHeight.toDouble()
+                    }
+                    uiEntityContainer.image(GlobalResources.TOWER_BASE_DETAIL_SPRITE) {
+                        smoothing = false
+                        scaledWidth = worldWidth.toDouble()
+                        scaledHeight = worldHeight.toDouble()
+                    }
                     val gunImage = uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
                         smoothing = false
                         anchor(Anchor.CENTER)
@@ -134,12 +146,22 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.SPEED_AREA -> {
-                    val speedEffect = world[entityId, com.xenotactic.gamelogic.components.EntitySpeedAreaComponent::class].speedEffect
+                    val speedEffect = world[entityId, EntitySpeedAreaComponent::class].speedEffect
                     val speedAreaColor = com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil(
                         speedEffect,
                         slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
                     ).withAd(0.4)
-                    Circle(worldWidth.value / 2, speedAreaColor).addTo(uiEntityContainer)
+                    val radius = worldWidth.value / 2
+                    Circle(radius, speedAreaColor).addTo(uiEntityContainer)
+                    val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
+                    val (worldX, worldY) = uiMap.getWorldCoordinates(
+                        bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
+                    )
+                    uiMap.speedAreaLayerGraphics.updateShape {
+                        fill(speedAreaColor) {
+                            circle(worldX.toDouble(), worldY.toDouble(), radius)
+                        }
+                    }
                 }
 
                 MapEntityType.MONSTER -> {
@@ -166,10 +188,8 @@ class UIMapEventListeners(
                 }
             }
 
-
-
-            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEntityViewComponent(uiEntityContainer))
-            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEntityContainerComponent(uiEntityContainer))
+            addComponentOrThrow(UIEntityViewComponent(uiEntityContainer))
+            addComponentOrThrow(UIEntityContainerComponent(uiEntityContainer))
 
             val text = entityTypeComponent.type.getText(entityId, world)
             if (text != null) {
@@ -179,14 +199,14 @@ class UIMapEventListeners(
                     scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                     centerOn(uiEntityContainer)
                 }
-                addComponentOrThrow(com.xenotactic.gamelogic.components.UIMapEntityTextComponent(textView))
+                addComponentOrThrow(UIMapEntityTextComponent(textView))
             }
         }
     }
 
     fun handleAddedMonsterEntityEvent(entityId: EntityId) {
-        val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
-        val maxHealthComponent = world[entityId, com.xenotactic.gamelogic.components.MaxHealthComponent::class]
+        val sizeComponent = world[entityId, SizeComponent::class]
+        val maxHealthComponent = world[entityId, MaxHealthComponent::class]
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
         val spriteContainer = uiMap.monsterLayer.container()
         val uiSprite = UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(spriteContainer) {
@@ -198,9 +218,9 @@ class UIMapEventListeners(
             addTo(spriteContainer)
         }
         world.modifyEntity(entityId) {
-            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEntityViewComponent(spriteContainer))
-            addComponentOrThrow(com.xenotactic.gamelogic.components.UIEightDirectionalSpriteComponent(uiSprite))
-            addComponentOrThrow(com.xenotactic.gamelogic.components.UIHealthBarComponent(healthBar))
+            addComponentOrThrow(UIEntityViewComponent(spriteContainer))
+            addComponentOrThrow(UIEightDirectionalSpriteComponent(uiSprite))
+            addComponentOrThrow(UIHealthBarComponent(healthBar))
 
         }
     }
