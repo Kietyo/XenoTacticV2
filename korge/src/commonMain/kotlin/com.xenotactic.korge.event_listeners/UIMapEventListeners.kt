@@ -8,6 +8,7 @@ import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.vector.circle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.*
+import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -15,6 +16,7 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.korge_utils.getCenterPoint
 import com.xenotactic.korge.korge_utils.getText
 import com.xenotactic.korge.korge_utils.makeEntityLabelText
 import com.xenotactic.korge.state.GameMapApi
@@ -62,14 +64,38 @@ class UIMapEventListeners(
     }
 
     private fun handleSpeedAreasRender() {
-
+        uiMap.speedAreaLayerGraphics.updateShape {
+            gameWorld.speedAreaFamily.getSequence().forEach { entityId ->
+                val sizeComponent = gameWorld.sizeComponent.getComponent(entityId)
+                val (worldWidth, worldHeight) = toWorldDimensions(
+                    sizeComponent.width,
+                    sizeComponent.height,
+                    uiMap.gridSize
+                )
+                val speedEffect = world[entityId, EntitySpeedAreaComponent::class].speedEffect
+                val speedAreaColor = SpeedAreaColorUtil(
+                    speedEffect,
+                    slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
+                ).withAd(0.4)
+//                val speedAreaColor = Colors.YELLOW
+                val radius = worldWidth.value / 2
+                val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
+                val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
+                val (worldX, worldY) = uiMap.getWorldCoordinates(
+                    centerPoint.x, centerPoint.y
+                )
+                fill(speedAreaColor) {
+                    circle(worldX.toDouble(), worldY.toDouble(), radius)
+                }
+            }
+        }
     }
 
     private fun handleAddedUIEntityEvent(entityId: EntityId) {
         val entityTypeComponent = gameWorld.entityTypeComponents.getComponent(entityId)
         if (entityTypeComponent.type == MapEntityType.SPEED_AREA) {
             handleSpeedAreasRender()
-            return
+//            return
         }
 
         world.modifyEntity(entityId) {
@@ -110,7 +136,12 @@ class UIMapEventListeners(
                         anchor(Anchor.CENTER)
                         xy(worldWidth / 2, worldHeight / 2)
 //                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble() * 20.0/32, worldHeight.toDouble() * 8.0/32))
-                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble(), worldHeight.toDouble()))
+                        scaleWhileMaintainingAspect(
+                            ScalingOption.ByWidthAndHeight(
+                                worldWidth.toDouble(),
+                                worldHeight.toDouble()
+                            )
+                        )
                     }
                     addComponentOrThrow(UIGunBarrelComponent(gunImage))
                 }
@@ -146,22 +177,8 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.SPEED_AREA -> {
-                    val speedEffect = world[entityId, EntitySpeedAreaComponent::class].speedEffect
-                    val speedAreaColor = com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil(
-                        speedEffect,
-                        slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
-                    ).withAd(0.4)
-                    val radius = worldWidth.value / 2
-                    Circle(radius, speedAreaColor).addTo(uiEntityContainer)
-                    val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
-                    val (worldX, worldY) = uiMap.getWorldCoordinates(
-                        bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
-                    )
-                    uiMap.speedAreaLayerGraphics.updateShape {
-                        fill(speedAreaColor) {
-                            circle(worldX.toDouble(), worldY.toDouble(), radius)
-                        }
-                    }
+                    // Create a transparent solid rect to represent the bounds of the speed area.
+                    uiEntityContainer.solidRect(worldWidth.value, worldHeight.value, Colors.WHITE.withAd(0.0))
                 }
 
                 MapEntityType.MONSTER -> {
@@ -183,6 +200,7 @@ class UIMapEventListeners(
                     MapEntityType.TELEPORT_IN,
                     MapEntityType.TELEPORT_OUT,
                     MapEntityType.SMALL_BLOCKER -> addTo(uiMap.entityLayer)
+
                     MapEntityType.SPEED_AREA -> addTo(uiMap.speedAreaLayer)
                     MapEntityType.MONSTER -> addTo(uiMap.monsterLayer)
                 }

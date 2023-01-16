@@ -60,4 +60,4 @@ object MainModule : Module() {
     }
 }
 
-suspend fun main() = Korge(Korge.Config(module = MainModule))
+suspend fun main() = Korge(Korge.Config(module = MainModule, forceRenderEveryFrame = false))
