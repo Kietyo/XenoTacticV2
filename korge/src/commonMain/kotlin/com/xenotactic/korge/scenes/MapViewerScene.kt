@@ -64,7 +64,7 @@ class MapViewerScene(
         val mapInspector = this.uiMapInspector()
 
         val playEntries = goldenMaps.map { mapWithMetadata ->
-            { width: Double, height: Double ->
+            { x: Int, y: Int, width: Double, height: Double ->
                 UIMapEntry(
                     mapWithMetadata.map,
                     width, height
@@ -89,7 +89,6 @@ class MapViewerScene(
         }
 
         val mapGrid = this.uiFixedGrid(
-            globalEventBus,
             maxColumns,
             maxRows,
             700.0, 500.0,
@@ -123,7 +122,7 @@ class MapViewerScene(
                     header.updateSelectionBox(it)
                     mapGrid.resetWithEntries(
                         playerData.maps.map { (_, map) ->
-                            { width: Double, height: Double ->
+                            { x: Int, y: Int, width: Double, height: Double ->
                                 UIMapEntry(
                                     map,
                                     width, height

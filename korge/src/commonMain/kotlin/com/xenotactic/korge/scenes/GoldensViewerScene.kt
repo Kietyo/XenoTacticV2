@@ -70,7 +70,6 @@ class GoldensViewerScene : Scene() {
         var chunkedMaps = allGoldenMapsVfsFiles.chunked(maxColumns * maxRows)
 
         val mapGrid = this.uiFixedGrid(
-            eventBus,
             maxColumns,
             maxRows,
             1000.0, 450.0,
@@ -113,7 +112,7 @@ class GoldensViewerScene : Scene() {
                 val currOption = pageDropdown.getCurrentOption()
                 require(currOption is UIDropdownOption.NumberOption)
                 mapGrid.resetWithEntries(chunkedMaps[currOption.data.toInt()].map { it ->
-                    { width: Double, height: Double ->
+                    { _, _, width: Double, height: Double ->
                         UIGoldensViewerEntry(eventBus, it, width, height)
                     }
                 })
