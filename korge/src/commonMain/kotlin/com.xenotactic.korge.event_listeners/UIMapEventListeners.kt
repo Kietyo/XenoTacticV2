@@ -1,5 +1,6 @@
 package com.xenotactic.korge.event_listeners
 
+import com.soywiz.korge.internal.KorgeUntested
 import com.soywiz.korge.ui.UIProgressBar
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
@@ -16,9 +17,7 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.korge_utils.getCenterPoint
-import com.xenotactic.korge.korge_utils.getText
-import com.xenotactic.korge.korge_utils.makeEntityLabelText
+import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.ui.UIMapV2
 
@@ -90,6 +89,7 @@ class UIMapEventListeners(
         }
     }
 
+    @OptIn(KorgeUntested::class)
     private fun handleAddedUIEntityEvent(entityId: EntityId) {
         val entityTypeComponent = gameWorld.entityTypeComponents.getComponent(entityId)
         if (entityTypeComponent.type == MapEntityType.SPEED_AREA) {
@@ -121,29 +121,8 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.TOWER -> {
-                    uiEntityContainer.image(GlobalResources.TOWER_BASE_SPRITE) {
-                        smoothing = false
-                        scaledWidth = worldWidth.toDouble()
-                        scaledHeight = worldHeight.toDouble()
-                    }
-                    uiEntityContainer.image(GlobalResources.TOWER_BASE_DETAIL_SPRITE) {
-                        smoothing = false
-                        scaledWidth = worldWidth.toDouble()
-                        scaledHeight = worldHeight.toDouble()
-                    }
-                    val gunImage = uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
-                        smoothing = false
-                        anchor(Anchor.CENTER)
-                        xy(worldWidth / 2, worldHeight / 2)
-//                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble() * 20.0/32, worldHeight.toDouble() * 8.0/32))
-                        scaleWhileMaintainingAspect(
-                            ScalingOption.ByWidthAndHeight(
-                                worldWidth.toDouble(),
-                                worldHeight.toDouble()
-                            )
-                        )
-                    }
-                    addComponentOrThrow(UIGunBarrelComponent(gunImage))
+                    val tower = createEntityContainerForTower(worldWidth, worldHeight, uiEntityContainer)
+                    addComponentOrThrow(UIGunBarrelComponent(tower.getChildByName(GUN_VIEW_NAME)!!))
                 }
 
                 MapEntityType.ROCK -> {

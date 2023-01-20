@@ -1,5 +1,8 @@
 package com.xenotactic.korge.korge_utils
 
+import com.soywiz.korge.view.View
+import com.soywiz.korge.view.alignTopToBottomOf
+import com.soywiz.korge.view.util.distributeEvenlyVertically
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
@@ -27,6 +30,12 @@ infix fun Int.to(that: Int): GameUnitTuple = GameUnitTuple(this, that)
 
 fun <T> Sequence<T>.isEmpty(): Boolean {
     return this.firstOrNull() == null
+}
+
+fun distributeVertically(views: Iterable<View>) {
+    views.windowed(2) {
+        it[1].alignTopToBottomOf(it[0])
+    }
 }
 
 

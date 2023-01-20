@@ -1,9 +1,8 @@
 package com.xenotactic.korge.korge_utils
 
-import com.soywiz.korma.geom.Angle
-import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.degrees
-import com.soywiz.korma.geom.inBetween
+import com.soywiz.korge.view.*
+import com.soywiz.korma.geom.*
+import com.xenotactic.ecs.IEntity
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
@@ -14,6 +13,9 @@ import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
+import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.gamelogic.utils.GlobalResources
+import com.xenotactic.gamelogic.utils.WorldUnit
 
 fun getCenterPoint(
     bottomLeftPositionComponent: BottomLeftPositionComponent,
@@ -133,4 +135,36 @@ fun IRectangleEntity.getBottomLeftPositionComponent(): BottomLeftPositionCompone
 
 fun IRectangleEntity.getSizeComponent(): SizeComponent {
     return SizeComponent(width, height)
+}
+
+const val GUN_VIEW_NAME = "gun"
+
+fun createEntityContainerForTower(
+    worldWidth: WorldUnit,
+    worldHeight: WorldUnit,
+    uiEntityContainer: Container = Container()): Container {
+    uiEntityContainer.image(GlobalResources.TOWER_BASE_SPRITE) {
+        smoothing = false
+        scaledWidth = worldWidth.toDouble()
+        scaledHeight = worldHeight.toDouble()
+    }
+    uiEntityContainer.image(GlobalResources.TOWER_BASE_DETAIL_SPRITE) {
+        smoothing = false
+        scaledWidth = worldWidth.toDouble()
+        scaledHeight = worldHeight.toDouble()
+    }
+    val gunImage = uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
+        smoothing = false
+        anchor(Anchor.CENTER)
+        xy(worldWidth / 2, worldHeight / 2)
+//                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble() * 20.0/32, worldHeight.toDouble() * 8.0/32))
+        scaleWhileMaintainingAspect(
+            ScalingOption.ByWidthAndHeight(
+                worldWidth.toDouble(),
+                worldHeight.toDouble()
+            )
+        )
+        name(GUN_VIEW_NAME)
+    }
+    return uiEntityContainer
 }

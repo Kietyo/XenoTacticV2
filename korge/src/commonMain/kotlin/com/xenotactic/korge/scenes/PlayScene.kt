@@ -7,6 +7,7 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
+import com.soywiz.korge.view.util.distributeEvenlyVertically
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
@@ -27,6 +28,7 @@ import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.models.SettingsContainer
@@ -152,51 +154,50 @@ class PlayScene : Scene() {
 ////            MapEntity.Tower(20, 0)
 //        )
 
+        val buttonsPanel = container {
+            val spawnCreepButton = uiButton("Spawn creep") {
+                onClick {
+                    println("Spawn creep button clicked!")
+                    gameMapApi.spawnCreep()
 
-        val spawnCreepButton = uiButton("Spawn creep") {
-            alignBottomToBottomOfWindow()
-            onClick {
-                println("Spawn creep button clicked!")
-                gameMapApi.spawnCreep()
-
-            }
-        }
-
-        val addTowerButton = uiButton("Add tower") {
-            alignBottomToBottomOfWindow()
-            alignLeftToRightOf(spawnCreepButton)
-            onClick {
-                println("Add tower button clicked!")
-                editorState.toggle(MapEntityType.TOWER)
-            }
-        }
-
-        val printWorldButton = uiButton("Print world") {
-            alignBottomToBottomOfWindow()
-            alignLeftToRightOf(addTowerButton)
-            onClick {
-                println("print world button clicked!")
-                println(world)
-            }
-        }
-
-        val deleteEntitiesButton = uiButton("Delete Entities") {
-            disable()
-            alignBottomToBottomOfWindow()
-            alignLeftToRightOf(printWorldButton)
-            onClick {
-                println("delete entities button clicked!")
-                eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
-                disable()
-            }
-            eventBus.register<EntitySelectionChangedEvent> {
-                if (gameWorld.selectionFamily.getSequence().isEmpty()) {
-                    disable()
-                } else {
-                    enable()
                 }
             }
+
+            val addTowerButton = uiButton("Add tower") {
+                onClick {
+                    println("Add tower button clicked!")
+                    editorState.toggle(MapEntityType.TOWER)
+                }
+            }
+
+            val printWorldButton = uiButton("Print world") {
+                onClick {
+                    println("print world button clicked!")
+                    println(world)
+                }
+            }
+
+            val deleteEntitiesButton = uiButton("Delete Entities") {
+                disable()
+                onClick {
+                    println("delete entities button clicked!")
+                    eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
+                    disable()
+                }
+                eventBus.register<EntitySelectionChangedEvent> {
+                    if (gameWorld.selectionFamily.getSequence().isEmpty()) {
+                        disable()
+                    } else {
+                        enable()
+                    }
+                }
+            }
+
+            distributeVertically(listOf(spawnCreepButton, addTowerButton, printWorldButton, deleteEntitiesButton))
+            alignBottomToBottomOfWindow()
         }
+
+
 
         keys {
             this.down(Key.ESCAPE) {
