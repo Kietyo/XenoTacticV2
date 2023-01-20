@@ -14,8 +14,11 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.*
+import com.xenotactic.gamelogic.utils.GlobalResources
+import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
+import com.xenotactic.korge.korge_utils.createEntityContainerForTower
 import com.xenotactic.korge.korge_utils.getDirection8
 import com.xenotactic.korge.korge_utils.kAngleTo
 import com.xenotactic.korge.ui.UIFixedGrid
@@ -27,8 +30,15 @@ object DebugMain5 {
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
         Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
+            GlobalResources.init()
 
             val solidRect = solidRect(250, 400, MaterialColors.BROWN_300)
+
+            val tower = createEntityContainerForTower(
+                220.toWorldUnit(), 220.toWorldUnit()
+            ).addTo(this)
+            tower.centerXOn(solidRect)
+            tower.alignTopToTopOf(solidRect, 15.0)
         }
     }
 }

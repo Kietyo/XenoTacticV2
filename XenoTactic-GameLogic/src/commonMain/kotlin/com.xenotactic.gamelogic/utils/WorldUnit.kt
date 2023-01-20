@@ -13,3 +13,5 @@ value class WorldUnit(val value: Double) {
         operator fun invoke(v: GameUnit) = WorldUnit(v.toDouble())
     }
 }
+
+fun Number.toWorldUnit() = WorldUnit(this.toDouble())
