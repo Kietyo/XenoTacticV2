@@ -1,8 +1,10 @@
 package com.xenotactic.korge.ui
 
+import com.soywiz.kds.Array2
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
+import com.soywiz.korma.geom.PointInt
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.korge.events.EventBus
 
@@ -52,27 +54,53 @@ class UIFixedGrid(
 
     init {
         this.solidRect(gridWidth, gridHeight, color = Colors.LIGHTGRAY)
+        println("""
+            gridEntryViewWidth: $gridEntryViewWidth
+            gridEntryViewHeight: $gridEntryViewHeight
+        """.trimIndent())
     }
 
     val gridEntryContainer = container()
+    val coordToView = mutableMapOf<PointInt, View>()
 
     init {
         resetWithEntries(initialEntries)
     }
 
+    fun setEntry(x: Int, y: Int, view: View) {
+        val point = PointInt(x, y)
+        val currView = coordToView[point]!!
+        currView.removeFromParent()
+        val scaledView = view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
+            gridEntryViewWidth, gridEntryViewHeight
+        ))
+        scaledView.addTo(gridEntryContainer)
+        scaledView.x = calculateXPosition(x)
+        scaledView.y = calculateYPosition(y)
+        coordToView[point] = scaledView
+    }
 
-    fun resetWithEntries(entries: List<(x: Int, y: Int, width: Double, height: Double) -> Container>) {
+    fun resetWithEntries(entries: List<(x: Int, y: Int, width: Double, height: Double) -> View>) {
         gridEntryContainer.removeChildren()
         val entriesIterator = entries.iterator()
         rowloop@ for (y in 0 until maxRows) {
             for (x in 0 until maxColumns) {
                 val fn = if (entriesIterator.hasNext()) entriesIterator.next() else defaultInitializerFn
                 val gridEntry = fn(x, y, gridEntryViewWidth, gridEntryViewHeight)
-                gridEntry.x += x * gridEntryViewWidth + x * entryPaddingHorizontal
-                gridEntry.y += y * gridEntryViewHeight + y * entryPaddingVertical
+                gridEntry.x = calculateXPosition(x)
+                gridEntry.y = calculateYPosition(y)
                 gridEntryContainer.addChild(gridEntry)
+                coordToView[PointInt(x, y)] = gridEntry
             }
         }
+    }
+
+    private fun calculateXPosition(x: Int): Double {
+        return x * gridEntryViewWidth + x * entryPaddingHorizontal
+    }
+
+    private fun calculateYPosition(y: Int): Double {
+        return y * gridEntryViewHeight + y * entryPaddingVertical
     }
 
     companion object {
