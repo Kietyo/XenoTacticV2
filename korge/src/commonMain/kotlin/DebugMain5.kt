@@ -1,28 +1,11 @@
-import com.soywiz.klock.Frequency
 import com.soywiz.korge.Korge
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiText
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.font.readTtfFont
-import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.readImageDataContainer
-import com.soywiz.korim.format.toProps
-import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korma.geom.*
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.gamelogic.views.EightDirection
-import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.korge.korge_utils.createEntityContainerForTower
-import com.xenotactic.korge.korge_utils.getDirection8
-import com.xenotactic.korge.korge_utils.kAngleTo
-import com.xenotactic.korge.ui.UIFixedGrid
-import com.xenotactic.korge.ui.UITextRect
 import kotlin.jvm.JvmStatic
 
 object DebugMain5 {
@@ -33,12 +16,51 @@ object DebugMain5 {
             GlobalResources.init()
 
             val solidRect = solidRect(250, 400, MaterialColors.BROWN_300)
+            val padding = 15.0
 
             val tower = createEntityContainerForTower(
                 220.toWorldUnit(), 220.toWorldUnit()
             ).addTo(this)
             tower.centerXOn(solidRect)
-            tower.alignTopToTopOf(solidRect, 15.0)
+            tower.alignTopToTopOf(solidRect, padding)
+
+            val iconWidth = 220.0 / 2.5
+
+            val damageIcon = image(GlobalResources.DAMAGE_ICON) {
+                smoothing = false
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
+                    iconWidth, iconWidth
+                ))
+                alignTopToBottomOf(tower, padding)
+                alignLeftToLeftOf(tower, padding)
+            }
+
+            val cooldownIcon = image(GlobalResources.COOLDOWN_ICON) {
+                smoothing = false
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
+                    iconWidth, iconWidth
+                ))
+                alignTopToBottomOf(tower, padding)
+                alignRightToRightOf(tower, padding)
+            }
+
+            val textSize = 30.0
+
+            val damageText = text("30", textSize = textSize, color = Colors.BLACK, font = GlobalResources.FONT_ATKINSON_BOLD) {
+                centerOn(damageIcon)
+                alignTopToBottomOf(damageIcon, 5.0)
+            }
+
+            val speedText = text("41\u002F41", textSize = textSize, color = Colors.BLACK, font = GlobalResources.FONT_ATKINSON_BOLD) {
+                centerOn(cooldownIcon)
+                alignTopToBottomOf(cooldownIcon, 5.0)
+            }
+
+            val bottom = damageText.globalBounds.bottom
+
+            solidRect.scaledHeight = bottom + padding
+
+            println("bottom: $bottom")
         }
     }
 }
