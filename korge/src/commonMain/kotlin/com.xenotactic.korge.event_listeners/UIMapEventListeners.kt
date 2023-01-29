@@ -10,7 +10,6 @@ import com.soywiz.korma.geom.vector.circle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
-import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources
@@ -121,7 +120,7 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.TOWER -> {
-                    val tower = createEntityContainerForTower(worldWidth, worldHeight, uiEntityContainer)
+                    val tower = createUIEntityContainerForTower(worldWidth, worldHeight, uiEntityContainer)
                     addComponentOrThrow(UIGunBarrelComponent(tower.getChildByName(GUN_VIEW_NAME)!!))
                 }
 

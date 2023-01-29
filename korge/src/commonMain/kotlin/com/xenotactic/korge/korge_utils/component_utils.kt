@@ -2,13 +2,11 @@ package com.xenotactic.korge.korge_utils
 
 import com.soywiz.korge.view.*
 import com.soywiz.korma.geom.*
-import com.xenotactic.ecs.IEntity
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.RectangleEntity
-import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
@@ -139,7 +137,7 @@ fun IRectangleEntity.getSizeComponent(): SizeComponent {
 
 const val GUN_VIEW_NAME = "gun"
 
-fun createEntityContainerForTower(
+fun createUIEntityContainerForTower(
     worldWidth: WorldUnit,
     worldHeight: WorldUnit,
     uiEntityContainer: Container = Container()): Container {

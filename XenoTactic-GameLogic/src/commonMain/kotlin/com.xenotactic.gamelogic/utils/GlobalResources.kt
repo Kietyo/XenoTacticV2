@@ -21,6 +21,7 @@ object GlobalResources {
     lateinit var DAMAGE_ICON: Bitmap32
     lateinit var COOLDOWN_ICON: Bitmap32
 
+    lateinit var FONT_ATKINSON_REGULAR: TtfFont
     lateinit var FONT_ATKINSON_BOLD: TtfFont
 
     suspend fun init() {
@@ -38,6 +39,7 @@ object GlobalResources {
         COOLDOWN_ICON = resourcesVfs["cooldown_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
 
+        FONT_ATKINSON_REGULAR = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()
         FONT_ATKINSON_BOLD = resourcesVfs["fonts/AtkinsonHyperlegible-Bold.ttf"].readTtfFont()
     }
 }
