@@ -112,17 +112,16 @@ fun <T : View> T.debugPrint() {
 
 fun <T : View> T.alignBottomToBottomOfWindow(): T {
     val windowsArea = this.getVisibleLocalArea()
-    println(
-        """
-        alignBottomToBottomOfWindow:
-        windowsArea: $windowsArea
-    """.trimIndent()
-    )
-    debugPrint()
+//    println(
+//        """
+//        alignBottomToBottomOfWindow:
+//        windowsArea: $windowsArea
+//    """.trimIndent()
+//    )
+//    debugPrint()
     return alignBottomToBottomOfWindow(
         windowsArea.width.toInt() + windowsArea.x.toInt(),
         windowsArea.height.toInt(),
-        yOffset = windowsArea.y.toInt()
     )
 }
 
@@ -133,22 +132,22 @@ fun <T : View> T.alignBottomToBottomOfWindow(
     val refParent = getReferenceParent()
     val resizeWHToLocal =
         refParent.globalToLocalXY(resizedWidth.toDouble(), resizedHeight.toDouble())
-    println(
-        "alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
-                "resizedHeight=$resizedHeight, yOffset=$yOffset):"
-    )
-    debugPrint()
-    println(
-        """
-        resizeWHToLocal: $resizeWHToLocal
-        refParent.globalToLocalXY(0.0, yOffset.toDouble()).y: ${
-            refParent.globalToLocalXY(
-                0.0,
-                yOffset.toDouble()
-            ).y
-        }
-    """.trimIndent()
-    )
+//    println(
+//        "alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
+//                "resizedHeight=$resizedHeight, yOffset=$yOffset):"
+//    )
+//    debugPrint()
+//    println(
+//        """
+//        resizeWHToLocal: $resizeWHToLocal
+//        refParent.globalToLocalXY(0.0, yOffset.toDouble()).y: ${
+//            refParent.globalToLocalXY(
+//                0.0,
+//                yOffset.toDouble()
+//            ).y
+//        }
+//    """.trimIndent()
+//    )
 
     this.y = resizeWHToLocal.y + yOffset - this.scaledHeight
     return this

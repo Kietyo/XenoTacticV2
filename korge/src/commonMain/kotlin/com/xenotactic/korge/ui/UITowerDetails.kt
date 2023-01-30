@@ -38,7 +38,13 @@ class UITowerDetails: Container() {
                         alignLeftToRightOf(t1, textPadding)
                     }
                 }
-                distributeVertically(listOf(damageText, speedText))
+                val rangeText = container {
+                    val t1 = text("Range:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
+                    text("7", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
+                        alignLeftToRightOf(t1, textPadding)
+                    }
+                }
+                distributeVertically(listOf(damageText, speedText, rangeText))
             }
 
 

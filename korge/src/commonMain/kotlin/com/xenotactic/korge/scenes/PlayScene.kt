@@ -40,6 +40,7 @@ import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 import com.xenotactic.korge.systems.*
+import com.xenotactic.korge.ui.UIGuiContainer
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
 import kotlin.time.Duration.Companion.milliseconds
@@ -154,48 +155,8 @@ class PlayScene : Scene() {
 ////            MapEntity.Tower(20, 0)
 //        )
 
-        val buttonsPanel = container {
-            val spawnCreepButton = uiButton("Spawn creep") {
-                onClick {
-                    println("Spawn creep button clicked!")
-                    gameMapApi.spawnCreep()
+        UIGuiContainer(this, engine, world, gameWorld, gameMapApi)
 
-                }
-            }
-
-            val addTowerButton = uiButton("Add tower") {
-                onClick {
-                    println("Add tower button clicked!")
-                    editorState.toggle(MapEntityType.TOWER)
-                }
-            }
-
-            val printWorldButton = uiButton("Print world") {
-                onClick {
-                    println("print world button clicked!")
-                    println(world)
-                }
-            }
-
-            val deleteEntitiesButton = uiButton("Delete Entities") {
-                disable()
-                onClick {
-                    println("delete entities button clicked!")
-                    eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
-                    disable()
-                }
-                eventBus.register<EntitySelectionChangedEvent> {
-                    if (gameWorld.selectionFamily.getSequence().isEmpty()) {
-                        disable()
-                    } else {
-                        enable()
-                    }
-                }
-            }
-
-            distributeVertically(listOf(spawnCreepButton, addTowerButton, printWorldButton, deleteEntitiesButton))
-            alignBottomToBottomOfWindow()
-        }
 
 
 

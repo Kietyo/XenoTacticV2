@@ -1,7 +1,9 @@
 package com.xenotactic.korge.models
 
+import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.components.EntityTowerComponent
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.PathFindingResult
@@ -176,5 +178,9 @@ class GameWorld(
                 .map { it.toRectangleEntity() },
             teleportPairs
         )
+    }
+
+    fun isTowerEntity(id: EntityId): Boolean {
+        return world.getComponentContainer<EntityTowerComponent>().containsComponent(id)
     }
 }
