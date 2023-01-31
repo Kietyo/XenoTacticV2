@@ -73,12 +73,12 @@ class UIGuiContainer(
 
         eventBus.register<EntitySelectionChangedEvent> {
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
+                val towerId = gameWorld.selectionFamily.first()
                 println("Selected one tower entity!")
                 middleSelectionContainer.apply {
                     removeChildren()
-//                    x = 0.0
-//                    y = 0.0
-                    UITowerDetails().addTo(this) {
+                    val towerDamage = gameMapApi.calculateTowerDamage(towerId)
+                    UITowerDetails(towerDamage).addTo(this) {
                         scaleWhileMaintainingAspect(ScalingOption.ByHeight(100.0))
                     }
                     centerXOnStage()

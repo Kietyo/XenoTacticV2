@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.components
 
-class DamageUpgradeComponent(
+class MutableDamageUpgradeComponent(
     var numUpgrades: Int
 ) {
 }

@@ -134,7 +134,7 @@ class PlayScene : Scene() {
             addSystem(MonsterDeathSystem(engine))
             addSystem(MonsterHealthRenderSystem(world))
             addSystem(ReloadSystem(world))
-            addSystem(TowerAttackSystem(world))
+            addSystem(TowerAttackSystem(world, gameMapApi))
         }
 
         val infoText = text("Hello world")

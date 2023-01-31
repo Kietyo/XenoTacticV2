@@ -4,51 +4,60 @@ import com.soywiz.klogger.Logger
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.ProjectileDamageComponent
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.korge_utils.getCenterPoint
+import com.xenotactic.korge.state.GameMapApi
 import kotlin.time.Duration
 
 class TowerAttackSystem(
-    val world: World
+    val world: World,
+    val gameMapApi: GameMapApi
 ) : System() {
     companion object {
         val logger = Logger<TowerAttackSystem>()
     }
+
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            com.xenotactic.gamelogic.components.EntityTowerComponent::class, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class, com.xenotactic.gamelogic.components.SizeComponent::class,
-            com.xenotactic.gamelogic.components.RangeComponent::class, com.xenotactic.gamelogic.components.TargetingComponent::class,
-            com.xenotactic.gamelogic.components.ReloadTimeComponent::class,
-            com.xenotactic.gamelogic.components.ReadyToAttackComponent::class
+            EntityTowerComponent::class,
+            BottomLeftPositionComponent::class,
+            SizeComponent::class,
+            RangeComponent::class,
+            TargetingComponent::class,
+            ReloadTimeComponent::class,
+            ReadyToAttackComponent::class
         ),
     )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach { towerId ->
 //            logger.info { "update: tower id: $towerId" }
-            val sizeComponent = world[towerId, com.xenotactic.gamelogic.components.SizeComponent::class]
-            val bottomLeftPositionComponent = world[towerId, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
+            val sizeComponent = world[towerId, SizeComponent::class]
+            val bottomLeftPositionComponent =
+                world[towerId, BottomLeftPositionComponent::class]
             val towerCenterPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
 
-            val targetingComponent = world[towerId, com.xenotactic.gamelogic.components.TargetingComponent::class]
+            val damage = gameMapApi.calculateTowerDamage(towerId)
+
+            val targetingComponent = world[towerId, TargetingComponent::class]
 
             world.addEntity {
-                addComponentOrThrow(com.xenotactic.gamelogic.components.ProjectileComponent)
+                addComponentOrThrow(ProjectileComponent)
                 addComponentOrThrow(targetingComponent)
-                addComponentOrThrow(com.xenotactic.gamelogic.components.VelocityComponent(0.2.toGameUnit()))
+                addComponentOrThrow(VelocityComponent(0.2.toGameUnit()))
                 addComponentOrThrow(
-                    com.xenotactic.gamelogic.components.MutableCenterPositionComponent(
+                    MutableCenterPositionComponent(
                         towerCenterPoint.x,
                         towerCenterPoint.y
                     )
                 )
-                addComponentOrThrow(ProjectileDamageComponent(10.0))
+                addComponentOrThrow(ProjectileDamageComponent(damage))
             }
 
             world.modifyEntity(towerId) {
-                addComponentOrThrow(com.xenotactic.gamelogic.components.ReloadDowntimeComponent(0.0))
-                removeComponent<com.xenotactic.gamelogic.components.ReadyToAttackComponent>()
+                addComponentOrThrow(ReloadDowntimeComponent(0.0))
+                removeComponent<ReadyToAttackComponent>()
             }
         }
     }

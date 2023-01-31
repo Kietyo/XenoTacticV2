@@ -3,12 +3,15 @@ package com.xenotactic.korge.ui
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
+import com.soywiz.korio.util.toStringDecimal
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
 
-class UITowerDetails: Container() {
+class UITowerDetails(
+    damage: Double = 15.0
+): Container() {
     init {
         val solidRect = solidRect(500, 250, MaterialColors.BROWN_200)
         val padding = 10.0
@@ -28,7 +31,7 @@ class UITowerDetails: Container() {
                 val textPadding = 6.0
                 val damageText = container {
                     val t1 = text("Damage:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    text("15", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
+                    text(damage.toStringDecimal(2), font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
                         alignLeftToRightOf(t1, textPadding)
                     }
                 }

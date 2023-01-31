@@ -3,6 +3,7 @@ package com.xenotactic.korge.state
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.rectangleIntersects
@@ -20,6 +21,7 @@ class GameMapApi(
     val engine: Engine,
 ) {
     val gameWorld: GameWorld = engine.gameWorld
+    val world = gameWorld.world
     val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
     val eventBus: EventBus = engine.eventBus
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
@@ -68,14 +70,17 @@ class GameMapApi(
                     MapEntityType.FINISH -> Unit
                     MapEntityType.CHECKPOINT -> Unit
                     MapEntityType.ROCK -> {
-                        addComponentOrThrow(com.xenotactic.gamelogic.components.SelectableComponent)
+                        addComponentOrThrow(SelectableComponent)
                     }
 
                     MapEntityType.TOWER -> {
-                        addComponentOrThrow(com.xenotactic.gamelogic.components.RangeComponent(7.toGameUnit()))
-                        addComponentOrThrow(com.xenotactic.gamelogic.components.ReloadTimeComponent(1000.0))
-                        addComponentOrThrow(com.xenotactic.gamelogic.components.ReloadDowntimeComponent(0.0))
-                        addComponentOrThrow(com.xenotactic.gamelogic.components.SelectableComponent)
+                        addComponentOrThrow(BaseDamageComponent(10.0))
+                        addComponentOrThrow(MutableDamageUpgradeComponent(0))
+                        addComponentOrThrow(DamageMultiplierComponent(1.0))
+                        addComponentOrThrow(RangeComponent(7.toGameUnit()))
+                        addComponentOrThrow(ReloadTimeComponent(1000.0))
+                        addComponentOrThrow(ReloadDowntimeComponent(0.0))
+                        addComponentOrThrow(SelectableComponent)
                     }
 
                     MapEntityType.TELEPORT_IN -> Unit
@@ -168,6 +173,13 @@ class GameMapApi(
     fun removeEntities(entities: Set<EntityId>) {
         entities.forEach { gameWorld.world.removeEntity(it) }
         updateShortestPath()
+    }
+
+    fun calculateTowerDamage(towerId: EntityId): Double {
+        val baseDamageComponent = world[towerId, BaseDamageComponent::class]
+        val mutableDamageUpgradeComponent = world[towerId, MutableDamageUpgradeComponent::class]
+        val damageMultiplierComponent = world[towerId, DamageMultiplierComponent::class]
+        return (baseDamageComponent.damage + mutableDamageUpgradeComponent.numUpgrades) * damageMultiplierComponent.multiplier
     }
 
 }
