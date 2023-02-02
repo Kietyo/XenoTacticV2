@@ -78,7 +78,7 @@ class GameMapApi(
                         addComponentOrThrow(MutableDamageUpgradeComponent(0))
                         addComponentOrThrow(DamageMultiplierComponent(1.0))
                         addComponentOrThrow(RangeComponent(7.toGameUnit()))
-                        addComponentOrThrow(ReloadTimeComponent(1000.0))
+                        addComponentOrThrow(WeaponSpeedComponent(1000.0))
                         addComponentOrThrow(ReloadDowntimeComponent(0.0))
                         addComponentOrThrow(SelectableComponent)
                     }

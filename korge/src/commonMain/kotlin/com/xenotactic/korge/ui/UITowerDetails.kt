@@ -10,7 +10,9 @@ import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
 
 class UITowerDetails(
-    damage: Double = 15.0
+    damage: Double,
+    weaponSpeedMillis: Double,
+    range: Double
 ): Container() {
     init {
         val solidRect = solidRect(500, 250, MaterialColors.BROWN_200)
@@ -37,13 +39,14 @@ class UITowerDetails(
                 }
                 val speedText = container {
                     val t1 = text("Speed:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    text("1.5 ATK/s", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
+                    val attacksPerSecond = (1E3 / weaponSpeedMillis).toStringDecimal(2)
+                    text("$attacksPerSecond ATK/s", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
                         alignLeftToRightOf(t1, textPadding)
                     }
                 }
                 val rangeText = container {
                     val t1 = text("Range:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    text("7", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
+                    text(range.toStringDecimal(2), font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
                         alignLeftToRightOf(t1, textPadding)
                     }
                 }

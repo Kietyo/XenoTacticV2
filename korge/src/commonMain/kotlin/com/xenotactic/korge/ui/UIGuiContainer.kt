@@ -4,6 +4,8 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.components.RangeComponent
+import com.xenotactic.gamelogic.components.WeaponSpeedComponent
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
@@ -25,7 +27,7 @@ class UIGuiContainer(
     val eventBus = engine.eventBus
     val editorState = engine.injections.getSingleton<EditorState>()
 
-    val middleSelectionContainer = stage.container {  }
+    val middleSelectionContainer = stage.container { }
 
     init {
         val buttonsPanel = stage.container {
@@ -78,7 +80,13 @@ class UIGuiContainer(
                 middleSelectionContainer.apply {
                     removeChildren()
                     val towerDamage = gameMapApi.calculateTowerDamage(towerId)
-                    UITowerDetails(towerDamage).addTo(this) {
+                    val weaponSpeedComponent = world[towerId, WeaponSpeedComponent::class]
+                    val rangeComponent = world[towerId, RangeComponent::class]
+                    UITowerDetails(
+                        towerDamage,
+                        weaponSpeedComponent.reloadTimeMillis,
+                        rangeComponent.range.value
+                    ).addTo(this) {
                         scaleWhileMaintainingAspect(ScalingOption.ByHeight(100.0))
                     }
                     centerXOnStage()

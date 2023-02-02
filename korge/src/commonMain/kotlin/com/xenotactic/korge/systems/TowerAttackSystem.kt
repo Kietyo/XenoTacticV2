@@ -25,7 +25,7 @@ class TowerAttackSystem(
             SizeComponent::class,
             RangeComponent::class,
             TargetingComponent::class,
-            ReloadTimeComponent::class,
+            WeaponSpeedComponent::class,
             ReadyToAttackComponent::class
         ),
     )
