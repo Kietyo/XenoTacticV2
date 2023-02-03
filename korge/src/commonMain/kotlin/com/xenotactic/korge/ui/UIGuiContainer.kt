@@ -3,16 +3,20 @@ package com.xenotactic.korge.ui
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
+import com.soywiz.korim.color.Colors
+import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.components.WeaponSpeedComponent
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
 import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.korge.models.GameWorld
@@ -76,6 +80,37 @@ class UIGuiContainer(
             distributeVertically(listOf(spawnCreepButton, addTowerButton, printWorldButton, deleteEntitiesButton))
             alignBottomToBottomOfWindow()
         }
+
+        val bottomRightGrid = UIFixedGrid(
+            4, 2, 220.0, 110.0, 5.0, 5.0,
+            backgroundColor = MaterialColors.TEAL_600
+        ).addTo(stage) {
+            alignBottomToBottomOfWindow()
+            alignRightToRightOfWindow()
+        }
+
+        val globalDamageUpgradeView = UITextRect(
+            "Global\nDamage\nUpgrade",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+
+        }
+
+        val globalRangeUpgradeView = UITextRect(
+            "Global\nRange\nUpgrade",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+        }
+
+        val incomeUpgradeView = UITextRect(
+            "Income\nUpgrade",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+        }
+
+        bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
+        bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
+        bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
 
         eventBus.register<EntitySelectionChangedEvent> {
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {

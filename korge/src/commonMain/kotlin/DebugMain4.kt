@@ -45,33 +45,41 @@ object DebugMain4 {
 //            }
 
 
-            val fixedGrid = UIFixedGrid(4, 2, 400.0, 200.0, 5.0, 5.0)
+            val fixedGrid = UIFixedGrid(
+                4, 2, 400.0, 200.0, 5.0, 5.0,
+                backgroundColor = MaterialColors.GRAY_600
+            )
             addChild(fixedGrid)
 
             val globalDamageUpgradeView = UITextRect(
                 "Global\nDamage\nUpgrade",
-                50.0, 50.0, 5.0, font).apply {
+                50.0, 50.0, 5.0, font
+            ).apply {
 
             }
 
             val globalRangeUpgradeView = UITextRect(
                 "Global\nRange\nUpgrade",
-                50.0, 50.0, 5.0, font).apply {
+                50.0, 50.0, 5.0, font
+            ).apply {
             }
 
             val incomeUpgradeView = UITextRect(
                 "Income\nUpgrade",
-                50.0, 50.0, 5.0, font).apply {
+                50.0, 50.0, 5.0, font
+            ).apply {
             }
 
             val towerDamageUpgradeView = UITextRect(
                 "Tower\nDamage\nUpgrade",
-                50.0, 50.0, 5.0, font).apply {
+                50.0, 50.0, 5.0, font
+            ).apply {
             }
 
             val towerSpeedUpgradeView = UITextRect(
                 "Tower\nSpeed\nUpgrade",
-                50.0, 50.0, 5.0, font).apply {
+                50.0, 50.0, 5.0, font
+            ).apply {
             }
 
             fixedGrid.setEntry(0, 0, globalDamageUpgradeView)

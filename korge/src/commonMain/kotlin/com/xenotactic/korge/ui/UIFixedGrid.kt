@@ -4,12 +4,14 @@ import com.soywiz.kds.Array2
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
+import com.soywiz.korim.color.MaterialColors
+import com.soywiz.korim.color.RGBA
 import com.soywiz.korma.geom.PointInt
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.korge.events.EventBus
 
 val EMPTY_BOX_FN: (x: Int, y:Int, width: Double, height: Double) -> View = {x,y,width, height ->
-    SolidRect(width, height, Colors.DARKKHAKI)
+    SolidRect(width, height, MaterialColors.TEAL_100)
 }
 
 fun Container.uiFixedGrid(
@@ -45,15 +47,16 @@ class UIFixedGrid(
     val entryPaddingHorizontal: Double,
     val entryPaddingVertical: Double,
     initialEntries: List<(x: Int, y: Int, width: Double, height: Double) -> Container> = emptyList(),
-    val defaultInitializerFn: (x: Int, y: Int, width: Double, height: Double) -> View = EMPTY_BOX_FN
+    val defaultInitializerFn: (x: Int, y: Int, width: Double, height: Double) -> View = EMPTY_BOX_FN,
+    backgroundColor: RGBA = Colors.DARKMAGENTA
 ) : Container() {
     val gridEntryViewWidth =
-        (gridWidth - entryPaddingHorizontal * (maxColumns - 1)) / maxColumns
+        (gridWidth - entryPaddingHorizontal * (maxColumns + 1)) / maxColumns
     val gridEntryViewHeight =
-        (gridHeight - entryPaddingVertical * (maxRows - 1)) / maxRows
+        (gridHeight - entryPaddingVertical * (maxRows + 1)) / maxRows
 
     init {
-        this.solidRect(gridWidth, gridHeight, color = Colors.LIGHTGRAY)
+        this.solidRect(gridWidth, gridHeight, color = backgroundColor)
         println("""
             gridEntryViewWidth: $gridEntryViewWidth
             gridEntryViewHeight: $gridEntryViewHeight
@@ -96,11 +99,11 @@ class UIFixedGrid(
     }
 
     private fun calculateXPosition(x: Int): Double {
-        return x * gridEntryViewWidth + x * entryPaddingHorizontal
+        return x * gridEntryViewWidth + (x + 1) * entryPaddingHorizontal
     }
 
     private fun calculateYPosition(y: Int): Double {
-        return y * gridEntryViewHeight + y * entryPaddingVertical
+        return y * gridEntryViewHeight + (y + 1) * entryPaddingVertical
     }
 
     companion object {
