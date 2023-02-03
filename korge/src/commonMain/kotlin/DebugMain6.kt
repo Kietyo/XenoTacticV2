@@ -20,7 +20,7 @@ object DebugMain6 {
             GlobalResources.init()
 
 
-            val d = UITowerDetails(15.0, 600.0, 7.0).addTo(this)
+            val d = UITowerDetails(15.0, 600.0, 7.0, 22, 30, 51).addTo(this)
 
 
         }

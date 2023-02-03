@@ -35,10 +35,7 @@ import com.xenotactic.korge.models.SettingsContainer
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
 import com.xenotactic.korge.random.generators.*
-import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapApi
-import com.xenotactic.korge.state.GameMapDimensionsState
-import com.xenotactic.korge.state.GameMapPathState
+import com.xenotactic.korge.state.*
 import com.xenotactic.korge.systems.*
 import com.xenotactic.korge.ui.UIGuiContainer
 import com.xenotactic.korge.ui.UIMapV2
@@ -92,6 +89,7 @@ class PlayScene : Scene() {
             injections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
+            injections.setSingletonOrThrow(GameplayState(61))
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)

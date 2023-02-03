@@ -64,7 +64,7 @@ class GameMapApi(
         for (entity in entities) {
             val entityId = gameWorld.world.addEntity {
                 addFromStagingEntity(entity)
-                val entityTypeComponent = entity[com.xenotactic.gamelogic.components.EntityTypeComponent::class]
+                val entityTypeComponent = entity[EntityTypeComponent::class]
                 when (entityTypeComponent.type) {
                     MapEntityType.START -> Unit
                     MapEntityType.FINISH -> Unit
@@ -75,7 +75,8 @@ class GameMapApi(
 
                     MapEntityType.TOWER -> {
                         addComponentOrThrow(BaseDamageComponent(10.0))
-                        addComponentOrThrow(MutableDamageUpgradeComponent(0))
+                        addComponentOrThrow(DamageUpgradeComponent(0))
+                        addComponentOrThrow(SpeedUpgradeComponent(0))
                         addComponentOrThrow(DamageMultiplierComponent(1.0))
                         addComponentOrThrow(RangeComponent(7.toGameUnit()))
                         addComponentOrThrow(WeaponSpeedComponent(1000.0))
@@ -99,19 +100,19 @@ class GameMapApi(
     fun spawnCreep() {
         gameWorld.world.addEntity {
             addComponentOrThrow(
-                com.xenotactic.gamelogic.components.EntityTypeComponent(
+                EntityTypeComponent(
                     MapEntityType.MONSTER
                 )
             )
-            addComponentOrThrow(com.xenotactic.gamelogic.components.SizeComponent(1.toGameUnit(), 1.toGameUnit()))
-            addComponentOrThrow(com.xenotactic.gamelogic.components.MonsterComponent)
-            addComponentOrThrow(com.xenotactic.gamelogic.components.VelocityComponent())
+            addComponentOrThrow(SizeComponent(1.toGameUnit(), 1.toGameUnit()))
+            addComponentOrThrow(MonsterComponent)
+            addComponentOrThrow(VelocityComponent())
 
-            val maxHealthComponent = com.xenotactic.gamelogic.components.MaxHealthComponent(100.0)
+            val maxHealthComponent = MaxHealthComponent(100.0)
             addComponentOrThrow(maxHealthComponent)
-            addComponentOrThrow(com.xenotactic.gamelogic.components.HealthComponent(maxHealthComponent.maxHealth))
-            addComponentOrThrow(com.xenotactic.gamelogic.components.AnimationComponent(100.0, 0.0))
-            addComponentOrThrow(com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent(1.0))
+            addComponentOrThrow(HealthComponent(maxHealthComponent.maxHealth))
+            addComponentOrThrow(AnimationComponent(100.0, 0.0))
+            addComponentOrThrow(ComputedSpeedEffectComponent(1.0))
 
 
             engine.eventBus.send(AddedMonsterEntityEvent(entityId))
@@ -120,7 +121,7 @@ class GameMapApi(
                 gameMapPathState.shortestPath!!
             )
             addComponentOrThrow(
-                com.xenotactic.gamelogic.components.PathSequenceTraversalComponent(
+                PathSequenceTraversalComponent(
                     pathSequenceTraversal
                 )
             )
@@ -177,9 +178,9 @@ class GameMapApi(
 
     fun calculateTowerDamage(towerId: EntityId): Double {
         val baseDamageComponent = world[towerId, BaseDamageComponent::class]
-        val mutableDamageUpgradeComponent = world[towerId, MutableDamageUpgradeComponent::class]
+        val damageUpgradeComponent = world[towerId, DamageUpgradeComponent::class]
         val damageMultiplierComponent = world[towerId, DamageMultiplierComponent::class]
-        return (baseDamageComponent.damage + mutableDamageUpgradeComponent.numUpgrades) * damageMultiplierComponent.multiplier
+        return (baseDamageComponent.damage + damageUpgradeComponent.numUpgrades) * damageMultiplierComponent.multiplier
     }
 
 }

@@ -4,7 +4,9 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
+import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.components.WeaponSpeedComponent
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.engine.Engine
@@ -16,6 +18,7 @@ import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.korge.models.GameWorld
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.korge.state.GameplayState
 
 class UIGuiContainer(
     val stage: SContainer,
@@ -26,6 +29,7 @@ class UIGuiContainer(
 ) {
     val eventBus = engine.eventBus
     val editorState = engine.injections.getSingleton<EditorState>()
+    val gameplayState = engine.injections.getSingleton<GameplayState>()
 
     val middleSelectionContainer = stage.container { }
 
@@ -82,10 +86,16 @@ class UIGuiContainer(
                     val towerDamage = gameMapApi.calculateTowerDamage(towerId)
                     val weaponSpeedComponent = world[towerId, WeaponSpeedComponent::class]
                     val rangeComponent = world[towerId, RangeComponent::class]
+                    val damageUpgradeComponent = world[towerId, DamageUpgradeComponent::class]
+                    val speedUpgradeComponent = world[towerId, SpeedUpgradeComponent::class]
                     UITowerDetails(
                         towerDamage,
                         weaponSpeedComponent.reloadTimeMillis,
-                        rangeComponent.range.value
+                        rangeComponent.range.value,
+                        damageUpgradeComponent.numUpgrades,
+                        speedUpgradeComponent.numUpgrades,
+                        gameplayState.maxSpeedUpgrades
+
                     ).addTo(this) {
                         scaleWhileMaintainingAspect(ScalingOption.ByHeight(100.0))
                     }

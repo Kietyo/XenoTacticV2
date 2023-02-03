@@ -12,7 +12,10 @@ import com.xenotactic.korge.korge_utils.distributeVertically
 class UITowerDetails(
     damage: Double,
     weaponSpeedMillis: Double,
-    range: Double
+    range: Double,
+    damageUpgrades: Int,
+    speedUpgrades: Int,
+    maxSpeedUpgrades: Int
 ): Container() {
     init {
         val solidRect = solidRect(500, 250, MaterialColors.BROWN_200)
@@ -77,7 +80,7 @@ class UITowerDetails(
 
                 val damageText =
                     text(
-                        "30",
+                        damageUpgrades.toString(),
                         textSize = textSize,
                         color = textColor,
                         font = GlobalResources.FONT_ATKINSON_BOLD
@@ -88,7 +91,7 @@ class UITowerDetails(
                     }
 
                 val speedText = text(
-                    "41/41",
+                    "$speedUpgrades/$maxSpeedUpgrades",
                     textSize = textSize,
                     color = textColor,
                     font = GlobalResources.FONT_ATKINSON_BOLD
