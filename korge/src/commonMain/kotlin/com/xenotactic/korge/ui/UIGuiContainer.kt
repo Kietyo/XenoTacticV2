@@ -3,7 +3,6 @@ package com.xenotactic.korge.ui
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
@@ -16,6 +15,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
+import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
 import com.xenotactic.korge.korge_utils.distributeVertically
@@ -128,6 +128,9 @@ class UIGuiContainer(
             "Tower\nSpeed\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
+            onClick {
+                eventBus.send(UpgradeTowerSpeedEvent)
+            }
         }
 
         bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
@@ -143,13 +146,13 @@ class UIGuiContainer(
                 middleSelectionContainer.apply {
                     removeChildren()
                     val towerDamage = gameMapApi.calculateTowerDamage(towerId)
-                    val weaponSpeedComponent = world[towerId, WeaponSpeedComponent::class]
+                    val attacksPerSecond = gameMapApi.calculateTowerAttacksPerSecond(towerId)
                     val rangeComponent = world[towerId, RangeComponent::class]
                     val damageUpgradeComponent = world[towerId, DamageUpgradeComponent::class]
                     val speedUpgradeComponent = world[towerId, SpeedUpgradeComponent::class]
                     UITowerDetails(
                         towerDamage,
-                        weaponSpeedComponent.reloadTimeMillis,
+                        attacksPerSecond,
                         rangeComponent.range.value,
                         damageUpgradeComponent.numUpgrades,
                         speedUpgradeComponent.numUpgrades,

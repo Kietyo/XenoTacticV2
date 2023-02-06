@@ -5,6 +5,6 @@ data class WeaponSpeedComponent(
     // Suppose that this is 860.
     // This means that the unit must wait 0.86 seconds
     // before it can attack again.
-    val reloadTimeMillis: Double
+    val millis: Double
 ) {
 }

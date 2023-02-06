@@ -16,6 +16,7 @@ import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.korge_utils.toRectangleEntity
 import com.xenotactic.korge.models.GameWorld
 import pathing.PathSequenceTraversal
+import kotlin.math.pow
 
 class GameMapApi(
     val engine: Engine,
@@ -25,6 +26,7 @@ class GameMapApi(
     val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
     val eventBus: EventBus = engine.eventBus
     private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
+    private val gameplayState = engine.injections.getSingleton<GameplayState>()
 
     val numCheckpoints
         get() = gameWorld.checkpoints.size
@@ -181,6 +183,16 @@ class GameMapApi(
         val damageUpgradeComponent = world[towerId, DamageUpgradeComponent::class]
         val damageMultiplierComponent = world[towerId, DamageMultiplierComponent::class]
         return (baseDamageComponent.damage + damageUpgradeComponent.numUpgrades) * damageMultiplierComponent.multiplier
+    }
+
+    fun calculateTowerAttacksPerSecond(towerId: EntityId): Double {
+        val weaponSpeedComponent = world[towerId, WeaponSpeedComponent::class]
+        val speedUpgradeComponent = world[towerId, SpeedUpgradeComponent::class]
+        val speedIncreasePerUpgrade = gameplayState.speedPercentPerUpgrade
+
+        val newWeaponSpeedMillis =
+            weaponSpeedComponent.millis / (1 + speedIncreasePerUpgrade).pow(speedUpgradeComponent.numUpgrades)
+        return 1E3 / newWeaponSpeedMillis
     }
 
 }

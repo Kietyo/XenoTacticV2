@@ -21,10 +21,10 @@ class ReloadSystem(
             val weaponSpeedComponent = world[it, com.xenotactic.gamelogic.components.WeaponSpeedComponent::class]
             val reloadDowntimeComponent = world[it, com.xenotactic.gamelogic.components.ReloadDowntimeComponent::class]
             reloadDowntimeComponent.currentDowntimeMillis += deltaTime.inWholeMilliseconds
-            require(reloadDowntimeComponent.currentDowntimeMillis / weaponSpeedComponent.reloadTimeMillis < 2.0) {
+            require(reloadDowntimeComponent.currentDowntimeMillis / weaponSpeedComponent.millis < 2.0) {
                 "Is eligible for 2 attacks in the same tick, which is weird..."
             }
-            if (reloadDowntimeComponent.currentDowntimeMillis >= weaponSpeedComponent.reloadTimeMillis) {
+            if (reloadDowntimeComponent.currentDowntimeMillis >= weaponSpeedComponent.millis) {
                 world.modifyEntity(it) {
                     addComponentOrThrow(com.xenotactic.gamelogic.components.ReadyToAttackComponent)
                     removeComponent<com.xenotactic.gamelogic.components.ReloadDowntimeComponent>()

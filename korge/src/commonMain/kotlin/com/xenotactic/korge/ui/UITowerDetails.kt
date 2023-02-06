@@ -8,12 +8,13 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
+import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
 
 class UITowerDetails(
     damage: Double,
-    weaponSpeedMillis: Double,
+    attacksPerSecond: Double,
     range: Double,
     damageUpgrades: Int,
     speedUpgrades: Int,
@@ -48,9 +49,11 @@ class UITowerDetails(
                 }
                 val speedTextSection = container {
                     val t1 = text("Speed:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    val attacksPerSecond = (1E3 / weaponSpeedMillis).toStringDecimal(2)
-                    text("$attacksPerSecond ATK/s", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
+                    val t2 = text("${attacksPerSecond.toStringDecimal(2)} ATK/s", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
                         alignLeftToRightOf(t1, textPadding)
+                    }
+                    eventBus?.register<UpgradedTowerSpeedEvent> {
+                        t2.text = "${it.newAttacksPerSecond.toStringDecimal(2)} ATK/s"
                     }
                 }
                 val rangeTextSection = container {
@@ -109,6 +112,10 @@ class UITowerDetails(
                     smoothing = false
                     centerOn(cooldownIcon)
                     alignTopToBottomOf(cooldownIcon, 5.0)
+                }
+
+                eventBus?.register<UpgradedTowerSpeedEvent> {
+                    speedUpgradesText.text = "${it.newSpeedUpgrade}/$maxSpeedUpgrades"
                 }
 
                 centerXOn(textContainer)

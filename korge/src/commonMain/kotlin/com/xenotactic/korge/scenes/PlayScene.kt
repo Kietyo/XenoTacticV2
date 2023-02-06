@@ -90,7 +90,7 @@ class PlayScene : Scene() {
             injections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
-            injections.setSingletonOrThrow(GameplayState(61))
+            injections.setSingletonOrThrow(GameplayState(61, 0.04))
             injections.setSingletonOrThrow(DeadUIZonesState())
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
