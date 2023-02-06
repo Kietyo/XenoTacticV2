@@ -81,7 +81,7 @@ class GameMapApi(
                         addComponentOrThrow(SpeedUpgradeComponent(0))
                         addComponentOrThrow(DamageMultiplierComponent(1.0))
                         addComponentOrThrow(RangeComponent(7.toGameUnit()))
-                        addComponentOrThrow(WeaponSpeedComponent(1000.0))
+                        addComponentOrThrow(BaseWeaponSpeedComponent(1000.0))
                         addComponentOrThrow(ReloadDowntimeComponent(0.0))
                         addComponentOrThrow(SelectableComponent)
                     }
@@ -185,14 +185,15 @@ class GameMapApi(
         return (baseDamageComponent.damage + damageUpgradeComponent.numUpgrades) * damageMultiplierComponent.multiplier
     }
 
-    fun calculateTowerAttacksPerSecond(towerId: EntityId): Double {
-        val weaponSpeedComponent = world[towerId, WeaponSpeedComponent::class]
+    fun calculateWeaponSpeedMillis(towerId: EntityId): Double {
+        val baseWeaponSpeedComponent = world[towerId, BaseWeaponSpeedComponent::class]
         val speedUpgradeComponent = world[towerId, SpeedUpgradeComponent::class]
         val speedIncreasePerUpgrade = gameplayState.speedPercentPerUpgrade
+        return baseWeaponSpeedComponent.millis / (1 + speedIncreasePerUpgrade).pow(speedUpgradeComponent.numUpgrades)
+    }
 
-        val newWeaponSpeedMillis =
-            weaponSpeedComponent.millis / (1 + speedIncreasePerUpgrade).pow(speedUpgradeComponent.numUpgrades)
-        return 1E3 / newWeaponSpeedMillis
+    fun calculateTowerAttacksPerSecond(towerId: EntityId): Double {
+        return 1E3 / calculateWeaponSpeedMillis(towerId)
     }
 
 }
