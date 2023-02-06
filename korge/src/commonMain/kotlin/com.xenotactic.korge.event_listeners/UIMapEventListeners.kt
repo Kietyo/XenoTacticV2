@@ -16,13 +16,10 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.engine.EventListener
 import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.ui.UIMapV2
-
-interface TestEventListenerI<T> {
-    fun handle(event: T)
-}
 
 data class AddedUIEntityEvent(
     val entityId: EntityId
@@ -39,7 +36,7 @@ data class AddedMonsterEntityEvent(
 
 class UIMapEventListeners(
     val engine: Engine
-) {
+): EventListener {
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     val gameWorld = engine.gameWorld

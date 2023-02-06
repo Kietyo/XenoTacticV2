@@ -83,6 +83,10 @@ class UIFixedGrid(
         coordToView[point] = scaledView
     }
 
+    fun clearEntry(x: Int, y: Int) {
+        setEntry(x, y, defaultInitializerFn(x, y, gridEntryViewWidth, gridEntryViewHeight))
+    }
+
     fun resetWithEntries(entries: List<(x: Int, y: Int, width: Double, height: Double) -> View>) {
         gridEntryContainer.removeChildren()
         val entriesIterator = entries.iterator()

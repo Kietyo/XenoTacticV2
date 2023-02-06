@@ -20,6 +20,7 @@ import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityTextComponentListener
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
+import com.xenotactic.korge.event_listeners.TowerUpgradeEventListeners
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
@@ -90,6 +91,7 @@ class PlayScene : Scene() {
             injections.setSingletonOrThrow(settingsContainer)
             injections.setSingletonOrThrow(GameMapPathState(this))
             injections.setSingletonOrThrow(GameplayState(61))
+            injections.setSingletonOrThrow(DeadUIZonesState())
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
@@ -107,7 +109,10 @@ class PlayScene : Scene() {
         val editorState = EditorState(engine)
         engine.injections.setSingletonOrThrow(editorState)
 
-        val uiMapEventListener = UIMapEventListeners(engine)
+        engine.eventListeners.apply {
+            add(UIMapEventListeners(engine))
+            add(TowerUpgradeEventListeners(engine))
+        }
 
         world.apply {
             injections = engine.injections

@@ -6,6 +6,8 @@ import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korio.util.toStringDecimal
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
+import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
 
@@ -15,9 +17,11 @@ class UITowerDetails(
     range: Double,
     damageUpgrades: Int,
     speedUpgrades: Int,
-    maxSpeedUpgrades: Int
+    maxSpeedUpgrades: Int,
+    engine: Engine? = null,
 ): Container() {
     init {
+        val eventBus = engine?.eventBus
         val solidRect = solidRect(500, 250, MaterialColors.BROWN_200)
         val padding = 10.0
         val tower = createUIEntityContainerForTower(
@@ -29,31 +33,33 @@ class UITowerDetails(
 
         val textColor = Colors.BLACK
 
-
         val rightSection = container {
             val textContainer = container {
                 val textSize = 30.0
                 val textPadding = 6.0
-                val damageText = container {
+                val damageTextSection = container {
                     val t1 = text("Damage:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    text(damage.toStringDecimal(2), font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
+                    val t2 = text(damage.toStringDecimal(2), font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
                         alignLeftToRightOf(t1, textPadding)
                     }
+                    eventBus?.register<UpgradedTowerDamageEvent> {
+                        t2.text = it.newDamage.toStringDecimal(2)
+                    }
                 }
-                val speedText = container {
+                val speedTextSection = container {
                     val t1 = text("Speed:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
                     val attacksPerSecond = (1E3 / weaponSpeedMillis).toStringDecimal(2)
                     text("$attacksPerSecond ATK/s", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
                         alignLeftToRightOf(t1, textPadding)
                     }
                 }
-                val rangeText = container {
+                val rangeTextSection = container {
                     val t1 = text("Range:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
                     text(range.toStringDecimal(2), font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
                         alignLeftToRightOf(t1, textPadding)
                     }
                 }
-                distributeVertically(listOf(damageText, speedText, rangeText))
+                distributeVertically(listOf(damageTextSection, speedTextSection, rangeTextSection))
             }
 
 
@@ -78,7 +84,7 @@ class UITowerDetails(
 
                 val textSize = 25.0
 
-                val damageText =
+                val damageUpgradesText =
                     text(
                         damageUpgrades.toString(),
                         textSize = textSize,
@@ -90,7 +96,11 @@ class UITowerDetails(
                         alignTopToBottomOf(damageIcon, 5.0)
                     }
 
-                val speedText = text(
+                eventBus?.register<UpgradedTowerDamageEvent> {
+                    damageUpgradesText.text = it.newDamageUpgrade.toString()
+                }
+
+                val speedUpgradesText = text(
                     "$speedUpgrades/$maxSpeedUpgrades",
                     textSize = textSize,
                     color = textColor,

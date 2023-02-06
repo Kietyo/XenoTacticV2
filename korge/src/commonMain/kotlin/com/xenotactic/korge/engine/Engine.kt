@@ -7,9 +7,12 @@ import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.models.GameWorld
 import kotlin.reflect.KClass
 
+interface EventListener
+
 class Engine(val eventBus: EventBus,
              val gameWorld: GameWorld = GameWorld()
 ) {
+    val eventListeners = mutableListOf<EventListener>()
     val injections = Injections()
 }
 

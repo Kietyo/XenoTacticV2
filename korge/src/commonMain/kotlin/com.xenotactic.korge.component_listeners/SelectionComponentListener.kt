@@ -8,19 +8,21 @@ import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
+import com.xenotactic.gamelogic.components.SelectedComponent
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
+import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.korge.ui.UIMapV2
 
 class SelectionComponentListener(
     val engine: Engine
-) : ComponentListener<com.xenotactic.gamelogic.components.SelectedComponent> {
+) : ComponentListener<SelectedComponent> {
     val world = engine.gameWorld.world
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     private val SELECTION_COLOR = Colors.YELLOW
 
-    override fun onAdd(entityId: EntityId, component: com.xenotactic.gamelogic.components.SelectedComponent) {
+    override fun onAdd(entityId: EntityId, component: SelectedComponent) {
         val uiEntityContainerComponent = world.get(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
         val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
 
@@ -41,7 +43,7 @@ class SelectionComponentListener(
         engine.eventBus.send(EntitySelectionChangedEvent)
     }
 
-    override fun onRemove(entityId: EntityId, component: com.xenotactic.gamelogic.components.SelectedComponent) {
+    override fun onRemove(entityId: EntityId, component: SelectedComponent) {
         println("Removed selection for entity: $entityId")
         val uiEntityContainerComponent = world.getOrNull(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
         if (uiEntityContainerComponent == null) {
@@ -57,7 +59,7 @@ class SelectionComponentListener(
         engine.eventBus.send(EntitySelectionChangedEvent)
     }
 
-    override fun onExisting(entityId: EntityId, component: com.xenotactic.gamelogic.components.SelectedComponent) {
+    override fun onExisting(entityId: EntityId, component: SelectedComponent) {
         TODO("Not yet implemented")
     }
 }

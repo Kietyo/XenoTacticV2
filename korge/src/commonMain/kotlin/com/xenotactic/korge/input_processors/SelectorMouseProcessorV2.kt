@@ -17,6 +17,7 @@ import com.xenotactic.gamelogic.components.PreSelectionComponent
 import com.xenotactic.gamelogic.components.SelectedComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.korge.state.GameMapApi
 
 class SelectorMouseProcessorV2(
@@ -27,6 +28,7 @@ class SelectorMouseProcessorV2(
     MouseComponent, EComponent {
 
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    private val deadUIZonesState = engine.injections.getSingleton<DeadUIZonesState>()
 
     private val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 
@@ -61,6 +63,19 @@ class SelectorMouseProcessorV2(
         }
 
         currentPosition.copyFrom(views.globalMouseXY)
+
+        if (        deadUIZonesState.zones.any {
+                if (it.hitTestAny(currentPosition.x, currentPosition.y)) {
+                    println("Hit view: $it")
+                    true
+                } else {
+                    false
+                }
+            }) {
+            return
+        }
+
+
 
         if (dragging) {
             println(

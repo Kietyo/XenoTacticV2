@@ -15,11 +15,13 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
+import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
 import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameplayState
@@ -34,6 +36,7 @@ class UIGuiContainer(
     val eventBus = engine.eventBus
     val editorState = engine.injections.getSingleton<EditorState>()
     val gameplayState = engine.injections.getSingleton<GameplayState>()
+    private val deadUIZonesState = engine.injections.getSingleton<DeadUIZonesState>()
 
     val middleSelectionContainer = stage.container { }
 
@@ -81,10 +84,14 @@ class UIGuiContainer(
             alignBottomToBottomOfWindow()
         }
 
+        val gridWidth = 230.0
+        val gridHeight = gridWidth / 2
+
         val bottomRightGrid = UIFixedGrid(
-            4, 2, 220.0, 110.0, 5.0, 5.0,
+            4, 2, gridWidth, gridHeight, 5.0, 5.0,
             backgroundColor = MaterialColors.TEAL_600
         ).addTo(stage) {
+            name = "Bottom right grid"
             alignBottomToBottomOfWindow()
             alignRightToRightOfWindow()
         }
@@ -93,7 +100,7 @@ class UIGuiContainer(
             "Global\nDamage\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
-
+            onCollision {  }
         }
 
         val globalRangeUpgradeView = UITextRect(
@@ -108,9 +115,26 @@ class UIGuiContainer(
         ).apply {
         }
 
+        val towerDamageUpgradeView = UITextRect(
+            "Tower\nDamage\nUpgrade",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+            onClick {
+                eventBus.send(UpgradeTowerDamageEvent)
+            }
+        }
+
+        val towerSpeedUpgradeView = UITextRect(
+            "Tower\nSpeed\nUpgrade",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+        }
+
         bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
         bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
         bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
+
+        deadUIZonesState.zones.add(bottomRightGrid)
 
         eventBus.register<EntitySelectionChangedEvent> {
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
@@ -129,18 +153,25 @@ class UIGuiContainer(
                         rangeComponent.range.value,
                         damageUpgradeComponent.numUpgrades,
                         speedUpgradeComponent.numUpgrades,
-                        gameplayState.maxSpeedUpgrades
-
+                        gameplayState.maxSpeedUpgrades,
+                        engine
                     ).addTo(this) {
                         scaleWhileMaintainingAspect(ScalingOption.ByHeight(100.0))
                     }
                     centerXOnStage()
                     alignBottomToBottomOfWindow()
                 }
+
+                bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
+                bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
             } else if (gameWorld.selectionFamily.isEmpty) {
                 middleSelectionContainer.removeChildren()
+                bottomRightGrid.clearEntry(0, 1)
+                bottomRightGrid.clearEntry(1, 1)
             } else {
                 middleSelectionContainer.removeChildren()
+                bottomRightGrid.clearEntry(0, 1)
+                bottomRightGrid.clearEntry(1, 1)
             }
         }
     }
