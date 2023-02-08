@@ -25,8 +25,8 @@ class PreSelectionComponentListener(
 
 
     override fun onAdd(entityId: EntityId, component: PreSelectionComponent) {
-        val uiEntityContainerComponent = world[entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class]
-        val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
+        val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
+        val sizeComponent = world[entityId, SizeComponent::class]
 
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
         val selectionBox = Graphics().addTo(uiEntityContainerComponent.container).apply {
@@ -39,16 +39,16 @@ class PreSelectionComponentListener(
         }
 
         world.modifyEntity(entityId) {
-            addComponentOrThrow(com.xenotactic.gamelogic.components.UIPreSelectionComponent(selectionBox))
+            addComponentOrThrow(UIPreSelectionComponent(selectionBox))
         }
     }
 
     override fun onRemove(entityId: EntityId, component: PreSelectionComponent) {
-        val uiEntityContainerComponent = world[entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class]
-        val uiPreSelectionComponent = world[entityId, com.xenotactic.gamelogic.components.UIPreSelectionComponent::class]
+        val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
+        val uiPreSelectionComponent = world[entityId, UIPreSelectionComponent::class]
         uiEntityContainerComponent.container.removeChild(uiPreSelectionComponent.graphics)
         world.modifyEntity(entityId) {
-            removeComponent<com.xenotactic.gamelogic.components.UIPreSelectionComponent>()
+            removeComponent<UIPreSelectionComponent>()
         }
     }
 
