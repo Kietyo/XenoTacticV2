@@ -4,8 +4,6 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.vector.circle
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
-import com.xenotactic.gamelogic.components.MutableCenterPositionComponent
-import com.xenotactic.gamelogic.components.ProjectileComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration

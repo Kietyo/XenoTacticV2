@@ -1,6 +1,5 @@
 package com.xenotactic.korge.renderer
 
-import com.xenotactic.gamelogic.components.EntityRenderComponent
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent

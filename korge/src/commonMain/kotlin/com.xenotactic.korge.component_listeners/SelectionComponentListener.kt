@@ -12,7 +12,6 @@ import com.xenotactic.gamelogic.components.SelectedComponent
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
-import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.korge.ui.UIMapV2
 
 class SelectionComponentListener(
