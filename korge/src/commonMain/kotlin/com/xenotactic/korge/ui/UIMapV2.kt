@@ -21,9 +21,6 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
-import com.xenotactic.gamelogic.components.EntityTypeComponent
-import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
@@ -53,7 +50,7 @@ class UIMapV2(
     private val uiMapSettingsV2: UIMapSettingsV2 = UIMapSettingsV2(),
 ) : Container() {
     private val gameWorld: GameWorld = engine.gameWorld
-    private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
+    private val gameMapDimensionsState = engine.stateInjections.getSingleton<GameMapDimensionsState>()
     val gridSize get() = uiMapSettingsV2.gridSize
     val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
     val borderSize get() = uiMapSettingsV2.borderSize
@@ -61,7 +58,7 @@ class UIMapV2(
     val mapHeight get() = gameMapDimensionsState.height
     val _pathLinesWidth = uiMapSettingsV2.pathLinesWidth
 
-    val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
+    val gameMapPathState = engine.stateInjections.getSingleton<GameMapPathState>()
 
     private val _boardLayer = this.container {
         //        this.propagateEvents = false

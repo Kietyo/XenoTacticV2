@@ -28,8 +28,8 @@ internal class GameMapApiTest {
         val gameWorld = GameWorld()
         val eventBus = EventBus(this)
         val engine = Engine(eventBus, gameWorld)
-        engine.injections.setSingletonOrThrow(GameMapPathState(engine))
-        engine.injections.setSingletonOrThrow(
+        engine.stateInjections.setSingletonOrThrow(GameMapPathState(engine))
+        engine.stateInjections.setSingletonOrThrow(
             GameMapDimensionsState(
                 engine,
                 width, height

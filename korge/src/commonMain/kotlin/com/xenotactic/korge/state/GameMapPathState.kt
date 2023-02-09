@@ -2,11 +2,12 @@ package com.xenotactic.korge.state
 
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.korge.engine.Engine
+import com.xenotactic.korge.engine.State
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 
 class GameMapPathState(
     val engine: Engine
-) {
+) : State {
     var shortestPath: PathSequence? = null
         private set
 

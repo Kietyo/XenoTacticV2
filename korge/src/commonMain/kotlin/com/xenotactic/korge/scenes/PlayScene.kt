@@ -3,13 +3,9 @@ package com.xenotactic.korge.scenes
 import com.soywiz.klock.TimeSpan
 import com.soywiz.korev.Key
 import com.soywiz.korge.input.keys
-import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
-import com.soywiz.korge.view.util.distributeEvenlyVertically
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
@@ -19,20 +15,15 @@ import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityTextComponentListener
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.event_listeners.TowerUpgradeEventListeners
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
-import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
-import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
-import com.xenotactic.korge.korge_utils.distributeVertically
-import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.models.SettingsContainer
+import com.xenotactic.korge.models.SettingsState
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
 import com.xenotactic.korge.random.generators.*
@@ -85,13 +76,13 @@ class PlayScene : Scene() {
 
         val world = World()
         val gameWorld = GameWorld(world)
-        val settingsContainer = SettingsContainer()
+        val settingsState = SettingsState()
         val engine = Engine(eventBus, gameWorld).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
-            injections.setSingletonOrThrow(settingsContainer)
-            injections.setSingletonOrThrow(GameMapPathState(this))
-            injections.setSingletonOrThrow(GameplayState(61, 0.04))
-            injections.setSingletonOrThrow(DeadUIZonesState())
+            stateInjections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
+            stateInjections.setSingletonOrThrow(settingsState)
+            stateInjections.setSingletonOrThrow(GameMapPathState(this))
+            stateInjections.setSingletonOrThrow(GameplayState(61, 0.04))
+            stateInjections.setSingletonOrThrow(DeadUIZonesState())
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
@@ -100,14 +91,14 @@ class PlayScene : Scene() {
         uiMapV2.centerOnStage()
 
         val mouseDragInputProcessor =
-            MouseDragInputProcessor(uiMapV2, settingsContainer.mouseDragStateSettings)
+            MouseDragInputProcessor(uiMapV2, settingsState.mouseDragStateSettings)
         addComponent(mouseDragInputProcessor)
         engine.injections.setSingletonOrThrow(mouseDragInputProcessor)
         addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
             engine.injections.setSingletonOrThrow(this)
         })
         val editorState = EditorState(engine)
-        engine.injections.setSingletonOrThrow(editorState)
+        engine.stateInjections.setSingletonOrThrow(editorState)
 
         engine.eventListeners.apply {
             add(UIMapEventListeners(engine))

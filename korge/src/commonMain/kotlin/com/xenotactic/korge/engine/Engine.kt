@@ -1,18 +1,18 @@
 package com.xenotactic.korge.engine
 
 import com.xenotactic.ecs.Injections
-import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.ecs.TypedInjections
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.models.GameWorld
-import kotlin.reflect.KClass
 
 interface EventListener
+interface State
 
 class Engine(val eventBus: EventBus,
              val gameWorld: GameWorld = GameWorld()
 ) {
     val eventListeners = mutableListOf<EventListener>()
+    val stateInjections = TypedInjections<State>()
     val injections = Injections()
 }
 

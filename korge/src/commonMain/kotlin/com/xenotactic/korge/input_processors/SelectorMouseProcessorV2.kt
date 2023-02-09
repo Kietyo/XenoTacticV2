@@ -11,10 +11,6 @@ import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.Point
-import com.xenotactic.ecs.EntityId
-import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.PreSelectionComponent
-import com.xenotactic.gamelogic.components.SelectedComponent
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.state.DeadUIZonesState
@@ -28,7 +24,7 @@ class SelectorMouseProcessorV2(
     MouseComponent, EComponent {
 
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
-    private val deadUIZonesState = engine.injections.getSingleton<DeadUIZonesState>()
+    private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
 
     private val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 

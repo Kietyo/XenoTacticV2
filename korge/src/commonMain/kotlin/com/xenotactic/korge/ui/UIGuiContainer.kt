@@ -33,9 +33,9 @@ class UIGuiContainer(
     val gameMapApi: GameMapApi
 ) {
     val eventBus = engine.eventBus
-    val editorState = engine.injections.getSingleton<EditorState>()
-    val gameplayState = engine.injections.getSingleton<GameplayState>()
-    private val deadUIZonesState = engine.injections.getSingleton<DeadUIZonesState>()
+    val editorState = engine.stateInjections.getSingleton<EditorState>()
+    val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
+    private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
 
     val middleSelectionContainer = stage.container { }
 

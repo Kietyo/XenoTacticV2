@@ -23,10 +23,10 @@ class GameMapApi(
 ) {
     val gameWorld: GameWorld = engine.gameWorld
     val world = gameWorld.world
-    val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
+    val gameMapPathState = engine.stateInjections.getSingleton<GameMapPathState>()
     val eventBus: EventBus = engine.eventBus
-    private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
-    private val gameplayState = engine.injections.getSingleton<GameplayState>()
+    private val gameMapDimensionsState = engine.stateInjections.getSingleton<GameMapDimensionsState>()
+    private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
 
     val numCheckpoints
         get() = gameWorld.checkpoints.size

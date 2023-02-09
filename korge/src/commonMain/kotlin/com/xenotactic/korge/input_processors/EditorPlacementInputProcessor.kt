@@ -28,7 +28,7 @@ class EditorPlacementInputProcessor(
     override val view: BaseView,
     val engine: Engine
 ) : MouseComponent {
-    private val editorState = engine.injections.getSingleton<EditorState>()
+    private val editorState = engine.stateInjections.getSingleton<EditorState>()
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val uiMap = engine.injections.getSingleton<UIMapV2>()
 
