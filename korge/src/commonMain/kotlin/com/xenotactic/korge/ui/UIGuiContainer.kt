@@ -4,6 +4,7 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.MaterialColors
+import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
@@ -13,6 +14,7 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
+import com.xenotactic.korge.events.RemovedTowerEntityEvent
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
@@ -99,7 +101,7 @@ class UIGuiContainer(
             "Global\nDamage\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
-            onCollision {  }
+            onCollision { }
         }
 
         val globalRangeUpgradeView = UITextRect(
@@ -138,19 +140,31 @@ class UIGuiContainer(
 
         deadUIZonesState.zones.add(bottomRightGrid)
 
+        var currentTowerId: EntityId? = null
+
+        fun resetView() {
+            currentTowerId = null
+            middleSelectionContainer.removeChildren()
+            bottomRightGrid.clearEntry(0, 1)
+            bottomRightGrid.clearEntry(1, 1)
+        }
+
         eventBus.register<EntitySelectionChangedEvent> {
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
                 val towerId = gameWorld.selectionFamily.first()
+                currentTowerId = towerId
                 println("Selected one tower entity!")
                 middleSelectionContainer.apply {
                     removeChildren()
                     val towerDamage = gameMapApi.calculateTowerDamage(towerId)
-                    val attacksPerSecond = gameMapApi.calculateTowerAttacksPerSecond(towerId)
+                    val weaponSpeedMillis = gameMapApi.calculateWeaponSpeedMillis(towerId)
+                    val attacksPerSecond = gameMapApi.calculateTowerAttacksPerSecond(towerId, weaponSpeedMillis)
                     val rangeComponent = world[towerId, RangeComponent::class]
                     val damageUpgradeComponent = world[towerId, DamageUpgradeComponent::class]
                     val speedUpgradeComponent = world[towerId, SpeedUpgradeComponent::class]
                     UITowerDetails(
                         towerDamage,
+                        weaponSpeedMillis,
                         attacksPerSecond,
                         rangeComponent.range.value,
                         damageUpgradeComponent.numUpgrades,
@@ -167,13 +181,15 @@ class UIGuiContainer(
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
             } else if (gameWorld.selectionFamily.isEmpty) {
-                middleSelectionContainer.removeChildren()
-                bottomRightGrid.clearEntry(0, 1)
-                bottomRightGrid.clearEntry(1, 1)
+                resetView()
             } else {
-                middleSelectionContainer.removeChildren()
-                bottomRightGrid.clearEntry(0, 1)
-                bottomRightGrid.clearEntry(1, 1)
+                resetView()
+            }
+        }
+
+        eventBus.register<RemovedTowerEntityEvent> {
+            if (currentTowerId == it.entityId) {
+                resetView()
             }
         }
     }

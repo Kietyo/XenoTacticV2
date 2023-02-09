@@ -49,9 +49,10 @@ class TowerUpgradeEventListeners(
             world.modifyEntity(it) {
                 val newSpeedUpgrade = speedUpgradeComponent.numUpgrades + 1
                 addOrReplaceComponent(SpeedUpgradeComponent(newSpeedUpgrade))
+                val newWeaponSpeedMillis = gameMapApi.calculateWeaponSpeedMillis(it)
                 val newAttacksPerSecond = gameMapApi.calculateTowerAttacksPerSecond(it)
                 engine.eventBus.send(UpgradedTowerSpeedEvent(
-                    it, newAttacksPerSecond, newSpeedUpgrade
+                    it, newWeaponSpeedMillis, newAttacksPerSecond, newSpeedUpgrade
                 ))
             }
         }

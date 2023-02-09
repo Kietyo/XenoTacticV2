@@ -13,6 +13,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.AddedMonsterEntityEvent
 import com.xenotactic.korge.event_listeners.AddedUIEntityEvent
 import com.xenotactic.korge.events.EventBus
+import com.xenotactic.korge.events.RemovedTowerEntityEvent
 import com.xenotactic.korge.korge_utils.toRectangleEntity
 import com.xenotactic.korge.models.GameWorld
 import pathing.PathSequenceTraversal
@@ -174,7 +175,12 @@ class GameMapApi(
     }
 
     fun removeEntities(entities: Set<EntityId>) {
-        entities.forEach { gameWorld.world.removeEntity(it) }
+        entities.forEach {
+            if (gameWorld.world.existsComponent<EntityTowerComponent>(it)) {
+                eventBus.send(RemovedTowerEntityEvent(it))
+            }
+            gameWorld.world.removeEntity(it)
+        }
         updateShortestPath()
     }
 
@@ -192,8 +198,11 @@ class GameMapApi(
         return baseWeaponSpeedComponent.millis / (1 + speedIncreasePerUpgrade).pow(speedUpgradeComponent.numUpgrades)
     }
 
-    fun calculateTowerAttacksPerSecond(towerId: EntityId): Double {
-        return 1E3 / calculateWeaponSpeedMillis(towerId)
+    fun calculateTowerAttacksPerSecond(
+        towerId: EntityId,
+        weaponSpeed: Double = calculateWeaponSpeedMillis(towerId)
+    ): Double {
+        return 1E3 / weaponSpeed
     }
 
 }

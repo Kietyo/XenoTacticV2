@@ -19,8 +19,10 @@ object DebugMain6 {
         Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
             GlobalResources.init()
 
+            val weaponSpeedMillis = 250.0
+            val attacksPerSecond = 1000.0 / weaponSpeedMillis
 
-            val d = UITowerDetails(15.0, 600.0, 7.0, 22, 30, 51).addTo(this)
+            val d = UITowerDetails(15.0, weaponSpeedMillis, attacksPerSecond, 7.0, 22, 30, 51).addTo(this)
 
 
         }
