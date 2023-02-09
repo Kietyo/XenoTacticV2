@@ -3,6 +3,10 @@ package com.xenotactic.korge.ui
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
+import com.soywiz.korge.view.filter.DropshadowFilter
+import com.soywiz.korge.view.filter.IdentityFilter
+import com.soywiz.korge.view.filter.addFilter
+import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
@@ -116,12 +120,33 @@ class UIGuiContainer(
         ).apply {
         }
 
-        val towerDamageUpgradeView = UITextRect(
+        val towerDamageUpgradeView2 = UITextRect(
             "Tower\nDamage\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
             onClick {
                 eventBus.send(UpgradeTowerDamageEvent)
+            }
+        }
+
+        val towerDamageUpgradeView = Container().apply {
+            addFilter(IdentityFilter(false))
+            val img = image(GlobalResources.DAMAGE_ICON) {
+                smoothing = false
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(50.0, 50.0))
+            }
+            text("+1", font = GlobalResources.FONT_ATKINSON_BOLD, color = Colors.BLACK) {
+                smoothing = false
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(40.0, 40.0))
+                centerOn(img)
+                x += 2
+                y += 2
+            }
+            text("+1", font = GlobalResources.FONT_ATKINSON_BOLD, color = Colors.YELLOW) {
+                smoothing = false
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(40.0, 40.0))
+                centerOn(img)
+//                addFilter(DropshadowFilter(0.5, 0.5, shadowColor = Colors.BLACK, blurRadius = 0.01, smoothing = false))
             }
         }
 
