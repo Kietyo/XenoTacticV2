@@ -122,7 +122,6 @@ class UIGuiContainer(
         }
 
         val towerDamageUpgradeView = Container().apply {
-            addFilter(IdentityFilter(false))
             var numUpgrades = 1
             val img = image(GlobalResources.DAMAGE_ICON) {
                 smoothing = false
@@ -160,12 +159,50 @@ class UIGuiContainer(
             }
         }
 
-        val towerSpeedUpgradeView = UITextRect(
+        val towerSpeedUpgradeView2 = UITextRect(
             "Tower\nSpeed\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
             onClick {
-                eventBus.send(UpgradeTowerSpeedEvent)
+                eventBus.send(UpgradeTowerSpeedEvent(1))
+            }
+        }
+
+        val towerSpeedUpgradeView = Container().apply {
+            var numUpgrades = 1
+            val img = image(GlobalResources.COOLDOWN_ICON) {
+                smoothing = false
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(50.0, 50.0))
+            }
+            val t = UITextWithShadow("+1").addTo(this) {
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(40.0, 40.0))
+                centerOn(img)
+            }
+
+            fun setNumUpgrades(newNumUpgrades: Int) {
+                numUpgrades = newNumUpgrades
+                t.text = "+$newNumUpgrades"
+                t.centerOn(img)
+            }
+
+            keys {
+                justDown(Key.LEFT_SHIFT) {
+//                    println("Down shift just down")
+                    setNumUpgrades(5)
+                }
+                up(Key.LEFT_SHIFT) {
+//                    println("up shift")
+                    setNumUpgrades(1)
+                }
+            }
+
+            onAttachDetach(onDetach = {
+                setNumUpgrades(1)
+//                println("on detach")
+            })
+
+            onClick {
+                eventBus.send(UpgradeTowerSpeedEvent(numUpgrades))
             }
         }
 

@@ -1,4 +1,6 @@
 package com.xenotactic.korge.events
 
-object UpgradeTowerSpeedEvent {
+data class UpgradeTowerSpeedEvent(
+    val numUpgrades: Int
+) {
 }

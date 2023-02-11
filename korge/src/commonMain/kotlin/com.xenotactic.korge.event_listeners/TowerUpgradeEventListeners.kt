@@ -23,7 +23,7 @@ class TowerUpgradeEventListeners(
             handleUpgradeTowerDamageEvent(it)
         }
         engine.eventBus.register<UpgradeTowerSpeedEvent> {
-            handleUpgradeTowerSpeedEvent()
+            handleUpgradeTowerSpeedEvent(it)
         }
     }
 
@@ -42,12 +42,12 @@ class TowerUpgradeEventListeners(
         }
     }
 
-    private fun handleUpgradeTowerSpeedEvent() {
+    private fun handleUpgradeTowerSpeedEvent(event: UpgradeTowerSpeedEvent) {
         gameWorld.selectionFamily.getSequence().forEach {
             if (!gameWorld.isTowerEntity(it)) return@forEach
             val speedUpgradeComponent = world[it, SpeedUpgradeComponent::class]
             world.modifyEntity(it) {
-                val newSpeedUpgrade = speedUpgradeComponent.numUpgrades + 1
+                val newSpeedUpgrade = speedUpgradeComponent.numUpgrades + event.numUpgrades
                 addOrReplaceComponent(SpeedUpgradeComponent(newSpeedUpgrade))
                 val newWeaponSpeedMillis = gameMapApi.calculateWeaponSpeedMillis(it)
                 val newAttacksPerSecond = gameMapApi.calculateTowerAttacksPerSecond(it)
