@@ -20,19 +20,19 @@ class TowerUpgradeEventListeners(
     val logger = Logger<TowerUpgradeEventListeners>()
     init {
         engine.eventBus.register<UpgradeTowerDamageEvent> {
-            handleUpgradeTowerDamageEvent()
+            handleUpgradeTowerDamageEvent(it)
         }
         engine.eventBus.register<UpgradeTowerSpeedEvent> {
             handleUpgradeTowerSpeedEvent()
         }
     }
 
-    private fun handleUpgradeTowerDamageEvent() {
+    private fun handleUpgradeTowerDamageEvent(event: UpgradeTowerDamageEvent) {
         gameWorld.selectionFamily.getSequence().forEach {
             if (!gameWorld.isTowerEntity(it)) return@forEach
             val damageUpgradeComponent = world[it, DamageUpgradeComponent::class]
             world.modifyEntity(it) {
-                val newDamageUpgrade = damageUpgradeComponent.numUpgrades + 1
+                val newDamageUpgrade = damageUpgradeComponent.numUpgrades + event.numUpgrades
                 addOrReplaceComponent(DamageUpgradeComponent(newDamageUpgrade))
                 val newDamage = gameMapApi.calculateTowerDamage(it)
                 engine.eventBus.send(UpgradedTowerDamageEvent(
