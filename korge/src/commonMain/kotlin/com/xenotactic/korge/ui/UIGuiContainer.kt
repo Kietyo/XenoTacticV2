@@ -1,13 +1,15 @@
 package com.xenotactic.korge.ui
 
 import com.soywiz.korev.Key
+import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.onAttachDetach
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.input.onClick
+import com.soywiz.korge.ui.UITooltipContainer
+import com.soywiz.korge.ui.tooltip
 import com.soywiz.korge.ui.uiButton
+import com.soywiz.korge.ui.uiTooltipContainer
 import com.soywiz.korge.view.*
-import com.soywiz.korge.view.filter.IdentityFilter
-import com.soywiz.korge.view.filter.addFilter
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
@@ -32,6 +34,13 @@ import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameplayState
 
+enum class ViewType {
+    NONE,
+    SINGLE_TOWER_SELECTION,
+    MULTI_TOWER_SELECTION
+}
+
+@OptIn(KorgeExperimental::class)
 class UIGuiContainer(
     val stage: SContainer,
     val engine: Engine,
@@ -90,17 +99,27 @@ class UIGuiContainer(
             alignBottomToBottomOfWindow()
         }
 
-        val gridWidth = 230.0
-        val gridHeight = gridWidth / 2
+        val bottomRightGridWidth = 230.0
+        val bottomRightGridHeight = bottomRightGridWidth / 2
+        val bottomRightGridHorizontalPadding = 5.0
 
         val bottomRightGrid = UIFixedGrid(
-            4, 2, gridWidth, gridHeight, 5.0, 5.0,
+            4, 2, bottomRightGridWidth, bottomRightGridHeight, bottomRightGridHorizontalPadding, 5.0,
             backgroundColor = MaterialColors.TEAL_600
         ).addTo(stage) {
             name = "Bottom right grid"
             alignBottomToBottomOfWindow()
             alignRightToRightOfWindow()
         }
+
+
+        val multiTowerSelectGridWidth = 400.0
+        val multiTowerSelectGridHeight = multiTowerSelectGridWidth / 3
+
+        val multiTowerSelectGrid = UIFixedGrid(
+            10, 3, multiTowerSelectGridWidth, multiTowerSelectGridHeight,
+            3.0, 3.0
+        )
 
         val globalDamageUpgradeView = UITextRect(
             "Global\nDamage\nUpgrade",
@@ -159,15 +178,6 @@ class UIGuiContainer(
             }
         }
 
-        val towerSpeedUpgradeView2 = UITextRect(
-            "Tower\nSpeed\nUpgrade",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        ).apply {
-            onClick {
-                eventBus.send(UpgradeTowerSpeedEvent(1))
-            }
-        }
-
         val towerSpeedUpgradeView = Container().apply {
             var numUpgrades = 1
             val img = image(GlobalResources.COOLDOWN_ICON) {
@@ -206,6 +216,12 @@ class UIGuiContainer(
             }
         }
 
+        val holdShiftText = Text(
+            "HOLD SHIFT (+5)",
+            font = GlobalResources.FONT_ATKINSON_BOLD,
+            textSize = 12.0
+        )
+
         bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
         bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
         bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
@@ -214,20 +230,33 @@ class UIGuiContainer(
 
         var currentTowerId: EntityId? = null
 
+        var currentViewType = ViewType.NONE
+
         fun resetView() {
-            currentTowerId = null
-            middleSelectionContainer.removeChildren()
-            bottomRightGrid.clearEntry(0, 1)
-            bottomRightGrid.clearEntry(1, 1)
+            when (currentViewType) {
+                ViewType.NONE -> Unit
+                ViewType.SINGLE_TOWER_SELECTION -> {
+                    currentTowerId = null
+                    middleSelectionContainer.removeChildren()
+                    bottomRightGrid.clearEntry(0, 1)
+                    bottomRightGrid.clearEntry(1, 1)
+                    holdShiftText.removeFromParent()
+                }
+
+                ViewType.MULTI_TOWER_SELECTION -> {
+                    middleSelectionContainer.removeChildren()
+                }
+            }
         }
 
         eventBus.register<EntitySelectionChangedEvent> {
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
+                resetView()
+                currentViewType = ViewType.SINGLE_TOWER_SELECTION
                 val towerId = gameWorld.selectionFamily.first()
                 currentTowerId = towerId
                 println("Selected one tower entity!")
                 middleSelectionContainer.apply {
-                    removeChildren()
                     val towerDamage = gameMapApi.calculateTowerDamage(towerId)
                     val weaponSpeedMillis = gameMapApi.calculateWeaponSpeedMillis(towerId)
                     val attacksPerSecond = gameMapApi.calculateTowerAttacksPerSecond(towerId, weaponSpeedMillis)
@@ -252,6 +281,19 @@ class UIGuiContainer(
 
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
+
+                holdShiftText.addTo(stage) {
+                    alignLeftToLeftOf(bottomRightGrid, padding = bottomRightGridHorizontalPadding / 2.0)
+                    alignBottomToTopOf(bottomRightGrid)
+                }
+            } else if (gameWorld.selectionFamily.size > 1) {
+                resetView()
+                currentViewType = ViewType.MULTI_TOWER_SELECTION
+                middleSelectionContainer.apply {
+                    multiTowerSelectGrid.addTo(this)
+                    centerXOnStage()
+                    alignBottomToBottomOfWindow()
+                }
             } else if (gameWorld.selectionFamily.isEmpty) {
                 resetView()
             } else {

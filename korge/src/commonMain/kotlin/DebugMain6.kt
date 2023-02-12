@@ -1,5 +1,8 @@
 import com.soywiz.korge.Korge
 import com.soywiz.korge.annotations.KorgeExperimental
+import com.soywiz.korge.ui.UITooltipContainer
+import com.soywiz.korge.ui.tooltip
+import com.soywiz.korge.ui.uiTooltipContainer
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
@@ -19,12 +22,20 @@ object DebugMain6 {
         Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
             GlobalResources.init()
 
-            val weaponSpeedMillis = 250.0
-            val attacksPerSecond = 1000.0 / weaponSpeedMillis
+//            val weaponSpeedMillis = 250.0
+//            val attacksPerSecond = 1000.0 / weaponSpeedMillis
 
-            val d = UITowerDetails(15.0, weaponSpeedMillis, attacksPerSecond, 7.0, 22, 30, 51).addTo(this)
+//            val d = UITowerDetails(15.0, weaponSpeedMillis, attacksPerSecond, 7.0, 22, 30, 51).addTo(this)
 
+            val d = container { solidRect(50, 50) }
 
+            val tooltip = d.uiTooltipContainer()
+
+            d.centerOnStage()
+
+            d.apply {
+                tooltip(tooltip, "hello world")
+            }
         }
     }
 }
