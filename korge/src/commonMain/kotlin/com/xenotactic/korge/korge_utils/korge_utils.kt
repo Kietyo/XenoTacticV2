@@ -153,14 +153,13 @@ fun <T : View> T.alignBottomToBottomOfWindow(
     return this
 }
 
-fun <T : View> T.alignRightToRightOfWindow(): T {
-    val refParent = getReferenceParent()
+fun <T : View> T.alignRightToRightOfWindow(padding: Double = 0.0): T {
     //    println("""
     //        refParent.getVisibleLocalArea(): ${refParent.getVisibleLocalArea()}
     //        refParent.getVisibleGlobalArea(): ${refParent.getVisibleGlobalArea()}
     //        refParent.getVisibleWindowArea(): ${refParent.getVisibleWindowArea()}
     //    """.trimIndent())
-    this.x = getReferenceParent().getVisibleGlobalArea().width - this.width
+    this.x = getReferenceParent().getVisibleGlobalArea().width - this.width - padding
     return this
 }
 

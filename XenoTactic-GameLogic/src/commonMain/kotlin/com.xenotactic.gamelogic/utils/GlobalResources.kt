@@ -20,6 +20,7 @@ object GlobalResources {
 
     lateinit var DAMAGE_ICON: Bitmap32
     lateinit var COOLDOWN_ICON: Bitmap32
+    lateinit var MONEY_ICON: Bitmap32
 
     lateinit var FONT_ATKINSON_REGULAR: TtfFont
     lateinit var FONT_ATKINSON_BOLD: TtfFont
@@ -37,6 +38,8 @@ object GlobalResources {
         DAMAGE_ICON = resourcesVfs["damage_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
         COOLDOWN_ICON = resourcesVfs["cooldown_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
+            .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
+        MONEY_ICON = resourcesVfs["gold_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
 
         FONT_ATKINSON_REGULAR = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()

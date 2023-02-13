@@ -5,10 +5,7 @@ import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.onAttachDetach
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.UITooltipContainer
-import com.soywiz.korge.ui.tooltip
 import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiTooltipContainer
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.EntityId
@@ -112,6 +109,23 @@ class UIGuiContainer(
             alignRightToRightOfWindow()
         }
 
+        val topRightResources = stage.container {
+            val i = image(GlobalResources.MONEY_ICON) {
+                smoothing = false
+            }
+            val t = text("100", font = GlobalResources.FONT_ATKINSON_BOLD,
+                textSize = 40.0) {
+                scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
+                alignLeftToRightOf(i, padding = 5.0)
+                centerYOn(i)
+            }
+
+            scaleWhileMaintainingAspect(ScalingOption.ByHeight(25.0))
+
+            y += 5.0
+            alignRightToRightOfWindow(padding = 10.0)
+        }
+
 
         val multiTowerSelectGridWidth = 400.0
         val multiTowerSelectGridHeight = multiTowerSelectGridWidth / 3
@@ -132,6 +146,15 @@ class UIGuiContainer(
             "Global\nRange\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
+        }
+
+        val addTowerView = UITextRect(
+            "Add\nTower",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+            onClick {
+                editorState.toggle(MapEntityType.TOWER)
+            }
         }
 
         val incomeUpgradeView = UITextRect(
@@ -222,9 +245,13 @@ class UIGuiContainer(
             textSize = 12.0
         )
 
-        bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
-        bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
-        bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
+        fun resetInitial() {
+            bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
+            bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
+            bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
+
+            bottomRightGrid.setEntry(0, 1, addTowerView)
+        }
 
         deadUIZonesState.zones.add(bottomRightGrid)
 
@@ -238,16 +265,19 @@ class UIGuiContainer(
                 ViewType.SINGLE_TOWER_SELECTION -> {
                     currentTowerId = null
                     middleSelectionContainer.removeChildren()
+                    holdShiftText.removeFromParent()
                     bottomRightGrid.clearEntry(0, 1)
                     bottomRightGrid.clearEntry(1, 1)
-                    holdShiftText.removeFromParent()
                 }
 
                 ViewType.MULTI_TOWER_SELECTION -> {
                     middleSelectionContainer.removeChildren()
                 }
             }
+            resetInitial()
         }
+
+        resetInitial()
 
         eventBus.register<EntitySelectionChangedEvent> {
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
