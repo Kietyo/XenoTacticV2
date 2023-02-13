@@ -6,8 +6,13 @@ import com.soywiz.korge.ui.uiTooltipContainer
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
+import com.soywiz.korim.format.ASE
+import com.soywiz.korim.format.readImageDataContainer
+import com.soywiz.korim.format.toProps
 import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korio.file.std.resourcesVfs
 import com.xenotactic.gamelogic.utils.GlobalResources
+import com.xenotactic.gamelogic.utils.toAsepriteModel
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
@@ -27,15 +32,19 @@ object DebugMain6 {
 
 //            val d = UITowerDetails(15.0, weaponSpeedMillis, attacksPerSecond, 7.0, 22, 30, 51).addTo(this)
 
-            val d = container { solidRect(50, 50) }
+            // Playing around with tooltips
+//            val d = container { solidRect(50, 50) }
+//
+//            val tooltip = d.uiTooltipContainer()
+//
+//            d.centerOnStage()
+//
+//            d.apply {
+//                tooltip(tooltip, "hello world")
+//            }
 
-            val tooltip = d.uiTooltipContainer()
-
-            d.centerOnStage()
-
-            d.apply {
-                tooltip(tooltip, "hello world")
-            }
+            val asp = resourcesVfs["gold_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
+            println(asp)
         }
     }
 }

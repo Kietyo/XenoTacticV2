@@ -24,13 +24,18 @@ data class AsepriteLayer(
 
 data class AsepriteFrame(
     val layers: List<AsepriteLayer>
-)
+) {
+    val baseWidth: Int get() = layers.first().baseWidth
+    val baseHeight: Int get() = layers.first().baseHeight
+}
 
 data class AsepriteLayerWithAllFrames(
     val baseWidth: Int,
     val baseHeight: Int,
     val frames: List<AsepriteLayer>
-)
+) {
+    val name get() = frames.first().name
+}
 
 data class AsepriteModel(
     val baseWidth: Int,
