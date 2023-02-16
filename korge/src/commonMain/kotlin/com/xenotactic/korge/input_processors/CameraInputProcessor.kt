@@ -5,8 +5,8 @@ import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.MouseComponent
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.plus
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus
@@ -21,7 +21,7 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
     var touchedDownY = 0.0
     var isMouseTouchedDown = false
 
-    var originalCameraPosition = Point.Zero
+    var originalCameraPosition = IPoint.Zero
 
     init {
         engine.eventBus.register<LeftControlAndMinus> {

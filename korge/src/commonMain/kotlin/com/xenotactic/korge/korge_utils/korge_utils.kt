@@ -11,6 +11,7 @@ import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -51,15 +52,15 @@ fun getRoundedGridCoordinates(
     return GameUnitTuple(gridXToInt, gridYToInt)
 }
 
-fun getTopLeft(p1: IPoint, p2: IPoint): Point {
-    return Point(
+fun getTopLeft(p1: IPoint, p2: IPoint): IPoint {
+    return IPoint(
         minOf(p1.x, p2.x),
         minOf(p1.y, p2.y)
     )
 }
 
-fun getBottomRight(p1: IPoint, p2: IPoint): Point {
-    return Point(
+fun getBottomRight(p1: IPoint, p2: IPoint): IPoint {
+    return IPoint(
         maxOf(p1.x, p2.x),
         maxOf(p1.y, p2.y)
     )
