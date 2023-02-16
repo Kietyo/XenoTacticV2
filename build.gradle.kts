@@ -13,3 +13,7 @@ buildscript {
         classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
     }
 }
+
+repositories {
+    mavenCentral()
+}
