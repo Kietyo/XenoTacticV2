@@ -453,14 +453,14 @@ internal class SearcherTest {
     fun lineIntersectsEntityTest() {
         assertTrue(
             lineIntersectsEntity(
-                Point(1.0, 1.0), Point(2.0, 2.0),
+                Point(1.0, 1.0), IPoint(2.0, 2.0),
                 MapEntity.Rock(1, 1, 1, 1)
             )
         )
 
         assertTrue(
             lineIntersectsEntity(
-                Point(1.0, 1.0), Point(2.0, 2.0),
+                Point(1.0, 1.0), IPoint(2.0, 2.0),
                 MapEntity.Rock(2, 2, 1, 1)
             )
         )

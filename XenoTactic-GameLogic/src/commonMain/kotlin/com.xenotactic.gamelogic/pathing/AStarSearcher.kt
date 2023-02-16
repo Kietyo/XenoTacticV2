@@ -1,6 +1,7 @@
 package pathing
 
 import com.soywiz.kds.PriorityQueue
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
@@ -18,10 +19,10 @@ object AStarSearcher : SearcherInterface {
     private val _counter = IntStatCounter("a star")
 
     fun getNextPoints(
-        currentPoint: Point,
+        currentPoint: IPoint,
         blockingEntities: List<IRectangleEntity>,
         availablePathingPoints: Set<PathingPoint>,
-    ): List<Point> {
+    ): List<IPoint> {
         return availablePathingPoints.mapNotNull {
             val verticalDirectionToPathingPoint = currentPoint.verticalDirectionTo(it.v)
             val horizontalDirectionToPathingPoint = currentPoint.horizontalDirectionTo(it.v)
@@ -89,8 +90,8 @@ object AStarSearcher : SearcherInterface {
         private val _blockingEntities: List<IRectangleEntity>,
         private val _blockingPoints: BlockingPointContainer.View
     ) {
-        private val cachedShortestPoints: MutableMap<Pair<Point, Point>, Point> =
-            mutableMapOf<Pair<Point, Point>, Point>()
+        private val cachedShortestPoints: MutableMap<Pair<IPoint, IPoint>, IPoint> =
+            mutableMapOf()
 
         val availablePathingPoints = getAvailablePathingPointsFromBlockingEntities(
             _blockingEntities,
@@ -249,8 +250,8 @@ object AStarSearcher : SearcherInterface {
         ): Path? {
             val endCenter = finish.centerPoint
 
-            val cameFrom = mutableMapOf<Point, Point>()
-            val costSoFar = mutableMapOf<Point, Double>()
+            val cameFrom = mutableMapOf<IPoint, IPoint>()
+            val costSoFar = mutableMapOf<IPoint, Double>()
             val frontier =
                 PriorityQueue<SearchNode> { o1, o2 -> (o1.priority - o2.priority).sign.toInt() }
 
@@ -318,7 +319,7 @@ object AStarSearcher : SearcherInterface {
 
             for (allowedEndPoint in endPoints) {
                 if (cameFrom.containsKey(allowedEndPoint)) {
-                    val resultingPath = mutableListOf<Point>()
+                    val resultingPath = mutableListOf<IPoint>()
                     var currentPoint = allowedEndPoint
                     while (!startingPoints.contains(currentPoint)) {
                         resultingPath.add(currentPoint)
@@ -335,10 +336,10 @@ object AStarSearcher : SearcherInterface {
         }
 
         private fun calculateShortestPointFromStartToEndCircleCached(
-            point: Point,
-            circleCenter: Point,
+            point: IPoint,
+            circleCenter: IPoint,
             radius: Double
-        ): Point {
+        ): IPoint {
             return cachedShortestPoints.getOrPut(
                 Pair(point, circleCenter)
             ) {
@@ -351,5 +352,5 @@ object AStarSearcher : SearcherInterface {
         }
     }
 
-    data class SearchNode(val point: Point, val priority: Double, val exploredPoints: Set<Point>)
+    data class SearchNode(val point: IPoint, val priority: Double, val exploredPoints: Set<IPoint>)
 }

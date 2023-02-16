@@ -1,5 +1,6 @@
 package com.xenotactic.gamelogic.pathing
 
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.cos
 import com.soywiz.korma.geom.sin
@@ -67,7 +68,7 @@ enum class HorizontalDirection {
  * `entityVerticalDirection` would be RIGHT and `entityHorizontalDirection` would be DOWN
  */
 data class PathingPoint(
-    val v: Point,
+    val v: IPoint,
     val entityVerticalDirection: VerticalDirection,
     val entityHorizontalDirection: HorizontalDirection
 ) {
@@ -77,7 +78,7 @@ data class PathingPoint(
             entityVerticalDirection: VerticalDirection,
             entityHorizontalDirection: HorizontalDirection
         ): PathingPoint {
-            return PathingPoint(Point(x, y), entityVerticalDirection, entityHorizontalDirection)
+            return PathingPoint(IPoint(x, y), entityVerticalDirection, entityHorizontalDirection)
         }
     }
 }
@@ -349,27 +350,27 @@ fun getAvailablePathingPointsFromBlockingEntities(
     return availablePoints.toSet()
 }
 
-fun Set<PathingPoint>.points(): Set<Point> {
+fun Set<PathingPoint>.points(): Set<IPoint> {
     return this.mapTo(mutableSetOf()) { it.v }
 }
 
 fun calculateShortestPointFromStartToEndCircle(
-    point: Point,
-    circleCenter: Point,
+    point: IPoint,
+    circleCenter: IPoint,
     radius: Double
-): Point {
+): IPoint {
     val angleRadians = angleRadians(circleCenter, point)
-    return Point(
+    return IPoint(
         circleCenter.x + cos(angleRadians) * radius,
         circleCenter.y + sin(angleRadians) * radius
     )
 }
 
 fun calculateShortestPointsFromPointsToCircle(
-    points: Set<Point>, circleCenter: Point,
+    points: Set<IPoint>, circleCenter: IPoint,
     radius: Double
-): Set<Point> {
-    val shortestPoints = mutableSetOf<Point>()
+): Set<IPoint> {
+    val shortestPoints = mutableSetOf<IPoint>()
     for (point in points) {
         shortestPoints.add(calculateShortestPointFromStartToEndCircle(point, circleCenter, radius))
     }
@@ -377,10 +378,10 @@ fun calculateShortestPointsFromPointsToCircle(
 }
 
 fun getNextPoints(
-    currentPoint: Point,
+    currentPoint: IPoint,
     blockingEntities: List<MapEntity>,
     availablePathingPoints: Set<PathingPoint>,
-): List<Point> {
+): List<IPoint> {
     val filtered = availablePathingPoints.mapNotNull {
         val verticalDirectionToPathingPoint = currentPoint.verticalDirectionTo(it.v)
         val horizontalDirectionToPathingPoint = currentPoint.horizontalDirectionTo(it.v)

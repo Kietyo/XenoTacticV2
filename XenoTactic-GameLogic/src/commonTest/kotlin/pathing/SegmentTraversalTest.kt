@@ -15,7 +15,7 @@ internal class SegmentTraversalTest {
 
     @Test
     fun traverse() {
-        val segment = Segment(Point(1.0, 1.0), Point(3.0, 3.0))
+        val segment = Segment(IPoint(1.0, 1.0), IPoint(3.0, 3.0))
         val segmentTraversal = SegmentTraversal(segment)
         assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             1.0,
@@ -41,7 +41,7 @@ internal class SegmentTraversalTest {
 
     @Test
     fun traverse2() {
-        val segment = Segment(Point(0.0, 0.0), Point(0.0, 3.0))
+        val segment = Segment(IPoint(0.0, 0.0), IPoint(0.0, 3.0))
         val segmentTraversal = SegmentTraversal(segment)
 
         segmentTraversal.traverse(1.0)
@@ -105,7 +105,7 @@ internal class SegmentTraversalTest {
 
     @Test
     fun traverse_traversesWholeSegmentInOneStep() {
-        val segment = Segment(Point(0.0, 0.0), Point(0.0, 3.0))
+        val segment = Segment(IPoint(0.0, 0.0), IPoint(0.0, 3.0))
         val segmentTraversal = SegmentTraversal(segment)
 
         segmentTraversal.traverse(10.0)

@@ -1,5 +1,6 @@
 package solver
 
+import com.soywiz.korma.geom.IRectangle
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
@@ -59,7 +60,7 @@ fun getNextTowerPlacementSpots(
     for (spot in currentPlacements) map.placeEntity(towerCache.getTower(spot.x, spot.y))
 
     val result = towerPlacementSpots.filter {
-        pathSequence.intersectsRectangle(Rectangle(it.x.value.toDouble(), it.y.value.toDouble(), 2.0, 2.0)) &&
+        pathSequence.intersectsRectangle(IRectangle(it.x.value.toDouble(), it.y.value.toDouble(), 2.0, 2.0)) &&
                 !map.intersectsBlockingEntities(it.x, it.y, 2.toGameUnit(), 2.toGameUnit())
     }
 
@@ -89,7 +90,7 @@ fun getNextTowerPlacementSpotsV2(
     for (spot in towerPlacementSpots) {
         val tower = towerCache.getTower(spot.x, spot.y)
         val intersectsPath = pathSequence
-            .intersectsRectangle(Rectangle(spot.x.value.toDouble(), spot.y.value.toDouble(), 2.0, 2.0))
+            .intersectsRectangle(IRectangle(spot.x.value.toDouble(), spot.y.value.toDouble(), 2.0, 2.0))
         if (intersectsPath
             && !map.intersectsBlockingEntities(spot.x, spot.y, 2.toGameUnit(), 2.toGameUnit())
         ) {

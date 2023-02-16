@@ -51,14 +51,14 @@ fun getRoundedGridCoordinates(
     return GameUnitTuple(gridXToInt, gridYToInt)
 }
 
-fun getTopLeft(p1: Point, p2: Point): Point {
+fun getTopLeft(p1: IPoint, p2: IPoint): Point {
     return Point(
         minOf(p1.x, p2.x),
         minOf(p1.y, p2.y)
     )
 }
 
-fun getBottomRight(p1: Point, p2: Point): Point {
+fun getBottomRight(p1: IPoint, p2: IPoint): Point {
     return Point(
         maxOf(p1.x, p2.x),
         maxOf(p1.y, p2.y)

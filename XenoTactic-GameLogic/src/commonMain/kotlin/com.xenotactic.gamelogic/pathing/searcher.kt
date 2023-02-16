@@ -1,8 +1,7 @@
 package com.xenotactic.gamelogic.pathing
 
-import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.Rectangle
-import com.soywiz.korma.geom.contains
+import com.soywiz.korma.annotations.KormaValueApi
+import com.soywiz.korma.geom.*
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
@@ -20,7 +19,7 @@ enum class SearcherType {
 }
 
 fun intersectSegments(
-    p1: Point, p2: Point, rx1: Double, ry1: Double, rx2: Double, ry2: Double
+    p1: IPoint, p2: IPoint, rx1: Double, ry1: Double, rx2: Double, ry2: Double
 ): Boolean {
     val d = (ry2 - ry1) * (p2.x - p1.x) - (rx2 - rx1) * (p2.y - p1.y)
     if (d == 0.0) return false
@@ -34,10 +33,11 @@ fun intersectSegments(
     return true
 }
 
+@OptIn(KormaValueApi::class)
 fun intersectSegmentRectangle(
-    startPoint: Point,
-    endPoint: Point,
-    rectangle: Rectangle
+    startPoint: IPoint,
+    endPoint: IPoint,
+    rectangle: IRectangle
 ): Boolean {
     val rectangleEndX = (rectangle.x + rectangle.width)
     val rectangleEndY = (rectangle.y + rectangle.height)
@@ -79,7 +79,7 @@ fun intersectSegmentRectangle(
     ) true else rectangle.contains(startPoint) || rectangle.contains(endPoint)
 }
 
-fun lineIntersectsEntity(p1: Point, p2: Point, entity: IRectangleEntity): Boolean {
+fun lineIntersectsEntity(p1: IPoint, p2: IPoint, entity: IRectangleEntity): Boolean {
     return intersectSegmentRectangle(p1, p2, entity.getRectangle())
 }
 
@@ -92,7 +92,7 @@ data class Segment(
     val point2: GameUnitTuple,
     private val attributes: MutableList<PathAttribute> = mutableListOf()
 ) {
-    constructor(p1: Point, p2: Point) : this(p1.toGameUnitPoint(), p2.toGameUnitPoint())
+    constructor(p1: IPoint, p2: IPoint) : this(p1.toGameUnitPoint(), p2.toGameUnitPoint())
 
     val length = point1.distanceTo(point2)
     val effectiveLength: GameUnit
@@ -110,19 +110,19 @@ data class Segment(
         attributes.add(attribute)
     }
 
-    fun intersectsRectangle(rect: Rectangle): Boolean {
+    fun intersectsRectangle(rect: IRectangle): Boolean {
         return intersectSegmentRectangle(point1.toPoint(), point2.toPoint(), rect)
     }
 
-    fun getFirstIntersectionPointToCircle(circleCenter: Point, radius: Double): Point? {
+    fun getFirstIntersectionPointToCircle(circleCenter: IPoint, radius: Double): IPoint? {
         val points =
             getIntersectionPointsOfLineSegmentAndCircle(point1.toPoint(), point2.toPoint(), circleCenter, radius)
         if (points.isEmpty()) return null
         return points.minByOrNull { point1.distanceTo(it.toGameUnitPoint()) }
     }
 
-    fun getFirstIntersectionPointToRectangle(rectBottomLeft: Point, width: Float, height: Float):
-            Point? {
+    fun getFirstIntersectionPointToRectangle(rectBottomLeft: IPoint, width: Float, height: Float):
+            IPoint? {
         val points =
             getIntersectionPointsOfLineSegmentAndRectangle(
                 point1.toPoint(),
@@ -144,7 +144,7 @@ data class Path(val points: List<GameUnitTuple>) {
             return Path(listOf())
         }
 
-        fun create(vararg vectors: Point): Path {
+        fun create(vararg vectors: IPoint): Path {
             return Path(vectors.map { it.toGameUnitPoint() }.toList())
         }
 
@@ -177,7 +177,7 @@ data class Path(val points: List<GameUnitTuple>) {
         return points.last()
     }
 
-    fun intersectsRectangle(rect: Rectangle): Boolean {
+    fun intersectsRectangle(rect: IRectangle): Boolean {
         return getSegments().any {
             it.intersectsRectangle(rect)
         }
@@ -197,7 +197,7 @@ data class Path(val points: List<GameUnitTuple>) {
         return segments.toList()
     }
 
-    fun getFirstIntersectionPointToCircle(circleCenter: Point, radius: Double):
+    fun getFirstIntersectionPointToCircle(circleCenter: IPoint, radius: Double):
             CircleIntersectionResult? {
         val segments = getSegments()
         for ((idx, segment) in segments.withIndex()) {
@@ -209,7 +209,7 @@ data class Path(val points: List<GameUnitTuple>) {
         return null
     }
 
-    fun getFirstIntersectionPointToRectangle(rectBottomLeft: Point, width: Float, height: Float):
+    fun getFirstIntersectionPointToRectangle(rectBottomLeft: IPoint, width: Float, height: Float):
             CircleIntersectionResult? {
         val segments = getSegments()
         for ((idx, segment) in segments.withIndex()) {
@@ -221,7 +221,7 @@ data class Path(val points: List<GameUnitTuple>) {
         }
         return null
     }
-    fun addSegment(point: Point): Path = addSegment(point.toGameUnitPoint())
+    fun addSegment(point: IPoint): Path = addSegment(point.toGameUnitPoint())
     fun addSegment(point: GameUnitTuple): Path {
         val newPoints = points.toMutableList()
         newPoints.add(point)
@@ -248,7 +248,7 @@ data class PathSequence constructor(val paths: List<Path> = listOf()) {
         return intersectsRectangle(tower.getRectangle())
     }
 
-    fun intersectsRectangle(rect: Rectangle): Boolean {
+    fun intersectsRectangle(rect: IRectangle): Boolean {
         return paths.any {
             it.intersectsRectangle(rect)
         }
@@ -408,7 +408,7 @@ data class GamePath(
     //        else -> entityPaths.size + 1
     //    }
 
-    fun getEntityPathThatIntersectsRectangle(rect: Rectangle): Pair<Int, EntityPath>? {
+    fun getEntityPathThatIntersectsRectangle(rect: IRectangle): Pair<Int, EntityPath>? {
         for ((i, entityPath) in entityPaths.withIndex()) {
             when (entityPath) {
                 is EntityPath.EntityToEntityPath -> {
@@ -449,7 +449,7 @@ data class GamePath(
     //        }.toSet()
     //    }
 
-    fun intersectsRectangle(rect: Rectangle): Boolean {
+    fun intersectsRectangle(rect: IRectangle): Boolean {
         return entityPaths.any {
             when (it) {
                 is EntityPath.EntityToEntityPath -> it.path.intersectsRectangle(rect)
@@ -470,7 +470,7 @@ data class GamePath(
 
 }
 
-fun lineIntersectsEntities(p1: Point, p2: Point, entities: List<IRectangleEntity>): Boolean {
+fun lineIntersectsEntities(p1: IPoint, p2: IPoint, entities: List<IRectangleEntity>): Boolean {
     return entities.any { lineIntersectsEntity(p1, p2, it) }
 }
 

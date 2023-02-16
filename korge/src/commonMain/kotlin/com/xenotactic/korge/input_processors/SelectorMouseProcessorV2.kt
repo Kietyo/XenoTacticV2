@@ -31,8 +31,8 @@ class SelectorMouseProcessorV2(
     private var dragging = false
     private var isInitialClick = false
 
-    private var startPosition = Point()
-    private var currentPosition = Point()
+    private var startPosition = IPoint()
+    private var currentPosition = IPoint()
 
     fun reset() {
         dragging = false

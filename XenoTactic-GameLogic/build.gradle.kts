@@ -30,10 +30,14 @@ version = "1.0.0"
 
 val gitliveVersion = "1.4.3"
 
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+}
+
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "17"
+            kotlinOptions.jvmTarget = "1.8"
         }
         withJava()
         testRuns["test"].executionTask.configure {

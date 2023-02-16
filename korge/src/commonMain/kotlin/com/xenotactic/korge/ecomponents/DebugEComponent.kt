@@ -14,7 +14,7 @@ sealed class DebugPathingPoints {
     data class ForEntity(
         val cursorPosition: GameUnitTuple,
         val entity: MapEntity,
-        val pathingPoints: List<Point> = listOf()
+        val pathingPoints: List<IPoint> = listOf()
     ): DebugPathingPoints()
 
     object None : DebugPathingPoints()

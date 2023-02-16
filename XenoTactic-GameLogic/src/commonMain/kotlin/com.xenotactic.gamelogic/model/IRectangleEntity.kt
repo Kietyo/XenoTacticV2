@@ -1,5 +1,7 @@
 package com.xenotactic.gamelogic.model
 
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.IRectangle
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -39,11 +41,11 @@ interface IRectangleEntity {
     val bottomRightUnitSquareGameUnitPoint: GameUnitTuple
         get() = GameUnitTuple(x + width - 1, y)
 
-    val centerPoint: Point
-        get() = Point(x.value + width.value / 2f, y.value + height.value / 2f)
+    val centerPoint: IPoint
+        get() = IPoint(x.value + width.value / 2f, y.value + height.value / 2f)
 
-    fun getRectangle(): Rectangle {
-        return Rectangle(x.value, y.value, width.value, height.value)
+    fun getRectangle(): IRectangle {
+        return IRectangle(x.value, y.value, width.value, height.value)
     }
 
     fun isFullyCoveredBy(

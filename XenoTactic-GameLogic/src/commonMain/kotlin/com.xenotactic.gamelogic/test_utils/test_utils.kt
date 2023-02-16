@@ -2,6 +2,7 @@ package com.xenotactic.gamelogic.test_utils
 
 import com.soywiz.korio.async.runBlockingNoSuspensions
 import com.soywiz.korio.file.VfsFile
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.korge_utils.readStringOrNull
 import com.xenotactic.gamelogic.model.GameUnitTuple
@@ -66,7 +67,7 @@ suspend fun VfsFile.createTempFile(extension: String = "txt"): VfsFile {
 
 
 
-fun assertPointSetEquals(expect: Set<Point>, actual: Set<Point>) {
+fun assertPointSetEquals(expect: Set<IPoint>, actual: Set<IPoint>) {
     kotlin.test.assertEquals(expect.size, actual.size)
     for (p1 in expect) {
         var found = false
@@ -116,11 +117,11 @@ fun assertPointEquals(expected: GameUnitTuple, actual: GameUnitTuple) {
     assertPointEquals(expected.toPoint(), actual.toPoint())
 }
 
-fun assertPointEquals(expected: Point, actual: GameUnitTuple) {
+fun assertPointEquals(expected: IPoint, actual: GameUnitTuple) {
     assertPointEquals(expected, actual.toPoint())
 }
 
-fun assertPointEquals(expected: Point, actual: Point) {
+fun assertPointEquals(expected: IPoint, actual: IPoint) {
     assertTrue(
         pointEquals(expected, actual), message =
         """Points are not equal.
@@ -130,7 +131,7 @@ fun assertPointEquals(expected: Point, actual: Point) {
     )
 }
 
-fun pointEquals(actual: Point, expected: Point): Boolean {
+fun pointEquals(actual: IPoint, expected: IPoint): Boolean {
     return doubleEquals(actual.x, expected.x) && doubleEquals(actual.y, expected.y)
 }
 
@@ -159,8 +160,8 @@ fun assertPathSequenceEquals(expected: PathSequence?, actual: PathSequence?) {
     }
 }
 
-fun randomVector(): Point {
-    return Point(Random.nextFloat(), Random.nextFloat())
+fun randomVector(): IPoint {
+    return IPoint(Random.nextFloat(), Random.nextFloat())
 }
 
 fun generateRandomFileName(length: Int = 6): String {

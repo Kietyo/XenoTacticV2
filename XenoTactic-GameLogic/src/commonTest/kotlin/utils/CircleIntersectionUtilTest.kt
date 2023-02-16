@@ -75,7 +75,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_tangentLeftPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(0f, 3f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(0f, 3f)),
             CircleIntersectionUtil(
                 Point(0f, 0f),
                 Point(0f, 8f),
@@ -194,7 +194,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_tangentRightPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(6f, 3f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(6f, 3f)),
             CircleIntersectionUtil(
                 Point(6f, 0f),
                 Point(6f, 8f),
@@ -207,7 +207,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_tangentRightPointOfCircle_reversedPoints() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(6f, 3f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(6f, 3f)),
             CircleIntersectionUtil(
                 Point(6f, 8f),
                 Point(6f, 0f),
@@ -333,7 +333,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_atMiddleOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.FullIntersection(Point(0f, 3f), Point(6f, 3f)),
+            CircleIntersectionUtil.Result.FullIntersection(IPoint(0f, 3f), IPoint(6f, 3f)),
             CircleIntersectionUtil(
                 Point(0f, 3f),
                 Point(8f, 3f),
@@ -362,7 +362,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentTopPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 6f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 6f)),
             CircleIntersectionUtil(
                 Point(0f, 6f),
                 Point(8f, 6f),
@@ -375,7 +375,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentTopPointOfCircle_reversedPoints() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 6f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 6f)),
             CircleIntersectionUtil(
                 Point(8f, 6f),
                 Point(0f, 6f),
@@ -388,7 +388,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentBottomPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 0f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 0f)),
             CircleIntersectionUtil(
                 Point(0f, 0f),
                 Point(8f, 0f),
@@ -401,7 +401,7 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentBottomPointOfCircle_reversedPoints() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 0f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 0f)),
             CircleIntersectionUtil(
                 Point(8f, 0f),
                 Point(0f, 0f),

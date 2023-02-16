@@ -62,7 +62,7 @@ object DebugMain2 {
             addUpdater {
                 val (mouseX, mouseY) = views.globalMouseXY
                 mouseCircle.xy(mouseX, mouseY)
-                val angle = midCircle.pos.kAngleTo(mouseCircle.pos)
+                val angle = midCircle.ipos.kAngleTo(mouseCircle.ipos)
                 val direction = getDirection8(angle)
                 sprite.changeToDirection(direction)
                 info.text = """

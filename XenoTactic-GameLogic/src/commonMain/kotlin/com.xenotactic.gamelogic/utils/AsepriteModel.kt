@@ -3,6 +3,7 @@ package com.xenotactic.gamelogic.utils
 import com.soywiz.korim.bitmap.Bitmap32
 import com.soywiz.korim.bitmap.BitmapSlice
 import com.soywiz.korim.bitmap.BmpSlice
+import com.soywiz.korim.bitmap.bmp
 import com.soywiz.korim.format.ASE
 import com.soywiz.korim.format.ImageDataContainer
 

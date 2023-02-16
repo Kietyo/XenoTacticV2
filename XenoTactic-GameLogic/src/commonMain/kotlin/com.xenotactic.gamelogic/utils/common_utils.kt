@@ -1,6 +1,7 @@
 package com.xenotactic.gamelogic.utils
 
 import com.soywiz.korma.geom.Angle
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.radians
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
@@ -52,7 +53,7 @@ fun intersectRectangles(
             (y1 + h1) > y2
 }
 
-fun Point.verticalDirectionTo(v: Point, allowableDifference: Double = ALLOWABLE_DIRECTION_DIFF):
+fun IPoint.verticalDirectionTo(v: IPoint, allowableDifference: Double = ALLOWABLE_DIRECTION_DIFF):
         VerticalDirection {
     if (abs(this.y - v.y) < allowableDifference) {
         return VerticalDirection.NONE
@@ -64,7 +65,7 @@ fun Point.verticalDirectionTo(v: Point, allowableDifference: Double = ALLOWABLE_
     }
 }
 
-fun Point.horizontalDirectionTo(v: Point, allowableDifference: Double = ALLOWABLE_DIRECTION_DIFF):
+fun IPoint.horizontalDirectionTo(v: IPoint, allowableDifference: Double = ALLOWABLE_DIRECTION_DIFF):
         HorizontalDirection {
     if (abs(this.x - v.x) < allowableDifference) {
         return HorizontalDirection.NONE
@@ -111,11 +112,11 @@ fun rectangleIntersects(a: IRectangleEntity, b: IRectangleEntity): Boolean {
 }
 
 fun getIntersectionPointsOfLineSegmentAndCircle(
-    p1: Point,
-    p2: Point,
-    circleCenter: Point,
+    p1: IPoint,
+    p2: IPoint,
+    circleCenter: IPoint,
     radius: Double
-): Set<Point> {
+): Set<IPoint> {
     val lowerX = kotlin.math.min(p1.x, p2.x)
     val upperX = kotlin.math.max(p1.x, p2.x)
     val lowerY = kotlin.math.min(p1.y, p2.y)
@@ -130,11 +131,11 @@ fun getIntersectionPointsOfLineSegmentAndCircle(
 }
 
 fun getIntersectionPointsOfLineEquationFromPointsAndCircle(
-    p1: Point,
-    p2: Point,
-    circleCenter: Point,
+    p1: IPoint,
+    p2: IPoint,
+    circleCenter: IPoint,
     radius: Double
-): Set<Point> {
+): Set<IPoint> {
     // Equation for a circle is: (x - u)^2 + (y - v)^2 = r^2
     // Equation for a line is: y = mx + b
     // where m = (y2 - y1) / (x2 - x1)
@@ -179,28 +180,28 @@ fun getIntersectionPointsOfLineEquationFromPointsAndCircle(
     // b^2 - 4ac
     val sqrtTerm = b * b - 4 * a * c
     println("sqrtTerm: $sqrtTerm")
-    if (sqrtTerm < 0) return setOf<Point>()
+    if (sqrtTerm < 0) return setOf<IPoint>()
 
     val xFromPositive = (-b + sqrt(sqrtTerm)) / (2 * a)
     println("xFromPositive: $xFromPositive, yFromPositive: ${yLineM * xFromPositive + yLineB}")
     // There's only 1 term
     if (sqrtTerm == 0.0) {
-        return setOf(Point(xFromPositive, yLineM * xFromPositive + yLineB))
+        return setOf(IPoint(xFromPositive, yLineM * xFromPositive + yLineB))
     }
     val xFromNegative = (-b - sqrt(sqrtTerm)) / (2 * a)
     println("xFromNegative: $xFromNegative, yFromNegative: ${yLineM * xFromNegative + yLineB}")
     return setOf(
-        Point(xFromPositive, yLineM * xFromPositive + yLineB),
-        Point(xFromNegative, yLineM * xFromNegative + yLineB)
+        IPoint(xFromPositive, yLineM * xFromPositive + yLineB),
+        IPoint(xFromNegative, yLineM * xFromNegative + yLineB)
     )
 }
 
 
 
 fun getIntersectionPointsOfHorizontalLineAndCircle(
-    b: Double, circleCenter: Point,
+    b: Double, circleCenter: IPoint,
     radius: Double
-): Set<Point> {
+): Set<IPoint> {
     // Horizontal line: y = b for all x
     // The circle equation: (x - u)^2 + (y - v)^2 = r^2
     // becomes: (x - u)^2 + (b - v)^2 = r^2
@@ -214,15 +215,15 @@ fun getIntersectionPointsOfHorizontalLineAndCircle(
     val circleV = circleCenter.y
     val sqrtTerm = radius * radius - (b - circleV).pow(2)
     if (sqrtTerm < 0) return setOf()
-    if (sqrtTerm == 0.0) return setOf(Point(circleU, b))
+    if (sqrtTerm == 0.0) return setOf(IPoint(circleU, b))
     val sqrt = sqrt(sqrtTerm)
-    return setOf(Point(circleU + sqrt, b), Point(circleU - sqrt, b))
+    return setOf(IPoint(circleU + sqrt, b), IPoint(circleU - sqrt, b))
 }
 
 fun getIntersectionPointsOfVerticalLineAndCircle(
-    a: Double, circleCenter: Point,
+    a: Double, circleCenter: IPoint,
     radius: Double
-): Set<Point> {
+): Set<IPoint> {
     // Vertical line: x = a for all y
     // The circle equation: (x - u)^2 + (y - v)^2 = r^2
     // becomes: (a - u)^2 + (y - v)^2 = r^2
@@ -236,26 +237,26 @@ fun getIntersectionPointsOfVerticalLineAndCircle(
     val circleV = circleCenter.y
     val sqrtTerm = radius * radius - (a - circleU).pow(2)
     if (sqrtTerm < 0) return setOf()
-    if (sqrtTerm == 0.0) return setOf(Point(a, circleV))
+    if (sqrtTerm == 0.0) return setOf(IPoint(a, circleV))
     val sqrt = sqrt(sqrtTerm)
-    return setOf(Point(a, circleV + sqrt), Point(a, circleV - sqrt))
+    return setOf(IPoint(a, circleV + sqrt), IPoint(a, circleV - sqrt))
 }
 
-fun Point.lerp(target: Point, alpha: Double): Point {
+fun IPoint.lerp(target: IPoint, alpha: Double): IPoint {
     val invAlpha = (1.0f - alpha).toFloat()
-    return Point(
+    return IPoint(
         this.x * invAlpha + target.x * alpha,
         this.y * invAlpha + target.y * alpha
     )
 }
 
 fun getIntersectionPointsOfLineSegmentAndRectangle(
-    p1: Point,
-    p2: Point,
-    rectBottomLeft: Point,
+    p1: IPoint,
+    p2: IPoint,
+    rectBottomLeft: IPoint,
     width: Float,
     height: Float
-): Set<Point> {
+): Set<IPoint> {
     val lowerRectX = rectBottomLeft.x
     val upperRectX = rectBottomLeft.x + width
     val lowerRectY = rectBottomLeft.y
@@ -267,18 +268,18 @@ fun getIntersectionPointsOfLineSegmentAndRectangle(
     val lowerPointY = kotlin.math.min(p1.y, p2.y)
     val upperPointY = kotlin.math.max(p1.y, p2.y)
 
-    val intersectionPoints = mutableSetOf<Point>()
+    val intersectionPoints = mutableSetOf<IPoint>()
 
     if (p1.x == p2.x) {
         if (p1.x !in lowerRectX..upperRectX) return emptySet()
         if (lowerRectY in lowerPointY..upperPointY) intersectionPoints.add(
-            Point(
+            IPoint(
                 p1.x,
                 lowerRectY
             )
         )
         if (upperRectY in lowerPointY..upperPointY) intersectionPoints.add(
-            Point(
+            IPoint(
                 p1.x,
                 upperRectY
             )
@@ -289,13 +290,13 @@ fun getIntersectionPointsOfLineSegmentAndRectangle(
     if (p1.y == p2.y) {
         if (p1.y !in lowerRectY..upperRectY) return emptySet()
         if (lowerRectX in lowerPointX..upperPointX) intersectionPoints.add(
-            Point(
+            IPoint(
                 lowerRectX,
                 p1.y
             )
         )
         if (upperRectX in lowerPointX..upperPointX) intersectionPoints.add(
-            Point(
+            IPoint(
                 upperRectX,
                 p1.y
             )
@@ -319,7 +320,7 @@ fun getIntersectionPointsOfLineSegmentAndRectangle(
     if (rectBotY in lowerPointY..upperPointY) {
         val intersectRectX = xFunc(rectBotY)
         if (intersectRectX in lowerRectX..upperRectX) {
-            intersectionPoints.add(Point(intersectRectX, rectBotY))
+            intersectionPoints.add(IPoint(intersectRectX, rectBotY))
         }
     }
 
@@ -327,7 +328,7 @@ fun getIntersectionPointsOfLineSegmentAndRectangle(
     if (rectTopY in lowerPointY..upperPointY) {
         val intersectRectX = xFunc(rectTopY)
         if (intersectRectX in lowerRectX..upperRectX) {
-            intersectionPoints.add(Point(intersectRectX, rectTopY))
+            intersectionPoints.add(IPoint(intersectRectX, rectTopY))
         }
     }
 
@@ -335,7 +336,7 @@ fun getIntersectionPointsOfLineSegmentAndRectangle(
     if (rectLeftX in lowerPointX..upperPointX) {
         val rectY = yFunc(rectLeftX)
         if (rectY in lowerRectY..upperRectY) {
-            intersectionPoints.add(Point(rectLeftX, rectY))
+            intersectionPoints.add(IPoint(rectLeftX, rectY))
         }
     }
 
@@ -343,7 +344,7 @@ fun getIntersectionPointsOfLineSegmentAndRectangle(
     if (rectRightX in lowerPointX..upperPointX) {
         val rectY = yFunc(rectRightX)
         if (rectY in lowerRectY..upperRectY) {
-            intersectionPoints.add(Point(rectRightX, rectY))
+            intersectionPoints.add(IPoint(rectRightX, rectY))
         }
     }
 
@@ -351,7 +352,7 @@ fun getIntersectionPointsOfLineSegmentAndRectangle(
     return intersectionPoints.toSet()
 }
 
-fun angleRadians(v1: Point, v2: Point): Angle {
+fun angleRadians(v1: IPoint, v2: IPoint): Angle {
     return atan2(v2.y - v1.y, v2.x - v1.x).radians
 }
 
@@ -373,7 +374,7 @@ fun toWorldCoordinates(
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, point: Point, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
+    gridSize: Double, point: IPoint, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ): Pair<WorldUnit, WorldUnit> =
     toWorldCoordinates(
         gridSize,

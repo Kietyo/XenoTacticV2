@@ -1,5 +1,6 @@
 package pathing
 
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.model.MapEntity
@@ -12,7 +13,7 @@ object BFSSearcher {
     class SearcherInternal(
         private val entitySequence: List<MapEntity>,
         private val blockingEntities: List<MapEntity>,
-        private val availablePathingPoints: Set<Point>
+        private val availablePathingPoints: Set<IPoint>
     ) {
         var shortestPath: Path? = null
         var shortestPathLength = Double.MAX_VALUE
@@ -21,7 +22,7 @@ object BFSSearcher {
         fun getPathInternal(
             currentIndex: Int,
             currentPath: Path,
-            availablePathingPoints: Set<Point>
+            availablePathingPoints: Set<IPoint>
         ) {
             numStatesExplored++
             //        println("numStatesExplored: $numStatesExplored")
@@ -95,7 +96,7 @@ object BFSSearcher {
         val nonNullBlockingPoints =
             blockingPoints ?: BlockingPointContainer.View.create(blockingEntities)
         val startPoint = pathingEntities[0].centerPoint
-        var availablePathingPoints: Set<Point> = setOf()
+        var availablePathingPoints: Set<IPoint> = setOf()
         measureTime("getting available pathing points") {
             availablePathingPoints =
                 getAvailablePathingPointsFromBlockingEntities(
