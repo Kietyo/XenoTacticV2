@@ -17,6 +17,13 @@
 //    }
 //}
 
+pluginManagement {
+    val kotlinxBenchmark: String by settings
+    plugins {
+        id("org.jetbrains.kotlinx.benchmark") version kotlinxBenchmark
+    }
+}
+
 //include(":Client")
 //include(":Server")
 include(":korge")
