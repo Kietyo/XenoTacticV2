@@ -21,7 +21,7 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
     var touchedDownY = 0.0
     var isMouseTouchedDown = false
 
-    var originalCameraPosition = IPoint.Zero
+    var originalCameraPosition = IPoint.ZERO
 
     init {
         engine.eventBus.register<LeftControlAndMinus> {
@@ -75,7 +75,7 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
         touchedDownX = screenX.toDouble()
         touchedDownY = screenY.toDouble()
         isMouseTouchedDown = true
-        originalCameraPosition = Point(view.x, view.y)
+        originalCameraPosition = IPoint(view.x, view.y)
     }
 
     fun touchUp() {
@@ -100,7 +100,7 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
             val deltaY = (screenY.toDouble() - touchedDownY) * multiplier
 
             val newCameraPosition = originalCameraPosition.plus(
-                Point(deltaX, deltaY)
+                IPoint(deltaX, deltaY)
             )
 
             view.x = newCameraPosition.x

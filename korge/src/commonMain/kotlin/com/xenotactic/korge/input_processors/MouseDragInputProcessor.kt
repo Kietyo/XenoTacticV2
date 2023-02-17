@@ -8,6 +8,8 @@ import com.soywiz.korge.input.DraggableInfo
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.xy
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.MPoint
 import com.soywiz.korma.geom.Point
 import com.xenotactic.korge.engine.EComponent
 
@@ -90,7 +92,7 @@ data class MouseDragInputProcessor(
         }
     }
 
-    private val currentPosition = Point()
+    private val currentPosition = MPoint()
 
     var startX = 0.0
     var startY = 0.0
@@ -165,7 +167,11 @@ data class MouseDragInputProcessor(
             deltaY,
             state == MouseDragStateType.START,
             state == MouseDragStateType.END,
-            TimeProvider.now()
+            TimeProvider.now(),
+            startX,
+            startY,
+            currentPosition.x,
+            currentPosition.y
         )
 
         if (dragging) {
@@ -177,10 +183,10 @@ data class MouseDragInputProcessor(
         val state = getState(event)
         val view = view
         if (state == MouseDragStateType.START) {
-            info.viewStartXY.copyFrom(view.pos)
+            info.viewStartXY.copyFrom(view.ipos)
         }
         //println("localDXY=${info.localDX(view)},${info.localDY(view)}")
-        info.viewPrevXY.copyFrom(view.pos)
+        info.viewPrevXY.copyFrom(view.ipos)
         info.viewNextXY.setTo(
             info.viewStartX + info.localDX(view),
             info.viewStartY + info.localDY(view)

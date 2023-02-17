@@ -9,6 +9,8 @@ import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.launch
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.MRectangle
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.StrokeInfo
@@ -172,7 +174,7 @@ class UIMap(
                 if (num > 0) {
                     val (worldX, worldY) = toWorldCoordinates(
                         _gridSize,
-                        Point(x + 0.5, y + 0.5), gameMap.height
+                        IPoint(x + 0.5, y + 0.5), gameMap.height
                     )
                     val component = _rockCountersLayer.text(
                         num.toString(), textSize = 15.0, alignment = TextAlignment
@@ -508,7 +510,7 @@ class UIMap(
     ): GameUnitTuple =
         getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight, mapWidth, mapHeight)
 
-    fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
+    fun getIntersectingEntities(rect: MRectangle): List<UIEntity> {
         return _drawnEntities.values.asSequence().flatten().filter {
             rect.intersects(it.getGlobalBounds())
         }.toList()

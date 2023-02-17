@@ -10,7 +10,8 @@ import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
-import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.MPoint
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.state.DeadUIZonesState
@@ -31,8 +32,8 @@ class SelectorMouseProcessorV2(
     private var dragging = false
     private var isInitialClick = false
 
-    private var startPosition = IPoint()
-    private var currentPosition = IPoint()
+    private var startPosition = MPoint()
+    private var currentPosition = MPoint()
 
     fun reset() {
         dragging = false

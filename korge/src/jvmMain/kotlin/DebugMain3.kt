@@ -3,7 +3,6 @@ import com.soywiz.korge.Korge
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap32
 import com.soywiz.korim.bitmap.Bitmap32Context2d
-import com.soywiz.korim.bitmap.rotatedRight
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.ASE
 import com.soywiz.korim.format.readImageDataContainer
@@ -89,9 +88,9 @@ object DebugMain3 {
                 mouseCircle.xy(mouseX, mouseY)
 
 
-                val bottomLeftAngle = midCircle.pos.kAngleTo(mouseCircle.pos)
+                val bottomLeftAngle = midCircle.ipos.kAngleTo(mouseCircle.ipos)
                 val direction = getDirection8(bottomLeftAngle)
-                val topLeftAngle = midCircle.pos.angleTo(mouseCircle.pos)
+                val topLeftAngle = midCircle.ipos.angleTo(mouseCircle.ipos)
                 gun.rotation(topLeftAngle)
                 info.text = """
                     mouseX: $mouseX, mouseY: $mouseY
