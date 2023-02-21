@@ -110,15 +110,32 @@ class UIGuiContainer(
         }
 
         val topRightResources = stage.container {
-            val i = image(GlobalResources.MONEY_ICON) {
-                smoothing = false
+            val goldSection = container {
+                val i = image(GlobalResources.GOLD_ICON) {
+                    smoothing = false
+                }
+                val t = text("100", font = GlobalResources.FONT_ATKINSON_BOLD,
+                    textSize = 40.0) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
+                    alignLeftToRightOf(i, padding = 5.0)
+                    centerYOn(i)
+                }
             }
-            val t = text("100", font = GlobalResources.FONT_ATKINSON_BOLD,
-                textSize = 40.0) {
-                scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
-                alignLeftToRightOf(i, padding = 5.0)
-                centerYOn(i)
+
+            val supplySection = container {
+                val i = image(GlobalResources.SUPPLY_ICON) {
+                    smoothing = false
+                }
+                val t = text("1/15", font = GlobalResources.FONT_ATKINSON_BOLD,
+                    textSize = 40.0) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
+                    alignLeftToRightOf(i, padding = 5.0)
+                    centerYOn(i)
+                }
+
+                alignLeftToRightOf(goldSection, padding = 40.0)
             }
+
 
             scaleWhileMaintainingAspect(ScalingOption.ByHeight(25.0))
 
