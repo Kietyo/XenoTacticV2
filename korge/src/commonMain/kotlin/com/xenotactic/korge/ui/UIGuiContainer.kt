@@ -5,6 +5,8 @@ import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.onAttachDetach
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.input.onClick
+import com.soywiz.korge.input.onOut
+import com.soywiz.korge.input.onOver
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.MaterialColors
@@ -165,12 +167,30 @@ class UIGuiContainer(
         ).apply {
         }
 
+        val tooltips = mutableListOf<View>()
+
+        fun clearTooltips() {
+            tooltips.forEach { it.removeFromParent() }
+            tooltips.clear()
+        }
+
         val addTowerView = UITextRect(
             "Add\nTower",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
             onClick {
                 editorState.toggle(MapEntityType.TOWER)
+            }
+            onOver {
+                val tooltip = UITooltipDescription().addTo(this@UIGuiContainer.stage) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(150.0, 150.0))
+                    alignBottomToTopOf(this@apply, padding = 5.0)
+                    centerXOn(this@apply)
+                }
+                tooltips.add(tooltip)
+            }
+            onOut {
+                clearTooltips()
             }
         }
 
