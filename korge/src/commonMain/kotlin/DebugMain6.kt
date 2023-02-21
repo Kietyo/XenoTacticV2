@@ -7,6 +7,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.format.ASE
+import com.soywiz.korim.format.onlyReadVisibleLayers
 import com.soywiz.korim.format.readImageDataContainer
 import com.soywiz.korim.format.toProps
 import com.soywiz.korio.async.runBlockingNoJs
@@ -25,7 +26,7 @@ object DebugMain6 {
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
         Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
-            GlobalResources.init()
+//            GlobalResources.init()
 
 //            val weaponSpeedMillis = 250.0
 //            val attacksPerSecond = 1000.0 / weaponSpeedMillis
@@ -43,8 +44,29 @@ object DebugMain6 {
 //                tooltip(tooltip, "hello world")
 //            }
 
-            val asp = resourcesVfs["gold_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
-            println(asp)
+            val asp = resourcesVfs["icons.aseprite"].readImageDataContainer(ASE.toProps().apply {
+                onlyReadVisibleLayers = false
+            })
+
+            val aspModel = asp.toAsepriteModel()
+            println(aspModel)
+
+            val backgroundLayerName = "background"
+            val goldIconLayerName = "gold_icon"
+            val supplyIconLayerName = "supply_icon"
+
+            val bmp = aspModel.frames.first().createMergedBitmap(backgroundLayerName, goldIconLayerName)
+
+            val i1  = image(bmp) {
+                smoothing = false
+                scale = 3.0
+            }
+
+            image(aspModel.frames.first().createMergedBitmap(backgroundLayerName, supplyIconLayerName)) {
+                smoothing = false
+                scale = 3.0
+                alignLeftToRightOf(i1)
+            }
         }
     }
 }

@@ -39,7 +39,8 @@ object GlobalResources {
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
         COOLDOWN_ICON = resourcesVfs["cooldown_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
-        MONEY_ICON = resourcesVfs["gold_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
+//        MONEY_ICON = COOLDOWN_ICON
+        MONEY_ICON = resourcesVfs["icons.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
 
         FONT_ATKINSON_REGULAR = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()

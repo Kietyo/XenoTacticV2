@@ -1,6 +1,7 @@
 package pathing
 
 import com.soywiz.korio.lang.assert
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
