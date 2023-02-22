@@ -28,10 +28,7 @@ import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
 import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.state.DeadUIZonesState
-import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapApi
-import com.xenotactic.korge.state.GameplayState
+import com.xenotactic.korge.state.*
 
 enum class ViewType {
     NONE,
@@ -51,6 +48,7 @@ class UIGuiContainer(
     private val editorState = engine.stateInjections.getSingleton<EditorState>()
     private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
+    private val mutableResourcesState = engine.stateInjections.getSingleton<MutableResourcesState>()
 
     val middleSelectionContainer = stage.container { }
 
@@ -116,8 +114,10 @@ class UIGuiContainer(
                 val i = image(GlobalResources.GOLD_ICON) {
                     smoothing = false
                 }
-                val t = text("100", font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40.0) {
+                val t = text(
+                    mutableResourcesState.currentGold.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
+                    textSize = 40.0
+                ) {
                     scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
@@ -128,8 +128,11 @@ class UIGuiContainer(
                 val i = image(GlobalResources.SUPPLY_ICON) {
                     smoothing = false
                 }
-                val t = text("1/15", font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40.0) {
+                val t = text(
+                    "${mutableResourcesState.currentSupply}/${mutableResourcesState.initialMaxSupply}",
+                    font = GlobalResources.FONT_ATKINSON_BOLD,
+                    textSize = 40.0
+                ) {
                     scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
