@@ -48,8 +48,8 @@ class UIGuiContainer(
     val gameMapApi: GameMapApi
 ) {
     val eventBus = engine.eventBus
-    val editorState = engine.stateInjections.getSingleton<EditorState>()
-    val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
+    private val editorState = engine.stateInjections.getSingleton<EditorState>()
+    private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
 
     val middleSelectionContainer = stage.container { }
@@ -174,6 +174,8 @@ class UIGuiContainer(
             tooltips.clear()
         }
 
+        val addTowerTooltip = UITooltipDescription(gameplayState.basicTowerCost)
+
         val addTowerView = UITextRect(
             "Add\nTower",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
@@ -182,7 +184,7 @@ class UIGuiContainer(
                 editorState.toggle(MapEntityType.TOWER)
             }
             onOver {
-                val tooltip = UITooltipDescription().addTo(this@UIGuiContainer.stage) {
+                val tooltip = addTowerTooltip.addTo(this@UIGuiContainer.stage) {
                     scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(150.0, 150.0))
                     alignBottomToTopOf(this@apply, padding = 5.0)
                     centerXOn(this@apply)

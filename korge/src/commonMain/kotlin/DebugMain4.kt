@@ -79,7 +79,7 @@ object DebugMain4 {
 //                alignLeftToLeftOf(bg, padding)
 //            }
 
-            val tooltip = UITooltipDescription().addTo(this)
+            val tooltip = UITooltipDescription(8).addTo(this)
 
         }
     }

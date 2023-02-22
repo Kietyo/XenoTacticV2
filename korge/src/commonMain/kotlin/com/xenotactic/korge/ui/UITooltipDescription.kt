@@ -5,13 +5,15 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
 
-class UITooltipDescription: Container() {
+class UITooltipDescription(
+    towerCost: Int
+): Container() {
     init {
         val padding = 5.0
         val bg = solidRect(200, 100, MaterialColors.YELLOW_100)
         val textColor = Colors.BLACK
 
-        val headerTextSize = 25.0
+        val headerTextSize = 24.0
         val descriptionTextSize = 20.0
 
         val titleText = text(
@@ -30,7 +32,7 @@ class UITooltipDescription: Container() {
                     smoothing = false
                 }
                 text(
-                    "100", font = GlobalResources.FONT_ATKINSON_BOLD,
+                    towerCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40.0, color = textColor
                 ) {
                     scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
@@ -54,7 +56,7 @@ class UITooltipDescription: Container() {
                 alignLeftToRightOf(goldCostSection, padding = 10.0)
             }
 
-            scaleWhileMaintainingAspect(ScalingOption.ByHeight(20.0))
+            scaleWhileMaintainingAspect(ScalingOption.ByHeight(23.0))
             alignLeftToLeftOf(bg, padding)
             alignTopToBottomOf(titleText)
         }
