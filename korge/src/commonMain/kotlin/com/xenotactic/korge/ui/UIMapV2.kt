@@ -5,7 +5,8 @@ import com.soywiz.korge.view.vector.gpuGraphics
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.IPoint
+
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.ecs.StagingEntity
@@ -25,7 +26,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.korge_utils.toWorldCoordinates
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 import kotlin.ranges.until
@@ -282,7 +283,7 @@ class UIMapV2(
         globalMouseY: Double
     ): Pair<Double, Double> {
         val localXY = globalToLocalXY(globalMouseX, globalMouseY)
-        val unprojected = Point(
+        val unprojected = IPoint(
             localXY.x,
             mapHeight.value * gridSize - localXY.y
         )

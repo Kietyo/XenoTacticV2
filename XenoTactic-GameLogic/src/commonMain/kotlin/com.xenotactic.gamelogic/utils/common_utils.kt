@@ -2,8 +2,11 @@ package com.xenotactic.gamelogic.utils
 
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.Point
+
 import com.soywiz.korma.geom.radians
+import com.xenotactic.ecs.AbstractEntity
+import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
@@ -407,3 +410,9 @@ infix fun GameUnitTuple.wW(width: Number) = RectangleEntityBuilder(
 infix fun RectangleEntityBuilder.wH(height: Number): IRectangleEntity = RectangleEntity(
     position.x, position.y, width, height.toGameUnit()
 )
+
+fun AbstractEntity.toRectangleEntity(): RectangleEntity {
+    val thisPosition = get(BottomLeftPositionComponent::class)
+    val thisSize = get(SizeComponent::class)
+    return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
+}

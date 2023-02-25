@@ -2,11 +2,9 @@ package com.xenotactic.korge.korge_utils
 
 import com.soywiz.korge.view.*
 import com.soywiz.korma.geom.*
-import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
-import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
@@ -83,19 +81,6 @@ fun intersectRectangles(thisPosition: GameUnitTuple, thisSize: GameUnitTuple,
         otherSize.second.toDouble()
     )
 }
-
-fun StagingEntity.toRectangleEntity(): RectangleEntity {
-    val thisPosition = get(BottomLeftPositionComponent::class)
-    val thisSize = get(SizeComponent::class)
-    return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
-}
-
-fun StatefulEntity.toRectangleEntity(): RectangleEntity {
-    val thisPosition = get(BottomLeftPositionComponent::class)
-    val thisSize = get(SizeComponent::class)
-    return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
-}
-
 
 // Returns the angle from one point to another, with respect to
 // bottom left coordinate system rather than top left coordinate system.

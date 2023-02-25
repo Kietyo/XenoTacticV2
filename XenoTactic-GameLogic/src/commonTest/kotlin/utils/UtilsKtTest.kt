@@ -1,6 +1,6 @@
 package utils
 
-import com.soywiz.korma.geom.Point
+
 import com.soywiz.korma.geom.RectangleInt
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameUnitTuple

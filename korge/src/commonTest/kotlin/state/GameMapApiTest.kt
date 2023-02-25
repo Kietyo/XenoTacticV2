@@ -1,6 +1,5 @@
 package state
 
-import com.soywiz.korio.async.suspendTest
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.tup
 import com.xenotactic.gamelogic.pathing.EntityPath
@@ -13,16 +12,18 @@ import com.xenotactic.gamelogic.utils.wW
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
+import com.xenotactic.korge.state.GameplayState
 import com.xenotactic.testing.assertThat
+import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 
 internal class GameMapApiTest {
     @Test
-    fun regressionTest1() = suspendTest {
+    fun regressionTest1() = runBlocking {
         val width = 30.toGameUnit()
         val height = 11.toGameUnit()
         val gameWorld = GameWorld()
@@ -34,6 +35,9 @@ internal class GameMapApiTest {
                 engine,
                 width, height
             )
+        )
+        engine.stateInjections.setSingletonOrThrow(
+            GameplayState.DEFAULT
         )
         val gameMapApi = GameMapApi(engine)
 

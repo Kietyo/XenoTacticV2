@@ -1,8 +1,6 @@
 package com.xenotactic.korge.state
 
-import com.soywiz.korma.geom.IRectangle
 import com.soywiz.korma.geom.MRectangle
-import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
@@ -16,8 +14,8 @@ import com.xenotactic.korge.event_listeners.AddedMonsterEntityEvent
 import com.xenotactic.korge.event_listeners.AddedUIEntityEvent
 import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.RemovedTowerEntityEvent
-import com.xenotactic.korge.korge_utils.toRectangleEntity
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.utils.toRectangleEntity
+import com.xenotactic.gamelogic.model.GameWorld
 import pathing.PathSequenceTraversal
 import kotlin.math.pow
 
@@ -148,7 +146,7 @@ class GameMapApi(
     fun getIntersectingEntities(rect: MRectangle): Set<EntityId> {
         return gameWorld.selectableEntitiesFamily.getSequence().mapNotNull {
             val comp = gameWorld.uiEntityViewComponentContainer.getComponent(it)
-            if (rect.intersects(comp.entityView.getGlobalBounds())) {
+            if (rect.intersects(comp.entityView.globalBounds)) {
                 it
             } else {
                 null

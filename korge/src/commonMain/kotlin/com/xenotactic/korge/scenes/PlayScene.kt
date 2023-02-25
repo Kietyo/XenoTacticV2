@@ -22,7 +22,7 @@ import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.models.SettingsState
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2

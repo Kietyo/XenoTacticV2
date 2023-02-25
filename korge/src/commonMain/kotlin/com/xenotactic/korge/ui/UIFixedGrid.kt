@@ -6,6 +6,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.color.RGBA
+import com.soywiz.korma.annotations.KormaValueApi
 import com.soywiz.korma.geom.PointInt
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.korge.events.EventBus
@@ -70,6 +71,7 @@ class UIFixedGrid(
         resetWithEntries(initialEntries)
     }
 
+    @OptIn(KormaValueApi::class)
     fun setEntry(x: Int, y: Int, view: View) {
         val point = PointInt(x, y)
         val currView = coordToView[point]!!

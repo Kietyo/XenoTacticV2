@@ -19,6 +19,7 @@ import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.engine.EventListener
 import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.korge.state.MutableResourcesState
 import com.xenotactic.korge.ui.UIMapV2
 
 data class AddedUIEntityEvent(
@@ -41,6 +42,7 @@ class UIMapEventListeners(
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     val gameWorld = engine.gameWorld
     val world = gameWorld.world
+    private val resourcesState = engine.stateInjections.getSingleton<MutableResourcesState>()
 
     init {
         engine.eventBus.register<AddedUIEntityEvent> {

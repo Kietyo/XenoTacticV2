@@ -27,7 +27,7 @@ import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
 import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.korge_utils.isEmpty
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.state.*
 
 enum class ViewType {

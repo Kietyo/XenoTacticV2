@@ -4,7 +4,7 @@ import com.soywiz.korge.view.View
 import com.soywiz.korge.view.alignTopToBottomOf
 import com.soywiz.korge.view.util.distributeEvenlyVertically
 import com.soywiz.korma.geom.Angle
-import com.soywiz.korma.geom.Point
+
 import com.soywiz.korma.geom.radians
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF

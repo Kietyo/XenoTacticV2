@@ -10,7 +10,7 @@ import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.xy
 import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.MPoint
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.korge.engine.EComponent
 
 

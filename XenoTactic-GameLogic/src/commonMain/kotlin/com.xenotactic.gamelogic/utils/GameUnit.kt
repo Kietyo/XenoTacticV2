@@ -1,6 +1,8 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korma.geom.Point
+
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.MPoint
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
@@ -104,7 +106,7 @@ fun distance(p1: GameUnitTuple, p2: GameUnitTuple) =
     com.xenotactic.gamelogic.utils.distance(p1.x, p1.y, p2.x, p2.y)
 
 fun distance(x1: GameUnit, y1: GameUnit, x2: GameUnit, y2: GameUnit) =
-    Point.Companion.distance(x1.toDouble(), y1.toDouble(), x2.toDouble(), y2.toDouble()).toGameUnit()
+    MPoint.Companion.distance(x1.toDouble(), y1.toDouble(), x2.toDouble(), y2.toDouble()).toGameUnit()
 
 fun <T> Iterable<T>.sumOf(function: (T) -> GameUnit): GameUnit {
     var sum = GameUnit(0.0)

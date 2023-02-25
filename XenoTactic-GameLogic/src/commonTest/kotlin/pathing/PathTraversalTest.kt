@@ -1,7 +1,7 @@
 package pathing
 
 import com.soywiz.korio.lang.assert
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.test_utils.assertDoubleEquals

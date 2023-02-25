@@ -2,7 +2,7 @@ package pathing
 
 import com.soywiz.korio.lang.assert
 import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.test_utils.TEST_DOUBLE_MAX_DELTA
 import com.xenotactic.gamelogic.utils.toGameUnit

@@ -1,14 +1,12 @@
-package com.xenotactic.korge.models
+package com.xenotactic.gamelogic.model
 
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.EntityTowerComponent
-import com.xenotactic.gamelogic.model.IRectangleEntity
-import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.korge.korge_utils.toRectangleEntity
+import com.xenotactic.gamelogic.utils.toRectangleEntity
 import pathing.PathFinder
 
 class GameWorld(

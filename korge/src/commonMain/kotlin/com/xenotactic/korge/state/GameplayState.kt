@@ -7,4 +7,8 @@ data class GameplayState(
     // E.g 0.04 = 4% speed increase
     val speedPercentPerUpgrade: Double,
     val basicTowerCost: Int
-): State
+): State {
+    companion object {
+        val DEFAULT = GameplayState(3, 0.04, 7)
+    }
+}

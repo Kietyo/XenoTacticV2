@@ -11,7 +11,7 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.MRectangle
-import com.soywiz.korma.geom.Point
+
 import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
@@ -491,7 +491,7 @@ class UIMap(
         globalMouseY: Double
     ): Pair<Double, Double> {
         val localXY = _boardLayer.globalToLocalXY(globalMouseX, globalMouseY)
-        val unprojected = Point(
+        val unprojected = IPoint(
             localXY.x,
             mapHeight.value * _gridSize - localXY.y
         )

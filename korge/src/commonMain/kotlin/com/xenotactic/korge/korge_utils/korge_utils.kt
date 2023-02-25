@@ -12,7 +12,7 @@ import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit

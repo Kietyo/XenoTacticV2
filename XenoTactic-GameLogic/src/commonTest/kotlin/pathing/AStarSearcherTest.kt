@@ -2,7 +2,7 @@ package pathing
 
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.baseName
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap

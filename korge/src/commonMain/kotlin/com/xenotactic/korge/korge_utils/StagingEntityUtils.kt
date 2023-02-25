@@ -1,6 +1,8 @@
 package com.xenotactic.korge.korge_utils
 
 import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -70,8 +72,8 @@ object StagingEntityUtils {
         speedEffect: Double,
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.SizeComponent(diameter, diameter))
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntitySpeedAreaComponent(speedEffect))
+        addComponentOrThrow(SizeComponent(diameter, diameter))
+        addComponentOrThrow(EntitySpeedAreaComponent(speedEffect))
         addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.SPEED_AREA))
     }
 

@@ -2,7 +2,8 @@ package com.xenotactic.korge.systems
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.view.rotation
-import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.IPoint
+
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.gamelogic.components.*
@@ -44,8 +45,8 @@ class TowerGunRotatingSystem(
             val (towerWorldX, towerWorldY) = uiMap.getWorldCoordinates(towerCenterPoint.x, towerCenterPoint.y)
             val (monsterWorldX, monsterWorldY) = uiMap.getWorldCoordinates(monsterCenterPoint.x, monsterCenterPoint.y)
 
-            val angle = Point(towerWorldX.toDouble(), towerWorldY.toDouble()).angleTo(
-                Point(monsterWorldX.toDouble(), monsterWorldY.toDouble())
+            val angle = IPoint(towerWorldX.toDouble(), towerWorldY.toDouble()).angleTo(
+                IPoint(monsterWorldX.toDouble(), monsterWorldY.toDouble())
             )
             uiGunBarrelComponent.view.rotation(angle)
         }

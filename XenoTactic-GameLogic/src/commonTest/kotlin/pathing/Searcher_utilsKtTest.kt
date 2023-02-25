@@ -1,6 +1,6 @@
 package pathing
 
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.*

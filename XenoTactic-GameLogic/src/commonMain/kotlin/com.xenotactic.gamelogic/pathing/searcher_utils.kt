@@ -1,7 +1,6 @@
 package com.xenotactic.gamelogic.pathing
 
 import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.cos
 import com.soywiz.korma.geom.sin
 import com.xenotactic.gamelogic.containers.BlockingPointContainer

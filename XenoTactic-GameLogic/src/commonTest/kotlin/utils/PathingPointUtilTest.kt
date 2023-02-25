@@ -1,6 +1,6 @@
 package utils
 
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import kotlin.math.sqrt

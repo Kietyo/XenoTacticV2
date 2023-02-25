@@ -3,7 +3,7 @@ package com.xenotactic.gamelogic.test_utils
 import com.soywiz.korio.async.runBlockingNoSuspensions
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.korge_utils.readStringOrNull
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Path

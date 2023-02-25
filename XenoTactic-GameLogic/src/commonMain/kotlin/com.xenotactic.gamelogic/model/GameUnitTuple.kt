@@ -2,7 +2,7 @@ package com.xenotactic.gamelogic.model
 
 import com.soywiz.korma.geom.Angle
 import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.distance
 import com.xenotactic.gamelogic.utils.toGameUnit

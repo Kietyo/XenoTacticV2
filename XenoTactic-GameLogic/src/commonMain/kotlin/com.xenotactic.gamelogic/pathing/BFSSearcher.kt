@@ -1,7 +1,7 @@
 package pathing
 
 import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.toGameUnitPoint

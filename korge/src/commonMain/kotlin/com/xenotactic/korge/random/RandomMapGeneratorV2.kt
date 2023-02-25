@@ -7,8 +7,7 @@ import com.xenotactic.gamelogic.model.*
 import pathing.AStarSearcher
 import com.xenotactic.gamelogic.pathing.SearcherInterface
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.model.GameWorld
 import kotlin.random.Random
 
 class RandomMapGeneratorMaxAttemptsError(

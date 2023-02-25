@@ -9,7 +9,7 @@ import com.xenotactic.korge.events.EventBus
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.*
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.models.SettingsState
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi
