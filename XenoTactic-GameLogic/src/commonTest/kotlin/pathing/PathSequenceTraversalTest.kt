@@ -5,6 +5,7 @@ import com.soywiz.korma.geom.IPoint
 
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.pathing.PathSequenceTraversal
 import com.xenotactic.gamelogic.test_utils.assertDoubleEquals
 import com.xenotactic.gamelogic.test_utils.assertFloatEquals
 import com.xenotactic.gamelogic.test_utils.assertPointEquals

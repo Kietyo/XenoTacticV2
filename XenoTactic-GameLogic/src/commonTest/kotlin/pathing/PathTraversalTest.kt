@@ -5,6 +5,7 @@ import com.soywiz.korma.geom.IPoint
 
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Path
+import com.xenotactic.gamelogic.pathing.PathTraversal
 import com.xenotactic.gamelogic.test_utils.assertDoubleEquals
 import com.xenotactic.gamelogic.test_utils.assertPointEquals
 import kotlin.test.Test

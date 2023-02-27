@@ -17,22 +17,15 @@ import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.engine.EventListener
+import com.xenotactic.gamelogic.events.AddedEntityEvent
+import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.MutableResourcesState
 import com.xenotactic.korge.ui.UIMapV2
 
-data class AddedUIEntityEvent(
-    val entityId: EntityId
-)
-
 data class RemoveUIEntitiesEvent(
     val entities: Set<EntityId>
-)
-
-
-data class AddedMonsterEntityEvent(
-    val entityId: EntityId
 )
 
 class UIMapEventListeners(
@@ -45,8 +38,8 @@ class UIMapEventListeners(
     private val resourcesState = engine.stateInjections.getSingleton<MutableResourcesState>()
 
     init {
-        engine.eventBus.register<AddedUIEntityEvent> {
-            handleAddedUIEntityEvent(it.entityId)
+        engine.eventBus.register<AddedEntityEvent> {
+            handleAddedEntityEvent(it.entityId)
         }
         engine.eventBus.register<RemoveUIEntitiesEvent> {
             handleRemoveUIEntitiesEvent(it.entities)
@@ -88,7 +81,7 @@ class UIMapEventListeners(
     }
 
     @OptIn(KorgeUntested::class)
-    private fun handleAddedUIEntityEvent(entityId: EntityId) {
+    private fun handleAddedEntityEvent(entityId: EntityId) {
         val entityTypeComponent = gameWorld.entityTypeComponents.getComponent(entityId)
         if (entityTypeComponent.type == MapEntityType.SPEED_AREA) {
             // For speed areas we render them on a graphics layer in order to reduce the amount of vertexes drawn.

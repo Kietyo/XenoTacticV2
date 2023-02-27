@@ -1,10 +1,7 @@
-package pathing
+package com.xenotactic.gamelogic.pathing
 
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.toGameUnitPoint
-import com.xenotactic.gamelogic.pathing.Path
-import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.lerp
 import com.xenotactic.gamelogic.utils.toGameUnit

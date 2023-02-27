@@ -20,7 +20,7 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
-import com.xenotactic.korge.events.RemovedTowerEntityEvent
+import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow

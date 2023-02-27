@@ -5,7 +5,7 @@ import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.Segment
-import pathing.SegmentTraversal
+import com.xenotactic.gamelogic.pathing.SegmentTraversal
 import kotlin.time.Duration
 
 class ProjectileMoveSystem(val world: World) : System() {
