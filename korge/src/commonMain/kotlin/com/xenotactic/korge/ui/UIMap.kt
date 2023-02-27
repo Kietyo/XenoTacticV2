@@ -12,7 +12,6 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.MRectangle
 
-import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
