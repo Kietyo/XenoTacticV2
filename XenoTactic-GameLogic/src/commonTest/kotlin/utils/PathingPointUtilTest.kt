@@ -1,9 +1,9 @@
 package utils
 
 
+import com.soywiz.korma.geom.IPoint
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.Point
 import kotlin.math.sqrt
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,11 +17,11 @@ internal class PathingPointUtilTest {
 
     @Test
     fun pathingPointUtil_oneBlockCovered() {
-        val centerPoint = Point(2, 2)
+        val centerPoint = IPoint(2, 2)
 
         assertEquals(
             setOf(
-                centerPoint + Point(TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA)
+                centerPoint + IPoint(TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -33,7 +33,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA)
+                centerPoint + IPoint(TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -45,7 +45,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(-TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA)
+                centerPoint + IPoint(-TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -57,7 +57,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(-TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA)
+                centerPoint + IPoint(-TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -71,11 +71,11 @@ internal class PathingPointUtilTest {
 
     @Test
     fun pathingPointUtil_twoBlocksCovered() {
-        val centerPoint = Point(2, 2)
+        val centerPoint = IPoint(2, 2)
 
         assertEquals(
             setOf(
-                centerPoint + Point(TEST_PATHING_RADIUS, 0.0)
+                centerPoint + IPoint(TEST_PATHING_RADIUS, 0.0)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -88,7 +88,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(0.0, -TEST_PATHING_RADIUS)
+                centerPoint + IPoint(0.0, -TEST_PATHING_RADIUS)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -101,7 +101,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(-TEST_PATHING_RADIUS, 0.0)
+                centerPoint + IPoint(-TEST_PATHING_RADIUS, 0.0)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -114,7 +114,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(0.0, TEST_PATHING_RADIUS)
+                centerPoint + IPoint(0.0, TEST_PATHING_RADIUS)
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -128,8 +128,8 @@ internal class PathingPointUtilTest {
 
         assertEquals(
             setOf(
-                centerPoint + Point(TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
-                centerPoint + Point(-TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(-TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -142,8 +142,8 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(-TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
-                centerPoint + Point(TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(-TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -158,10 +158,10 @@ internal class PathingPointUtilTest {
 
     @Test
     fun pathingPointUtil_threeBlocksCovered() {
-        val centerPoint = Point(2, 2)
+        val centerPoint = IPoint(2, 2)
         assertEquals(
             setOf(
-                centerPoint + Point(TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -175,7 +175,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(-TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(-TEST_DIAGONAL_XY_DELTA, -TEST_DIAGONAL_XY_DELTA),
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -189,7 +189,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(-TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(-TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),
@@ -203,7 +203,7 @@ internal class PathingPointUtilTest {
         )
         assertEquals(
             setOf(
-                centerPoint + Point(TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
+                centerPoint + IPoint(TEST_DIAGONAL_XY_DELTA, TEST_DIAGONAL_XY_DELTA),
             ),
             util.calculate(
                 MapEntity.CHECKPOINT.at(1, 1),

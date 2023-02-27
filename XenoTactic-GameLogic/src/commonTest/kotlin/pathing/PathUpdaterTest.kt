@@ -4,6 +4,7 @@ import com.soywiz.kds.iterators.parallelMap
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
+import com.soywiz.korma.geom.IPoint
 
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
@@ -11,7 +12,6 @@ import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
 
@@ -42,9 +42,9 @@ internal class PathUpdaterTest {
         assertEquals(
             PathSequence.create(
                 Path.create(
-                    Point(4.0, 7.05),
-                    Point(6.007071067811865, 7.007071067811865),
-                    Point(8, 1)
+                    IPoint(4.0, 7.05),
+                    IPoint(6.007071067811865, 7.007071067811865),
+                    IPoint(8, 1)
                 )
             ),
             pathUpdater.gamePath?.toPathSequence()

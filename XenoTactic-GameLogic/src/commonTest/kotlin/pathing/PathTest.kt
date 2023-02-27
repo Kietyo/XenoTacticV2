@@ -3,7 +3,6 @@ package pathing
 
 import com.soywiz.korma.geom.IPoint
 import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.pathing.Path
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -24,11 +23,12 @@ internal class PathTest {
     @Test
     fun getPathCutoffAtIntersection_fivePoints() {
         val path = Path.create(
-            Point(0f, 0f),
-            Point(3f, 3f),
-            Point(5f, 5f),
-            Point(7f, 7f),
-            Point(8f, 8f))
+            IPoint(0f, 0f),
+            IPoint(3f, 3f),
+            IPoint(5f, 5f),
+            IPoint(7f, 7f),
+            IPoint(8f, 8f)
+        )
 
         assertEquals(
             Path.create(IPoint(0f, 0f), IPoint(2f, 2f)),
@@ -46,8 +46,10 @@ internal class PathTest {
         )
 
         assertEquals(
-            Path.create(IPoint(0f, 0f), IPoint(3f, 3f), IPoint(5f ,5f), IPoint(7f ,7f),
-                Point(2f, 2f)),
+            Path.create(
+                IPoint(0f, 0f), IPoint(3f, 3f), IPoint(5f, 5f), IPoint(7f, 7f),
+                IPoint(2f, 2f)
+            ),
             path.getPathCutoffAtIntersection(Path.CircleIntersectionResult(3, GameUnitTuple(2f, 2f)))
         )
 

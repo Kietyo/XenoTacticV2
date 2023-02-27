@@ -2,7 +2,6 @@ package pathing
 
 
 import com.soywiz.korma.geom.IPoint
-import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.pathing.PathAttribute
 import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.test_utils.assertPointEquals
@@ -31,7 +30,7 @@ internal class SegmentTest {
     fun getFirstIntersectionPoint_onlyOnePointInSegmentsIntersects() {
         val segment = Segment(IPoint(0f, 0f), IPoint(3f, 3f))
         assertPointEquals(
-            Point(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
+            IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
             segment.getFirstIntersectionPointToCircle(IPoint(3f, 3f), 3.0)!!
         )
     }

@@ -6,7 +6,6 @@ import com.soywiz.korma.geom.MRectangleInt
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.test_utils.assertPointSetEquals
 import com.xenotactic.gamelogic.test_utils.randomVector
@@ -24,13 +23,13 @@ internal class UtilsKtTest {
     data class IntersectionPointArgs(
         val p1: IPoint,
         val p2: IPoint,
-        val circleCenter: Point,
+        val circleCenter: IPoint,
         val radius: Double
     ) {
         constructor(
             p1: IPoint,
             p2: IPoint,
-            circleCenter: Point,
+            circleCenter: IPoint,
             radius: Float
         ) : this(p1, p2, circleCenter, radius.toDouble())
     }
@@ -74,13 +73,13 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine() {
         assertPointSetEquals(
             setOf(
-                Point(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
-                Point(3 - sqrt(4.5f), 3 - sqrt(4.5f))
+                IPoint(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
+                IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f))
             ),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 0f),
-                Point(8f, 8f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(8f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -91,9 +90,9 @@ internal class UtilsKtTest {
         assertPointSetEquals(
             setOf(IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f))),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 0f),
-                Point(3f, 3f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -104,9 +103,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(-3f, -3f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(-3f, -3f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -116,13 +115,13 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine_reversedPoints() {
         assertPointSetEquals(
             setOf(
-                Point(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
-                Point(3 - sqrt(4.5f), 3 - sqrt(4.5f))
+                IPoint(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
+                IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f))
             ),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(8f, 8f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(8f, 8f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -132,13 +131,13 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine_negativeSlope() {
         assertPointSetEquals(
             setOf(
-                Point(4f + sqrt(56f / 16), 4f - sqrt(56f / 16)),
-                Point(4f - sqrt(56f / 16), 4f + sqrt(56f / 16))
+                IPoint(4f + sqrt(56f / 16), 4f - sqrt(56f / 16)),
+                IPoint(4f - sqrt(56f / 16), 4f + sqrt(56f / 16))
             ),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 8f),
-                Point(8f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 8f),
+                IPoint(8f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -148,13 +147,13 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine_negativeSlope_reversedPoints() {
         assertPointSetEquals(
             setOf(
-                Point(4f + sqrt(56f / 16), 4f - sqrt(56f / 16)),
-                Point(4f - sqrt(56f / 16), 4f + sqrt(56f / 16))
+                IPoint(4f + sqrt(56f / 16), 4f - sqrt(56f / 16)),
+                IPoint(4f - sqrt(56f / 16), 4f + sqrt(56f / 16))
             ),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(8f, 0f),
-                Point(0f, 8f),
-                Point(3f, 3f),
+                IPoint(8f, 0f),
+                IPoint(0f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -165,9 +164,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 6f),
-                Point(8f, 14f),
-                Point(3f, 3f),
+                IPoint(0f, 6f),
+                IPoint(8f, 14f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -178,9 +177,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 6f), IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(3f, 0f),
-                Point(3f, 8f),
-                Point(3f, 3f),
+                IPoint(3f, 0f),
+                IPoint(3f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -191,9 +190,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 6f), IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(3f, 8f),
-                Point(3f, 0f),
-                Point(3f, 3f),
+                IPoint(3f, 8f),
+                IPoint(3f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -204,9 +203,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(0f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 0f),
-                Point(0f, 8f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(0f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -217,9 +216,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(0f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 8f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 8f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -230,9 +229,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(6f, 0f),
-                Point(6f, 8f),
-                Point(3f, 3f),
+                IPoint(6f, 0f),
+                IPoint(6f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -243,9 +242,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(6f, 8f),
-                Point(6f, 0f),
-                Point(3f, 3f),
+                IPoint(6f, 8f),
+                IPoint(6f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -256,9 +255,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(6f, 3f),
-                Point(6f, 8f),
-                Point(3f, 3f),
+                IPoint(6f, 3f),
+                IPoint(6f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -269,9 +268,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(6f, 8f),
-                Point(6f, 3f),
-                Point(3f, 3f),
+                IPoint(6f, 8f),
+                IPoint(6f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -282,9 +281,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(6f, 0f),
-                Point(6f, 3f),
-                Point(3f, 3f),
+                IPoint(6f, 0f),
+                IPoint(6f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -295,9 +294,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(6f, 3f),
-                Point(6f, 0f),
-                Point(3f, 3f),
+                IPoint(6f, 3f),
+                IPoint(6f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -308,9 +307,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(-1f, 0f),
-                Point(-1f, 8f),
-                Point(3f, 3f),
+                IPoint(-1f, 0f),
+                IPoint(-1f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -321,9 +320,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(-1f, 8f),
-                Point(-1f, 0f),
-                Point(3f, 3f),
+                IPoint(-1f, 8f),
+                IPoint(-1f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -334,9 +333,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(7f, 0f),
-                Point(7f, 8f),
-                Point(3f, 3f),
+                IPoint(7f, 0f),
+                IPoint(7f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -347,9 +346,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(7f, 8f),
-                Point(7f, 0f),
-                Point(3f, 3f),
+                IPoint(7f, 8f),
+                IPoint(7f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -360,9 +359,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(0f, 3f), IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 3f),
-                Point(8f, 3f),
-                Point(3f, 3f),
+                IPoint(0f, 3f),
+                IPoint(8f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -373,9 +372,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(0f, 3f), IPoint(6f, 3f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(8f, 3f),
-                Point(0f, 3f),
-                Point(3f, 3f),
+                IPoint(8f, 3f),
+                IPoint(0f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -386,9 +385,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 6f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 6f),
-                Point(8f, 6f),
-                Point(3f, 3f),
+                IPoint(0f, 6f),
+                IPoint(8f, 6f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -399,9 +398,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 6f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(8f, 6f),
-                Point(0f, 6f),
-                Point(3f, 3f),
+                IPoint(8f, 6f),
+                IPoint(0f, 6f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -412,9 +411,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 0f),
-                Point(8f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(8f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -425,9 +424,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(8f, 0f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(8f, 0f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -438,9 +437,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 0f),
-                Point(3f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(3f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -451,9 +450,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(3f, 0f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(3f, 0f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -464,9 +463,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(3f, 0f),
-                Point(6f, 0f),
-                Point(3f, 3f),
+                IPoint(3f, 0f),
+                IPoint(6f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -477,9 +476,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf(IPoint(3f, 0f)),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(6f, 0f),
-                Point(3f, 0f),
-                Point(3f, 3f),
+                IPoint(6f, 0f),
+                IPoint(3f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -490,9 +489,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, 7f),
-                Point(8f, 7f),
-                Point(3f, 3f),
+                IPoint(0f, 7f),
+                IPoint(8f, 7f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -503,9 +502,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(8f, 7f),
-                Point(0f, 7f),
-                Point(3f, 3f),
+                IPoint(8f, 7f),
+                IPoint(0f, 7f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -516,9 +515,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(0f, -1f),
-                Point(8f, -1f),
-                Point(3f, 3f),
+                IPoint(0f, -1f),
+                IPoint(8f, -1f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -529,9 +528,9 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(8f, -1f),
-                Point(0f, -1f),
-                Point(3f, 3f),
+                IPoint(8f, -1f),
+                IPoint(0f, -1f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -542,11 +541,11 @@ internal class UtilsKtTest {
         val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertPointSetEquals(
             setOf(
-                Point(3.9999115f, 3.0f),
-                Point(3.9999115f, 5.0f)
+                IPoint(3.9999115f, 3.0f),
+                IPoint(3.9999115f, 5.0f)
             ),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(3.9999115f, 8.95f), IPoint(
+                IPoint(3.9999115f, 8.95f), IPoint(
                     3.9999995f, 1.05f
                 ), tpIn.centerPoint, tpIn.radius
             )
@@ -558,11 +557,11 @@ internal class UtilsKtTest {
         val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertPointSetEquals(
             setOf(
-                Point(3.9999995f, 3.0f),
-                Point(3.9999995f, 5.0f)
+                IPoint(3.9999995f, 3.0f),
+                IPoint(3.9999995f, 5.0f)
             ),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(
+                IPoint(
                     3.9999995f, 1.05f
                 ), IPoint(3.9999115f, 8.95f), tpIn.centerPoint, tpIn.radius
             )
@@ -575,7 +574,7 @@ internal class UtilsKtTest {
         assertEquals(
             setOf<IPoint>(),
             getIntersectionPointsOfLineSegmentAndCircle(
-                Point(2.992929f, 5.007071f), IPoint(
+                IPoint(2.992929f, 5.007071f), IPoint(
                     3.0f, 3.99f
                 ), tpIn.centerPoint, tpIn.radius
             )
@@ -586,12 +585,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_bottomAndTopSides() {
         assertEquals(
             setOf(
-                Point(2f, 1f), IPoint(4f, 5f)
+                IPoint(2f, 1f), IPoint(4f, 5f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(1f, -1f),
-                Point(5f, 7f),
-                Point(1f, 1f),
+                IPoint(1f, -1f),
+                IPoint(5f, 7f),
+                IPoint(1f, 1f),
                 5f, 4f
             )
         )
@@ -601,12 +600,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_bottomAndTopSides_reversed() {
         assertEquals(
             setOf(
-                Point(4f, 5f), IPoint(2f, 1f)
+                IPoint(4f, 5f), IPoint(2f, 1f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(5f, 7f),
-                Point(1f, -1f),
-                Point(1f, 1f),
+                IPoint(5f, 7f),
+                IPoint(1f, -1f),
+                IPoint(1f, 1f),
                 5f, 4f
             )
         )
@@ -616,12 +615,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_leftAndRightSides() {
         assertEquals(
             setOf(
-                Point(2f, 1f), IPoint(4f, 5f)
+                IPoint(2f, 1f), IPoint(4f, 5f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(1f, -1f),
-                Point(5f, 7f),
-                Point(2f, 0f),
+                IPoint(1f, -1f),
+                IPoint(5f, 7f),
+                IPoint(2f, 0f),
                 2f, 8f
             )
         )
@@ -631,12 +630,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_leftAndRightSides_reversed() {
         assertEquals(
             setOf(
-                Point(2f, 1f), IPoint(4f, 5f)
+                IPoint(2f, 1f), IPoint(4f, 5f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(5f, 7f),
-                Point(1f, -1f),
-                Point(2f, 0f),
+                IPoint(5f, 7f),
+                IPoint(1f, -1f),
+                IPoint(2f, 0f),
                 2f, 8f
             )
         )
@@ -646,12 +645,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_leftSideAndTopRightCorner() {
         assertEquals(
             setOf(
-                Point(2f, 1f), IPoint(4f, 5f)
+                IPoint(2f, 1f), IPoint(4f, 5f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(5f, 7f),
-                Point(1f, -1f),
-                Point(2f, 0f),
+                IPoint(5f, 7f),
+                IPoint(1f, -1f),
+                IPoint(2f, 0f),
                 2f, 5f
             )
         )
@@ -661,12 +660,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_leftSideAndTopSide() {
         assertEquals(
             setOf(
-                Point(2f, 1f), IPoint(4f, 5f)
+                IPoint(2f, 1f), IPoint(4f, 5f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(5f, 7f),
-                Point(1f, -1f),
-                Point(2f, 0f),
+                IPoint(5f, 7f),
+                IPoint(1f, -1f),
+                IPoint(2f, 0f),
                 4f, 5f
             )
         )
@@ -676,12 +675,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_verticalLine() {
         assertEquals(
             setOf(
-                Point(3f, 1f), IPoint(3f, 5f)
+                IPoint(3f, 1f), IPoint(3f, 5f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(3f, 0f),
-                Point(3f, 6f),
-                Point(1f, 1f),
+                IPoint(3f, 0f),
+                IPoint(3f, 6f),
+                IPoint(1f, 1f),
                 5f, 4f
             )
         )
@@ -691,12 +690,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_regressionTest1() {
         assertEquals(
             setOf(
-                Point(4f, 3f), IPoint(4f, 5f)
+                IPoint(4f, 3f), IPoint(4f, 5f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(4f, 8.95f),
-                Point(4f, 1f),
-                Point(3f, 3f),
+                IPoint(4f, 8.95f),
+                IPoint(4f, 1f),
+                IPoint(3f, 3f),
                 2f, 2f
             )
         )
@@ -706,12 +705,12 @@ internal class UtilsKtTest {
     fun getIntersectionPointsOfLineSegmentAndRectangle_regressionTest2() {
         assertPointSetEquals(
             setOf(
-                Point(4.992978f, 5.0f)
+                IPoint(4.992978f, 5.0f)
             ),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(5.0f, 6.01f),
-                Point(4.992929f, 4.992929f),
-                Point(3f, 3f),
+                IPoint(5.0f, 6.01f),
+                IPoint(4.992929f, 4.992929f),
+                IPoint(3f, 3f),
                 2f, 2f
             )
         )
@@ -722,9 +721,9 @@ internal class UtilsKtTest {
         assertEquals(
             emptySet<IPoint>(),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(6.01f, 8.0f),
-                Point(6.0f, 6.99f),
-                Point(3f, 3f),
+                IPoint(6.01f, 8.0f),
+                IPoint(6.0f, 6.99f),
+                IPoint(3f, 3f),
                 2f, 2f
             )
         )
@@ -735,9 +734,9 @@ internal class UtilsKtTest {
         assertEquals(
             emptySet<IPoint>(),
             getIntersectionPointsOfLineSegmentAndRectangle(
-                Point(6.0f, 6.99f),
-                Point(5.0f, 6.01f),
-                Point(3f, 3f),
+                IPoint(6.0f, 6.99f),
+                IPoint(5.0f, 6.01f),
+                IPoint(3f, 3f),
                 2f, 2f
             )
         )
