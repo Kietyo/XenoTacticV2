@@ -16,7 +16,6 @@ import com.xenotactic.gamelogic.pathing.PathSequenceTraversal
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity
-import com.xenotactic.korge.ecomponents.DebugEComponent
 import kotlin.math.pow
 
 class GameMapApi(
@@ -139,8 +138,6 @@ class GameMapApi(
 
         println("pathFinderResult: $pathFinderResult")
         gameMapPathState.updatePath(pathFinderResult.toGamePathOrNull()?.toPathSequence())
-
-        engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
     }
 
     fun getIntersectingEntities(rect: MRectangle): Set<EntityId> {
