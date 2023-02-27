@@ -1,10 +1,12 @@
-package com.xenotactic.korge.events
+package com.xenotactic.gamelogic.events
 
+import com.soywiz.kds.iterators.fastForEach
 import com.soywiz.klogger.Logger
-import com.soywiz.korge.bus.GlobalBus
 import com.soywiz.korio.async.launchImmediately
+import com.soywiz.korio.async.launchUnscoped
 import com.soywiz.korio.lang.Closeable
 import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KClass
 
 interface EventBusInterface {
@@ -20,6 +22,42 @@ object DummyEventBus : EventBusInterface {
                 return
             }
         }
+}
+
+class GlobalBus(
+    val coroutineContext: CoroutineContext
+) {
+    private val perClassHandlers = HashMap<KClass<*>, ArrayList<suspend (Any) -> Unit>>()
+
+    suspend fun send(message: Any) {
+        val clazz = message::class
+        perClassHandlers[clazz]?.fastForEach { handler ->
+            handler(message)
+        }
+    }
+
+    fun sendAsync(message: Any, coroutineContext: CoroutineContext = this.coroutineContext) {
+        coroutineContext.launchUnscoped { send(message) }
+    }
+
+    private fun forClass(clazz: KClass<*>) = perClassHandlers.getOrPut(clazz) { arrayListOf() }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> register(clazz: KClass<out T>, handler: suspend (T) -> Unit): Closeable {
+        val chandler = handler as (suspend (Any) -> Unit)
+        forClass(clazz).add(chandler)
+        return Closeable {
+            unregister(clazz, chandler)
+        }
+    }
+
+    fun <T : Any> unregister(clazz: KClass<out T>, handler: suspend (T) -> Unit) {
+        forClass(clazz).remove(handler)
+    }
+
+    inline fun <reified T : Any> register(noinline handler: suspend (T) -> Unit): Closeable {
+        return register(T::class, handler)
+    }
 }
 
 /**

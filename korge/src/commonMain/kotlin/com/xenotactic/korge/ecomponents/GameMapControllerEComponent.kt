@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 import pathing.PathFinder

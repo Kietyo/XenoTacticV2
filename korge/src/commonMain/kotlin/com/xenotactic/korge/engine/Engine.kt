@@ -2,7 +2,7 @@ package com.xenotactic.korge.engine
 
 import com.xenotactic.ecs.Injections
 import com.xenotactic.ecs.TypedInjections
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.model.GameWorld
 
 interface EventListener

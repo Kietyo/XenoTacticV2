@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.korge_utils.toGameMap
 import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.korge.daos.PlayerDataApi
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent
 import com.xenotactic.korge.korge_components.ResizeDebugComponent
 import com.xenotactic.korge.korge_utils.alignLeftToLeftOfWindow

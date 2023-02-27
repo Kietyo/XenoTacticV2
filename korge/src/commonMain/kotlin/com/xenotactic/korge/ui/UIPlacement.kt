@@ -19,7 +19,7 @@ import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.ExitGameSceneEvent
 import com.xenotactic.korge.events.PointerActionChangeEvent
 import com.xenotactic.korge.events.SpawnCreepEvent

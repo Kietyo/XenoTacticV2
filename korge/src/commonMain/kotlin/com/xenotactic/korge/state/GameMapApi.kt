@@ -12,7 +12,7 @@ import com.xenotactic.korge.ecomponents.DebugEComponent
 import com.xenotactic.korge.engine.Engine
 import com.xenotactic.korge.event_listeners.AddedMonsterEntityEvent
 import com.xenotactic.korge.event_listeners.AddedUIEntityEvent
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.RemovedTowerEntityEvent
 import com.xenotactic.gamelogic.utils.toRectangleEntity
 import com.xenotactic.gamelogic.model.GameWorld

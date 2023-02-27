@@ -8,11 +8,10 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korinject.AsyncInjector
 import com.soywiz.korma.geom.Anchor
-import com.soywiz.korma.geom.ISizeInt
 import com.soywiz.korma.geom.MSizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.bridges.MapBridge
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.scenes.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

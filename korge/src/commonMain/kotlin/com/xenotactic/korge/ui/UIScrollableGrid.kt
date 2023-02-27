@@ -6,7 +6,7 @@ import com.soywiz.korge.ui.uiScrollable
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
 import com.soywiz.korim.color.MaterialColors
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 
 fun Container.uiScrollableGrid(
     eventBus: EventBus,

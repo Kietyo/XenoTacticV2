@@ -12,7 +12,7 @@ import com.soywiz.korma.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 
 class InformationalUI(

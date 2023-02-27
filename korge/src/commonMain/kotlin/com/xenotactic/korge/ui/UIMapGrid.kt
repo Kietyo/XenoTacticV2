@@ -6,7 +6,7 @@ import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 
 inline fun Container.uiMapGrid(
     eventBus: EventBus,

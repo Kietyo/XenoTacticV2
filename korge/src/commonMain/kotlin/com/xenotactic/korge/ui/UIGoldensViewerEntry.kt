@@ -8,7 +8,6 @@ import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.ScalingOption
 import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.alignBottomToBottomOf
 import com.soywiz.korge.view.alignLeftToLeftOf
 import com.soywiz.korge.view.alignRightToRightOf
@@ -25,7 +24,7 @@ import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
 import com.xenotactic.gamelogic.korge_utils.existsBlocking
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
 import kotlinx.coroutines.Dispatchers

@@ -6,9 +6,8 @@ import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.centerOnStage
 import com.soywiz.korge.view.text
-import com.soywiz.korio.file.std.resourcesVfs
 import com.xenotactic.korge.bridges.MapBridge
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent
 
 lateinit var VIEWS_INSTANCE: Views

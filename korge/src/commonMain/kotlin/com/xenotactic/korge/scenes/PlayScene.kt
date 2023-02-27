@@ -7,7 +7,7 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.component_listeners.PreSelectionComponentListener

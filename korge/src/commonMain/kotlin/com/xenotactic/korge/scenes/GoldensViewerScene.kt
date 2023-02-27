@@ -20,7 +20,7 @@ import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.korge_utils.toGameMap
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
 import com.xenotactic.korge.ui.MapWithMetadata
