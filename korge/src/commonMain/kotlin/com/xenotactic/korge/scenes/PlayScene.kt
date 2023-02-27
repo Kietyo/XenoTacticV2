@@ -14,7 +14,7 @@ import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityTextComponentListener
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.event_listeners.TowerUpgradeEventListeners
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
 import com.xenotactic.korge.events.UpdatedPathLineEvent

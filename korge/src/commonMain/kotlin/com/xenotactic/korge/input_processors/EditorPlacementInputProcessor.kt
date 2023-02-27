@@ -9,7 +9,7 @@ import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.state.GameMapApi

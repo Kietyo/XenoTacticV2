@@ -3,8 +3,8 @@ package com.xenotactic.korge.event_listeners
 import com.soywiz.klogger.Logger
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.engine.EventListener
+import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.engine.EventListener
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent

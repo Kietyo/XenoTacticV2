@@ -9,7 +9,7 @@ import com.xenotactic.gamelogic.pathing.PathingPoint
 import com.xenotactic.gamelogic.pathing.SearcherType
 import com.xenotactic.gamelogic.pathing.getAvailablePathingPointsFromBlockingEntities
 import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 
 sealed class DebugPathingPoints {
     data class ForEntity(

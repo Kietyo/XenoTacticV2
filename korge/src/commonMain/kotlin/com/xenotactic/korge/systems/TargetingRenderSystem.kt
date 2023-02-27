@@ -5,7 +5,7 @@ import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.korge_utils.getCenterPoint
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration

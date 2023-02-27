@@ -6,7 +6,7 @@ import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.HealthComponent
 import com.xenotactic.gamelogic.components.MaxHealthComponent
 import com.xenotactic.gamelogic.components.MonsterComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.events.MonsterDeathsEvent
 import kotlin.time.Duration
 

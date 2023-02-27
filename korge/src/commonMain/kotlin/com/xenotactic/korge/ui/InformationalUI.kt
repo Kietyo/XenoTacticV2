@@ -11,7 +11,7 @@ import com.soywiz.korge.view.xy
 import com.soywiz.korma.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedPathLineEvent
 

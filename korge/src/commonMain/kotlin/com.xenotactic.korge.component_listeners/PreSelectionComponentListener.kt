@@ -13,7 +13,7 @@ import com.xenotactic.gamelogic.components.PreSelectionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.components.UIEntityContainerComponent
 import com.xenotactic.gamelogic.components.UIPreSelectionComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.ui.UIMapV2
 
 class PreSelectionComponentListener(

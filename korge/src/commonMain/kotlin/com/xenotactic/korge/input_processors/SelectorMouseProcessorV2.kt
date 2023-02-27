@@ -13,7 +13,7 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.MPoint
 import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.korge.state.GameMapApi
 

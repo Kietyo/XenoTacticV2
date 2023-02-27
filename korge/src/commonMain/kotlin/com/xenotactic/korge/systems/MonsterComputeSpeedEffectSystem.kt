@@ -2,7 +2,7 @@ package com.xenotactic.korge.systems
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.korge_utils.getCenterPoint
 import kotlin.time.Duration
 

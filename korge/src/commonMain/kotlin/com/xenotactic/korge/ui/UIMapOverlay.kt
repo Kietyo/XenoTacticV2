@@ -11,7 +11,7 @@ import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.scaleWhileMaintainingAspect
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korim.color.Colors
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 
 object UIMapOverlayOutsideClickedEvent

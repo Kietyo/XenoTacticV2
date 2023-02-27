@@ -15,8 +15,8 @@ import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.engine.EventListener
+import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.engine.EventListener
 import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.korge.state.GameMapApi
 import com.xenotactic.korge.state.MutableResourcesState

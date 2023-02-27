@@ -1,6 +1,6 @@
 package com.xenotactic.korge.state
 
-import com.xenotactic.korge.engine.State
+import com.xenotactic.gamelogic.engine.State
 
 class MutableResourcesState(
     initialCurrentGold: Int,

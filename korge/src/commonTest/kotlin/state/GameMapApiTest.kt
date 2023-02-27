@@ -9,7 +9,7 @@ import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.wH
 import com.xenotactic.gamelogic.utils.wW
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.gamelogic.model.GameWorld

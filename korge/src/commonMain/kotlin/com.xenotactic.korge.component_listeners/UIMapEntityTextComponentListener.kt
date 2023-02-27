@@ -2,7 +2,7 @@ package com.xenotactic.korge.component_listeners
 
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.ui.UIMapV2
 
 class UIMapEntityTextComponentListener(

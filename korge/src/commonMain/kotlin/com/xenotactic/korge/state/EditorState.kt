@@ -2,8 +2,8 @@ package com.xenotactic.korge.state
 
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.engine.State
+import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.engine.State
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent

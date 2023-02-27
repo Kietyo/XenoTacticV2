@@ -1,8 +1,8 @@
 package com.xenotactic.korge.state
 
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.engine.State
+import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.engine.State
 import com.xenotactic.korge.events.ResizeMapEvent
 
 class GameMapDimensionsState(

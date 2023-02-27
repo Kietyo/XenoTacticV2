@@ -1,4 +1,4 @@
-package com.xenotactic.korge.engine
+package com.xenotactic.gamelogic.engine
 
 import com.xenotactic.ecs.Injections
 import com.xenotactic.ecs.TypedInjections

@@ -4,7 +4,7 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.events.UpdatedPathLineEvent
