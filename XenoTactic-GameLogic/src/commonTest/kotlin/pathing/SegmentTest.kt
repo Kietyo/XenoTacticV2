@@ -1,6 +1,8 @@
 package pathing
 
 
+import com.soywiz.korma.geom.IPoint
+import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.pathing.PathAttribute
 import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.test_utils.assertPointEquals

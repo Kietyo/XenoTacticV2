@@ -2,6 +2,7 @@ package pathing
 
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.baseName
+import com.soywiz.korma.geom.IPoint
 
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
@@ -362,9 +363,9 @@ internal class AStarSearcherTest {
         assertEquals(
             PathSequence.create(
                 Path.create(
-                    Point(4.0, 7.05),
-                    Point(6.007071067811865, 7.007071067811865),
-                    Point(8, 1)
+                    IPoint(4.0, 7.05),
+                    IPoint(6.007071067811865, 7.007071067811865),
+                    IPoint(8, 1)
                 )
             ),
             AStarSearcher.getUpdatablePath(
@@ -383,8 +384,8 @@ internal class AStarSearcherTest {
         assertEquals(
             PathSequence.create(
                 Path.create(
-                    Point(2.0, 2.05),
-                    Point(2.9646446609406727, 2.0353553390593273),
+                    IPoint(2.0, 2.05),
+                    IPoint(2.9646446609406727, 2.0353553390593273),
                 )
             ),
             AStarSearcher.getUpdatablePath(

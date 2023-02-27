@@ -3,6 +3,7 @@ package pathing
 
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.pathing.*
 import kotlin.test.Test
 import kotlin.test.assertEquals

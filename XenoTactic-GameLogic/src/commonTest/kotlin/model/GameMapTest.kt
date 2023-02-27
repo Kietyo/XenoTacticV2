@@ -1,6 +1,7 @@
 package model
 
-
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.MPoint
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -123,14 +124,14 @@ internal class GameMapTest {
         assertPathSequenceEquals(
             PathSequence.create(
                 Path.create(
-                    Point(1.0, 1.0),
-                    Point(1.9929289321881345, 7.007071067811865),
-                    Point(4.0, 7.05)
+                    IPoint(1.0, 1.0),
+                    IPoint(1.9929289321881345, 7.007071067811865),
+                    IPoint(4.0, 7.05)
                 ),
                 Path.create(
-                    Point(4.0, 7.05),
-                    Point(6.007071067811865, 7.007071067811865),
-                    Point(8.0, 1.0)
+                    IPoint(4.0, 7.05),
+                    IPoint(6.007071067811865, 7.007071067811865),
+                    IPoint(8.0, 1.0)
                 )
             ),
             PathFinder.getShortestPath(gameMap)!!

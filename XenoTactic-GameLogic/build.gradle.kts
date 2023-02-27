@@ -99,6 +99,7 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation("com.soywiz.korlibs.korma:korma:$korgePluginVersion")
                 implementation(kotlin("test"))
 //                implementation(kotlin("test-js"))
             }

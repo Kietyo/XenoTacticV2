@@ -1,8 +1,10 @@
 package utils
 
 
+import com.soywiz.korma.geom.IPoint
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.test_utils.assertEquals
 import com.xenotactic.gamelogic.utils.CircleIntersectionUtil
 import kotlin.math.sqrt

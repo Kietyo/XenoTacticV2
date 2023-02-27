@@ -11,6 +11,7 @@ import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
 

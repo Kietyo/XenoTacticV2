@@ -1,10 +1,12 @@
 package utils
 
 
-import com.soywiz.korma.geom.RectangleInt
+import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.MRectangleInt
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.Point
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.test_utils.assertPointSetEquals
 import com.xenotactic.gamelogic.test_utils.randomVector
@@ -741,7 +743,7 @@ internal class UtilsKtTest {
         )
     }
 
-    fun RectangleInt.testString(): String {
+    fun MRectangleInt.testString(): String {
         return "left: ${this.left}, right: ${this.right}, top: ${this.top}, bottom: ${this.bottom}"
     }
 

@@ -3,6 +3,7 @@ package utils
 
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.Point
 import kotlin.math.sqrt
 import kotlin.test.Test
 import kotlin.test.assertEquals
