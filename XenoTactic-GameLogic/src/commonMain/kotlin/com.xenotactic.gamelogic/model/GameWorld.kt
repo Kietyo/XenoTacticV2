@@ -1,5 +1,6 @@
 package com.xenotactic.gamelogic.model
 
+import com.soywiz.klock.TimeSpan
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
@@ -8,6 +9,7 @@ import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity
 import pathing.PathFinder
+import kotlin.time.Duration.Companion.milliseconds
 
 class GameWorld(
     val world: World = World()
@@ -181,4 +183,6 @@ class GameWorld(
     fun isTowerEntity(id: EntityId): Boolean {
         return world.getComponentContainer<EntityTowerComponent>().containsComponent(id)
     }
+
+
 }

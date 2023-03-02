@@ -416,3 +416,13 @@ fun AbstractEntity.toRectangleEntity(): RectangleEntity {
     val thisSize = get(SizeComponent::class)
     return RectangleEntity(thisPosition.x, thisPosition.y, thisSize.width, thisSize.height)
 }
+
+fun getCenterPoint(
+    bottomLeftPositionComponent: BottomLeftPositionComponent,
+    sizeComponent: SizeComponent
+): GameUnitTuple {
+    return GameUnitTuple(
+        bottomLeftPositionComponent.x + sizeComponent.width / 2.0,
+        bottomLeftPositionComponent.y + sizeComponent.height / 2.0
+    )
+}

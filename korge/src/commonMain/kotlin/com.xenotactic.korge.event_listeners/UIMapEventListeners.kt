@@ -21,7 +21,8 @@ import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.gamelogic.api.GameMapApi
-import com.xenotactic.gamelogic.state.MutableResourcesState
+import com.xenotactic.gamelogic.state.MutableGoldState
+import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.korge.ui.UIMapV2
 
 data class RemoveUIEntitiesEvent(
@@ -35,7 +36,7 @@ class UIMapEventListeners(
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     val gameWorld = engine.gameWorld
     val world = gameWorld.world
-    private val resourcesState = engine.stateInjections.getSingleton<MutableResourcesState>()
+    private val resourcesState = engine.stateInjections.getSingleton<MutableGoldState>()
 
     init {
         engine.eventBus.register<AddedEntityEvent> {

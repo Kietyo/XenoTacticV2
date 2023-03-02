@@ -5,8 +5,8 @@ import com.soywiz.korev.Key
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.api.GameSimulator
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
@@ -24,11 +24,8 @@ import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.gamelogic.state.GameMapDimensionsState
-import com.xenotactic.gamelogic.state.GameMapPathState
-import com.xenotactic.gamelogic.state.GameplayState
-import com.xenotactic.gamelogic.state.MutableResourcesState
-import com.xenotactic.korge.models.SettingsState
+import com.xenotactic.gamelogic.system.MonsterComputeSpeedEffectSystem
+import com.xenotactic.korge.models.MouseDragSettingsState
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
 import com.xenotactic.korge.random.generators.*
@@ -37,7 +34,6 @@ import com.xenotactic.korge.systems.*
 import com.xenotactic.korge.ui.UIGuiContainer
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -80,17 +76,15 @@ class PlayScene : Scene() {
         println(randomMap)
 
 
-        val world = World()
-        val gameWorld = GameWorld(world)
-        val settingsState = SettingsState()
+        val gameWorld = GameWorld()
+        val mouseDragSettingsState = MouseDragSettingsState()
         val engine = Engine(eventBus, gameWorld).apply {
-            stateInjections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
-            stateInjections.setSingletonOrThrow(settingsState)
-            stateInjections.setSingletonOrThrow(GameMapPathState(this))
-            stateInjections.setSingletonOrThrow(GameplayState(61, 0.04, 7))
+            stateInjections.setSingletonOrThrow(mouseDragSettingsState)
             stateInjections.setSingletonOrThrow(DeadUIZonesState())
-            stateInjections.setSingletonOrThrow(MutableResourcesState(100))
+
         }
+        val gameSimulator = GameSimulator(width, height, engine, gameWorld.world)
+
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
         val gameMapApi = GameMapApi(engine)
@@ -98,7 +92,7 @@ class PlayScene : Scene() {
         uiMapV2.centerOnStage()
 
         val mouseDragInputProcessor =
-            MouseDragInputProcessor(uiMapV2, settingsState.mouseDragStateSettings)
+            MouseDragInputProcessor(uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
         addComponent(mouseDragInputProcessor)
         engine.injections.setSingletonOrThrow(mouseDragInputProcessor)
         addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
@@ -112,30 +106,30 @@ class PlayScene : Scene() {
             add(TowerUpgradeEventListeners(engine))
         }
 
-        world.apply {
+        gameWorld.world.apply {
             injections = engine.injections
             addFamilyListener(SetInitialPositionFamilyListener(this))
             addComponentListener(PreSelectionComponentListener(engine))
             addComponentListener(SelectionComponentListener(engine))
             addComponentListener(UIMapEntityComponentListener())
             addComponentListener(UIMapEntityTextComponentListener(engine))
-            addSystem(MonsterMoveSystem(this))
-            addSystem(MonsterRemoveSystem(this))
-            addSystem(MonsterComputeSpeedEffectSystem(engine))
+
+            addSystem(MonsterUpdateUIPositionSystem(this))
             addSystem(EightDirectionalMonsterSpriteDirectionSystem(this))
             addSystem(EightDirectionalMonsterAnimationSystem(this))
+
             addSystem(ProjectileRemoveSystem(this))
             addSystem(TowerTargetingRemoveSystem(gameWorld.world))
             addSystem(TargetingAddSystem(gameWorld))
             addSystem(TargetingRenderSystem(engine))
             addSystem(TowerGunRotatingSystem(engine))
-            addSystem(ProjectileMoveSystem(world))
-            addSystem(ProjectileCollideSystem(world))
+            addSystem(ProjectileMoveSystem(this))
+            addSystem(ProjectileCollideSystem(this))
             addSystem(ProjectileRenderSystem(engine))
             addSystem(MonsterDeathSystem(engine))
-            addSystem(MonsterHealthRenderSystem(world))
+            addSystem(MonsterHealthRenderSystem(this))
             addSystem(ReloadSystem(engine))
-            addSystem(TowerAttackSystem(world, gameMapApi))
+            addSystem(TowerAttackSystem(this, gameMapApi))
         }
 
         val infoText = text("Hello world")
@@ -156,7 +150,7 @@ class PlayScene : Scene() {
 ////            MapEntity.Tower(20, 0)
 //        )
 
-        UIGuiContainer(this, engine, world, gameWorld, gameMapApi)
+        UIGuiContainer(this, engine, gameWorld, gameMapApi)
 
 
 
@@ -186,7 +180,7 @@ class PlayScene : Scene() {
         val updateInfoTextFrequency = TimeSpan(250.0)
         addFixedUpdater(deltaTime) {
             val updateTime = measureTime {
-                world.update(deltaTime.milliseconds.milliseconds)
+                gameSimulator.update(deltaTime)
             }
             accumulatedTime += deltaTime
             if (accumulatedTime >= updateInfoTextFrequency) {

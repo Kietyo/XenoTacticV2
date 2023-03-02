@@ -11,7 +11,6 @@ import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
@@ -30,7 +29,8 @@ import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.GameplayState
-import com.xenotactic.gamelogic.state.MutableResourcesState
+import com.xenotactic.gamelogic.state.MutableGoldState
+import com.xenotactic.gamelogic.state.MutableSupplyState
 import com.xenotactic.korge.state.*
 
 enum class ViewType {
@@ -43,15 +43,16 @@ enum class ViewType {
 class UIGuiContainer(
     val stage: SContainer,
     val engine: Engine,
-    val world: World,
     val gameWorld: GameWorld,
     val gameMapApi: GameMapApi
 ) {
+    val world = gameWorld.world
     val eventBus = engine.eventBus
     private val editorState = engine.stateInjections.getSingleton<EditorState>()
     private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
-    private val mutableResourcesState = engine.stateInjections.getSingleton<MutableResourcesState>()
+    private val mutableGoldState = engine.stateInjections.getSingleton<MutableGoldState>()
+    private val mutableSupplyState = engine.stateInjections.getSingleton<MutableSupplyState>()
 
     val middleSelectionContainer = stage.container { }
 
@@ -118,7 +119,7 @@ class UIGuiContainer(
                     smoothing = false
                 }
                 val t = text(
-                    mutableResourcesState.currentGold.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
+                    mutableGoldState.currentGold.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40.0
                 ) {
                     scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
@@ -132,7 +133,7 @@ class UIGuiContainer(
                     smoothing = false
                 }
                 val t = text(
-                    "${mutableResourcesState.currentSupply}/${mutableResourcesState.initialMaxSupply}",
+                    "${mutableSupplyState.currentSupply}/${mutableSupplyState.initialMaxSupply}",
                     font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40.0
                 ) {

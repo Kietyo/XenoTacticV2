@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.events.ResizeMapEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.*
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.korge.models.SettingsState
+import com.xenotactic.korge.models.MouseDragSettingsState
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
@@ -24,18 +24,18 @@ class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
-        val settingsState = SettingsState()
+        val mouseDragSettingsState = MouseDragSettingsState()
         val width = 10.toGameUnit()
         val height = 10.toGameUnit()
         val engine = Engine(eventBus, GameWorld(world = gameWorld)).apply {
             stateInjections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
             injections.setSingletonOrThrow(GameMapApi(this))
-            injections.setSingletonOrThrow(settingsState)
+            injections.setSingletonOrThrow(mouseDragSettingsState)
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
 
-        val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2, settingsState.mouseDragStateSettings)
+        val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
         addComponent(mouseDragInputProcessor)
 
         engine.apply {

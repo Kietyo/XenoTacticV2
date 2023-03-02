@@ -6,7 +6,7 @@ import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.korge_utils.getCenterPoint
+import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.gamelogic.api.GameMapApi
 import kotlin.time.Duration
 

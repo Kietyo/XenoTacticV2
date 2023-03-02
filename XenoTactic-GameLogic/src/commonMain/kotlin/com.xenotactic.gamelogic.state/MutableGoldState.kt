@@ -2,12 +2,9 @@ package com.xenotactic.gamelogic.state
 
 import com.xenotactic.gamelogic.engine.State
 
-class MutableResourcesState(
+class MutableGoldState(
     initialCurrentGold: Int,
 ): State {
-    val initialMaxSupply: Int = 15
     var currentGold: Int = initialCurrentGold
-        private set
-    var currentSupply: Int = 0
         private set
 }

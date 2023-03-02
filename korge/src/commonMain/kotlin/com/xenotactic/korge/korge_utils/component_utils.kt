@@ -13,16 +13,6 @@ import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.WorldUnit
 
-fun getCenterPoint(
-    bottomLeftPositionComponent: BottomLeftPositionComponent,
-    sizeComponent: SizeComponent
-): GameUnitTuple {
-    return GameUnitTuple(
-        bottomLeftPositionComponent.x + sizeComponent.width / 2.0,
-        bottomLeftPositionComponent.y + sizeComponent.height / 2.0
-    )
-}
-
 fun GameUnitTuple.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
     return BottomLeftPositionComponent(x, y)
 }

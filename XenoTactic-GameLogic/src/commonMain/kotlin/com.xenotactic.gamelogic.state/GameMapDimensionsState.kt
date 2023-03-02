@@ -24,11 +24,11 @@ class GameMapDimensionsState(
         height = newHeight
         engine.eventBus.send(
             ResizeMapEvent(
-            oldMapWidth,
-            oldMapHeight,
-            newWidth,
-            newHeight
-        )
+                oldMapWidth,
+                oldMapHeight,
+                newWidth,
+                newHeight
+            )
         )
     }
 }

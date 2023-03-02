@@ -8,10 +8,11 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration
 
-class MonsterMoveSystem(val world: World) : System() {
+class MonsterUpdateUIPositionSystem(val world: World): System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            com.xenotactic.gamelogic.components.MonsterComponent::class, com.xenotactic.gamelogic.components.UIEntityViewComponent::class,
+            com.xenotactic.gamelogic.components.MonsterComponent::class,
+            com.xenotactic.gamelogic.components.UIEntityViewComponent::class,
             com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class,
             com.xenotactic.gamelogic.components.VelocityComponent::class,
         )
@@ -24,8 +25,6 @@ class MonsterMoveSystem(val world: World) : System() {
             val traversal = world[it, com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class].pathSequenceTraversal
             val currentPoint = traversal.currentPosition
             val uiEntityViewComponent = world[it, com.xenotactic.gamelogic.components.UIEntityViewComponent::class]
-            val movementVelocityComponent = world[it, com.xenotactic.gamelogic.components.VelocityComponent::class]
-            val computedSpeedEffectComponent = world[it, com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent::class]
 
             val (worldX, worldY) = uiMapV2.getWorldCoordinates(
                 currentPoint.x, currentPoint.y,
@@ -33,8 +32,7 @@ class MonsterMoveSystem(val world: World) : System() {
             )
 
             uiEntityViewComponent.entityView.xy(worldX, worldY)
-
-            traversal.traverse(movementVelocityComponent.velocity * computedSpeedEffectComponent.computedSpeedEffect)
         }
     }
+
 }
