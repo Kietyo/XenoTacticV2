@@ -9,7 +9,7 @@ import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
-import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.gamelogic.api.GameMapApi
 
 class TowerUpgradeEventListeners(
     val engine: Engine

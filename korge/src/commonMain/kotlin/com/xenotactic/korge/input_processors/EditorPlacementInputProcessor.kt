@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.math.ceil

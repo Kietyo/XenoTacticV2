@@ -12,7 +12,7 @@ import com.xenotactic.korge.input_processors.*
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.models.SettingsState
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2

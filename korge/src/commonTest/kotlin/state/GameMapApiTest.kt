@@ -13,9 +13,9 @@ import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
-import com.xenotactic.korge.state.GameMapPathState
+import com.xenotactic.gamelogic.state.GameMapPathState
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.testing.assertThat
 import kotlinx.coroutines.runBlocking

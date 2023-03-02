@@ -14,7 +14,7 @@ import com.soywiz.korma.geom.MPoint
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.state.DeadUIZonesState
-import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.gamelogic.api.GameMapApi
 
 class SelectorMouseProcessorV2(
     override val view: Container,

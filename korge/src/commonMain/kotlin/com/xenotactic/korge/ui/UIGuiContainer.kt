@@ -12,6 +12,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
+import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent

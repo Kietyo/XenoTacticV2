@@ -1,5 +1,6 @@
 package com.xenotactic.korge.state
 
+import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.engine.Engine

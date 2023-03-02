@@ -1,4 +1,4 @@
-package com.xenotactic.korge.state
+package com.xenotactic.gamelogic.api
 
 import com.soywiz.korma.geom.MRectangle
 import com.xenotactic.ecs.EntityId
@@ -14,6 +14,7 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.pathing.PathSequenceTraversal
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.state.GameMapPathState
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit

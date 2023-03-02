@@ -6,7 +6,7 @@ import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.BaseWeaponSpeedComponent
 import com.xenotactic.gamelogic.components.ReloadDowntimeComponent
 import com.xenotactic.gamelogic.engine.Engine
-import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.gamelogic.api.GameMapApi
 import kotlin.time.Duration
 
 class ReloadSystem(
