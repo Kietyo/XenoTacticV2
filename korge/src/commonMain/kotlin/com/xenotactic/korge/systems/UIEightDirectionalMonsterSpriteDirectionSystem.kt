@@ -4,10 +4,9 @@ import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
 import com.xenotactic.korge.korge_utils.getDirection8
-import com.xenotactic.korge.korge_utils.kAngleTo
 import kotlin.time.Duration
 
-class EightDirectionalMonsterSpriteDirectionSystem(
+class UIEightDirectionalMonsterSpriteDirectionSystem(
     val world: World
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(

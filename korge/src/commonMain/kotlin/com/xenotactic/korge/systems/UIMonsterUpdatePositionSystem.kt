@@ -8,7 +8,7 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration
 
-class MonsterUpdateUIPositionSystem(val world: World): System() {
+class UIMonsterUpdatePositionSystem(val world: World): System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
             com.xenotactic.gamelogic.components.MonsterComponent::class,

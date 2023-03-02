@@ -3,13 +3,9 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.AnimationComponent
-import com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent
-import com.xenotactic.gamelogic.components.PathSequenceTraversalComponent
-import com.xenotactic.gamelogic.components.UIEightDirectionalSpriteComponent
 import kotlin.time.Duration
 
-class EightDirectionalMonsterAnimationSystem(
+class UIEightDirectionalMonsterAnimationSystem(
     val world: World
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(

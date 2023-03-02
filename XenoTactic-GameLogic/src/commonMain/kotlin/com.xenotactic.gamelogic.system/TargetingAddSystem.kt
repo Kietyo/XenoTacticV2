@@ -1,4 +1,4 @@
-package com.xenotactic.korge.systems
+package com.xenotactic.gamelogic.system
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
@@ -15,7 +15,9 @@ class TargetingAddSystem(
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            com.xenotactic.gamelogic.components.EntityTowerComponent::class, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class, com.xenotactic.gamelogic.components.SizeComponent::class,
+            com.xenotactic.gamelogic.components.EntityTowerComponent::class,
+            com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class,
+            com.xenotactic.gamelogic.components.SizeComponent::class,
             com.xenotactic.gamelogic.components.RangeComponent::class
         ),
         noneOfComponents = setOf(com.xenotactic.gamelogic.components.TargetingComponent::class)

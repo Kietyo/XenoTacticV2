@@ -12,11 +12,11 @@ import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration
 
-class TowerGunRotatingSystem(
+class UITowerGunRotatingSystem(
     val engine: Engine
 ) : System() {
     companion object {
-        val logger = Logger<TowerGunRotatingSystem>()
+        val logger = Logger<UITowerGunRotatingSystem>()
     }
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(

@@ -5,16 +5,20 @@ import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration
 
-class TargetingRenderSystem(val engine: Engine) : System() {
+class UITargetingRenderSystem(val engine: Engine) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
-            com.xenotactic.gamelogic.components.EntityTowerComponent::class, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class, com.xenotactic.gamelogic.components.SizeComponent::class,
-            com.xenotactic.gamelogic.components.RangeComponent::class, com.xenotactic.gamelogic.components.TargetingComponent::class
+            EntityTowerComponent::class,
+            BottomLeftPositionComponent::class,
+            SizeComponent::class,
+            RangeComponent::class,
+            TargetingComponent::class
         ),
     )
 
@@ -24,12 +28,12 @@ class TargetingRenderSystem(val engine: Engine) : System() {
     override fun update(deltaTime: Duration) {
         uiMap.targetingLinesLayer.updateShape {
             getFamily().getSequence().forEach {
-                val targetingComponent = world[it, com.xenotactic.gamelogic.components.TargetingComponent::class]
-                val sizeComponent = world[it, com.xenotactic.gamelogic.components.SizeComponent::class]
-                val bottomLeftPositionComponent = world[it, com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
+                val targetingComponent = world[it, TargetingComponent::class]
+                val sizeComponent = world[it, SizeComponent::class]
+                val bottomLeftPositionComponent = world[it, BottomLeftPositionComponent::class]
                 val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
 
-                val monsterCenterPoint = world[targetingComponent.targetEntityId, com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
+                val monsterCenterPoint = world[targetingComponent.targetEntityId, PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
 
                 val (towerWorldX, towerWorldY) = uiMap.getWorldCoordinates(centerPoint.x, centerPoint.y)
                 val (monsterWorldX, monsterWorldY) = uiMap.getWorldCoordinates(monsterCenterPoint.x, monsterCenterPoint.y)

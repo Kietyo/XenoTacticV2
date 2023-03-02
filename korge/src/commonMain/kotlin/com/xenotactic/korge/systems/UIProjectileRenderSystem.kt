@@ -8,7 +8,7 @@ import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration
 
-class ProjectileRenderSystem(
+class UIProjectileRenderSystem(
     val engine: Engine
 ) : System() {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(

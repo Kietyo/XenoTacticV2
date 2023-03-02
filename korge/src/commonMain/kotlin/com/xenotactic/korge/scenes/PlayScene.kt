@@ -24,7 +24,6 @@ import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.gamelogic.system.MonsterComputeSpeedEffectSystem
 import com.xenotactic.korge.models.MouseDragSettingsState
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
@@ -83,7 +82,7 @@ class PlayScene : Scene() {
             stateInjections.setSingletonOrThrow(DeadUIZonesState())
 
         }
-        val gameSimulator = GameSimulator(width, height, engine, gameWorld.world)
+        val gameSimulator = GameSimulator(width, height, engine, gameWorld)
 
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
@@ -114,18 +113,13 @@ class PlayScene : Scene() {
             addComponentListener(UIMapEntityComponentListener())
             addComponentListener(UIMapEntityTextComponentListener(engine))
 
-            addSystem(MonsterUpdateUIPositionSystem(this))
-            addSystem(EightDirectionalMonsterSpriteDirectionSystem(this))
-            addSystem(EightDirectionalMonsterAnimationSystem(this))
+            addSystem(UIMonsterUpdatePositionSystem(this))
+            addSystem(UIEightDirectionalMonsterSpriteDirectionSystem(this))
+            addSystem(UIEightDirectionalMonsterAnimationSystem(this))
+            addSystem(UITargetingRenderSystem(engine))
+            addSystem(UITowerGunRotatingSystem(engine))
 
-            addSystem(ProjectileRemoveSystem(this))
-            addSystem(TowerTargetingRemoveSystem(gameWorld.world))
-            addSystem(TargetingAddSystem(gameWorld))
-            addSystem(TargetingRenderSystem(engine))
-            addSystem(TowerGunRotatingSystem(engine))
-            addSystem(ProjectileMoveSystem(this))
-            addSystem(ProjectileCollideSystem(this))
-            addSystem(ProjectileRenderSystem(engine))
+            addSystem(UIProjectileRenderSystem(engine))
             addSystem(MonsterDeathSystem(engine))
             addSystem(MonsterHealthRenderSystem(this))
             addSystem(ReloadSystem(engine))
