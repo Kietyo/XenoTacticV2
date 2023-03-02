@@ -13,6 +13,8 @@ import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.pathing.PathSequenceTraversal
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity

@@ -28,6 +28,8 @@ import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
 import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.gamelogic.state.GameplayState
+import com.xenotactic.gamelogic.state.MutableResourcesState
 import com.xenotactic.korge.state.*
 
 enum class ViewType {

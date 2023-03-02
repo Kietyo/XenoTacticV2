@@ -12,7 +12,7 @@ import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
 
 
 @OptIn(KorgeExperimental::class)

@@ -21,7 +21,7 @@ import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.korge.state.GameMapApi
-import com.xenotactic.korge.state.MutableResourcesState
+import com.xenotactic.gamelogic.state.MutableResourcesState
 import com.xenotactic.korge.ui.UIMapV2
 
 data class RemoveUIEntitiesEvent(

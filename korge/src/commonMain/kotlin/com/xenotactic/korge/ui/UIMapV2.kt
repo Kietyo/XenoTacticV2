@@ -27,7 +27,7 @@ import com.xenotactic.gamelogic.events.ResizeMapEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.korge_utils.toWorldCoordinates
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.korge.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.korge.state.GameMapPathState
 import kotlin.ranges.until
 

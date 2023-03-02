@@ -1,4 +1,4 @@
-package com.xenotactic.korge.state
+package com.xenotactic.gamelogic.state
 
 import com.xenotactic.gamelogic.engine.State
 
