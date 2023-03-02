@@ -3,7 +3,7 @@ package com.xenotactic.korge.state
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.engine.State
-import com.xenotactic.korge.events.ResizeMapEvent
+import com.xenotactic.gamelogic.events.ResizeMapEvent
 
 class GameMapDimensionsState(
     val engine: Engine,
@@ -22,11 +22,13 @@ class GameMapDimensionsState(
         val oldMapHeight = height
         width = newWidth
         height = newHeight
-        engine.eventBus.send(ResizeMapEvent(
+        engine.eventBus.send(
+            ResizeMapEvent(
             oldMapWidth,
             oldMapHeight,
             newWidth,
             newHeight
-        ))
+        )
+        )
     }
 }

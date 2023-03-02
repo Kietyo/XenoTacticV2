@@ -3,7 +3,7 @@ package com.xenotactic.korge.state
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.engine.State
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 
 class GameMapPathState(
     val engine: Engine

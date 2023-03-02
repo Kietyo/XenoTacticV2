@@ -17,7 +17,7 @@ import com.xenotactic.korge.component_listeners.UIMapEntityTextComponentListener
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.event_listeners.TowerUpgradeEventListeners
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.family_listeners.SetInitialPositionFamilyListener
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor

@@ -23,8 +23,8 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.gamelogic.engine.Engine
-import com.xenotactic.korge.events.ResizeMapEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.ResizeMapEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.korge_utils.toWorldCoordinates
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.state.GameMapDimensionsState

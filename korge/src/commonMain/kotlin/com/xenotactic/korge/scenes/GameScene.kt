@@ -17,7 +17,7 @@ import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.ExitGameSceneEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor

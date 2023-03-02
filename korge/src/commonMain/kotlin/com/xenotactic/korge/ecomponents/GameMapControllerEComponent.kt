@@ -14,7 +14,7 @@ import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import pathing.PathFinder
 
 // The game map controller.
@@ -115,9 +115,11 @@ class GameMapControllerEComponent(
 
         engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
 
-        eventBus.send(UpdatedPathLineEvent(
+        eventBus.send(
+            UpdatedPathLineEvent(
             shortestPath,
-            shortestPath?.pathLength))
+            shortestPath?.pathLength)
+        )
     }
 
     fun getGameMapDebugOnly(): GameMap {

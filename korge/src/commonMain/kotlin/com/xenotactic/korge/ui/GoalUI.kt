@@ -23,7 +23,7 @@ import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 
 class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeComponent {
     val goalContainer: UIContainer
@@ -121,7 +121,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         if (event.newPathLength == null) {
             return
         }
-        val newPathLength = event.newPathLength
+        val newPathLength = event.newPathLength!!
         for ((i, goal) in rankPathLengthGoals.withIndex()) {
             if (newPathLength >= goal) {
                 discoveredRanks[i] = true

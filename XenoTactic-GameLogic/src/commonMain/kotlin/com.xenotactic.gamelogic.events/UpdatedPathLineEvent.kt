@@ -1,4 +1,4 @@
-package com.xenotactic.korge.events
+package com.xenotactic.gamelogic.events
 
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.GameUnit

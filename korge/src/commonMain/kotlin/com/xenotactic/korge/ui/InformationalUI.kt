@@ -13,7 +13,7 @@ import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 
 class InformationalUI(
     override val view: Container, val engine: Engine,

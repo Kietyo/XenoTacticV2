@@ -6,8 +6,8 @@ import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.events.ResizeMapEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.ResizeMapEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.*
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.models.SettingsState
