@@ -1,4 +1,4 @@
-package com.xenotactic.korge.systems
+package com.xenotactic.gamelogic.system
 
 import com.soywiz.klogger.Logger
 import com.xenotactic.ecs.FamilyConfiguration

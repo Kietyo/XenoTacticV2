@@ -1,7 +1,5 @@
 package com.xenotactic.gamelogic.api
 
-import com.soywiz.klock.TimeSpan
-import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.*
@@ -14,8 +12,12 @@ class GameSimulator(
     height: GameUnit,
     val engine: Engine,
     val gameWorld: GameWorld,
+    val ticksPerSecond: Int = 40,
 ) {
     val world = gameWorld.world
+    val gameMapApi: GameMapApi
+    val millisPerTick = (1000.0 / 40).milliseconds
+    var tickNum: Long = 0
     init {
         engine.apply {
             stateInjections.setSingletonOrThrow(GameMapDimensionsState(engine, width, height))
@@ -24,6 +26,13 @@ class GameSimulator(
             stateInjections.setSingletonOrThrow(MutableGoldState(100))
             stateInjections.setSingletonOrThrow(MutableSupplyState())
         }
+
+        gameMapApi = GameMapApi(engine)
+
+        engine.apply {
+            injections.setSingletonOrThrow(gameMapApi)
+        }
+
         world.apply {
             addSystem(MonsterMoveSystem(this))
             addSystem(MonsterRemoveSystem(this))
@@ -35,10 +44,16 @@ class GameSimulator(
 
             addSystem(ProjectileMoveSystem(this))
             addSystem(ProjectileCollideSystem(this))
+
+            addSystem(MonsterDeathSystem(engine))
+            addSystem(ReloadSystem(engine))
+            addSystem(TowerAttackSystem(this, gameMapApi))
         }
+
     }
 
-    fun update(deltaTime: TimeSpan) {
-        world.update(deltaTime.milliseconds.milliseconds)
+    fun tick() {
+        world.update(millisPerTick)
+        tickNum++
     }
 }

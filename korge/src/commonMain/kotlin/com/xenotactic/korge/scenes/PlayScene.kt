@@ -5,7 +5,6 @@ import com.soywiz.korev.Key
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
-import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.api.GameSimulator
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.events.EventBus
@@ -82,12 +81,11 @@ class PlayScene : Scene() {
             stateInjections.setSingletonOrThrow(DeadUIZonesState())
 
         }
-        val gameSimulator = GameSimulator(width, height, engine, gameWorld)
 
+        val gameSimulator = GameSimulator(width, height, engine, gameWorld)
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
-        val gameMapApi = GameMapApi(engine)
-        engine.injections.setSingletonOrThrow(gameMapApi)
+
         uiMapV2.centerOnStage()
 
         val mouseDragInputProcessor =
@@ -120,10 +118,9 @@ class PlayScene : Scene() {
             addSystem(UITowerGunRotatingSystem(engine))
 
             addSystem(UIProjectileRenderSystem(engine))
-            addSystem(MonsterDeathSystem(engine))
-            addSystem(MonsterHealthRenderSystem(this))
-            addSystem(ReloadSystem(engine))
-            addSystem(TowerAttackSystem(this, gameMapApi))
+
+            addSystem(UIMonsterHealthRenderSystem(this))
+
         }
 
         val infoText = text("Hello world")
@@ -135,7 +132,7 @@ class PlayScene : Scene() {
         }
 
 //        gameMapApi.placeEntities(randomMap.map.getAllEntities())
-        gameMapApi.placeEntitiesV2(randomMap2.gameWorld)
+        gameSimulator.gameMapApi.placeEntitiesV2(randomMap2.gameWorld)
 //        gameMapApi.placeEntities(
 //            MapEntity.Start(22, 0),
 //            MapEntity.Finish(3, 2),
@@ -144,7 +141,7 @@ class PlayScene : Scene() {
 ////            MapEntity.Tower(20, 0)
 //        )
 
-        UIGuiContainer(this, engine, gameWorld, gameMapApi)
+        UIGuiContainer(this, engine, gameWorld, gameSimulator.gameMapApi)
 
 
 
@@ -169,12 +166,12 @@ class PlayScene : Scene() {
             )
         )
 
-        val deltaTime = TimeSpan(1000.0 / 60)
+        val deltaTime = TimeSpan(gameSimulator.millisPerTick.inWholeMilliseconds.toDouble())
         var accumulatedTime = TimeSpan.ZERO
         val updateInfoTextFrequency = TimeSpan(250.0)
         addFixedUpdater(deltaTime) {
             val updateTime = measureTime {
-                gameSimulator.update(deltaTime)
+                gameSimulator.tick()
             }
             accumulatedTime += deltaTime
             if (accumulatedTime >= updateInfoTextFrequency) {

@@ -1,4 +1,4 @@
-package com.xenotactic.korge.events
+package com.xenotactic.gamelogic.events
 
 data class MonsterDeathsEvent(
     val deaths: Int
