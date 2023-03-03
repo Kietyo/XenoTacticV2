@@ -33,7 +33,7 @@ class ProjectileMoveSystem(val world: World) : System() {
                 )
             )
 
-            segmentTraversal.traverse(velocityComponent.velocity)
+            segmentTraversal.traverse(velocityComponent.calculateDistance(deltaTime))
 
             mutableCenterPositionComponent.x = segmentTraversal.currentPosition.x
             mutableCenterPositionComponent.y = segmentTraversal.currentPosition.y

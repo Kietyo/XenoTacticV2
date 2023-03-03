@@ -25,7 +25,8 @@ class MonsterMoveSystem(val world: World) : System() {
             val computedSpeedEffectComponent =
                 world[it, com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent::class]
 
-            val distanceTraversed = movementVelocityComponent.velocity * (deltaTime.inWholeMilliseconds / 1000.0) * computedSpeedEffectComponent.computedSpeedEffect
+            val distanceTraversed =
+                movementVelocityComponent.calculateDistance(deltaTime) * computedSpeedEffectComponent.computedSpeedEffect
 
             traversal.traverse(distanceTraversed)
         }

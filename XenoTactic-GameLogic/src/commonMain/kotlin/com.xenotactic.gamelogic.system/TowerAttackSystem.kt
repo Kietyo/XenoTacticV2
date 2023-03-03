@@ -45,7 +45,7 @@ class TowerAttackSystem(
             world.addEntity {
                 addComponentOrThrow(ProjectileComponent)
                 addComponentOrThrow(targetingComponent)
-                addComponentOrThrow(VelocityComponent(0.2.toGameUnit()))
+                addComponentOrThrow(VelocityComponent(10.toGameUnit()))
                 addComponentOrThrow(
                     MutableCenterPositionComponent(
                         towerCenterPoint.x,
