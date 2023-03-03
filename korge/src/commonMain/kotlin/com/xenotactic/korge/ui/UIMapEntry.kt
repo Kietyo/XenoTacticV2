@@ -67,17 +67,17 @@ class UIMapEntry(
 
         val buttonStack =
             this.uiVerticalStack(buttonStackWidth, padding = buttonPaddingHeight) {
-                val playButton = this.uiButton(buttonStackWidth, buttonHeight, "Play") {
+                val playButton = this.uiButton("Play", buttonStackWidth, buttonHeight) {
                     this.onClick {
                         onPlayButtonClick(it)
                     }
                 }
-                val saveButton = this.uiButton(buttonStackWidth, buttonHeight, "Save") {
+                val saveButton = this.uiButton("Save", buttonStackWidth, buttonHeight) {
                     onClick {
                         onSaveButtonClick(it)
                     }
                 }
-                val deleteButton = this.uiButton(buttonStackWidth, buttonHeight, "Hide")
+                val deleteButton = this.uiButton("Hide", buttonStackWidth, buttonHeight)
             }
 
         val outlineRect = this.roundRect(

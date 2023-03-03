@@ -77,13 +77,13 @@ class GoldensViewerScene : Scene() {
             10.0,
         )
         val pageDropdown = this.uiDropdown()
-        val prevButton = this.uiButton(width = 50.0, height = 20.0, text = "Prev") {
+        val prevButton = this.uiButton(width = 50.0, height = 20.0, label = "Prev") {
             alignLeftToRightOf(pageDropdown)
             onClick {
                 pageDropdown.previousEntry()
             }
         }
-        val nextButton = this.uiButton(width = 50.0, height = 20.0, text = "Next") {
+        val nextButton = this.uiButton(width = 50.0, height = 20.0, label = "Next") {
             alignLeftToRightOf(prevButton)
             onClick {
                 pageDropdown.nextEntry()

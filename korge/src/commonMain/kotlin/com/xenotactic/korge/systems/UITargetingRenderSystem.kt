@@ -1,6 +1,7 @@
 package com.xenotactic.korge.systems
 
 import com.soywiz.korim.color.Colors
+import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
 import com.xenotactic.ecs.FamilyConfiguration
@@ -33,17 +34,25 @@ class UITargetingRenderSystem(val engine: Engine) : System() {
                 val bottomLeftPositionComponent = world[it, BottomLeftPositionComponent::class]
                 val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
 
-                val monsterCenterPoint = world[targetingComponent.targetEntityId, PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
+                val monsterCenterPoint =
+                    world[targetingComponent.targetEntityId, PathSequenceTraversalComponent::class].pathSequenceTraversal.currentPosition
 
                 val (towerWorldX, towerWorldY) = uiMap.getWorldCoordinates(centerPoint.x, centerPoint.y)
-                val (monsterWorldX, monsterWorldY) = uiMap.getWorldCoordinates(monsterCenterPoint.x, monsterCenterPoint.y)
+                val (monsterWorldX, monsterWorldY) = uiMap.getWorldCoordinates(
+                    monsterCenterPoint.x,
+                    monsterCenterPoint.y
+                )
 
                 stroke(Colors.RED.withAd(0.5), StrokeInfo(thickness = 2.0)) {
                     line(
-                        towerWorldX.toDouble(),
-                        towerWorldY.toDouble(),
-                        monsterWorldX.toDouble(),
-                        monsterWorldY.toDouble(),
+                        Point(
+                            towerWorldX.toDouble(),
+                            towerWorldY.toDouble()
+                        ),
+                        Point(
+                            monsterWorldX.toDouble(),
+                            monsterWorldY.toDouble()
+                        )
                     )
                 }
 

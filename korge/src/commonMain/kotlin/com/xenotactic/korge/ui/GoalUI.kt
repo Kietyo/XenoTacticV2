@@ -66,7 +66,6 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
                 uiContainer {
                     val currImage = this.image(rankBitmaps[i]).apply {
                         setSizeScaled(64.0, 64.0)
-                        colorTransform = ColorTransform(Colors.BLACK)
                     }
                     val currText = this.text(text[i], alignment = TextAlignment.CENTER)
                     currText.y += 64.0 + _textPaddingFromGoalImage
@@ -125,7 +124,6 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         for ((i, goal) in rankPathLengthGoals.withIndex()) {
             if (newPathLength >= goal) {
                 discoveredRanks[i] = true
-                _rankImages[i].colorTransform = ColorTransform(Colors.WHITE)
                 _rankImages[i].invalidateColorTransform()
             } else {
                 break

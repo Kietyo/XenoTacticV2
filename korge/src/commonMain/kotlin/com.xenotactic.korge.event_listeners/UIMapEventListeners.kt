@@ -11,9 +11,6 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.GlobalResources
-import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.engine.EventListener
@@ -22,7 +19,7 @@ import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.korge.korge_utils.*
 import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.MutableGoldState
-import com.xenotactic.gamelogic.utils.getCenterPoint
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.ui.UIMapV2
 
 data class RemoveUIEntitiesEvent(
@@ -31,7 +28,7 @@ data class RemoveUIEntitiesEvent(
 
 class UIMapEventListeners(
     val engine: Engine
-): EventListener {
+) : EventListener {
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     val gameWorld = engine.gameWorld
@@ -71,11 +68,11 @@ class UIMapEventListeners(
                 val radius = worldWidth.value / 2
                 val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
                 val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
-                val (worldX, worldY) = uiMap.getWorldCoordinates(
+                val worldPoint = uiMap.getWorldCoordinates(
                     centerPoint.x, centerPoint.y
-                )
+                ).toPoint()
                 fill(speedAreaColor) {
-                    circle(worldX.toDouble(), worldY.toDouble(), radius)
+                    circle(worldPoint, radius.toFloat())
                 }
             }
         }

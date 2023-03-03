@@ -2,10 +2,8 @@ package com.xenotactic.korge.ui
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.UISkin
 import com.soywiz.korge.ui.UIVerticalStack
 import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiSkin
 import com.soywiz.korge.ui.uiVerticalStack
 import com.soywiz.korge.ui.uiWindow
 import com.soywiz.korge.view.Container
@@ -50,9 +48,7 @@ class UIPlacement(
 
         placementContainer = uiVerticalStack {
             uiButton {
-                uiSkin = UISkin {
-                    setSkinProperty("textSize", 12.0)
-                }
+                textSize = 12.0
                 text = "View rock counters"
                 onClick {
                     onButtonClick(UIPlacementButton.VIEW_ROCK_COUNTERS)

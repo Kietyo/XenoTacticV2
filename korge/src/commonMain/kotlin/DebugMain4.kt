@@ -3,6 +3,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korma.geom.SizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.ui.UITextRect
 import com.xenotactic.korge.ui.UITooltipDescription
@@ -12,7 +13,9 @@ object DebugMain4 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 1280, height = 720, bgcolor = Colors.LIGHTGRAY) {
+        Korge(bgcolor = Colors.LIGHTGRAY,
+            virtualSize = SizeInt(1280, 720)
+        ) {
             GlobalResources.init()
 //            val font = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()
 //            val font = resourcesVfs["fonts/AtkinsonHyperlegible-Bold.ttf"].readTtfFont()

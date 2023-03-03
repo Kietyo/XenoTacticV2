@@ -4,6 +4,7 @@ import com.soywiz.korge.ui.uiScrollable
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.runBlockingNoJs
+import com.soywiz.korma.geom.SizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.ui.UITowerEntry
 import kotlin.jvm.JvmStatic
@@ -13,7 +14,9 @@ object DebugMain5 {
     @OptIn(KorgeExperimental::class)
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
+        Korge(bgcolor = Colors.LIGHTGRAY,
+            virtualSize = SizeInt(640, 480)
+        ) {
             GlobalResources.init()
 
 //            val solidRect = solidRect(250, 400, MaterialColors.BROWN_300)

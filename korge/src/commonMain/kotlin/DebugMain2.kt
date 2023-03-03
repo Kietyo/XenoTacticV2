@@ -15,18 +15,17 @@ import com.xenotactic.korge.korge_utils.getDirection8
 import com.xenotactic.korge.korge_utils.kAngleTo
 import kotlin.jvm.JvmStatic
 
-
-
-
-
-
-operator fun ClosedRange<Angle>.contains(angle: Angle): Boolean = angle.inBetween(this.start, this.endInclusive, inclusive = true)
+operator fun ClosedRange<Angle>.contains(angle: Angle): Boolean =
+    angle.inBetween(this.start, this.endInclusive, inclusive = true)
 
 object DebugMain2 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 1280, height = 720, bgcolor = Colors.LIGHTGRAY) {
+        Korge(
+            bgcolor = Colors.LIGHTGRAY,
+            virtualSize = SizeInt(1280, 720)
+        ) {
 //            text("Hello world")
 
             val midCircle = circle(radius = 20.0) {
@@ -60,9 +59,9 @@ object DebugMain2 {
 
 
             addUpdater {
-                val (mouseX, mouseY) = views.globalMouseXY
+                val (mouseX, mouseY) = views.globalMousePos
                 mouseCircle.xy(mouseX, mouseY)
-                val angle = midCircle.ipos.kAngleTo(mouseCircle.ipos)
+                val angle = midCircle.pos.kAngleTo(mouseCircle.pos)
                 val direction = getDirection8(angle)
                 sprite.changeToDirection(direction)
                 info.text = """

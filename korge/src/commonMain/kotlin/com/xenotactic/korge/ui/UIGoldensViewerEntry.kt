@@ -91,7 +91,7 @@ class UIGoldensViewerEntry(
         if (gameMapFile.existsBlocking()) {
             val deleteButton = this.uiButton(
                 width = 55.0, height = 25.0,
-                text = "Delete"
+                label = "Delete"
             ) {
                 alignRightToRightOf(entryBackground, padding = 10.0)
                 alignBottomToBottomOf(entryBackground, padding = 10.0)

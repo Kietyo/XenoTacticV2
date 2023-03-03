@@ -9,6 +9,7 @@ import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.file.std.rootLocalVfs
 import com.soywiz.korma.geom.Anchor
+import com.soywiz.korma.geom.SizeInt
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import kotlin.jvm.JvmStatic
 
@@ -17,7 +18,9 @@ object DebugMain {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"]) {
+        Korge(bgcolor = Colors["#2b2b2b"],
+            virtualSize = SizeInt(512, 512)
+        ) {
 
 //            val vfs = rootLocalVfs.listNames()
 //

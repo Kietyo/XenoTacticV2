@@ -25,8 +25,7 @@ class ResizeDebugComponent(override val view: Container) : ResizeComponent {
         val parent = view.getReferenceParent()
 
         return """
-            text.localXY(): ${text.localXY()}
-            text.globalXY(): ${text.globalXY()}
+            text.pos: ${text.pos}
             width: $width
             height: $height
             view.windowBounds: ${view.windowBounds}
@@ -35,8 +34,7 @@ class ResizeDebugComponent(override val view: Container) : ResizeComponent {
             view.height: ${view.height}
             view.getBounds(): ${view.getBounds()}
             view.getBoundsNoAnchoring(): ${view.getBoundsNoAnchoring()}
-            view.localXY(): ${view.localXY()}
-            view.globalXY(): ${view.globalXY()}
+            view.globalXY(): ${view.globalPos}
             view.globalBounds: ${view.globalBounds}
             view.getWindowBounds(): ${view.getWindowBounds()}
             view.getGlobalBounds(): ${view.getGlobalBounds()}

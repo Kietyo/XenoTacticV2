@@ -51,8 +51,8 @@ class ObjectPlacementInputProcessor(
                 //                            event.y.toDouble()
                 //                        )
                 //                    }
-                //                    camera.globalToLocalXY(event.x.toDouble(), event.y.toDouble()): ${
-                //                        camera.globalToLocalXY(
+                //                    camera.globalToLocal(event.x.toDouble(), event.y.toDouble()): ${
+                //                        camera.globalToLocal(
                 //                            event.x.toDouble(),
                 //                            event.y.toDouble()
                 //                        )

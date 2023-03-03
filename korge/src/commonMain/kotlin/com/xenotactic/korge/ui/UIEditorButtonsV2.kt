@@ -27,7 +27,7 @@ class UIEditorButtonsV2(
 
     init {
         val buttonStack = uiHorizontalStack {
-            val addStartButton = uiButton(text = "Add Start") {
+            val addStartButton = uiButton(label = "Add Start") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.START) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -36,7 +36,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            val addFinishButton = uiButton(text = "Add Finish") {
+            val addFinishButton = uiButton(label = "Add Finish") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -45,7 +45,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            val addCheckpoint = uiButton(text = "Add Checkpoint") {
+            val addCheckpoint = uiButton(label = "Add Checkpoint") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -54,7 +54,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            val addTeleport = uiButton(text = "Add Teleport") {
+            val addTeleport = uiButton(label = "Add Teleport") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -63,7 +63,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            uiButton(text = "Add rocks") {
+            uiButton(label = "Add rocks") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
                         editorState.switchToPlayingMode()

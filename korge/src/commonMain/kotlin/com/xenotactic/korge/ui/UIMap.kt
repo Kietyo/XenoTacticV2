@@ -11,6 +11,7 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.MRectangle
+import com.soywiz.korma.geom.Point
 
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
@@ -259,10 +260,10 @@ class UIMap(
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
                 for (i in 0..gameMap.width) {
-                    this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height.value * _gridSize)
+                    this.line(Point(i * _gridSize, 0.0), Point(i * _gridSize, gameMap.height.value * _gridSize))
                 }
                 for (j in 0..gameMap.height) {
-                    this.line(0.0, j * _gridSize, gameMap.width.value * _gridSize, j * _gridSize)
+                    this.line(Point(0.0, j * _gridSize), Point(gameMap.width.value * _gridSize, j * _gridSize))
                 }
             }
         }
@@ -379,13 +380,13 @@ class UIMap(
                 ) {
                     for (path in pathSequence.paths) {
                         for (segment in path.getSegments()) {
-                            val (p1WorldX, p1WorldY) = toWorldCoordinates(
+                            val worldP1 = toWorldCoordinates(
                                 _gridSize, segment.point1, gameMap.height
                             )
-                            val (p2WorldX, p2WorldY) = toWorldCoordinates(
+                            val worldP2 = toWorldCoordinates(
                                 _gridSize, segment.point2, gameMap.height
                             )
-                            this.line(p1WorldX.value, p1WorldY.value, p2WorldX.value, p2WorldY.value)
+                            this.line(worldP1.toPoint(), worldP2.toPoint())
                         }
                     }
                 }
@@ -489,10 +490,10 @@ class UIMap(
         globalMouseX: Double,
         globalMouseY: Double
     ): Pair<Double, Double> {
-        val localXY = _boardLayer.globalToLocalXY(globalMouseX, globalMouseY)
-        val unprojected = IPoint(
+        val localXY = _boardLayer.globalToLocal(Point(globalMouseX, globalMouseY))
+        val unprojected = Point(
             localXY.x,
-            mapHeight.value * _gridSize - localXY.y
+            (mapHeight.value * _gridSize - localXY.y).toFloat()
         )
 
         val gridX = unprojected.x / _gridSize

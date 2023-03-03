@@ -24,7 +24,8 @@ object DebugMain3 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
+        Korge(bgcolor = Colors.LIGHTGRAY,
+            virtualSize = SizeInt(640, 480)) {
 //            text("Hello world")
 
             val midCircle = circle(radius = 20.0) {
@@ -84,13 +85,13 @@ object DebugMain3 {
             val angleOffset = Angle.fromDegrees(90)
 
             addUpdater {
-                val (mouseX, mouseY) = views.globalMouseXY
+                val (mouseX, mouseY) = views.globalMousePos
                 mouseCircle.xy(mouseX, mouseY)
 
 
-                val bottomLeftAngle = midCircle.ipos.kAngleTo(mouseCircle.ipos)
+                val bottomLeftAngle = midCircle.pos.kAngleTo(mouseCircle.pos)
                 val direction = getDirection8(bottomLeftAngle)
-                val topLeftAngle = midCircle.ipos.angleTo(mouseCircle.ipos)
+                val topLeftAngle = midCircle.pos.angleTo(mouseCircle.pos)
                 gun.rotation(topLeftAngle)
                 info.text = """
                     mouseX: $mouseX, mouseY: $mouseY

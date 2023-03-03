@@ -87,13 +87,13 @@ class UIMapInspector(
 
         val sectionButtonsContainer = this.container {
             val sectionButton1 = this.uiButton(
+                "Details",
                 sectionButtonWidth, SECTION_BUTTONS_HEIGHT,
-                text = "Details"
             )
 
             val sectionButton2 = this.uiButton(
+                "Scores",
                 sectionButtonWidth, SECTION_BUTTONS_HEIGHT,
-                text = "Scores"
             )
 
             //                val sectionButton1 = this.solidRect(

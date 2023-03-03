@@ -74,7 +74,7 @@ fun intersectRectangles(thisPosition: GameUnitTuple, thisSize: GameUnitTuple,
 
 // Returns the angle from one point to another, with respect to
 // bottom left coordinate system rather than top left coordinate system.
-fun IPoint.kAngleTo(other: IPoint): Angle {
+fun Point.kAngleTo(other: Point): Angle {
     val yDiff = other.y - this.y
     return Angle.between(this.x, this.y, other.x, this.y - yDiff)
 }

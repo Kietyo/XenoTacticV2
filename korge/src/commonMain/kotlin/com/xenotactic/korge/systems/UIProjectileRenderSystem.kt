@@ -5,6 +5,7 @@ import com.soywiz.korma.geom.vector.circle
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.toPoint
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration
 
@@ -25,12 +26,12 @@ class UIProjectileRenderSystem(
         uiMap.projectileLayer.updateShape {
             getFamily().getSequence().forEach {
                 val mutableCenterPositionComponent = world[it, com.xenotactic.gamelogic.components.MutableCenterPositionComponent::class]
-                val (worldX, worldY) = uiMap.getWorldCoordinates(
+                val worldPoint = uiMap.getWorldCoordinates(
                     mutableCenterPositionComponent.x,
                     mutableCenterPositionComponent.y
                 )
                 fill(Colors.RED) {
-                    circle(worldX.toDouble(), worldY.toDouble(), 10.0)
+                    circle(worldPoint.toPoint(), 10.0f)
                 }
             }
         }

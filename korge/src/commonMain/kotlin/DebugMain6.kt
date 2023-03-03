@@ -12,6 +12,7 @@ import com.soywiz.korim.format.readImageDataContainer
 import com.soywiz.korim.format.toProps
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korma.geom.SizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toAsepriteModel
 import com.xenotactic.gamelogic.utils.toWorldUnit
@@ -25,7 +26,10 @@ object DebugMain6 {
     @OptIn(KorgeExperimental::class)
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
+        Korge(
+            bgcolor = Colors.LIGHTGRAY,
+            virtualSize = SizeInt(640, 480)
+        ) {
 //            GlobalResources.init()
 
 //            val weaponSpeedMillis = 250.0
@@ -57,7 +61,7 @@ object DebugMain6 {
 
             val bmp = aspModel.frames.first().createMergedBitmap(backgroundLayerName, goldIconLayerName)
 
-            val i1  = image(bmp) {
+            val i1 = image(bmp) {
                 smoothing = false
                 scale = 3.0
             }

@@ -9,6 +9,7 @@ import com.soywiz.korim.color.RGBA
 import com.soywiz.korinject.AsyncInjector
 import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.MSizeInt
+import com.soywiz.korma.geom.SizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.gamelogic.events.EventBus
@@ -19,7 +20,7 @@ import kotlin.reflect.KClass
 
 object MainModule : Module() {
     override val bgcolor: RGBA = Colors["#2b2b2b"]
-    override val size: MSizeInt = MSizeInt(1000, 720)
+    override val virtualSize: SizeInt = SizeInt(1000, 720)
     override val clipBorders: Boolean = false
     override val mainScene: KClass<out Scene> = RootScene::class
     override val scaleAnchor: Anchor

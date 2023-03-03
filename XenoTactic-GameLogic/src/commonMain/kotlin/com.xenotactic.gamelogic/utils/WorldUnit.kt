@@ -1,6 +1,11 @@
 package com.xenotactic.gamelogic.utils
 
+import com.soywiz.korma.geom.Point
 import kotlin.jvm.JvmInline
+
+typealias WorldPoint = Pair<WorldUnit, WorldUnit>
+
+fun WorldPoint.toPoint() = Point(first.toDouble(), second.toDouble())
 
 @JvmInline
 value class WorldUnit(val value: Double) {

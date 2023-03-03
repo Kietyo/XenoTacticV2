@@ -8,6 +8,7 @@ import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korge.view.text
 import com.soywiz.korge.view.xy
+import com.soywiz.korma.geom.Point
 import com.soywiz.korma.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
@@ -52,7 +53,7 @@ class InformationalUI(
 
     fun resizeInternal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
-        val localArea = view.globalToLocalXY(width, height)
+        val localArea = view.globalToLocal(Point(width, height))
         pathText.xy(visibleLocalArea.x, localArea.y - pathText.height)
     }
 }

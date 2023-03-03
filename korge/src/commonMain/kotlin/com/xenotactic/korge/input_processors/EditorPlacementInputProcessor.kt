@@ -70,7 +70,7 @@ class EditorPlacementInputProcessor(
             return
         }
 
-        val globalXY = views.globalMouseXY
+        val globalXY = views.globalMousePos
         val (gridX, gridY) = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
         if (editorState.entityTypeToPlace == MapEntityType.ROCK) {

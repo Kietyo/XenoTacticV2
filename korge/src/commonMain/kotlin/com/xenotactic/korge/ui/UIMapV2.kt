@@ -6,6 +6,7 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.Point
 
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.line
@@ -130,7 +131,7 @@ class UIMapV2(
         renderPathLines(gameMapPathState.shortestPath)
     }
 
-    fun getWorldCoordinates(x: GameUnit, y: GameUnit, entityHeight: GameUnit = GameUnit(0)) =
+    fun getWorldCoordinates(x: GameUnit, y: GameUnit, entityHeight: GameUnit = GameUnit(0)): WorldPoint =
         Pair(WorldUnit(x.value * gridSize), WorldUnit((mapHeight - y - entityHeight).value * gridSize))
 
     fun toWorldDimensions(width: GameUnit, height: GameUnit) = Pair(
@@ -279,13 +280,13 @@ class UIMapV2(
     }
 
     fun getGridPositionsFromGlobalMouse(
-        globalMouseX: Double,
-        globalMouseY: Double
+        globalMouseX: Float,
+        globalMouseY: Float
     ): Pair<Double, Double> {
-        val localXY = globalToLocalXY(globalMouseX, globalMouseY)
-        val unprojected = IPoint(
+        val localXY = globalToLocal(Point(globalMouseX, globalMouseY))
+        val unprojected = Point(
             localXY.x,
-            mapHeight.value * gridSize - localXY.y
+            (mapHeight.value * gridSize - localXY.y).toFloat()
         )
 
         val gridX = unprojected.x / gridSize
@@ -374,17 +375,15 @@ class UIMapV2(
                 ) {
                     for (path in pathSequence.paths) {
                         for (segment in path.getSegments()) {
-                            val (p1WorldX, p1WorldY) = toWorldCoordinates(
+                            val worldP1 = toWorldCoordinates(
                                 gridSize, segment.point1, mapHeight
                             )
-                            val (p2WorldX, p2WorldY) = toWorldCoordinates(
+                            val worldP2 = toWorldCoordinates(
                                 gridSize, segment.point2, mapHeight
                             )
                             this.line(
-                                p1WorldX.value,
-                                p1WorldY.value,
-                                p2WorldX.value,
-                                p2WorldY.value
+                                worldP1.toPoint(),
+                                worldP2.toPoint()
                             )
                         }
                     }

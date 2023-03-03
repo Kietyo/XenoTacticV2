@@ -11,6 +11,7 @@ import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.MPoint
+import com.soywiz.korma.geom.Point
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.state.DeadUIZonesState
@@ -31,8 +32,8 @@ class SelectorMouseProcessorV2(
     private var dragging = false
     private var isInitialClick = false
 
-    private var startPosition = MPoint()
-    private var currentPosition = MPoint()
+    private var startPosition = Point()
+    private var currentPosition = Point()
 
     fun reset() {
         dragging = false
@@ -48,7 +49,7 @@ class SelectorMouseProcessorV2(
         ) {
             dragging = true
             isInitialClick = true
-            startPosition.copyFrom(views.globalMouseXY)
+            startPosition = views.globalMousePos
         }
 
         if (event.type == MouseEvent.Type.CLICK &&
@@ -58,10 +59,10 @@ class SelectorMouseProcessorV2(
             return
         }
 
-        currentPosition.copyFrom(views.globalMouseXY)
+        currentPosition = views.globalMousePos
 
-        if (        deadUIZonesState.zones.any {
-                if (it.hitTestAny(currentPosition.x, currentPosition.y)) {
+        if (deadUIZonesState.zones.any {
+                if (it.hitTestAny(currentPosition)) {
                     println("Hit view: $it")
                     true
                 } else {
@@ -84,8 +85,8 @@ class SelectorMouseProcessorV2(
 
             selectionRectangle.apply {
                 visible = true
-                scaledWidth = currentPosition.x - startPosition.x
-                scaledHeight = currentPosition.y - startPosition.y
+                scaledWidth = (currentPosition.x - startPosition.x).toDouble()
+                scaledHeight = (currentPosition.y - startPosition.y).toDouble()
                 xy(startPosition)
             }
 

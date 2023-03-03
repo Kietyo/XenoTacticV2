@@ -12,6 +12,7 @@ import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korma.geom.IPoint
+import com.soywiz.korma.geom.Point
 
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.utils.GameUnit
@@ -88,25 +89,17 @@ fun <T : View> T.debugPrint() {
     val localArea = refParent.getVisibleLocalArea()
     val windowsArea = this.getVisibleWindowArea()
     val windowBounds = refParent.windowBounds
-    val localAreaFromGlobal = globalToLocalXY(globalArea.width, globalArea.height)
-    val globalAreaFromLocal = localToGlobalXY(localArea.width, localArea.height)
-    val windowBoundsToGlobal = localToGlobalXY(windowBounds.height, windowBounds.width)
-    val windowBoundsToLocal = globalToLocalXY(windowBounds.height, windowBounds.width)
     println(
         """
         refParent.getVisibleLocalArea(): $localArea
         refParent.getVisibleGlobalArea(): $globalArea
         refParent.getVisibleWindowArea(): $windowsArea
-        localAreaFromGlobal: $localAreaFromGlobal
-        globalAreaFromLocal: $globalAreaFromLocal
         refParent.height: ${refParent.height}
         refParent.width: ${refParent.width}
         refParent.windowBounds: ${refParent.windowBounds}
         this.scaledHeight: ${this.scaledHeight}
         this.height: ${this.height}
         this.unscaledHeight: ${this.unscaledHeight}
-        windowBoundsToGlobal: ${windowBoundsToGlobal}
-        windowBoundsToLocal: ${windowBoundsToLocal}
     """.trimIndent()
     )
 }
@@ -132,7 +125,7 @@ fun <T : View> T.alignBottomToBottomOfWindow(
 ): T {
     val refParent = getReferenceParent()
     val resizeWHToLocal =
-        refParent.globalToLocalXY(resizedWidth.toDouble(), resizedHeight.toDouble())
+        refParent.globalToLocal(Point(resizedWidth, resizedHeight))
 //    println(
 //        "alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
 //                "resizedHeight=$resizedHeight, yOffset=$yOffset):"
@@ -141,8 +134,8 @@ fun <T : View> T.alignBottomToBottomOfWindow(
 //    println(
 //        """
 //        resizeWHToLocal: $resizeWHToLocal
-//        refParent.globalToLocalXY(0.0, yOffset.toDouble()).y: ${
-//            refParent.globalToLocalXY(
+//        refParent.globalToLocal(0.0, yOffset.toDouble()).y: ${
+//            refParent.globalToLocal(
 //                0.0,
 //                yOffset.toDouble()
 //            ).y
