@@ -9,7 +9,6 @@ import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity
 import pathing.PathFinder
-import kotlin.time.Duration.Companion.milliseconds
 
 class GameWorld(
     val world: World = World()

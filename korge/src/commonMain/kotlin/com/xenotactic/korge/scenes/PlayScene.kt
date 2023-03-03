@@ -120,7 +120,6 @@ class PlayScene : Scene() {
             addSystem(UIProjectileRenderSystem(engine))
 
             addSystem(UIMonsterHealthRenderSystem(this))
-
         }
 
         val infoText = text("Hello world")
@@ -157,8 +156,6 @@ class PlayScene : Scene() {
 //            dockedTo(Anchor.CENTER)
             centerXOnStage()
         }
-
-
 
         addComponent(
             EditorPlacementInputProcessor(

@@ -12,11 +12,11 @@ class GameSimulator(
     height: GameUnit,
     val engine: Engine,
     val gameWorld: GameWorld,
-    val ticksPerSecond: Int = 40,
+    val ticksPerSecond: Int = 60,
 ) {
     val world = gameWorld.world
     val gameMapApi: GameMapApi
-    val millisPerTick = (1000.0 / 40).milliseconds
+    val millisPerTick = (1000.0 / ticksPerSecond).milliseconds
     var tickNum: Long = 0
     init {
         engine.apply {
