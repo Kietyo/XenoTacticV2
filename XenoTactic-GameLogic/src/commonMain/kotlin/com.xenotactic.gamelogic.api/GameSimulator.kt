@@ -53,6 +53,7 @@ class GameSimulator(
             stateInjections.setSingletonOrThrow(GameplayState(61, 0.04, 7))
             stateInjections.setSingletonOrThrow(MutableGoldState(100))
             stateInjections.setSingletonOrThrow(MutableSupplyState())
+            injections.setSingletonOrThrow(this@GameSimulator)
         }
 
         gameMapApi = GameMapApi(engine)
@@ -82,19 +83,26 @@ class GameSimulator(
     fun tick() {
         world.update(millisPerTick)
 
-        val eventsToProcess = mutableEventQueueState.toList()
-        for (event in eventsToProcess) {
-            when (event) {
-                is GameEvent.PlaceEntities -> handlePlaceEntitiesEvent(event)
-                is GameEvent.RemoveEntities -> handleRemoveEntitiesEvent(event)
+        if (mutableEventQueueState.isNotEmpty) {
+            val eventsToProcess = mutableEventQueueState.toList()
+
+            for (event in eventsToProcess) {
+                when (event) {
+                    is GameEvent.PlaceEntities -> handlePlaceEntitiesEvent(event)
+                    is GameEvent.RemoveEntities -> handleRemoveEntitiesEvent(event)
+                }
             }
+
+            eventLog.recordEntry(LogEntry(tickNum, eventsToProcess))
+
+            mutableEventQueueState.clearEvents()
         }
 
-        eventLog.recordEntry(LogEntry(tickNum, eventsToProcess))
-
-        mutableEventQueueState.clearEvents()
-
         tickNum++
+    }
+
+    fun printEventLog() {
+        println(eventLog)
     }
 
     private fun handleRemoveEntitiesEvent(event: GameEvent.RemoveEntities) {

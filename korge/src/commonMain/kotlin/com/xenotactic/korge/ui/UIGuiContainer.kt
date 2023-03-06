@@ -12,6 +12,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.MaterialColors
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.api.GameSimulator
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
@@ -53,6 +54,7 @@ class UIGuiContainer(
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
     private val mutableGoldState = engine.stateInjections.getSingleton<MutableGoldState>()
     private val mutableSupplyState = engine.stateInjections.getSingleton<MutableSupplyState>()
+    private val gameSimulator = engine.injections.getSingletonOrNull<GameSimulator>()
 
     val middleSelectionContainer = stage.container { }
 
@@ -80,6 +82,14 @@ class UIGuiContainer(
                 }
             }
 
+            val printEventLog = uiButton("Print event log") {
+                onClick {
+                    gameSimulator?.let {
+                        it.printEventLog()
+                    }
+                }
+            }
+
             val deleteEntitiesButton = uiButton("Delete Entities") {
                 disable()
                 onClick {
@@ -96,7 +106,7 @@ class UIGuiContainer(
                 }
             }
 
-            distributeVertically(listOf(spawnCreepButton, addTowerButton, printWorldButton, deleteEntitiesButton))
+            distributeVertically(listOf(spawnCreepButton, addTowerButton, printWorldButton, printEventLog, deleteEntitiesButton))
             alignBottomToBottomOfWindow()
         }
 
