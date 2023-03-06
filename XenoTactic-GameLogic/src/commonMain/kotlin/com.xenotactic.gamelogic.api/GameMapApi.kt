@@ -16,6 +16,7 @@ import com.xenotactic.gamelogic.pathing.PathSequenceTraversal
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.gamelogic.state.GameMapPathState
 import com.xenotactic.gamelogic.state.GameplayState
+import com.xenotactic.gamelogic.state.MutableEventQueueState
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity
@@ -30,6 +31,7 @@ class GameMapApi(
     val eventBus: EventBus = engine.eventBus
     private val gameMapDimensionsState = engine.stateInjections.getSingleton<GameMapDimensionsState>()
     private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
+    private val mutableEventQueueState = engine.stateInjections.getSingleton<MutableEventQueueState>()
 
     val numCheckpoints
         get() = gameWorld.checkpoints.size
@@ -56,50 +58,17 @@ class GameMapApi(
         }
     }
 
-    fun placeEntitiesV2(otherGameWorld: GameWorld) {
+    fun placeEntities(otherGameWorld: GameWorld) {
         val entities = otherGameWorld.world.getStagingEntities()
-        placeEntitiesV2(entities)
+        placeEntities(entities)
     }
 
-    fun placeEntitiesV2(vararg entities: StagingEntity) {
-        placeEntitiesV2(entities.asIterable())
+    fun placeEntities(vararg entities: StagingEntity) {
+        placeEntities(entities.asIterable())
     }
 
-    private fun placeEntitiesV2(entities: Iterable<StagingEntity>) {
-        for (entity in entities) {
-            val entityId = gameWorld.world.addEntity {
-                addFromStagingEntity(entity)
-                val entityTypeComponent = entity[EntityTypeComponent::class]
-                when (entityTypeComponent.type) {
-                    MapEntityType.START -> Unit
-                    MapEntityType.FINISH -> Unit
-                    MapEntityType.CHECKPOINT -> Unit
-                    MapEntityType.ROCK -> {
-                        addComponentOrThrow(SelectableComponent)
-                    }
-
-                    MapEntityType.TOWER -> {
-                        addComponentOrThrow(BaseDamageComponent(10.0))
-                        addComponentOrThrow(DamageUpgradeComponent(0))
-                        addComponentOrThrow(SpeedUpgradeComponent(0))
-                        addComponentOrThrow(DamageMultiplierComponent(1.0))
-                        addComponentOrThrow(RangeComponent(7.toGameUnit()))
-                        addComponentOrThrow(BaseWeaponSpeedComponent(1000.0))
-                        addComponentOrThrow(ReloadDowntimeComponent(0.0))
-                        addComponentOrThrow(SelectableComponent)
-                    }
-
-                    MapEntityType.TELEPORT_IN -> Unit
-                    MapEntityType.TELEPORT_OUT -> Unit
-                    MapEntityType.SMALL_BLOCKER -> Unit
-                    MapEntityType.SPEED_AREA -> Unit
-                    MapEntityType.MONSTER -> Unit
-                }
-//                addOrReplaceComponent(SelectableComponent)
-            }
-            engine.eventBus.send(AddedEntityEvent(entityId))
-        }
-        updateShortestPath()
+    private fun placeEntities(entities: Iterable<StagingEntity>) {
+        mutableEventQueueState.add(GameEvent.PlaceEntities(entities.toList()))
     }
 
     fun spawnCreep() {
@@ -133,15 +102,7 @@ class GameMapApi(
         }
     }
 
-    private fun updateShortestPath() {
-        val pathFinderResult = gameWorld.getPathFindingResult(
-            gameMapDimensionsState.width,
-            gameMapDimensionsState.height,
-        )
 
-        println("pathFinderResult: $pathFinderResult")
-        gameMapPathState.updatePath(pathFinderResult.toGamePathOrNull()?.toPathSequence())
-    }
 
     fun getIntersectingEntities(rect: MRectangle): Set<EntityId> {
         return gameWorld.selectableEntitiesFamily.getSequence().mapNotNull {
@@ -175,13 +136,7 @@ class GameMapApi(
     }
 
     fun removeEntities(entities: Set<EntityId>) {
-        entities.forEach {
-            if (gameWorld.world.existsComponent<EntityTowerComponent>(it)) {
-                eventBus.send(RemovedTowerEntityEvent(it))
-            }
-            gameWorld.world.removeEntity(it)
-        }
-        updateShortestPath()
+        mutableEventQueueState.add(GameEvent.RemoveEntities(entities))
     }
 
     fun calculateTowerDamage(towerId: EntityId): Double {

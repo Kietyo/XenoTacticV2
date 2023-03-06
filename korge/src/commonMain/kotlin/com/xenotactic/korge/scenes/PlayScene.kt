@@ -131,7 +131,7 @@ class PlayScene : Scene() {
         }
 
 //        gameMapApi.placeEntities(randomMap.map.getAllEntities())
-        gameSimulator.gameMapApi.placeEntitiesV2(randomMap2.gameWorld)
+        gameSimulator.gameMapApi.placeEntities(randomMap2.gameWorld)
 //        gameMapApi.placeEntities(
 //            MapEntity.Start(22, 0),
 //            MapEntity.Finish(3, 2),

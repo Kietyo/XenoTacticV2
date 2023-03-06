@@ -119,7 +119,7 @@ class EditorPlacementInputProcessor(
                     MapEntityType.TELEPORT_OUT -> {
                         require(stagingTeleportIn != null)
 
-                        gameMapApi.placeEntitiesV2(
+                        gameMapApi.placeEntities(
                             stagingTeleportIn!!,
                             entityToAdd
                         )
@@ -148,7 +148,7 @@ class EditorPlacementInputProcessor(
                             )
                             return
                         }
-                        gameMapApi.placeEntitiesV2(entityToAdd)
+                        gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     }
                 }
@@ -224,7 +224,7 @@ class EditorPlacementInputProcessor(
         //        )
 
         if (eventType == MouseEvent.Type.UP) {
-            gameMapApi.placeEntitiesV2(
+            gameMapApi.placeEntities(
                 StagingEntityUtils.createRock(
                     RectangleEntity(roundedGridX, roundedGridY, width, height)
                 )
