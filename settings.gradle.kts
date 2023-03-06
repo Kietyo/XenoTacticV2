@@ -25,7 +25,7 @@ pluginManagement {
         kotlin("plugin.serialization") version kotlinVersion
         kotlin("plugin.allopen") version kotlinVersion
         id("org.jetbrains.kotlinx.benchmark") version kotlinxBenchmark
-        id("com.soywiz.kproject.settings") version "0.0.6"
+//        id("com.soywiz.kproject.settings") version "0.0.6"
     }
 }
 
