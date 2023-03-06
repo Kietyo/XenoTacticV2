@@ -31,7 +31,6 @@ import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableGoldState
-import com.xenotactic.gamelogic.state.MutableSupplyState
 import com.xenotactic.korge.state.*
 
 enum class ViewType {
@@ -53,7 +52,6 @@ class UIGuiContainer(
     private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
     private val mutableGoldState = engine.stateInjections.getSingleton<MutableGoldState>()
-    private val mutableSupplyState = engine.stateInjections.getSingleton<MutableSupplyState>()
     private val gameSimulator = engine.injections.getSingletonOrNull<GameSimulator>()
 
     val middleSelectionContainer = stage.container { }
@@ -143,7 +141,7 @@ class UIGuiContainer(
                     smoothing = false
                 }
                 val t = text(
-                    "${mutableSupplyState.currentSupply}/${mutableSupplyState.initialMaxSupply}",
+                    "${gameWorld.currentSupplyUsage}/${gameplayState.initialMaxSupply}",
                     font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40.0
                 ) {

@@ -43,16 +43,17 @@ class GameSimulator(
 
     private val gameMapDimensionsState = GameMapDimensionsState(engine, width, height)
     private val gameMapPathState = GameMapPathState(engine)
+    private val gameplayState = GameplayState(61, 0.04, 7)
     private val mutableEventQueueState = MutableEventQueueState()
+    private val mutableGoldState = MutableGoldState(100)
 
     init {
         engine.apply {
             stateInjections.setSingletonOrThrow(gameMapDimensionsState)
             stateInjections.setSingletonOrThrow(gameMapPathState)
             stateInjections.setSingletonOrThrow(mutableEventQueueState)
-            stateInjections.setSingletonOrThrow(GameplayState(61, 0.04, 7))
-            stateInjections.setSingletonOrThrow(MutableGoldState(100))
-            stateInjections.setSingletonOrThrow(MutableSupplyState())
+            stateInjections.setSingletonOrThrow(gameplayState)
+            stateInjections.setSingletonOrThrow(mutableGoldState)
             injections.setSingletonOrThrow(this@GameSimulator)
         }
 
@@ -117,9 +118,14 @@ class GameSimulator(
 
     private fun handlePlaceEntitiesEvent(event: GameEvent.PlaceEntities) {
         for (entity in event.entities) {
+            val entityTypeComponent = entity[EntityTypeComponent::class]
+
+            if (entityTypeComponent.type == MapEntityType.TOWER) {
+
+            }
+
             val entityId = gameWorld.world.addEntity {
-                addFromStagingEntity(entity)
-                val entityTypeComponent = entity[EntityTypeComponent::class]
+                addComponentsFromStagingEntity(entity)
                 when (entityTypeComponent.type) {
                     MapEntityType.START -> Unit
                     MapEntityType.FINISH -> Unit
@@ -127,7 +133,6 @@ class GameSimulator(
                     MapEntityType.ROCK -> {
                         addComponentOrThrow(SelectableComponent)
                     }
-
                     MapEntityType.TOWER -> {
                         addComponentOrThrow(BaseDamageComponent(10.0))
                         addComponentOrThrow(DamageUpgradeComponent(0))
@@ -137,6 +142,7 @@ class GameSimulator(
                         addComponentOrThrow(BaseWeaponSpeedComponent(1000.0))
                         addComponentOrThrow(ReloadDowntimeComponent(0.0))
                         addComponentOrThrow(SelectableComponent)
+                        addComponentOrThrow(SupplyCostComponent(1))
                     }
 
                     MapEntityType.TELEPORT_IN -> Unit

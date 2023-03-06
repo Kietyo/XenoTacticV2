@@ -68,7 +68,7 @@ class RocksGenerator(
             } while (true)
             addedRocks.add(rock)
             context.world.addEntity {
-                addFromStagingEntity(StagingEntityUtils.createRock(rock))
+                addComponentsFromStagingEntity(StagingEntityUtils.createRock(rock))
             }
         }
     }

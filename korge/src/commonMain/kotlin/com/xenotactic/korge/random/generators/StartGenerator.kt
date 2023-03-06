@@ -1,12 +1,7 @@
 package com.xenotactic.korge.random.generators
 
-import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.components.EntityStartComponent
-import com.xenotactic.gamelogic.components.EntityTypeComponent
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
-import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
-import com.xenotactic.korge.korge_utils.toSizeComponent
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
 
@@ -16,7 +11,7 @@ object StartGenerator : IGenerator {
         val point = context.getRandomPointWithinMapBounds(size)
 
         context.world.addEntity {
-            addFromStagingEntity(StagingEntityUtils.createStart(
+            addComponentsFromStagingEntity(StagingEntityUtils.createStart(
                 point, size
             ))
         }

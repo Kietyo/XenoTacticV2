@@ -366,7 +366,6 @@ class UIMapV2(
 
         // Draw path lines
         if (pathSequence != null) {
-            println("Got path sequence: $pathSequence")
             _pathingLinesGraphics.updateShape {
                 stroke(
                     Colors.YELLOW.withAd(0.75), info = StrokeInfo(

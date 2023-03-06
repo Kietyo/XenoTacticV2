@@ -1,13 +1,7 @@
 package com.xenotactic.korge.random.generators
 
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
-import com.xenotactic.gamelogic.components.EntityTypeComponent
-import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
-import com.xenotactic.korge.korge_utils.toBottomLeftPositionComponent
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
 
@@ -22,7 +16,7 @@ class SpeedAreaGenerator(
 
             val position = context.getRandomPointPartiallyInMap(diameter, diameter)
             context.world.addEntity {
-                addFromStagingEntity(StagingEntityUtils.createSpeedArea(
+                addComponentsFromStagingEntity(StagingEntityUtils.createSpeedArea(
                     position, diameter, speedEffect
                 ))
             }

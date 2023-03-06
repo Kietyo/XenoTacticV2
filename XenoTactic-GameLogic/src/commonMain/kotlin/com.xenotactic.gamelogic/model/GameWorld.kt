@@ -4,21 +4,23 @@ import com.soywiz.klock.TimeSpan
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.EntityTowerComponent
+import com.xenotactic.gamelogic.components.*
+import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.pathing.PathFindingResult
+import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity
 import pathing.PathFinder
 
 class GameWorld(
-    val world: World = World()
+    val world: World = World(),
 ) {
     val entityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                com.xenotactic.gamelogic.components.EntityTypeComponent::class,
-                com.xenotactic.gamelogic.components.SizeComponent::class,
-                com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class,
+                EntityTypeComponent::class,
+                SizeComponent::class,
+                BottomLeftPositionComponent::class,
             )
         )
     )
@@ -49,7 +51,10 @@ class GameWorld(
     )
     val monsterFamily = world.getOrCreateFamily(
         FamilyConfiguration(
-            allOfComponents = setOf(com.xenotactic.gamelogic.components.MonsterComponent::class, com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class)
+            allOfComponents = setOf(
+                com.xenotactic.gamelogic.components.MonsterComponent::class,
+                com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class
+            )
         )
     )
     val speedAreaFamily = world.getOrCreateFamily(
@@ -79,8 +84,10 @@ class GameWorld(
         world.getComponentContainer<com.xenotactic.gamelogic.components.UIMapEntityComponent>()
     val uiMapEntityTextComponentContainer =
         world.getComponentContainer<com.xenotactic.gamelogic.components.UIMapEntityTextComponent>()
-    val selectionComponentContainer = world.getComponentContainer<com.xenotactic.gamelogic.components.SelectedComponent>()
-    val preSelectionComponentContainer = world.getComponentContainer<com.xenotactic.gamelogic.components.PreSelectionComponent>()
+    val selectionComponentContainer =
+        world.getComponentContainer<com.xenotactic.gamelogic.components.SelectedComponent>()
+    val preSelectionComponentContainer =
+        world.getComponentContainer<com.xenotactic.gamelogic.components.PreSelectionComponent>()
 
     val startEntity
         get() = world.getFirstStatefulEntityMatching(
@@ -135,6 +142,22 @@ class GameWorld(
             FamilyConfiguration.allOf(com.xenotactic.gamelogic.components.EntityBlockingComponent::class)
         )
 
+    val currentSupplyUsage
+        get() = world.getOrCreateFamily(
+            FamilyConfiguration.allOf(
+                SupplyCostComponent::class
+            )
+        ).getSequence().mapComponent<SupplyCostComponent, _>() {
+            it.cost
+        }.sum()
+
+    private inline fun <reified T1 : Any, R> Sequence<EntityId>.mapComponent(
+        crossinline transform: (T1) -> R): Sequence<R> {
+        return this.map {
+            transform(world.getComponentContainer<T1>().getComponent(it))
+        }
+    }
+
     fun getPathFindingResult(
         width: GameUnit, height: GameUnit,
         blockingEntities: List<IRectangleEntity> = this.blockingEntities.map { it.toRectangleEntity() },
@@ -185,3 +208,4 @@ class GameWorld(
 
 
 }
+

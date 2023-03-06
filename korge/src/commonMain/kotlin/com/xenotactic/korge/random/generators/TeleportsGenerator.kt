@@ -92,14 +92,14 @@ class TeleportsGenerator(
             )
 
             val addedTeleportIn = context.world.addEntityReturnStateful {
-                addFromStagingEntity(StagingEntityUtils.createTeleportIn(
+                addComponentsFromStagingEntity(StagingEntityUtils.createTeleportIn(
                     i, teleportInPosition, teleportInSize
                 ))
             }
             addedTpIns.add(addedTeleportIn)
 
             val addedTeleportOut = context.world.addEntityReturnStateful {
-                addFromStagingEntity(StagingEntityUtils.createTeleportOut(
+                addComponentsFromStagingEntity(StagingEntityUtils.createTeleportOut(
                     i,
                     teleportOutPosition,
                     teleportOutSize
