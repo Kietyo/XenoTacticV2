@@ -162,10 +162,6 @@ class GameSimulator(
                 }
             }
 
-            if (entity.containsComponentType<SupplyCostComponent>()) {
-
-            }
-
             eventBus.send(AddedEntityEvent(entityId))
         }
         updateShortestPath()

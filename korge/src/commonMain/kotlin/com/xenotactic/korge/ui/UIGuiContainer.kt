@@ -19,6 +19,7 @@ import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
@@ -104,7 +105,15 @@ class UIGuiContainer(
                 }
             }
 
-            distributeVertically(listOf(spawnCreepButton, addTowerButton, printWorldButton, printEventLog, deleteEntitiesButton))
+            distributeVertically(
+                listOf(
+                    spawnCreepButton,
+                    addTowerButton,
+                    printWorldButton,
+                    printEventLog,
+                    deleteEntitiesButton
+                )
+            )
             alignBottomToBottomOfWindow()
         }
 
@@ -140,14 +149,19 @@ class UIGuiContainer(
                 val i = image(GlobalResources.SUPPLY_ICON) {
                     smoothing = false
                 }
+                val calculateTextFn = { "${gameWorld.currentSupplyUsage}/${gameplayState.initialMaxSupply}" }
                 val t = text(
-                    "${gameWorld.currentSupplyUsage}/${gameplayState.initialMaxSupply}",
+                    calculateTextFn(),
                     font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40.0
                 ) {
                     scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
+                }
+
+                eventBus.register<AddedEntityEvent> {
+                    t.text = calculateTextFn()
                 }
 
                 alignLeftToRightOf(goldSection, padding = 40.0)
