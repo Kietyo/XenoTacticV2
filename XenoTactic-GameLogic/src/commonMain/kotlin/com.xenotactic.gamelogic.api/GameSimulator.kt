@@ -10,10 +10,7 @@ import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.state.*
 import com.xenotactic.gamelogic.system.*
-import com.xenotactic.gamelogic.utils.EventLog
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.LogEntry
-import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.utils.*
 import kotlin.time.Duration.Companion.milliseconds
 
 sealed class GameEvent {
@@ -46,6 +43,7 @@ class GameSimulator(
     private val gameplayState = GameplayState(61, 0.04, 7)
     private val mutableEventQueueState = MutableEventQueueState()
     private val mutableGoldState = MutableGoldState(100)
+    private val stateUtils: StateUtils
 
     init {
         engine.apply {
@@ -58,9 +56,11 @@ class GameSimulator(
         }
 
         gameMapApi = GameMapApi(engine)
+        stateUtils = StateUtils(engine)
 
         engine.apply {
             injections.setSingletonOrThrow(gameMapApi)
+            injections.setSingletonOrThrow(stateUtils)
         }
 
         world.apply {
@@ -121,7 +121,17 @@ class GameSimulator(
             val entityTypeComponent = entity[EntityTypeComponent::class]
 
             if (entityTypeComponent.type == MapEntityType.TOWER) {
-
+                // check we have enough gold
+                val towerCost = gameplayState.basicTowerCost
+                if (towerCost > mutableGoldState.currentGold) {
+                    break
+                }
+                val towerSupplyCost = entity[SupplyCostComponent::class]
+                val currentSupplyUsage = gameWorld.currentSupplyUsage
+                val currentMaxSupplyCost = stateUtils.currentMaxSupply
+                if ((towerSupplyCost.cost + currentSupplyUsage) > currentMaxSupplyCost) {
+                    break
+                }
             }
 
             val entityId = gameWorld.world.addEntity {
@@ -142,7 +152,6 @@ class GameSimulator(
                         addComponentOrThrow(BaseWeaponSpeedComponent(1000.0))
                         addComponentOrThrow(ReloadDowntimeComponent(0.0))
                         addComponentOrThrow(SelectableComponent)
-                        addComponentOrThrow(SupplyCostComponent(1))
                     }
 
                     MapEntityType.TELEPORT_IN -> Unit
@@ -151,8 +160,12 @@ class GameSimulator(
                     MapEntityType.SPEED_AREA -> Unit
                     MapEntityType.MONSTER -> Unit
                 }
-//                addOrReplaceComponent(SelectableComponent)
             }
+
+            if (entity.containsComponentType<SupplyCostComponent>()) {
+
+            }
+
             eventBus.send(AddedEntityEvent(entityId))
         }
         updateShortestPath()

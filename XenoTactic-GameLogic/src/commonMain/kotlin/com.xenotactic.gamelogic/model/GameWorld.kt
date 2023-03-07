@@ -1,13 +1,10 @@
 package com.xenotactic.gamelogic.model
 
-import com.soywiz.klock.TimeSpan
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.pathing.PathFindingResult
-import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity
 import pathing.PathFinder
@@ -27,119 +24,124 @@ class GameWorld(
     val selectableEntitiesFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                com.xenotactic.gamelogic.components.EntityTypeComponent::class,
-                com.xenotactic.gamelogic.components.SizeComponent::class,
-                com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class,
-                com.xenotactic.gamelogic.components.SelectableComponent::class
+                EntityTypeComponent::class,
+                SizeComponent::class,
+                BottomLeftPositionComponent::class,
+                SelectableComponent::class
             )
         )
     )
     val uiEntityFamily = world.getOrCreateFamily(
         FamilyConfiguration(
-            allOfComponents = setOf(com.xenotactic.gamelogic.components.UIEntityViewComponent::class)
+            allOfComponents = setOf(UIEntityViewComponent::class)
         )
     )
     val preSelectionFamily = world.getOrCreateFamily(
         FamilyConfiguration(
-            allOfComponents = setOf(com.xenotactic.gamelogic.components.PreSelectionComponent::class)
+            allOfComponents = setOf(PreSelectionComponent::class)
         )
     )
     val selectionFamily = world.getOrCreateFamily(
         FamilyConfiguration(
-            allOfComponents = setOf(com.xenotactic.gamelogic.components.SelectedComponent::class)
+            allOfComponents = setOf(SelectedComponent::class)
+        )
+    )
+    val supplyDepotsFamily = world.getOrCreateFamily(
+        FamilyConfiguration(
+            allOfComponents = setOf(EntitySupplyDepotComponent::class)
         )
     )
     val monsterFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                com.xenotactic.gamelogic.components.MonsterComponent::class,
-                com.xenotactic.gamelogic.components.PathSequenceTraversalComponent::class
+                MonsterComponent::class,
+                PathSequenceTraversalComponent::class
             )
         )
     )
     val speedAreaFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                com.xenotactic.gamelogic.components.EntitySpeedAreaComponent::class,
-                com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class,
-                com.xenotactic.gamelogic.components.SizeComponent::class
+                EntitySpeedAreaComponent::class,
+                BottomLeftPositionComponent::class,
+                SizeComponent::class
             )
         )
     )
     val blockingEntitiesFamily = world.getOrCreateFamily(
         FamilyConfiguration(
             allOfComponents = setOf(
-                com.xenotactic.gamelogic.components.EntityBlockingComponent::class,
+                EntityBlockingComponent::class,
             )
         )
     )
 
     val bottomLeftPositionComponent =
-        world.getComponentContainer<com.xenotactic.gamelogic.components.BottomLeftPositionComponent>()
-    val sizeComponent = world.getComponentContainer<com.xenotactic.gamelogic.components.SizeComponent>()
-    val entityTypeComponents = world.getComponentContainer<com.xenotactic.gamelogic.components.EntityTypeComponent>()
+        world.getComponentContainer<BottomLeftPositionComponent>()
+    val sizeComponent = world.getComponentContainer<SizeComponent>()
+    val entityTypeComponents = world.getComponentContainer<EntityTypeComponent>()
     val uiEntityViewComponentContainer =
-        world.getComponentContainer<com.xenotactic.gamelogic.components.UIEntityViewComponent>()
+        world.getComponentContainer<UIEntityViewComponent>()
     val uiMapEntityComponentContainer =
-        world.getComponentContainer<com.xenotactic.gamelogic.components.UIMapEntityComponent>()
+        world.getComponentContainer<UIMapEntityComponent>()
     val uiMapEntityTextComponentContainer =
-        world.getComponentContainer<com.xenotactic.gamelogic.components.UIMapEntityTextComponent>()
+        world.getComponentContainer<UIMapEntityTextComponent>()
     val selectionComponentContainer =
-        world.getComponentContainer<com.xenotactic.gamelogic.components.SelectedComponent>()
+        world.getComponentContainer<SelectedComponent>()
     val preSelectionComponentContainer =
-        world.getComponentContainer<com.xenotactic.gamelogic.components.PreSelectionComponent>()
+        world.getComponentContainer<PreSelectionComponent>()
 
     val startEntity
         get() = world.getFirstStatefulEntityMatching(
             FamilyConfiguration.allOf(
-                com.xenotactic.gamelogic.components.EntityStartComponent::class
+                EntityStartComponent::class
             )
         )
     val finishEntity
         get() = world.getFirstStatefulEntityMatching(
             FamilyConfiguration.allOf(
-                com.xenotactic.gamelogic.components.EntityFinishComponent::class
+                EntityFinishComponent::class
             )
         )
 
     val checkpoints
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
-                com.xenotactic.gamelogic.components.EntityCheckpointComponent::class
+                EntityCheckpointComponent::class
             )
         )
 
     val teleportIns
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
-                com.xenotactic.gamelogic.components.EntityTeleportInComponent::class
+                EntityTeleportInComponent::class
             )
         )
 
     val teleportOuts
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
-                com.xenotactic.gamelogic.components.EntityTeleportOutComponent::class
+                EntityTeleportOutComponent::class
             )
         )
 
     val rocks
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
-                com.xenotactic.gamelogic.components.EntityRockComponent::class
+                EntityRockComponent::class
             )
         )
 
     val speedAreas
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(
-                com.xenotactic.gamelogic.components.EntitySpeedAreaComponent::class
+                EntitySpeedAreaComponent::class
             )
         )
 
     val blockingEntities
         get() = world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(com.xenotactic.gamelogic.components.EntityBlockingComponent::class)
+            FamilyConfiguration.allOf(EntityBlockingComponent::class)
         )
 
     val currentSupplyUsage
@@ -147,7 +149,7 @@ class GameWorld(
             FamilyConfiguration.allOf(
                 SupplyCostComponent::class
             )
-        ).getSequence().mapComponent<SupplyCostComponent, _>() {
+        ).getSequence().mapComponent<SupplyCostComponent, _> {
             it.cost
         }.sum()
 
@@ -168,12 +170,12 @@ class GameWorld(
         val addedCheckpoints = this.checkpoints
 
         val sequenceNumToTeleportInEntities = this.teleportIns.associateBy({
-            it[com.xenotactic.gamelogic.components.EntityTeleportInComponent::class].sequenceNumber
+            it[EntityTeleportInComponent::class].sequenceNumber
         }) {
             it
         }
         val sequenceNumToTeleportOutEntities = this.teleportOuts.associateBy({
-            it[com.xenotactic.gamelogic.components.EntityTeleportOutComponent::class].sequenceNumber
+            it[EntityTeleportOutComponent::class].sequenceNumber
         }) {
             it
         }
@@ -196,7 +198,7 @@ class GameWorld(
             startEntity.toRectangleEntity(),
             finishEntity.toRectangleEntity(),
             blockingEntities + additionalBlockingEntities,
-            addedCheckpoints.sortedBy { it[com.xenotactic.gamelogic.components.EntityCheckpointComponent::class].sequenceNumber }
+            addedCheckpoints.sortedBy { it[EntityCheckpointComponent::class].sequenceNumber }
                 .map { it.toRectangleEntity() },
             teleportPairs
         )

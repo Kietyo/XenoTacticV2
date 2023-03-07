@@ -1,8 +1,7 @@
 package com.xenotactic.korge.korge_utils
 
 import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
-import com.xenotactic.gamelogic.components.SizeComponent
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -83,8 +82,9 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityBlockingComponent)
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTowerComponent)
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.TOWER))
+        addComponentOrThrow(EntityBlockingComponent)
+        addComponentOrThrow(EntityTowerComponent)
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
+        addComponentOrThrow(SupplyCostComponent(1))
     }
 }

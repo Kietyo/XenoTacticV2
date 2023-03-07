@@ -9,6 +9,7 @@ data class GameplayState(
     val basicTowerCost: Int,
 ): State {
     val initialMaxSupply = 15
+    val supplyPerDepot = 15
     companion object {
         val DEFAULT = GameplayState(3, 0.04, 7)
     }

@@ -63,9 +63,7 @@ class GameMapApi(
         placeEntities(entities)
     }
 
-    fun placeEntities(vararg entities: StagingEntity) {
-        placeEntities(entities.asIterable())
-    }
+    fun placeEntities(vararg entities: StagingEntity) = placeEntities(entities.asIterable())
 
     private fun placeEntities(entities: Iterable<StagingEntity>) {
         mutableEventQueueState.add(GameEvent.PlaceEntities(entities.toList()))
