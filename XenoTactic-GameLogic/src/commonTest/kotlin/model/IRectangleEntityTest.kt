@@ -1,8 +1,8 @@
 package model
 
+import com.kietyo.ktruth.assertThat
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.testing.assertThat
 import kotlin.test.Test
 
 internal class IRectangleEntityTest {

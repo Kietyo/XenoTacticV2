@@ -1,4 +1,4 @@
-package com.xenotactic.testing
+package com.kietyo.ktruth2
 
 import com.xenotactic.ecs.StatefulEntity
 import kotlin.reflect.KClass

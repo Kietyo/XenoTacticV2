@@ -1,9 +1,9 @@
 package pathing
 
+import com.kietyo.ktruth.assertThat
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.baseName
 import com.soywiz.korma.geom.IPoint
-
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
@@ -13,11 +13,8 @@ import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.*
-
-
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.test_utils.doublesSimilar
-import com.xenotactic.testing.assertThat
 import utils.StatCounterMap
 
 import kotlin.test.*

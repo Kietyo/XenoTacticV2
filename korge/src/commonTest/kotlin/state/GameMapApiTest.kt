@@ -17,7 +17,7 @@ import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.gamelogic.state.GameMapPathState
 import com.xenotactic.gamelogic.state.GameplayState
-import com.xenotactic.testing.assertThat
+import com.kietyo.ktruth2.assertThat
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 

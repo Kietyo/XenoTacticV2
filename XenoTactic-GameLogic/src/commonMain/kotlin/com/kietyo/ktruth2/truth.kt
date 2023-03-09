@@ -1,5 +1,6 @@
-package com.xenotactic.testing
+package com.kietyo.ktruth2
 
+import com.kietyo.ktruth.DoubleSubject
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.utils.GameUnit
 import kotlin.test.assertEquals

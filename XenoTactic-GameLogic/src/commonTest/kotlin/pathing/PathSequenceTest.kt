@@ -4,7 +4,7 @@ package pathing
 import com.soywiz.korma.geom.IPoint
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.testing.assertThat
+import com.kietyo.ktruth2.assertThat
 import kotlin.test.Test
 
 internal class PathSequenceTest {
