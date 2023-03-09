@@ -7,7 +7,7 @@ import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.pathing.SegmentTraversal
 import com.xenotactic.gamelogic.test_utils.TEST_DOUBLE_MAX_DELTA
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.kietyo.ktruth2.assertThat
+import com.xenotactic.testing.assertThat
 import kotlin.math.sqrt
 import kotlin.test.Test
 import kotlin.test.assertFalse

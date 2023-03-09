@@ -1,5 +1,6 @@
 package state
 
+import com.kietyo.ktruth.assertThat
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.tup
 import com.xenotactic.gamelogic.pathing.EntityPath
@@ -17,7 +18,7 @@ import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.gamelogic.state.GameMapPathState
 import com.xenotactic.gamelogic.state.GameplayState
-import com.kietyo.ktruth2.assertThat
+import com.xenotactic.testing.assertThat
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 

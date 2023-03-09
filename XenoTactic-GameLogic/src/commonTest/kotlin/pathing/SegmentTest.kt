@@ -6,7 +6,7 @@ import com.xenotactic.gamelogic.pathing.PathAttribute
 import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.test_utils.assertPointEquals
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.kietyo.ktruth2.assertThat
+import com.xenotactic.testing.assertThat
 import kotlin.math.sqrt
 import kotlin.test.Test
 import kotlin.test.assertNull

@@ -1,4 +1,4 @@
-package com.kietyo.ktruth2
+package com.xenotactic.testing
 
 import com.kietyo.ktruth.DoubleSubject
 import com.xenotactic.ecs.StatefulEntity
