@@ -37,6 +37,11 @@ korge {
 
 dependencies {
 	add("commonMainImplementation", project(":XenoTactic-GameLogic"))
-	add("commonMainImplementation", project(":XenoECS"))
+	add("commonTestImplementation", project(":XenoTactic-GameLogic"))
+
+	add("commonMainImplementation", project(":ktruth"))
+	add("commonTestImplementation", project(":ktruth"))
+
 	//    add("commonMainImplementation", project(":Fleks"))
+	add("commonMainImplementation", project(":XenoECS"))
 }

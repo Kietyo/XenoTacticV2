@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/XenoTactic-GameLogic" />
             <option value="$PROJECT_DIR$/korge" />
+            <option value="$PROJECT_DIR$/../ktruth" />
           </set>
         </option>
       </GradleProjectSettings>

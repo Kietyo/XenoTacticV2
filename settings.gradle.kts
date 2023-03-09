@@ -36,4 +36,7 @@ include(":XenoTactic-GameLogic")
 //include(":Fleks")
 
 include("XenoECS")
-project(":XenoECS").projectDir = file("C:\\Users\\kietm\\GitHub\\XenoECS")
+project(":XenoECS").projectDir = file("..\\XenoECS")
+
+include("ktruth")
+project(":ktruth").projectDir = file("..\\ktruth")

@@ -144,14 +144,17 @@ class GameWorld(
             FamilyConfiguration.allOf(EntityBlockingComponent::class)
         )
 
-    val currentSupplyUsage
-        get() = world.getOrCreateFamily(
-            FamilyConfiguration.allOf(
-                SupplyCostComponent::class
+    val currentSupplyUsage: Int
+        get() {
+            val fam = world.getOrCreateFamily(
+                FamilyConfiguration.allOf(
+                    SupplyCostComponent::class
+                )
             )
-        ).getSequence().mapComponent<SupplyCostComponent, _> {
-            it.cost
-        }.sum()
+            return fam.getSequence().mapComponent<SupplyCostComponent, _> {
+                it.cost
+            }.sum()
+        }
 
     private inline fun <reified T1 : Any, R> Sequence<EntityId>.mapComponent(
         crossinline transform: (T1) -> R): Sequence<R> {

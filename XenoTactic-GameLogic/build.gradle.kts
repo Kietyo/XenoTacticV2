@@ -78,6 +78,7 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:$kotlinxBenchmark")
                 implementation(project(":XenoECS"))
+                implementation(project(":ktruth"))
 
                 implementation(kotlin("test"))
 
@@ -101,6 +102,7 @@ kotlin {
             dependencies {
                 implementation("com.soywiz.korlibs.korma:korma:$korgePluginVersion")
                 implementation(kotlin("test"))
+                implementation(project(":ktruth"))
 //                implementation(kotlin("test-js"))
             }
         }
