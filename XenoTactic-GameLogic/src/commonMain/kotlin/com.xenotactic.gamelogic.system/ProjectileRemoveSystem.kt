@@ -28,7 +28,7 @@ class ProjectileRemoveSystem(
             // The target no longer exists in the world.
             if (!world.containsEntity(targetingComponent.targetEntityId)) {
                 world.modifyEntity(it) {
-                    remove()
+                    removeThisEntity()
                 }
             }
         }

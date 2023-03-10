@@ -163,6 +163,9 @@ class UIGuiContainer(
                 eventBus.register<AddedEntityEvent> {
                     t.text = calculateTextFn()
                 }
+                eventBus.register<RemovedTowerEntityEvent> {
+                    t.text = calculateTextFn()
+                }
 
                 alignLeftToRightOf(goldSection, padding = 40.0)
             }

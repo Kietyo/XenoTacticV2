@@ -19,7 +19,9 @@ class MonsterRemoveSystem(val world: World) : System() {
         getFamily().getNewList().forEach {
             val traversal = world[it, PathSequenceTraversalComponent::class].pathSequenceTraversal
             if (traversal.isTraversalFinished()) {
-                world.removeEntity(it)
+                world.modifyEntity(it) {
+                    removeThisEntity()
+                }
             }
         }
     }

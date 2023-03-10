@@ -29,7 +29,7 @@ class ProjectileCollideSystem(
             monsterHealthComponent.health -= projectileDamageComponent.damage
 
             world.modifyEntity(it) {
-                remove()
+                removeThisEntity()
             }
         }
     }

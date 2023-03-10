@@ -6,7 +6,6 @@ import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
-import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.state.*
 import com.xenotactic.gamelogic.system.*
@@ -108,10 +107,13 @@ class GameSimulator(
 
     private fun handleRemoveEntitiesEvent(event: GameEvent.RemoveEntities) {
         event.entities.forEach {
-            if (gameWorld.world.existsComponent<EntityTowerComponent>(it)) {
+            val isTowerEntity = gameWorld.world.existsComponent<EntityTowerComponent>(it)
+            gameWorld.world.modifyEntity(it) {
+                removeThisEntity()
+            }
+            if (isTowerEntity) {
                 eventBus.send(RemovedTowerEntityEvent(it))
             }
-            gameWorld.world.removeEntity(it)
         }
         updateShortestPath()
     }
@@ -173,7 +175,6 @@ class GameSimulator(
             gameMapDimensionsState.height,
         )
 
-        println("pathFinderResult: $pathFinderResult")
         gameMapPathState.updatePath(pathFinderResult.toGamePathOrNull()?.toPathSequence())
     }
 }
