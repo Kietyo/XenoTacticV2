@@ -26,9 +26,9 @@ class GameSimulator(
     width: GameUnit,
     height: GameUnit,
     val engine: Engine,
-    val gameWorld: GameWorld,
     val ticksPerSecond: Int = 60,
 ) {
+    val gameWorld = engine.gameWorld
     val eventBus = engine.eventBus
     val world = gameWorld.world
     val gameMapApi: GameMapApi

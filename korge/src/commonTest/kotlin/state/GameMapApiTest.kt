@@ -15,9 +15,11 @@ import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.api.GameSimulator
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.gamelogic.state.GameMapPathState
 import com.xenotactic.gamelogic.state.GameplayState
+import com.xenotactic.gamelogic.state.MutableEventQueueState
 import com.xenotactic.testing.assertThat
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -30,19 +32,24 @@ internal class GameMapApiTest {
         val gameWorld = GameWorld()
         val eventBus = EventBus(this)
         val engine = Engine(eventBus, gameWorld)
-        engine.stateInjections.setSingletonOrThrow(GameMapPathState(engine))
-        engine.stateInjections.setSingletonOrThrow(
-            GameMapDimensionsState(
-                engine,
-                width, height
-            )
-        )
-        engine.stateInjections.setSingletonOrThrow(
-            GameplayState.DEFAULT
-        )
-        val gameMapApi = GameMapApi(engine)
+//        engine.stateInjections.setSingletonOrThrow(GameMapPathState(engine))
+//        engine.stateInjections.setSingletonOrThrow(
+//            GameMapDimensionsState(
+//                engine,
+//                width, height
+//            )
+//        )
+//        engine.stateInjections.setSingletonOrThrow(
+//            GameplayState.DEFAULT
+//        )
+//        engine.stateInjections.setSingletonOrThrow(
+//            MutableEventQueueState()
+//        )
 
-        gameMapApi.placeEntities(
+
+        val gameSimulator = GameSimulator(width, height, engine)
+
+        gameSimulator.gameMapApi.placeEntities(
             StagingEntityUtils.createStart(22 tup 0),
             StagingEntityUtils.createFinish(3 tup 2),
             StagingEntityUtils.createRock(22 tup 6 wW 2 wH 4),
@@ -50,8 +57,12 @@ internal class GameMapApiTest {
             StagingEntityUtils.createTower(20 tup 0)
         )
 
+        gameSimulator.tick()
+
         assertThat(
-            gameMapApi.gameMapPathState.shortestPath!!
+            gameWorld.getPathFindingResult(
+                width, height
+            ).toGamePathOrNull()!!.toPathSequence()
         ).isEqualTo(
             PathFindingResult.Success(
                 GamePath(

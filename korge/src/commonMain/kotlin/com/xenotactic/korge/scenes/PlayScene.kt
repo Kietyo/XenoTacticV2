@@ -82,7 +82,7 @@ class PlayScene : Scene() {
 
         }
 
-        val gameSimulator = GameSimulator(width, height, engine, gameWorld)
+        val gameSimulator = GameSimulator(width, height, engine)
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
 
