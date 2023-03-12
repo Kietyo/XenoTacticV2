@@ -41,7 +41,7 @@ class GameSimulator(
     private val gameMapPathState = GameMapPathState(engine)
     private val gameplayState = GameplayState(61, 0.04, 7)
     private val mutableEventQueueState = MutableEventQueueState()
-    private val mutableGoldState = MutableGoldState(100)
+    private val mutableGoldState = MutableGoldState(200, eventBus)
     private val stateUtils: StateUtils
 
     init {
@@ -108,6 +108,11 @@ class GameSimulator(
     private fun handleRemoveEntitiesEvent(event: GameEvent.RemoveEntities) {
         event.entities.forEach {
             val isTowerEntity = gameWorld.world.existsComponent<EntityTowerComponent>(it)
+
+            if (isTowerEntity) {
+                mutableGoldState.currentGold += gameplayState.basicTowerCost
+            }
+
             gameWorld.world.modifyEntity(it) {
                 removeThisEntity()
             }
@@ -128,12 +133,15 @@ class GameSimulator(
                 if (towerCost > mutableGoldState.currentGold) {
                     break
                 }
+
                 val towerSupplyCost = entity[SupplyCostComponent::class]
                 val currentSupplyUsage = gameWorld.currentSupplyUsage
                 val currentMaxSupplyCost = stateUtils.currentMaxSupply
                 if ((towerSupplyCost.cost + currentSupplyUsage) > currentMaxSupplyCost) {
                     break
                 }
+
+                mutableGoldState.currentGold -= towerCost
             }
 
             val entityId = gameWorld.world.addEntity {

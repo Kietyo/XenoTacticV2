@@ -20,6 +20,7 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.AddedEntityEvent
+import com.xenotactic.gamelogic.events.GoldStateUpdated
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
@@ -135,13 +136,18 @@ class UIGuiContainer(
                 val i = image(GlobalResources.GOLD_ICON) {
                     smoothing = false
                 }
+                val calculateTextFn = { gold: Int -> gold.toString()}
                 val t = text(
-                    mutableGoldState.currentGold.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
+                    calculateTextFn(mutableGoldState.currentGold), font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40.0
                 ) {
                     scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
+                }
+
+                eventBus.register<GoldStateUpdated> {
+                    t.text = calculateTextFn(it.current)
                 }
             }
 

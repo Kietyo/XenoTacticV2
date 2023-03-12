@@ -1,10 +1,17 @@
 package com.xenotactic.gamelogic.state
 
 import com.xenotactic.gamelogic.engine.State
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.events.GoldStateUpdated
 
 class MutableGoldState(
     initialCurrentGold: Int,
+    val eventBus: EventBus? = null
 ): State {
     var currentGold: Int = initialCurrentGold
-        private set
+        set(value) {
+            val prev = field
+            field = value
+            eventBus?.send(GoldStateUpdated(prev, value))
+        }
 }
