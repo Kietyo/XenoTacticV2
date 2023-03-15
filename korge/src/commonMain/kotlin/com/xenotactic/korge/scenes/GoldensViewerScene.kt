@@ -5,8 +5,6 @@ import com.soywiz.kds.iterators.parallelMap
 import com.soywiz.klogger.Logger
 import com.soywiz.korev.Key
 import com.soywiz.korev.KeyEvent
-import com.soywiz.korge.baseview.BaseView
-import com.soywiz.korge.component.KeyComponent
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.uiButton

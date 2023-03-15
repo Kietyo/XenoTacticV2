@@ -1,6 +1,5 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.component.ResizeComponent
 import com.soywiz.korge.ui.UIContainer
 import com.soywiz.korge.ui.uiContainer
 import com.soywiz.korge.view.Container

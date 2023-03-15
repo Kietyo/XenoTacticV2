@@ -3,7 +3,6 @@ package com.xenotactic.korge.korge_utils
 import com.soywiz.kmem.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.ResizeComponent
 import com.soywiz.korge.input.MouseEvents
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.View

@@ -1,7 +1,9 @@
 package com.xenotactic.korge.input_processors
 
+import com.soywiz.korev.EventListener
 import com.soywiz.korev.Key
 import com.soywiz.korev.KeyEvent
+import com.soywiz.korev.ReshapeEvent
 import com.soywiz.korge.view.BaseView
 import com.soywiz.korge.view.Views
 import com.xenotactic.gamelogic.engine.Engine
@@ -9,11 +11,17 @@ import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus
 
-class KeyInputProcessor(override val view: BaseView,
+class KeyInputProcessor( val view: BaseView,
                         val engine: Engine
-) : KeyComponent {
+) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(*KeyEvent.Type.ALL) {
+            onKeyEvent(it)
+        }
+    }
+
     var isLeftControlHeldDown = false
-    override fun Views.onKeyEvent(event: KeyEvent) {
+    fun onKeyEvent(event: KeyEvent) {
         println(event)
         when (event.type) {
             KeyEvent.Type.DOWN -> when (event.key) {

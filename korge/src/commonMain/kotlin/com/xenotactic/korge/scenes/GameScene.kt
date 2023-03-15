@@ -3,8 +3,6 @@ package com.xenotactic.korge.scenes
 import com.soywiz.klock.TimeSpan
 import com.soywiz.klogger.Logger
 import com.soywiz.korev.Key
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
@@ -19,7 +17,6 @@ import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor
-//import com.xenotactic.korge.korge_components.MonstersEComponent
 import com.xenotactic.korge.korge_components.ResizeDebugComponent
 import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
@@ -110,8 +107,8 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             updatePathLength(gameMapControllerComponent.shortestPath?.pathLength)
         }
 
-
-        addComponent(KeyInputProcessor(this, engine))
+        val keyInputProcessor = KeyInputProcessor(this, engine)
+        keyInputProcessor.setup(this)
 //        val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
 //        addComponent(monstersComponent)
 

@@ -3,10 +3,7 @@ package com.xenotactic.korge.scenes
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alignTopToBottomOf
-import com.soywiz.korge.view.getVisibleGlobalArea
+import com.soywiz.korge.view.*
 import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.korge_utils.toGameMap
 import com.xenotactic.gamelogic.mapid.MapToId

@@ -1,6 +1,8 @@
 package com.xenotactic.korge.input_processors
 
 import com.soywiz.klock.TimeProvider
+import com.soywiz.korev.EventListener
+import com.soywiz.korev.KeyEvent
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 
@@ -40,9 +42,10 @@ data class MouseDragStateSettings(
 )
 
 data class MouseDragInputProcessor(
-    override val view: View,
+    val views: Views,
+    val view: View,
     val settings: MouseDragStateSettings = MouseDragStateSettings()
-) : MouseComponent, EComponent {
+) : EComponent {
     private val autoMove = true
     val info = DraggableInfo(view)
 
@@ -51,6 +54,16 @@ data class MouseDragInputProcessor(
         MouseEvent.Type.DRAG,
         MouseEvent.Type.UP,
     )
+
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(
+            MouseEvent.Type.DOWN,
+            MouseEvent.Type.DRAG,
+            MouseEvent.Type.UP
+        ) {
+            onMouseEvent(it)
+        }
+    }
 
     fun adjustSettings(fn: MouseDragStateSettings.() -> Unit) {
         fn(settings)
@@ -75,6 +88,7 @@ data class MouseDragInputProcessor(
                 }
                 return MouseDragStateType.UNKNOWN
             }
+
             MouseEvent.Type.UP -> {
                 if (event.button == MouseButton.LEFT) {
                     return MouseDragStateType.END
@@ -87,6 +101,7 @@ data class MouseDragInputProcessor(
                 }
                 return MouseDragStateType.UNKNOWN
             }
+
             MouseEvent.Type.DRAG -> return MouseDragStateType.DRAG
             else -> return MouseDragStateType.UNKNOWN
         }
@@ -103,7 +118,7 @@ data class MouseDragInputProcessor(
         dragging = false
     }
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun onMouseEvent(event: MouseEvent) {
         if (!settings.isEnabled) return
         if (event.type !in ALLOWED_EVENTS) {
             return
@@ -119,7 +134,8 @@ data class MouseDragInputProcessor(
 
         if (dragging) {
             if (event.type != MouseEvent.Type.DRAG &&
-                    event.button != activeButton) {
+                event.button != activeButton
+            ) {
                 return
             }
         }
@@ -153,9 +169,11 @@ data class MouseDragInputProcessor(
                 startY = currentPosition.y
                 info.reset()
             }
+
             MouseDragStateType.END -> {
                 dragging = false
             }
+
             else -> Unit
         }
 

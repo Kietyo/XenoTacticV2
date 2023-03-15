@@ -1,7 +1,9 @@
 package com.xenotactic.korge.input_processors
 
+import com.soywiz.korev.EventListener
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
+import com.soywiz.korge.view.BaseView
 import com.soywiz.korge.view.Views
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.*
@@ -23,9 +25,10 @@ data class PlaceEntityErrorEvent(val errorMsg: String)
 
 
 class EditorPlacementInputProcessor(
-    override val view: BaseView,
+    val views: Views,
+    val view: BaseView,
     val engine: Engine
-) : MouseComponent {
+) {
     private val editorState = engine.stateInjections.getSingleton<EditorState>()
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val uiMap = engine.injections.getSingleton<UIMapV2>()
@@ -47,7 +50,16 @@ class EditorPlacementInputProcessor(
 
     var stagingTeleportIn: StagingEntity? = null
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(MouseEvent.Type.DOWN,
+            MouseEvent.Type.DRAG,
+            MouseEvent.Type.UP,
+            MouseEvent.Type.MOVE) {
+            onMouseEvent(views, it)
+        }
+    }
+
+    fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!editorState.isEditingEnabled ||
             !ALLOWED_EVENTS.contains(event.type)
         ) {

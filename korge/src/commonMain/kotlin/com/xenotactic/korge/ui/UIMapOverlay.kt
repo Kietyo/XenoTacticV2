@@ -47,13 +47,13 @@ class UIMapOverlay(
         view.onClick { }
 
         val cameraInputProcessor = CameraInputProcessor(view, engine)
-        addComponent(cameraInputProcessor)
+        cameraInputProcessor.setup(this)
 
         isCurrentlySet = true
     }
 
     fun clearOverlay() {
-        removeAllComponents()
+        clearEvents()
         removeChildren()
         isCurrentlySet = false
     }
