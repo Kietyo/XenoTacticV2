@@ -4,7 +4,7 @@ import com.soywiz.kds.iterators.parallelMap
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
-import com.soywiz.korma.geom.IPoint
+
 
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync

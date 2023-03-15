@@ -2,7 +2,7 @@ package com.xenotactic.korge.input_processors
 
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
+
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.alpha

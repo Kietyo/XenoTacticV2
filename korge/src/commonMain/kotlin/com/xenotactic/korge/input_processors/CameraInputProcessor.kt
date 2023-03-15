@@ -1,13 +1,14 @@
 package com.xenotactic.korge.input_processors
 
+import com.soywiz.korev.EventListener
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
+
 import com.soywiz.korge.view.View
-import com.soywiz.korge.view.Views
-import com.soywiz.korma.geom.IPoint
+
 
 import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus
 import kotlin.math.max
@@ -16,7 +17,7 @@ import kotlin.math.sqrt
 
 const val ZOOM_DELTA = 0.04
 
-class CameraInputProcessor(override val view: View, val engine: Engine) : MouseComponent {
+class CameraInputProcessor(val view: View, val engine: Engine){
     var touchedDownX = 0.0
     var touchedDownY = 0.0
     var isMouseTouchedDown = false
@@ -32,7 +33,13 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
         }
     }
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(MouseEvent.Type.DRAG, MouseEvent.Type.UP, MouseEvent.Type.DOWN, MouseEvent.Type.SCROLL) {
+            onMouseEvent(it)
+        }
+    }
+
+    fun onMouseEvent(event: MouseEvent) {
         //        println("went here? $event")
         when (event.type) {
 //            MouseEvent.Type.DRAG -> {

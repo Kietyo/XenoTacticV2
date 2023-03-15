@@ -3,13 +3,11 @@ package com.xenotactic.korge.scenes
 import com.soywiz.klock.TimeSpan
 import com.soywiz.klogger.Logger
 import com.soywiz.korev.Key
+import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.addFixedUpdater
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerXOnStage
+import com.soywiz.korge.view.*
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.GoalEComponent
@@ -70,14 +68,15 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         val cameraInputProcessor = CameraInputProcessor(uiMap, engine)
         cameraInputProcessor.setZoomFactor(0.7)
-        addComponent(cameraInputProcessor)
-
+        cameraInputProcessor.setup(this)
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
             this, uiMap, engine, eventBus
         )
-        addComponent(objectPlacementInputProcessor)
-        addComponent(ResizeDebugComponent(this))
+        objectPlacementInputProcessor.setup(this)
+
+        val resizeDebugComponent = ResizeDebugComponent(this)
+        resizeDebugComponent.setup(this)
 
         val uiPlacement = uiPlacement(engine, eventBus).apply {
             onStageResized(true) { width: Int, height: Int ->

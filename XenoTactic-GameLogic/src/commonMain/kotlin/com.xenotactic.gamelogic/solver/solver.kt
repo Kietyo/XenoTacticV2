@@ -1,9 +1,8 @@
 package solver
 
-import com.soywiz.korma.geom.IRectangle
-import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.IRectangle
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.EntitiesBlockingEntityUtil
 import com.xenotactic.gamelogic.utils.MapBlockingUtil

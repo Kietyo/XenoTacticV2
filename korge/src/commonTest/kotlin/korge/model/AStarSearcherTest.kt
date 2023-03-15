@@ -3,7 +3,7 @@ package korge.model
 import com.soywiz.klogger.Logger
 import com.soywiz.korio.async.suspendTest
 import com.soywiz.korio.file.baseName
-import com.soywiz.korma.geom.IPoint
+
 
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync

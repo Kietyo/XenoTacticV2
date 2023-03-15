@@ -3,12 +3,12 @@ package com.xenotactic.korge.input_processors
 import com.soywiz.klock.TimeProvider
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
+
 import com.soywiz.korge.input.DraggableInfo
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.xy
-import com.soywiz.korma.geom.IPoint
+
 import com.soywiz.korma.geom.MPoint
 
 import com.xenotactic.korge.engine.EComponent

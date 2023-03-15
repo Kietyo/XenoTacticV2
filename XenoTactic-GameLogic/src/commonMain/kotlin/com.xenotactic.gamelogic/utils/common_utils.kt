@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.utils
 
 import com.soywiz.korma.geom.Angle
-import com.soywiz.korma.geom.IPoint
+
 
 import com.soywiz.korma.geom.radians
 import com.xenotactic.ecs.AbstractEntity

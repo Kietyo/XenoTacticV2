@@ -2,8 +2,7 @@ package com.xenotactic.korge.input_processors
 
 import com.soywiz.korev.Key
 import com.soywiz.korev.KeyEvent
-import com.soywiz.korge.baseview.BaseView
-import com.soywiz.korge.component.KeyComponent
+import com.soywiz.korge.view.BaseView
 import com.soywiz.korge.view.Views
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent

@@ -1,9 +1,5 @@
 package com.xenotactic.gamelogic.model
 
-import com.soywiz.korma.geom.IPoint
-import com.soywiz.korma.geom.IRectangle
-
-import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.until
 

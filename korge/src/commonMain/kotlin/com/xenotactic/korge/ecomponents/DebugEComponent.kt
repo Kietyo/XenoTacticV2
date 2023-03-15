@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ecomponents
 
-import com.soywiz.korma.geom.IPoint
+
 
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
@@ -10,6 +10,7 @@ import com.xenotactic.gamelogic.pathing.SearcherType
 import com.xenotactic.gamelogic.pathing.getAvailablePathingPointsFromBlockingEntities
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.model.IPoint
 
 sealed class DebugPathingPoints {
     data class ForEntity(

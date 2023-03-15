@@ -5,7 +5,6 @@ import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOn
 import com.soywiz.korim.color.Colors
 import com.soywiz.korma.geom.vector.StrokeInfo
-import com.soywiz.korma.geom.vector.rectHole
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.SelectedComponent

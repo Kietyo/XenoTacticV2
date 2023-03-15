@@ -2,10 +2,7 @@ package com.xenotactic.gamelogic.pathing
 
 import com.soywiz.korma.annotations.KormaValueApi
 import com.soywiz.korma.geom.*
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.IRectangleEntity
-import com.xenotactic.gamelogic.model.toGameUnitPoint
+import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndRectangle

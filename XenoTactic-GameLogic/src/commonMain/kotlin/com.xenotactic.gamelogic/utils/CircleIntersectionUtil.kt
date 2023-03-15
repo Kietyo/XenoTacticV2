@@ -1,7 +1,8 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korma.geom.IPoint
 
+
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.pathing.Segment
 
 /**

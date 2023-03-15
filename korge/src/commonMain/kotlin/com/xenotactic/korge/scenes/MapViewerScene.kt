@@ -2,7 +2,6 @@ package com.xenotactic.korge.scenes
 
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.component.onStageResized
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.SContainer
 import com.soywiz.korge.view.addTo

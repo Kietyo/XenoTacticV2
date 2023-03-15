@@ -6,7 +6,6 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korma.geom.Anchor
-import com.soywiz.korma.geom.vector.circle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil

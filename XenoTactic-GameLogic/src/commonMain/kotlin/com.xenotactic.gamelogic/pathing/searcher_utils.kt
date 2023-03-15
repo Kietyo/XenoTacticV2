@@ -1,10 +1,11 @@
 package com.xenotactic.gamelogic.pathing
 
-import com.soywiz.korma.geom.IPoint
+
 import com.soywiz.korma.geom.cos
 import com.soywiz.korma.geom.sin
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_POINT_PRECISION
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.utils.MapBlockingUtil

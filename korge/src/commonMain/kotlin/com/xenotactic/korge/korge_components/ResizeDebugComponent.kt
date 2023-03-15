@@ -1,9 +1,9 @@
 package com.xenotactic.korge.korge_components
 
-import com.soywiz.korge.component.ResizeComponent
+import com.soywiz.korev.EventListener
+import com.soywiz.korev.ReshapeEvent
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
@@ -12,13 +12,18 @@ import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
 import com.xenotactic.korge.korge_utils.getReferenceParent
 
-class ResizeDebugComponent(override val view: Container) : ResizeComponent {
-    val text: Text
+class ResizeDebugComponent(val view: Container) {
+    val text: Text = view.text("", textSize = 12.0)
 
     init {
-        text = view.text("", textSize = 12.0)
         text.text = getText()
         text.visible(false)
+    }
+
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(ReshapeEvent) {
+            resized(it.width, it.height)
+        }
     }
 
     private fun getText(width: Int = 0, height: Int = 0): String {
@@ -51,7 +56,7 @@ class ResizeDebugComponent(override val view: Container) : ResizeComponent {
 
     }
 
-    override fun resized(views: Views, width: Int, height: Int) {
+    fun resized(width: Int, height: Int) {
         val txt = getText(width, height)
 
         //        println(txt)

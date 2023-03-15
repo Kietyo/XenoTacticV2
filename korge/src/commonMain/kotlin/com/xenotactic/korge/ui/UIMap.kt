@@ -9,12 +9,11 @@ import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.launch
-import com.soywiz.korma.geom.IPoint
+
 import com.soywiz.korma.geom.MRectangle
 import com.soywiz.korma.geom.Point
 
 import com.soywiz.korma.geom.vector.StrokeInfo
-import com.soywiz.korma.geom.vector.line
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
@@ -26,6 +25,7 @@ import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.input_processors.PointerAction
 import com.xenotactic.korge.korge_utils.getRoundedGridCoordinates

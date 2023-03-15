@@ -1,6 +1,6 @@
 package model
 
-import com.soywiz.korma.geom.IPoint
+
 import com.soywiz.korma.geom.MPoint
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity

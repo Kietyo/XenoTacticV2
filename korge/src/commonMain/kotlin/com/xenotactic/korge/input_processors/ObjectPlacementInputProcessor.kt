@@ -1,10 +1,10 @@
 package com.xenotactic.korge.input_processors
 
+import com.soywiz.korev.EventListener
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
+
 import com.soywiz.korge.view.View
-import com.soywiz.korge.view.Views
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -18,18 +18,24 @@ import com.xenotactic.korge.ui.UIMap
 import kotlin.math.floor
 
 class ObjectPlacementInputProcessor(
-    override val view: View,
+    val view: View,
     val uiMapView: UIMap,
     val engine: Engine,
     val eventBus: EventBus
-) : MouseComponent {
+) {
     val objectPlacementComponent = engine.injections.getSingleton<ObjectPlacementEComponent>()
     val gameMapComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
 
     val gridSize: Double
         get() = uiMapView._gridSize
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(*MouseEvent.Type.ALL) {
+            onMouseEvent(it)
+        }
+    }
+
+    fun onMouseEvent(event: MouseEvent) {
         val (gridX, gridY) = uiMapView.getGridPositionsFromGlobalMouse(
             event.x.toDouble(), event.y.toDouble()
         )

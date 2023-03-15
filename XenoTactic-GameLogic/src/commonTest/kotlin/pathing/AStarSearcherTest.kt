@@ -3,7 +3,7 @@ package pathing
 import com.kietyo.ktruth.assertThat
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.baseName
-import com.soywiz.korma.geom.IPoint
+
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
