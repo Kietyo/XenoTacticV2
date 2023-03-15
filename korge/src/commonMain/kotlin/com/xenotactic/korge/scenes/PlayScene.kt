@@ -89,12 +89,15 @@ class PlayScene : Scene() {
         uiMapV2.centerOnStage()
 
         val mouseDragInputProcessor =
-            MouseDragInputProcessor(uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
-        addComponent(mouseDragInputProcessor)
+            MouseDragInputProcessor(views, uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
+        mouseDragInputProcessor.setup(this)
         engine.injections.setSingletonOrThrow(mouseDragInputProcessor)
-        addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
+
+        val selectorMouseProcessorV2 = SelectorMouseProcessorV2(views, this@sceneInit, engine).apply {
             engine.injections.setSingletonOrThrow(this)
-        })
+        }
+        selectorMouseProcessorV2.setup(this)
+
         val editorState = EditorState(engine)
         engine.stateInjections.setSingletonOrThrow(editorState)
 
@@ -157,11 +160,10 @@ class PlayScene : Scene() {
             centerXOnStage()
         }
 
-        addComponent(
-            EditorPlacementInputProcessor(
-                this, engine
-            )
+        val editorPlacementInputProcessor = EditorPlacementInputProcessor(
+            views, this, engine
         )
+        editorPlacementInputProcessor.setup(this)
 
         val deltaTime = TimeSpan(gameSimulator.millisPerTick.inWholeMilliseconds.toDouble())
         var accumulatedTime = TimeSpan.ZERO

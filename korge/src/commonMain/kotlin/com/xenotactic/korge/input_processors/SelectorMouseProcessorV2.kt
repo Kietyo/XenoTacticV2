@@ -1,5 +1,7 @@
 package com.xenotactic.korge.input_processors
 
+import com.soywiz.korev.EventListener
+import com.soywiz.korev.KeyEvent
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 
@@ -18,11 +20,11 @@ import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.gamelogic.api.GameMapApi
 
 class SelectorMouseProcessorV2(
-    override val view: Container,
+    val views: Views,
+    val view: Container,
     val engine: Engine,
     var isEnabled: Boolean = true
-) :
-    MouseComponent, EComponent {
+) : EComponent {
 
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
@@ -40,7 +42,13 @@ class SelectorMouseProcessorV2(
         isInitialClick = false
     }
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(*MouseEvent.Type.ALL) {
+            onMouseEvent(it)
+        }
+    }
+
+    fun onMouseEvent(event: MouseEvent) {
         if (!isEnabled) return
         if (event.type == MouseEvent.Type.MOVE) return
 

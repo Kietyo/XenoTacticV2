@@ -186,16 +186,11 @@ class GoldensViewerScene : Scene() {
             }
         }
 
-        addComponent(object : KeyComponent {
-            override val view: BaseView
-                get() = TODO("Not yet implemented")
-
-            override fun Views.onKeyEvent(event: KeyEvent) {
-                if (event.type == KeyEvent.Type.UP && event.key == Key.ESCAPE) {
-                    overlayContainer.clearOverlay()
-                }
+        onEvent(KeyEvent.Type.UP) {
+            if (it.key == Key.ESCAPE) {
+                overlayContainer.clearOverlay()
             }
-        })
+        }
 
         logger.info {
             "sceneInit: Finished initializing"

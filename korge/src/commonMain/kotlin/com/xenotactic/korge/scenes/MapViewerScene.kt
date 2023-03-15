@@ -105,7 +105,8 @@ class MapViewerScene(
             mapInspector.alignRightToRightOfWindow()
         }
 
-        addComponent(ResizeDebugComponent(this))
+        val resizeDebugComponent = ResizeDebugComponent(this)
+        resizeDebugComponent.setup(this)
 
         header.onHeaderSectionClick {
             when (it) {

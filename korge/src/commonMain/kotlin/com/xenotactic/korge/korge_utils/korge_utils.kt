@@ -4,12 +4,7 @@ import com.soywiz.kmem.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korge.input.MouseEvents
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.View
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.getVisibleGlobalArea
-import com.soywiz.korge.view.getVisibleLocalArea
-import com.soywiz.korge.view.getVisibleWindowArea
+import com.soywiz.korge.view.*
 
 import com.soywiz.korma.geom.Point
 
