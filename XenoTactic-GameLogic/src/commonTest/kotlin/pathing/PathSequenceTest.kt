@@ -2,6 +2,7 @@ package pathing
 
 
 
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.testing.assertThat

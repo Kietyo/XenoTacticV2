@@ -4,13 +4,12 @@ import com.soywiz.klogger.Logger
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.*
-import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.PathFindingResult
-import pathing.AStarSearcher
-import pathing.PathFinder
 import com.xenotactic.gamelogic.pathing.SearcherInterface
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
+import pathing.AStarSearcher
+import pathing.PathFinder
 import kotlin.random.Random
 
 data class MapGeneratorConfiguration(

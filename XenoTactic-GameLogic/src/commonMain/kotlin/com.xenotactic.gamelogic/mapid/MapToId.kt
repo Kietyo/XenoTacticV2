@@ -1,7 +1,5 @@
 package com.xenotactic.gamelogic.mapid
 
-import com.soywiz.korio.lang.substr
-import com.soywiz.krypto.encoding.hex
 import com.soywiz.krypto.sha1
 import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.ExperimentalSerializationApi

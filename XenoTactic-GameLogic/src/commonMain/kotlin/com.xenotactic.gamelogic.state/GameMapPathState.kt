@@ -1,9 +1,9 @@
 package com.xenotactic.gamelogic.state
 
-import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.engine.State
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.pathing.PathSequence
 
 class GameMapPathState(
     val engine: Engine

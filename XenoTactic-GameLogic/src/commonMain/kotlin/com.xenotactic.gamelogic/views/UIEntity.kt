@@ -4,11 +4,11 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
 import com.soywiz.korma.geom.Anchor
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources
+import com.xenotactic.gamelogic.utils.toWorldDimensions
 
 class UIEntity(
     val entityType: MapEntityType,

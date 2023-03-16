@@ -4,10 +4,10 @@ import com.soywiz.klogger.Logger
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.components.*
+import com.xenotactic.gamelogic.utils.getCenterPoint
+import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.time.Duration
 
 class TowerAttackSystem(

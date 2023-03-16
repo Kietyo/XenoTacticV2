@@ -1,9 +1,9 @@
 package com.xenotactic.gamelogic.state
 
-import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.engine.State
 import com.xenotactic.gamelogic.events.ResizeMapEvent
+import com.xenotactic.gamelogic.utils.GameUnit
 
 class GameMapDimensionsState(
     val engine: Engine,

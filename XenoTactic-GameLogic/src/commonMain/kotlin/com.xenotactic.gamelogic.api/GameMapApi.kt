@@ -5,10 +5,8 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.engine.Engine
-import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathFindingResult

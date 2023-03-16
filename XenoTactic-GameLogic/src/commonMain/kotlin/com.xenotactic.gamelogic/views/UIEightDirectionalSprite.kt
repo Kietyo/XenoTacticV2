@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.views
 
-import com.soywiz.korge.view.*
+import com.soywiz.korge.view.RectBase
 import com.soywiz.korim.format.ImageData
 import com.soywiz.korim.format.ImageDataContainer
 

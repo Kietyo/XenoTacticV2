@@ -5,12 +5,12 @@ import com.soywiz.korio.file.VfsFile
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.korge_utils.toGameMap
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.MapGeneratorResult
 import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlin.random.Random
 import kotlin.test.Ignore
 import kotlin.test.Test

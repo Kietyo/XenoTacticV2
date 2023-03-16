@@ -2,9 +2,9 @@ package com.xenotactic.gamelogic.system
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.utils.distance
 import com.xenotactic.gamelogic.utils.getCenterPoint
-import com.xenotactic.gamelogic.model.GameWorld
 import kotlin.time.Duration
 
 /**

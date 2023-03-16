@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.model
 
-import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.pathing.PathSequenceTraversal
+import com.xenotactic.gamelogic.utils.GameUnit
 
 val MONSTER_WIDTH = GameUnit(1)
 val MONSTER_HEIGHT = GameUnit(1)

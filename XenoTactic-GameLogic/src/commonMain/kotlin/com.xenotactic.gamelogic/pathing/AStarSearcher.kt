@@ -1,8 +1,7 @@
 package pathing
 
+
 import com.soywiz.kds.PriorityQueue
-
-
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.IPoint
@@ -10,9 +9,9 @@ import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.model.toGameUnitPoint
 import com.xenotactic.gamelogic.pathing.*
+import com.xenotactic.gamelogic.utils.IntStatCounter
 import com.xenotactic.gamelogic.utils.horizontalDirectionTo
 import com.xenotactic.gamelogic.utils.verticalDirectionTo
-import com.xenotactic.gamelogic.utils.IntStatCounter
 import utils.PathingPointUtil
 import kotlin.math.sign
 

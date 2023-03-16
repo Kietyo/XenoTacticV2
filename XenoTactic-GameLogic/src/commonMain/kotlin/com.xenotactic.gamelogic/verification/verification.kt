@@ -1,5 +1,5 @@
-import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.model.TeleportPair
 import pathing.PathFinder
 
 sealed class MapVerificationResult {

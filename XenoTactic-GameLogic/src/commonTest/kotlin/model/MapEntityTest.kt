@@ -1,9 +1,12 @@
 package model
 
 
-import kotlin.test.*
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.MapEntity
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 internal class MapEntityTest {
 //    @Test

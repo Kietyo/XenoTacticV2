@@ -3,9 +3,9 @@ package com.xenotactic.gamelogic.korge_utils
 import com.soywiz.korio.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.localCurrentDirVfs
+import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import com.xenotactic.gamelogic.model.GameMap
 
 suspend fun TEST_TEMP_DATA_VFS() =
     localCurrentDirVfs["src/commonTest/testdata/TEMP"].apply {

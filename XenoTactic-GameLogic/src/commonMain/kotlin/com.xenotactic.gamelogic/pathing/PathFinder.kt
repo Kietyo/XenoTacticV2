@@ -1,9 +1,8 @@
 package pathing
 
-import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
+import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.PathFindingResult

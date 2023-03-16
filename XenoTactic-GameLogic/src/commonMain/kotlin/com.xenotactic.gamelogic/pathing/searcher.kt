@@ -30,7 +30,6 @@ fun intersectSegments(
     return true
 }
 
-@OptIn(KormaValueApi::class)
 fun intersectSegmentRectangle(
     startPoint: IPoint,
     endPoint: IPoint,

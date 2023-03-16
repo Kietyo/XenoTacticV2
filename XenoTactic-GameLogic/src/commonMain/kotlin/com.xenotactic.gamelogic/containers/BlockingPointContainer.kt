@@ -1,10 +1,10 @@
 package com.xenotactic.gamelogic.containers
 
-import kotlinx.serialization.Serializable
 import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.IRectangleEntity
+import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.GameUnit
+import kotlinx.serialization.Serializable
 
 /**
  * Container for storing number of blocking entities for a specific point.

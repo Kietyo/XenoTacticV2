@@ -1,6 +1,5 @@
 package com.xenotactic.gamelogic.model
 
-import com.xenotactic.gamelogic.model.GameMap
 import kotlinx.serialization.Serializable
 
 @Serializable

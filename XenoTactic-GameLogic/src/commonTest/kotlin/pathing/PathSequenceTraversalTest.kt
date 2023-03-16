@@ -1,6 +1,7 @@
 package pathing
 
 import com.soywiz.korio.lang.assert
+import com.xenotactic.gamelogic.model.IPoint
 
 
 import com.xenotactic.gamelogic.pathing.Path

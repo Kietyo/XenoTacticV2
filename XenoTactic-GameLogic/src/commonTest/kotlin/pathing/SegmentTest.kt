@@ -2,6 +2,7 @@ package pathing
 
 
 
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.pathing.PathAttribute
 import com.xenotactic.gamelogic.pathing.Segment
 import com.xenotactic.gamelogic.test_utils.assertPointEquals

@@ -1,16 +1,17 @@
 package model
 
 
-import com.soywiz.korma.geom.MPoint
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.test_utils.assertPathSequenceEquals
 import pathing.PathFinder
-
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertContentEquals
+import kotlin.test.assertTrue
 
 internal class GameMapTest {
 

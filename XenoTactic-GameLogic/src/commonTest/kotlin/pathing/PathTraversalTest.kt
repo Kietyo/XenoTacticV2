@@ -4,6 +4,7 @@ import com.soywiz.korio.lang.assert
 
 
 import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathTraversal
 import com.xenotactic.gamelogic.test_utils.assertDoubleEquals
