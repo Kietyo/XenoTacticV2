@@ -1,8 +1,9 @@
 package com.xenotactic.korge.ui
 
+import com.soywiz.korev.EventListener
+import com.soywiz.korev.ReshapeEvent
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.getVisibleLocalArea
 import com.soywiz.korge.view.getVisibleWindowArea
 import com.soywiz.korge.view.text
@@ -16,9 +17,9 @@ import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 
 class InformationalUI(
-    override val view: Container, val engine: Engine,
+    val view: Container, val engine: Engine,
     val eventBus: EventBus
-) : ResizeComponent {
+) {
     val gameMapControllerComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
     val pathText: Text
 
@@ -46,11 +47,17 @@ class InformationalUI(
         }
     }
 
-    override fun resized(views: Views, width: Int, height: Int) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvent(ReshapeEvent) {
+            resized(it.width, it.height)
+        }
+    }
+
+    private fun resized(width: Int, height: Int) {
         resizeInternal(width.toDouble(), height.toDouble())
     }
 
-    fun resizeInternal(width: Double, height: Double) {
+    private fun resizeInternal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
         val localArea = view.globalToLocal(Point(width, height))
         pathText.xy(visibleLocalArea.x, localArea.y - pathText.height)

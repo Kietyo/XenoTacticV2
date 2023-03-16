@@ -1,5 +1,7 @@
 package com.xenotactic.korge.ui
 
+import com.soywiz.korev.EventListener
+import com.soywiz.korev.ReshapeEvent
 import com.soywiz.korge.ui.UIContainer
 import com.soywiz.korge.ui.uiContainer
 import com.soywiz.korge.view.Container
@@ -24,7 +26,7 @@ import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 
-class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeComponent {
+class GoalUI(val view: Container, val eventBus: EventBus) {
     val goalContainer: UIContainer
     lateinit var _rankTexts: List<Text>
     lateinit var _rankImages: List<Image>
@@ -104,7 +106,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         }
     }
 
-    fun handleNewGoalDataEvent(event: UpdatedGoalDataEvent) {
+    private fun handleNewGoalDataEvent(event: UpdatedGoalDataEvent) {
         _rankTexts[0].text = event.data.bronzeGoal.toString()
         _rankTexts[1].text = event.data.silverGoal.toString()
         _rankTexts[2].text = event.data.goldGoal.toString()
@@ -115,7 +117,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         goalContainer.visible(true)
     }
 
-    fun handleNewPathLengthEvent(event: UpdatedPathLineEvent) {
+    private fun handleNewPathLengthEvent(event: UpdatedPathLineEvent) {
         if (event.newPathLength == null) {
             return
         }
@@ -130,7 +132,13 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         }
     }
 
-    override fun resized(views: Views, width: Int, height: Int) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvent(ReshapeEvent) {
+            resized(it.width, it.height)
+        }
+    }
+
+    fun resized(width: Int, height: Int) {
         resizeInternal(width.toDouble(), height.toDouble())
     }
 

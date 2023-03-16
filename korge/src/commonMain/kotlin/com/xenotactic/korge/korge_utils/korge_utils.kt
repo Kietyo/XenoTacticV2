@@ -3,6 +3,7 @@ package com.xenotactic.korge.korge_utils
 import com.soywiz.kmem.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
+import com.soywiz.korev.ReshapeEvent
 import com.soywiz.korge.input.MouseEvents
 import com.soywiz.korge.view.*
 
@@ -159,7 +160,7 @@ fun <T : View> T.unscaledDimensions() =
     Pair(this.unscaledWidth, this.unscaledHeight)
 
 fun <T : Container> T.onStageResizedV2(
-    firstTrigger: Boolean = true, block: Views.(
+    firstTrigger: Boolean = true, block: (
         width: Int,
         height: Int
     ) -> Unit
@@ -168,13 +169,14 @@ fun <T : Container> T.onStageResizedV2(
         deferWithViews { views ->
             val windowsArea = getVisibleWindowArea()
             block(
-                views,
                 windowsArea.width.toInt(),
                 windowsArea.height.toInt()
             )
         }
     }
-    addComponent(ResizeComponent(this, block))
+    onEvent(ReshapeEvent) {
+        block(it.width, it.height)
+    }
 }
 
 fun MouseEvents.isScrollDown(): Boolean {

@@ -35,8 +35,8 @@ class EditorSceneV2 : Scene() {
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
 
-        val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
-        addComponent(mouseDragInputProcessor)
+        val mouseDragInputProcessor = MouseDragInputProcessor(views, uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
+        mouseDragInputProcessor.setup(this)
 
         engine.apply {
             stateInjections.setSingletonOrThrow(EditorState(engine))
@@ -50,17 +50,21 @@ class EditorSceneV2 : Scene() {
             addComponentListener(SelectionComponentListener(engine))
         }
 
-        addComponent(EditorPlacementInputProcessor(
-            this, engine
-        ))
+        val editorPlacementInputProcessor = EditorPlacementInputProcessor(
+            views, this, engine
+        )
+        editorPlacementInputProcessor.setup(this)
 
-        addComponent(CameraInputProcessor(uiMapV2, engine))
+        val cameraInputProcessor = CameraInputProcessor(uiMapV2, engine)
+        cameraInputProcessor.setup(this)
 
-        addComponent(KeyInputProcessor(this, engine))
+        val keyInputProcessor = KeyInputProcessor(this, engine)
+        keyInputProcessor.setup(this)
 
-        addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
+        val selectorMouseProcessorV2 = SelectorMouseProcessorV2(views, this@sceneInit, engine).apply {
             engine.injections.setSingletonOrThrow(this)
-        })
+        }
+        selectorMouseProcessorV2.setup(this)
 
         val uiEditorButtonsV2 =
             UIEditorButtonsV2(engine, this).addTo(this).apply {
