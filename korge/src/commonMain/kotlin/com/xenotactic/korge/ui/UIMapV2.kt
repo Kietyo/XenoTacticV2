@@ -53,7 +53,7 @@ class UIMapV2(
     private val gameWorld: GameWorld = engine.gameWorld
     private val gameMapDimensionsState = engine.stateInjections.getSingleton<GameMapDimensionsState>()
     val gridSize get() = uiMapSettingsV2.gridSize
-    val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
+    private val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
     val borderSize get() = uiMapSettingsV2.borderSize
     val mapWidth get() = gameMapDimensionsState.width
     val mapHeight get() = gameMapDimensionsState.height
@@ -105,7 +105,7 @@ class UIMapV2(
         }
     }
 
-    fun resetUIMap() {
+    private fun resetUIMap() {
 //        drawBoard()
         drawBoardV2()
         drawGridNumbers()
@@ -136,54 +136,6 @@ class UIMapV2(
     fun toWorldDimensions(width: GameUnit, height: GameUnit) = Pair(
         WorldUnit(width * gridSize), WorldUnit(height * gridSize)
     )
-
-    private fun drawBoard() {
-        println("Drawing board")
-        _boardLayer.removeChildren()
-        when (uiMapSettingsV2.boardType) {
-            BoardType.SOLID -> _boardLayer.solidRect(
-                gridSize * mapWidth.value,
-                gridSize * mapHeight.value,
-                MaterialColors.GREEN_600
-            )
-
-            BoardType.CHECKERED_1X1 -> {
-                var altColorWidth = true
-                for (i in 0 until mapWidth) {
-                    var altColorHeight = altColorWidth
-                    for (j in 0 until mapHeight) {
-                        val currColor =
-                            if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
-                                .GREEN_800
-                        _boardLayer.solidRect(gridSize, gridSize, currColor)
-                            .xy(i * gridSize, j * gridSize)
-                        altColorHeight = !altColorHeight
-                    }
-                    altColorWidth = !altColorWidth
-                }
-            }
-
-            BoardType.CHECKERED_2X2 -> {
-                var altColorWidth = true
-                val gridSize = gridSize * 2
-                for (i in 0 until ((mapWidth.toInt() + 1) / 2)) {
-                    var altColorHeight = altColorWidth
-                    for (j in 0 until ((mapHeight.toInt() + 1) / 2)) {
-                        val gridWidth = if ((i + 1) * 2 > mapWidth.value) this.gridSize else gridSize
-                        val gridHeight = if ((j + 1) * 2 > mapHeight.value) this.gridSize else gridSize
-                        val currColor =
-                            if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
-                                .GREEN_800
-                        _boardLayer.solidRect(gridWidth, gridHeight, currColor)
-                            .xy(i * gridSize, j * gridSize)
-                        altColorHeight = !altColorHeight
-                    }
-                    altColorWidth = !altColorWidth
-                }
-            }
-        }
-        println("Finished drawing board!")
-    }
 
     private fun drawBoardV2() {
         println("Drawing board")

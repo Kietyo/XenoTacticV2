@@ -23,6 +23,7 @@ import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.models.MouseDragSettingsState
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
@@ -85,6 +86,9 @@ class PlayScene : Scene() {
         val gameSimulator = GameSimulator(width, height, engine)
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
+
+        val cameraInputProcessor = CameraInputProcessor(uiMapV2, engine)
+        cameraInputProcessor.setup(this)
 
         uiMapV2.centerOnStage()
 

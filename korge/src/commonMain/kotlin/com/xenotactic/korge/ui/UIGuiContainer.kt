@@ -56,7 +56,7 @@ class UIGuiContainer(
     private val mutableGoldState = engine.stateInjections.getSingleton<MutableGoldState>()
     private val gameSimulator = engine.injections.getSingletonOrNull<GameSimulator>()
 
-    val middleSelectionContainer = stage.container { }
+    private val middleSelectionContainer = stage.container { }
 
     init {
         val buttonsPanel = stage.container {
@@ -115,10 +115,11 @@ class UIGuiContainer(
                     deleteEntitiesButton
                 )
             )
+            scale = 2.0
             alignBottomToBottomOfWindow()
         }
 
-        val bottomRightGridWidth = 230.0
+        val bottomRightGridWidth = 400.0
         val bottomRightGridHeight = bottomRightGridWidth / 2
         val bottomRightGridHorizontalPadding = 5.0
 
@@ -214,6 +215,7 @@ class UIGuiContainer(
 
         val addTowerTooltip = UITooltipDescription(gameplayState.basicTowerCost)
 
+        val tooltipSize = bottomRightGridWidth / 1.5
         val addTowerView = UITextRect(
             "Add\nTower",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
@@ -223,7 +225,7 @@ class UIGuiContainer(
             }
             onOver {
                 val tooltip = addTowerTooltip.addTo(this@UIGuiContainer.stage) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(150.0, 150.0))
+                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
                     alignBottomToTopOf(this@apply, padding = 5.0)
                     centerXOn(this@apply)
                 }
@@ -316,11 +318,14 @@ class UIGuiContainer(
             }
         }
 
+        val textHeightSize = bottomRightGridHeight / 7
         val holdShiftText = Text(
             "HOLD SHIFT (+5)",
             font = GlobalResources.FONT_ATKINSON_BOLD,
             textSize = 12.0
-        )
+        ).apply {
+            scaleWhileMaintainingAspect(ScalingOption.ByHeight(textHeightSize))
+        }
 
         fun resetInitial() {
             bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
@@ -380,7 +385,7 @@ class UIGuiContainer(
                         gameplayState.maxSpeedUpgrades,
                         engine
                     ).addTo(this) {
-                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(100.0))
+                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(bottomRightGridHeight))
                     }
                     centerXOnStage()
                     alignBottomToBottomOfWindow()
