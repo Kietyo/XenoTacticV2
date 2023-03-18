@@ -379,12 +379,17 @@ fun calculateShortestPointsFromPointsToCircle(
 
 fun getNextPoints(
     currentPoint: IPoint,
-    blockingEntities: List<MapEntity>,
+    blockingEntities: List<IRectangleEntity>,
     availablePathingPoints: Set<PathingPoint>,
 ): List<IPoint> {
     val filtered = availablePathingPoints.mapNotNull {
         val verticalDirectionToPathingPoint = currentPoint.verticalDirectionTo(it.v)
         val horizontalDirectionToPathingPoint = currentPoint.horizontalDirectionTo(it.v)
+        val lineIntersectsEntity =             lineIntersectsEntities(
+            currentPoint,
+            it.v,
+            blockingEntities
+        )
         if ((it.entityVerticalDirection == VerticalDirection.DOWN &&
                     it.entityHorizontalDirection == HorizontalDirection.LEFT &&
                     verticalDirectionToPathingPoint == VerticalDirection.UP &&
@@ -401,11 +406,7 @@ fun getNextPoints(
                     it.entityHorizontalDirection == HorizontalDirection.RIGHT &&
                     verticalDirectionToPathingPoint == VerticalDirection.DOWN &&
                     horizontalDirectionToPathingPoint == HorizontalDirection.LEFT) ||
-            lineIntersectsEntities(
-                currentPoint,
-                it.v,
-                blockingEntities
-            )
+            lineIntersectsEntity
         ) {
             null
         } else {

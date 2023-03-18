@@ -6,7 +6,10 @@ data class IRectangle(
     val width: Double,
     val height: Double,
 ) {
+    constructor(x: Number, y: Number, width: Number, height: Number):
+            this(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+
     fun contains(p: IPoint): Boolean {
-        return p.x in x..(x + width) && y in y..(y + height)
+        return p.x in x..(x + width) && p.y in y..(y + height)
     }
 }

@@ -18,43 +18,6 @@ import kotlin.math.sign
 object AStarSearcher : SearcherInterface {
     private val _counter = IntStatCounter("a star")
 
-    fun getNextPoints(
-        currentPoint: IPoint,
-        blockingEntities: List<IRectangleEntity>,
-        availablePathingPoints: Set<PathingPoint>,
-    ): List<IPoint> {
-        return availablePathingPoints.mapNotNull {
-            val verticalDirectionToPathingPoint = currentPoint.verticalDirectionTo(it.v)
-            val horizontalDirectionToPathingPoint = currentPoint.horizontalDirectionTo(it.v)
-            if ((it.entityVerticalDirection == VerticalDirection.DOWN &&
-                        it.entityHorizontalDirection == HorizontalDirection.LEFT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.UP &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.RIGHT) ||
-                (it.entityVerticalDirection == VerticalDirection.DOWN &&
-                        it.entityHorizontalDirection == HorizontalDirection.RIGHT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.UP &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.LEFT) ||
-                (it.entityVerticalDirection == VerticalDirection.UP &&
-                        it.entityHorizontalDirection == HorizontalDirection.LEFT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.DOWN &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.RIGHT) ||
-                (it.entityVerticalDirection == VerticalDirection.UP &&
-                        it.entityHorizontalDirection == HorizontalDirection.RIGHT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.DOWN &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.LEFT) ||
-                lineIntersectsEntities(
-                    currentPoint,
-                    it.v,
-                    blockingEntities
-                )
-            ) {
-                null
-            } else {
-                it.v
-            }
-        }
-    }
-
     override fun getUpdatablePath(
         mapWidth: Int,
         mapHeight: Int,
