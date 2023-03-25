@@ -1,4 +1,5 @@
 import com.soywiz.korge.Korge
+import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.MaterialColors
@@ -13,9 +14,12 @@ object DebugMain4 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(bgcolor = Colors.LIGHTGRAY,
-            virtualSize = SizeInt(1280, 720)
-        ) {
+            Korge(
+                KorgeConfig(
+                    bgcolor = Colors.LIGHTGRAY,
+                    virtualSize = SizeInt(1280, 720)
+                )
+            ) {
             GlobalResources.init()
 //            val font = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()
 //            val font = resourcesVfs["fonts/AtkinsonHyperlegible-Bold.ttf"].readTtfFont()

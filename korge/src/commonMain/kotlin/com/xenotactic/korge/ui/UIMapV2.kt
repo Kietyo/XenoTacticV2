@@ -88,6 +88,10 @@ class UIMapV2(
         //        useNativeRendering = false
     }
 
+//    private val _pathingLinesGraphics = this.cpuGraphics {
+//        //        useNativeRendering = false
+//    }
+
     val monsterLayer = this.container().apply {
     }
 

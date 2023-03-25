@@ -101,7 +101,8 @@ fun <T : View> T.debugPrint() {
 }
 
 fun <T : View> T.alignBottomToBottomOfWindow(): T {
-    val windowsArea = this.getVisibleLocalArea()
+//    val windowsArea = this.getVisibleLocalArea()
+    val windowsArea = this.getVisibleGlobalArea()
 //    println(
 //        """
 //        alignBottomToBottomOfWindow:

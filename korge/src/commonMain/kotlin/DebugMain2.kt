@@ -1,5 +1,6 @@
 import com.soywiz.klock.Frequency
 import com.soywiz.korge.Korge
+import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
@@ -23,10 +24,12 @@ object DebugMain2 {
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
         Korge(
-            bgcolor = Colors.LIGHTGRAY,
-            virtualSize = SizeInt(1280, 720)
+            KorgeConfig(
+                bgcolor = Colors.LIGHTGRAY,
+                virtualSize = SizeInt(1280, 720)
+            )
         ) {
-//            text("Hello world")
+            //            text("Hello world")
 
             val midCircle = circle(radius = 20.0) {
                 anchor(Anchor.CENTER)
@@ -45,18 +48,17 @@ object DebugMain2 {
                 scale = 8.0
                 anchor(Anchor.CENTER)
                 xy(640, 360)
-//                centerOnXY(0.0, 0.0)
-//                xy(0, 0)
+                //                centerOnXY(0.0, 0.0)
+                //                xy(0, 0)
             }
 
             uiButton()
 
-//            val rect = solidRect(16, 16, Colors.RED) {
-//                scale = 8.0
-//                centerOnStage()
-//                anchor(Anchor.CENTER)
-//            }
-
+            //            val rect = solidRect(16, 16, Colors.RED) {
+            //                scale = 8.0
+            //                centerOnStage()
+            //                anchor(Anchor.CENTER)
+            //            }
 
             addUpdater {
                 val (mouseX, mouseY) = views.globalMousePos

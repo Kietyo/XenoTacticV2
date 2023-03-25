@@ -1,4 +1,5 @@
 import com.soywiz.korge.Korge
+import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.ui.UITooltipContainer
 import com.soywiz.korge.ui.tooltip
@@ -26,10 +27,12 @@ object DebugMain6 {
     @OptIn(KorgeExperimental::class)
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(
-            bgcolor = Colors.LIGHTGRAY,
-            virtualSize = SizeInt(640, 480)
-        ) {
+            Korge(
+                KorgeConfig(
+                    bgcolor = Colors.LIGHTGRAY,
+                    virtualSize = SizeInt(640, 480)
+                )
+            ) {
 //            GlobalResources.init()
 
 //            val weaponSpeedMillis = 250.0

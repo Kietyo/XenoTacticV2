@@ -1,6 +1,7 @@
 package com.xenotactic.gamelogic.api
 
 import com.soywiz.korma.geom.MRectangle
+import com.soywiz.korma.geom.Rectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
@@ -100,7 +101,7 @@ class GameMapApi(
 
 
 
-    fun getIntersectingEntities(rect: MRectangle): Set<EntityId> {
+    fun getIntersectingEntities(rect: Rectangle): Set<EntityId> {
         return gameWorld.selectableEntitiesFamily.getSequence().mapNotNull {
             val comp = gameWorld.uiEntityViewComponentContainer.getComponent(it)
             if (rect.intersects(comp.entityView.globalBounds)) {

@@ -1,4 +1,5 @@
 import com.soywiz.korge.Korge
+import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
@@ -18,8 +19,11 @@ object DebugMain {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(bgcolor = Colors["#2b2b2b"],
-            virtualSize = SizeInt(512, 512)
+        Korge(
+            KorgeConfig(
+                bgcolor = Colors["#2b2b2b"],
+                virtualSize = SizeInt(512, 512)
+            )
         ) {
 
 //            val vfs = rootLocalVfs.listNames()

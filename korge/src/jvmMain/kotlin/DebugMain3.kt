@@ -1,5 +1,6 @@
 import com.soywiz.kds.setExtra
 import com.soywiz.korge.Korge
+import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap32
 import com.soywiz.korim.bitmap.Bitmap32Context2d
@@ -24,8 +25,12 @@ object DebugMain3 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(bgcolor = Colors.LIGHTGRAY,
-            virtualSize = SizeInt(640, 480)) {
+            Korge(
+                KorgeConfig(
+                    bgcolor = Colors.LIGHTGRAY,
+                    virtualSize = SizeInt(640, 480)
+                )
+            ) {
 //            text("Hello world")
 
             val midCircle = circle(radius = 20.0) {

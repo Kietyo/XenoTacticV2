@@ -84,9 +84,7 @@ class UIGuiContainer(
 
             val printEventLog = uiButton("Print event log") {
                 onClick {
-                    gameSimulator?.let {
-                        it.printEventLog()
-                    }
+                    gameSimulator?.printEventLog()
                 }
             }
 
@@ -116,8 +114,9 @@ class UIGuiContainer(
                 )
             )
             scale = 2.0
-            alignBottomToBottomOfWindow()
         }
+
+        buttonsPanel.alignBottomToBottomOfWindow()
 
         val bottomRightGridWidth = 400.0
         val bottomRightGridHeight = bottomRightGridWidth / 2

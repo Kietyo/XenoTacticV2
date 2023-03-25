@@ -1,10 +1,10 @@
-import com.soywiz.korge.gradle.*
+import com.soywiz.korge.gradle.korge
 
 //plugins {
 //	alias(libs.plugins.korge)
 //}
 
-apply<KorgeGradlePlugin>()
+apply<com.soywiz.korge.gradle.KorgeGradlePlugin>()
 
 korge {
 	id = "com.kietyo.xenotactic.korge.xenotactic"

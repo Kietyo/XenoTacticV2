@@ -1,4 +1,5 @@
 import com.soywiz.korge.Korge
+import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.ui.uiScrollable
 import com.soywiz.korge.view.*
@@ -14,9 +15,12 @@ object DebugMain5 {
     @OptIn(KorgeExperimental::class)
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(bgcolor = Colors.LIGHTGRAY,
-            virtualSize = SizeInt(640, 480)
-        ) {
+            Korge(
+                KorgeConfig(
+                    bgcolor = Colors.LIGHTGRAY,
+                    virtualSize = SizeInt(640, 480)
+                )
+            ) {
             GlobalResources.init()
 
 //            val solidRect = solidRect(250, 400, MaterialColors.BROWN_300)

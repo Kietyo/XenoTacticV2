@@ -1,8 +1,12 @@
+import MainModule.logger
 import com.soywiz.klogger.Logger
 import com.soywiz.korge.Korge
+import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.scene.sceneContainer
 import com.soywiz.korge.view.Views
+import com.soywiz.korge.view.views
 import com.soywiz.korgw.GameWindow
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
@@ -60,4 +64,37 @@ object MainModule : Module() {
     }
 }
 
-suspend fun main() = Korge(Korge.Config(module = MainModule, forceRenderEveryFrame = false))
+suspend fun main() = KorgeConfig(module = MainModule, forceRenderEveryFrame = false).start() {
+    Logger.defaultLevel = Logger.Level.DEBUG
+    //        val globalBus = EventBus(CoroutineScope(Dispatchers.Main))
+    val globalBus = EventBus(CoroutineScope(Dispatchers.Default))
+    println("Preparing main module")
+    println(views)
+
+    GlobalResources.init()
+
+    val mapBridge = MapBridge()
+
+    //        mapInstance(GameScene(mapBridge))
+
+    injector.apply {
+        mapPrototype { RootScene(views(), globalBus, mapBridge) }
+        mapPrototype {
+            logger.debug {
+                "mapping GameScene"
+            }
+            GameScene(mapBridge)
+        }
+        mapPrototype { MapViewerScene(globalBus) }
+        mapPrototype { GoldensViewerScene() }
+        mapPrototype { TestScene() }
+        mapPrototype { EditorSceneV2() }
+        mapPrototype { PlayScene() }
+        mapPrototype { RootScene(views, globalBus, mapBridge) }
+    }
+
+
+    sceneContainer {
+        changeTo<RootScene>()
+    }
+}

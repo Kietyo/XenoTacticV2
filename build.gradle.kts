@@ -11,6 +11,16 @@ buildscript {
 
     dependencies {
         classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+//        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+//        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+    }
+}
+
+tasks{
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xskip-prerelease-check")
+        }
     }
 }
 

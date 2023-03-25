@@ -12,6 +12,7 @@ import com.soywiz.korio.async.launch
 
 import com.soywiz.korma.geom.MRectangle
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.Rectangle
 
 import com.soywiz.korma.geom.vector.StrokeInfo
 import com.xenotactic.gamelogic.globals.*
@@ -509,7 +510,7 @@ class UIMap(
     ): GameUnitTuple =
         getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight, mapWidth, mapHeight)
 
-    fun getIntersectingEntities(rect: MRectangle): List<UIEntity> {
+    fun getIntersectingEntities(rect: Rectangle): List<UIEntity> {
         return _drawnEntities.values.asSequence().flatten().filter {
             rect.intersects(it.getGlobalBounds())
         }.toList()
