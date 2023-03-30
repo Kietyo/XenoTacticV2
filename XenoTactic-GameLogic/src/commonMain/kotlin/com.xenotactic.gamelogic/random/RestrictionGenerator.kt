@@ -1,6 +1,6 @@
 package random
 
-import com.soywiz.korma.random.nextDoubleInclusive
+import korlibs.math.random.nextDoubleInclusive
 import kotlin.random.Random
 
 class RestrictionGenerator {

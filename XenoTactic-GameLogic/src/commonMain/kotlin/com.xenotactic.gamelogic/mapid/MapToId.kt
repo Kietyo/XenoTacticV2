@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.mapid
 
-import com.soywiz.krypto.sha1
 import com.xenotactic.gamelogic.model.GameMap
+import korlibs.crypto.sha1
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf

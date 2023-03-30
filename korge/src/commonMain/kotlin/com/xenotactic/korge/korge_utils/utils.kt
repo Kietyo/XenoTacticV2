@@ -1,8 +1,8 @@
 package com.xenotactic.korge.korge_utils
 
-import com.soywiz.korge.view.View
-import com.soywiz.korge.view.alignTopToBottomOf
-import com.soywiz.korge.view.util.distributeEvenlyVertically
+import korlibs.korge.view.View
+import korlibs.korge.view.alignTopToBottomOf
+import korlibs.korge.view.util.distributeEvenlyVertically
 import korlibs.math.geom.Angle
 
 import korlibs.math.geom.radians

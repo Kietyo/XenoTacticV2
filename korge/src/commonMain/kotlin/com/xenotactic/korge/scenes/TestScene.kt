@@ -2,10 +2,10 @@ package com.xenotactic.korge.scenes
 
 import korlibs.logger.Logger
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.line
-import com.soywiz.korge.view.text
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.container
+import korlibs.korge.view.line
+import korlibs.korge.view.text
 
 class TestScene : Scene() {
 

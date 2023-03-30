@@ -5,8 +5,8 @@ import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.scene.sceneContainer
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.views
+import korlibs.korge.view.Views
+import korlibs.korge.view.views
 import com.soywiz.korgw.GameWindow
 import korlibs.image.color.Colors
 import korlibs.image.color.RGBA

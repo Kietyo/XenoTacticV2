@@ -1,8 +1,8 @@
 package com.xenotactic.korge.component_listeners
 
-import com.soywiz.korge.view.Graphics
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOn
+import korlibs.korge.view.Graphics
+import korlibs.korge.view.addTo
+import korlibs.korge.view.centerOn
 import korlibs.image.color.Colors
 import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.ComponentListener

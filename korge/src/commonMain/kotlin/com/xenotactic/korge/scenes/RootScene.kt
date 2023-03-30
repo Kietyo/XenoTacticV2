@@ -2,10 +2,10 @@ package com.xenotactic.korge.scenes
 
 import korlibs.logger.Logger
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.centerOnStage
-import com.soywiz.korge.view.text
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.Views
+import korlibs.korge.view.centerOnStage
+import korlibs.korge.view.text
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent

@@ -2,14 +2,14 @@ package com.xenotactic.korge.korge_components
 
 import com.soywiz.korev.EventListener
 import com.soywiz.korev.ReshapeEvent
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.getVisibleGlobalArea
-import com.soywiz.korge.view.getVisibleLocalArea
-import com.soywiz.korge.view.getVisibleWindowArea
-import com.soywiz.korge.view.text
-import com.soywiz.korge.view.visible
-import com.soywiz.korge.view.xy
+import korlibs.korge.view.Container
+import korlibs.korge.view.Text
+import korlibs.korge.view.getVisibleGlobalArea
+import korlibs.korge.view.getVisibleLocalArea
+import korlibs.korge.view.getVisibleWindowArea
+import korlibs.korge.view.text
+import korlibs.korge.view.visible
+import korlibs.korge.view.xy
 import com.xenotactic.korge.korge_utils.getReferenceParent
 
 class ResizeDebugComponent(val view: Container) {

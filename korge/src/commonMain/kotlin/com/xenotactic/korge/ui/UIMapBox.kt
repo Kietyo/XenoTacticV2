@@ -1,13 +1,13 @@
 package com.xenotactic.korge.ui
 
 import korlibs.logger.Logger
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.image
-import com.soywiz.korge.view.renderToBitmap
-import com.soywiz.korge.view.solidRect
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
+import korlibs.korge.view.centerOn
+import korlibs.korge.view.container
+import korlibs.korge.view.image
+import korlibs.korge.view.renderToBitmap
+import korlibs.korge.view.solidRect
 import korlibs.image.color.Colors
 import korlibs.io.async.launch
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO

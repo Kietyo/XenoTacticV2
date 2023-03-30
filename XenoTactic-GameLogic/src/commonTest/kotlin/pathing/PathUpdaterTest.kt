@@ -3,8 +3,8 @@ package pathing
 
 import korlibs.datastructure.iterators.parallelMap
 import korlibs.io.async.runBlockingNoJs
-import com.soywiz.korio.file.VfsFile
-import com.soywiz.korio.file.baseName
+import korlibs.io.file.VfsFile
+import korlibs.io.file.baseName
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap

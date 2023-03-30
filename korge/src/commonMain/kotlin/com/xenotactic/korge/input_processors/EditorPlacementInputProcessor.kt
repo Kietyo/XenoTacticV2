@@ -3,8 +3,8 @@ package com.xenotactic.korge.input_processors
 import com.soywiz.korev.EventListener
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.view.BaseView
-import com.soywiz.korge.view.Views
+import korlibs.korge.view.BaseView
+import korlibs.korge.view.Views
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.GameUnit

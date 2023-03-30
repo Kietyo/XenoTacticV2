@@ -1,10 +1,10 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korim.bitmap.Bitmap32
-import com.soywiz.korim.bitmap.BmpSlice
-import com.soywiz.korim.bitmap.bmp
-import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.ImageDataContainer
+import korlibs.image.bitmap.Bitmap32
+import korlibs.image.bitmap.BmpSlice
+import korlibs.image.bitmap.bmp
+import korlibs.image.format.ASE
+import korlibs.image.format.ImageDataContainer
 
 data class AsepriteLayer(
     val originalAseIndex: Int,

@@ -2,7 +2,7 @@ import com.soywiz.korge.Korge
 import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.ui.uiScrollable
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.io.async.runBlockingNoJs
 import korlibs.math.geom.SizeInt

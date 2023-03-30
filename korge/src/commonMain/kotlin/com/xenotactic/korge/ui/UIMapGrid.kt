@@ -2,8 +2,8 @@ package com.xenotactic.korge.ui
 
 import korlibs.logger.Logger
 import com.soywiz.korge.ui.uiScrollable
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.events.EventBus

@@ -4,8 +4,8 @@ import com.soywiz.korev.EventListener
 import com.soywiz.korev.Key
 import com.soywiz.korev.KeyEvent
 import com.soywiz.korev.ReshapeEvent
-import com.soywiz.korge.view.BaseView
-import com.soywiz.korge.view.Views
+import korlibs.korge.view.BaseView
+import korlibs.korge.view.Views
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.events.LeftControlAndEqual

@@ -4,7 +4,7 @@ import com.soywiz.korev.EventListener
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 
-import com.soywiz.korge.view.View
+import korlibs.korge.view.View
 
 
 import com.xenotactic.gamelogic.engine.Engine

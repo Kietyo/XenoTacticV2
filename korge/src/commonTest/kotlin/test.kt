@@ -2,7 +2,7 @@ import com.soywiz.klock.*
 import com.soywiz.korge.input.*
 import com.soywiz.korge.tests.*
 import com.soywiz.korge.tween.*
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.image.color.*
 import korlibs.math.geom.*
 import com.xenotactic.gamelogic.model.IRectangle

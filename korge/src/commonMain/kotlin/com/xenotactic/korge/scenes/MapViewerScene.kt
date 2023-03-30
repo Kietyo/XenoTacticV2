@@ -3,7 +3,7 @@ package com.xenotactic.korge.scenes
 import korlibs.logger.Logger
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.korge_utils.toGameMap
 import com.xenotactic.gamelogic.mapid.MapToId

@@ -1,6 +1,6 @@
 package com.xenotactic.korge.korge_utils
 
-import com.soywiz.korge.view.Text
+import korlibs.korge.view.Text
 import com.soywiz.korim.text.TextAlignment
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World

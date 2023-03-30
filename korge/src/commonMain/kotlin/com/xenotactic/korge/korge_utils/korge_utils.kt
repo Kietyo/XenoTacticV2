@@ -1,11 +1,11 @@
 package com.xenotactic.korge.korge_utils
 
-import com.soywiz.kmem.clamp
+import korlibs.memory.clamp
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korev.ReshapeEvent
 import com.soywiz.korge.input.MouseEvents
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 
 import korlibs.math.geom.Point
 

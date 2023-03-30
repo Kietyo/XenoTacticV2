@@ -1,8 +1,8 @@
 package com.xenotactic.gamelogic.views
 
-import com.soywiz.korge.view.RectBase
-import com.soywiz.korim.format.ImageData
-import com.soywiz.korim.format.ImageDataContainer
+import korlibs.korge.view.RectBase
+import korlibs.image.format.ImageData
+import korlibs.image.format.ImageDataContainer
 
 enum class EightDirection {
     UP_LEFT,

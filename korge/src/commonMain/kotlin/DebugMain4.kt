@@ -1,6 +1,6 @@
 import com.soywiz.korge.Korge
 import com.soywiz.korge.KorgeConfig
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.io.async.runBlockingNoJs

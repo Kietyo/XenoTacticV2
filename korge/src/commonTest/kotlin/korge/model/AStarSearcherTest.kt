@@ -2,7 +2,7 @@ package korge.model
 
 import korlibs.logger.Logger
 import korlibs.io.async.suspendTest
-import com.soywiz.korio.file.baseName
+import korlibs.io.file.baseName
 
 
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS

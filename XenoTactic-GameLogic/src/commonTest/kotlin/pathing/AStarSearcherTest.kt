@@ -2,7 +2,7 @@ package pathing
 
 import com.kietyo.ktruth.assertThat
 import korlibs.io.async.runBlockingNoJs
-import com.soywiz.korio.file.baseName
+import korlibs.io.file.baseName
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.*

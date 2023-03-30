@@ -8,7 +8,7 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onOut
 import com.soywiz.korge.input.onOver
 import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.image.color.MaterialColors
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.api.GameMapApi

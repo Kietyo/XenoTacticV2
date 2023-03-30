@@ -5,7 +5,7 @@ import korlibs.logger.Logger
 import com.soywiz.korev.Key
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.GoalEComponent

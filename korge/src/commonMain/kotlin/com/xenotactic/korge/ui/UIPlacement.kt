@@ -6,9 +6,9 @@ import com.soywiz.korge.ui.UIVerticalStack
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.ui.uiVerticalStack
 import com.soywiz.korge.ui.uiWindow
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOnStage
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
+import korlibs.korge.view.centerOnStage
 import korlibs.io.async.AsyncSignal
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType

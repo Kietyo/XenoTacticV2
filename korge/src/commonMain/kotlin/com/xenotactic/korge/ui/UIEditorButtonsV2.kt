@@ -3,7 +3,7 @@ package com.xenotactic.korge.ui
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.*
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.engine.Engine

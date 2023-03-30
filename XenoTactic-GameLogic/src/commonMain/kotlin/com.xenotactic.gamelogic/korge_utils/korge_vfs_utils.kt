@@ -1,9 +1,9 @@
 package com.xenotactic.gamelogic.korge_utils
 
 import korlibs.io.async.runBlockingNoJs
-import com.soywiz.korio.file.VfsFile
 import korlibs.io.file.std.localCurrentDirVfs
 import com.xenotactic.gamelogic.model.GameMap
+import korlibs.io.file.VfsFile
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 

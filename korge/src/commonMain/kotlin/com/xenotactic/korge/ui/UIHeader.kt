@@ -1,16 +1,16 @@
 package com.xenotactic.korge.ui
 
 import com.soywiz.korge.input.onClick
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.SolidRect
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.alignLeftToRightOf
-import com.soywiz.korge.view.alignRightToRightOf
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.centerYOn
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.text
+import korlibs.korge.view.Container
+import korlibs.korge.view.SolidRect
+import korlibs.korge.view.Text
+import korlibs.korge.view.alignLeftToRightOf
+import korlibs.korge.view.alignRightToRightOf
+import korlibs.korge.view.centerOn
+import korlibs.korge.view.centerYOn
+import korlibs.korge.view.container
+import korlibs.korge.view.solidRect
+import korlibs.korge.view.text
 import korlibs.image.color.Colors
 import korlibs.io.async.Signal
 import com.xenotactic.korge.korge_utils.scaledDimensions

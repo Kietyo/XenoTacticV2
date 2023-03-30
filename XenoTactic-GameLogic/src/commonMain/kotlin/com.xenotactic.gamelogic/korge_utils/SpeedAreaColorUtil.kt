@@ -1,10 +1,10 @@
 package com.xenotactic.gamelogic.korge_utils
 
-import com.soywiz.kmem.clamp
 import korlibs.image.color.MaterialColors
 import korlibs.image.color.RGBA
-import com.soywiz.korma.math.roundDecimalPlaces
+import korlibs.math.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.model.MapEntity
+import korlibs.memory.clamp
 import kotlin.math.floor
 
 object SpeedAreaColorUtil {

@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import com.xenotactic.gamelogic.utils.GlobalResources
 

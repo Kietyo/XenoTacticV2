@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.components
 
-import com.soywiz.korge.view.View
+import korlibs.korge.view.View
 
 data class UIGunBarrelComponent(
     val view: View

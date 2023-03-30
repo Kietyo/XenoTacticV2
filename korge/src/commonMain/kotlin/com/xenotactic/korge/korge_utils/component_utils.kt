@@ -1,6 +1,6 @@
 package com.xenotactic.korge.korge_utils
 
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.math.geom.*
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple

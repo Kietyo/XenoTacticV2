@@ -1,7 +1,7 @@
 package com.xenotactic.korge.systems
 
 import korlibs.logger.Logger
-import com.soywiz.korge.view.rotation
+import korlibs.korge.view.rotation
 
 
 import com.xenotactic.ecs.FamilyConfiguration

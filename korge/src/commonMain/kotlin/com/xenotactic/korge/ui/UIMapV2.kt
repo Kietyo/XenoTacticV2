@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korge.view.vector.gpuGraphics
+import korlibs.korge.view.*
+import korlibs.korge.view.vector.gpuGraphics
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import com.soywiz.korim.text.TextAlignment

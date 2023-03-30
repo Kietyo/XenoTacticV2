@@ -7,9 +7,9 @@ import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 
 import com.soywiz.korge.input.DraggableInfo
-import com.soywiz.korge.view.View
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.xy
+import korlibs.korge.view.View
+import korlibs.korge.view.Views
+import korlibs.korge.view.xy
 
 import korlibs.math.geom.MPoint
 

@@ -4,7 +4,7 @@ import com.soywiz.klock.TimeSpan
 import com.soywiz.korev.Key
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import com.xenotactic.gamelogic.api.GameSimulator
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.events.EventBus

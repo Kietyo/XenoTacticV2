@@ -2,14 +2,14 @@ package com.xenotactic.korge.ui
 
 import com.soywiz.korev.EventListener
 import com.soywiz.korev.ReshapeEvent
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.getVisibleLocalArea
-import com.soywiz.korge.view.getVisibleWindowArea
-import com.soywiz.korge.view.text
-import com.soywiz.korge.view.xy
+import korlibs.korge.view.Container
+import korlibs.korge.view.Text
+import korlibs.korge.view.getVisibleLocalArea
+import korlibs.korge.view.getVisibleWindowArea
+import korlibs.korge.view.text
+import korlibs.korge.view.xy
 import korlibs.math.geom.Point
-import com.soywiz.korma.math.roundDecimalPlaces
+import korlibs.math.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.gamelogic.engine.Engine

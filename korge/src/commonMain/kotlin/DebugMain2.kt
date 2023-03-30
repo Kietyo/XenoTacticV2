@@ -2,11 +2,11 @@ import com.soywiz.klock.Frequency
 import com.soywiz.korge.Korge
 import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.image.color.Colors
-import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.readImageDataContainer
-import com.soywiz.korim.format.toProps
+import korlibs.image.format.ASE
+import korlibs.image.format.readImageDataContainer
+import korlibs.image.format.toProps
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
 import korlibs.math.geom.*

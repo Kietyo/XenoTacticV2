@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ui
 
 import korlibs.logger.Logger
-import com.soywiz.korge.view.*
+import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.image.color.RGBA

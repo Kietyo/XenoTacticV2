@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.components
 
-import com.soywiz.korge.view.Graphics
+import korlibs.korge.view.Graphics
 
 data class UIPreSelectionComponent(
     val graphics: Graphics

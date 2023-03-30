@@ -5,12 +5,12 @@ import com.soywiz.korev.KeyEvent
 import com.soywiz.korev.MouseButton
 import com.soywiz.korev.MouseEvent
 
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.alpha
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.visible
-import com.soywiz.korge.view.xy
+import korlibs.korge.view.Container
+import korlibs.korge.view.Views
+import korlibs.korge.view.alpha
+import korlibs.korge.view.solidRect
+import korlibs.korge.view.visible
+import korlibs.korge.view.xy
 import korlibs.image.color.Colors
 import korlibs.math.geom.MPoint
 import korlibs.math.geom.Point

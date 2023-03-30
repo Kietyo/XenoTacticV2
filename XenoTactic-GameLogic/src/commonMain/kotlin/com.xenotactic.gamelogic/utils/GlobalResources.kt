@@ -1,9 +1,10 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korim.bitmap.Bitmap32
-import com.soywiz.korim.font.TtfFont
-import com.soywiz.korim.font.readTtfFont
-import com.soywiz.korim.format.*
+import korlibs.image.font.readTtfFont
+import korlibs.image.format.*
+import korlibs.image.bitmap.Bitmap32
+import korlibs.image.font.TtfFont
+import korlibs.image.format.ImageDataContainer
 import korlibs.io.file.std.resourcesVfs
 import kotlin.native.concurrent.ThreadLocal
 

@@ -1,12 +1,12 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korge.view.vector.gpuGraphics
-import com.soywiz.korim.bitmap.effect.BitmapEffect
+import korlibs.korge.view.*
+import korlibs.korge.view.vector.gpuGraphics
+import korlibs.image.bitmap.effect.BitmapEffect
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
-import com.soywiz.korim.font.BitmapFont
-import com.soywiz.korim.font.DefaultTtfFont
+import korlibs.image.font.BitmapFont
+import korlibs.image.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
 import korlibs.io.async.launch
 

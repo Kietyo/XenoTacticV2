@@ -1,7 +1,7 @@
 import korlibs.datastructure.iterators.parallelMap
 import korlibs.io.async.launch
 import korlibs.io.async.runBlockingNoJs
-import com.soywiz.korio.file.VfsFile
+import korlibs.io.file.VfsFile
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.korge_utils.toGameMap
