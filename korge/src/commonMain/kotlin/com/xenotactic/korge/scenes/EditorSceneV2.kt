@@ -1,6 +1,6 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.korge.scene.Scene
+import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.toGameUnit

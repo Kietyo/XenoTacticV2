@@ -1,6 +1,4 @@
-import com.soywiz.korge.Korge
-import com.soywiz.korge.KorgeConfig
-import com.soywiz.korge.ui.uiButton
+import korlibs.korge.ui.uiButton
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.format.ASE
@@ -12,6 +10,8 @@ import korlibs.io.file.std.rootLocalVfs
 import korlibs.math.geom.Anchor
 import korlibs.math.geom.SizeInt
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
 import kotlin.jvm.JvmStatic
 
 object DebugMain {

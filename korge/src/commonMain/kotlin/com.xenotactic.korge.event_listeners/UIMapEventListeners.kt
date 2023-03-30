@@ -1,7 +1,7 @@
 package com.xenotactic.korge.event_listeners
 
-import com.soywiz.korge.internal.KorgeUntested
-import com.soywiz.korge.ui.UIProgressBar
+import korlibs.korge.internal.KorgeUntested
+import korlibs.korge.ui.UIProgressBar
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors

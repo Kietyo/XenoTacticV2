@@ -1,10 +1,10 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.klock.TimeSpan
+import korlibs.time.TimeSpan
 import korlibs.logger.Logger
-import com.soywiz.korev.Key
-import com.soywiz.korge.input.draggable
-import com.soywiz.korge.scene.Scene
+import korlibs.event.Key
+import korlibs.korge.input.draggable
+import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent

@@ -1,10 +1,10 @@
 package com.xenotactic.korge.korge_utils
 
 import korlibs.memory.clamp
-import com.soywiz.korev.MouseButton
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korev.ReshapeEvent
-import com.soywiz.korge.input.MouseEvents
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
+import korlibs.event.ReshapeEvent
+import korlibs.korge.input.MouseEvents
 import korlibs.korge.view.*
 
 import korlibs.math.geom.Point
@@ -70,12 +70,12 @@ fun <T : View> T.getReferenceParent(): Container {
 }
 
 fun <T : View> T.alignLeftToLeftOfWindow(): T {
-    this.x = getReferenceParent().getVisibleLocalArea().x
+    this.x = getReferenceParent().getVisibleLocalArea().xD
     return this
 }
 
 fun <T : View> T.alignTopToTopOfWindow(): T {
-    this.y = getReferenceParent().getVisibleLocalArea().y
+    this.y = getReferenceParent().getVisibleLocalArea().yD
     return this
 }
 

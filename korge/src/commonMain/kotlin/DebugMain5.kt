@@ -1,7 +1,7 @@
-import com.soywiz.korge.Korge
-import com.soywiz.korge.KorgeConfig
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.ui.uiScrollable
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiScrollable
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.io.async.runBlockingNoJs

@@ -5,7 +5,7 @@ import korlibs.korge.view.Text
 import korlibs.korge.view.addTo
 import korlibs.korge.view.alpha
 import korlibs.korge.view.text
-import com.soywiz.korim.text.TextAlignment
+import korlibs.image.text.TextAlignment
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
 import com.xenotactic.gamelogic.engine.Engine

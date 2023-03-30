@@ -1,9 +1,9 @@
 package com.xenotactic.korge.input_processors
 
-import com.soywiz.korev.EventListener
-import com.soywiz.korev.KeyEvent
-import com.soywiz.korev.MouseButton
-import com.soywiz.korev.MouseEvent
+import korlibs.event.EventListener
+import korlibs.event.KeyEvent
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
 
 import korlibs.korge.view.Container
 import korlibs.korge.view.Views

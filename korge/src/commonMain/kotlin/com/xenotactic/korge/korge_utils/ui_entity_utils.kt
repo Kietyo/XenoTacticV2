@@ -1,17 +1,11 @@
 package com.xenotactic.korge.korge_utils
 
-import korlibs.korge.view.Text
-import com.soywiz.korim.text.TextAlignment
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.globals.ENTITY_LABEL_SIZE
-import com.xenotactic.gamelogic.model.MapEntityData
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.components.EntityCheckpointComponent
-import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
-import com.xenotactic.gamelogic.components.EntityTeleportInComponent
-import com.xenotactic.gamelogic.components.EntityTeleportOutComponent
 import com.xenotactic.korge.ui.ENTITY_TEXT_FONT
+import korlibs.korge.view.Text
 
 fun makeEntityLabelText(text: String): Text {
     return Text(text, textSize = ENTITY_LABEL_SIZE,

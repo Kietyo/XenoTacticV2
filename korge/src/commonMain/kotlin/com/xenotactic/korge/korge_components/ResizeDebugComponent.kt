@@ -1,7 +1,7 @@
 package com.xenotactic.korge.korge_components
 
-import com.soywiz.korev.EventListener
-import com.soywiz.korev.ReshapeEvent
+import korlibs.event.EventListener
+import korlibs.event.ReshapeEvent
 import korlibs.korge.view.Container
 import korlibs.korge.view.Text
 import korlibs.korge.view.getVisibleGlobalArea
@@ -41,7 +41,6 @@ class ResizeDebugComponent(val view: Container) {
             view.getBoundsNoAnchoring(): ${view.getBoundsNoAnchoring()}
             view.globalXY(): ${view.globalPos}
             view.globalBounds: ${view.globalBounds}
-            view.getWindowBounds(): ${view.getWindowBounds()}
             view.getGlobalBounds(): ${view.getGlobalBounds()}
             view.getLocalBounds(): ${view.getLocalBounds()}
             view.getLocalBoundsOptimized(): ${view.getLocalBoundsOptimized()}

@@ -1,9 +1,9 @@
-import com.soywiz.korge.Korge
-import com.soywiz.korge.KorgeConfig
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.ui.UITooltipContainer
-import com.soywiz.korge.ui.tooltip
-import com.soywiz.korge.ui.uiTooltipContainer
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.UITooltipContainer
+import korlibs.korge.ui.tooltip
+import korlibs.korge.ui.uiTooltipContainer
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors

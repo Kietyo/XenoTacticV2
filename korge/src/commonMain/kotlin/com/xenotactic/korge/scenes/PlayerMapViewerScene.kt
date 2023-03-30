@@ -1,6 +1,6 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.korge.scene.Scene
+import korlibs.korge.scene.Scene
 import korlibs.korge.view.SContainer
 import korlibs.korge.view.text
 import com.xenotactic.korge.daos.PlayerDataApi

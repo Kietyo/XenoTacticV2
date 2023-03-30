@@ -1,7 +1,7 @@
-import com.soywiz.klock.Frequency
-import com.soywiz.korge.Korge
-import com.soywiz.korge.KorgeConfig
-import com.soywiz.korge.ui.uiButton
+import korlibs.time.Frequency
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.ui.uiButton
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.format.ASE

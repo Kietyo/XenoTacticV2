@@ -7,7 +7,7 @@ import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.image.font.BitmapFont
 import korlibs.image.font.DefaultTtfFont
-import com.soywiz.korim.text.TextAlignment
+import korlibs.image.text.TextAlignment
 import korlibs.io.async.launch
 
 import korlibs.math.geom.MRectangle

@@ -1,5 +1,5 @@
-import com.soywiz.korge.Korge
-import com.soywiz.korge.KorgeConfig
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors

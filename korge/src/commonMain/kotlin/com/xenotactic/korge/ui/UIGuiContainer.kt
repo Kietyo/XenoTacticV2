@@ -1,13 +1,13 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korev.Key
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.component.onAttachDetach
-import com.soywiz.korge.input.keys
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onOut
-import com.soywiz.korge.input.onOver
-import com.soywiz.korge.ui.uiButton
+import korlibs.event.Key
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.component.onAttachDetach
+import korlibs.korge.input.keys
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onOut
+import korlibs.korge.input.onOver
+import korlibs.korge.ui.uiButton
 import korlibs.korge.view.*
 import korlibs.image.color.MaterialColors
 import com.xenotactic.ecs.EntityId

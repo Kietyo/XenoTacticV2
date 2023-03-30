@@ -1,7 +1,7 @@
 package com.xenotactic.korge.scenes
 
 import korlibs.logger.Logger
-import com.soywiz.korge.scene.Scene
+import korlibs.korge.scene.Scene
 import korlibs.korge.view.SContainer
 import korlibs.korge.view.Views
 import korlibs.korge.view.centerOnStage

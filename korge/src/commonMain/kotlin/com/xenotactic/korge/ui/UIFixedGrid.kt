@@ -5,7 +5,6 @@ import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.image.color.RGBA
-import com.soywiz.korma.annotations.KormaValueApi
 import korlibs.math.geom.PointInt
 
 val EMPTY_BOX_FN: (x: Int, y:Int, width: Double, height: Double) -> View = {x,y,width, height ->
@@ -68,7 +67,6 @@ class UIFixedGrid(
         resetWithEntries(initialEntries)
     }
 
-    @OptIn(KormaValueApi::class)
     fun setEntry(x: Int, y: Int, view: View) {
         val point = PointInt(x, y)
         val currView = coordToView[point]!!

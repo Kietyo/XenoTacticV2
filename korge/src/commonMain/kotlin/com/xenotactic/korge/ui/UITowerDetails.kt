@@ -3,7 +3,6 @@ package com.xenotactic.korge.ui
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
-import com.soywiz.korio.util.toStringDecimal
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.gamelogic.engine.Engine
@@ -11,6 +10,7 @@ import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
+import korlibs.io.util.toStringDecimal
 
 class UITowerDetails(
     damage: Double,

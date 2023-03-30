@@ -1,9 +1,9 @@
 package com.xenotactic.korge.input_processors
 
-import com.soywiz.korev.EventListener
-import com.soywiz.korev.Key
-import com.soywiz.korev.KeyEvent
-import com.soywiz.korev.ReshapeEvent
+import korlibs.event.EventListener
+import korlibs.event.Key
+import korlibs.event.KeyEvent
+import korlibs.event.ReshapeEvent
 import korlibs.korge.view.BaseView
 import korlibs.korge.view.Views
 import com.xenotactic.gamelogic.engine.Engine

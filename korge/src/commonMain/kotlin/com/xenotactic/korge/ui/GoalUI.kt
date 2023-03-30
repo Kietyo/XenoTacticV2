@@ -1,9 +1,9 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korev.EventListener
-import com.soywiz.korev.ReshapeEvent
-import com.soywiz.korge.ui.UIContainer
-import com.soywiz.korge.ui.uiContainer
+import korlibs.event.EventListener
+import korlibs.event.ReshapeEvent
+import korlibs.korge.ui.UIContainer
+import korlibs.korge.ui.uiContainer
 import korlibs.korge.view.Container
 import korlibs.korge.view.Image
 import korlibs.korge.view.Text
@@ -19,12 +19,12 @@ import korlibs.image.color.ColorTransform
 import korlibs.image.color.Colors
 import korlibs.image.format.PNG
 import korlibs.image.format.readBitmap
-import com.soywiz.korim.text.TextAlignment
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import korlibs.image.text.TextAlignment
 
 class GoalUI(val view: Container, val eventBus: EventBus) {
     val goalContainer: UIContainer
@@ -96,7 +96,7 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
         //        }
 
         val globalArea = view.getVisibleWindowArea()
-        resizeInternal(globalArea.width, globalArea.height)
+        resizeInternal(globalArea.widthD, globalArea.heightD)
 
         eventBus.register<UpdatedGoalDataEvent> {
             handleNewGoalDataEvent(it)
@@ -144,7 +144,7 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
 
     fun resizeInternal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
-        goalContainer.xy(visibleLocalArea.x, 50.0)
+        goalContainer.xy(visibleLocalArea.xD, 50.0)
         goalContainer.scale = 0.75
         //        goalContainer.x += bronzeText!!.width / 2
     }

@@ -1,6 +1,6 @@
 import korlibs.datastructure.setExtra
-import com.soywiz.korge.Korge
-import com.soywiz.korge.KorgeConfig
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
 import korlibs.korge.view.*
 import korlibs.image.bitmap.Bitmap32
 import korlibs.image.bitmap.Bitmap32Context2d

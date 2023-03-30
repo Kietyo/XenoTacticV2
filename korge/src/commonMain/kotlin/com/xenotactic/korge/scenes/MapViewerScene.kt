@@ -1,8 +1,8 @@
 package com.xenotactic.korge.scenes
 
 import korlibs.logger.Logger
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.scene.Scene
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
 import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.korge_utils.toGameMap
@@ -42,7 +42,7 @@ class MapViewerScene(
         playerData.userName = "XenoTactic"
         PlayerDataApi.savePlayerData(playerData)
 
-        val header = UIHeader(playerData.userName, HEADER_HEIGHT, getVisibleGlobalArea().width)
+        val header = UIHeader(playerData.userName, HEADER_HEIGHT, getVisibleGlobalArea().widthD)
             .addTo(this)
 
         val maxColumns = 4

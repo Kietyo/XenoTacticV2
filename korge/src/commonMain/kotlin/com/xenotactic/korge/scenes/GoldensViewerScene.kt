@@ -3,11 +3,11 @@ package com.xenotactic.korge.scenes
 import MapVerificationResult
 import korlibs.datastructure.iterators.parallelMap
 import korlibs.logger.Logger
-import com.soywiz.korev.Key
-import com.soywiz.korev.KeyEvent
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.ui.uiButton
+import korlibs.event.Key
+import korlibs.event.KeyEvent
+import korlibs.korge.input.onClick
+import korlibs.korge.scene.Scene
+import korlibs.korge.ui.uiButton
 import korlibs.korge.view.SContainer
 import korlibs.korge.view.Views
 import korlibs.korge.view.alignLeftToRightOf

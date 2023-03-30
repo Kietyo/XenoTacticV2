@@ -1,7 +1,7 @@
-import com.soywiz.klock.*
-import com.soywiz.korge.input.*
-import com.soywiz.korge.tests.*
-import com.soywiz.korge.tween.*
+import korlibs.time.*
+import korlibs.korge.input.*
+import korlibs.korge.tests.*
+import korlibs.korge.tween.*
 import korlibs.korge.view.*
 import korlibs.image.color.*
 import korlibs.math.geom.*

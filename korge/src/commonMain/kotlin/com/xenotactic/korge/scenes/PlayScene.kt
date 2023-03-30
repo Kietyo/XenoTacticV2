@@ -1,9 +1,9 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.klock.TimeSpan
-import com.soywiz.korev.Key
-import com.soywiz.korge.input.keys
-import com.soywiz.korge.scene.Scene
+import korlibs.time.TimeSpan
+import korlibs.event.Key
+import korlibs.korge.input.keys
+import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
 import com.xenotactic.gamelogic.api.GameSimulator
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration

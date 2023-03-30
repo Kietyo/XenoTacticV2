@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.input.onClick
+import korlibs.korge.input.onClick
 import korlibs.korge.view.Container
 import korlibs.korge.view.SolidRect
 import korlibs.korge.view.Text

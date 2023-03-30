@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korev.EventListener
-import com.soywiz.korev.ReshapeEvent
+import korlibs.event.EventListener
+import korlibs.event.ReshapeEvent
 import korlibs.korge.view.Container
 import korlibs.korge.view.Text
 import korlibs.korge.view.getVisibleLocalArea
@@ -26,7 +26,7 @@ class InformationalUI(
     init {
         pathText = view.text("")
         val globalArea = view.getVisibleWindowArea()
-        resizeInternal(globalArea.width, globalArea.height)
+        resizeInternal(globalArea.widthD, globalArea.heightD)
 
         handlePathChanged()
 
@@ -60,6 +60,6 @@ class InformationalUI(
     private fun resizeInternal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
         val localArea = view.globalToLocal(Point(width, height))
-        pathText.xy(visibleLocalArea.x, localArea.y - pathText.height)
+        pathText.xy(visibleLocalArea.xD, localArea.y - pathText.height)
     }
 }

@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ui
 
 import korlibs.logger.Logger
-import com.soywiz.korge.input.onClick
+import korlibs.korge.input.onClick
 import korlibs.korge.view.Container
 import korlibs.korge.view.ScalingOption
 import korlibs.korge.view.View
@@ -26,7 +26,7 @@ class UIMapOverlay(
         if (isCurrentlySet) return
         val globalAreaDimensions = getVisibleGlobalArea()
         val background = this.solidRect(
-            globalAreaDimensions.width, globalAreaDimensions.height,
+            globalAreaDimensions.widthD, globalAreaDimensions.heightD,
             color = Colors.BLACK.withAd(0.7)
         )
         background.onClick {
@@ -37,8 +37,8 @@ class UIMapOverlay(
         }
 
         view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
-            globalAreaDimensions.width,
-            globalAreaDimensions.height
+            globalAreaDimensions.widthD,
+            globalAreaDimensions.heightD
         ))
         view.centerOn(background)
         view.addTo(this)

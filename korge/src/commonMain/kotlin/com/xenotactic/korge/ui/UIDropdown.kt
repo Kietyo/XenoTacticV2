@@ -1,9 +1,9 @@
 package com.xenotactic.korge.ui
 
 import korlibs.logger.Logger
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onScroll
-import com.soywiz.korge.input.onUpOutside
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onScroll
+import korlibs.korge.input.onUpOutside
 import korlibs.korge.view.Container
 import korlibs.korge.view.ScalingOption
 import korlibs.korge.view.SolidRect

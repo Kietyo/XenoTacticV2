@@ -1,8 +1,8 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiScrollable
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiButton
+import korlibs.korge.ui.uiScrollable
 import korlibs.korge.view.Container
 import korlibs.korge.view.Text
 import korlibs.korge.view.addTo

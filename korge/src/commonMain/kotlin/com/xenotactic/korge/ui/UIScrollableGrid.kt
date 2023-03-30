@@ -1,8 +1,8 @@
 package com.xenotactic.korge.ui
 
 import korlibs.logger.Logger
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.ui.uiScrollable
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiScrollable
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
 import korlibs.image.color.MaterialColors

@@ -1,12 +1,12 @@
 package com.xenotactic.korge.ui
 
 import korlibs.logger.Logger
-import com.soywiz.korge.input.MouseEvents
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onOut
-import com.soywiz.korge.input.onOver
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiVerticalStack
+import korlibs.korge.input.MouseEvents
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onOut
+import korlibs.korge.input.onOver
+import korlibs.korge.ui.uiButton
+import korlibs.korge.ui.uiVerticalStack
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
 import korlibs.korge.view.alignLeftToRightOf

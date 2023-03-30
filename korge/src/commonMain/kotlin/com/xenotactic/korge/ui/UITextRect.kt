@@ -3,8 +3,8 @@ package com.xenotactic.korge.ui
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.font.Font
-import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korio.resources.Resourceable
+import korlibs.image.text.TextAlignment
+import korlibs.io.resources.Resourceable
 
 class UITextRect(
     text: String,

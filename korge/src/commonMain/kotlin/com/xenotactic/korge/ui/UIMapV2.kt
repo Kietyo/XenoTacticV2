@@ -4,7 +4,7 @@ import korlibs.korge.view.*
 import korlibs.korge.view.vector.gpuGraphics
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
-import com.soywiz.korim.text.TextAlignment
+import korlibs.image.text.TextAlignment
 
 import korlibs.math.geom.Point
 

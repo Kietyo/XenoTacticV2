@@ -1,8 +1,8 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.*
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.input.onClick
+import korlibs.korge.ui.*
 import korlibs.korge.view.*
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
