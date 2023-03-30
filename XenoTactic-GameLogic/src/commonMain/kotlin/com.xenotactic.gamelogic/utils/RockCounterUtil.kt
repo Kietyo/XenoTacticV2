@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.kds.IntArray2
+import korlibs.datastructure.IntArray2
 import com.xenotactic.gamelogic.model.GameMap
 
 object RockCounterUtil {

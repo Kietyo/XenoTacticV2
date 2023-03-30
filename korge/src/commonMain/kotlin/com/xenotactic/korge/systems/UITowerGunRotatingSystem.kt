@@ -1,6 +1,6 @@
 package com.xenotactic.korge.systems
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.view.rotation
 
 

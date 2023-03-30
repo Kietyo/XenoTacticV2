@@ -1,9 +1,9 @@
 package com.xenotactic.gamelogic.views
 
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korma.geom.Anchor
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.math.geom.Anchor
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit

@@ -1,8 +1,8 @@
 package com.xenotactic.korge.ui
 
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.launchImmediately
+import korlibs.image.color.Colors
+import korlibs.io.async.launchImmediately
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.input_processors.PlaceEntityErrorEvent
 import kotlinx.coroutines.Dispatchers

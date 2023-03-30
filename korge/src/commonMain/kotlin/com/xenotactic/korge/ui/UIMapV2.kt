@@ -2,13 +2,13 @@ package com.xenotactic.korge.ui
 
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.vector.gpuGraphics
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import com.soywiz.korim.text.TextAlignment
 
-import com.soywiz.korma.geom.Point
+import korlibs.math.geom.Point
 
-import com.soywiz.korma.geom.vector.StrokeInfo
+import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.globals.BORDER_RATIO
 import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO

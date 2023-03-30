@@ -1,10 +1,10 @@
 package com.xenotactic.gamelogic.events
 
-import com.soywiz.kds.iterators.fastForEach
-import com.soywiz.klogger.Logger
-import com.soywiz.korio.async.launchImmediately
-import com.soywiz.korio.async.launchUnscoped
-import com.soywiz.korio.lang.Closeable
+import korlibs.datastructure.iterators.fastForEach
+import korlibs.io.async.launchImmediately
+import korlibs.io.async.launchUnscoped
+import korlibs.io.lang.Closeable
+import korlibs.logger.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KClass

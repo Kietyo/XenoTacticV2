@@ -3,9 +3,9 @@ package com.xenotactic.korge.event_listeners
 import com.soywiz.korge.internal.KorgeUntested
 import com.soywiz.korge.ui.UIProgressBar
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korma.geom.Anchor
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.math.geom.Anchor
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil

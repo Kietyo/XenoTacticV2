@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.ScalingOption
@@ -10,7 +10,7 @@ import com.soywiz.korge.view.centerOn
 import com.soywiz.korge.view.getVisibleGlobalArea
 import com.soywiz.korge.view.scaleWhileMaintainingAspect
 import com.soywiz.korge.view.solidRect
-import com.soywiz.korim.color.Colors
+import korlibs.image.color.Colors
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 

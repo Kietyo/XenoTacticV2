@@ -1,7 +1,7 @@
 package pathing
 
 
-import com.soywiz.kds.PriorityQueue
+import korlibs.datastructure.PriorityQueue
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.IPoint

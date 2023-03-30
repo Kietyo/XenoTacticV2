@@ -1,6 +1,6 @@
 package utils
 
-import com.soywiz.kds.IntArray2
+import korlibs.datastructure.IntArray2
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.RockCounterUtil

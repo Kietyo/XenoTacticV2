@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.system
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World

@@ -3,13 +3,13 @@ import com.soywiz.korge.Korge
 import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
+import korlibs.image.color.Colors
 import com.soywiz.korim.format.ASE
 import com.soywiz.korim.format.readImageDataContainer
 import com.soywiz.korim.format.toProps
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korma.geom.*
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import korlibs.math.geom.*
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.korge.korge_utils.getDirection8

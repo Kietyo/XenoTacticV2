@@ -1,10 +1,10 @@
 import com.soywiz.korge.Korge
 import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korma.geom.SizeInt
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.io.async.runBlockingNoJs
+import korlibs.math.geom.SizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.ui.UITextRect
 import com.xenotactic.korge.ui.UITooltipDescription

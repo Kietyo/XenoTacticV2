@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.benchmarks
 
-import com.soywiz.kds.Array2
+import korlibs.datastructure.Array2
 import kotlinx.benchmark.*
 
 @State(Scope.Benchmark)

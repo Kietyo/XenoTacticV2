@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korma.geom.Point
+import korlibs.math.geom.Point
 import kotlin.jvm.JvmInline
 
 typealias WorldPoint = Pair<WorldUnit, WorldUnit>

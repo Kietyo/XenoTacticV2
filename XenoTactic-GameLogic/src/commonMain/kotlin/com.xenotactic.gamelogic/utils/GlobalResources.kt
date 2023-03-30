@@ -4,7 +4,7 @@ import com.soywiz.korim.bitmap.Bitmap32
 import com.soywiz.korim.font.TtfFont
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.format.*
-import com.soywiz.korio.file.std.resourcesVfs
+import korlibs.io.file.std.resourcesVfs
 import kotlin.native.concurrent.ThreadLocal
 
 @ThreadLocal

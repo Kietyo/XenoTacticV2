@@ -1,6 +1,6 @@
 package scrap
 
-import com.soywiz.korio.async.suspendTest
+import korlibs.io.async.suspendTest
 import com.soywiz.korio.file.VfsFile
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.TEST_DATA_VFS

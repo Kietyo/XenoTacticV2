@@ -1,8 +1,8 @@
 package pathing
 
 
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.korio.async.runBlockingNoJs
+import korlibs.datastructure.iterators.parallelMap
+import korlibs.io.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS

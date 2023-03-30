@@ -1,7 +1,7 @@
 package korge.model
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korio.async.suspendTest
+import korlibs.logger.Logger
+import korlibs.io.async.suspendTest
 import com.soywiz.korio.file.baseName
 
 

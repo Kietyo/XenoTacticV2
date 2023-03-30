@@ -2,15 +2,15 @@ import com.soywiz.korge.Korge
 import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.ui.uiButton
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
+import korlibs.image.color.Colors
 import com.soywiz.korim.format.ASE
 import com.soywiz.korim.format.readImageDataContainer
 import com.soywiz.korim.format.toProps
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korio.file.std.rootLocalVfs
-import com.soywiz.korma.geom.Anchor
-import com.soywiz.korma.geom.SizeInt
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import korlibs.io.file.std.rootLocalVfs
+import korlibs.math.geom.Anchor
+import korlibs.math.geom.SizeInt
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import kotlin.jvm.JvmStatic
 

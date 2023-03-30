@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ecomponents
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.xenotactic.gamelogic.globals.GAME_HEIGHT
 import com.xenotactic.gamelogic.globals.GAME_WIDTH
 import com.xenotactic.gamelogic.model.GRectInt

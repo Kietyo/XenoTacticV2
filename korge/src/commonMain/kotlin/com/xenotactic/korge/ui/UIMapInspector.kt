@@ -17,8 +17,8 @@ import com.soywiz.korge.view.container
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.text
 import com.soywiz.korge.view.visible
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.gamelogic.model.GameMap
 

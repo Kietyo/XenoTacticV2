@@ -1,8 +1,8 @@
 package com.xenotactic.korge.ui
 
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import com.soywiz.korio.util.toStringDecimal
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit

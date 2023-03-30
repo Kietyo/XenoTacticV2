@@ -1,10 +1,10 @@
 package com.xenotactic.gamelogic.daos
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korio.file.std.resourcesVfs
+import korlibs.logger.Logger
 import com.xenotactic.gamelogic.korge_utils.decodeJson
 import com.xenotactic.gamelogic.korge_utils.existsBlocking
 import com.xenotactic.gamelogic.model.PlayerData
+import korlibs.io.file.std.resourcesVfs
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString

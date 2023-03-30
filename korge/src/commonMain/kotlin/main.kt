@@ -1,5 +1,5 @@
 import MainModule.logger
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.Korge
 import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.scene.Module
@@ -8,12 +8,12 @@ import com.soywiz.korge.scene.sceneContainer
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.views
 import com.soywiz.korgw.GameWindow
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.RGBA
+import korlibs.image.color.Colors
+import korlibs.image.color.RGBA
 import com.soywiz.korinject.AsyncInjector
-import com.soywiz.korma.geom.Anchor
-import com.soywiz.korma.geom.MSizeInt
-import com.soywiz.korma.geom.SizeInt
+import korlibs.math.geom.Anchor
+import korlibs.math.geom.MSizeInt
+import korlibs.math.geom.SizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.gamelogic.events.EventBus

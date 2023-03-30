@@ -11,8 +11,8 @@ import com.soywiz.korge.view.centerYOn
 import com.soywiz.korge.view.container
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.text
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.Signal
+import korlibs.image.color.Colors
+import korlibs.io.async.Signal
 import com.xenotactic.korge.korge_utils.scaledDimensions
 import kotlin.collections.set
 

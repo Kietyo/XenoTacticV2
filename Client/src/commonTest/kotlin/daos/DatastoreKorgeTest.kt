@@ -1,8 +1,8 @@
 package daos
 
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.runBlockingNoJs
+import korlibs.datastructure.iterators.parallelMap
+import korlibs.io.async.launch
+import korlibs.io.async.runBlockingNoJs
 import com.xenotactic.gamelogic.daos.DatastoreKorge
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity

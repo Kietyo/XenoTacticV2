@@ -1,6 +1,6 @@
 package com.xenotactic.korge.event_listeners
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.engine.Engine

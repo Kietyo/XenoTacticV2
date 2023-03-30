@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ui
 
 import MapVerificationResult
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onOver
 import com.soywiz.korge.ui.uiButton
@@ -16,10 +16,10 @@ import com.soywiz.korge.view.roundRect
 import com.soywiz.korge.view.scaleWhileMaintainingAspect
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.text
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.color.RGBA
-import com.soywiz.korio.async.launch
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.image.color.RGBA
+import korlibs.io.async.launch
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.baseName
 import com.xenotactic.gamelogic.korge_utils.existsBlocking

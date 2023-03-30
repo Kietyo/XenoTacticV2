@@ -1,8 +1,8 @@
 package com.xenotactic.gamelogic.pathing
 
 
-import com.soywiz.korma.geom.cos
-import com.soywiz.korma.geom.sin
+import korlibs.math.geom.cos
+import korlibs.math.geom.sin
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.globals.PATHING_POINT_PRECISION
 import com.xenotactic.gamelogic.model.IPoint

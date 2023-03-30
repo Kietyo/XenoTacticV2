@@ -1,7 +1,6 @@
 package com.xenotactic.gamelogic.api
 
-import com.soywiz.korma.geom.MRectangle
-import com.soywiz.korma.geom.Rectangle
+import korlibs.math.geom.MRectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
@@ -19,6 +18,7 @@ import com.xenotactic.gamelogic.state.MutableEventQueueState
 import com.xenotactic.gamelogic.utils.rectangleIntersects
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.toRectangleEntity
+import korlibs.math.geom.Rectangle
 import kotlin.math.pow
 
 class GameMapApi(

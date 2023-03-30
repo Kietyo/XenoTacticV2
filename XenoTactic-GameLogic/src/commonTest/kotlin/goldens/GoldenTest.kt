@@ -1,6 +1,6 @@
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.runBlockingNoJs
+import korlibs.datastructure.iterators.parallelMap
+import korlibs.io.async.launch
+import korlibs.io.async.runBlockingNoJs
 import com.soywiz.korio.file.VfsFile
 import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles

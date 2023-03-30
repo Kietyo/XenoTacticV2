@@ -3,18 +3,18 @@ package com.xenotactic.korge.ui
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.vector.gpuGraphics
 import com.soywiz.korim.bitmap.effect.BitmapEffect
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korio.async.launch
+import korlibs.io.async.launch
 
-import com.soywiz.korma.geom.MRectangle
-import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.Rectangle
+import korlibs.math.geom.MRectangle
+import korlibs.math.geom.Point
+import korlibs.math.geom.Rectangle
 
-import com.soywiz.korma.geom.vector.StrokeInfo
+import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy

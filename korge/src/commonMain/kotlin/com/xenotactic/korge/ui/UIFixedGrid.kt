@@ -1,12 +1,12 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.color.RGBA
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.image.color.RGBA
 import com.soywiz.korma.annotations.KormaValueApi
-import com.soywiz.korma.geom.PointInt
+import korlibs.math.geom.PointInt
 
 val EMPTY_BOX_FN: (x: Int, y:Int, width: Double, height: Double) -> View = {x,y,width, height ->
     SolidRect(width, height, MaterialColors.TEAL_100)

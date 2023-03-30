@@ -3,9 +3,9 @@ import com.soywiz.korge.KorgeConfig
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.ui.uiScrollable
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korma.geom.SizeInt
+import korlibs.image.color.Colors
+import korlibs.io.async.runBlockingNoJs
+import korlibs.math.geom.SizeInt
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.ui.UITowerEntry
 import kotlin.jvm.JvmStatic

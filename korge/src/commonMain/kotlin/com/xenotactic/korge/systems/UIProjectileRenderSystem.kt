@@ -1,6 +1,6 @@
 package com.xenotactic.korge.systems
 
-import com.soywiz.korim.color.Colors
+import korlibs.image.color.Colors
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.gamelogic.engine.Engine

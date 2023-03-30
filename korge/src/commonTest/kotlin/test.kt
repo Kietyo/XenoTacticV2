@@ -3,8 +3,8 @@ import com.soywiz.korge.input.*
 import com.soywiz.korge.tests.*
 import com.soywiz.korge.tween.*
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.*
-import com.soywiz.korma.geom.*
+import korlibs.image.color.*
+import korlibs.math.geom.*
 import com.xenotactic.gamelogic.model.IRectangle
 import kotlin.test.*
 

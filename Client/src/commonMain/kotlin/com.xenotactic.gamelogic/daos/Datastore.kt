@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.daos
 
-import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.runBlockingNoJs
+import korlibs.io.async.launch
+import korlibs.io.async.runBlockingNoJs
 import com.soywiz.korio.net.http.Http
 import com.soywiz.korio.stream.openAsync
 import com.xenotactic.gamelogic.httpClient

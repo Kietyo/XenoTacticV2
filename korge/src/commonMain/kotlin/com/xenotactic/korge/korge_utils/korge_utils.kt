@@ -7,7 +7,7 @@ import com.soywiz.korev.ReshapeEvent
 import com.soywiz.korge.input.MouseEvents
 import com.soywiz.korge.view.*
 
-import com.soywiz.korma.geom.Point
+import korlibs.math.geom.Point
 
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IPoint

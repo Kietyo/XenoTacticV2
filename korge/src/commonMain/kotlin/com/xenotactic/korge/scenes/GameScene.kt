@@ -1,7 +1,7 @@
 package com.xenotactic.korge.scenes
 
 import com.soywiz.klock.TimeSpan
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korev.Key
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene

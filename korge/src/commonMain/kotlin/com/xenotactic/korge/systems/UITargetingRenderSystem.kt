@@ -1,8 +1,8 @@
 package com.xenotactic.korge.systems
 
-import com.soywiz.korim.color.Colors
-import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.vector.StrokeInfo
+import korlibs.image.color.Colors
+import korlibs.math.geom.Point
+import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.gamelogic.components.*

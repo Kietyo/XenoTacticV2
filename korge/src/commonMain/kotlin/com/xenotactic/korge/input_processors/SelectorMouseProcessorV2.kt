@@ -11,9 +11,9 @@ import com.soywiz.korge.view.alpha
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
-import com.soywiz.korim.color.Colors
-import com.soywiz.korma.geom.MPoint
-import com.soywiz.korma.geom.Point
+import korlibs.image.color.Colors
+import korlibs.math.geom.MPoint
+import korlibs.math.geom.Point
 import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.state.DeadUIZonesState

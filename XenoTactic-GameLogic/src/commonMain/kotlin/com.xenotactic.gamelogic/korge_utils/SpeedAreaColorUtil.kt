@@ -1,8 +1,8 @@
 package com.xenotactic.gamelogic.korge_utils
 
 import com.soywiz.kmem.clamp
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.color.RGBA
+import korlibs.image.color.MaterialColors
+import korlibs.image.color.RGBA
 import com.soywiz.korma.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.model.MapEntity
 import kotlin.math.floor

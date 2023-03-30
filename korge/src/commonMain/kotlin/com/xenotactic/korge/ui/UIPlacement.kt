@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.UIVerticalStack
 import com.soywiz.korge.ui.uiButton
@@ -9,7 +9,7 @@ import com.soywiz.korge.ui.uiWindow
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.addTo
 import com.soywiz.korge.view.centerOnStage
-import com.soywiz.korio.async.AsyncSignal
+import korlibs.io.async.AsyncSignal
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit

@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onScroll
 import com.soywiz.korge.input.onUpOutside
@@ -14,10 +14,10 @@ import com.soywiz.korge.view.container
 import com.soywiz.korge.view.scaleWhileMaintainingAspect
 import com.soywiz.korge.view.solidRect
 import com.soywiz.korge.view.text
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.RGBA
-import com.soywiz.korio.async.Signal
-import com.soywiz.korio.async.launchImmediately
+import korlibs.image.color.Colors
+import korlibs.image.color.RGBA
+import korlibs.io.async.Signal
+import korlibs.io.async.launchImmediately
 import com.xenotactic.korge.korge_utils.isScrollDown
 import com.xenotactic.korge.korge_utils.isScrollUp
 import kotlinx.coroutines.Dispatchers

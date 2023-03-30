@@ -1,7 +1,7 @@
 package com.xenotactic.korge.daos
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korio.file.std.resourcesVfs
+import korlibs.logger.Logger
+import korlibs.io.file.std.resourcesVfs
 import com.xenotactic.gamelogic.korge_utils.decodeJson
 import com.xenotactic.gamelogic.model.PlayerData
 import kotlinx.coroutines.sync.Mutex

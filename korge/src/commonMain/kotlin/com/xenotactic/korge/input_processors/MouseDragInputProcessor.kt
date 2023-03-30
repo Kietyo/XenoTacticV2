@@ -11,7 +11,7 @@ import com.soywiz.korge.view.View
 import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.xy
 
-import com.soywiz.korma.geom.MPoint
+import korlibs.math.geom.MPoint
 
 import com.xenotactic.korge.engine.EComponent
 

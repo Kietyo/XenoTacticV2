@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.test_utils
 
-import com.soywiz.korio.async.runBlockingNoSuspensions
+import korlibs.io.async.runBlockingNoSuspensions
 import com.soywiz.korio.file.VfsFile
 
 

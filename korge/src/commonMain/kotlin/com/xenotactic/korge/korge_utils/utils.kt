@@ -3,9 +3,9 @@ package com.xenotactic.korge.korge_utils
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.alignTopToBottomOf
 import com.soywiz.korge.view.util.distributeEvenlyVertically
-import com.soywiz.korma.geom.Angle
+import korlibs.math.geom.Angle
 
-import com.soywiz.korma.geom.radians
+import korlibs.math.geom.radians
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.GRectInt

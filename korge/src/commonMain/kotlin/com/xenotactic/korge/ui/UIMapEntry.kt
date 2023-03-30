@@ -1,6 +1,6 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.soywiz.korge.input.MouseEvents
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onOut
@@ -15,8 +15,8 @@ import com.soywiz.korge.view.alpha
 import com.soywiz.korge.view.centerOn
 import com.soywiz.korge.view.roundRect
 import com.soywiz.korge.view.solidRect
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.Signal
+import korlibs.image.color.Colors
+import korlibs.io.async.Signal
 import com.xenotactic.gamelogic.model.GameMap
 import kotlin.math.min
 

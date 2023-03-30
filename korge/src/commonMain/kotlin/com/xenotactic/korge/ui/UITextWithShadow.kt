@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ui
 
 import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
+import korlibs.image.color.Colors
 import com.xenotactic.gamelogic.utils.GlobalResources
 
 class UITextWithShadow(

@@ -15,13 +15,13 @@ import com.soywiz.korge.view.roundRect
 import com.soywiz.korge.view.text
 import com.soywiz.korge.view.visible
 import com.soywiz.korge.view.xy
-import com.soywiz.korim.color.ColorTransform
-import com.soywiz.korim.color.Colors
+import korlibs.image.color.ColorTransform
+import korlibs.image.color.Colors
 import com.soywiz.korim.format.PNG
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent

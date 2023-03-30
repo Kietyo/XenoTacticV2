@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.model
 
-import com.soywiz.korma.geom.Angle
+import korlibs.math.geom.Angle
 import kotlin.math.sqrt
 
 data class IPoint(val x: Double, val y: Double) {

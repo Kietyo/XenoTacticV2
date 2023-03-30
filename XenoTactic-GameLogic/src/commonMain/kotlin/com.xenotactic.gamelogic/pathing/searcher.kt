@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.pathing
 
 import com.soywiz.korma.annotations.KormaValueApi
-import com.soywiz.korma.geom.*
+import korlibs.math.geom.*
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.getIntersectionPointsOfLineSegmentAndCircle

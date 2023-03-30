@@ -1,8 +1,8 @@
 package com.xenotactic.korge.scenes
 
 import MapVerificationResult
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.klogger.Logger
+import korlibs.datastructure.iterators.parallelMap
+import korlibs.logger.Logger
 import com.soywiz.korev.Key
 import com.soywiz.korev.KeyEvent
 import com.soywiz.korge.input.onClick

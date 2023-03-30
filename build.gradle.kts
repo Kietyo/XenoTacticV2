@@ -11,18 +11,21 @@ buildscript {
 
     dependencies {
         classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+
+//        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+//        classpath("korlibs.korge:korlibs.korge.gradle.plugin:$korgePluginVersion")
 //        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
 //        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
     }
 }
 
-tasks{
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs += listOf("-Xskip-prerelease-check")
-        }
-    }
-}
+//tasks{
+//    withType<KotlinCompile> {
+//        kotlinOptions {
+//            freeCompilerArgs += listOf("-Xskip-prerelease-check")
+//        }
+//    }
+//}
 
 repositories {
     mavenCentral()

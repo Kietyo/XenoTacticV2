@@ -1,6 +1,6 @@
 package solver
 
-import com.soywiz.klogger.Logger
+import korlibs.logger.Logger
 import com.xenotactic.gamelogic.globals.COUNTERS
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple

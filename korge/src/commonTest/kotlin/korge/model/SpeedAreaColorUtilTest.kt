@@ -1,6 +1,6 @@
 package korge.model
 
-import com.soywiz.korim.color.MaterialColors
+import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 import kotlin.test.Test
 import kotlin.test.assertEquals
