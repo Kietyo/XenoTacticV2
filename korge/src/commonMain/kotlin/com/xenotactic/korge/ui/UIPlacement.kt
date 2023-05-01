@@ -48,7 +48,7 @@ class UIPlacement(
 
         placementContainer = uiVerticalStack {
             uiButton {
-                textSize = 12.0
+                textSize = 12f
                 text = "View rock counters"
                 onClick {
                     onButtonClick(UIPlacementButton.VIEW_ROCK_COUNTERS)

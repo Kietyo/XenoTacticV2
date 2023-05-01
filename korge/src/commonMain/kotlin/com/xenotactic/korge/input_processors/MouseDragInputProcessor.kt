@@ -107,7 +107,7 @@ data class MouseDragInputProcessor(
         }
     }
 
-    private val currentPosition = Point()
+    private var currentPosition = Point()
 
     var startX = 0f
     var startY = 0f
@@ -159,7 +159,7 @@ data class MouseDragInputProcessor(
 
         require(state != MouseDragStateType.UNKNOWN)
 
-        currentPosition.copyFrom(views.globalMousePos)
+        currentPosition = views.globalMousePos
 
         when (state) {
             MouseDragStateType.START -> {
@@ -201,15 +201,16 @@ data class MouseDragInputProcessor(
         val state = getState(event)
         val view = view
         if (state == MouseDragStateType.START) {
-            info.viewStartXY.copyFrom(view.pos)
+            info.viewStartXY = view.pos
+
         }
         //println("localDXY=${info.localDX(view)},${info.localDY(view)}")
-        info.viewPrevXY.copyFrom(view.pos)
-        info.viewNextXY.setTo(
+        info.viewPrevXY = view.pos
+        info.viewNextXY = Point(
             info.viewStartX + info.localDX(view),
             info.viewStartY + info.localDY(view)
         )
-        info.viewDeltaXY.setTo(info.viewNextX - info.viewPrevX, info.viewNextY - info.viewPrevY)
+        info.viewDeltaXY = Point(info.viewNextX - info.viewPrevX, info.viewNextY - info.viewPrevY)
         if (autoMove) {
             view.xy(info.viewNextXY)
         }

@@ -14,6 +14,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
 
     fun toInt() = value.toInt()
     fun toDouble() = value
+    fun toFloat() = value.toFloat()
+
     operator fun plus(other: GameUnit): GameUnit {
         return GameUnit(value + other.value)
     }
@@ -66,8 +68,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return value.compareTo(o.toDouble())
     }
 
-    fun toWorldUnit(gridSize: Double): WorldUnit {
-        return WorldUnit(value * gridSize)
+    fun toWorldUnit(gridSize: Number): WorldUnit {
+        return WorldUnit(value * gridSize.toDouble())
     }
 
     infix fun tup(gridYInt: GameUnit): GameUnitTuple = GameUnitTuple(this, gridYInt)

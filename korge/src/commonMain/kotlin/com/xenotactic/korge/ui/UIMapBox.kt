@@ -30,9 +30,9 @@ inline fun Container.uiMapBox(
 class UIMapBox(
     gameMap: GameMap,
     val boxWidth: Double, val boxHeight: Double,
-    val gameMapGridSize: Double = 25.0,
-    val paddingTopAndBottom: Double = 5.0,
-    val paddingLeftAndRight: Double = 5.0,
+    val gameMapGridSize: Float = 25f,
+    val paddingTopAndBottom: Float = 5f,
+    val paddingLeftAndRight: Float = 5f,
     calculateMapPath: Boolean = false
 ) : Container() {
 

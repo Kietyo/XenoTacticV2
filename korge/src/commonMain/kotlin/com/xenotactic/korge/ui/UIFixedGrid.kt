@@ -39,18 +39,18 @@ fun Container.uiFixedGrid(
 class UIFixedGrid(
     val maxColumns: Int,
     val maxRows: Int,
-    gridWidth: Double,
-    gridHeight: Double,
-    val entryPaddingHorizontal: Double,
-    val entryPaddingVertical: Double,
-    initialEntries: List<(x: Int, y: Int, width: Double, height: Double) -> Container> = emptyList(),
-    val defaultInitializerFn: (x: Int, y: Int, width: Double, height: Double) -> View = EMPTY_BOX_FN,
+    gridWidth: Number,
+    gridHeight: Number,
+    val entryPaddingHorizontal: Number,
+    val entryPaddingVertical: Number,
+    initialEntries: List<(x: Int, y: Int, width: Float, height: Float) -> Container> = emptyList(),
+    val defaultInitializerFn: (x: Int, y: Int, width: Float, height: Float) -> View = EMPTY_BOX_FN,
     backgroundColor: RGBA = Colors.DARKMAGENTA
 ) : Container() {
     val gridEntryViewWidth =
-        (gridWidth - entryPaddingHorizontal * (maxColumns + 1)) / maxColumns
+        (gridWidth.toFloat() - entryPaddingHorizontal.toFloat() * (maxColumns + 1)) / maxColumns
     val gridEntryViewHeight =
-        (gridHeight - entryPaddingVertical * (maxRows + 1)) / maxRows
+        (gridHeight.toFloat() - entryPaddingVertical.toFloat() * (maxRows + 1)) / maxRows
 
     init {
         this.solidRect(gridWidth, gridHeight, color = backgroundColor)
@@ -72,11 +72,11 @@ class UIFixedGrid(
         val currView = coordToView[point]!!
         currView.removeFromParent()
         val scaledView = view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
-            gridEntryViewWidth, gridEntryViewHeight
+            gridEntryViewWidth.toDouble(), gridEntryViewHeight.toDouble()
         ))
         scaledView.addTo(gridEntryContainer)
-        scaledView.x = calculateXPosition(x).toFloat()
-        scaledView.y = calculateYPosition(y).toFloat()
+        scaledView.x = calculateXPosition(x)
+        scaledView.y = calculateYPosition(y)
         coordToView[point] = scaledView
     }
 
@@ -99,12 +99,12 @@ class UIFixedGrid(
         }
     }
 
-    private fun calculateXPosition(x: Int): Double {
-        return x * gridEntryViewWidth + (x + 1) * entryPaddingHorizontal
+    private fun calculateXPosition(x: Int): Float {
+        return x * gridEntryViewWidth + (x + 1) * entryPaddingHorizontal.toFloat()
     }
 
-    private fun calculateYPosition(y: Int): Double {
-        return y * gridEntryViewHeight + (y + 1) * entryPaddingVertical
+    private fun calculateYPosition(y: Int): Float {
+        return y * gridEntryViewHeight + (y + 1) * entryPaddingVertical.toFloat()
     }
 
     companion object {

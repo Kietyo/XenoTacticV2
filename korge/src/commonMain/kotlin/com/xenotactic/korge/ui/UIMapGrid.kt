@@ -15,8 +15,8 @@ inline fun Container.uiMapGrid(
     maxRows: Int,
     gameMapViewWidth: Double,
     gameMapViewHeight: Double,
-    paddingHorizontal: Double,
-    paddingVertical: Double,
+    paddingHorizontal: Float,
+    paddingVertical: Float,
     gameMaps: List<GameMap>
 ): UIMapGrid = UIMapGrid(
     eventBus,
@@ -48,8 +48,8 @@ class UIMapGrid(
     val maxRows: Int,
     val gameMapViewWidth: Double,
     val gameMapViewHeight: Double,
-    val entryPaddingHorizontal: Double,
-    val entryPaddingVertical: Double,
+    val entryPaddingHorizontal: Float,
+    val entryPaddingVertical: Float,
     val gameMaps: List<GameMap>
 ) : Container() {
     init {

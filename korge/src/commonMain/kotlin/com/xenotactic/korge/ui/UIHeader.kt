@@ -34,20 +34,20 @@ class UIHeader(
     val sectionToTextMap = mutableMapOf<UIHeaderSection, Text>()
 
     init {
-        val HEADER_TITLE_PADDING_LEFT = 10.0
-        val PROFILE_PADDING_TOP_AND_BOTTOM = 10.0
-        val PROFILE_PADDING_RIGHT = 5.0
+        val HEADER_TITLE_PADDING_LEFT = 10f
+        val PROFILE_PADDING_TOP_AND_BOTTOM = 10f
+        val PROFILE_PADDING_RIGHT = 5f
 
         val headerSection = this.solidRect(
             headerWidth, headerHeight,
             color = Colors.BROWN
         )
-        this.text(userName, textSize = 30.0) {
+        this.text(userName, textSize = 30f) {
             this.centerYOn(headerSection)
             this.x += HEADER_TITLE_PADDING_LEFT
         }
 
-        val headerTextSize = 20.0
+        val headerTextSize = 20f
         val textSpacing = 50.0
         val textWidth = 75.0
 

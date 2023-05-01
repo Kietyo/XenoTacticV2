@@ -44,11 +44,11 @@ enum class BoardType {
 }
 
 data class UIMapSettings(
-    val gridSize = GRID_SIZE,
-    val borderRatio = BORDER_RATIO,
-    val gridLinesRatio = GRID_LINES_RATIO,
-    val gridNumbersRatio = GRID_NUMBERS_RATIO,
-    val pathLinesRatio = PATH_LINES_RATIO,
+    val gridSize: Float = GRID_SIZE,
+    val borderRatio: Float = BORDER_RATIO,
+    val gridLinesRatio: Float = GRID_LINES_RATIO,
+    val gridNumbersRatio: Float = GRID_NUMBERS_RATIO,
+    val pathLinesRatio: Float = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
     val boardType: BoardType = BoardType.CHECKERED_1X1,
 ) {
@@ -59,7 +59,7 @@ data class UIMapSettings(
 }
 
 val ENTITY_TEXT_FONT = BitmapFont(
-    font = DefaultTtfFont, 30.0, effect = BitmapEffect(
+    font = DefaultTtfFont, 30f, effect = BitmapEffect(
         //                        dropShadowX = 1,
         //                        dropShadowY = 1,
         //                        dropShadowRadius = 1,
@@ -261,10 +261,10 @@ class UIMap(
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
                 for (i in 0..gameMap.width) {
-                    this.line(Point(i * _gridSize, 0.0), Point(i * _gridSize, gameMap.height.value * _gridSize))
+                    this.line(Point(i * _gridSize, 0f), Point(i * _gridSize, gameMap.height.toFloat() * _gridSize))
                 }
                 for (j in 0..gameMap.height) {
-                    this.line(Point(0.0, j * _gridSize), Point(gameMap.width.value * _gridSize, j * _gridSize))
+                    this.line(Point(0f, j * _gridSize), Point(gameMap.width.toFloat() * _gridSize, j * _gridSize))
                 }
             }
         }

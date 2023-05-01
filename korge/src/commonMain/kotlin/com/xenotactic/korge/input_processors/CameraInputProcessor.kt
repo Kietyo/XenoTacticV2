@@ -6,8 +6,12 @@ import korlibs.event.MouseEvent
 import korlibs.korge.view.View
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.model.IPoint
+import com.xenotactic.gamelogic.utils.minus
+import com.xenotactic.gamelogic.utils.times
+import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus
+import korlibs.math.geom.Scale
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -128,21 +132,22 @@ class CameraInputProcessor(val view: View, val engine: Engine){
     val MAX_ZOOM_OUT = 0.2
 
     fun zoomOutCamera() {
-        val newZoomFactor = max(MAX_ZOOM_OUT, view.scale - ZOOM_DELTA)
+        val newZoomFactor = max(MAX_ZOOM_OUT, view.scale.avgD - ZOOM_DELTA)
         setZoomFactor(newZoomFactor)
     }
 
     fun zoomInCamera() {
-        val newZoomFactor = min(1.5, view.scale + ZOOM_DELTA)
+        val newZoomFactor = min(1.5, view.scale.avgD + ZOOM_DELTA)
         setZoomFactor(newZoomFactor)
     }
 
     fun setZoomFactor(newZoomFactor: Double) {
         val prevZoomFactor = view.scale
-        view.scale = newZoomFactor
+        view.scale = newZoomFactor.toScale()
 
         // Make the view re-center after scaling
         view.x += (view.width * (prevZoomFactor - newZoomFactor)) / 2
         view.y += (view.height * (prevZoomFactor - newZoomFactor)) / 2
     }
 }
+

@@ -11,7 +11,7 @@ import korlibs.korge.view.align.*
 class UITowerEntry: Container() {
     init {
         val solidRect = solidRect(250, 400, MaterialColors.BROWN_300)
-        val padding = 15.0
+        val padding = 15f
 
         val tower = createUIEntityContainerForTower(
             220.toWorldUnit(), 220.toWorldUnit()

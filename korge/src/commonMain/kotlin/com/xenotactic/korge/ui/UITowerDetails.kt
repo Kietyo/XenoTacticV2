@@ -143,7 +143,7 @@ class UITowerDetails(
                     alignLeftToRightOf(damageIcon, iconPadding)
                 }
 
-                val textSize = 25.0
+                val textSize = 25f
 
                 val damageUpgradesText =
                     text(

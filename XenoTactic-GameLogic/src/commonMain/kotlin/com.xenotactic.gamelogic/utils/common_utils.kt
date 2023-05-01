@@ -2,7 +2,6 @@ package com.xenotactic.gamelogic.utils
 
 import korlibs.math.geom.Angle
 
-
 import korlibs.math.geom.radians
 import com.xenotactic.ecs.AbstractEntity
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
@@ -199,8 +198,6 @@ fun getIntersectionPointsOfLineEquationFromPointsAndCircle(
     )
 }
 
-
-
 fun getIntersectionPointsOfHorizontalLineAndCircle(
     b: Double, circleCenter: IPoint,
     radius: Double
@@ -363,11 +360,6 @@ fun abs(f1: Float): Float {
     return if (f1 < 0) -f1 else f1
 }
 
-
-
-
-
-
 fun toWorldCoordinates(
     gridSize: Double, gameUnitPoint: GameUnitTuple, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ): Pair<WorldUnit, WorldUnit> =
@@ -391,7 +383,7 @@ fun toWorldCoordinates(
 fun toWorldUnit(gridSize: Double, value: Double) = value.toGameUnit().toWorldUnit(gridSize)
 
 fun toWorldDimensions(width: GameUnit, height: GameUnit, gridSize: Number) =
-    Pair(WorldUnit(width.value * gridSize), WorldUnit(height.value * gridSize.toDouble()))
+    Pair(WorldUnit(width.value * gridSize.toDouble()), WorldUnit(height.value * gridSize.toDouble()))
 
 fun toWorldDimensions(entity: MapEntity, gridSize: Double) =
     toWorldDimensions(entity.width, entity.height, gridSize)
@@ -430,3 +422,5 @@ fun getCenterPoint(
 infix fun Number.size(right: Number) = Size(this.toFloat(), right.toFloat())
 
 fun Number.toScale() = Scale(this.toFloat())
+operator fun Scale.minus(other: Number) = Scale(this.avg - other.toFloat())
+operator fun Number.times(scale: Scale) = this.toFloat() * scale.avg

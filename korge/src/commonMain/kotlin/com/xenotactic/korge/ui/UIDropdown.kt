@@ -48,9 +48,9 @@ sealed class UIDropdownOption {
 }
 
 data class UIDropdownSettings(
-    val dropdownWidth: Double = 100.0,
-    val dropdownHeight: Double = 20.0,
-    val dropdownEntryTextPaddingLeft: Double = 5.0,
+    val dropdownWidth: Float = 100f,
+    val dropdownHeight: Float = 20f,
+    val dropdownEntryTextPaddingLeft: Float = 5f,
 )
 
 inline fun Container.uiDropdown(
@@ -62,14 +62,14 @@ class UIDropdown(
     initialOptions: List<UIDropdownOption> = emptyList(),
     settings: UIDropdownSettings = UIDropdownSettings(),
 ) : Container() {
-    val dropdownWidth: Double = settings.dropdownWidth
-    val dropdownHeight: Double = settings.dropdownHeight
-    val dropdownEntryTextPaddingLeft: Double = settings.dropdownEntryTextPaddingLeft
+    val dropdownWidth = settings.dropdownWidth
+    val dropdownHeight = settings.dropdownHeight
+    val dropdownEntryTextPaddingLeft = settings.dropdownEntryTextPaddingLeft
 
     fun Container.uiDropDownEntry(
-        entryWidth: Double,
-        entryHeight: Double,
-        textPaddingLeft: Double,
+        entryWidth: Float,
+        entryHeight: Float,
+        textPaddingLeft: Float,
         data: IndexedValue<UIDropdownOption>
     ): UIDropDownEntry = UIDropDownEntry(
         entryWidth, entryHeight, textPaddingLeft,
@@ -77,9 +77,9 @@ class UIDropdown(
     ).addTo(this)
 
     class UIDropDownEntry(
-        val entryWidth: Double,
-        val entryHeight: Double,
-        val textPaddingLeft: Double,
+        val entryWidth: Float,
+        val entryHeight: Float,
+        val textPaddingLeft: Float,
         var data: IndexedValue<UIDropdownOption>
     ) : Container() {
         val entryTextWidth = entryWidth - textPaddingLeft
@@ -92,7 +92,9 @@ class UIDropdown(
                 data.value.text, textSize = entryHeight.toFloat(), color = Colors.BLACK,
                 autoScaling = true
             ) {
-                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(entryTextWidth, entryHeight))
+                scaleWhileMaintainingAspect(
+                    ScalingOption.ByWidthAndHeight(entryTextWidth.toDouble(), entryHeight.toDouble())
+                )
                 alignLeftToLeftOf(dropdownBg, padding = textPaddingLeft)
             }
         }

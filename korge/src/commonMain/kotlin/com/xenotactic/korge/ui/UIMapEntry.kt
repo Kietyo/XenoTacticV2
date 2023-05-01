@@ -19,6 +19,7 @@ import korlibs.image.color.Colors
 import korlibs.io.async.Signal
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.utils.size
+import korlibs.math.geom.RectCorners
 import kotlin.math.min
 
 inline fun Container.uiMapEntry(
@@ -39,10 +40,10 @@ class UIMapEntry(
     _buttonSectionWidthRatio: Double = 0.25
 ) : Container() {
     val MAP_SECTION_WIDTH = _width * _mapSectionWidthRatio
-    val MAP_SECTION_LEFT_RIGHT_PADDING = 5.0
+    val MAP_SECTION_LEFT_RIGHT_PADDING = 5f
 
     val BUTTON_SECTION_WIDTH = _width * _buttonSectionWidthRatio
-    val BUTTON_SECTION_LEFT_RIGHT_PADDING = 3.0
+    val BUTTON_SECTION_LEFT_RIGHT_PADDING = 3f
 
     val OUTLINE_RECT_STROKE_THICKNESS =
         min(MAP_SECTION_LEFT_RIGHT_PADDING, BUTTON_SECTION_LEFT_RIGHT_PADDING)
@@ -82,7 +83,7 @@ class UIMapEntry(
             }
 
         val outlineRect = this.roundRect(
-            _width, _height, 0.0, 0.0, Colors.TRANSPARENT_WHITE, Colors.YELLOW,
+            _width size _height, RectCorners(0.0, 0.0), Colors.TRANSPARENT_WHITE, Colors.YELLOW,
             OUTLINE_RECT_STROKE_THICKNESS
         ).apply {
             alpha(0.0)

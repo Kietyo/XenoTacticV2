@@ -7,6 +7,7 @@ import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.size
 
 fun Container.uiScrollableGrid(
     eventBus: EventBus,
@@ -66,7 +67,7 @@ class UIScrollableGrid(
                 maxColumns
         val gridEntryViewHeight = (gridHeight - entryPaddingVertical * (maxRows - 1)) / maxRows
 
-        this.uiScrollable(gridWidth, gridHeight,
+        this.uiScrollable(gridWidth size  gridHeight,
             config = {
                 this.backgroundColor = MaterialColors.GRAY_600
             }) {

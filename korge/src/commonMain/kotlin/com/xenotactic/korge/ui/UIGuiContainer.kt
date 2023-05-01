@@ -33,11 +33,9 @@ import com.xenotactic.korge.korge_utils.isEmpty
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableGoldState
+import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.state.*
-import korlibs.korge.view.align.alignBottomToTopOf
-import korlibs.korge.view.align.alignLeftToRightOf
-import korlibs.korge.view.align.centerXOn
-import korlibs.korge.view.align.centerYOn
+import korlibs.korge.view.align.*
 
 enum class ViewType {
     NONE,
@@ -117,7 +115,7 @@ class UIGuiContainer(
                     deleteEntitiesButton
                 )
             )
-            scale = 2.0
+            scale = 2.0.toScale()
         }
 
         buttonsPanel.alignBottomToBottomOfWindow()
@@ -143,9 +141,9 @@ class UIGuiContainer(
                 val calculateTextFn = { gold: Int -> gold.toString()}
                 val t = text(
                     calculateTextFn(mutableGoldState.currentGold), font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40.0
+                    textSize = 40f
                 ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
+                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight.toDouble()))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
                 }
