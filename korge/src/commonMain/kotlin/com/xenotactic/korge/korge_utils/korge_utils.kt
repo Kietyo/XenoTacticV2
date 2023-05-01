@@ -144,7 +144,7 @@ fun <T : View> T.alignBottomToBottomOfWindow(
     return this
 }
 
-fun <T : View> T.alignRightToRightOfWindow(padding: Double = 0.0): T {
+fun <T : View> T.alignRightToRightOfWindow(padding: Float = 0f): T {
     //    println("""
     //        refParent.getVisibleLocalArea(): ${refParent.getVisibleLocalArea()}
     //        refParent.getVisibleGlobalArea(): ${refParent.getVisibleGlobalArea()}

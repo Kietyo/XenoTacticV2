@@ -11,8 +11,7 @@ import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
 import korlibs.io.util.toStringDecimal
-import korlibs.korge.view.align.alignLeftToLeftOf
-import korlibs.korge.view.align.centerYOn
+import korlibs.korge.view.align.*
 
 class UITowerDetails(
     damage: Double,

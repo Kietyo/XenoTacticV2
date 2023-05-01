@@ -44,11 +44,11 @@ enum class BoardType {
 }
 
 data class UIMapSettings(
-    val gridSize: Double = GRID_SIZE,
-    val borderRatio: Double = BORDER_RATIO,
-    val gridLinesRatio: Double = GRID_LINES_RATIO,
-    val gridNumbersRatio: Double = GRID_NUMBERS_RATIO,
-    val pathLinesRatio: Double = PATH_LINES_RATIO,
+    val gridSize = GRID_SIZE,
+    val borderRatio = BORDER_RATIO,
+    val gridLinesRatio = GRID_LINES_RATIO,
+    val gridNumbersRatio = GRID_NUMBERS_RATIO,
+    val pathLinesRatio = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
     val boardType: BoardType = BoardType.CHECKERED_1X1,
 ) {

@@ -20,6 +20,7 @@ import com.xenotactic.korge.ui.UIHeaderSection
 import com.xenotactic.korge.ui.UIMapEntry
 import com.xenotactic.korge.ui.uiFixedGrid
 import com.xenotactic.korge.ui.uiMapInspector
+import korlibs.korge.view.align.alignTopToBottomOf
 import kotlinx.coroutines.launch
 import verify
 import kotlin.collections.component1

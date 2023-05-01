@@ -29,6 +29,7 @@ import com.xenotactic.korge.ui.UIMapOverlay
 import com.xenotactic.korge.ui.UIMapOverlayOutsideClickedEvent
 import com.xenotactic.korge.ui.uiDropdown
 import com.xenotactic.korge.ui.uiFixedGrid
+import korlibs.math.geom.Size
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import pathing.PathFinder
@@ -75,13 +76,16 @@ class GoldensViewerScene : Scene() {
             10.0,
         )
         val pageDropdown = this.uiDropdown()
-        val prevButton = this.uiButton(width = 50.0, height = 20.0, label = "Prev") {
+        val prevButton = this.uiButton(
+            size = Size(50.0, 20.0),
+            label = "Prev") {
             alignLeftToRightOf(pageDropdown)
             onClick {
                 pageDropdown.previousEntry()
             }
         }
-        val nextButton = this.uiButton(width = 50.0, height = 20.0, label = "Next") {
+        val nextButton = this.uiButton(
+            size = Size(50.0, 20.0), label = "Next") {
             alignLeftToRightOf(prevButton)
             onClick {
                 pageDropdown.nextEntry()

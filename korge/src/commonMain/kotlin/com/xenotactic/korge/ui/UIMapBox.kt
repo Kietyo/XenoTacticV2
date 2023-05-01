@@ -3,7 +3,7 @@ package com.xenotactic.korge.ui
 import korlibs.logger.Logger
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
-import korlibs.korge.view.centerOn
+import korlibs.korge.view.align.centerOn
 import korlibs.korge.view.container
 import korlibs.korge.view.image
 import korlibs.korge.view.renderToBitmap
@@ -12,6 +12,7 @@ import korlibs.image.color.Colors
 import korlibs.io.async.launch
 import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.scenes.VIEWS_INSTANCE
 import kotlinx.coroutines.GlobalScope
 import pathing.PathFinder
@@ -70,7 +71,7 @@ class UIMapBox(
 
         val mapScale = min(scaledByHeight, scaledByWidth)
 
-        mapContainer.scale = mapScale
+        mapContainer.scale = mapScale.toScale()
         mapContainer.removeChildren()
         mapContainer.apply {
             UIMap(

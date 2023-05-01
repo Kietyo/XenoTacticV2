@@ -19,7 +19,7 @@ class RootScene(
     override suspend fun SContainer.sceneInit() {
         VIEWS_INSTANCE = views
 
-        this.text("Loading...", textSize = 50.0).centerOnStage()
+        this.text("Loading...", textSize = 50f).centerOnStage()
 
 //        val test = resourcesVfs["test.txt"]
 //

@@ -13,7 +13,10 @@ import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
-
+import com.xenotactic.gamelogic.utils.size
+import korlibs.korge.view.align.alignBottomToBottomOf
+import korlibs.korge.view.align.centerOn
+import korlibs.korge.view.align.centerXOn
 
 @OptIn(KorgeExperimental::class)
 class UIEditorButtonsV2(
@@ -77,7 +80,7 @@ class UIEditorButtonsV2(
                     mouseDragInputProcessor.adjustSettings {
                         isEnabled = false
                     }
-                    baseView.uiWindow("Resize Map", 150.0, 150.0) {
+                    baseView.uiWindow("Resize Map", 150.0 size 150.0) {
                         val thisWindow = it
                         uiVerticalStack {
                             uiText("Width:")

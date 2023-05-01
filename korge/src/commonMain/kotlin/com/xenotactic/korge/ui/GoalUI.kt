@@ -25,8 +25,10 @@ import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.gamelogic.utils.toScale
 import korlibs.image.text.TextAlignment
 import korlibs.math.geom.RectCorners
+import korlibs.math.geom.Size
 
 class GoalUI(val view: Container, val eventBus: EventBus) {
     val goalContainer: UIContainer
@@ -66,7 +68,7 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
             for (i in 0 until 3) {
                 uiContainer {
                     val currImage = this.image(rankBitmaps[i]).apply {
-                        setSizeScaled(64.0, 64.0)
+                        scaledSize = Size(64, 64)
                     }
                     val currText = this.text(text[i], alignment = TextAlignment.CENTER)
                     currText.y += 64f + _textPaddingFromGoalImage
@@ -145,7 +147,7 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
     fun reSizeernal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
         goalContainer.xy(visibleLocalArea.xD, 50.0)
-        goalContainer.scale = 0.75
+        goalContainer.scale = 0.75.toScale()
         //        goalContainer.x += bronzeText!!.width / 2
     }
 

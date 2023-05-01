@@ -390,8 +390,8 @@ fun toWorldCoordinates(
 
 fun toWorldUnit(gridSize: Double, value: Double) = value.toGameUnit().toWorldUnit(gridSize)
 
-fun toWorldDimensions(width: GameUnit, height: GameUnit, gridSize: Double) =
-    Pair(WorldUnit(width.value * gridSize), WorldUnit(height.value * gridSize))
+fun toWorldDimensions(width: GameUnit, height: GameUnit, gridSize: Number) =
+    Pair(WorldUnit(width.value * gridSize), WorldUnit(height.value * gridSize.toDouble()))
 
 fun toWorldDimensions(entity: MapEntity, gridSize: Double) =
     toWorldDimensions(entity.width, entity.height, gridSize)

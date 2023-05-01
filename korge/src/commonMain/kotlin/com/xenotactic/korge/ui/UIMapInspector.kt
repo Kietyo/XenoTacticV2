@@ -11,8 +11,8 @@ import korlibs.korge.view.align.alignLeftToLeftOf
 import korlibs.korge.view.align.alignLeftToRightOf
 import korlibs.korge.view.align.alignTopToBottomOf
 import korlibs.korge.view.align.alignTopToTopOf
-import korlibs.korge.view.centerOn
-import korlibs.korge.view.centerXOn
+import korlibs.korge.view.align.centerOn
+import korlibs.korge.view.align.centerXOn
 import korlibs.korge.view.container
 import korlibs.korge.view.solidRect
 import korlibs.korge.view.text
@@ -21,6 +21,8 @@ import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.mapid.MapToId
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.size
+import korlibs.math.geom.Size
 
 inline fun Container.uiMapInspector(): UIMapInspector =
     UIMapInspector().addTo(this)
@@ -51,7 +53,8 @@ class UIMapInspector(
 
     lateinit var mapSection: UIMapBox
 
-    val content = this.uiScrollable(width = INNER_ELEMENT_WIDTH, 200.0,
+    val content = this.uiScrollable(
+        size = Size(INNER_ELEMENT_WIDTH, 200.0),
         config = {
             this.backgroundColor = Colors.TRANSPARENT_WHITE
         })
@@ -88,12 +91,12 @@ class UIMapInspector(
         val sectionButtonsContainer = this.container {
             val sectionButton1 = this.uiButton(
                 "Details",
-                sectionButtonWidth, SECTION_BUTTONS_HEIGHT,
+                size = sectionButtonWidth size SECTION_BUTTONS_HEIGHT,
             )
 
             val sectionButton2 = this.uiButton(
                 "Scores",
-                sectionButtonWidth, SECTION_BUTTONS_HEIGHT,
+                size = sectionButtonWidth size SECTION_BUTTONS_HEIGHT,
             )
 
             //                val sectionButton1 = this.solidRect(
@@ -114,7 +117,7 @@ class UIMapInspector(
         content.alignTopToBottomOf(sectionButtonsContainer, PADDING_TOP)
 
 //        val text("Map ID: ${MapToId.calculateId(gameMap)}", textSize = 10.0)
-        mapIdText = text("Map ID: asdfasdfasdfasdfsdf", textSize = 10.0) {
+        mapIdText = text("Map ID: asdfasdfasdfasdfsdf", textSize = 10f) {
             alignLeftToLeftOf(mapInspectorBackground, PADDING_LEFT_AND_RIGHT)
             alignBottomToBottomOf(mapInspectorBackground, PADDING_BOTTOM)
             visible(false)

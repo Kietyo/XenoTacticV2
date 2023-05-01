@@ -14,7 +14,7 @@ import korlibs.korge.view.xy
 import korlibs.math.geom.MPoint
 
 import com.xenotactic.korge.engine.EComponent
-
+import korlibs.math.geom.Point
 
 fun DraggableInfo.asString(): String {
     return """
@@ -107,10 +107,10 @@ data class MouseDragInputProcessor(
         }
     }
 
-    private val currentPosition = MPoint()
+    private val currentPosition = Point()
 
-    var startX = 0.0
-    var startY = 0.0
+    var startX = 0f
+    var startY = 0f
 
     private var dragging = false
 

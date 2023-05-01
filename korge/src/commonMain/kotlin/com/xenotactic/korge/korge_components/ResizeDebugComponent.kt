@@ -13,7 +13,7 @@ import korlibs.korge.view.xy
 import com.xenotactic.korge.korge_utils.getReferenceParent
 
 class ResizeDebugComponent(val view: Container) {
-    val text: Text = view.text("", textSize = 12.0)
+    val text: Text = view.text("", textSize = 12f)
 
     init {
         text.text = getText()

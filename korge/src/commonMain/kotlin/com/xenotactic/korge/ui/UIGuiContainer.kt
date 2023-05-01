@@ -34,6 +34,10 @@ import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.korge.state.*
+import korlibs.korge.view.align.alignBottomToTopOf
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.centerXOn
+import korlibs.korge.view.align.centerYOn
 
 enum class ViewType {
     NONE,

@@ -26,6 +26,7 @@ import com.xenotactic.korge.ui.UIPathText
 import com.xenotactic.korge.ui.UIPlacementButton
 import com.xenotactic.korge.ui.uiActiveTextNotifier
 import com.xenotactic.korge.ui.uiPlacement
+import korlibs.korge.view.align.centerXOnStage
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 

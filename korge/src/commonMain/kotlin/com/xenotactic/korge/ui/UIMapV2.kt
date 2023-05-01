@@ -32,11 +32,11 @@ import com.xenotactic.gamelogic.state.GameMapPathState
 import kotlin.ranges.until
 
 data class UIMapSettingsV2(
-    val gridSize: Double = GRID_SIZE,
-    val borderRatio: Double = BORDER_RATIO,
-    val gridLinesRatio: Double = GRID_LINES_RATIO,
-    val gridNumbersRatio: Double = GRID_NUMBERS_RATIO,
-    val pathLinesRatio: Double = PATH_LINES_RATIO,
+    val gridSize: Float = GRID_SIZE,
+    val borderRatio: Float = BORDER_RATIO,
+    val gridLinesRatio: Float = GRID_LINES_RATIO,
+    val gridNumbersRatio: Float = GRID_NUMBERS_RATIO,
+    val pathLinesRatio: Float = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
     val boardType: BoardType = BoardType.CHECKERED_1X1,
 ) {
@@ -124,11 +124,11 @@ class UIMapV2(
         val heightDiffWorldUnit = (event.newMapHeight - event.oldMapHeight).toWorldUnit(gridSize)
         gameWorld.uiEntityFamily.getSequence().forEach {
             val uiMapEntityComponent = gameWorld.uiEntityViewComponentContainer.getComponent(it)
-            uiMapEntityComponent.entityView.y += heightDiffWorldUnit.value
+            uiMapEntityComponent.entityView.y += heightDiffWorldUnit.toFloat()
             val uiMapEntityTextComponent =
                 gameWorld.uiMapEntityTextComponentContainer.getComponentOrNull(it)
             if (uiMapEntityTextComponent != null) {
-                uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.value
+                uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.toFloat()
             }
         }
         renderPathLines(gameMapPathState.shortestPath)

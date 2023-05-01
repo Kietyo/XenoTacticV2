@@ -118,19 +118,19 @@ fun createUIEntityContainerForTower(
     uiEntityContainer: Container = Container()): Container {
     uiEntityContainer.image(GlobalResources.TOWER_BASE_SPRITE) {
         smoothing = false
-        scaledWidth = worldWidth.toDouble()
-        scaledHeight = worldHeight.toDouble()
+        scaledWidth = worldWidth.toFloat()
+        scaledHeight = worldHeight.toFloat()
     }
     uiEntityContainer.image(GlobalResources.TOWER_BASE_DETAIL_SPRITE) {
         smoothing = false
-        scaledWidth = worldWidth.toDouble()
-        scaledHeight = worldHeight.toDouble()
+        scaledWidth = worldWidth.toFloat()
+        scaledHeight = worldHeight.toFloat()
     }
     val gunImage = uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
         smoothing = false
         anchor(Anchor.CENTER)
         xy(worldWidth / 2, worldHeight / 2)
-//                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toDouble() * 20.0/32, worldHeight.toDouble() * 8.0/32))
+//                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toFloat() * 20.0/32, worldHeight.toFloat() * 8.0/32))
         scaleWhileMaintainingAspect(
             ScalingOption.ByWidthAndHeight(
                 worldWidth.toDouble(),

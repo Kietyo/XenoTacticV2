@@ -2,22 +2,22 @@ package com.xenotactic.gamelogic.globals
 
 import com.xenotactic.gamelogic.utils.GameUnit
 
-const val GRID_SIZE = 25.0
+const val GRID_SIZE = 25f
 
 // The border will be a ratio of the grid size.
-const val BORDER_RATIO = 0.5
+const val BORDER_RATIO = 0.5f
 
 // Grid lines width based on ratio of the grid size.
-const val GRID_LINES_RATIO = 0.04
+const val GRID_LINES_RATIO = 0.04f
 
 // Size of the grid number text based on the ratio of the grid size.
-const val GRID_NUMBERS_RATIO = 0.5
+const val GRID_NUMBERS_RATIO = 0.5f
 
 // Path lines width based on ratio of the grid size.
-const val PATH_LINES_RATIO = 0.25
+const val PATH_LINES_RATIO = 0.25f
 
 // The width of the line based on the ratio of the grid size.
-const val LINE_WIDTH_RATIO = 0.035
+const val LINE_WIDTH_RATIO = 0.035f
 
 val GAME_WIDTH = GameUnit(20)
 val GAME_HEIGHT = GameUnit(30)

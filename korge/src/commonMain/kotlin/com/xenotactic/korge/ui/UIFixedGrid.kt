@@ -75,8 +75,8 @@ class UIFixedGrid(
             gridEntryViewWidth, gridEntryViewHeight
         ))
         scaledView.addTo(gridEntryContainer)
-        scaledView.x = calculateXPosition(x)
-        scaledView.y = calculateYPosition(y)
+        scaledView.x = calculateXPosition(x).toFloat()
+        scaledView.y = calculateYPosition(y).toFloat()
         coordToView[point] = scaledView
     }
 

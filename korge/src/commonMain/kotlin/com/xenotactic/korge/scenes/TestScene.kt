@@ -13,10 +13,10 @@ class TestScene : Scene() {
         val textBox = this.container {
             val text = this.text("This is a sample test")
             this.line(
-                text.x,
-                text.y + text.scaledHeight,
-                text.scaledWidth,
-                text.y + text.scaledHeight
+                text.x.toDouble(),
+                text.y.toDouble() + text.scaledHeight,
+                text.scaledWidth.toDouble(),
+                text.y.toDouble() + text.scaledHeight
             )
         }
 

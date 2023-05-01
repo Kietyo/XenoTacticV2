@@ -6,7 +6,7 @@ import korlibs.korge.view.Container
 import korlibs.korge.view.ScalingOption
 import korlibs.korge.view.View
 import korlibs.korge.view.addTo
-import korlibs.korge.view.centerOn
+import korlibs.korge.view.align.centerOn
 import korlibs.korge.view.getVisibleGlobalArea
 import korlibs.korge.view.scaleWhileMaintainingAspect
 import korlibs.korge.view.solidRect

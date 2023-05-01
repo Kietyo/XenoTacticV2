@@ -12,12 +12,13 @@ import korlibs.korge.view.addTo
 import korlibs.korge.view.align.alignLeftToRightOf
 import korlibs.korge.view.align.alignTopToTopOf
 import korlibs.korge.view.alpha
-import korlibs.korge.view.centerOn
+import korlibs.korge.view.align.centerOn
 import korlibs.korge.view.roundRect
 import korlibs.korge.view.solidRect
 import korlibs.image.color.Colors
 import korlibs.io.async.Signal
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.size
 import kotlin.math.min
 
 inline fun Container.uiMapEntry(
@@ -61,23 +62,23 @@ class UIMapEntry(
         val buttonsSection = this.solidRect(BUTTON_SECTION_WIDTH, _height, Colors.ROSYBROWN)
         buttonsSection.alignLeftToRightOf(mapSection)
 
-        val buttonStackWidth = BUTTON_SECTION_WIDTH - BUTTON_SECTION_LEFT_RIGHT_PADDING * 2
-        val buttonPaddingHeight = 5.0
+        val buttonStackWidth = (BUTTON_SECTION_WIDTH - BUTTON_SECTION_LEFT_RIGHT_PADDING * 2).toFloat()
+        val buttonPaddingHeight = 5f
         val buttonHeight = (_height - buttonPaddingHeight * (2 + 1)) / 3
 
         val buttonStack =
             this.uiVerticalStack(buttonStackWidth, padding = buttonPaddingHeight) {
-                val playButton = this.uiButton("Play", buttonStackWidth, buttonHeight) {
+                val playButton = this.uiButton("Play", buttonStackWidth size buttonHeight) {
                     this.onClick {
                         onPlayButtonClick(it)
                     }
                 }
-                val saveButton = this.uiButton("Save", buttonStackWidth, buttonHeight) {
+                val saveButton = this.uiButton("Save", buttonStackWidth size buttonHeight) {
                     onClick {
                         onSaveButtonClick(it)
                     }
                 }
-                val deleteButton = this.uiButton("Hide", buttonStackWidth, buttonHeight)
+                val deleteButton = this.uiButton("Hide", buttonStackWidth size buttonHeight)
             }
 
         val outlineRect = this.roundRect(

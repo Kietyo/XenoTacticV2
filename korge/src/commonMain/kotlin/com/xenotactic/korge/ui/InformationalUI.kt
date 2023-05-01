@@ -60,6 +60,6 @@ class InformationalUI(
     private fun reSizeernal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
         val localArea = view.globalToLocal(Point(width, height))
-        pathText.xy(visibleLocalArea.xD, localArea.y - pathText.height)
+        pathText.xy(visibleLocalArea.xD, localArea.yD - pathText.height)
     }
 }

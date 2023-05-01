@@ -40,11 +40,11 @@ class UIActiveTextNotifier(
     private fun afterPointerActionChange() {
         val pointerAction = placementComponent.pointerAction
         if (pointerAction == PointerAction.Inactive) {
-            activeButtonText.alpha = 0.0
+            activeButtonText.alpha = 0f
             return
         }
 
-        activeButtonText.alpha = 1.0
+        activeButtonText.alpha = 1f
         when (pointerAction) {
             PointerAction.Inactive -> TODO()
             is PointerAction.HighlightForPlacement -> {

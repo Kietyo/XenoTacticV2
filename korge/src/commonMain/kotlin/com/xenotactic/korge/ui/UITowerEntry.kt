@@ -6,10 +6,7 @@ import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
-import korlibs.korge.view.align.alignLeftToLeftOf
-import korlibs.korge.view.align.alignTopToBottomOf
-import korlibs.korge.view.align.alignTopToTopOf
-import korlibs.korge.view.align.centerXOn
+import korlibs.korge.view.align.*
 
 class UITowerEntry: Container() {
     init {
@@ -44,7 +41,7 @@ class UITowerEntry: Container() {
             alignRightToRightOf(tower, padding)
         }
 
-        val textSize = 30.0
+        val textSize = 30f
 
         val damageText = text("30", textSize = textSize, color = Colors.BLACK, font = GlobalResources.FONT_ATKINSON_BOLD) {
             smoothing = false

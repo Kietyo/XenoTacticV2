@@ -89,7 +89,7 @@ class UIDropdown(
         init {
             dropdownBg = this.solidRect(entryWidth, entryHeight)
             currentDropdownText = this.text(
-                data.value.text, textSize = entryHeight, color = Colors.BLACK,
+                data.value.text, textSize = entryHeight.toFloat(), color = Colors.BLACK,
                 autoScaling = true
             ) {
                 scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(entryTextWidth, entryHeight))

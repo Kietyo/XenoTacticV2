@@ -11,7 +11,7 @@ import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.ui.UIMapV2
-import korlibs.korge.view.align.align.centerOn
+import korlibs.korge.view.align.centerOn
 
 class SelectionComponentListener(
     val engine: Engine
@@ -27,8 +27,8 @@ class SelectionComponentListener(
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
         val selectionBox = Graphics().addTo(uiEntityContainerComponent.container).apply {
             updateShape {
-                stroke(SELECTION_COLOR, StrokeInfo(6.0)) {
-                    this.rectHole(0.0, 0.0, worldWidth.toFloat(), worldHeight.toFloat())
+                stroke(SELECTION_COLOR, StrokeInfo(6f)) {
+                    this.rectHole(0f, 0f, worldWidth.toFloat(), worldHeight.toFloat())
                 }
             }
             centerOn(uiEntityContainerComponent.container)

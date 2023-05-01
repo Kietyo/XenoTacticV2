@@ -64,7 +64,7 @@ class UIGoldensViewerEntry(
         )
 
         titleView = this.text(
-            gameMapFile.baseName, textSize = TEXT_SECTION_HEIGHT.toDouble(),
+            gameMapFile.baseName, textSize = TEXT_SECTION_HEIGHT.toFloat(),
             color = Colors.WHITE
         ).apply {
             alignLeftToLeftOf(entryTextSection, padding = OUTLINE_RECT_STROKE_THICKNESS)

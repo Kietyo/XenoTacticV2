@@ -7,6 +7,7 @@ import korlibs.korge.view.addTo
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.size
 
 inline fun Container.uiMapGrid(
     eventBus: EventBus,
@@ -55,7 +56,7 @@ class UIMapGrid(
         val mapIterator = gameMaps.iterator()
 
         this.uiScrollable(
-            gameMapViewWidth,
+            gameMapViewWidth size
             gameMapViewHeight,
             config = {
                 this.backgroundColor = MaterialColors.GRAY_600

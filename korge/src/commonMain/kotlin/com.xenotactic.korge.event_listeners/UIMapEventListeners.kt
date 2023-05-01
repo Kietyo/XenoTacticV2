@@ -20,7 +20,8 @@ import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.ui.UIMapV2
-import korlibs.korge.view.align.align.centerOn
+import korlibs.korge.view.align.centerOn
+import korlibs.math.geom.Size
 
 data class RemoveUIEntitiesEvent(
     val entities: Set<EntityId>
@@ -152,8 +153,8 @@ class UIMapEventListeners(
                 MapEntityType.MONSTER -> {
                     UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(uiEntityContainer) {
                         anchor(Anchor.CENTER)
-                        scaledWidth = worldWidth.toDouble()
-                        scaledHeight = worldHeight.toDouble()
+                        scaledWidth = worldWidth.toFloat()
+                        scaledHeight = worldHeight.toFloat()
                     }
                 }
             }
@@ -181,7 +182,7 @@ class UIMapEventListeners(
             if (text != null) {
                 val textView = makeEntityLabelText(text).apply {
                     addTo(uiMap.entityLabelLayer)
-                    scaledHeight = uiMap.gridSize / 2
+                    scaledHeight = uiMap.gridSize.toFloat() / 2
                     scaledWidth = scaledHeight * unscaledWidth / unscaledHeight
                     centerOn(uiEntityContainer)
                 }
@@ -197,8 +198,8 @@ class UIMapEventListeners(
         val spriteContainer = uiMap.monsterLayer.container()
         val uiSprite = UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(spriteContainer) {
             anchor(Anchor.CENTER)
-            scaledWidth = worldWidth.toDouble()
-            scaledHeight = worldHeight.toDouble()
+            scaledWidth = worldWidth.toFloat()
+            scaledHeight = worldHeight.toFloat()
         }
         val healthBar = createHealthBar(sizeComponent.width, maxHealthComponent.maxHealth).apply {
             addTo(spriteContainer)
@@ -213,12 +214,12 @@ class UIMapEventListeners(
 
     private fun createHealthBar(
         diameterGameUnit: GameUnit,
-        maxHealth: Float
+        maxHealth: Number
     ): UIProgressBar {
         val diameter = diameterGameUnit.toWorldUnit(uiMap.gridSize)
         return UIProgressBar(
             Size(diameter.toFloat(), diameter.toFloat() / 4f),
-            current = maxHealth, maximum = maxHealth
+            current = maxHealth.toFloat(), maximum = maxHealth.toFloat()
         ).apply {
             x -= diameter.toFloat() / 2f
             y -= diameter.toFloat() / 5f * 4f

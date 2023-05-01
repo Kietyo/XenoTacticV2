@@ -33,6 +33,9 @@ import com.xenotactic.korge.systems.*
 import com.xenotactic.korge.ui.UIGuiContainer
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.align.centerOnStage
+import korlibs.korge.view.align.centerXOnStage
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 

@@ -4,10 +4,7 @@ import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
-import korlibs.korge.view.align.alignLeftToLeftOf
-import korlibs.korge.view.align.alignLeftToRightOf
-import korlibs.korge.view.align.alignTopToTopOf
-import korlibs.korge.view.align.centerYOn
+import korlibs.korge.view.align.*
 
 class UITooltipDescription(
     towerCost: Int
@@ -17,8 +14,8 @@ class UITooltipDescription(
         val bg = solidRect(200, 100, MaterialColors.YELLOW_100)
         val textColor = Colors.BLACK
 
-        val headerTextSize = 24.0
-        val descriptionTextSize = 20.0
+        val headerTextSize = 24f
+        val descriptionTextSize = 20f
 
         val titleText = text(
             "BASIC TOWER",
@@ -37,9 +34,9 @@ class UITooltipDescription(
                 }
                 text(
                     towerCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40.0, color = textColor
+                    textSize = 40f, color = textColor
                 ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
+                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
                 }
@@ -51,9 +48,9 @@ class UITooltipDescription(
                 }
                 val t = text(
                     "1", font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40.0, color = textColor
+                    textSize = 40f, color = textColor
                 ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
+                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
                 }

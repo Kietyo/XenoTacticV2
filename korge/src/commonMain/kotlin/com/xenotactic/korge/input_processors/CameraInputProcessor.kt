@@ -99,7 +99,7 @@ class CameraInputProcessor(val view: View, val engine: Engine){
             //            val multiplier = 1.0 / zoomFactor
             //            val multiplier = (0.9 / zoomFactor).clamp(0.1, 0.9)
             //            val multiplier = zoomFactor.clamp(0.1, 1.0)
-            val multiplier = sqrt(view.scale)
+            val multiplier = sqrt(view.scale.avgD)
             val deltaX = (screenX.toDouble() - touchedDownX) * multiplier
             val deltaY = (screenY.toDouble() - touchedDownY) * multiplier
 
@@ -107,12 +107,12 @@ class CameraInputProcessor(val view: View, val engine: Engine){
                 IPoint(deltaX, deltaY)
             )
 
-            view.x = newCameraPosition.x
-            view.y = newCameraPosition.y
+            view.x = newCameraPosition.x.toFloat()
+            view.y = newCameraPosition.y.toFloat()
         }
     }
 
-    fun scrolled(amountY: Double) {
+    fun scrolled(amountY: Float) {
         when {
             amountY > -0.5 -> {
                 zoomOutCamera()
