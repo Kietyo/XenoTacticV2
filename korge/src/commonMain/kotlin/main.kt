@@ -7,14 +7,13 @@ import korlibs.image.color.Colors
 import korlibs.image.color.RGBA
 import korlibs.inject.AsyncInjector
 import korlibs.korge.KorgeConfig
-import korlibs.korge.scene.Module
 import korlibs.korge.scene.Scene
 import korlibs.korge.scene.sceneContainer
 import korlibs.korge.view.Views
 import korlibs.korge.view.views
 import korlibs.logger.Logger
 import korlibs.math.geom.Anchor
-import korlibs.math.geom.SizeInt
+import korlibs.math.geom.Size
 import korlibs.render.GameWindow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +21,8 @@ import kotlin.reflect.KClass
 
 object MainModule : Module() {
     override val bgcolor: RGBA = Colors["#2b2b2b"]
-    override val virtualSize: SizeInt = SizeInt(1920, 1080)
-    override val windowSize: SizeInt = SizeInt(1000, 720)
+    override val virtualSize: Size = Size(1920, 1080)
+    override val windowSize: Size = Size(1000, 720)
     override val clipBorders: Boolean = false
     override val mainScene: KClass<out Scene> = RootScene::class
     override val scaleAnchor: Anchor

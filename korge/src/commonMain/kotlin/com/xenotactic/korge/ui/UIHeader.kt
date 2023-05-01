@@ -4,8 +4,8 @@ import korlibs.korge.input.onClick
 import korlibs.korge.view.Container
 import korlibs.korge.view.SolidRect
 import korlibs.korge.view.Text
-import korlibs.korge.view.alignLeftToRightOf
-import korlibs.korge.view.alignRightToRightOf
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignRightToRightOf
 import korlibs.korge.view.centerOn
 import korlibs.korge.view.centerYOn
 import korlibs.korge.view.container

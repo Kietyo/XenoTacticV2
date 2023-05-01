@@ -2,7 +2,6 @@ package com.xenotactic.korge.component_listeners
 
 import korlibs.korge.view.Graphics
 import korlibs.korge.view.addTo
-import korlibs.korge.view.centerOn
 import korlibs.image.color.Colors
 import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.ComponentListener
@@ -12,6 +11,7 @@ import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.ui.UIMapV2
+import korlibs.korge.view.align.align.centerOn
 
 class SelectionComponentListener(
     val engine: Engine
@@ -28,7 +28,7 @@ class SelectionComponentListener(
         val selectionBox = Graphics().addTo(uiEntityContainerComponent.container).apply {
             updateShape {
                 stroke(SELECTION_COLOR, StrokeInfo(6.0)) {
-                    this.rectHole(0.0, 0.0, worldWidth.value, worldHeight.value)
+                    this.rectHole(0.0, 0.0, worldWidth.toFloat(), worldHeight.toFloat())
                 }
             }
             centerOn(uiEntityContainerComponent.container)

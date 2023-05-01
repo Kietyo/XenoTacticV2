@@ -19,6 +19,8 @@ import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
 import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
+import korlibs.korge.view.align.centerOnStage
+import korlibs.korge.view.align.centerXOnStage
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {

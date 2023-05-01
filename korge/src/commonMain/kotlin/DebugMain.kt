@@ -1,3 +1,4 @@
+import com.xenotactic.gamelogic.utils.toScale
 import korlibs.korge.ui.uiButton
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
@@ -8,10 +9,10 @@ import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
 import korlibs.io.file.std.rootLocalVfs
 import korlibs.math.geom.Anchor
-import korlibs.math.geom.SizeInt
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import korlibs.korge.Korge
 import korlibs.korge.KorgeConfig
+import korlibs.math.geom.Size
 import kotlin.jvm.JvmStatic
 
 object DebugMain {
@@ -21,8 +22,8 @@ object DebugMain {
     fun main(args: Array<String>) = runBlockingNoJs {
         Korge(
             KorgeConfig(
-                bgcolor = Colors["#2b2b2b"],
-                virtualSize = SizeInt(512, 512)
+                backgroundColor = Colors["#2b2b2b"],
+                virtualSize = Size(512, 512)
             )
         ) {
 
@@ -91,7 +92,7 @@ object DebugMain {
 //            }
 
             val sprite = UIEightDirectionalSprite(asp).addTo(this) {
-                scale = 4.0
+                scale = 4f.toScale()
                 anchor(Anchor.CENTER)
 //                centerOnXY(0.0, 0.0)
 //                xy(0, 0)
@@ -105,7 +106,7 @@ object DebugMain {
     }
 }
 
-private fun View.centerOnXY(x: Double, y: Double) {
-    this.x = x - scaledWidth / 2.0
-    this.y = y - scaledHeight / 2.0
+private fun View.centerOnXY(x: Float, y: Float) {
+    this.x = x - scaledWidth / 2f
+    this.y = y - scaledHeight / 2f
 }

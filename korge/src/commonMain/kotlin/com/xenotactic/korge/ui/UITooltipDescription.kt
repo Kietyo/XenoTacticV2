@@ -4,6 +4,10 @@ import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignTopToTopOf
+import korlibs.korge.view.align.centerYOn
 
 class UITooltipDescription(
     towerCost: Int

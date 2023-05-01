@@ -6,6 +6,10 @@ import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.align.alignTopToTopOf
+import korlibs.korge.view.align.centerXOn
 
 class UITowerEntry: Container() {
     init {

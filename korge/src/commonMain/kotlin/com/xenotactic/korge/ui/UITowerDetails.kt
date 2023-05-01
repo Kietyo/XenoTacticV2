@@ -11,6 +11,8 @@ import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
 import korlibs.io.util.toStringDecimal
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.centerYOn
 
 class UITowerDetails(
     damage: Double,
@@ -37,7 +39,7 @@ class UITowerDetails(
         val paddingBetweenImageAndText = 15.0
         val rightSection = container {
             val textContainer = container {
-                val textSize = 30.0
+                val textSize = 30f
                 val textPadding = 6.0
                 val damageTextSection = container {
                     val t1 = text(

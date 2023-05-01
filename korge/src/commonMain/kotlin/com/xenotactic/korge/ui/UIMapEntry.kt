@@ -9,8 +9,8 @@ import korlibs.korge.ui.uiButton
 import korlibs.korge.ui.uiVerticalStack
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
-import korlibs.korge.view.alignLeftToRightOf
-import korlibs.korge.view.alignTopToTopOf
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignTopToTopOf
 import korlibs.korge.view.alpha
 import korlibs.korge.view.centerOn
 import korlibs.korge.view.roundRect

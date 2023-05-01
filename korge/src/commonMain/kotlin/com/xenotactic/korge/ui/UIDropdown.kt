@@ -9,7 +9,7 @@ import korlibs.korge.view.ScalingOption
 import korlibs.korge.view.SolidRect
 import korlibs.korge.view.Text
 import korlibs.korge.view.addTo
-import korlibs.korge.view.alignLeftToLeftOf
+import korlibs.korge.view.align.alignLeftToLeftOf
 import korlibs.korge.view.container
 import korlibs.korge.view.scaleWhileMaintainingAspect
 import korlibs.korge.view.solidRect

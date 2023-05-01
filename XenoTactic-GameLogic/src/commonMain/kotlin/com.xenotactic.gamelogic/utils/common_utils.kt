@@ -11,6 +11,8 @@ import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
 import com.xenotactic.gamelogic.pathing.VerticalDirection
+import korlibs.math.geom.Scale
+import korlibs.math.geom.Size
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.pow
@@ -106,8 +108,6 @@ fun String.removeAllIndents(): String {
         it.trimIndent()
     }
 }
-
-
 
 fun rectangleIntersects(a: IRectangleEntity, b: IRectangleEntity): Boolean {
     return a.left < b.right && a.right > b.left &&
@@ -426,3 +426,7 @@ fun getCenterPoint(
         bottomLeftPositionComponent.y + sizeComponent.height / 2.0
     )
 }
+
+infix fun Number.size(right: Number) = Size(this.toFloat(), right.toFloat())
+
+fun Number.toScale() = Scale(this.toFloat())

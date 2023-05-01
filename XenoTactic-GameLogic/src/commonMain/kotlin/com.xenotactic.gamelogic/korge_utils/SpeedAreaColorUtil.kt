@@ -2,7 +2,7 @@ package com.xenotactic.gamelogic.korge_utils
 
 import korlibs.image.color.MaterialColors
 import korlibs.image.color.RGBA
-import korlibs.math.math.roundDecimalPlaces
+import korlibs.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.model.MapEntity
 import korlibs.memory.clamp
 import kotlin.math.floor

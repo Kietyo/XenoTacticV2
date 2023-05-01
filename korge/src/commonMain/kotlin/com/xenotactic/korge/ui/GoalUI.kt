@@ -24,7 +24,9 @@ import korlibs.io.file.std.resourcesVfs
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.utils.size
 import korlibs.image.text.TextAlignment
+import korlibs.math.geom.RectCorners
 
 class GoalUI(val view: Container, val eventBus: EventBus) {
     val goalContainer: UIContainer
@@ -44,7 +46,7 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
             resourcesVfs["medals/Medals256/rank_3.png"].readBitmap(PNG)
         }
 
-        val _textPaddingFromGoalImage = 5.0
+        val _textPaddingFromGoalImage = 5f
         val _borderPadding = 5.0
 
         lateinit var rank1Image: Image
@@ -52,12 +54,10 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
 
         goalContainer = view.uiContainer {
             this.roundRect(
-                192.0,
+                192.0 size
                 64.0 + _textPaddingFromGoalImage + 20.0 + _borderPadding,
-                10.0,
-                10.0,
-                fill = Colors
-                    .BLACK.withAd(0.2)
+                RectCorners(10f, 10f),
+                fill = Colors.BLACK.withAd(0.2)
             )
             val textViews = mutableListOf<Text>()
             val rankImages = mutableListOf<Image>()
@@ -69,8 +69,8 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
                         setSizeScaled(64.0, 64.0)
                     }
                     val currText = this.text(text[i], alignment = TextAlignment.CENTER)
-                    currText.y += 64.0 + _textPaddingFromGoalImage
-                    currText.x += 32.0
+                    currText.y += 64f + _textPaddingFromGoalImage
+                    currText.x += 32f
                     textViews.add(currText)
                     rankImages.add(currImage)
                 }.xy(i * 64.0, _borderPadding)
@@ -96,7 +96,7 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
         //        }
 
         val globalArea = view.getVisibleWindowArea()
-        resizeInternal(globalArea.widthD, globalArea.heightD)
+        reSizeernal(globalArea.widthD, globalArea.heightD)
 
         eventBus.register<UpdatedGoalDataEvent> {
             handleNewGoalDataEvent(it)
@@ -139,10 +139,10 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
     }
 
     fun resized(width: Int, height: Int) {
-        resizeInternal(width.toDouble(), height.toDouble())
+        reSizeernal(width.toDouble(), height.toDouble())
     }
 
-    fun resizeInternal(width: Double, height: Double) {
+    fun reSizeernal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
         goalContainer.xy(visibleLocalArea.xD, 50.0)
         goalContainer.scale = 0.75

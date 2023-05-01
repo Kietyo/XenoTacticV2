@@ -70,12 +70,12 @@ fun <T : View> T.getReferenceParent(): Container {
 }
 
 fun <T : View> T.alignLeftToLeftOfWindow(): T {
-    this.x = getReferenceParent().getVisibleLocalArea().xD
+    this.x = getReferenceParent().getVisibleLocalArea().x
     return this
 }
 
 fun <T : View> T.alignTopToTopOfWindow(): T {
-    this.y = getReferenceParent().getVisibleLocalArea().yD
+    this.y = getReferenceParent().getVisibleLocalArea().y
     return this
 }
 

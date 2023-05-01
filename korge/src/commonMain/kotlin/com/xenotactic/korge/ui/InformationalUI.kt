@@ -9,7 +9,7 @@ import korlibs.korge.view.getVisibleWindowArea
 import korlibs.korge.view.text
 import korlibs.korge.view.xy
 import korlibs.math.geom.Point
-import korlibs.math.math.roundDecimalPlaces
+import korlibs.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.gamelogic.engine.Engine
@@ -26,7 +26,7 @@ class InformationalUI(
     init {
         pathText = view.text("")
         val globalArea = view.getVisibleWindowArea()
-        resizeInternal(globalArea.widthD, globalArea.heightD)
+        reSizeernal(globalArea.widthD, globalArea.heightD)
 
         handlePathChanged()
 
@@ -54,10 +54,10 @@ class InformationalUI(
     }
 
     private fun resized(width: Int, height: Int) {
-        resizeInternal(width.toDouble(), height.toDouble())
+        reSizeernal(width.toDouble(), height.toDouble())
     }
 
-    private fun resizeInternal(width: Double, height: Double) {
+    private fun reSizeernal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
         val localArea = view.globalToLocal(Point(width, height))
         pathText.xy(visibleLocalArea.xD, localArea.y - pathText.height)

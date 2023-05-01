@@ -8,7 +8,7 @@ import korlibs.korge.ui.uiVerticalStack
 import korlibs.korge.ui.uiWindow
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
-import korlibs.korge.view.centerOnStage
+import korlibs.korge.view.align.centerOnStage
 import korlibs.io.async.AsyncSignal
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType

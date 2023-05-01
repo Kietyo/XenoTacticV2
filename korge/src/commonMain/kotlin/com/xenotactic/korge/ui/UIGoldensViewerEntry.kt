@@ -8,10 +8,10 @@ import korlibs.korge.ui.uiButton
 import korlibs.korge.view.Container
 import korlibs.korge.view.ScalingOption
 import korlibs.korge.view.Text
-import korlibs.korge.view.alignBottomToBottomOf
-import korlibs.korge.view.alignLeftToLeftOf
-import korlibs.korge.view.alignRightToRightOf
-import korlibs.korge.view.alignTopToBottomOf
+import korlibs.korge.view.align.alignBottomToBottomOf
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.alignRightToRightOf
+import korlibs.korge.view.align.alignTopToBottomOf
 import korlibs.korge.view.roundRect
 import korlibs.korge.view.scaleWhileMaintainingAspect
 import korlibs.korge.view.solidRect

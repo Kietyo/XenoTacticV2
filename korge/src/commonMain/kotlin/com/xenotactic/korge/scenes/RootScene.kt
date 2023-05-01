@@ -4,7 +4,7 @@ import korlibs.logger.Logger
 import korlibs.korge.scene.Scene
 import korlibs.korge.view.SContainer
 import korlibs.korge.view.Views
-import korlibs.korge.view.centerOnStage
+import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.text
 import com.xenotactic.korge.bridges.MapBridge
 import com.xenotactic.gamelogic.events.EventBus

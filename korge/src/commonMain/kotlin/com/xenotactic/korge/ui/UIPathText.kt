@@ -2,7 +2,7 @@ package com.xenotactic.korge.ui
 
 import korlibs.korge.view.Container
 import korlibs.korge.view.text
-import korlibs.math.math.roundDecimalPlaces
+import korlibs.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 
 class UIPathText : Container() {

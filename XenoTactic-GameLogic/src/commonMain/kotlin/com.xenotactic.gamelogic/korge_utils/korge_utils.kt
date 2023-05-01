@@ -5,7 +5,7 @@ import korlibs.korge.view.size
 import korlibs.korge.view.xy
 import com.xenotactic.gamelogic.utils.WorldUnit
 
-fun View.size(worldWidth: WorldUnit, worldHeight: WorldUnit) = size(worldWidth.value, worldHeight.value)
+fun View.size(worldWidth: WorldUnit, worldHeight: WorldUnit) = size(worldWidth.toFloat(), worldHeight.toFloat())
 
 fun View.xy(worldX: WorldUnit, worldY: WorldUnit) = xy(worldX.value, worldY.value)
 

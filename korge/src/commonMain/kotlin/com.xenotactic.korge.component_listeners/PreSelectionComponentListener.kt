@@ -2,7 +2,6 @@ package com.xenotactic.korge.component_listeners
 
 import korlibs.korge.view.Graphics
 import korlibs.korge.view.addTo
-import korlibs.korge.view.centerOn
 import korlibs.image.color.Colors
 import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.ComponentListener
@@ -30,8 +29,8 @@ class PreSelectionComponentListener(
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
         val selectionBox = Graphics().addTo(uiEntityContainerComponent.container).apply {
             updateShape {
-                stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(6.0)) {
-                    this.rectHole(0.0, 0.0, worldWidth.value, worldHeight.value)
+                stroke(IN_PROCESS_SELECTION_COLOR, StrokeInfo(6f)) {
+                    this.rectHole(0f, 0f, worldWidth.toFloat(), worldHeight.toFloat())
                 }
             }
             centerOn(uiEntityContainerComponent.container)

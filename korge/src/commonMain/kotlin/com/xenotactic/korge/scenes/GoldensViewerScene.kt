@@ -10,8 +10,8 @@ import korlibs.korge.scene.Scene
 import korlibs.korge.ui.uiButton
 import korlibs.korge.view.SContainer
 import korlibs.korge.view.Views
-import korlibs.korge.view.alignLeftToRightOf
-import korlibs.korge.view.alignTopToBottomOf
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignTopToBottomOf
 import korlibs.korge.view.text
 import korlibs.io.file.baseName
 import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles

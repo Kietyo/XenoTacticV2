@@ -28,8 +28,8 @@ class UIMonsterHealthRenderSystem(
             val maxHealthComponent = world[it, MaxHealthComponent::class]
             val uiHealthBarComponent = world[it, UIHealthBarComponent::class]
 
-            uiHealthBarComponent.view.maximum = maxHealthComponent.maxHealth
-            uiHealthBarComponent.view.current = healthComponent.health
+            uiHealthBarComponent.view.maximum = maxHealthComponent.maxHealth.toFloat()
+            uiHealthBarComponent.view.current = healthComponent.health.toFloat()
         }
     }
 }

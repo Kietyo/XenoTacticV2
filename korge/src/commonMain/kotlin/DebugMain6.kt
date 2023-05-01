@@ -13,13 +13,15 @@ import korlibs.image.format.readImageDataContainer
 import korlibs.image.format.toProps
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
-import korlibs.math.geom.SizeInt
+import korlibs.math.geom.Size
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toAsepriteModel
+import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
 import com.xenotactic.korge.korge_utils.distributeVertically
 import com.xenotactic.korge.ui.UITowerDetails
+import korlibs.korge.view.align.alignLeftToRightOf
 import kotlin.jvm.JvmStatic
 
 object DebugMain6 {
@@ -29,8 +31,8 @@ object DebugMain6 {
     fun main(args: Array<String>) = runBlockingNoJs {
             Korge(
                 KorgeConfig(
-                    bgcolor = Colors.LIGHTGRAY,
-                    virtualSize = SizeInt(640, 480)
+                    backgroundColor = Colors.LIGHTGRAY,
+                    virtualSize = Size(640, 480)
                 )
             ) {
 //            GlobalResources.init()
@@ -66,12 +68,12 @@ object DebugMain6 {
 
             val i1 = image(bmp) {
                 smoothing = false
-                scale = 3.0
+                scale = 3.0.toScale()
             }
 
             image(aspModel.frames.first().createMergedBitmap(backgroundLayerName, supplyIconLayerName)) {
                 smoothing = false
-                scale = 3.0
+                scale = 3.0.toScale()
                 alignLeftToRightOf(i1)
             }
         }

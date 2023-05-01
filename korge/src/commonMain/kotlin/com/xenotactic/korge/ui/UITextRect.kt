@@ -5,6 +5,7 @@ import korlibs.image.color.Colors
 import korlibs.image.font.Font
 import korlibs.image.text.TextAlignment
 import korlibs.io.resources.Resourceable
+import korlibs.korge.view.align.centerOn
 
 class UITextRect(
     text: String,

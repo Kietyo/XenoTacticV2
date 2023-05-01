@@ -42,7 +42,7 @@ class UITargetingRenderSystem(val engine: Engine) : System() {
                     monsterCenterPoint.y
                 )
 
-                stroke(Colors.RED.withAd(0.5), StrokeInfo(thickness = 2.0)) {
+                stroke(Colors.RED.withAd(0.5), StrokeInfo(thickness = 2f)) {
                     line(
                         Point(
                             towerWorldX.toDouble(),

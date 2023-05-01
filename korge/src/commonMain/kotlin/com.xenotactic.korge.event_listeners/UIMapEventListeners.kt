@@ -20,6 +20,7 @@ import com.xenotactic.gamelogic.api.GameMapApi
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.ui.UIMapV2
+import korlibs.korge.view.align.align.centerOn
 
 data class RemoveUIEntitiesEvent(
     val entities: Set<EntityId>
@@ -64,7 +65,7 @@ class UIMapEventListeners(
                     speedEffect,
                     slowLow = 0.3, slowHigh = 0.9, fastLow = 1.2, fastHigh = 2.0
                 ).withAd(0.4)
-                val radius = worldWidth.value / 2
+                val radius = worldWidth.toFloat() / 2
                 val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
                 val centerPoint = getCenterPoint(bottomLeftPositionComponent, sizeComponent)
                 val worldPoint = uiMap.getWorldCoordinates(
@@ -95,15 +96,15 @@ class UIMapEventListeners(
 
             when (entityTypeComponent.type) {
                 MapEntityType.CHECKPOINT -> {
-                    Circle((worldWidth / 2).value, Colors.MAROON).addTo(uiEntityContainer)
+                    Circle((worldWidth / 2).toFloat(), Colors.MAROON).addTo(uiEntityContainer)
                 }
 
                 MapEntityType.FINISH -> {
-                    Circle((worldWidth / 2).value, Colors.MAGENTA).addTo(uiEntityContainer)
+                    Circle((worldWidth / 2).toFloat(), Colors.MAGENTA).addTo(uiEntityContainer)
                 }
 
                 MapEntityType.START -> {
-                    Circle((worldWidth / 2).value, Colors.RED).apply {
+                    Circle((worldWidth / 2).toFloat(), Colors.RED).apply {
                         addTo(uiEntityContainer)
                     }
                 }
@@ -115,7 +116,7 @@ class UIMapEventListeners(
 
                 MapEntityType.ROCK -> {
                     uiEntityContainer.solidRect(
-                        worldWidth.value, worldHeight.value,
+                        worldWidth.toFloat(), worldHeight.toFloat(),
                         MaterialColors.BROWN_500
                     )
                     uiEntityContainer.solidRect(
@@ -125,16 +126,16 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.TELEPORT_IN -> {
-                    Circle(worldWidth.value / 2, Colors.GREEN.withAd(0.6)).addTo(uiEntityContainer)
+                    Circle(worldWidth.toFloat() / 2, Colors.GREEN.withAd(0.6)).addTo(uiEntityContainer)
                 }
 
                 MapEntityType.TELEPORT_OUT -> {
-                    Circle(worldWidth.value / 2, Colors.RED.withAd(0.6)).addTo(uiEntityContainer)
+                    Circle(worldWidth.toFloat() / 2, Colors.RED.withAd(0.6)).addTo(uiEntityContainer)
                 }
 
                 MapEntityType.SMALL_BLOCKER -> {
                     uiEntityContainer.solidRect(
-                        worldWidth.value, worldHeight.value,
+                        worldWidth.toFloat(), worldHeight.toFloat(),
                         MaterialColors.YELLOW_500
                     )
                     uiEntityContainer.solidRect(
@@ -145,7 +146,7 @@ class UIMapEventListeners(
 
                 MapEntityType.SPEED_AREA -> {
                     // Create a transparent solid rect to represent the bounds of the speed area.
-                    uiEntityContainer.solidRect(worldWidth.value, worldHeight.value, Colors.WHITE.withAd(0.0))
+                    uiEntityContainer.solidRect(worldWidth.toFloat(), worldHeight.toFloat(), Colors.WHITE.withAd(0.0))
                 }
 
                 MapEntityType.MONSTER -> {
@@ -212,15 +213,15 @@ class UIMapEventListeners(
 
     private fun createHealthBar(
         diameterGameUnit: GameUnit,
-        maxHealth: Double
+        maxHealth: Float
     ): UIProgressBar {
         val diameter = diameterGameUnit.toWorldUnit(uiMap.gridSize)
         return UIProgressBar(
-            diameter.toDouble(), diameter.toDouble() / 4.0,
+            Size(diameter.toFloat(), diameter.toFloat() / 4f),
             current = maxHealth, maximum = maxHealth
         ).apply {
-            x -= diameter.toDouble() / 2.0
-            y -= diameter.toDouble() / 5.0 * 4.0
+            x -= diameter.toFloat() / 2f
+            y -= diameter.toFloat() / 5f * 4f
         }
     }
 

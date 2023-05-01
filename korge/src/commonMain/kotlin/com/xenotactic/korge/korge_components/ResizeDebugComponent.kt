@@ -43,8 +43,7 @@ class ResizeDebugComponent(val view: Container) {
             view.globalBounds: ${view.globalBounds}
             view.getGlobalBounds(): ${view.getGlobalBounds()}
             view.getLocalBounds(): ${view.getLocalBounds()}
-            view.getLocalBoundsOptimized(): ${view.getLocalBoundsOptimized()}
-            view.getLocalBoundsOptimizedAnchored(): ${view.getLocalBoundsOptimizedAnchored()}
+            view.getLocalBoundsInternal(): ${view.getLocalBoundsInternal()}
             view.getVisibleLocalArea(): ${view.getVisibleLocalArea()}
             view.getVisibleGlobalArea(): ${view.getVisibleGlobalArea()}
             view.getVisibleWindowArea(): ${view.getVisibleWindowArea()}

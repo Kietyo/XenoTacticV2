@@ -1,7 +1,7 @@
 package com.xenotactic.korge.korge_utils
 
 import korlibs.korge.view.View
-import korlibs.korge.view.alignTopToBottomOf
+import korlibs.korge.view.align.alignTopToBottomOf
 import korlibs.korge.view.util.distributeEvenlyVertically
 import korlibs.math.geom.Angle
 

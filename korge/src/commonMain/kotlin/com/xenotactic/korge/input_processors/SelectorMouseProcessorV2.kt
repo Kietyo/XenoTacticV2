@@ -93,8 +93,8 @@ class SelectorMouseProcessorV2(
 
             selectionRectangle.apply {
                 visible = true
-                scaledWidth = (currentPosition.x - startPosition.x).toDouble()
-                scaledHeight = (currentPosition.y - startPosition.y).toDouble()
+                scaledWidth = (currentPosition.x - startPosition.x)
+                scaledHeight = (currentPosition.y - startPosition.y)
                 xy(startPosition)
             }
 

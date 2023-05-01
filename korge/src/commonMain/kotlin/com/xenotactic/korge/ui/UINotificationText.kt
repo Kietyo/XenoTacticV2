@@ -16,7 +16,7 @@ class UINotificationText(
     val engine: Engine,
     text: String = "N/A"
 ) : Container() {
-    private val NOTIFICATION_TEXT_SIZE = 20.0
+    private val NOTIFICATION_TEXT_SIZE = 20f
     private val notificationText = text(text, textSize = NOTIFICATION_TEXT_SIZE) {
     }
     private val errorText = text("Unable to place entity!", textSize = NOTIFICATION_TEXT_SIZE, color = Colors.RED) {

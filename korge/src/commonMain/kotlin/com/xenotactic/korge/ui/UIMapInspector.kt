@@ -6,11 +6,11 @@ import korlibs.korge.ui.uiScrollable
 import korlibs.korge.view.Container
 import korlibs.korge.view.Text
 import korlibs.korge.view.addTo
-import korlibs.korge.view.alignBottomToBottomOf
-import korlibs.korge.view.alignLeftToLeftOf
-import korlibs.korge.view.alignLeftToRightOf
-import korlibs.korge.view.alignTopToBottomOf
-import korlibs.korge.view.alignTopToTopOf
+import korlibs.korge.view.align.alignBottomToBottomOf
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.align.alignTopToTopOf
 import korlibs.korge.view.centerOn
 import korlibs.korge.view.centerXOn
 import korlibs.korge.view.container

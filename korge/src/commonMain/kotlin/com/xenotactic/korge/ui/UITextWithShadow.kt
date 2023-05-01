@@ -3,6 +3,7 @@ package com.xenotactic.korge.ui
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import com.xenotactic.gamelogic.utils.GlobalResources
+import korlibs.korge.view.align.centerOn
 
 class UITextWithShadow(
     initialText: String

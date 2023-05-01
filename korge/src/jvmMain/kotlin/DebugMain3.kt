@@ -14,6 +14,7 @@ import korlibs.math.geom.*
 import com.xenotactic.gamelogic.utils.toAsepriteModel
 import com.xenotactic.korge.korge_utils.getDirection8
 import com.xenotactic.korge.korge_utils.kAngleTo
+import korlibs.korge.view.align.centerOnStage
 import kotlin.jvm.JvmStatic
 
 fun coolPrint(vararg objs: Any) {
@@ -27,22 +28,22 @@ object DebugMain3 {
     fun main(args: Array<String>) = runBlockingNoJs {
             Korge(
                 KorgeConfig(
-                    bgcolor = Colors.LIGHTGRAY,
-                    virtualSize = SizeInt(640, 480)
+                    backgroundColor = Colors.LIGHTGRAY,
+                    virtualSize = Size(640, 480)
                 )
             ) {
 //            text("Hello world")
 
-            val midCircle = circle(radius = 20.0) {
+            val midCircle = circle(radius = 20f) {
                 anchor(Anchor.CENTER)
                 centerOnStage()
             }
 
-            val mouseCircle = circle(radius = 20.0, fill = Colors.RED) {
+            val mouseCircle = circle(radius = 20f, fill = Colors.RED) {
                 anchor(Anchor.CENTER)
             }
 
-            val info = text("", textSize = 25.0)
+            val info = text("", textSize = 25f)
 
             val props = ASE.toProps()
             props.setExtra("disableSlicing", false)

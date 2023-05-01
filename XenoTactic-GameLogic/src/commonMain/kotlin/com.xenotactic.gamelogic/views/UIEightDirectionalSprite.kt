@@ -52,23 +52,23 @@ class UIEightDirectionalSprite(
         baseBitmap = down.defaultAnimation.frames.first().slice
     }
 
-    override var width: Double = baseBitmap.width.toDouble(); set(v) {
-        if (field != v) {
-            field = v
-            dirtyVertices = true
-            invalidateRender()
-        }
-    }
-    override var height: Double = baseBitmap.height.toDouble(); set(v) {
-        if (field != v) {
-            field = v
-            dirtyVertices = true
-            invalidateRender()
-        }
-    }
+//    override var width: Float = baseBitmap.width; set(v) {
+//        if (field != v) {
+//            field = v
+//            dirtyVertices = true
+//            invalidateRender()
+//        }
+//    }
+//    var height: Float = baseBitmap.height; set(v) {
+//        if (field != v) {
+//            field = v
+//            dirtyVertices = true
+//            invalidateRender()
+//        }
+//    }
 
-    override val bwidth: Double get() = width
-    override val bheight: Double get() = height
+    override val bwidth: Float get() = width
+    override val bheight: Float get() = height
 
     private val frameCount = down.frames.size
     var currentFrame = 0

@@ -14,6 +14,7 @@ import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.korge.korge_utils.getDirection8
 import com.xenotactic.korge.korge_utils.kAngleTo
+import korlibs.korge.view.align.centerOnStage
 import kotlin.jvm.JvmStatic
 
 operator fun ClosedRange<Angle>.contains(angle: Angle): Boolean =
@@ -25,27 +26,27 @@ object DebugMain2 {
     fun main(args: Array<String>) = runBlockingNoJs {
         Korge(
             KorgeConfig(
-                bgcolor = Colors.LIGHTGRAY,
-                virtualSize = SizeInt(1280, 720)
+                backgroundColor = Colors.LIGHTGRAY,
+                virtualSize = Size(1280, 720)
             )
         ) {
             //            text("Hello world")
 
-            val midCircle = circle(radius = 20.0) {
+            val midCircle = circle(radius = 20f) {
                 anchor(Anchor.CENTER)
                 centerOnStage()
             }
 
-            val mouseCircle = circle(radius = 20.0, fill = Colors.RED) {
+            val mouseCircle = circle(radius = 20f, fill = Colors.RED) {
                 anchor(Anchor.CENTER)
             }
 
-            val info = text("", textSize = 50.0)
+            val info = text("", textSize = 50f)
 
             val asp = resourcesVfs["8_directional_character.aseprite"].readImageDataContainer(ASE.toProps())
 
             val sprite = UIEightDirectionalSprite(asp).addTo(this) {
-                scale = 8.0
+                scale = Scale(2f)
                 anchor(Anchor.CENTER)
                 xy(640, 360)
                 //                centerOnXY(0.0, 0.0)

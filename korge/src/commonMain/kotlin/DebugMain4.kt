@@ -4,7 +4,7 @@ import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.io.async.runBlockingNoJs
-import korlibs.math.geom.SizeInt
+import korlibs.math.geom.Size
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.ui.UITextRect
 import com.xenotactic.korge.ui.UITooltipDescription
@@ -16,8 +16,8 @@ object DebugMain4 {
     fun main(args: Array<String>) = runBlockingNoJs {
             Korge(
                 KorgeConfig(
-                    bgcolor = Colors.LIGHTGRAY,
-                    virtualSize = SizeInt(1280, 720)
+                    backgroundColor = Colors.LIGHTGRAY,
+                    virtualSize = Size(1280, 720)
                 )
             ) {
             GlobalResources.init()
