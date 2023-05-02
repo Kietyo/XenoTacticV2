@@ -5,8 +5,8 @@ import korlibs.io.async.suspendTest
 import korlibs.io.file.baseName
 
 
-import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
+import com.xenotactic.gamelogic.utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

@@ -22,7 +22,7 @@ import korlibs.image.color.RGBA
 import korlibs.io.async.launch
 import korlibs.io.file.VfsFile
 import korlibs.io.file.baseName
-import com.xenotactic.gamelogic.korge_utils.existsBlocking
+import com.xenotactic.gamelogic.utils.existsBlocking
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.utils.rectCorner

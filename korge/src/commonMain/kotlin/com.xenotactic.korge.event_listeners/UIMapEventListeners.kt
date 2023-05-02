@@ -8,7 +8,7 @@ import korlibs.image.color.MaterialColors
 import korlibs.math.geom.Anchor
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
+import com.xenotactic.gamelogic.utils.SpeedAreaColorUtil
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.gamelogic.utils.Engine

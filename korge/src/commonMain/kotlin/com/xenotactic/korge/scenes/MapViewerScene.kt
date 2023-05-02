@@ -4,8 +4,8 @@ import korlibs.logger.Logger
 import korlibs.korge.annotations.KorgeExperimental
 import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
-import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
-import com.xenotactic.gamelogic.korge_utils.toGameMap
+import com.xenotactic.gamelogic.utils.getGoldenJsonFiles
+import com.xenotactic.gamelogic.utils.toGameMap
 import com.xenotactic.gamelogic.utils.MapToId
 import com.xenotactic.korge.daos.PlayerDataApi
 import com.xenotactic.gamelogic.events.EventBus

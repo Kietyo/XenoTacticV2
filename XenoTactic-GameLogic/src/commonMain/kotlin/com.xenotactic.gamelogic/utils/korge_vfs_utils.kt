@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.korge_utils
+package com.xenotactic.gamelogic.utils
 
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.localCurrentDirVfs

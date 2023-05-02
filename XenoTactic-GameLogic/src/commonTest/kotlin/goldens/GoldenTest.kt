@@ -2,9 +2,9 @@ import korlibs.datastructure.iterators.parallelMap
 import korlibs.io.async.launch
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.VfsFile
-import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
-import com.xenotactic.gamelogic.korge_utils.toGameMap
+import com.xenotactic.gamelogic.utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.utils.getGoldenJsonFiles
+import com.xenotactic.gamelogic.utils.toGameMap
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.MapGeneratorResult
 import com.xenotactic.gamelogic.random.RandomMapGenerator

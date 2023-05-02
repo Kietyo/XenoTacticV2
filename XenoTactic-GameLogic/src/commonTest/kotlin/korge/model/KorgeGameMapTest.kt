@@ -1,6 +1,6 @@
 import korlibs.io.async.suspendTest
 import korlibs.io.file.std.localCurrentDirVfs
-import com.xenotactic.gamelogic.korge_utils.TEST_TEMP_DATA_VFS
+import com.xenotactic.gamelogic.utils.TEST_TEMP_DATA_VFS
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import korge.model.korge_test_utils.createTempFile

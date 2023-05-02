@@ -5,8 +5,8 @@ import korlibs.datastructure.iterators.parallelMap
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.VfsFile
 import korlibs.io.file.baseName
-import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
+import com.xenotactic.gamelogic.utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity

@@ -4,7 +4,7 @@ import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.math.geom.Anchor
-import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
+import com.xenotactic.gamelogic.utils.SpeedAreaColorUtil
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.GlobalResources

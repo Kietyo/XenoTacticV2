@@ -13,8 +13,8 @@ import korlibs.korge.view.align.alignLeftToRightOf
 import korlibs.korge.view.align.alignTopToBottomOf
 import korlibs.korge.view.text
 import korlibs.io.file.baseName
-import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
-import com.xenotactic.gamelogic.korge_utils.toGameMap
+import com.xenotactic.gamelogic.utils.getGoldenJsonFiles
+import com.xenotactic.gamelogic.utils.toGameMap
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus

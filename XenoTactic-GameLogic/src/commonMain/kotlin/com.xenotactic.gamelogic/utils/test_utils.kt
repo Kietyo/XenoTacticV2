@@ -3,8 +3,6 @@ package com.xenotactic.gamelogic.utils
 import korlibs.io.async.runBlockingNoSuspensions
 import korlibs.io.file.VfsFile
 
-
-import com.xenotactic.gamelogic.korge_utils.readStringOrNull
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.pathing.Path
@@ -18,7 +16,7 @@ import kotlin.math.absoluteValue
 import kotlin.random.Random
 import kotlin.test.assertTrue
 
-val GOLDEN_IDS_FILE = com.xenotactic.gamelogic.korge_utils.TEST_DATA_VFS["golden_ids.json"]
+val GOLDEN_IDS_FILE = TEST_DATA_VFS["golden_ids.json"]
 
 const val TEST_FLOAT_MAX_DELTA = 0.00001f
 const val TEST_DOUBLE_MAX_DELTA = 0.00001
