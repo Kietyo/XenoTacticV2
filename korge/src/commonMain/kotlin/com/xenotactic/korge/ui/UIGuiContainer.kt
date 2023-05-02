@@ -35,6 +35,7 @@ import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.state.*
+import korlibs.event.Key.SHIFT
 import korlibs.korge.view.align.*
 
 enum class ViewType {
@@ -258,11 +259,11 @@ class UIGuiContainer(
             }
 
             keys {
-                justDown(Key.LEFT_SHIFT) {
+                justDown(SHIFT) {
 //                    println("Down shift just down")
                     setNumUpgrades(5)
                 }
-                up(Key.LEFT_SHIFT) {
+                up(SHIFT) {
 //                    println("up shift")
                     setNumUpgrades(1)
                 }
