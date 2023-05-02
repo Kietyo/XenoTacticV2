@@ -1,8 +1,8 @@
 package com.xenotactic.gamelogic.random
 
 import korlibs.logger.Logger
-import com.xenotactic.gamelogic.globals.GAME_HEIGHT
-import com.xenotactic.gamelogic.globals.GAME_WIDTH
+import com.xenotactic.gamelogic.utils.GAME_HEIGHT
+import com.xenotactic.gamelogic.utils.GAME_WIDTH
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.pathing.SearcherInterface

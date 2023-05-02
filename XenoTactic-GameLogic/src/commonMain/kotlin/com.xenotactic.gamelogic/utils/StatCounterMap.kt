@@ -1,6 +1,6 @@
 package utils
 
-import com.xenotactic.gamelogic.globals.CounterName
+import com.xenotactic.gamelogic.utils.CounterName
 import com.xenotactic.gamelogic.utils.IntStatCounter
 import com.xenotactic.gamelogic.utils.TimeStatCounter
 import kotlin.time.ExperimentalTime

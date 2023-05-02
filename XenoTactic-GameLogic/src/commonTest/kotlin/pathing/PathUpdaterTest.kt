@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.test_utils.doublesSimilar
+import com.xenotactic.gamelogic.utils.doublesSimilar
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.utils.removeAllIndents
 import kotlinx.serialization.decodeFromString

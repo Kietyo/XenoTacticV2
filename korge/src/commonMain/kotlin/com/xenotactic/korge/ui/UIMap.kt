@@ -14,7 +14,6 @@ import korlibs.math.geom.Point
 import korlibs.math.geom.Rectangle
 
 import korlibs.math.geom.vector.StrokeInfo
-import com.xenotactic.gamelogic.globals.*
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameMap

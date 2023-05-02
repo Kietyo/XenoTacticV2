@@ -10,11 +10,11 @@ import korlibs.math.geom.Point
 
 import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.gamelogic.globals.BORDER_RATIO
-import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
-import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
-import com.xenotactic.gamelogic.globals.GRID_SIZE
-import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
+import com.xenotactic.gamelogic.utils.BORDER_RATIO
+import com.xenotactic.gamelogic.utils.GRID_LINES_RATIO
+import com.xenotactic.gamelogic.utils.GRID_NUMBERS_RATIO
+import com.xenotactic.gamelogic.utils.GRID_SIZE
+import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.korge_utils.size
 import com.xenotactic.gamelogic.korge_utils.xy
 import com.xenotactic.gamelogic.model.GameUnitTuple

@@ -2,29 +2,15 @@ package com.xenotactic.korge.korge_utils
 
 import korlibs.korge.view.View
 import korlibs.korge.view.align.alignTopToBottomOf
-import korlibs.korge.view.util.distributeEvenlyVertically
-import korlibs.math.geom.Angle
 
-import korlibs.math.geom.radians
 import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
-import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.pathing.HorizontalDirection
-import com.xenotactic.gamelogic.pathing.VerticalDirection
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.WorldUnit
-import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
-
-import kotlin.math.*
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTimedValue
-
-
 
 infix fun Int.to(that: Int): GameUnitTuple = GameUnitTuple(this, that)
 

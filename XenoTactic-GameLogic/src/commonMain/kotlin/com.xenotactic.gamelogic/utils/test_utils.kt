@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.test_utils
+package com.xenotactic.gamelogic.utils
 
 import korlibs.io.async.runBlockingNoSuspensions
 import korlibs.io.file.VfsFile
@@ -9,8 +9,6 @@ import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.utils.CircleIntersectionUtil
-import com.xenotactic.gamelogic.utils.GameUnit
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString

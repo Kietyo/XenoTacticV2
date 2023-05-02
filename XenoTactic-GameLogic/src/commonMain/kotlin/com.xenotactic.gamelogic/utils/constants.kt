@@ -1,6 +1,4 @@
-package com.xenotactic.gamelogic.globals
-
-import com.xenotactic.gamelogic.utils.GameUnit
+package com.xenotactic.gamelogic.utils
 
 const val GRID_SIZE = 25f
 

@@ -1,7 +1,7 @@
 package korge.model.korge_test_utils
 
 import korlibs.io.file.VfsFile
-import com.xenotactic.gamelogic.test_utils.generateRandomFileName
+import com.xenotactic.gamelogic.utils.generateRandomFileName
 
 suspend fun VfsFile.createTempFile(extension: String = "txt"): VfsFile {
     while (true) {

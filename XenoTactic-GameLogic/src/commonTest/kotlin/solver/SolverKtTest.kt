@@ -1,7 +1,7 @@
 package solver
 
 import korlibs.logger.Logger
-import com.xenotactic.gamelogic.globals.COUNTERS
+import com.xenotactic.gamelogic.utils.COUNTERS
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration

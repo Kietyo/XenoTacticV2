@@ -4,10 +4,9 @@ package com.xenotactic.gamelogic.pathing
 import korlibs.math.geom.cos
 import korlibs.math.geom.sin
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
-import com.xenotactic.gamelogic.globals.PATHING_POINT_PRECISION
+import com.xenotactic.gamelogic.utils.PATHING_POINT_PRECISION
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.IRectangleEntity
-import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.MapBlockingUtil
 import com.xenotactic.gamelogic.utils.angleRadians
 import com.xenotactic.gamelogic.utils.horizontalDirectionTo

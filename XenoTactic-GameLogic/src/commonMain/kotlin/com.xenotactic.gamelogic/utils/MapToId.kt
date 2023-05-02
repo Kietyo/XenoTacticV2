@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.mapid
+package com.xenotactic.gamelogic.utils
 
 import com.xenotactic.gamelogic.model.GameMap
 import korlibs.crypto.sha1

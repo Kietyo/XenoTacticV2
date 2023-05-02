@@ -19,7 +19,7 @@ import korlibs.korge.view.text
 import korlibs.korge.view.visible
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
-import com.xenotactic.gamelogic.mapid.MapToId
+import com.xenotactic.gamelogic.utils.MapToId
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.utils.size
 import korlibs.math.geom.Size

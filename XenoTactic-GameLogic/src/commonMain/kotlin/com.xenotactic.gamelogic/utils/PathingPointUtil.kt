@@ -3,7 +3,7 @@ package utils
 
 
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
-import com.xenotactic.gamelogic.globals.PATHING_RADIUS
+import com.xenotactic.gamelogic.utils.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import kotlin.math.sqrt

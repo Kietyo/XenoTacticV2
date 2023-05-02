@@ -7,7 +7,7 @@ import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
 import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.*
-import com.xenotactic.gamelogic.test_utils.doublesSimilar
+import com.xenotactic.gamelogic.utils.doublesSimilar
 import com.xenotactic.gamelogic.utils.measureTime
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

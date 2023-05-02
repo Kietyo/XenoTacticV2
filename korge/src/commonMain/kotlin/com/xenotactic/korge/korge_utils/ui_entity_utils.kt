@@ -2,7 +2,7 @@ package com.xenotactic.korge.korge_utils
 
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.globals.ENTITY_LABEL_SIZE
+import com.xenotactic.gamelogic.utils.ENTITY_LABEL_SIZE
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.ui.ENTITY_TEXT_FONT
 import korlibs.korge.view.Text

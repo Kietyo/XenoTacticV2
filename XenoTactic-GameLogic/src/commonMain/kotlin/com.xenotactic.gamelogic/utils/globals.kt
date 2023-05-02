@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.globals
+package com.xenotactic.gamelogic.utils
 
 import utils.StatCounterMap
 

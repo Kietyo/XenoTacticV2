@@ -5,8 +5,8 @@ import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.test_utils.assertPointSetEquals
-import com.xenotactic.gamelogic.test_utils.randomVector
+import com.xenotactic.gamelogic.utils.assertPointSetEquals
+import com.xenotactic.gamelogic.utils.randomVector
 import com.xenotactic.gamelogic.utils.*
 import kotlin.math.min
 import kotlin.math.sqrt

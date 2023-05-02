@@ -10,7 +10,7 @@ import korlibs.korge.view.renderToBitmap
 import korlibs.korge.view.solidRect
 import korlibs.image.color.Colors
 import korlibs.io.async.launch
-import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
+import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.scenes.VIEWS_INSTANCE

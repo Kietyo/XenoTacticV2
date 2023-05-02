@@ -3,12 +3,11 @@ package pathing
 
 
 import com.kietyo.ktruth.assertThat
-import com.xenotactic.gamelogic.globals.PATHING_RADIUS
+import com.xenotactic.gamelogic.utils.PATHING_RADIUS
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.*
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 internal class SearcherUtilsTest {
     @Test
