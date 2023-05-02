@@ -1,7 +1,6 @@
 package com.xenotactic.korge.input_processors
 
 import korlibs.event.EventListener
-import korlibs.event.KeyEvent
 import korlibs.event.MouseButton
 import korlibs.event.MouseEvent
 
@@ -12,12 +11,11 @@ import korlibs.korge.view.solidRect
 import korlibs.korge.view.visible
 import korlibs.korge.view.xy
 import korlibs.image.color.Colors
-import korlibs.math.geom.MPoint
 import korlibs.math.geom.Point
 import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.state.DeadUIZonesState
-import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.utils.GameMapApi
 
 class SelectorMouseProcessorV2(
     val views: Views,

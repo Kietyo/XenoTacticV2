@@ -10,7 +10,6 @@ import korlibs.image.font.DefaultTtfFont
 import korlibs.image.text.TextAlignment
 import korlibs.io.async.launch
 
-import korlibs.math.geom.MRectangle
 import korlibs.math.geom.Point
 import korlibs.math.geom.Rectangle
 
@@ -25,7 +24,7 @@ import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.input_processors.PointerAction

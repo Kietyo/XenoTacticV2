@@ -11,7 +11,7 @@ import korlibs.korge.view.getVisibleGlobalArea
 import korlibs.korge.view.scaleWhileMaintainingAspect
 import korlibs.korge.view.solidRect
 import korlibs.image.color.Colors
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 
 object UIMapOverlayOutsideClickedEvent

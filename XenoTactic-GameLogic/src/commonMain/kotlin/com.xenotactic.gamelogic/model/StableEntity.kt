@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.serialization
+package com.xenotactic.gamelogic.model
 
 import com.xenotactic.gamelogic.utils.GameUnit
 import kotlinx.serialization.Serializable

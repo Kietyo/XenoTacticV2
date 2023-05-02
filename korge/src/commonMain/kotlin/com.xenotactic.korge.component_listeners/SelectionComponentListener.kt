@@ -8,7 +8,7 @@ import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.SelectedComponent
 import com.xenotactic.gamelogic.utils.toWorldDimensions
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.ui.UIMapV2
 import korlibs.korge.view.align.centerOn

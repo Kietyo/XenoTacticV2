@@ -6,7 +6,7 @@ import korlibs.korge.ui.*
 import korlibs.korge.view.*
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor

@@ -3,7 +3,7 @@ package com.xenotactic.korge.systems
 import korlibs.image.color.Colors
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.toPoint
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration

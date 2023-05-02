@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.state
 
-import com.xenotactic.gamelogic.engine.State
+import com.xenotactic.gamelogic.utils.State
 
 data class GameplayState(
     val maxSpeedUpgrades: Int,

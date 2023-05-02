@@ -3,6 +3,10 @@ package com.xenotactic.gamelogic.serialization
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
+import com.xenotactic.gamelogic.model.SerializableComponentI2
+import com.xenotactic.gamelogic.model.SerializableComponents
+import com.xenotactic.gamelogic.model.StableEntity
+import com.xenotactic.gamelogic.model.StableEntityV3
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

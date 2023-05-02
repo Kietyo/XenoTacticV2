@@ -2,7 +2,6 @@ package com.xenotactic.gamelogic.model
 
 import MapVerificationResult
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
-import com.xenotactic.gamelogic.firebase_models.FbGameMap
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.sequenceOfNullable
 import com.xenotactic.gamelogic.utils.toGameUnit

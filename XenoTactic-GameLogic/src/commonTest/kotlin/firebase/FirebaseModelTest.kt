@@ -1,7 +1,7 @@
 package firebase
 
-import com.xenotactic.gamelogic.firebase_models.FbMapData
-import com.xenotactic.gamelogic.firebase_models.FbMapEntry
+import com.xenotactic.gamelogic.model.FbMapData
+import com.xenotactic.gamelogic.model.FbMapEntry
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import kotlinx.serialization.decodeFromString

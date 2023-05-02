@@ -1,15 +1,13 @@
-package com.xenotactic.gamelogic.api
+package com.xenotactic.gamelogic.utils
 
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.state.*
 import com.xenotactic.gamelogic.system.*
-import com.xenotactic.gamelogic.utils.*
 import kotlin.time.Duration.Companion.milliseconds
 
 sealed class GameEvent {

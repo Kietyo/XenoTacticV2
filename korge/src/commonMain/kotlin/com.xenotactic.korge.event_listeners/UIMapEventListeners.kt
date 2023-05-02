@@ -11,12 +11,12 @@ import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.korge_utils.SpeedAreaColorUtil
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.gamelogic.engine.Engine
-import com.xenotactic.gamelogic.engine.EventListener
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.EventListener
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.korge.korge_utils.*
-import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.ui.UIMapV2

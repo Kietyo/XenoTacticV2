@@ -1,6 +1,5 @@
-package com.xenotactic.gamelogic.firebase_models
+package com.xenotactic.gamelogic.model
 
-import com.xenotactic.gamelogic.model.MapEntity
 import kotlinx.serialization.Serializable
 
 @Serializable

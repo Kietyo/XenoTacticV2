@@ -12,7 +12,7 @@ import korlibs.math.geom.Point
 import korlibs.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 

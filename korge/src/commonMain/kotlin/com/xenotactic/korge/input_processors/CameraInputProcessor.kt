@@ -4,14 +4,13 @@ import korlibs.event.EventListener
 import korlibs.event.MouseButton
 import korlibs.event.MouseEvent
 import korlibs.korge.view.View
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.utils.minus
 import com.xenotactic.gamelogic.utils.times
 import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus
-import korlibs.math.geom.Scale
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt

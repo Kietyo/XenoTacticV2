@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.components
 
-import com.xenotactic.gamelogic.serialization.SerializableComponentI2
+import com.xenotactic.gamelogic.model.SerializableComponentI2
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlinx.serialization.Serializable

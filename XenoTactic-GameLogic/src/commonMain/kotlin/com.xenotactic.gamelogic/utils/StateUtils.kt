@@ -1,6 +1,5 @@
 package com.xenotactic.gamelogic.utils
 
-import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.state.GameplayState
 
 class StateUtils(

@@ -1,6 +1,6 @@
 package com.xenotactic.gamelogic.state
 
-import com.xenotactic.gamelogic.engine.State
+import com.xenotactic.gamelogic.utils.State
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.events.GoldStateUpdated
 

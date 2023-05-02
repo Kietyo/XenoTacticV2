@@ -5,7 +5,7 @@ import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
 import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower

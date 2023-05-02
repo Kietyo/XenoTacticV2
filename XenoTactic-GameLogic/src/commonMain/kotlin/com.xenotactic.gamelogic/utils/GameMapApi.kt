@@ -1,10 +1,8 @@
-package com.xenotactic.gamelogic.api
+package com.xenotactic.gamelogic.utils
 
-import korlibs.math.geom.MRectangle
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.engine.Engine
 import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.model.GameWorld
@@ -15,9 +13,6 @@ import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.gamelogic.state.GameMapPathState
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableEventQueueState
-import com.xenotactic.gamelogic.utils.rectangleIntersects
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.utils.toRectangleEntity
 import korlibs.math.geom.Rectangle
 import kotlin.math.pow
 

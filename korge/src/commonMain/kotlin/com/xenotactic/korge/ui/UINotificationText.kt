@@ -3,7 +3,7 @@ package com.xenotactic.korge.ui
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.io.async.launchImmediately
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.input_processors.PlaceEntityErrorEvent
 import korlibs.korge.view.align.alignTopToBottomOf
 import korlibs.korge.view.align.centerXOnStage

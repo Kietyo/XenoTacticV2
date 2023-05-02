@@ -4,7 +4,7 @@ import korlibs.logger.Logger
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.gamelogic.utils.toGameUnit

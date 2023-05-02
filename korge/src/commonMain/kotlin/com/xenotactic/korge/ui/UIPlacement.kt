@@ -15,7 +15,7 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.ExitGameSceneEvent

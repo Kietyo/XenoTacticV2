@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.daos
+package com.xenotactic.gamelogic.utils
 
 import korlibs.logger.Logger
 import com.xenotactic.gamelogic.korge_utils.decodeJson

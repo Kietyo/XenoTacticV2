@@ -1,7 +1,5 @@
 package com.xenotactic.gamelogic.utils
 
-import com.xenotactic.gamelogic.api.GameEvent
-
 data class LogEntry(
     val tickNum: Long,
     val events: List<GameEvent>

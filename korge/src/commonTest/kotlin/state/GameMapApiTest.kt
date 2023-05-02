@@ -10,17 +10,11 @@ import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.wH
 import com.xenotactic.gamelogic.utils.wW
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.korge_utils.StagingEntityUtils
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.gamelogic.api.GameMapApi
-import com.xenotactic.gamelogic.api.GameSimulator
-import com.xenotactic.gamelogic.state.GameMapDimensionsState
-import com.xenotactic.gamelogic.state.GameMapPathState
-import com.xenotactic.gamelogic.state.GameplayState
-import com.xenotactic.gamelogic.state.MutableEventQueueState
-import com.xenotactic.testing.assertThat
+import com.xenotactic.gamelogic.utils.GameSimulator
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 

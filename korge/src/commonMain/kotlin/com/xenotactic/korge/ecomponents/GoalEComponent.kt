@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ecomponents
 
 import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
 import solver.OptimizationGoal

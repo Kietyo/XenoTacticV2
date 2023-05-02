@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.state
 
-import com.xenotactic.gamelogic.api.GameEvent
-import com.xenotactic.gamelogic.engine.State
+import com.xenotactic.gamelogic.utils.GameEvent
+import com.xenotactic.gamelogic.utils.State
 
 class MutableEventQueueState(
     private val eventQueue: MutableList<GameEvent> = mutableListOf<GameEvent>()

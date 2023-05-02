@@ -3,10 +3,10 @@ package com.xenotactic.gamelogic.system
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.components.BaseWeaponSpeedComponent
 import com.xenotactic.gamelogic.components.ReloadDowntimeComponent
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import kotlin.time.Duration
 
 class ReloadSystem(

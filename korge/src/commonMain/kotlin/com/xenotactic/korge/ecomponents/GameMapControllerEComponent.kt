@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent

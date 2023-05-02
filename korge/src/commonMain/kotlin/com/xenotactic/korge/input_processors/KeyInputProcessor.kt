@@ -3,10 +3,8 @@ package com.xenotactic.korge.input_processors
 import korlibs.event.EventListener
 import korlibs.event.Key
 import korlibs.event.KeyEvent
-import korlibs.event.ReshapeEvent
 import korlibs.korge.view.BaseView
-import korlibs.korge.view.Views
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus

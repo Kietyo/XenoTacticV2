@@ -4,7 +4,7 @@ import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.events.ResizeMapEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
@@ -12,7 +12,7 @@ import com.xenotactic.korge.input_processors.*
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.models.MouseDragSettingsState
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2

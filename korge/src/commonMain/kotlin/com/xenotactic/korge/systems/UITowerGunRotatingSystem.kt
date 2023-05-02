@@ -7,7 +7,7 @@ import korlibs.korge.view.rotation
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.utils.getCenterPoint
 import com.xenotactic.korge.ui.UIMapV2

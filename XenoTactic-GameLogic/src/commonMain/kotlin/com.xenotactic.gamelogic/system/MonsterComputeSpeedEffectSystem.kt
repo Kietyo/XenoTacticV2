@@ -2,7 +2,7 @@ package com.xenotactic.gamelogic.system
 
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.getCenterPoint
 import kotlin.time.Duration
 

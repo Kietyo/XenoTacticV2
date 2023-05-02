@@ -3,13 +3,13 @@ package com.xenotactic.korge.event_listeners
 import korlibs.logger.Logger
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
-import com.xenotactic.gamelogic.engine.Engine
-import com.xenotactic.gamelogic.engine.EventListener
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.EventListener
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
-import com.xenotactic.gamelogic.api.GameMapApi
+import com.xenotactic.gamelogic.utils.GameMapApi
 
 class TowerUpgradeEventListeners(
     val engine: Engine

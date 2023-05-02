@@ -11,14 +11,14 @@ import korlibs.korge.ui.uiButton
 import korlibs.korge.view.*
 import korlibs.image.color.MaterialColors
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.api.GameMapApi
-import com.xenotactic.gamelogic.api.GameSimulator
+import com.xenotactic.gamelogic.utils.GameMapApi
+import com.xenotactic.gamelogic.utils.GameSimulator
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.GlobalResources
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.GoldStateUpdated
 import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent

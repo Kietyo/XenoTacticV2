@@ -5,7 +5,7 @@ import korlibs.event.Key
 import korlibs.korge.input.keys
 import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
-import com.xenotactic.gamelogic.api.GameSimulator
+import com.xenotactic.gamelogic.utils.GameSimulator
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
@@ -14,7 +14,7 @@ import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
 import com.xenotactic.korge.component_listeners.SelectionComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityComponentListener
 import com.xenotactic.korge.component_listeners.UIMapEntityTextComponentListener
-import com.xenotactic.gamelogic.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.event_listeners.TowerUpgradeEventListeners
 import com.xenotactic.korge.event_listeners.UIMapEventListeners
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent

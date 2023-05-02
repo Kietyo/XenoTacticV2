@@ -1,4 +1,4 @@
-package com.xenotactic.gamelogic.engine
+package com.xenotactic.gamelogic.utils
 
 import com.xenotactic.ecs.Injections
 import com.xenotactic.ecs.TypedInjections
