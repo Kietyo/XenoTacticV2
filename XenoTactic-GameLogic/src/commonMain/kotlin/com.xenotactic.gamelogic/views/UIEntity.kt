@@ -16,10 +16,12 @@ class UIEntity(
     val entityWidth: GameUnit,
     val entityHeight: GameUnit,
 //    val engine: Engine?,
-    val gridSize: Double,
-    val borderSize: Double,
+    gridSize: Number,
+    borderSize: Number,
     val speedEffect: Double? = null,
 ) : Container() {
+    val gridSize = gridSize.toFloat()
+    val borderSize = borderSize.toFloat()
     init {
         val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
         println(

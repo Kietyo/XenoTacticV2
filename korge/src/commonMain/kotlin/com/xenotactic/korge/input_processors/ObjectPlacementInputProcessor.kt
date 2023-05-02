@@ -26,9 +26,6 @@ class ObjectPlacementInputProcessor(
     val objectPlacementComponent = engine.injections.getSingleton<ObjectPlacementEComponent>()
     val gameMapComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
 
-    val gridSize: Double
-        get() = uiMapView._gridSize
-
     fun setup(eventListener: EventListener) {
         eventListener.onEvents(*MouseEvent.Type.ALL) {
             onMouseEvent(it)

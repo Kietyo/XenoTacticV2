@@ -1,8 +1,5 @@
 package com.xenotactic.gamelogic.utils
 
-import korlibs.math.geom.Angle
-
-import korlibs.math.geom.radians
 import com.xenotactic.ecs.AbstractEntity
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
@@ -10,8 +7,7 @@ import com.xenotactic.gamelogic.globals.ALLOWABLE_DIRECTION_DIFF
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.pathing.HorizontalDirection
 import com.xenotactic.gamelogic.pathing.VerticalDirection
-import korlibs.math.geom.Scale
-import korlibs.math.geom.Size
+import korlibs.math.geom.*
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.pow
@@ -361,7 +357,7 @@ fun abs(f1: Float): Float {
 }
 
 fun toWorldCoordinates(
-    gridSize: Double, gameUnitPoint: GameUnitTuple, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
+    gridSize: Number, gameUnitPoint: GameUnitTuple, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ): Pair<WorldUnit, WorldUnit> =
     toWorldCoordinates(
         gridSize,
@@ -369,7 +365,7 @@ fun toWorldCoordinates(
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, point: IPoint, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
+    gridSize: Number, point: IPoint, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ): Pair<WorldUnit, WorldUnit> =
     toWorldCoordinates(
         gridSize,
@@ -377,15 +373,15 @@ fun toWorldCoordinates(
     )
 
 fun toWorldCoordinates(
-    gridSize: Double, x: Double, y: Double, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
+    gridSize: Number, x: Double, y: Double, gameHeight: GameUnit, entityHeight: GameUnit = GameUnit(0)
 ) = Pair(toWorldUnit(gridSize, x), toWorldUnit(gridSize, (gameHeight.value - y - entityHeight.value)))
 
-fun toWorldUnit(gridSize: Double, value: Double) = value.toGameUnit().toWorldUnit(gridSize)
+fun toWorldUnit(gridSize: Number, value: Double) = value.toGameUnit().toWorldUnit(gridSize)
 
 fun toWorldDimensions(width: GameUnit, height: GameUnit, gridSize: Number) =
     Pair(WorldUnit(width.value * gridSize.toDouble()), WorldUnit(height.value * gridSize.toDouble()))
 
-fun toWorldDimensions(entity: MapEntity, gridSize: Double) =
+fun toWorldDimensions(entity: MapEntity, gridSize: Number) =
     toWorldDimensions(entity.width, entity.height, gridSize)
 
 data class RectangleEntityBuilder(
@@ -420,6 +416,7 @@ fun getCenterPoint(
 }
 
 infix fun Number.size(right: Number) = Size(this.toFloat(), right.toFloat())
+infix fun Number.rectCorner(right: Number) = RectCorners(this.toFloat(), right.toFloat())
 
 fun Number.toScale() = Scale(this.toFloat())
 operator fun Scale.minus(other: Number) = Scale(this.avg - other.toFloat())

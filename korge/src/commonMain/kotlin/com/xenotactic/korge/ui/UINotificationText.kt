@@ -36,7 +36,7 @@ class UINotificationText(
             while (true) {
                 errorTextDisplayTimeMillis = maxOf(errorTextDisplayTimeMillis - TICK_RATE_MILLIS, 0)
                 errorText.alpha =
-                    errorTextDisplayTimeMillis.toDouble() / (DEFAULT_DISPLAY_TIME_MILLIS - DISPLAY_TIME_UNTIL_FADE_MILLIS)
+                    errorTextDisplayTimeMillis.toFloat() / (DEFAULT_DISPLAY_TIME_MILLIS - DISPLAY_TIME_UNTIL_FADE_MILLIS)
                 if (errorTextDisplayTimeMillis <= 0) {
                     errorText.visible = false
                 }

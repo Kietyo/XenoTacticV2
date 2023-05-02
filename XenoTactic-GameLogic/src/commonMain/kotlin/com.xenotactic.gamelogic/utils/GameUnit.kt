@@ -52,9 +52,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return value.toInt() until o.value.toInt()
     }
 
-    operator fun times(o: Double): GameUnit {
-        return GameUnit(value * o)
-    }
+    operator fun times(o: Double) = GameUnit(value * o)
+    operator fun times(other: Number) = GameUnit(value * other.toDouble())
 
     operator fun div(d: Double): GameUnit {
         return GameUnit(value / d)
@@ -73,6 +72,7 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
     }
 
     infix fun tup(gridYInt: GameUnit): GameUnitTuple = GameUnitTuple(this, gridYInt)
+
 
     companion object {
         val ZERO = GameUnit(0)

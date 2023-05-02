@@ -48,14 +48,14 @@ data class UIMapSettings(
     val borderRatio: Float = BORDER_RATIO,
     val gridLinesRatio: Float = GRID_LINES_RATIO,
     val gridNumbersRatio: Float = GRID_NUMBERS_RATIO,
-    val pathLinesRatio: Float = PATH_LINES_RATIO,
+    val pathLinesRatio: Number = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
     val boardType: BoardType = BoardType.CHECKERED_1X1,
 ) {
     val borderSize = gridSize * borderRatio
     val gridLineSize = gridSize * gridLinesRatio
     val gridNumberFontSize = gridSize * gridNumbersRatio
-    val pathLinesWidth = gridSize * pathLinesRatio
+    val pathLinesWidth = gridSize * pathLinesRatio.toFloat()
 }
 
 val ENTITY_TEXT_FONT = BitmapFont(
@@ -178,7 +178,7 @@ class UIMap(
                         IPoint(x + 0.5, y + 0.5), gameMap.height
                     )
                     val component = _rockCountersLayer.text(
-                        num.toString(), textSize = 15.0, alignment = TextAlignment
+                        num.toString(), textSize = 15f, alignment = TextAlignment
                             .MIDDLE_CENTER,
                         font = ENTITY_TEXT_FONT
                     ).xy(
@@ -283,10 +283,10 @@ class UIMap(
                 textSize = _gridNumberFontSize,
                 alignment = TextAlignment.BOTTOM_LEFT
             ).xy(
-                i * _gridSize, 0.0
+                i * _gridSize, 0f
             )
             _gridNumberLayer.text(i.toString(), textSize = _gridNumberFontSize).xy(
-                i * _gridSize, gameMap.height.value * _gridSize
+                i * _gridSize, gameMap.height.toFloat() * _gridSize
             )
         }
         for (j in 0 until gameMap.height) {
@@ -499,7 +499,7 @@ class UIMap(
         val gridX = unprojected.x / _gridSize
         val gridY = unprojected.y / _gridSize
 
-        return gridX to gridY
+        return gridX.toDouble() to gridY.toDouble()
     }
 
     fun getRoundedGridCoordinates(

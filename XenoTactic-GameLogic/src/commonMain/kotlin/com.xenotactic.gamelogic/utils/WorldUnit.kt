@@ -12,6 +12,7 @@ value class WorldUnit(val value: Double) {
     operator fun div(i: Int): WorldUnit = WorldUnit(value / i)
     operator fun minus(other: Double) = WorldUnit(value - other)
     operator fun minus(other: Float) = WorldUnit(value - other)
+    operator fun minus(other: Number) = WorldUnit(value - other.toDouble())
     operator fun minus(other: WorldUnit) = WorldUnit(value - other.value)
     fun toDouble(): Double = value
     fun toFloat() = value.toFloat()

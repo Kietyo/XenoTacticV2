@@ -17,8 +17,8 @@ import kotlin.math.floor
 import kotlin.math.roundToInt
 
 fun getRoundedGridCoordinates(
-    gridX: Double,
-    gridY: Double,
+    gridX: Number,
+    gridY: Number,
     entityWidth: GameUnit,
     entityHeight: GameUnit,
     mapWidth: GameUnit,
@@ -26,16 +26,16 @@ fun getRoundedGridCoordinates(
 ): GameUnitTuple {
     val roundedGridX = when {
         entityWidth.toInt() == 1 -> floor(
-            gridX - entityWidth.value / 2
+            gridX.toDouble() - entityWidth.value / 2
         ).toInt()
-        else -> (gridX - entityWidth.value / 2).roundToInt()
+        else -> (gridX.toDouble() - entityWidth.value / 2).roundToInt()
     }
 
     val roundedGridY = when {
         entityHeight.toInt() == 1 -> floor(
-            gridY - entityHeight.value / 2
+            gridY.toDouble() - entityHeight.value / 2
         ).toInt()
-        else -> (gridY - entityHeight.value / 2).roundToInt()
+        else -> (gridY.toDouble() - entityHeight.value / 2).roundToInt()
     }
 
     val gridXToInt = roundedGridX.clamp(

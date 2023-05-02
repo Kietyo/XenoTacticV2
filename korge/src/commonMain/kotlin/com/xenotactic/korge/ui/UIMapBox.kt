@@ -19,10 +19,10 @@ import pathing.PathFinder
 import kotlin.math.min
 
 inline fun Container.uiMapBox(
-    gameMap: GameMap, boxWidth: Double, boxHeight: Double,
-    gameMapGridSize: Double = 25.0
+    gameMap: GameMap, boxWidth: Number, boxHeight: Number,
+    gameMapGridSize: Number = 25.0
 ): UIMapBox =
-    UIMapBox(gameMap, boxWidth, boxHeight, gameMapGridSize).addTo(this)
+    UIMapBox(gameMap, boxWidth.toDouble(), boxHeight.toDouble(), gameMapGridSize).addTo(this)
 
 /**
  * A UI element where a game map is drawn inside of a box.
@@ -30,11 +30,12 @@ inline fun Container.uiMapBox(
 class UIMapBox(
     gameMap: GameMap,
     val boxWidth: Double, val boxHeight: Double,
-    val gameMapGridSize: Float = 25f,
+    gameMapGridSize: Number = 25f,
     val paddingTopAndBottom: Float = 5f,
     val paddingLeftAndRight: Float = 5f,
     calculateMapPath: Boolean = false
 ) : Container() {
+    val gameMapGridSize = gameMapGridSize.toFloat()
 
     val mapSection = this.solidRect(boxWidth, boxHeight, Colors.BLACK.withAd(0.4))
     val mapContainer: Container = this.container()

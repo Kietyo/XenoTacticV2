@@ -114,7 +114,7 @@ class GoldensViewerScene : Scene() {
                 val currOption = pageDropdown.getCurrentOption()
                 require(currOption is UIDropdownOption.NumberOption)
                 mapGrid.resetWithEntries(chunkedMaps[currOption.data.toInt()].map { it ->
-                    { _, _, width: Double, height: Double ->
+                    { _, _, width: Float, height: Float ->
                         UIGoldensViewerEntry(eventBus, it, width, height)
                     }
                 })

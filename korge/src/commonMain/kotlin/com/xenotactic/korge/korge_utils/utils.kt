@@ -39,16 +39,16 @@ fun distributeVertically(views: Iterable<View>) {
 }
 
 
-fun toWorldCoordinates(gridSize: Double, entity: StagingEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
-    val position = entity[com.xenotactic.gamelogic.components.BottomLeftPositionComponent::class]
-    val size = entity[com.xenotactic.gamelogic.components.SizeComponent::class]
+fun toWorldCoordinates(gridSize: Number, entity: StagingEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
+    val position = entity[BottomLeftPositionComponent::class]
+    val size = entity[SizeComponent::class]
     return toWorldCoordinates(
         gridSize,
         position.toTuple(), gameHeight, entityHeight = size.height
     )
 }
 
-fun toWorldCoordinates(gridSize: Double, entity: MapEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
+fun toWorldCoordinates(gridSize: Number, entity: MapEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
     return toWorldCoordinates(
         gridSize,
         entity.gameUnitPoint, gameHeight, entityHeight = entity.height

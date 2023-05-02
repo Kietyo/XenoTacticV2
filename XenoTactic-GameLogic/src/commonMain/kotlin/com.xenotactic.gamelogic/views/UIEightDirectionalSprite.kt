@@ -16,18 +16,8 @@ enum class EightDirection {
 }
 
 class UIEightDirectionalSprite(
-    val imageDataContainer: ImageDataContainer,
+    imageDataContainer: ImageDataContainer,
 ): RectBase() {
-//    override var anchorX: Double = 0.0
-//        set(value) {
-//            field = value
-//            invalidateRender()
-//        }
-//    override var anchorY: Double = 0.0
-//        set(value) {
-//            field = value
-//            invalidateRender()
-//        }
     val upLeft = imageDataContainer.imageDatasByName["up_left"]!!
     val up = imageDataContainer.imageDatasByName["up"]!!
     val upRight = imageDataContainer.imageDatasByName["up_right"]!!
@@ -67,8 +57,8 @@ class UIEightDirectionalSprite(
 //        }
 //    }
 
-    override val bwidth: Float get() = width
-    override val bheight: Float get() = height
+    override val bwidth: Float get() = baseBitmap.width.toFloat()
+    override val bheight: Float get() = baseBitmap.height.toFloat()
 
     private val frameCount = down.frames.size
     var currentFrame = 0

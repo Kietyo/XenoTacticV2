@@ -76,8 +76,8 @@ class UIScrollableGrid(
                 for (i in 0 until maxColumns) {
                     if (!entriesIterator.hasNext()) break@rowloop
                     val gridEntry = entriesIterator.next()(gridEntryViewWidth, gridEntryViewHeight)
-                    gridEntry.x += i * gridEntryViewWidth + i * entryPaddingHorizontal
-                    gridEntry.y += j * gridEntryViewHeight + j * entryPaddingVertical
+                    gridEntry.x += (i * gridEntryViewWidth + i * entryPaddingHorizontal).toFloat()
+                    gridEntry.y += (j * gridEntryViewHeight + j * entryPaddingVertical).toFloat()
                     this.addChild(gridEntry)
                 }
             }

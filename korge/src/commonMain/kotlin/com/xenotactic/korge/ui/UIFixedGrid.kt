@@ -7,18 +7,18 @@ import korlibs.image.color.MaterialColors
 import korlibs.image.color.RGBA
 import korlibs.math.geom.PointInt
 
-val EMPTY_BOX_FN: (x: Int, y:Int, width: Double, height: Double) -> View = {x,y,width, height ->
+val EMPTY_BOX_FN: (x: Int, y:Int, width: Float, height: Float) -> View = {x,y,width, height ->
     SolidRect(width, height, MaterialColors.TEAL_100)
 }
 
 fun Container.uiFixedGrid(
     maxColumns: Int,
     maxRows: Int,
-    gridWidth: Double,
-    gridHeight: Double,
-    entryPaddingHorizontal: Double,
-    entryPaddingVertical: Double,
-    initialEntries: List<(x: Int, y: Int, width: Double, height: Double) -> Container> = emptyList()
+    gridWidth: Number,
+    gridHeight: Number,
+    entryPaddingHorizontal: Number,
+    entryPaddingVertical: Number,
+    initialEntries: List<(x: Int, y: Int, width: Float, height: Float) -> Container> = emptyList()
 ): UIFixedGrid =
     UIFixedGrid(
         maxColumns,
@@ -53,7 +53,7 @@ class UIFixedGrid(
         (gridHeight.toFloat() - entryPaddingVertical.toFloat() * (maxRows + 1)) / maxRows
 
     init {
-        this.solidRect(gridWidth, gridHeight, color = backgroundColor)
+        this.solidRect(gridWidth.toFloat(), gridHeight.toFloat(), color = backgroundColor)
         println("""
             gridEntryViewWidth: $gridEntryViewWidth
             gridEntryViewHeight: $gridEntryViewHeight
@@ -84,7 +84,7 @@ class UIFixedGrid(
         setEntry(x, y, defaultInitializerFn(x, y, gridEntryViewWidth, gridEntryViewHeight))
     }
 
-    fun resetWithEntries(entries: List<(x: Int, y: Int, width: Double, height: Double) -> View>) {
+    fun resetWithEntries(entries: List<(x: Int, y: Int, width: Float, height: Float) -> View>) {
         gridEntryContainer.removeChildren()
         val entriesIterator = entries.iterator()
         rowloop@ for (y in 0 until maxRows) {

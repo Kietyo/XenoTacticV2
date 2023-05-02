@@ -161,9 +161,9 @@ class UIGuiContainer(
                 val t = text(
                     calculateTextFn(),
                     font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40.0
+                    textSize = 40f
                 ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight))
+                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight.toDouble()))
                     alignLeftToRightOf(i, padding = 5.0)
                     centerYOn(i)
                 }
@@ -181,8 +181,8 @@ class UIGuiContainer(
 
             scaleWhileMaintainingAspect(ScalingOption.ByHeight(25.0))
 
-            y += 5.0
-            alignRightToRightOfWindow(padding = 10.0)
+            y += 5f
+            alignRightToRightOfWindow(padding = 10f)
         }
 
 
@@ -197,15 +197,12 @@ class UIGuiContainer(
         val globalDamageUpgradeView = UITextRect(
             "Global\nDamage\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        ).apply {
-            onCollision { }
-        }
+        )
 
         val globalRangeUpgradeView = UITextRect(
             "Global\nRange\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        ).apply {
-        }
+        )
 
         val tooltips = mutableListOf<View>()
 
@@ -323,7 +320,7 @@ class UIGuiContainer(
         val holdShiftText = Text(
             "HOLD SHIFT (+5)",
             font = GlobalResources.FONT_ATKINSON_BOLD,
-            textSize = 12.0
+            textSize = 12f
         ).apply {
             scaleWhileMaintainingAspect(ScalingOption.ByHeight(textHeightSize))
         }

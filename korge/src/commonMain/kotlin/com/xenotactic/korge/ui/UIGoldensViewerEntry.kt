@@ -25,6 +25,8 @@ import korlibs.io.file.baseName
 import com.xenotactic.gamelogic.korge_utils.existsBlocking
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.rectCorner
+import com.xenotactic.gamelogic.utils.size
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
 import kotlinx.coroutines.Dispatchers
@@ -40,12 +42,17 @@ private data class EntrySettings(
     val isDeleteButtonVisible: Boolean
 )
 
-class UIGoldensViewerEntry(
+class UIGoldensViewerEntry private constructor(
     val eventBus: EventBus,
     val mapData: MapWithMetadata,
-    val entryWidth: Double,
-    val entryHeight: Double
+    entryWidth: Float,
+    entryHeight: Float
 ) : Container() {
+    constructor(eventBus: EventBus,
+        mapData: MapWithMetadata,
+        entryWidth: Number,
+        entryHeight: Number) : this(eventBus, mapData, entryWidth.toFloat(), entryHeight.toFloat())
+
     val OUTLINE_RECT_STROKE_THICKNESS = 3
     val TEXT_SECTION_WIDTH = entryWidth - OUTLINE_RECT_STROKE_THICKNESS * 2
     val TEXT_SECTION_HEIGHT = 20
@@ -59,7 +66,7 @@ class UIGoldensViewerEntry(
         )
 
         val entryTextSection = this.solidRect(
-            entryWidth, TEXT_SECTION_HEIGHT.toDouble(),
+            entryWidth size  TEXT_SECTION_HEIGHT.toDouble(),
             color = MaterialColors.GRAY_800
         )
 
@@ -83,14 +90,14 @@ class UIGoldensViewerEntry(
         }
 
         val outlineRect = this.roundRect(
-            entryWidth, entryHeight, 0.0, 0.0, Colors.TRANSPARENT_WHITE,
+            entryWidth size entryHeight, 0.0 rectCorner 0.0, Colors.TRANSPARENT_WHITE,
             stroke = entrySettings.outlineRectangleColor,
-            strokeThickness = OUTLINE_RECT_STROKE_THICKNESS.toDouble()
+            strokeThickness = OUTLINE_RECT_STROKE_THICKNESS.toFloat()
         )
 
         if (gameMapFile.existsBlocking()) {
             val deleteButton = this.uiButton(
-                width = 55.0, height = 25.0,
+                size = 55 size 25,
                 label = "Delete"
             ) {
                 alignRightToRightOf(entryBackground, padding = 10.0)
@@ -127,7 +134,7 @@ class UIGoldensViewerEntry(
         titleView.text = title
         titleView.scaleWhileMaintainingAspect(
             ScalingOption.ByWidthAndHeight(
-                TEXT_SECTION_WIDTH,
+                TEXT_SECTION_WIDTH.toDouble(),
                 TEXT_SECTION_HEIGHT.toDouble()
             )
         )

@@ -91,7 +91,7 @@ class UIHeader(
         }
 
         headerOptions.centerYOn(headerSection)
-        headerOptions.x += 200.0
+        headerOptions.x += 200f
 
         val profileSection = this.solidRect(
             100.0, headerHeight - PROFILE_PADDING_TOP_AND_BOTTOM,
@@ -100,7 +100,7 @@ class UIHeader(
         profileSection.alignRightToRightOf(headerSection, padding = PROFILE_PADDING_RIGHT)
         profileSection.centerYOn(headerSection)
 
-        val profileText = this.text(userName, textSize = 20.0)
+        val profileText = this.text(userName, textSize = 20f)
         profileText.centerOn(profileSection)
     }
 

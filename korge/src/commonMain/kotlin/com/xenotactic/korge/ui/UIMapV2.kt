@@ -210,10 +210,10 @@ class UIMapV2(
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BOTTOM_LEFT
             ).xy(
-                i * gridSize, 0.0
+                i * gridSize, 0f
             )
             _gridNumberLayer.text(i.toString(), textSize = gridNumberFontSize).xy(
-                i * gridSize, mapHeight.value * gridSize
+                i * gridSize, mapHeight.toFloat() * gridSize
             )
         }
         for (j in 0 until mapHeight) {
@@ -237,7 +237,7 @@ class UIMapV2(
     fun getGridPositionsFromGlobalMouse(
         globalMouseX: Float,
         globalMouseY: Float
-    ): Pair<Double, Double> {
+    ): Pair<Float, Float> {
         val localXY = globalToLocal(Point(globalMouseX, globalMouseY))
         val unprojected = Point(
             localXY.x,
@@ -251,8 +251,8 @@ class UIMapV2(
     }
 
     fun getRoundedGridCoordinates(
-        gridX: Double,
-        gridY: Double,
+        gridX: Number,
+        gridY: Number,
         entityWidth: GameUnit,
         entityHeight: GameUnit,
     ): GameUnitTuple =

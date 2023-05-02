@@ -40,11 +40,11 @@ class EditorPlacementInputProcessor(
         MouseEvent.Type.MOVE
     )
 
-    var downGridX: Double = 0.0
-    var downGridY: Double = 0.0
+    var downGridX = 0f
+    var downGridY = 0f
 
-    var currentGridX = 0.0
-    var currentGridY = 0.0
+    var currentGridX = 0f
+    var currentGridY = 0f
 
     var isRightClickDrag = false
 
@@ -192,7 +192,7 @@ class EditorPlacementInputProcessor(
         }
     }
 
-    private fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
+    private fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Float, gridY: Float) {
         if (eventType == MouseEvent.Type.DOWN ||
             eventType == MouseEvent.Type.MOVE
         ) {
