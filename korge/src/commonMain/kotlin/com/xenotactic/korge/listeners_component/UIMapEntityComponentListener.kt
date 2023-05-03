@@ -1,4 +1,4 @@
-package com.xenotactic.korge.component_listeners
+package com.xenotactic.korge.listeners_component
 
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId

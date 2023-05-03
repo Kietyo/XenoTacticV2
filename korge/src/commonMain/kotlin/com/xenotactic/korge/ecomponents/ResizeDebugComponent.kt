@@ -1,4 +1,4 @@
-package com.xenotactic.korge.korge_components
+package com.xenotactic.korge.ecomponents
 
 import korlibs.event.EventListener
 import korlibs.event.ReshapeEvent

@@ -1,4 +1,4 @@
-package com.xenotactic.korge.testdata
+package com.xenotactic.korge.utils
 
 //val STANDARD_MAP = GameMap(10, 10).apply {
 //    placeEntities(

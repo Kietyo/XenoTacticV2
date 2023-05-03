@@ -21,7 +21,7 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.GoldStateUpdated
-import com.xenotactic.korge.event_listeners.RemoveUIEntitiesEvent
+import com.xenotactic.korge.listeners_event.RemoveUIEntitiesEvent
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent

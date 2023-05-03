@@ -17,8 +17,8 @@ import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
-import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
-import com.xenotactic.korge.component_listeners.SelectionComponentListener
+import com.xenotactic.korge.listeners_component.PreSelectionComponentListener
+import com.xenotactic.korge.listeners_component.SelectionComponentListener
 import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.align.centerXOnStage
 

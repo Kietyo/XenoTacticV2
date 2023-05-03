@@ -1,4 +1,4 @@
-package com.xenotactic.korge.family_listeners
+package com.xenotactic.korge.listeners_family
 
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration

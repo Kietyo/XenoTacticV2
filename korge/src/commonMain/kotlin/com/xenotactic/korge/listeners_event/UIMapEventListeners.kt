@@ -1,4 +1,4 @@
-package com.xenotactic.korge.event_listeners
+package com.xenotactic.korge.listeners_event
 
 import korlibs.korge.internal.KorgeUntested
 import korlibs.korge.ui.UIProgressBar

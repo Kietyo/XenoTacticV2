@@ -17,7 +17,7 @@ import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor
-import com.xenotactic.korge.korge_components.ResizeDebugComponent
+import com.xenotactic.korge.ecomponents.ResizeDebugComponent
 import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.utils.alignRightToRightOfWindow
 import com.xenotactic.korge.utils.MapRendererUpdater
