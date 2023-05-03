@@ -39,6 +39,9 @@ dependencies {
 	add("commonMainImplementation", project(":XenoTactic-GameLogic"))
 	add("commonTestImplementation", project(":XenoTactic-GameLogic"))
 
+	add("commonMainImplementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-RC")
+	add("commonTestImplementation", "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
 	add("commonMainImplementation", project(":ktruth"))
 	add("commonTestImplementation", project(":ktruth"))
 

@@ -1,7 +1,7 @@
 package com.xenotactic.gamelogic.mapid
 
-import com.soywiz.korio.lang.assert
 import com.xenotactic.gamelogic.model.GameMap
+import korlibs.io.lang.assert
 import kotlin.test.assertEquals
 
 internal class MapToIdTest {

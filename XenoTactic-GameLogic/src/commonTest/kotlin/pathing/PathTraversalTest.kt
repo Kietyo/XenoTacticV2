@@ -1,6 +1,6 @@
 package pathing
 
-import com.soywiz.korio.lang.assert
+import korlibs.io.lang.assert
 
 
 import com.xenotactic.gamelogic.model.GameUnitTuple

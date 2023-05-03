@@ -15,12 +15,14 @@ import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.utils.StagingEntityUtils
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.utils.GameSimulator
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
 internal class GameMapApiTest {
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun regressionTest1() = runBlocking {
+    fun regressionTest1() = runTest {
         val width = 30.toGameUnit()
         val height = 11.toGameUnit()
         val gameWorld = GameWorld()
