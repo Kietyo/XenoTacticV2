@@ -7,13 +7,13 @@ import korlibs.korge.view.*
 import com.xenotactic.gamelogic.utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.utils.toGameMap
 import com.xenotactic.gamelogic.utils.MapToId
-import com.xenotactic.korge.daos.PlayerDataApi
+import com.xenotactic.korge.utils.PlayerDataApi
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent
 import com.xenotactic.korge.korge_components.ResizeDebugComponent
-import com.xenotactic.korge.korge_utils.alignLeftToLeftOfWindow
-import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
-import com.xenotactic.korge.korge_utils.alignTopToTopOfWindow
+import com.xenotactic.korge.utils.alignLeftToLeftOfWindow
+import com.xenotactic.korge.utils.alignRightToRightOfWindow
+import com.xenotactic.korge.utils.alignTopToTopOfWindow
 import com.xenotactic.korge.ui.MapWithMetadata
 import com.xenotactic.korge.ui.UIHeader
 import com.xenotactic.korge.ui.UIHeaderSection

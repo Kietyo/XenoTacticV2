@@ -1,4 +1,4 @@
-package com.xenotactic.korge.korge_utils
+package com.xenotactic.korge.utils
 
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*

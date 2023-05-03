@@ -1,7 +1,7 @@
 package com.xenotactic.korge.random.generators
 
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.korge_utils.StagingEntityUtils
+import com.xenotactic.korge.utils.StagingEntityUtils
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
 

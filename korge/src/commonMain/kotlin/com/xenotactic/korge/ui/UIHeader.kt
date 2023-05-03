@@ -13,7 +13,7 @@ import korlibs.korge.view.solidRect
 import korlibs.korge.view.text
 import korlibs.image.color.Colors
 import korlibs.io.async.Signal
-import com.xenotactic.korge.korge_utils.scaledDimensions
+import com.xenotactic.korge.utils.scaledDimensions
 import kotlin.collections.set
 
 enum class UIHeaderSection {

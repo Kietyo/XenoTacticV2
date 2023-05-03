@@ -15,7 +15,7 @@ import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.EventListener
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
-import com.xenotactic.korge.korge_utils.*
+import com.xenotactic.korge.utils.*
 import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*

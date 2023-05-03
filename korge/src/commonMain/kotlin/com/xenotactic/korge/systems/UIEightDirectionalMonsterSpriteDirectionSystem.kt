@@ -3,7 +3,7 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.korge.korge_utils.getDirection8
+import com.xenotactic.korge.utils.getDirection8
 import kotlin.time.Duration
 
 class UIEightDirectionalMonsterSpriteDirectionSystem(

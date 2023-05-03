@@ -1,4 +1,4 @@
-package com.xenotactic.korge.bridges
+package com.xenotactic.korge.utils
 
 import com.xenotactic.gamelogic.model.GameMap
 

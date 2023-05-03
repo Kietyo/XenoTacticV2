@@ -6,7 +6,7 @@ import korlibs.korge.view.SContainer
 import korlibs.korge.view.Views
 import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.text
-import com.xenotactic.korge.bridges.MapBridge
+import com.xenotactic.korge.utils.MapBridge
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent
 

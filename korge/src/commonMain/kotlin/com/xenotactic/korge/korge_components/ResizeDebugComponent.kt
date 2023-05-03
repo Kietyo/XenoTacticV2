@@ -10,7 +10,7 @@ import korlibs.korge.view.getVisibleWindowArea
 import korlibs.korge.view.text
 import korlibs.korge.view.visible
 import korlibs.korge.view.xy
-import com.xenotactic.korge.korge_utils.getReferenceParent
+import com.xenotactic.korge.utils.getReferenceParent
 
 class ResizeDebugComponent(val view: Container) {
     val text: Text = view.text("", textSize = 12f)

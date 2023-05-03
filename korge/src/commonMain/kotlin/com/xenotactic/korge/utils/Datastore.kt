@@ -1,4 +1,4 @@
-package com.xenotactic.korge.daos
+package com.xenotactic.korge.utils
 
 class Datastore {
 

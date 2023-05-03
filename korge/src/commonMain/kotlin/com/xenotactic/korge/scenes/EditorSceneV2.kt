@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.events.ResizeMapEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.*
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.korge.models.MouseDragSettingsState
+import com.xenotactic.korge.state.MouseDragSettingsState
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState

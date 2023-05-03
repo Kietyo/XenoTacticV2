@@ -2,8 +2,6 @@ import korlibs.datastructure.setExtra
 import korlibs.korge.Korge
 import korlibs.korge.KorgeConfig
 import korlibs.korge.view.*
-import korlibs.image.bitmap.Bitmap32
-import korlibs.image.bitmap.Bitmap32Context2d
 import korlibs.image.color.Colors
 import korlibs.image.format.ASE
 import korlibs.image.format.readImageDataContainer
@@ -12,8 +10,8 @@ import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
 import korlibs.math.geom.*
 import com.xenotactic.gamelogic.utils.toAsepriteModel
-import com.xenotactic.korge.korge_utils.getDirection8
-import com.xenotactic.korge.korge_utils.kAngleTo
+import com.xenotactic.korge.utils.getDirection8
+import com.xenotactic.korge.utils.kAngleTo
 import korlibs.korge.view.align.centerOnStage
 import kotlin.jvm.JvmStatic
 

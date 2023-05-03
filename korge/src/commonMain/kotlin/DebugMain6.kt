@@ -1,12 +1,8 @@
 import korlibs.korge.Korge
 import korlibs.korge.KorgeConfig
 import korlibs.korge.annotations.KorgeExperimental
-import korlibs.korge.ui.UITooltipContainer
-import korlibs.korge.ui.tooltip
-import korlibs.korge.ui.uiTooltipContainer
 import korlibs.korge.view.*
 import korlibs.image.color.Colors
-import korlibs.image.color.MaterialColors
 import korlibs.image.format.ASE
 import korlibs.image.format.onlyReadVisibleLayers
 import korlibs.image.format.readImageDataContainer
@@ -14,13 +10,8 @@ import korlibs.image.format.toProps
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
 import korlibs.math.geom.Size
-import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toAsepriteModel
 import com.xenotactic.gamelogic.utils.toScale
-import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
-import com.xenotactic.korge.korge_utils.distributeVertically
-import com.xenotactic.korge.ui.UITowerDetails
 import korlibs.korge.view.align.alignLeftToRightOf
 import kotlin.jvm.JvmStatic
 

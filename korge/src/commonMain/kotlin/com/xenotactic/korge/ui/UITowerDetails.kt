@@ -8,8 +8,8 @@ import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
-import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
-import com.xenotactic.korge.korge_utils.distributeVertically
+import com.xenotactic.korge.utils.createUIEntityContainerForTower
+import com.xenotactic.korge.utils.distributeVertically
 import korlibs.io.util.toStringDecimal
 import korlibs.korge.view.align.*
 

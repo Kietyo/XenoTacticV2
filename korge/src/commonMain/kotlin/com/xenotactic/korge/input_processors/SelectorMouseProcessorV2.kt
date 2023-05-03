@@ -12,7 +12,6 @@ import korlibs.korge.view.visible
 import korlibs.korge.view.xy
 import korlibs.image.color.Colors
 import korlibs.math.geom.Point
-import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.gamelogic.utils.GameMapApi
@@ -22,7 +21,7 @@ class SelectorMouseProcessorV2(
     val view: Container,
     val engine: Engine,
     var isEnabled: Boolean = true
-) : EComponent {
+)  {
 
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()

@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.korge.korge_utils.StagingEntityUtils
+import com.xenotactic.korge.utils.StagingEntityUtils
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent

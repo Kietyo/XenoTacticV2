@@ -5,7 +5,7 @@ import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
+import com.xenotactic.korge.utils.createUIEntityContainerForTower
 import korlibs.korge.view.align.*
 
 class UITowerEntry: Container() {

@@ -1,4 +1,4 @@
-package com.xenotactic.korge.korge_utils
+package com.xenotactic.korge.utils
 
 import korlibs.korge.view.*
 import korlibs.math.geom.*
@@ -9,7 +9,7 @@ import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.WorldUnit
 

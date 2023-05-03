@@ -18,8 +18,8 @@ import korlibs.image.color.Colors
 import korlibs.image.color.RGBA
 import korlibs.io.async.Signal
 import korlibs.io.async.launchImmediately
-import com.xenotactic.korge.korge_utils.isScrollDown
-import com.xenotactic.korge.korge_utils.isScrollUp
+import com.xenotactic.korge.utils.isScrollDown
+import com.xenotactic.korge.utils.isScrollUp
 import kotlinx.coroutines.Dispatchers
 import kotlin.math.max
 import kotlin.math.min

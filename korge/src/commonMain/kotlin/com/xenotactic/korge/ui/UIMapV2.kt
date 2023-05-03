@@ -15,8 +15,8 @@ import com.xenotactic.gamelogic.utils.GRID_LINES_RATIO
 import com.xenotactic.gamelogic.utils.GRID_NUMBERS_RATIO
 import com.xenotactic.gamelogic.utils.GRID_SIZE
 import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
-import com.xenotactic.gamelogic.korge_utils.size
-import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
@@ -25,7 +25,7 @@ import com.xenotactic.gamelogic.views.UIEntity
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.ResizeMapEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
-import com.xenotactic.korge.korge_utils.toWorldCoordinates
+import com.xenotactic.korge.utils.toWorldCoordinates
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.gamelogic.state.GameMapPathState
@@ -256,7 +256,7 @@ class UIMapV2(
         entityWidth: GameUnit,
         entityHeight: GameUnit,
     ): GameUnitTuple =
-        com.xenotactic.korge.korge_utils.getRoundedGridCoordinates(
+        com.xenotactic.korge.utils.getRoundedGridCoordinates(
             gridX,
             gridY,
             entityWidth,

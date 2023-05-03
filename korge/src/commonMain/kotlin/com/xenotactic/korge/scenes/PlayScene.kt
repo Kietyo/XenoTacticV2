@@ -24,7 +24,7 @@ import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.input_processors.CameraInputProcessor
-import com.xenotactic.korge.models.MouseDragSettingsState
+import com.xenotactic.korge.state.MouseDragSettingsState
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
 import com.xenotactic.korge.random.generators.*

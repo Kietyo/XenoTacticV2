@@ -3,7 +3,7 @@ package com.xenotactic.korge.systems
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.System
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.time.Duration

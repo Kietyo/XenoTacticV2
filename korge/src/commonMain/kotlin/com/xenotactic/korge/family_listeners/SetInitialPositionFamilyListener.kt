@@ -5,7 +5,7 @@ import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.components.UIEntityViewComponent
-import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.korge.ui.UIMapV2

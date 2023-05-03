@@ -1,4 +1,4 @@
-package com.xenotactic.korge.korge_utils
+package com.xenotactic.korge.utils
 
 import korlibs.memory.clamp
 import korlibs.event.MouseButton

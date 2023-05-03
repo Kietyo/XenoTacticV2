@@ -9,6 +9,7 @@ import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.model.toGameUnitPoint
 import com.xenotactic.gamelogic.pathing.*
 import com.xenotactic.gamelogic.utils.IntStatCounter
+import korlibs.datastructure.PriorityQueue
 import utils.PathingPointUtil
 import kotlin.math.sign
 

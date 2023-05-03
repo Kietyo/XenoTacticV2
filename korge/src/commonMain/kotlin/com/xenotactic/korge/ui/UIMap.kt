@@ -14,22 +14,21 @@ import korlibs.math.geom.Point
 import korlibs.math.geom.Rectangle
 
 import korlibs.math.geom.vector.StrokeInfo
-import com.xenotactic.gamelogic.korge_utils.size
-import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.input_processors.PointerAction
-import com.xenotactic.korge.korge_utils.getRoundedGridCoordinates
-import com.xenotactic.korge.korge_utils.makeEntityLabelText
-import com.xenotactic.korge.korge_utils.toWorldCoordinates
+import com.xenotactic.korge.utils.getRoundedGridCoordinates
+import com.xenotactic.korge.utils.makeEntityLabelText
+import com.xenotactic.korge.utils.toWorldCoordinates
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
@@ -71,7 +70,7 @@ class UIMap(
     val shortestPath: PathSequence? = null,
     private val uiMapSettings: UIMapSettings = UIMapSettings(),
     val initialRenderEntities: Boolean = true
-) : Container(), EComponent {
+) : Container() {
     val _gridSize = uiMapSettings.gridSize
     private val _borderSize = uiMapSettings.borderSize
     private val _gridLineSize = uiMapSettings.gridLineSize

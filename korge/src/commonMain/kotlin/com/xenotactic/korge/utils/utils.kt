@@ -1,4 +1,4 @@
-package com.xenotactic.korge.korge_utils
+package com.xenotactic.korge.utils
 
 import korlibs.korge.view.View
 import korlibs.korge.view.align.alignTopToBottomOf

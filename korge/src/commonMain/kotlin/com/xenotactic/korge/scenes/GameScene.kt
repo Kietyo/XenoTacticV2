@@ -6,7 +6,7 @@ import korlibs.event.Key
 import korlibs.korge.input.draggable
 import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
-import com.xenotactic.korge.bridges.MapBridge
+import com.xenotactic.korge.utils.MapBridge
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.GoalEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
@@ -18,9 +18,9 @@ import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor
 import com.xenotactic.korge.korge_components.ResizeDebugComponent
-import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
-import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
-import com.xenotactic.korge.renderer.MapRendererUpdater
+import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.utils.alignRightToRightOfWindow
+import com.xenotactic.korge.utils.MapRendererUpdater
 import com.xenotactic.korge.ui.UIMap
 import com.xenotactic.korge.ui.UIPathText
 import com.xenotactic.korge.ui.UIPlacementButton

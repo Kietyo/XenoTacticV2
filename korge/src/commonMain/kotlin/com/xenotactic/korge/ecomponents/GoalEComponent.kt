@@ -1,6 +1,5 @@
 package com.xenotactic.korge.ecomponents
 
-import com.xenotactic.korge.engine.EComponent
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
@@ -16,8 +15,7 @@ data class GoalData(
     val goldGoal: Int,
 )
 
-class GoalEComponent(val engine: Engine, val eventBus: EventBus) :
-    EComponent {
+class GoalEComponent(val engine: Engine, val eventBus: EventBus) {
     private var goalData: GoalData? = null
     private var solverResult: SolverResult.Success? = null
 

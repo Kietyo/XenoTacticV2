@@ -26,10 +26,10 @@ import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
-import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
-import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
-import com.xenotactic.korge.korge_utils.distributeVertically
-import com.xenotactic.korge.korge_utils.isEmpty
+import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.utils.alignRightToRightOfWindow
+import com.xenotactic.korge.utils.distributeVertically
+import com.xenotactic.korge.utils.isEmpty
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableGoldState

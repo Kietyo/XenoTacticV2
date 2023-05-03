@@ -1,4 +1,4 @@
-package com.xenotactic.korge.daos
+package com.xenotactic.korge.utils
 
 import korlibs.logger.Logger
 import korlibs.io.file.std.resourcesVfs

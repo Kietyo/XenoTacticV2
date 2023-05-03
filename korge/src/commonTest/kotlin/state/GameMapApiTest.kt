@@ -12,7 +12,7 @@ import com.xenotactic.gamelogic.utils.wH
 import com.xenotactic.gamelogic.utils.wW
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.korge_utils.StagingEntityUtils
+import com.xenotactic.korge.utils.StagingEntityUtils
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.utils.GameSimulator
 import kotlinx.coroutines.runBlocking

@@ -10,10 +10,9 @@ import korlibs.image.format.toProps
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
 import korlibs.math.geom.*
-import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.korge.korge_utils.getDirection8
-import com.xenotactic.korge.korge_utils.kAngleTo
+import com.xenotactic.korge.utils.getDirection8
+import com.xenotactic.korge.utils.kAngleTo
 import korlibs.korge.view.align.centerOnStage
 import kotlin.jvm.JvmStatic
 
