@@ -3,6 +3,7 @@ package com.xenotactic.korge.listeners_event
 import korlibs.logger.Logger
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
+import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.EventListener
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
@@ -13,11 +14,13 @@ import com.xenotactic.gamelogic.utils.GameMapApi
 
 class TowerUpgradeEventListeners(
     val engine: Engine
-): EventListener {
+) : EventListener {
     private val gameWorld = engine.gameWorld
     private val world = gameWorld.world
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    private val gamePlayState = engine.stateInjections.getSingleton<GameplayState>()
     val logger = Logger<TowerUpgradeEventListeners>()
+
     init {
         engine.eventBus.register<UpgradeTowerDamageEvent> {
             handleUpgradeTowerDamageEvent(it)
@@ -35,9 +38,11 @@ class TowerUpgradeEventListeners(
                 val newDamageUpgrade = damageUpgradeComponent.numUpgrades + event.numUpgrades
                 addOrReplaceComponent(DamageUpgradeComponent(newDamageUpgrade))
                 val newDamage = gameMapApi.calculateTowerDamage(it)
-                engine.eventBus.send(UpgradedTowerDamageEvent(
-                    it, newDamage, newDamageUpgrade
-                ))
+                engine.eventBus.send(
+                    UpgradedTowerDamageEvent(
+                        it, newDamage, newDamageUpgrade
+                    )
+                )
             }
         }
     }
@@ -46,14 +51,20 @@ class TowerUpgradeEventListeners(
         gameWorld.selectionFamily.getSequence().forEach {
             if (!gameWorld.isTowerEntity(it)) return@forEach
             val speedUpgradeComponent = world[it, SpeedUpgradeComponent::class]
+            if (speedUpgradeComponent.numUpgrades == gamePlayState.maxSpeedUpgrades) {
+                return@forEach
+            }
             world.modifyEntity(it) {
-                val newSpeedUpgrade = speedUpgradeComponent.numUpgrades + event.numUpgrades
+                val newSpeedUpgrade =
+                    minOf(speedUpgradeComponent.numUpgrades + event.numUpgrades, gamePlayState.maxSpeedUpgrades)
                 addOrReplaceComponent(SpeedUpgradeComponent(newSpeedUpgrade))
                 val newWeaponSpeedMillis = gameMapApi.calculateWeaponSpeedMillis(it)
                 val newAttacksPerSecond = gameMapApi.calculateTowerAttacksPerSecond(it)
-                engine.eventBus.send(UpgradedTowerSpeedEvent(
-                    it, newWeaponSpeedMillis, newAttacksPerSecond, newSpeedUpgrade
-                ))
+                engine.eventBus.send(
+                    UpgradedTowerSpeedEvent(
+                        it, newWeaponSpeedMillis, newAttacksPerSecond, newSpeedUpgrade
+                    )
+                )
             }
         }
     }

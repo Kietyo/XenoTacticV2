@@ -1,7 +1,6 @@
 package com.xenotactic.korge.ui
 
 import korlibs.event.Key
-import korlibs.korge.annotations.KorgeExperimental
 import korlibs.korge.component.onAttachDetach
 import korlibs.korge.input.keys
 import korlibs.korge.input.onClick
@@ -44,7 +43,6 @@ enum class ViewType {
     MULTI_TOWER_SELECTION
 }
 
-@OptIn(KorgeExperimental::class)
 class UIGuiContainer(
     val stage: SContainer,
     val engine: Engine,
@@ -252,7 +250,7 @@ class UIGuiContainer(
                 centerOn(img)
             }
 
-            fun setNumUpgrades(newNumUpgrades: Int) {
+            fun setNumUpgradesText(newNumUpgrades: Int) {
                 numUpgrades = newNumUpgrades
                 t.text = "+$newNumUpgrades"
                 t.centerOn(img)
@@ -261,16 +259,16 @@ class UIGuiContainer(
             keys {
                 justDown(SHIFT) {
 //                    println("Down shift just down")
-                    setNumUpgrades(5)
+                    setNumUpgradesText(5)
                 }
                 up(SHIFT) {
 //                    println("up shift")
-                    setNumUpgrades(1)
+                    setNumUpgradesText(1)
                 }
             }
 
             onAttachDetach(onDetach = {
-                setNumUpgrades(1)
+                setNumUpgradesText(1)
 //                println("on detach")
             })
 
