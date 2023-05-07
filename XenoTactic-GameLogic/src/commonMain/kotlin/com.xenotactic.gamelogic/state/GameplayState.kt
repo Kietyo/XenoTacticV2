@@ -7,11 +7,12 @@ data class GameplayState(
     // E.g 0.04 = 4% speed increase
     val speedPercentPerUpgrade: Double,
     val basicTowerCost: Int,
-
+    val initialDamageUpgradeCost: Int,
+    val initialSpeedUpgradeCost: Int,
 ): State {
     val initialMaxSupply = 15
     val supplyPerDepot = 15
     companion object {
-        val DEFAULT = GameplayState(3, 0.04, 7)
+        val DEFAULT = GameplayState(3, 0.04, 7, 4, 5)
     }
 }
