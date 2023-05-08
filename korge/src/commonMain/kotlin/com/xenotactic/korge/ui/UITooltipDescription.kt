@@ -7,18 +7,23 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import korlibs.korge.view.align.*
 
 class UITooltipDescription(
-    towerCost: Int
+    goldCost: Int,
+    supplyCost: Int? = 1,
+    titleText: String = "BASIC TOWER",
+    descriptionText: String = "A basic tower."
 ): Container() {
+    private lateinit var goldCostSectionText: Text
+
     init {
         val padding = 5.0
         val bg = solidRect(200, 100, MaterialColors.YELLOW_100)
         val textColor = Colors.BLACK
 
-        val headerTextSize = 24f
-        val descriptionTextSize = 20f
+        val headerTextSize = 23f
+        val descriptionTextSize = 18f
 
-        val titleText = text(
-            "BASIC TOWER",
+        val titleTextUI = text(
+            titleText,
             textSize = headerTextSize,
             color = textColor,
             font = GlobalResources.FONT_ATKINSON_BOLD
@@ -32,8 +37,8 @@ class UITooltipDescription(
                 val i = image(GlobalResources.GOLD_ICON) {
                     smoothing = false
                 }
-                text(
-                    towerCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
+                goldCostSectionText = text(
+                    goldCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40f, color = textColor
                 ) {
                     scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
@@ -42,28 +47,31 @@ class UITooltipDescription(
                 }
             }
 
-            val supplyCostSection = container {
-                val i = image(GlobalResources.SUPPLY_ICON) {
-                    smoothing = false
+            supplyCost?.let {
+                val supplyCostSection = container {
+                    val i = image(GlobalResources.SUPPLY_ICON) {
+                        smoothing = false
+                    }
+                    val t = text(
+                        supplyCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
+                        textSize = 40f, color = textColor
+                    ) {
+                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
+                        alignLeftToRightOf(i, padding = 5.0)
+                        centerYOn(i)
+                    }
+                    alignLeftToRightOf(goldCostSection, padding = 10.0)
                 }
-                val t = text(
-                    "1", font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40f, color = textColor
-                ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
-                    alignLeftToRightOf(i, padding = 5.0)
-                    centerYOn(i)
-                }
-                alignLeftToRightOf(goldCostSection, padding = 10.0)
             }
+
 
             scaleWhileMaintainingAspect(ScalingOption.ByHeight(23.0))
             alignLeftToLeftOf(bg, padding)
-            alignTopToBottomOf(titleText)
+            alignTopToBottomOf(titleTextUI)
         }
 
-        val descriptionText = text(
-            "A basic tower.",
+        val descriptionTextUI = text(
+            descriptionText,
             textSize = descriptionTextSize,
             font = GlobalResources.FONT_ATKINSON_REGULAR,
             color = textColor
@@ -71,5 +79,9 @@ class UITooltipDescription(
             alignTopToBottomOf(costSection, padding)
             alignLeftToLeftOf(bg, padding)
         }
+    }
+
+    fun updateMoneyCost(newCost: Int) {
+        goldCostSectionText.text = newCost.toString()
     }
 }

@@ -210,7 +210,19 @@ class UIGuiContainer(
             tooltips.clear()
         }
 
-        val addTowerTooltip = UITooltipDescription(gameplayState.basicTowerCost)
+        val tooltipAddTower = UITooltipDescription(gameplayState.basicTowerCost)
+        val tooltipUpgradeDamage = UITooltipDescription(
+            gameplayState.initialDamageUpgradeCost,
+            null,
+            "Upgrade Damage",
+            "Upgrade tower damage."
+        )
+        val tooltipUpgradeSpeed = UITooltipDescription(
+            gameplayState.initialSpeedUpgradeCost,
+            null,
+            "Upgrade Speed",
+            "Upgrade tower speed."
+        )
 
         val tooltipSize = bottomRightGridWidth / 1.5
         val addTowerView = UITextRect(
@@ -220,24 +232,23 @@ class UIGuiContainer(
             onClick {
                 editorState.toggle(MapEntityType.TOWER)
             }
+            var tooltip: UITooltipDescription? = null
             onOver {
-                val tooltip = addTowerTooltip.addTo(this@UIGuiContainer.stage) {
+                tooltip = tooltipAddTower.addTo(this@UIGuiContainer.stage) {
                     scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
                     alignBottomToTopOf(this@apply, padding = 5.0)
                     centerXOn(this@apply)
                 }
-                tooltips.add(tooltip)
             }
             onOut {
-                clearTooltips()
+                tooltip?.removeFromParent()
             }
         }
 
         val incomeUpgradeView = UITextRect(
             "Income\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        ).apply {
-        }
+        )
 
         val towerDamageUpgradeView = Container().apply {
             var numUpgrades = 1
@@ -271,6 +282,18 @@ class UIGuiContainer(
                 setNumUpgradesText(1)
 //                println("on detach")
             })
+
+            var tooltip: UITooltipDescription? = null
+            onOver {
+                tooltip = tooltipUpgradeDamage.addTo(this@UIGuiContainer.stage) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
+                    alignBottomToTopOf(this@apply, padding = 5.0)
+                    centerXOn(this@apply)
+                }
+            }
+            onOut {
+                tooltip?.removeFromParent()
+            }
 
             onClick {
                 eventBus.send(UpgradeTowerDamageEvent(numUpgrades))
@@ -312,6 +335,18 @@ class UIGuiContainer(
 
             onClick {
                 eventBus.send(UpgradeTowerSpeedEvent(numUpgrades))
+            }
+
+            var tooltip: UITooltipDescription? = null
+            onOver {
+                tooltip = tooltipUpgradeSpeed.addTo(this@UIGuiContainer.stage) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
+                    alignBottomToTopOf(this@apply, padding = 5.0)
+                    centerXOn(this@apply)
+                }
+            }
+            onOut {
+                tooltip?.removeFromParent()
             }
         }
 
@@ -386,10 +421,13 @@ class UIGuiContainer(
                     }
                     centerXOnStage()
                     alignBottomToBottomOfWindow()
+
+                    tooltipUpgradeDamage.updateMoneyCost(gameplayState.initialDamageUpgradeCost + damageUpgradeComponent.numUpgrades)
                 }
 
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
+
 
                 holdShiftText.addTo(stage) {
                     alignLeftToLeftOf(bottomRightGrid, padding = bottomRightGridHorizontalPadding / 2.0)
