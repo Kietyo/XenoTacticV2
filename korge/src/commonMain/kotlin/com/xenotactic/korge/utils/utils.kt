@@ -49,7 +49,26 @@ fun toWorldCoordinates(gridSize: Number, entity: MapEntity, gameWidth: GameUnit,
 //    return sum
 //}
 
+data class UpgradeDecision(
+    val maxPossibleUpgradesDelta: Int,
+    val upgradesCost: Int
+)
 
+fun calculateUpgradeDecision(
+    currentMoney: Int, currentNumUpgrades: Int, maxUpgrades: Int, initialUpgradeCost: Int, numUpgradesWanted: Int): UpgradeDecision {
+    var availableMoney = currentMoney
+    var maxPossibleUpgrades = 0
+    while ((currentNumUpgrades + maxPossibleUpgrades) < maxUpgrades && maxPossibleUpgrades < numUpgradesWanted) {
+        val currentUpgradeCost = initialUpgradeCost + currentNumUpgrades + maxPossibleUpgrades
+        if (currentUpgradeCost > availableMoney) {
+            break
+        } else {
+            availableMoney -= currentUpgradeCost
+            maxPossibleUpgrades++
+        }
+    }
+    return UpgradeDecision(maxPossibleUpgrades, currentMoney - availableMoney)
+}
 
 
 fun main() {
