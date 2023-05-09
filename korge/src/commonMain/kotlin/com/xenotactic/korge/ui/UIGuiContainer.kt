@@ -204,11 +204,6 @@ class UIGuiContainer(
 
         val tooltips = mutableListOf<View>()
 
-        fun clearTooltips() {
-            tooltips.forEach { it.removeFromParent() }
-            tooltips.clear()
-        }
-
         val tooltipAddTower = UITooltipDescription(gameplayState.basicTowerCost)
         val tooltipUpgradeDamage = UITooltipDescription(
             gameplayState.initialDamageUpgradeCost,

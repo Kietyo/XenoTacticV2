@@ -5,14 +5,11 @@ import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableGoldState
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.utils.EventListener
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
-import com.xenotactic.gamelogic.utils.GameMapApi
-import com.xenotactic.korge.utils.calculateUpgradeDecision
 
 class TowerUpgradeEventListeners(
     val engine: Engine
@@ -37,8 +34,13 @@ class TowerUpgradeEventListeners(
         gameWorld.selectionFamily.getSequence().forEach {
             if (!gameWorld.isTowerEntity(it)) return@forEach
             val damageUpgradeComponent = world[it, DamageUpgradeComponent::class]
+            val costOfUpgrades = calculateCostOfUpgrades(damageUpgradeComponent.numUpgrades, gamePlayState.initialDamageUpgradeCost, event.numUpgrades)
+            if (costOfUpgrades > mutableGoldState.currentGold) {
+                return@forEach
+            }
             world.modifyEntity(it) {
                 val newDamageUpgrade = damageUpgradeComponent.numUpgrades + event.numUpgrades
+                mutableGoldState.currentGold -= costOfUpgrades
                 addOrReplaceComponent(DamageUpgradeComponent(newDamageUpgrade))
                 val newDamage = gameMapApi.calculateTowerDamage(it)
                 engine.eventBus.send(

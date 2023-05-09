@@ -1,5 +1,6 @@
 package utils
 
+import com.kietyo.ktruth.assertThat
 import korlibs.math.geom.MRectangleInt
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameUnitTuple
@@ -551,5 +552,13 @@ internal class UtilsKtTest {
     @Test
     fun gameUnit_minus() {
         assertEquals(GameUnit(5) - GameUnit(2), GameUnit(3))
+    }
+
+    @Test
+    fun calculateCostOfUpgrades() {
+        assertThat(calculateCostOfUpgrades(0, 4, 5))
+            .isEqualTo(30)
+        assertThat(calculateCostOfUpgrades(1, 4, 5))
+            .isEqualTo(35)
     }
 }
