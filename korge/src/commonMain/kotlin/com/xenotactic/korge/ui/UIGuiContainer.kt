@@ -10,14 +10,10 @@ import korlibs.korge.ui.uiButton
 import korlibs.korge.view.*
 import korlibs.image.color.MaterialColors
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.utils.GameMapApi
-import com.xenotactic.gamelogic.utils.GameSimulator
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.utils.GlobalResources
-import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.GoldStateUpdated
 import com.xenotactic.korge.listeners_event.RemoveUIEntitiesEvent
@@ -31,8 +27,9 @@ import com.xenotactic.korge.utils.distributeVertically
 import com.xenotactic.korge.utils.isEmpty
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.GameplayState
+import com.xenotactic.gamelogic.state.MutableCurrentlySelectedTowerState
 import com.xenotactic.gamelogic.state.MutableGoldState
-import com.xenotactic.gamelogic.utils.toScale
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.state.*
 import korlibs.event.Key.SHIFT
 import korlibs.korge.view.align.*
@@ -202,8 +199,6 @@ class UIGuiContainer(
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         )
 
-        val tooltips = mutableListOf<View>()
-
         val tooltipAddTower = UITooltipDescription(gameplayState.basicTowerCost)
         val tooltipUpgradeDamage = UITooltipDescription(
             gameplayState.initialDamageUpgradeCost,
@@ -244,52 +239,15 @@ class UIGuiContainer(
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         )
 
-        val towerDamageUpgradeView = Container().apply {
-            var numUpgrades = 1
-            val img = image(GlobalResources.DAMAGE_ICON) {
-                smoothing = false
-                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(50.0, 50.0))
-            }
-            val t = UITextWithShadow("+1").addTo(this) {
-                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(40.0, 40.0))
-                centerOn(img)
-            }
+        val mutableCurrentlySelectedTowerState = MutableCurrentlySelectedTowerState(null)
+        engine.stateInjections.setSingletonOrThrow(mutableCurrentlySelectedTowerState)
 
-            fun setNumUpgradesText(newNumUpgrades: Int) {
-                numUpgrades = newNumUpgrades
-                t.text = "+$newNumUpgrades"
-                t.centerOn(img)
-            }
-
-            keys {
-                justDown(SHIFT) {
-                    setNumUpgradesText(5)
-                }
-                up(SHIFT) {
-                    setNumUpgradesText(1)
-                }
-            }
-
-            onAttachDetach(onDetach = {
-                setNumUpgradesText(1)
-            })
-
-            var tooltip: UITooltipDescription? = null
-            onOver {
-                tooltip = tooltipUpgradeDamage.addTo(this@UIGuiContainer.stage) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
-                    alignBottomToTopOf(this@apply, padding = 5.0)
-                    centerXOn(this@apply)
-                }
-            }
-            onOut {
-                tooltip?.removeFromParent()
-            }
-
-            onClick {
-                eventBus.send(UpgradeTowerDamageEvent(numUpgrades))
-            }
-        }
+        val towerDamageUpgradeView = UITowerUpgradeIcon(
+            engine,
+            tooltipUpgradeDamage,
+            tooltipSize,
+            this@UIGuiContainer
+        )
 
         val towerSpeedUpgradeView = Container().apply {
             var numUpgrades = 1
@@ -360,14 +318,13 @@ class UIGuiContainer(
 
         deadUIZonesState.zones.add(bottomRightGrid)
 
-        var currentTowerId: EntityId? = null
         var currentViewType = ViewType.NONE
 
         fun resetView() {
             when (currentViewType) {
                 ViewType.NONE -> Unit
                 ViewType.SINGLE_TOWER_SELECTION -> {
-                    currentTowerId = null
+                    mutableCurrentlySelectedTowerState.currentTowerId = null
                     middleSelectionContainer.removeChildren()
                     holdShiftText.removeFromParent()
                     bottomRightGrid.clearEntry(0, 1)
@@ -389,10 +346,8 @@ class UIGuiContainer(
                     entityId: EntityId,
                     old: DamageUpgradeComponent?,
                     new: DamageUpgradeComponent) {
-                    if (entityId == currentTowerId) {
-                        tooltipUpgradeDamage.updateMoneyCost(
-                            gameplayState.initialDamageUpgradeCost + new.numUpgrades
-                        )
+                    if (entityId == mutableCurrentlySelectedTowerState.currentTowerId) {
+                        towerDamageUpgradeView.setNumTowerUpgradesText(towerDamageUpgradeView.numUpgrades)
                     }
                 }
             })
@@ -402,7 +357,7 @@ class UIGuiContainer(
                     entityId: EntityId,
                     old: SpeedUpgradeComponent?,
                     new: SpeedUpgradeComponent) {
-                    if (entityId == currentTowerId) {
+                    if (entityId == mutableCurrentlySelectedTowerState.currentTowerId) {
                         tooltipUpgradeSpeed.updateMoneyCost(
                             gameplayState.initialSpeedUpgradeCost + new.numUpgrades
                         )
@@ -415,7 +370,7 @@ class UIGuiContainer(
                 resetView()
                 currentViewType = ViewType.SINGLE_TOWER_SELECTION
                 val towerId = gameWorld.selectionFamily.first()
-                currentTowerId = towerId
+                mutableCurrentlySelectedTowerState.currentTowerId = towerId
                 println("Selected one tower entity!")
                 middleSelectionContainer.apply {
                     val towerDamage = gameMapApi.calculateTowerDamage(towerId)
@@ -467,7 +422,7 @@ class UIGuiContainer(
         }
 
         eventBus.register<RemovedTowerEntityEvent> {
-            if (currentTowerId == it.entityId) {
+            if (mutableCurrentlySelectedTowerState.currentTowerId == it.entityId) {
                 resetView()
             }
         }

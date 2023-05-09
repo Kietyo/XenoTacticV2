@@ -152,9 +152,6 @@ class PlayScene : Scene() {
 
         UIGuiContainer(this, engine, gameWorld, gameSimulator.gameMapApi)
 
-
-
-
         keys {
             this.down(Key.ESCAPE) {
                 editorState.switchToPlayingMode()

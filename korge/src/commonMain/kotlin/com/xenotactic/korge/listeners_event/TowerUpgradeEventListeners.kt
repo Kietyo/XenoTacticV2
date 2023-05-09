@@ -34,7 +34,9 @@ class TowerUpgradeEventListeners(
         gameWorld.selectionFamily.getSequence().forEach {
             if (!gameWorld.isTowerEntity(it)) return@forEach
             val damageUpgradeComponent = world[it, DamageUpgradeComponent::class]
-            val costOfUpgrades = calculateCostOfUpgrades(damageUpgradeComponent.numUpgrades, gamePlayState.initialDamageUpgradeCost, event.numUpgrades)
+            val costOfUpgrades = calculateCostOfUpgrades(
+                damageUpgradeComponent.numUpgrades, gamePlayState.initialDamageUpgradeCost, event.numUpgrades
+            )
             if (costOfUpgrades > mutableGoldState.currentGold) {
                 return@forEach
             }
@@ -59,6 +61,9 @@ class TowerUpgradeEventListeners(
             if (speedUpgradeComponent.numUpgrades == gamePlayState.maxSpeedUpgrades) {
                 return@forEach
             }
+            if (speedUpgradeComponent.numUpgrades + event.numUpgrades > gamePlayState.maxSpeedUpgrades) {
+                return@forEach
+            }
             val upgradeDecision = calculateUpgradeDecision(
                 mutableGoldState.currentGold,
                 speedUpgradeComponent.numUpgrades,
@@ -66,10 +71,10 @@ class TowerUpgradeEventListeners(
                 gamePlayState.initialSpeedUpgradeCost,
                 event.numUpgrades
             )
-            if (upgradeDecision.maxPossibleUpgradesDelta > 0) {
+            if (upgradeDecision.maxPossibleUpgradesDelta == event.numUpgrades) {
                 world.modifyEntity(it) {
                     val newSpeedUpgrade =
-                       speedUpgradeComponent.numUpgrades + upgradeDecision.maxPossibleUpgradesDelta
+                        speedUpgradeComponent.numUpgrades + upgradeDecision.maxPossibleUpgradesDelta
                     addOrReplaceComponent(SpeedUpgradeComponent(newSpeedUpgrade))
                     mutableGoldState.currentGold -= upgradeDecision.upgradesCost
                     val newWeaponSpeedMillis = gameMapApi.calculateWeaponSpeedMillis(it)

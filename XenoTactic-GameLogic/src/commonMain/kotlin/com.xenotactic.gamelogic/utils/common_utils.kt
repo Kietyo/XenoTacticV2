@@ -420,7 +420,8 @@ data class UpgradeDecision(
 )
 
 fun calculateUpgradeDecision(
-    currentMoney: Int, currentNumUpgrades: Int, maxUpgrades: Int, initialUpgradeCost: Int, numUpgradesWanted: Int): UpgradeDecision {
+    currentMoney: Int, currentNumUpgrades: Int, maxUpgrades: Int, initialUpgradeCost: Int,
+    numUpgradesWanted: Int): UpgradeDecision {
     var availableMoney = currentMoney
     var maxPossibleUpgrades = 0
     while ((currentNumUpgrades + maxPossibleUpgrades) < maxUpgrades && maxPossibleUpgrades < numUpgradesWanted) {
@@ -435,11 +436,9 @@ fun calculateUpgradeDecision(
     return UpgradeDecision(maxPossibleUpgrades, currentMoney - availableMoney)
 }
 
-
 fun calculateCostOfUpgrades(
     currentNumUpgrades: Int, initialUpgradeCost: Int, numUpgradesWanted: Int
 ) = (currentNumUpgrades + initialUpgradeCost) * numUpgradesWanted + (numUpgradesWanted - 1) * numUpgradesWanted / 2
-
 
 infix fun Number.size(right: Number) = Size(this.toFloat(), right.toFloat())
 infix fun Number.rectCorner(right: Number) = RectCorners(this.toFloat(), right.toFloat())
