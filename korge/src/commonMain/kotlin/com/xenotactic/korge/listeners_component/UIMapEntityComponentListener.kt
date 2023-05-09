@@ -5,9 +5,6 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.UIEntityViewComponent
 
 class UIMapEntityComponentListener : ComponentListener<UIEntityViewComponent> {
-    override fun onAdd(entityId: EntityId, component: UIEntityViewComponent) {
-    }
-
     override fun onRemove(entityId: EntityId, component: UIEntityViewComponent) {
         component.entityView.removeFromParent()
     }

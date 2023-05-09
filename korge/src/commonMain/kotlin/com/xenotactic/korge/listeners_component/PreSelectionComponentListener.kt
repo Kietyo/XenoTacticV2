@@ -22,8 +22,7 @@ class PreSelectionComponentListener(
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     val IN_PROCESS_SELECTION_COLOR = Colors.YELLOW.withAd(0.5)
 
-
-    override fun onAdd(entityId: EntityId, component: PreSelectionComponent) {
+    override fun onAddOrReplace(entityId: EntityId, old: PreSelectionComponent?, new: PreSelectionComponent) {
         val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
         val sizeComponent = world[entityId, SizeComponent::class]
 

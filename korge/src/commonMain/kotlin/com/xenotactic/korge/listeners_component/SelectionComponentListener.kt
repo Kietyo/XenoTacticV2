@@ -20,7 +20,7 @@ class SelectionComponentListener(
     val uiMap = engine.injections.getSingleton<UIMapV2>()
     private val SELECTION_COLOR = Colors.YELLOW
 
-    override fun onAdd(entityId: EntityId, component: SelectedComponent) {
+    override fun onAddOrReplace(entityId: EntityId, old: SelectedComponent?, new: SelectedComponent) {
         val uiEntityContainerComponent = world.get(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
         val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
 

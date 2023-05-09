@@ -9,7 +9,6 @@ class UIMapEntityTextComponentListener(
     val engine: Engine
 ) : ComponentListener<com.xenotactic.gamelogic.components.UIMapEntityTextComponent> {
     val uiMap = engine.injections.getSingleton<UIMapV2>()
-    override fun onAdd(entityId: EntityId, component: com.xenotactic.gamelogic.components.UIMapEntityTextComponent) = Unit
 
     override fun onRemove(entityId: EntityId, component: com.xenotactic.gamelogic.components.UIMapEntityTextComponent) {
         uiMap.entityLabelLayer.removeChild(component.textView)

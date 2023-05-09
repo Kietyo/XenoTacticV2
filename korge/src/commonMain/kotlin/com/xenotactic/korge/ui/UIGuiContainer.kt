@@ -1,5 +1,6 @@
 package com.xenotactic.korge.ui
 
+import com.xenotactic.ecs.EntityComponentListener
 import korlibs.event.Key
 import korlibs.korge.component.onAttachDetach
 import korlibs.korge.input.keys
@@ -137,7 +138,7 @@ class UIGuiContainer(
                 val i = image(GlobalResources.GOLD_ICON) {
                     smoothing = false
                 }
-                val calculateTextFn = { gold: Int -> gold.toString()}
+                val calculateTextFn = { gold: Int -> gold.toString() }
                 val t = text(
                     calculateTextFn(mutableGoldState.currentGold), font = GlobalResources.FONT_ATKINSON_BOLD,
                     textSize = 40f
@@ -183,7 +184,6 @@ class UIGuiContainer(
             y += 5f
             alignRightToRightOfWindow(padding = 10f)
         }
-
 
         val multiTowerSelectGridWidth = 400.0
         val multiTowerSelectGridHeight = multiTowerSelectGridWidth / 3
@@ -269,18 +269,15 @@ class UIGuiContainer(
 
             keys {
                 justDown(SHIFT) {
-//                    println("Down shift just down")
                     setNumUpgradesText(5)
                 }
                 up(SHIFT) {
-//                    println("up shift")
                     setNumUpgradesText(1)
                 }
             }
 
             onAttachDetach(onDetach = {
                 setNumUpgradesText(1)
-//                println("on detach")
             })
 
             var tooltip: UITooltipDescription? = null
@@ -318,19 +315,19 @@ class UIGuiContainer(
             }
 
             keys {
-                justDown(Key.LEFT_SHIFT) {
-//                    println("Down shift just down")
+                justDown(SHIFT) {
+                    //                    println("Down shift just down")
                     setNumUpgrades(5)
                 }
-                up(Key.LEFT_SHIFT) {
-//                    println("up shift")
+                up(SHIFT) {
+                    //                    println("up shift")
                     setNumUpgrades(1)
                 }
             }
 
             onAttachDetach(onDetach = {
                 setNumUpgrades(1)
-//                println("on detach")
+                //                println("on detach")
             })
 
             onClick {
@@ -370,7 +367,6 @@ class UIGuiContainer(
         deadUIZonesState.zones.add(bottomRightGrid)
 
         var currentTowerId: EntityId? = null
-
         var currentViewType = ViewType.NONE
 
         fun resetView() {
@@ -422,17 +418,28 @@ class UIGuiContainer(
                     centerXOnStage()
                     alignBottomToBottomOfWindow()
 
-                    tooltipUpgradeDamage.updateMoneyCost(gameplayState.initialDamageUpgradeCost + damageUpgradeComponent.numUpgrades)
+                    tooltipUpgradeDamage.updateMoneyCost(
+                        gameplayState.initialDamageUpgradeCost + damageUpgradeComponent.numUpgrades
+                    )
                 }
 
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
 
-
                 holdShiftText.addTo(stage) {
                     alignLeftToLeftOf(bottomRightGrid, padding = bottomRightGridHorizontalPadding / 2.0)
                     alignBottomToTopOf(bottomRightGrid)
                 }
+
+                gameWorld.world.componentService.addEntityComponentListener(
+                    towerId, object : EntityComponentListener<DamageUpgradeComponent> {
+                        override fun onAddOrReplace(oldComponent: DamageUpgradeComponent?,
+                            newComponent: DamageUpgradeComponent) {
+                            tooltipUpgradeDamage.updateMoneyCost(
+                                gameplayState.initialDamageUpgradeCost + newComponent.numUpgrades
+                            )
+                        }
+                    })
             } else if (gameWorld.selectionFamily.size > 1) {
                 resetView()
                 currentViewType = ViewType.MULTI_TOWER_SELECTION
