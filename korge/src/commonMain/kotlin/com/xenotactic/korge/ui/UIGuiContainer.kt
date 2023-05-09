@@ -1,7 +1,6 @@
 package com.xenotactic.korge.ui
 
-import com.xenotactic.ecs.EntityComponentListener
-import korlibs.event.Key
+import com.xenotactic.ecs.ComponentListener
 import korlibs.korge.component.onAttachDetach
 import korlibs.korge.input.keys
 import korlibs.korge.input.onClick
@@ -389,6 +388,33 @@ class UIGuiContainer(
 
         resetInitial()
 
+        gameWorld.world.componentService.addComponentListener(
+            object : ComponentListener<DamageUpgradeComponent> {
+                override fun onAddOrReplace(
+                    entityId: EntityId,
+                    old: DamageUpgradeComponent?,
+                    new: DamageUpgradeComponent) {
+                    if (entityId == currentTowerId) {
+                        tooltipUpgradeDamage.updateMoneyCost(
+                            gameplayState.initialDamageUpgradeCost + new.numUpgrades
+                        )
+                    }
+                }
+            })
+        gameWorld.world.componentService.addComponentListener(
+            object : ComponentListener<SpeedUpgradeComponent> {
+                override fun onAddOrReplace(
+                    entityId: EntityId,
+                    old: SpeedUpgradeComponent?,
+                    new: SpeedUpgradeComponent) {
+                    if (entityId == currentTowerId) {
+                        tooltipUpgradeSpeed.updateMoneyCost(
+                            gameplayState.initialSpeedUpgradeCost + new.numUpgrades
+                        )
+                    }
+                }
+            })
+
         eventBus.register<EntitySelectionChangedEvent> {
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
                 resetView()
@@ -430,16 +456,6 @@ class UIGuiContainer(
                     alignLeftToLeftOf(bottomRightGrid, padding = bottomRightGridHorizontalPadding / 2.0)
                     alignBottomToTopOf(bottomRightGrid)
                 }
-
-                gameWorld.world.componentService.addEntityComponentListener(
-                    towerId, object : EntityComponentListener<DamageUpgradeComponent> {
-                        override fun onAddOrReplace(oldComponent: DamageUpgradeComponent?,
-                            newComponent: DamageUpgradeComponent) {
-                            tooltipUpgradeDamage.updateMoneyCost(
-                                gameplayState.initialDamageUpgradeCost + newComponent.numUpgrades
-                            )
-                        }
-                    })
             } else if (gameWorld.selectionFamily.size > 1) {
                 resetView()
                 currentViewType = ViewType.MULTI_TOWER_SELECTION
