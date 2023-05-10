@@ -1,13 +1,13 @@
 package com.xenotactic.korge.ui
 
-import com.xenotactic.gamelogic.components.DamageUpgradeComponent
+import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableCurrentlySelectedTowerState
 import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.calculateCostOfUpgrades
 import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import korlibs.event.Key
+import korlibs.image.bitmap.Bitmap
 import korlibs.korge.component.onAttachDetach
 import korlibs.korge.input.keys
 import korlibs.korge.input.onClick
@@ -20,31 +20,30 @@ import korlibs.korge.view.align.centerXOn
 
 class UITowerUpgradeIcon(
     val engine: Engine,
-    val tooltipUpgradeDamage: UITooltipDescription,
+    val tooltip: UITooltipDescription,
     val tooltipSize: Double,
-    val guiContainer: UIGuiContainer
+    val guiContainer: UIGuiContainer,
+    val icon: Bitmap,
+    val initialUpgradeCost: Int,
+    val getCurrentUpgradesFn: (currentTowerId: EntityId) -> Int,
+    val onUpgradeClick: (numUpgrades: Int) -> Unit
 ) : Container() {
-    private val eventBus = engine.eventBus
-    private val world = engine.gameWorld.world
-    private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
     private val mutableCurrentlySelectedTowerState =
         engine.stateInjections.getSingleton<MutableCurrentlySelectedTowerState>()
     var numUpgrades = 1
 
     private val currentTowerId get() = mutableCurrentlySelectedTowerState.currentTowerId
 
-    private val img = image(GlobalResources.DAMAGE_ICON) {
+    private val img = image(icon) {
         smoothing = false
         scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(50.0, 50.0))
     }
-    private val towerDamageUpgradeText: UITextWithShadow = UITextWithShadow("+1").addTo(this) {
+    private val upgradeNumText: UITextWithShadow = UITextWithShadow("+1").addTo(this) {
         scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(40.0, 40.0))
         centerOn(img)
     }
 
     init {
-
-
         keys {
             justDown(Key.SHIFT) {
                 setNumTowerUpgradesText(5)
@@ -59,34 +58,36 @@ class UITowerUpgradeIcon(
         })
 
         onOver {
-            this.tooltipUpgradeDamage.addTo(guiContainer.stage) {
+            this.tooltip.addTo(guiContainer.stage) {
                 scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
                 alignBottomToTopOf(this@UITowerUpgradeIcon, padding = 5.0)
                 centerXOn(this@UITowerUpgradeIcon)
             }
         }
         onOut {
-            this.tooltipUpgradeDamage.removeFromParent()
+            this.tooltip.removeFromParent()
         }
 
         onClick {
-            eventBus.send(UpgradeTowerDamageEvent(numUpgrades))
+            onUpgradeClick(numUpgrades)
         }
     }
 
     fun setNumTowerUpgradesText(newNumUpgrades: Int) {
         numUpgrades = newNumUpgrades
 
-        val towerDamageUpgradeComponent =
-            world[currentTowerId!!, DamageUpgradeComponent::class]
-        this.tooltipUpgradeDamage.updateMoneyCost(
+        val currentUpgrades =
+            getCurrentUpgradesFn(currentTowerId!!)
+
+        this.tooltip.updateMoneyCost(
             calculateCostOfUpgrades(
-                towerDamageUpgradeComponent.numUpgrades,
-                gameplayState.initialDamageUpgradeCost, newNumUpgrades
+                currentUpgrades,
+                initialUpgradeCost,
+                newNumUpgrades
             )
         )
 
-        towerDamageUpgradeText.text = "+$newNumUpgrades"
-        towerDamageUpgradeText.centerOn(img)
+        upgradeNumText.text = "+$newNumUpgrades"
+        upgradeNumText.centerOn(img)
     }
 }

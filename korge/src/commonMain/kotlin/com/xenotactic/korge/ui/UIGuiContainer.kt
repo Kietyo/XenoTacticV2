@@ -246,58 +246,25 @@ class UIGuiContainer(
             engine,
             tooltipUpgradeDamage,
             tooltipSize,
-            this@UIGuiContainer
+            this@UIGuiContainer,
+            GlobalResources.DAMAGE_ICON,
+            gameplayState.initialDamageUpgradeCost,
+            {
+                world[it, DamageUpgradeComponent::class].numUpgrades
+            },
+            { eventBus.send(UpgradeTowerDamageEvent(it))}
         )
 
-        val towerSpeedUpgradeView = Container().apply {
-            var numUpgrades = 1
-            val img = image(GlobalResources.COOLDOWN_ICON) {
-                smoothing = false
-                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(50.0, 50.0))
-            }
-            val t = UITextWithShadow("+1").addTo(this) {
-                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(40.0, 40.0))
-                centerOn(img)
-            }
-
-            fun setNumUpgrades(newNumUpgrades: Int) {
-                numUpgrades = newNumUpgrades
-                t.text = "+$newNumUpgrades"
-                t.centerOn(img)
-            }
-
-            keys {
-                justDown(SHIFT) {
-                    //                    println("Down shift just down")
-                    setNumUpgrades(5)
-                }
-                up(SHIFT) {
-                    //                    println("up shift")
-                    setNumUpgrades(1)
-                }
-            }
-
-            onAttachDetach(onDetach = {
-                setNumUpgrades(1)
-                //                println("on detach")
-            })
-
-            onClick {
-                eventBus.send(UpgradeTowerSpeedEvent(numUpgrades))
-            }
-
-            var tooltip: UITooltipDescription? = null
-            onOver {
-                tooltip = tooltipUpgradeSpeed.addTo(this@UIGuiContainer.stage) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
-                    alignBottomToTopOf(this@apply, padding = 5.0)
-                    centerXOn(this@apply)
-                }
-            }
-            onOut {
-                tooltip?.removeFromParent()
-            }
-        }
+        val towerSpeedUpgradeView = UITowerUpgradeIcon(
+            engine,
+            tooltipUpgradeSpeed,
+            tooltipSize,
+            this@UIGuiContainer,
+            GlobalResources.COOLDOWN_ICON,
+            gameplayState.initialSpeedUpgradeCost,
+            { world[it, SpeedUpgradeComponent::class].numUpgrades },
+            { eventBus.send(UpgradeTowerSpeedEvent(it)) }
+        )
 
         val textHeightSize = bottomRightGridHeight / 7
         val holdShiftText = Text(
@@ -358,9 +325,7 @@ class UIGuiContainer(
                     old: SpeedUpgradeComponent?,
                     new: SpeedUpgradeComponent) {
                     if (entityId == mutableCurrentlySelectedTowerState.currentTowerId) {
-                        tooltipUpgradeSpeed.updateMoneyCost(
-                            gameplayState.initialSpeedUpgradeCost + new.numUpgrades
-                        )
+                        towerSpeedUpgradeView.setNumTowerUpgradesText(towerSpeedUpgradeView.numUpgrades)
                     }
                 }
             })
