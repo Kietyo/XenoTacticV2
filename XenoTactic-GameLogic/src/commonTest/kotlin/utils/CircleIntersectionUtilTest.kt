@@ -1,9 +1,11 @@
 package utils
 
-import com.soywiz.korma.geom.Point
+
+
 import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.test_utils.assertEquals
+import com.xenotactic.gamelogic.utils.assertEquals
 import com.xenotactic.gamelogic.utils.CircleIntersectionUtil
 import kotlin.math.sqrt
 import kotlin.test.Test
@@ -14,12 +16,12 @@ internal class CircleIntersectionUtilTest {
     fun assertEquals_circleIntersectionResults() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
-                Point(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
+                IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
+                IPoint(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
             ),
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
-                Point(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
+                IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
+                IPoint(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
             )
         )
     }
@@ -28,13 +30,13 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
-                Point(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
+                IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f)),
+                IPoint(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
             ),
             CircleIntersectionUtil(
-                Point(0f, 0f),
-                Point(8f, 8f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(8f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -44,13 +46,13 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_atMiddleOfCircle() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3f, 0f),
-                Point(3f, 6f),
+                IPoint(3f, 0f),
+                IPoint(3f, 6f),
             ),
             CircleIntersectionUtil(
-                Point(3f, 0f),
-                Point(3f, 8f),
-                Point(3f, 3f),
+                IPoint(3f, 0f),
+                IPoint(3f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -60,13 +62,13 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_atMiddleOfCircle_reversedPoints() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3f, 6f),
-                Point(3f, 0f)
+                IPoint(3f, 6f),
+                IPoint(3f, 0f)
             ),
             CircleIntersectionUtil(
-                Point(3f, 8f),
-                Point(3f, 0f),
-                Point(3f, 3f),
+                IPoint(3f, 8f),
+                IPoint(3f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -75,11 +77,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_tangentLeftPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(0f, 3f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(0f, 3f)),
             CircleIntersectionUtil(
-                Point(0f, 0f),
-                Point(0f, 8f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(0f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -91,12 +93,12 @@ internal class CircleIntersectionUtilTest {
             CircleIntersectionUtil.Result.PartialIntersection(
                 false,
                 true,
-                Point(3 - sqrt(4.5f), 3 - sqrt(4.5f))
+                IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f))
             ),
             CircleIntersectionUtil(
-                Point(0f, 0f),
-                Point(3f, 3f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -107,9 +109,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(-3f, -3f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(-3f, -3f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -119,13 +121,13 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine_reversedPoints() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
-                Point(3 - sqrt(4.5f), 3 - sqrt(4.5f))
+                IPoint(3 + sqrt(4.5f), 3 + sqrt(4.5f)),
+                IPoint(3 - sqrt(4.5f), 3 - sqrt(4.5f))
             ),
             CircleIntersectionUtil(
-                Point(8f, 8f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(8f, 8f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -135,13 +137,13 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine_negativeSlope() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(4f - sqrt(56f / 16), 4f + sqrt(56f / 16)),
-                Point(4f + sqrt(56f / 16), 4f - sqrt(56f / 16))
+                IPoint(4f - sqrt(56f / 16), 4f + sqrt(56f / 16)),
+                IPoint(4f + sqrt(56f / 16), 4f - sqrt(56f / 16))
             ),
             CircleIntersectionUtil(
-                Point(0f, 8f),
-                Point(8f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 8f),
+                IPoint(8f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -151,13 +153,13 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_standardLine_negativeSlope_reversedPoints() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(4f + sqrt(56f / 16), 4f - sqrt(56f / 16)),
-                Point(4f - sqrt(56f / 16), 4f + sqrt(56f / 16))
+                IPoint(4f + sqrt(56f / 16), 4f - sqrt(56f / 16)),
+                IPoint(4f - sqrt(56f / 16), 4f + sqrt(56f / 16))
             ),
             CircleIntersectionUtil(
-                Point(8f, 0f),
-                Point(0f, 8f),
-                Point(3f, 3f),
+                IPoint(8f, 0f),
+                IPoint(0f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -168,9 +170,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(0f, 6f),
-                Point(8f, 14f),
-                Point(3f, 3f),
+                IPoint(0f, 6f),
+                IPoint(8f, 14f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -180,12 +182,12 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_tangentLeftPointOfCircle_reversedPoints() {
         assertEquals(
             CircleIntersectionUtil.Result.Tangent(
-                Point(0f, 3f)
+                IPoint(0f, 3f)
             ),
             CircleIntersectionUtil(
-                Point(0f, 8f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 8f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -194,11 +196,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_tangentRightPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(6f, 3f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(6f, 3f)),
             CircleIntersectionUtil(
-                Point(6f, 0f),
-                Point(6f, 8f),
-                Point(3f, 3f),
+                IPoint(6f, 0f),
+                IPoint(6f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -207,11 +209,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_verticalLine_tangentRightPointOfCircle_reversedPoints() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(6f, 3f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(6f, 3f)),
             CircleIntersectionUtil(
-                Point(6f, 8f),
-                Point(6f, 0f),
-                Point(3f, 3f),
+                IPoint(6f, 8f),
+                IPoint(6f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -222,9 +224,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.Touching(true, false),
             CircleIntersectionUtil(
-                Point(6f, 3f),
-                Point(6f, 8f),
-                Point(3f, 3f),
+                IPoint(6f, 3f),
+                IPoint(6f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -238,9 +240,9 @@ internal class CircleIntersectionUtilTest {
                 true
             ),
             CircleIntersectionUtil(
-                Point(6f, 8f),
-                Point(6f, 3f),
-                Point(3f, 3f),
+                IPoint(6f, 8f),
+                IPoint(6f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -254,9 +256,9 @@ internal class CircleIntersectionUtilTest {
                 true
             ),
             CircleIntersectionUtil(
-                Point(6f, 0f),
-                Point(6f, 3f),
-                Point(3f, 3f),
+                IPoint(6f, 0f),
+                IPoint(6f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -270,9 +272,9 @@ internal class CircleIntersectionUtilTest {
                 false
             ),
             CircleIntersectionUtil(
-                Point(6f, 3f),
-                Point(6f, 0f),
-                Point(3f, 3f),
+                IPoint(6f, 3f),
+                IPoint(6f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -283,9 +285,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(-1f, 0f),
-                Point(-1f, 8f),
-                Point(3f, 3f),
+                IPoint(-1f, 0f),
+                IPoint(-1f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -296,9 +298,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(-1f, 8f),
-                Point(-1f, 0f),
-                Point(3f, 3f),
+                IPoint(-1f, 8f),
+                IPoint(-1f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -309,9 +311,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(7f, 0f),
-                Point(7f, 8f),
-                Point(3f, 3f),
+                IPoint(7f, 0f),
+                IPoint(7f, 8f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -322,9 +324,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(7f, 8f),
-                Point(7f, 0f),
-                Point(3f, 3f),
+                IPoint(7f, 8f),
+                IPoint(7f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -333,11 +335,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_atMiddleOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.FullIntersection(Point(0f, 3f), Point(6f, 3f)),
+            CircleIntersectionUtil.Result.FullIntersection(IPoint(0f, 3f), IPoint(6f, 3f)),
             CircleIntersectionUtil(
-                Point(0f, 3f),
-                Point(8f, 3f),
-                Point(3f, 3f),
+                IPoint(0f, 3f),
+                IPoint(8f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -347,13 +349,13 @@ internal class CircleIntersectionUtilTest {
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_atMiddleOfCircle_reversedPoints() {
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(6f, 3f),
-                Point(0f, 3f),
+                IPoint(6f, 3f),
+                IPoint(0f, 3f),
             ),
             CircleIntersectionUtil(
-                Point(8f, 3f),
-                Point(0f, 3f),
-                Point(3f, 3f),
+                IPoint(8f, 3f),
+                IPoint(0f, 3f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -362,11 +364,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentTopPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 6f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 6f)),
             CircleIntersectionUtil(
-                Point(0f, 6f),
-                Point(8f, 6f),
-                Point(3f, 3f),
+                IPoint(0f, 6f),
+                IPoint(8f, 6f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -375,11 +377,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentTopPointOfCircle_reversedPoints() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 6f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 6f)),
             CircleIntersectionUtil(
-                Point(8f, 6f),
-                Point(0f, 6f),
-                Point(3f, 3f),
+                IPoint(8f, 6f),
+                IPoint(0f, 6f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -388,11 +390,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentBottomPointOfCircle() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 0f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 0f)),
             CircleIntersectionUtil(
-                Point(0f, 0f),
-                Point(8f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(8f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -401,11 +403,11 @@ internal class CircleIntersectionUtilTest {
     @Test
     fun getIntersectionPointsOfLineSegmentAndCircle_horizontalLine_tangentBottomPointOfCircle_reversedPoints() {
         assertEquals(
-            CircleIntersectionUtil.Result.Tangent(Point(3f, 0f)),
+            CircleIntersectionUtil.Result.Tangent(IPoint(3f, 0f)),
             CircleIntersectionUtil(
-                Point(8f, 0f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(8f, 0f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -419,9 +421,9 @@ internal class CircleIntersectionUtilTest {
                 true
             ),
             CircleIntersectionUtil(
-                Point(0f, 0f),
-                Point(3f, 0f),
-                Point(3f, 3f),
+                IPoint(0f, 0f),
+                IPoint(3f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -435,9 +437,9 @@ internal class CircleIntersectionUtilTest {
                 false
             ),
             CircleIntersectionUtil(
-                Point(3f, 0f),
-                Point(0f, 0f),
-                Point(3f, 3f),
+                IPoint(3f, 0f),
+                IPoint(0f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -450,9 +452,9 @@ internal class CircleIntersectionUtilTest {
                 true, false
             ),
             CircleIntersectionUtil(
-                Point(3f, 0f),
-                Point(6f, 0f),
-                Point(3f, 3f),
+                IPoint(3f, 0f),
+                IPoint(6f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -465,9 +467,9 @@ internal class CircleIntersectionUtilTest {
                 false, true
             ),
             CircleIntersectionUtil(
-                Point(6f, 0f),
-                Point(3f, 0f),
-                Point(3f, 3f),
+                IPoint(6f, 0f),
+                IPoint(3f, 0f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -478,9 +480,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(0f, 7f),
-                Point(8f, 7f),
-                Point(3f, 3f),
+                IPoint(0f, 7f),
+                IPoint(8f, 7f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -491,9 +493,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(8f, 7f),
-                Point(0f, 7f),
-                Point(3f, 3f),
+                IPoint(8f, 7f),
+                IPoint(0f, 7f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -504,9 +506,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(0f, -1f),
-                Point(8f, -1f),
-                Point(3f, 3f),
+                IPoint(0f, -1f),
+                IPoint(8f, -1f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -517,9 +519,9 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(8f, -1f),
-                Point(0f, -1f),
-                Point(3f, 3f),
+                IPoint(8f, -1f),
+                IPoint(0f, -1f),
+                IPoint(3f, 3f),
                 3.0
             )
         )
@@ -530,12 +532,12 @@ internal class CircleIntersectionUtilTest {
         val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3.9999115f, 5.0f),
-                Point(3.9999115f, 3.0f),
+                IPoint(3.9999115f, 5.0f),
+                IPoint(3.9999115f, 3.0f),
             ),
             CircleIntersectionUtil(
-                Point(3.9999115f, 8.95f),
-                Point(3.9999995f, 1.05f),
+                IPoint(3.9999115f, 8.95f),
+                IPoint(3.9999995f, 1.05f),
                 tpIn.centerPoint, tpIn.radius
             )
         )
@@ -546,12 +548,12 @@ internal class CircleIntersectionUtilTest {
         val tpIn = MapEntity.TeleportIn(0, GameUnitTuple(3, 3))
         assertEquals(
             CircleIntersectionUtil.Result.FullIntersection(
-                Point(3.9999995f, 3.0f),
-                Point(3.9999995f, 5.0f),
+                IPoint(3.9999995f, 3.0f),
+                IPoint(3.9999995f, 5.0f),
             ),
             CircleIntersectionUtil(
-                Point(3.9999995f, 1.05f),
-                Point(3.9999115f, 8.95f), tpIn.centerPoint, tpIn.radius
+                IPoint(3.9999995f, 1.05f),
+                IPoint(3.9999115f, 8.95f), tpIn.centerPoint, tpIn.radius
             )
         )
     }
@@ -562,8 +564,8 @@ internal class CircleIntersectionUtilTest {
         assertEquals(
             CircleIntersectionUtil.Result.NoIntersection,
             CircleIntersectionUtil(
-                Point(2.992929f, 5.007071f),
-                Point(3.0f, 3.99f),
+                IPoint(2.992929f, 5.007071f),
+                IPoint(3.0f, 3.99f),
                 tpIn.centerPoint, tpIn.radius
             )
         )

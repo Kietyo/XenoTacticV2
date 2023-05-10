@@ -1,18 +1,18 @@
 package com.xenotactic.korge.input_processors
 
-import com.soywiz.korev.MouseButton
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.baseview.BaseView
-import com.soywiz.korge.component.MouseComponent
-import com.soywiz.korge.view.Views
+import korlibs.event.EventListener
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
+import korlibs.korge.view.BaseView
+import korlibs.korge.view.Views
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.*
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.korge_utils.StagingEntityUtils
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.korge.utils.StagingEntityUtils
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapApi
+import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
 import com.xenotactic.korge.ui.UIMapV2
 import kotlin.math.ceil
@@ -25,10 +25,11 @@ data class PlaceEntityErrorEvent(val errorMsg: String)
 
 
 class EditorPlacementInputProcessor(
-    override val view: BaseView,
+    val views: Views,
+    val view: BaseView,
     val engine: Engine
-) : MouseComponent {
-    private val editorState = engine.injections.getSingleton<EditorState>()
+) {
+    private val editorState = engine.stateInjections.getSingleton<EditorState>()
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val uiMap = engine.injections.getSingleton<UIMapV2>()
 
@@ -39,17 +40,26 @@ class EditorPlacementInputProcessor(
         MouseEvent.Type.MOVE
     )
 
-    var downGridX: Double = 0.0
-    var downGridY: Double = 0.0
+    var downGridX = 0f
+    var downGridY = 0f
 
-    var currentGridX = 0.0
-    var currentGridY = 0.0
+    var currentGridX = 0f
+    var currentGridY = 0f
 
     var isRightClickDrag = false
 
     var stagingTeleportIn: StagingEntity? = null
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(MouseEvent.Type.DOWN,
+            MouseEvent.Type.DRAG,
+            MouseEvent.Type.UP,
+            MouseEvent.Type.MOVE) {
+            onMouseEvent(views, it)
+        }
+    }
+
+    fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!editorState.isEditingEnabled ||
             !ALLOWED_EVENTS.contains(event.type)
         ) {
@@ -70,7 +80,7 @@ class EditorPlacementInputProcessor(
             return
         }
 
-        val globalXY = views.globalMouseXY
+        val globalXY = views.globalMousePos
         val (gridX, gridY) = uiMap.getGridPositionsFromGlobalMouse(globalXY.x, globalXY.y)
 
         if (editorState.entityTypeToPlace == MapEntityType.ROCK) {
@@ -119,7 +129,7 @@ class EditorPlacementInputProcessor(
                     MapEntityType.TELEPORT_OUT -> {
                         require(stagingTeleportIn != null)
 
-                        gameMapApi.placeEntitiesV2(
+                        gameMapApi.placeEntities(
                             stagingTeleportIn!!,
                             entityToAdd
                         )
@@ -148,7 +158,7 @@ class EditorPlacementInputProcessor(
                             )
                             return
                         }
-                        gameMapApi.placeEntitiesV2(entityToAdd)
+                        gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     }
                 }
@@ -182,7 +192,7 @@ class EditorPlacementInputProcessor(
         }
     }
 
-    private fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Double, gridY: Double) {
+    private fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Float, gridY: Float) {
         if (eventType == MouseEvent.Type.DOWN ||
             eventType == MouseEvent.Type.MOVE
         ) {
@@ -224,7 +234,7 @@ class EditorPlacementInputProcessor(
         //        )
 
         if (eventType == MouseEvent.Type.UP) {
-            gameMapApi.placeEntitiesV2(
+            gameMapApi.placeEntities(
                 StagingEntityUtils.createRock(
                     RectangleEntity(roundedGridX, roundedGridY, width, height)
                 )

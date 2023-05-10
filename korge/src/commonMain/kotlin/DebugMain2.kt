@@ -1,66 +1,67 @@
-import com.soywiz.klock.Frequency
-import com.soywiz.korge.Korge
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.readImageDataContainer
-import com.soywiz.korim.format.toProps
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korma.geom.*
-import com.xenotactic.gamelogic.views.EightDirection
+import korlibs.time.Frequency
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.ui.uiButton
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.format.ASE
+import korlibs.image.format.readImageDataContainer
+import korlibs.image.format.toProps
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import korlibs.math.geom.*
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.korge.korge_utils.getDirection8
-import com.xenotactic.korge.korge_utils.kAngleTo
+import com.xenotactic.korge.utils.getDirection8
+import com.xenotactic.korge.utils.kAngleTo
+import korlibs.korge.view.align.centerOnStage
 import kotlin.jvm.JvmStatic
 
-
-
-
-
-
-operator fun ClosedRange<Angle>.contains(angle: Angle): Boolean = angle.inBetween(this.start, this.endInclusive, inclusive = true)
+operator fun ClosedRange<Angle>.contains(angle: Angle): Boolean =
+    angle.inBetween(this.start, this.endInclusive, inclusive = true)
 
 object DebugMain2 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 1280, height = 720, bgcolor = Colors.LIGHTGRAY) {
-//            text("Hello world")
+        Korge(
+            KorgeConfig(
+                backgroundColor = Colors.LIGHTGRAY,
+                virtualSize = Size(1280, 720)
+            )
+        ) {
+            //            text("Hello world")
 
-            val midCircle = circle(radius = 20.0) {
+            val midCircle = circle(radius = 20f) {
                 anchor(Anchor.CENTER)
                 centerOnStage()
             }
 
-            val mouseCircle = circle(radius = 20.0, fill = Colors.RED) {
+            val mouseCircle = circle(radius = 20f, fill = Colors.RED) {
                 anchor(Anchor.CENTER)
             }
 
-            val info = text("", textSize = 50.0)
+            val info = text("", textSize = 50f)
 
             val asp = resourcesVfs["8_directional_character.aseprite"].readImageDataContainer(ASE.toProps())
 
             val sprite = UIEightDirectionalSprite(asp).addTo(this) {
-                scale = 8.0
+                scale = Scale(2f)
                 anchor(Anchor.CENTER)
                 xy(640, 360)
-//                centerOnXY(0.0, 0.0)
-//                xy(0, 0)
+                //                centerOnXY(0.0, 0.0)
+                //                xy(0, 0)
             }
 
             uiButton()
 
-//            val rect = solidRect(16, 16, Colors.RED) {
-//                scale = 8.0
-//                centerOnStage()
-//                anchor(Anchor.CENTER)
-//            }
-
+            //            val rect = solidRect(16, 16, Colors.RED) {
+            //                scale = 8.0
+            //                centerOnStage()
+            //                anchor(Anchor.CENTER)
+            //            }
 
             addUpdater {
-                val (mouseX, mouseY) = views.globalMouseXY
+                val (mouseX, mouseY) = views.globalMousePos
                 mouseCircle.xy(mouseX, mouseY)
                 val angle = midCircle.pos.kAngleTo(mouseCircle.pos)
                 val direction = getDirection8(angle)

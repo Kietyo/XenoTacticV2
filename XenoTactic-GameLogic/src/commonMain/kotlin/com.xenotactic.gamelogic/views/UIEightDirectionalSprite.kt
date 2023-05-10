@@ -1,8 +1,8 @@
 package com.xenotactic.gamelogic.views
 
-import com.soywiz.korge.view.*
-import com.soywiz.korim.format.ImageData
-import com.soywiz.korim.format.ImageDataContainer
+import korlibs.korge.view.RectBase
+import korlibs.image.format.ImageData
+import korlibs.image.format.ImageDataContainer
 
 enum class EightDirection {
     UP_LEFT,
@@ -16,18 +16,8 @@ enum class EightDirection {
 }
 
 class UIEightDirectionalSprite(
-    val imageDataContainer: ImageDataContainer,
+    imageDataContainer: ImageDataContainer,
 ): RectBase() {
-//    override var anchorX: Double = 0.0
-//        set(value) {
-//            field = value
-//            invalidateRender()
-//        }
-//    override var anchorY: Double = 0.0
-//        set(value) {
-//            field = value
-//            invalidateRender()
-//        }
     val upLeft = imageDataContainer.imageDatasByName["up_left"]!!
     val up = imageDataContainer.imageDatasByName["up"]!!
     val upRight = imageDataContainer.imageDatasByName["up_right"]!!
@@ -52,23 +42,23 @@ class UIEightDirectionalSprite(
         baseBitmap = down.defaultAnimation.frames.first().slice
     }
 
-    override var width: Double = baseBitmap.width.toDouble(); set(v) {
-        if (field != v) {
-            field = v
-            dirtyVertices = true
-            invalidateRender()
-        }
-    }
-    override var height: Double = baseBitmap.height.toDouble(); set(v) {
-        if (field != v) {
-            field = v
-            dirtyVertices = true
-            invalidateRender()
-        }
-    }
+//    override var width: Float = baseBitmap.width; set(v) {
+//        if (field != v) {
+//            field = v
+//            dirtyVertices = true
+//            invalidateRender()
+//        }
+//    }
+//    var height: Float = baseBitmap.height; set(v) {
+//        if (field != v) {
+//            field = v
+//            dirtyVertices = true
+//            invalidateRender()
+//        }
+//    }
 
-    override val bwidth: Double get() = width
-    override val bheight: Double get() = height
+    override val bwidth: Float get() = baseBitmap.width.toFloat()
+    override val bheight: Float get() = baseBitmap.height.toFloat()
 
     private val frameCount = down.frames.size
     var currentFrame = 0

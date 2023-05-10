@@ -1,10 +1,11 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.font.Font
-import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korio.resources.Resourceable
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.font.Font
+import korlibs.image.text.TextAlignment
+import korlibs.io.resources.Resourceable
+import korlibs.korge.view.align.centerOn
 
 class UITextRect(
     text: String,

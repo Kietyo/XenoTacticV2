@@ -1,26 +1,23 @@
 package com.xenotactic.korge.scenes
 
 import MapVerificationResult
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.klogger.Logger
-import com.soywiz.korev.Key
-import com.soywiz.korev.KeyEvent
-import com.soywiz.korge.baseview.BaseView
-import com.soywiz.korge.component.KeyComponent
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.alignLeftToRightOf
-import com.soywiz.korge.view.alignTopToBottomOf
-import com.soywiz.korge.view.text
-import com.soywiz.korio.file.baseName
-import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
-import com.xenotactic.gamelogic.korge_utils.toGameMap
+import korlibs.datastructure.iterators.parallelMap
+import korlibs.logger.Logger
+import korlibs.event.Key
+import korlibs.event.KeyEvent
+import korlibs.korge.input.onClick
+import korlibs.korge.scene.Scene
+import korlibs.korge.ui.uiButton
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.text
+import korlibs.io.file.baseName
+import com.xenotactic.gamelogic.utils.getGoldenJsonFiles
+import com.xenotactic.gamelogic.utils.toGameMap
 import com.xenotactic.gamelogic.utils.measureTime
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
 import com.xenotactic.korge.ui.MapWithMetadata
@@ -31,6 +28,7 @@ import com.xenotactic.korge.ui.UIMapOverlay
 import com.xenotactic.korge.ui.UIMapOverlayOutsideClickedEvent
 import com.xenotactic.korge.ui.uiDropdown
 import com.xenotactic.korge.ui.uiFixedGrid
+import korlibs.math.geom.Size
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import pathing.PathFinder
@@ -77,13 +75,16 @@ class GoldensViewerScene : Scene() {
             10.0,
         )
         val pageDropdown = this.uiDropdown()
-        val prevButton = this.uiButton(width = 50.0, height = 20.0, text = "Prev") {
+        val prevButton = this.uiButton(
+            size = Size(50.0, 20.0),
+            label = "Prev") {
             alignLeftToRightOf(pageDropdown)
             onClick {
                 pageDropdown.previousEntry()
             }
         }
-        val nextButton = this.uiButton(width = 50.0, height = 20.0, text = "Next") {
+        val nextButton = this.uiButton(
+            size = Size(50.0, 20.0), label = "Next") {
             alignLeftToRightOf(prevButton)
             onClick {
                 pageDropdown.nextEntry()
@@ -112,7 +113,7 @@ class GoldensViewerScene : Scene() {
                 val currOption = pageDropdown.getCurrentOption()
                 require(currOption is UIDropdownOption.NumberOption)
                 mapGrid.resetWithEntries(chunkedMaps[currOption.data.toInt()].map { it ->
-                    { _, _, width: Double, height: Double ->
+                    { _, _, width: Float, height: Float ->
                         UIGoldensViewerEntry(eventBus, it, width, height)
                     }
                 })
@@ -188,16 +189,11 @@ class GoldensViewerScene : Scene() {
             }
         }
 
-        addComponent(object : KeyComponent {
-            override val view: BaseView
-                get() = TODO("Not yet implemented")
-
-            override fun Views.onKeyEvent(event: KeyEvent) {
-                if (event.type == KeyEvent.Type.UP && event.key == Key.ESCAPE) {
-                    overlayContainer.clearOverlay()
-                }
+        onEvent(KeyEvent.Type.UP) {
+            if (it.key == Key.ESCAPE) {
+                overlayContainer.clearOverlay()
             }
-        })
+        }
 
         logger.info {
             "sceneInit: Finished initializing"

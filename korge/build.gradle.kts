@@ -1,4 +1,4 @@
-import com.soywiz.korge.gradle.*
+import korlibs.korge.gradle.*
 
 //plugins {
 //	alias(libs.plugins.korge)
@@ -37,6 +37,14 @@ korge {
 
 dependencies {
 	add("commonMainImplementation", project(":XenoTactic-GameLogic"))
-	add("commonMainImplementation", project(":XenoECS"))
+	add("commonTestImplementation", project(":XenoTactic-GameLogic"))
+
+	add("commonMainImplementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-RC")
+	add("commonTestImplementation", "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+	add("commonMainImplementation", project(":ktruth"))
+	add("commonTestImplementation", project(":ktruth"))
+
 	//    add("commonMainImplementation", project(":Fleks"))
+	add("commonMainImplementation", project(":XenoECS"))
 }

@@ -1,32 +1,30 @@
 package com.xenotactic.korge.input_processors
 
-import com.soywiz.korev.MouseButton
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.alpha
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.visible
-import com.soywiz.korge.view.xy
-import com.soywiz.korim.color.Colors
-import com.soywiz.korma.geom.Point
-import com.xenotactic.ecs.EntityId
-import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.PreSelectionComponent
-import com.xenotactic.gamelogic.components.SelectedComponent
-import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.state.GameMapApi
+import korlibs.event.EventListener
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
+
+import korlibs.korge.view.Container
+import korlibs.korge.view.Views
+import korlibs.korge.view.alpha
+import korlibs.korge.view.solidRect
+import korlibs.korge.view.visible
+import korlibs.korge.view.xy
+import korlibs.image.color.Colors
+import korlibs.math.geom.Point
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.korge.state.DeadUIZonesState
+import com.xenotactic.gamelogic.utils.GameMapApi
 
 class SelectorMouseProcessorV2(
-    override val view: Container,
+    val views: Views,
+    val view: Container,
     val engine: Engine,
     var isEnabled: Boolean = true
-) :
-    MouseComponent, EComponent {
+)  {
 
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
 
     private val selectionRectangle = view.solidRect(0, 0, Colors.BLUE).alpha(0.25).visible(false)
 
@@ -41,7 +39,13 @@ class SelectorMouseProcessorV2(
         isInitialClick = false
     }
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(*MouseEvent.Type.ALL) {
+            onMouseEvent(it)
+        }
+    }
+
+    fun onMouseEvent(event: MouseEvent) {
         if (!isEnabled) return
         if (event.type == MouseEvent.Type.MOVE) return
 
@@ -50,7 +54,7 @@ class SelectorMouseProcessorV2(
         ) {
             dragging = true
             isInitialClick = true
-            startPosition.copyFrom(views.globalMouseXY)
+            startPosition = views.globalMousePos
         }
 
         if (event.type == MouseEvent.Type.CLICK &&
@@ -60,7 +64,20 @@ class SelectorMouseProcessorV2(
             return
         }
 
-        currentPosition.copyFrom(views.globalMouseXY)
+        currentPosition = views.globalMousePos
+
+        if (deadUIZonesState.zones.any {
+                if (it.hitTestAny(currentPosition)) {
+                    println("Hit view: $it")
+                    true
+                } else {
+                    false
+                }
+            }) {
+            return
+        }
+
+
 
         if (dragging) {
             println(
@@ -73,8 +90,8 @@ class SelectorMouseProcessorV2(
 
             selectionRectangle.apply {
                 visible = true
-                scaledWidth = currentPosition.x - startPosition.x
-                scaledHeight = currentPosition.y - startPosition.y
+                scaledWidth = (currentPosition.x - startPosition.x)
+                scaledHeight = (currentPosition.y - startPosition.y)
                 xy(startPosition)
             }
 

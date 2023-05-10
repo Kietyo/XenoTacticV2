@@ -1,6 +1,6 @@
 package random
 
-import com.soywiz.korio.lang.assert
+import korlibs.io.lang.assert
 import kotlin.test.Test
 
 internal class BinomialDistributionTest {

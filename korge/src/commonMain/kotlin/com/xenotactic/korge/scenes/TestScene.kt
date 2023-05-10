@@ -1,11 +1,11 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.line
-import com.soywiz.korge.view.text
+import korlibs.logger.Logger
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.container
+import korlibs.korge.view.line
+import korlibs.korge.view.text
 
 class TestScene : Scene() {
 
@@ -13,10 +13,10 @@ class TestScene : Scene() {
         val textBox = this.container {
             val text = this.text("This is a sample test")
             this.line(
-                text.x,
-                text.y + text.scaledHeight,
-                text.scaledWidth,
-                text.y + text.scaledHeight
+                text.x.toDouble(),
+                text.y.toDouble() + text.scaledHeight,
+                text.scaledWidth.toDouble(),
+                text.y.toDouble() + text.scaledHeight
             )
         }
 

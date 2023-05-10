@@ -1,7 +1,7 @@
 package com.xenotactic.korge.events
 
 import MapVerificationResult
-import com.soywiz.korio.file.VfsFile
+import korlibs.io.file.VfsFile
 import com.xenotactic.gamelogic.model.GameMap
 
 data class GoldensEntryHoverOnEvent(

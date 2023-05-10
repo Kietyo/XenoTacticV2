@@ -1,19 +1,18 @@
-import com.soywiz.kds.setExtra
-import com.soywiz.korge.Korge
-import com.soywiz.korge.view.*
-import com.soywiz.korim.bitmap.Bitmap32
-import com.soywiz.korim.bitmap.Bitmap32Context2d
-import com.soywiz.korim.bitmap.rotatedRight
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.readImageDataContainer
-import com.soywiz.korim.format.toProps
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korma.geom.*
+import korlibs.datastructure.setExtra
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.format.ASE
+import korlibs.image.format.readImageDataContainer
+import korlibs.image.format.toProps
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import korlibs.math.geom.*
 import com.xenotactic.gamelogic.utils.toAsepriteModel
-import com.xenotactic.korge.korge_utils.getDirection8
-import com.xenotactic.korge.korge_utils.kAngleTo
+import com.xenotactic.korge.utils.getDirection8
+import com.xenotactic.korge.utils.kAngleTo
+import korlibs.korge.view.align.centerOnStage
 import kotlin.jvm.JvmStatic
 
 fun coolPrint(vararg objs: Any) {
@@ -25,19 +24,24 @@ object DebugMain3 {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
+            Korge(
+                KorgeConfig(
+                    backgroundColor = Colors.LIGHTGRAY,
+                    virtualSize = Size(640, 480)
+                )
+            ) {
 //            text("Hello world")
 
-            val midCircle = circle(radius = 20.0) {
+            val midCircle = circle(radius = 20f) {
                 anchor(Anchor.CENTER)
                 centerOnStage()
             }
 
-            val mouseCircle = circle(radius = 20.0, fill = Colors.RED) {
+            val mouseCircle = circle(radius = 20f, fill = Colors.RED) {
                 anchor(Anchor.CENTER)
             }
 
-            val info = text("", textSize = 25.0)
+            val info = text("", textSize = 25f)
 
             val props = ASE.toProps()
             props.setExtra("disableSlicing", false)
@@ -85,7 +89,7 @@ object DebugMain3 {
             val angleOffset = Angle.fromDegrees(90)
 
             addUpdater {
-                val (mouseX, mouseY) = views.globalMouseXY
+                val (mouseX, mouseY) = views.globalMousePos
                 mouseCircle.xy(mouseX, mouseY)
 
 

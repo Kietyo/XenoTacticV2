@@ -1,29 +1,26 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.component.onStageResized
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alignTopToBottomOf
-import com.soywiz.korge.view.getVisibleGlobalArea
-import com.xenotactic.gamelogic.korge_utils.getGoldenJsonFiles
-import com.xenotactic.gamelogic.korge_utils.toGameMap
-import com.xenotactic.gamelogic.mapid.MapToId
-import com.xenotactic.korge.daos.PlayerDataApi
-import com.xenotactic.korge.events.EventBus
+import korlibs.logger.Logger
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.*
+import com.xenotactic.gamelogic.utils.getGoldenJsonFiles
+import com.xenotactic.gamelogic.utils.toGameMap
+import com.xenotactic.gamelogic.utils.MapToId
+import com.xenotactic.korge.utils.PlayerDataApi
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent
-import com.xenotactic.korge.korge_components.ResizeDebugComponent
-import com.xenotactic.korge.korge_utils.alignLeftToLeftOfWindow
-import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
-import com.xenotactic.korge.korge_utils.alignTopToTopOfWindow
+import com.xenotactic.korge.ecomponents.ResizeDebugComponent
+import com.xenotactic.korge.utils.alignLeftToLeftOfWindow
+import com.xenotactic.korge.utils.alignRightToRightOfWindow
+import com.xenotactic.korge.utils.alignTopToTopOfWindow
 import com.xenotactic.korge.ui.MapWithMetadata
 import com.xenotactic.korge.ui.UIHeader
 import com.xenotactic.korge.ui.UIHeaderSection
 import com.xenotactic.korge.ui.UIMapEntry
 import com.xenotactic.korge.ui.uiFixedGrid
 import com.xenotactic.korge.ui.uiMapInspector
+import korlibs.korge.view.align.alignTopToBottomOf
 import kotlinx.coroutines.launch
 import verify
 import kotlin.collections.component1
@@ -46,7 +43,7 @@ class MapViewerScene(
         playerData.userName = "XenoTactic"
         PlayerDataApi.savePlayerData(playerData)
 
-        val header = UIHeader(playerData.userName, HEADER_HEIGHT, getVisibleGlobalArea().width)
+        val header = UIHeader(playerData.userName, HEADER_HEIGHT, getVisibleGlobalArea().widthD)
             .addTo(this)
 
         val maxColumns = 4
@@ -64,10 +61,10 @@ class MapViewerScene(
         val mapInspector = this.uiMapInspector()
 
         val playEntries = goldenMaps.map { mapWithMetadata ->
-            { x: Int, y: Int, width: Double, height: Double ->
+            { x: Int, y: Int, width: Float, height: Float ->
                 UIMapEntry(
                     mapWithMetadata.map,
-                    width, height
+                    width.toDouble(), height.toDouble()
                 ).apply {
                     onPlayButtonClick {
                         globalEventBus.send(PlayMapEvent(mapWithMetadata.map))
@@ -109,7 +106,8 @@ class MapViewerScene(
             mapInspector.alignRightToRightOfWindow()
         }
 
-        addComponent(ResizeDebugComponent(this))
+        val resizeDebugComponent = ResizeDebugComponent(this)
+        resizeDebugComponent.setup(this)
 
         header.onHeaderSectionClick {
             when (it) {
@@ -122,10 +120,10 @@ class MapViewerScene(
                     header.updateSelectionBox(it)
                     mapGrid.resetWithEntries(
                         playerData.maps.map { (_, map) ->
-                            { x: Int, y: Int, width: Double, height: Double ->
+                            { x: Int, y: Int, width: Float, height: Float ->
                                 UIMapEntry(
                                     map,
-                                    width, height
+                                    width.toDouble(), height.toDouble()
                                 ).apply {
                                     onPlayButtonClick {
                                         globalEventBus.send(PlayMapEvent(map))

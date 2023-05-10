@@ -1,7 +1,7 @@
 package solver
 
-import com.soywiz.kds.Array2
-import com.soywiz.kds.each
+import korlibs.datastructure.Array2
+import korlibs.datastructure.each
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.pathing.PathSequence

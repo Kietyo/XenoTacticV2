@@ -1,14 +1,13 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.centerOnStage
-import com.soywiz.korge.view.text
-import com.soywiz.korio.file.std.resourcesVfs
-import com.xenotactic.korge.bridges.MapBridge
-import com.xenotactic.korge.events.EventBus
+import korlibs.logger.Logger
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.Views
+import korlibs.korge.view.align.centerOnStage
+import korlibs.korge.view.text
+import com.xenotactic.korge.utils.MapBridge
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent
 
 lateinit var VIEWS_INSTANCE: Views
@@ -20,7 +19,7 @@ class RootScene(
     override suspend fun SContainer.sceneInit() {
         VIEWS_INSTANCE = views
 
-        this.text("Loading...", textSize = 50.0).centerOnStage()
+        this.text("Loading...", textSize = 50f).centerOnStage()
 
 //        val test = resourcesVfs["test.txt"]
 //

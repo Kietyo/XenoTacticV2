@@ -1,9 +1,12 @@
 package pathing
 
-import com.soywiz.korio.lang.assert
-import com.soywiz.korma.geom.Point
+import korlibs.io.lang.assert
+import com.xenotactic.gamelogic.model.IPoint
+
+
 import com.xenotactic.gamelogic.pathing.Segment
-import com.xenotactic.gamelogic.test_utils.TEST_DOUBLE_MAX_DELTA
+import com.xenotactic.gamelogic.pathing.SegmentTraversal
+import com.xenotactic.gamelogic.utils.TEST_DOUBLE_MAX_DELTA
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.testing.assertThat
 import kotlin.math.sqrt
@@ -15,7 +18,7 @@ internal class SegmentTraversalTest {
 
     @Test
     fun traverse() {
-        val segment = Segment(Point(1.0, 1.0), Point(3.0, 3.0))
+        val segment = Segment(IPoint(1.0, 1.0), IPoint(3.0, 3.0))
         val segmentTraversal = SegmentTraversal(segment)
         assertThat(segmentTraversal.currentPosition.x).isEqualTo(
             1.0,
@@ -41,7 +44,7 @@ internal class SegmentTraversalTest {
 
     @Test
     fun traverse2() {
-        val segment = Segment(Point(0.0, 0.0), Point(0.0, 3.0))
+        val segment = Segment(IPoint(0.0, 0.0), IPoint(0.0, 3.0))
         val segmentTraversal = SegmentTraversal(segment)
 
         segmentTraversal.traverse(1.0)
@@ -105,7 +108,7 @@ internal class SegmentTraversalTest {
 
     @Test
     fun traverse_traversesWholeSegmentInOneStep() {
-        val segment = Segment(Point(0.0, 0.0), Point(0.0, 3.0))
+        val segment = Segment(IPoint(0.0, 0.0), IPoint(0.0, 3.0))
         val segmentTraversal = SegmentTraversal(segment)
 
         segmentTraversal.traverse(10.0)

@@ -1,36 +1,32 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.klock.TimeSpan
-import com.soywiz.klogger.Logger
-import com.soywiz.korev.Key
-import com.soywiz.korge.component.onStageResized
-import com.soywiz.korge.input.draggable
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.addFixedUpdater
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerXOnStage
-import com.xenotactic.korge.bridges.MapBridge
+import korlibs.time.TimeSpan
+import korlibs.logger.Logger
+import korlibs.event.Key
+import korlibs.korge.input.draggable
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.*
+import com.xenotactic.korge.utils.MapBridge
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.GoalEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.ExitGameSceneEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor
-//import com.xenotactic.korge.korge_components.MonstersEComponent
-import com.xenotactic.korge.korge_components.ResizeDebugComponent
-import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
-import com.xenotactic.korge.korge_utils.alignRightToRightOfWindow
-import com.xenotactic.korge.renderer.MapRendererUpdater
+import com.xenotactic.korge.ecomponents.ResizeDebugComponent
+import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.utils.alignRightToRightOfWindow
+import com.xenotactic.korge.utils.MapRendererUpdater
 import com.xenotactic.korge.ui.UIMap
 import com.xenotactic.korge.ui.UIPathText
 import com.xenotactic.korge.ui.UIPlacementButton
 import com.xenotactic.korge.ui.uiActiveTextNotifier
 import com.xenotactic.korge.ui.uiPlacement
+import korlibs.korge.view.align.centerXOnStage
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -70,14 +66,15 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         val cameraInputProcessor = CameraInputProcessor(uiMap, engine)
         cameraInputProcessor.setZoomFactor(0.7)
-        addComponent(cameraInputProcessor)
-
+        cameraInputProcessor.setup(this)
 
         val objectPlacementInputProcessor = ObjectPlacementInputProcessor(
             this, uiMap, engine, eventBus
         )
-        addComponent(objectPlacementInputProcessor)
-        addComponent(ResizeDebugComponent(this))
+        objectPlacementInputProcessor.setup(this)
+
+        val resizeDebugComponent = ResizeDebugComponent(this)
+        resizeDebugComponent.setup(this)
 
         val uiPlacement = uiPlacement(engine, eventBus).apply {
             onStageResized(true) { width: Int, height: Int ->
@@ -111,8 +108,8 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             updatePathLength(gameMapControllerComponent.shortestPath?.pathLength)
         }
 
-
-        addComponent(KeyInputProcessor(this, engine))
+        val keyInputProcessor = KeyInputProcessor(this, engine)
+        keyInputProcessor.setup(this)
 //        val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
 //        addComponent(monstersComponent)
 

@@ -1,15 +1,17 @@
 package model
 
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.test_utils.assertPathSequenceEquals
+import com.xenotactic.gamelogic.utils.assertPathSequenceEquals
 import pathing.PathFinder
-
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertContentEquals
+import kotlin.test.assertTrue
 
 internal class GameMapTest {
 
@@ -123,14 +125,14 @@ internal class GameMapTest {
         assertPathSequenceEquals(
             PathSequence.create(
                 Path.create(
-                    Point(1.0, 1.0),
-                    Point(1.9929289321881345, 7.007071067811865),
-                    Point(4.0, 7.05)
+                    IPoint(1.0, 1.0),
+                    IPoint(1.9929289321881345, 7.007071067811865),
+                    IPoint(4.0, 7.05)
                 ),
                 Path.create(
-                    Point(4.0, 7.05),
-                    Point(6.007071067811865, 7.007071067811865),
-                    Point(8.0, 1.0)
+                    IPoint(4.0, 7.05),
+                    IPoint(6.007071067811865, 7.007071067811865),
+                    IPoint(8.0, 1.0)
                 )
             ),
             PathFinder.getShortestPath(gameMap)!!

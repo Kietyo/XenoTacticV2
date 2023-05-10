@@ -4,10 +4,8 @@ import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.components.EntityFinishComponent
-import com.xenotactic.gamelogic.components.EntityStartComponent
-import com.xenotactic.korge.korge_utils.StagingEntityUtils
-import com.xenotactic.korge.korge_utils.intersectsEntity
+import com.xenotactic.korge.utils.StagingEntityUtils
+import com.xenotactic.korge.utils.intersectsEntity
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
 
@@ -43,7 +41,7 @@ class CheckpointsGenerator(
                 addedCheckpoints.any { it.intersectsEntity(position, size) }
             )
             val addedCheckpoint = context.world.addEntityReturnStateful {
-                addFromStagingEntity(
+                addComponentsFromStagingEntity(
                     StagingEntityUtils.createCheckpoint(
                         i, position, size
                     )

@@ -1,23 +1,33 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korio.util.toStringDecimal
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
-import com.xenotactic.korge.korge_utils.distributeVertically
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.korge.events.UpgradedTowerDamageEvent
+import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
+import com.xenotactic.korge.utils.createUIEntityContainerForTower
+import com.xenotactic.korge.utils.distributeVertically
+import korlibs.io.util.toStringDecimal
+import korlibs.korge.view.align.*
 
 class UITowerDetails(
     damage: Double,
     weaponSpeedMillis: Double,
-    range: Double
-): Container() {
+    attacksPerSecond: Double,
+    range: Double,
+    damageUpgrades: Int,
+    speedUpgrades: Int,
+    maxSpeedUpgrades: Int,
+    engine: Engine? = null,
+) : Container() {
     init {
-        val solidRect = solidRect(500, 250, MaterialColors.BROWN_200)
+        val eventBus = engine?.eventBus
+        val solidRect = solidRect(550, 300, MaterialColors.BROWN_200)
         val padding = 10.0
-        val tower = createUIEntityContainerForTower(
+        val towerImage = createUIEntityContainerForTower(
             220.toWorldUnit(), 220.toWorldUnit()
         ).addTo(this) {
             centerYOn(solidRect)
@@ -25,32 +35,92 @@ class UITowerDetails(
         }
 
         val textColor = Colors.BLACK
-
-
+        val paddingBetweenImageAndText = 15.0
         val rightSection = container {
             val textContainer = container {
-                val textSize = 30.0
+                val textSize = 30f
                 val textPadding = 6.0
-                val damageText = container {
-                    val t1 = text("Damage:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    text(damage.toStringDecimal(2), font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
+                val damageTextSection = container {
+                    val t1 = text(
+                        "Damage:",
+                        font = GlobalResources.FONT_ATKINSON_BOLD,
+                        textSize = textSize,
+                        color = textColor
+                    )
+                    val t2 = text(
+                        damage.toStringDecimal(2),
+                        font = GlobalResources.FONT_ATKINSON_REGULAR,
+                        textSize = textSize,
+                        color = textColor
+                    ) {
+                        alignLeftToRightOf(t1, textPadding)
+                    }
+                    eventBus?.register<UpgradedTowerDamageEvent> {
+                        t2.text = it.newDamage.toStringDecimal(2)
+                    }
+                }
+                val speedTextSection = container {
+                    val t1 = text(
+                        "Speed:",
+                        font = GlobalResources.FONT_ATKINSON_BOLD,
+                        textSize = textSize,
+                        color = textColor
+                    )
+                    val t2 = text(
+                        "${attacksPerSecond.toStringDecimal(2)} ATK/s",
+                        font = GlobalResources.FONT_ATKINSON_REGULAR,
+                        textSize = textSize,
+                        color = textColor
+                    ) {
+                        alignLeftToRightOf(t1, textPadding)
+                    }
+                    eventBus?.register<UpgradedTowerSpeedEvent> {
+                        t2.text = "${it.newAttacksPerSecond.toStringDecimal(2)} ATK/s"
+                    }
+                }
+                val weaponSpeedTextSection = container {
+                    val t1 = text(
+                        "Weapon Speed:",
+                        font = GlobalResources.FONT_ATKINSON_BOLD,
+                        textSize = textSize,
+                        color = textColor
+                    )
+                    val t2 = text(
+                        (weaponSpeedMillis / 1E3).toStringDecimal(2),
+                        font = GlobalResources.FONT_ATKINSON_REGULAR,
+                        textSize = textSize,
+                        color = textColor
+                    ) {
+                        alignLeftToRightOf(t1, textPadding)
+                    }
+                    eventBus?.register<UpgradedTowerSpeedEvent> {
+                        t2.text = (it.newWeaponSpeedMillis / 1E3).toStringDecimal(2)
+                    }
+                }
+                val rangeTextSection = container {
+                    val t1 = text(
+                        "Range:",
+                        font = GlobalResources.FONT_ATKINSON_BOLD,
+                        textSize = textSize,
+                        color = textColor
+                    )
+                    text(
+                        range.toStringDecimal(2),
+                        font = GlobalResources.FONT_ATKINSON_REGULAR,
+                        textSize = textSize,
+                        color = textColor
+                    ) {
                         alignLeftToRightOf(t1, textPadding)
                     }
                 }
-                val speedText = container {
-                    val t1 = text("Speed:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    val attacksPerSecond = (1E3 / weaponSpeedMillis).toStringDecimal(2)
-                    text("$attacksPerSecond ATK/s", font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
-                        alignLeftToRightOf(t1, textPadding)
-                    }
-                }
-                val rangeText = container {
-                    val t1 = text("Range:", font = GlobalResources.FONT_ATKINSON_BOLD, textSize = textSize, color = textColor)
-                    text(range.toStringDecimal(2), font = GlobalResources.FONT_ATKINSON_REGULAR, textSize = textSize, color = textColor) {
-                        alignLeftToRightOf(t1, textPadding)
-                    }
-                }
-                distributeVertically(listOf(damageText, speedText, rangeText))
+                distributeVertically(
+                    listOf(
+                        damageTextSection,
+                        speedTextSection,
+                        weaponSpeedTextSection,
+                        rangeTextSection
+                    )
+                )
             }
 
 
@@ -73,11 +143,11 @@ class UITowerDetails(
                     alignLeftToRightOf(damageIcon, iconPadding)
                 }
 
-                val textSize = 25.0
+                val textSize = 25f
 
-                val damageText =
+                val damageUpgradesText =
                     text(
-                        "30",
+                        damageUpgrades.toString(),
                         textSize = textSize,
                         color = textColor,
                         font = GlobalResources.FONT_ATKINSON_BOLD
@@ -87,8 +157,12 @@ class UITowerDetails(
                         alignTopToBottomOf(damageIcon, 5.0)
                     }
 
-                val speedText = text(
-                    "41/41",
+                eventBus?.register<UpgradedTowerDamageEvent> {
+                    damageUpgradesText.text = it.newDamageUpgrade.toString()
+                }
+
+                val speedUpgradesText = text(
+                    "$speedUpgrades/$maxSpeedUpgrades",
                     textSize = textSize,
                     color = textColor,
                     font = GlobalResources.FONT_ATKINSON_BOLD
@@ -98,12 +172,16 @@ class UITowerDetails(
                     alignTopToBottomOf(cooldownIcon, 5.0)
                 }
 
+                eventBus?.register<UpgradedTowerSpeedEvent> {
+                    speedUpgradesText.text = "${it.newSpeedUpgrade}/$maxSpeedUpgrades"
+                }
+
                 centerXOn(textContainer)
                 alignTopToBottomOf(textContainer, padding = 15.0)
             }
 
             centerYOn(solidRect)
-            alignLeftToRightOf(tower, padding = padding)
+            alignLeftToRightOf(towerImage, padding = paddingBetweenImageAndText)
         }
     }
 }

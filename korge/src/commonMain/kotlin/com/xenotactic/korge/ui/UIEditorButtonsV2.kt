@@ -1,25 +1,22 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.*
-import com.soywiz.korge.view.*
-import com.soywiz.korui.UiButton
-import com.xenotactic.ecs.World
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.input.onClick
+import korlibs.korge.ui.*
+import korlibs.korge.view.*
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.EscapeButtonActionEvent
-import com.xenotactic.korge.events.ResizeMapEvent
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
-import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
-import com.xenotactic.korge.korge_utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapApi
-import com.xenotactic.korge.state.GameMapDimensionsState
-
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.utils.size
+import korlibs.korge.view.align.alignBottomToBottomOf
+import korlibs.korge.view.align.centerOn
+import korlibs.korge.view.align.centerXOn
 
 @OptIn(KorgeExperimental::class)
 class UIEditorButtonsV2(
@@ -27,13 +24,13 @@ class UIEditorButtonsV2(
     val baseView: SContainer
 ) : Container() {
     private val uiMapV2 = engine.injections.getSingleton<UIMapV2>()
-    private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
-    private val editorState = engine.injections.getSingleton<EditorState>()
+    private val gameMapDimensionsState = engine.stateInjections.getSingleton<GameMapDimensionsState>()
+    private val editorState = engine.stateInjections.getSingleton<EditorState>()
     private val mouseDragInputProcessor = engine.injections.getSingleton<MouseDragInputProcessor>()
 
     init {
         val buttonStack = uiHorizontalStack {
-            val addStartButton = uiButton(text = "Add Start") {
+            val addStartButton = uiButton(label = "Add Start") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.START) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -42,7 +39,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            val addFinishButton = uiButton(text = "Add Finish") {
+            val addFinishButton = uiButton(label = "Add Finish") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -51,7 +48,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            val addCheckpoint = uiButton(text = "Add Checkpoint") {
+            val addCheckpoint = uiButton(label = "Add Checkpoint") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -60,7 +57,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            val addTeleport = uiButton(text = "Add Teleport") {
+            val addTeleport = uiButton(label = "Add Teleport") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.FINISH) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -69,7 +66,7 @@ class UIEditorButtonsV2(
                     }
                 }
             }
-            uiButton(text = "Add rocks") {
+            uiButton(label = "Add rocks") {
                 onClick {
                     if (editorState.isEditingEnabled && editorState.entityTypeToPlace == MapEntityType.ROCK) { // Switching to playing mode
                         editorState.switchToPlayingMode()
@@ -83,7 +80,7 @@ class UIEditorButtonsV2(
                     mouseDragInputProcessor.adjustSettings {
                         isEnabled = false
                     }
-                    baseView.uiWindow("Resize Map", 150.0, 150.0) {
+                    baseView.uiWindow("Resize Map", 150.0 size 150.0) {
                         val thisWindow = it
                         uiVerticalStack {
                             uiText("Width:")

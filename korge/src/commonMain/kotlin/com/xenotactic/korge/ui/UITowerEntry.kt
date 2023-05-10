@@ -1,16 +1,17 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
+import com.xenotactic.korge.utils.createUIEntityContainerForTower
+import korlibs.korge.view.align.*
 
 class UITowerEntry: Container() {
     init {
         val solidRect = solidRect(250, 400, MaterialColors.BROWN_300)
-        val padding = 15.0
+        val padding = 15f
 
         val tower = createUIEntityContainerForTower(
             220.toWorldUnit(), 220.toWorldUnit()
@@ -40,7 +41,7 @@ class UITowerEntry: Container() {
             alignRightToRightOf(tower, padding)
         }
 
-        val textSize = 30.0
+        val textSize = 30f
 
         val damageText = text("30", textSize = textSize, color = Colors.BLACK, font = GlobalResources.FONT_ATKINSON_BOLD) {
             smoothing = false

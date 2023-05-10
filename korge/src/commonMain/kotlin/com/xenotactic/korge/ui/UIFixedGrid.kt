@@ -1,25 +1,24 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.kds.Array2
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korma.geom.PointInt
-import com.xenotactic.gamelogic.utils.measureTime
-import com.xenotactic.korge.events.EventBus
+import korlibs.logger.Logger
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.image.color.RGBA
+import korlibs.math.geom.PointInt
 
-val EMPTY_BOX_FN: (x: Int, y:Int, width: Double, height: Double) -> View = {x,y,width, height ->
-    SolidRect(width, height, Colors.DARKKHAKI)
+val EMPTY_BOX_FN: (x: Int, y:Int, width: Float, height: Float) -> View = {x,y,width, height ->
+    SolidRect(width, height, MaterialColors.TEAL_100)
 }
 
 fun Container.uiFixedGrid(
     maxColumns: Int,
     maxRows: Int,
-    gridWidth: Double,
-    gridHeight: Double,
-    entryPaddingHorizontal: Double,
-    entryPaddingVertical: Double,
-    initialEntries: List<(x: Int, y: Int, width: Double, height: Double) -> Container> = emptyList()
+    gridWidth: Number,
+    gridHeight: Number,
+    entryPaddingHorizontal: Number,
+    entryPaddingVertical: Number,
+    initialEntries: List<(x: Int, y: Int, width: Float, height: Float) -> Container> = emptyList()
 ): UIFixedGrid =
     UIFixedGrid(
         maxColumns,
@@ -40,20 +39,21 @@ fun Container.uiFixedGrid(
 class UIFixedGrid(
     val maxColumns: Int,
     val maxRows: Int,
-    gridWidth: Double,
-    gridHeight: Double,
-    val entryPaddingHorizontal: Double,
-    val entryPaddingVertical: Double,
-    initialEntries: List<(x: Int, y: Int, width: Double, height: Double) -> Container> = emptyList(),
-    val defaultInitializerFn: (x: Int, y: Int, width: Double, height: Double) -> View = EMPTY_BOX_FN
+    gridWidth: Number,
+    gridHeight: Number,
+    val entryPaddingHorizontal: Number,
+    val entryPaddingVertical: Number,
+    initialEntries: List<(x: Int, y: Int, width: Float, height: Float) -> Container> = emptyList(),
+    val defaultInitializerFn: (x: Int, y: Int, width: Float, height: Float) -> View = EMPTY_BOX_FN,
+    backgroundColor: RGBA = Colors.DARKMAGENTA
 ) : Container() {
     val gridEntryViewWidth =
-        (gridWidth - entryPaddingHorizontal * (maxColumns - 1)) / maxColumns
+        (gridWidth.toFloat() - entryPaddingHorizontal.toFloat() * (maxColumns + 1)) / maxColumns
     val gridEntryViewHeight =
-        (gridHeight - entryPaddingVertical * (maxRows - 1)) / maxRows
+        (gridHeight.toFloat() - entryPaddingVertical.toFloat() * (maxRows + 1)) / maxRows
 
     init {
-        this.solidRect(gridWidth, gridHeight, color = Colors.LIGHTGRAY)
+        this.solidRect(gridWidth.toFloat(), gridHeight.toFloat(), color = backgroundColor)
         println("""
             gridEntryViewWidth: $gridEntryViewWidth
             gridEntryViewHeight: $gridEntryViewHeight
@@ -72,7 +72,7 @@ class UIFixedGrid(
         val currView = coordToView[point]!!
         currView.removeFromParent()
         val scaledView = view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
-            gridEntryViewWidth, gridEntryViewHeight
+            gridEntryViewWidth.toDouble(), gridEntryViewHeight.toDouble()
         ))
         scaledView.addTo(gridEntryContainer)
         scaledView.x = calculateXPosition(x)
@@ -80,7 +80,11 @@ class UIFixedGrid(
         coordToView[point] = scaledView
     }
 
-    fun resetWithEntries(entries: List<(x: Int, y: Int, width: Double, height: Double) -> View>) {
+    fun clearEntry(x: Int, y: Int) {
+        setEntry(x, y, defaultInitializerFn(x, y, gridEntryViewWidth, gridEntryViewHeight))
+    }
+
+    fun resetWithEntries(entries: List<(x: Int, y: Int, width: Float, height: Float) -> View>) {
         gridEntryContainer.removeChildren()
         val entriesIterator = entries.iterator()
         rowloop@ for (y in 0 until maxRows) {
@@ -95,12 +99,12 @@ class UIFixedGrid(
         }
     }
 
-    private fun calculateXPosition(x: Int): Double {
-        return x * gridEntryViewWidth + x * entryPaddingHorizontal
+    private fun calculateXPosition(x: Int): Float {
+        return x * gridEntryViewWidth + (x + 1) * entryPaddingHorizontal.toFloat()
     }
 
-    private fun calculateYPosition(y: Int): Double {
-        return y * gridEntryViewHeight + y * entryPaddingVertical
+    private fun calculateYPosition(y: Int): Float {
+        return y * gridEntryViewHeight + (y + 1) * entryPaddingVertical.toFloat()
     }
 
     companion object {

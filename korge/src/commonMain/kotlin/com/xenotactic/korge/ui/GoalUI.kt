@@ -1,31 +1,36 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.component.ResizeComponent
-import com.soywiz.korge.ui.UIContainer
-import com.soywiz.korge.ui.uiContainer
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Image
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.getVisibleLocalArea
-import com.soywiz.korge.view.getVisibleWindowArea
-import com.soywiz.korge.view.image
-import com.soywiz.korge.view.roundRect
-import com.soywiz.korge.view.text
-import com.soywiz.korge.view.visible
-import com.soywiz.korge.view.xy
-import com.soywiz.korim.color.ColorTransform
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.format.PNG
-import com.soywiz.korim.format.readBitmap
-import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
-import com.xenotactic.korge.events.EventBus
+import korlibs.event.EventListener
+import korlibs.event.ReshapeEvent
+import korlibs.korge.ui.UIContainer
+import korlibs.korge.ui.uiContainer
+import korlibs.korge.view.Container
+import korlibs.korge.view.Image
+import korlibs.korge.view.Text
+import korlibs.korge.view.Views
+import korlibs.korge.view.getVisibleLocalArea
+import korlibs.korge.view.getVisibleWindowArea
+import korlibs.korge.view.image
+import korlibs.korge.view.roundRect
+import korlibs.korge.view.text
+import korlibs.korge.view.visible
+import korlibs.korge.view.xy
+import korlibs.image.color.ColorTransform
+import korlibs.image.color.Colors
+import korlibs.image.format.PNG
+import korlibs.image.format.readBitmap
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.UpdatedGoalDataEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.gamelogic.utils.toScale
+import korlibs.image.text.TextAlignment
+import korlibs.math.geom.RectCorners
+import korlibs.math.geom.Size
 
-class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeComponent {
+class GoalUI(val view: Container, val eventBus: EventBus) {
     val goalContainer: UIContainer
     lateinit var _rankTexts: List<Text>
     lateinit var _rankImages: List<Image>
@@ -43,7 +48,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
             resourcesVfs["medals/Medals256/rank_3.png"].readBitmap(PNG)
         }
 
-        val _textPaddingFromGoalImage = 5.0
+        val _textPaddingFromGoalImage = 5f
         val _borderPadding = 5.0
 
         lateinit var rank1Image: Image
@@ -51,12 +56,10 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
 
         goalContainer = view.uiContainer {
             this.roundRect(
-                192.0,
+                192.0 size
                 64.0 + _textPaddingFromGoalImage + 20.0 + _borderPadding,
-                10.0,
-                10.0,
-                fill = Colors
-                    .BLACK.withAd(0.2)
+                RectCorners(10f, 10f),
+                fill = Colors.BLACK.withAd(0.2)
             )
             val textViews = mutableListOf<Text>()
             val rankImages = mutableListOf<Image>()
@@ -65,12 +68,11 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
             for (i in 0 until 3) {
                 uiContainer {
                     val currImage = this.image(rankBitmaps[i]).apply {
-                        setSizeScaled(64.0, 64.0)
-                        colorTransform = ColorTransform(Colors.BLACK)
+                        scaledSize = Size(64, 64)
                     }
                     val currText = this.text(text[i], alignment = TextAlignment.CENTER)
-                    currText.y += 64.0 + _textPaddingFromGoalImage
-                    currText.x += 32.0
+                    currText.y += 64f + _textPaddingFromGoalImage
+                    currText.x += 32f
                     textViews.add(currText)
                     rankImages.add(currImage)
                 }.xy(i * 64.0, _borderPadding)
@@ -96,7 +98,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         //        }
 
         val globalArea = view.getVisibleWindowArea()
-        resizeInternal(globalArea.width, globalArea.height)
+        reSizeernal(globalArea.widthD, globalArea.heightD)
 
         eventBus.register<UpdatedGoalDataEvent> {
             handleNewGoalDataEvent(it)
@@ -106,7 +108,7 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         }
     }
 
-    fun handleNewGoalDataEvent(event: UpdatedGoalDataEvent) {
+    private fun handleNewGoalDataEvent(event: UpdatedGoalDataEvent) {
         _rankTexts[0].text = event.data.bronzeGoal.toString()
         _rankTexts[1].text = event.data.silverGoal.toString()
         _rankTexts[2].text = event.data.goldGoal.toString()
@@ -117,15 +119,14 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         goalContainer.visible(true)
     }
 
-    fun handleNewPathLengthEvent(event: UpdatedPathLineEvent) {
+    private fun handleNewPathLengthEvent(event: UpdatedPathLineEvent) {
         if (event.newPathLength == null) {
             return
         }
-        val newPathLength = event.newPathLength
+        val newPathLength = event.newPathLength!!
         for ((i, goal) in rankPathLengthGoals.withIndex()) {
             if (newPathLength >= goal) {
                 discoveredRanks[i] = true
-                _rankImages[i].colorTransform = ColorTransform(Colors.WHITE)
                 _rankImages[i].invalidateColorTransform()
             } else {
                 break
@@ -133,14 +134,20 @@ class GoalUI(override val view: Container, val eventBus: EventBus) : ResizeCompo
         }
     }
 
-    override fun resized(views: Views, width: Int, height: Int) {
-        resizeInternal(width.toDouble(), height.toDouble())
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvent(ReshapeEvent) {
+            resized(it.width, it.height)
+        }
     }
 
-    fun resizeInternal(width: Double, height: Double) {
+    fun resized(width: Int, height: Int) {
+        reSizeernal(width.toDouble(), height.toDouble())
+    }
+
+    fun reSizeernal(width: Double, height: Double) {
         val visibleLocalArea = view.getVisibleLocalArea()
-        goalContainer.xy(visibleLocalArea.x, 50.0)
-        goalContainer.scale = 0.75
+        goalContainer.xy(visibleLocalArea.xD, 50.0)
+        goalContainer.scale = 0.75.toScale()
         //        goalContainer.x += bronzeText!!.width / 2
     }
 

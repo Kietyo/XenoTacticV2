@@ -1,25 +1,23 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.UISkin
-import com.soywiz.korge.ui.UIVerticalStack
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiSkin
-import com.soywiz.korge.ui.uiVerticalStack
-import com.soywiz.korge.ui.uiWindow
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOnStage
-import com.soywiz.korio.async.AsyncSignal
+import korlibs.logger.Logger
+import korlibs.korge.input.onClick
+import korlibs.korge.ui.UIVerticalStack
+import korlibs.korge.ui.uiButton
+import korlibs.korge.ui.uiVerticalStack
+import korlibs.korge.ui.uiWindow
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
+import korlibs.korge.view.align.centerOnStage
+import korlibs.io.async.AsyncSignal
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.EscapeButtonActionEvent
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.ExitGameSceneEvent
 import com.xenotactic.korge.events.PointerActionChangeEvent
 import com.xenotactic.korge.events.SpawnCreepEvent
@@ -50,9 +48,7 @@ class UIPlacement(
 
         placementContainer = uiVerticalStack {
             uiButton {
-                uiSkin = UISkin {
-                    setSkinProperty("textSize", 12.0)
-                }
+                textSize = 12f
                 text = "View rock counters"
                 onClick {
                     onButtonClick(UIPlacementButton.VIEW_ROCK_COUNTERS)

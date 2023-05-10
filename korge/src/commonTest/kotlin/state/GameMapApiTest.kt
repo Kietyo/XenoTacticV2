@@ -1,6 +1,6 @@
 package state
 
-import com.soywiz.korio.async.suspendTest
+import com.kietyo.ktruth.assertThat
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.tup
 import com.xenotactic.gamelogic.pathing.EntityPath
@@ -10,34 +10,42 @@ import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.wH
 import com.xenotactic.gamelogic.utils.wW
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
-import com.xenotactic.korge.korge_utils.StagingEntityUtils
-import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.state.GameMapApi
-import com.xenotactic.korge.state.GameMapDimensionsState
-import com.xenotactic.korge.state.GameMapPathState
-import com.xenotactic.testing.assertThat
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.korge.utils.StagingEntityUtils
+import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.gamelogic.utils.GameSimulator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
 internal class GameMapApiTest {
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun regressionTest1() = suspendTest {
+    fun regressionTest1() = runTest {
         val width = 30.toGameUnit()
         val height = 11.toGameUnit()
         val gameWorld = GameWorld()
         val eventBus = EventBus(this)
         val engine = Engine(eventBus, gameWorld)
-        engine.injections.setSingletonOrThrow(GameMapPathState(engine))
-        engine.injections.setSingletonOrThrow(
-            GameMapDimensionsState(
-                engine,
-                width, height
-            )
-        )
-        val gameMapApi = GameMapApi(engine)
+//        engine.stateInjections.setSingletonOrThrow(GameMapPathState(engine))
+//        engine.stateInjections.setSingletonOrThrow(
+//            GameMapDimensionsState(
+//                engine,
+//                width, height
+//            )
+//        )
+//        engine.stateInjections.setSingletonOrThrow(
+//            GameplayState.DEFAULT
+//        )
+//        engine.stateInjections.setSingletonOrThrow(
+//            MutableEventQueueState()
+//        )
 
-        gameMapApi.placeEntitiesV2(
+
+        val gameSimulator = GameSimulator(width, height, engine)
+
+        gameSimulator.gameMapApi.placeEntities(
             StagingEntityUtils.createStart(22 tup 0),
             StagingEntityUtils.createFinish(3 tup 2),
             StagingEntityUtils.createRock(22 tup 6 wW 2 wH 4),
@@ -45,8 +53,12 @@ internal class GameMapApiTest {
             StagingEntityUtils.createTower(20 tup 0)
         )
 
+        gameSimulator.tick()
+
         assertThat(
-            gameMapApi.gameMapPathState.shortestPath!!
+            gameWorld.getPathFindingResult(
+                width, height
+            ).toGamePathOrNull()!!.toPathSequence()
         ).isEqualTo(
             PathFindingResult.Success(
                 GamePath(

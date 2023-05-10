@@ -1,10 +1,12 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.launchImmediately
-import com.xenotactic.korge.engine.Engine
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.io.async.launchImmediately
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.input_processors.PlaceEntityErrorEvent
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.align.centerXOnStage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 
@@ -16,7 +18,7 @@ class UINotificationText(
     val engine: Engine,
     text: String = "N/A"
 ) : Container() {
-    private val NOTIFICATION_TEXT_SIZE = 20.0
+    private val NOTIFICATION_TEXT_SIZE = 20f
     private val notificationText = text(text, textSize = NOTIFICATION_TEXT_SIZE) {
     }
     private val errorText = text("Unable to place entity!", textSize = NOTIFICATION_TEXT_SIZE, color = Colors.RED) {
@@ -34,7 +36,7 @@ class UINotificationText(
             while (true) {
                 errorTextDisplayTimeMillis = maxOf(errorTextDisplayTimeMillis - TICK_RATE_MILLIS, 0)
                 errorText.alpha =
-                    errorTextDisplayTimeMillis.toDouble() / (DEFAULT_DISPLAY_TIME_MILLIS - DISPLAY_TIME_UNTIL_FADE_MILLIS)
+                    errorTextDisplayTimeMillis.toFloat() / (DEFAULT_DISPLAY_TIME_MILLIS - DISPLAY_TIME_UNTIL_FADE_MILLIS)
                 if (errorTextDisplayTimeMillis <= 0) {
                     errorText.visible = false
                 }

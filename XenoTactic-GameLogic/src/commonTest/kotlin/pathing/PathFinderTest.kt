@@ -1,6 +1,6 @@
 package pathing
 
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenBlocking
+import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenBlocking
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.test.Test

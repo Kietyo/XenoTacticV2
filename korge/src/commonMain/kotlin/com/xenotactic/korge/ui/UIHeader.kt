@@ -1,19 +1,19 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.SolidRect
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.alignLeftToRightOf
-import com.soywiz.korge.view.alignRightToRightOf
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.centerYOn
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.text
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.Signal
-import com.xenotactic.korge.korge_utils.scaledDimensions
+import korlibs.korge.input.onClick
+import korlibs.korge.view.Container
+import korlibs.korge.view.SolidRect
+import korlibs.korge.view.Text
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignRightToRightOf
+import korlibs.korge.view.align.centerOn
+import korlibs.korge.view.align.centerYOn
+import korlibs.korge.view.container
+import korlibs.korge.view.solidRect
+import korlibs.korge.view.text
+import korlibs.image.color.Colors
+import korlibs.io.async.Signal
+import com.xenotactic.korge.utils.scaledDimensions
 import kotlin.collections.set
 
 enum class UIHeaderSection {
@@ -34,20 +34,20 @@ class UIHeader(
     val sectionToTextMap = mutableMapOf<UIHeaderSection, Text>()
 
     init {
-        val HEADER_TITLE_PADDING_LEFT = 10.0
-        val PROFILE_PADDING_TOP_AND_BOTTOM = 10.0
-        val PROFILE_PADDING_RIGHT = 5.0
+        val HEADER_TITLE_PADDING_LEFT = 10f
+        val PROFILE_PADDING_TOP_AND_BOTTOM = 10f
+        val PROFILE_PADDING_RIGHT = 5f
 
         val headerSection = this.solidRect(
             headerWidth, headerHeight,
             color = Colors.BROWN
         )
-        this.text(userName, textSize = 30.0) {
+        this.text(userName, textSize = 30f) {
             this.centerYOn(headerSection)
             this.x += HEADER_TITLE_PADDING_LEFT
         }
 
-        val headerTextSize = 20.0
+        val headerTextSize = 20f
         val textSpacing = 50.0
         val textWidth = 75.0
 
@@ -91,7 +91,7 @@ class UIHeader(
         }
 
         headerOptions.centerYOn(headerSection)
-        headerOptions.x += 200.0
+        headerOptions.x += 200f
 
         val profileSection = this.solidRect(
             100.0, headerHeight - PROFILE_PADDING_TOP_AND_BOTTOM,
@@ -100,7 +100,7 @@ class UIHeader(
         profileSection.alignRightToRightOf(headerSection, padding = PROFILE_PADDING_RIGHT)
         profileSection.centerYOn(headerSection)
 
-        val profileText = this.text(userName, textSize = 20.0)
+        val profileText = this.text(userName, textSize = 20f)
         profileText.centerOn(profileSection)
     }
 

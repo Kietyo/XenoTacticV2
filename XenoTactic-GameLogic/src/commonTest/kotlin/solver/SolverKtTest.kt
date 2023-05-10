@@ -1,19 +1,20 @@
 package solver
 
-import com.soywiz.klogger.Logger
-import com.xenotactic.gamelogic.globals.COUNTERS
+import korlibs.logger.Logger
+import com.xenotactic.gamelogic.utils.COUNTERS
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.utils.measureTime
-import pathing.AStarSearcher
 import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.random.MapGeneratorResult
 import com.xenotactic.gamelogic.random.RandomMapGenerator
+import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.utils.toGameUnit
+import pathing.AStarSearcher
 import test_utils.STANDARD_MAP
-
 import kotlin.random.Random
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 internal class SolverKtTest {
 

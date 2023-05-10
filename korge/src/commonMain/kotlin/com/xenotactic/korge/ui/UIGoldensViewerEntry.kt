@@ -1,31 +1,32 @@
 package com.xenotactic.korge.ui
 
 import MapVerificationResult
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onOver
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.ScalingOption
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alignBottomToBottomOf
-import com.soywiz.korge.view.alignLeftToLeftOf
-import com.soywiz.korge.view.alignRightToRightOf
-import com.soywiz.korge.view.alignTopToBottomOf
-import com.soywiz.korge.view.roundRect
-import com.soywiz.korge.view.scaleWhileMaintainingAspect
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.text
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.color.RGBA
-import com.soywiz.korio.async.launch
-import com.soywiz.korio.file.VfsFile
-import com.soywiz.korio.file.baseName
-import com.xenotactic.gamelogic.korge_utils.existsBlocking
+import korlibs.logger.Logger
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onOver
+import korlibs.korge.ui.uiButton
+import korlibs.korge.view.Container
+import korlibs.korge.view.ScalingOption
+import korlibs.korge.view.Text
+import korlibs.korge.view.align.alignBottomToBottomOf
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.alignRightToRightOf
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.roundRect
+import korlibs.korge.view.scaleWhileMaintainingAspect
+import korlibs.korge.view.solidRect
+import korlibs.korge.view.text
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.image.color.RGBA
+import korlibs.io.async.launch
+import korlibs.io.file.VfsFile
+import korlibs.io.file.baseName
+import com.xenotactic.gamelogic.utils.existsBlocking
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.rectCorner
+import com.xenotactic.gamelogic.utils.size
 import com.xenotactic.korge.events.GoldensEntryClickEvent
 import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
 import kotlinx.coroutines.Dispatchers
@@ -41,12 +42,17 @@ private data class EntrySettings(
     val isDeleteButtonVisible: Boolean
 )
 
-class UIGoldensViewerEntry(
+class UIGoldensViewerEntry private constructor(
     val eventBus: EventBus,
     val mapData: MapWithMetadata,
-    val entryWidth: Double,
-    val entryHeight: Double
+    entryWidth: Float,
+    entryHeight: Float
 ) : Container() {
+    constructor(eventBus: EventBus,
+        mapData: MapWithMetadata,
+        entryWidth: Number,
+        entryHeight: Number) : this(eventBus, mapData, entryWidth.toFloat(), entryHeight.toFloat())
+
     val OUTLINE_RECT_STROKE_THICKNESS = 3
     val TEXT_SECTION_WIDTH = entryWidth - OUTLINE_RECT_STROKE_THICKNESS * 2
     val TEXT_SECTION_HEIGHT = 20
@@ -60,12 +66,12 @@ class UIGoldensViewerEntry(
         )
 
         val entryTextSection = this.solidRect(
-            entryWidth, TEXT_SECTION_HEIGHT.toDouble(),
+            entryWidth size  TEXT_SECTION_HEIGHT.toDouble(),
             color = MaterialColors.GRAY_800
         )
 
         titleView = this.text(
-            gameMapFile.baseName, textSize = TEXT_SECTION_HEIGHT.toDouble(),
+            gameMapFile.baseName, textSize = TEXT_SECTION_HEIGHT.toFloat(),
             color = Colors.WHITE
         ).apply {
             alignLeftToLeftOf(entryTextSection, padding = OUTLINE_RECT_STROKE_THICKNESS)
@@ -84,15 +90,15 @@ class UIGoldensViewerEntry(
         }
 
         val outlineRect = this.roundRect(
-            entryWidth, entryHeight, 0.0, 0.0, Colors.TRANSPARENT_WHITE,
+            entryWidth size entryHeight, 0.0 rectCorner 0.0, Colors.TRANSPARENT_WHITE,
             stroke = entrySettings.outlineRectangleColor,
-            strokeThickness = OUTLINE_RECT_STROKE_THICKNESS.toDouble()
+            strokeThickness = OUTLINE_RECT_STROKE_THICKNESS.toFloat()
         )
 
         if (gameMapFile.existsBlocking()) {
             val deleteButton = this.uiButton(
-                width = 55.0, height = 25.0,
-                text = "Delete"
+                size = 55 size 25,
+                label = "Delete"
             ) {
                 alignRightToRightOf(entryBackground, padding = 10.0)
                 alignBottomToBottomOf(entryBackground, padding = 10.0)
@@ -128,7 +134,7 @@ class UIGoldensViewerEntry(
         titleView.text = title
         titleView.scaleWhileMaintainingAspect(
             ScalingOption.ByWidthAndHeight(
-                TEXT_SECTION_WIDTH,
+                TEXT_SECTION_WIDTH.toDouble(),
                 TEXT_SECTION_HEIGHT.toDouble()
             )
         )

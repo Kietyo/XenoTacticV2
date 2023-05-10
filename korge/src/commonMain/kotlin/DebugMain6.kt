@@ -1,14 +1,18 @@
-import com.soywiz.korge.Korge
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korio.async.runBlockingNoJs
-import com.xenotactic.gamelogic.utils.GlobalResources
-import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.korge.korge_utils.createUIEntityContainerForTower
-import com.xenotactic.korge.korge_utils.distributeVertically
-import com.xenotactic.korge.ui.UITowerDetails
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.format.ASE
+import korlibs.image.format.onlyReadVisibleLayers
+import korlibs.image.format.readImageDataContainer
+import korlibs.image.format.toProps
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import korlibs.math.geom.Size
+import com.xenotactic.gamelogic.utils.toAsepriteModel
+import com.xenotactic.gamelogic.utils.toScale
+import korlibs.korge.view.align.alignLeftToRightOf
 import kotlin.jvm.JvmStatic
 
 object DebugMain6 {
@@ -16,13 +20,53 @@ object DebugMain6 {
     @OptIn(KorgeExperimental::class)
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
-            GlobalResources.init()
+            Korge(
+                KorgeConfig(
+                    backgroundColor = Colors.LIGHTGRAY,
+                    virtualSize = Size(640, 480)
+                )
+            ) {
+//            GlobalResources.init()
 
+//            val weaponSpeedMillis = 250.0
+//            val attacksPerSecond = 1000.0 / weaponSpeedMillis
 
-            val d = UITowerDetails(15.0, 600.0, 7.0).addTo(this)
+//            val d = UITowerDetails(15.0, weaponSpeedMillis, attacksPerSecond, 7.0, 22, 30, 51).addTo(this)
 
+            // Playing around with tooltips
+//            val d = container { solidRect(50, 50) }
+//
+//            val tooltip = d.uiTooltipContainer()
+//
+//            d.centerOnStage()
+//
+//            d.apply {
+//                tooltip(tooltip, "hello world")
+//            }
 
+            val asp = resourcesVfs["icons.aseprite"].readImageDataContainer(ASE.toProps().apply {
+                onlyReadVisibleLayers = false
+            })
+
+            val aspModel = asp.toAsepriteModel()
+            println(aspModel)
+
+            val backgroundLayerName = "background"
+            val goldIconLayerName = "gold_icon"
+            val supplyIconLayerName = "supply_icon"
+
+            val bmp = aspModel.frames.first().createMergedBitmap(backgroundLayerName, goldIconLayerName)
+
+            val i1 = image(bmp) {
+                smoothing = false
+                scale = 3.0.toScale()
+            }
+
+            image(aspModel.frames.first().createMergedBitmap(backgroundLayerName, supplyIconLayerName)) {
+                smoothing = false
+                scale = 3.0.toScale()
+                alignLeftToRightOf(i1)
+            }
         }
     }
 }

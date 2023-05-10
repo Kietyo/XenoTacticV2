@@ -1,12 +1,13 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.ui.uiScrollable
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
-import com.soywiz.korim.color.MaterialColors
-import com.xenotactic.korge.events.EventBus
+import korlibs.logger.Logger
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiScrollable
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
+import korlibs.image.color.MaterialColors
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.size
 
 fun Container.uiScrollableGrid(
     eventBus: EventBus,
@@ -66,7 +67,7 @@ class UIScrollableGrid(
                 maxColumns
         val gridEntryViewHeight = (gridHeight - entryPaddingVertical * (maxRows - 1)) / maxRows
 
-        this.uiScrollable(gridWidth, gridHeight,
+        this.uiScrollable(gridWidth size  gridHeight,
             config = {
                 this.backgroundColor = MaterialColors.GRAY_600
             }) {
@@ -75,8 +76,8 @@ class UIScrollableGrid(
                 for (i in 0 until maxColumns) {
                     if (!entriesIterator.hasNext()) break@rowloop
                     val gridEntry = entriesIterator.next()(gridEntryViewWidth, gridEntryViewHeight)
-                    gridEntry.x += i * gridEntryViewWidth + i * entryPaddingHorizontal
-                    gridEntry.y += j * gridEntryViewHeight + j * entryPaddingVertical
+                    gridEntry.x += (i * gridEntryViewWidth + i * entryPaddingHorizontal).toFloat()
+                    gridEntry.y += (j * gridEntryViewHeight + j * entryPaddingVertical).toFloat()
                     this.addChild(gridEntry)
                 }
             }

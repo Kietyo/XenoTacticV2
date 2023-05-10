@@ -1,12 +1,13 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.ui.uiScrollable
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
-import com.soywiz.korim.color.MaterialColors
+import korlibs.logger.Logger
+import korlibs.korge.ui.uiScrollable
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
+import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.size
 
 inline fun Container.uiMapGrid(
     eventBus: EventBus,
@@ -14,8 +15,8 @@ inline fun Container.uiMapGrid(
     maxRows: Int,
     gameMapViewWidth: Double,
     gameMapViewHeight: Double,
-    paddingHorizontal: Double,
-    paddingVertical: Double,
+    paddingHorizontal: Float,
+    paddingVertical: Float,
     gameMaps: List<GameMap>
 ): UIMapGrid = UIMapGrid(
     eventBus,
@@ -47,15 +48,15 @@ class UIMapGrid(
     val maxRows: Int,
     val gameMapViewWidth: Double,
     val gameMapViewHeight: Double,
-    val entryPaddingHorizontal: Double,
-    val entryPaddingVertical: Double,
+    val entryPaddingHorizontal: Float,
+    val entryPaddingVertical: Float,
     val gameMaps: List<GameMap>
 ) : Container() {
     init {
         val mapIterator = gameMaps.iterator()
 
         this.uiScrollable(
-            gameMapViewWidth,
+            gameMapViewWidth size
             gameMapViewHeight,
             config = {
                 this.backgroundColor = MaterialColors.GRAY_600

@@ -1,8 +1,10 @@
 package utils
 
-import com.soywiz.korma.geom.Point
+
+
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
-import com.xenotactic.gamelogic.globals.PATHING_RADIUS
+import com.xenotactic.gamelogic.utils.PATHING_RADIUS
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import kotlin.math.sqrt
 
@@ -57,7 +59,7 @@ class PathingPointUtil(val pathingRadius: Double = PATHING_RADIUS) {
             EntityMask(true, true, true, true) to emptyList(),
         )
 
-    fun calculate(entity: IRectangleEntity, blockingPoints: BlockingPointContainer.View): Set<Point> {
+    fun calculate(entity: IRectangleEntity, blockingPoints: BlockingPointContainer.View): Set<IPoint> {
         require(entity.width.toInt() == 2 && entity.height.toInt() == 2) {
             "Only works with 2x2 entities!"
         }
@@ -70,7 +72,7 @@ class PathingPointUtil(val pathingRadius: Double = PATHING_RADIUS) {
         )
 
         return maskToPathingPointOffset[entityMask]!!.map {
-            Point(entity.centerPoint.x + it.first, entity.centerPoint.y + it.second)
+            IPoint(entity.centerPoint.x + it.first, entity.centerPoint.y + it.second)
         }.toSet()
     }
 

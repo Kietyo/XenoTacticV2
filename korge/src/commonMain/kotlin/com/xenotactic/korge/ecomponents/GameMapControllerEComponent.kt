@@ -1,20 +1,19 @@
 package com.xenotactic.korge.ecomponents
 
-import com.soywiz.klogger.Logger
-import com.xenotactic.gamelogic.globals.GAME_HEIGHT
-import com.xenotactic.gamelogic.globals.GAME_WIDTH
+import korlibs.logger.Logger
+import com.xenotactic.gamelogic.utils.GAME_HEIGHT
+import com.xenotactic.gamelogic.utils.GAME_WIDTH
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
-import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.AddEntityEvent
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import pathing.PathFinder
 
 // The game map controller.
@@ -22,7 +21,7 @@ import pathing.PathFinder
 class GameMapControllerEComponent(
     val engine: Engine, val eventBus: EventBus,
     private var gameMap: GameMap = GameMap(GAME_WIDTH, GAME_HEIGHT)
-) : EComponent {
+) {
     var shortestPath: PathSequence? = null
         private set
 
@@ -115,9 +114,11 @@ class GameMapControllerEComponent(
 
         engine.injections.getSingletonOrNull<DebugEComponent>()?.updatePathingPoints()
 
-        eventBus.send(UpdatedPathLineEvent(
+        eventBus.send(
+            UpdatedPathLineEvent(
             shortestPath,
-            shortestPath?.pathLength))
+            shortestPath?.pathLength)
+        )
     }
 
     fun getGameMapDebugOnly(): GameMap {

@@ -1,23 +1,25 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.input.MouseEvents
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onOut
-import com.soywiz.korge.input.onOver
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiVerticalStack
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alignLeftToRightOf
-import com.soywiz.korge.view.alignTopToTopOf
-import com.soywiz.korge.view.alpha
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.roundRect
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.Signal
+import korlibs.logger.Logger
+import korlibs.korge.input.MouseEvents
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onOut
+import korlibs.korge.input.onOver
+import korlibs.korge.ui.uiButton
+import korlibs.korge.ui.uiVerticalStack
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignTopToTopOf
+import korlibs.korge.view.alpha
+import korlibs.korge.view.align.centerOn
+import korlibs.korge.view.roundRect
+import korlibs.korge.view.solidRect
+import korlibs.image.color.Colors
+import korlibs.io.async.Signal
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.size
+import korlibs.math.geom.RectCorners
 import kotlin.math.min
 
 inline fun Container.uiMapEntry(
@@ -38,10 +40,10 @@ class UIMapEntry(
     _buttonSectionWidthRatio: Double = 0.25
 ) : Container() {
     val MAP_SECTION_WIDTH = _width * _mapSectionWidthRatio
-    val MAP_SECTION_LEFT_RIGHT_PADDING = 5.0
+    val MAP_SECTION_LEFT_RIGHT_PADDING = 5f
 
     val BUTTON_SECTION_WIDTH = _width * _buttonSectionWidthRatio
-    val BUTTON_SECTION_LEFT_RIGHT_PADDING = 3.0
+    val BUTTON_SECTION_LEFT_RIGHT_PADDING = 3f
 
     val OUTLINE_RECT_STROKE_THICKNESS =
         min(MAP_SECTION_LEFT_RIGHT_PADDING, BUTTON_SECTION_LEFT_RIGHT_PADDING)
@@ -61,27 +63,27 @@ class UIMapEntry(
         val buttonsSection = this.solidRect(BUTTON_SECTION_WIDTH, _height, Colors.ROSYBROWN)
         buttonsSection.alignLeftToRightOf(mapSection)
 
-        val buttonStackWidth = BUTTON_SECTION_WIDTH - BUTTON_SECTION_LEFT_RIGHT_PADDING * 2
-        val buttonPaddingHeight = 5.0
+        val buttonStackWidth = (BUTTON_SECTION_WIDTH - BUTTON_SECTION_LEFT_RIGHT_PADDING * 2).toFloat()
+        val buttonPaddingHeight = 5f
         val buttonHeight = (_height - buttonPaddingHeight * (2 + 1)) / 3
 
         val buttonStack =
             this.uiVerticalStack(buttonStackWidth, padding = buttonPaddingHeight) {
-                val playButton = this.uiButton(buttonStackWidth, buttonHeight, "Play") {
+                val playButton = this.uiButton("Play", buttonStackWidth size buttonHeight) {
                     this.onClick {
                         onPlayButtonClick(it)
                     }
                 }
-                val saveButton = this.uiButton(buttonStackWidth, buttonHeight, "Save") {
+                val saveButton = this.uiButton("Save", buttonStackWidth size buttonHeight) {
                     onClick {
                         onSaveButtonClick(it)
                     }
                 }
-                val deleteButton = this.uiButton(buttonStackWidth, buttonHeight, "Hide")
+                val deleteButton = this.uiButton("Hide", buttonStackWidth size buttonHeight)
             }
 
         val outlineRect = this.roundRect(
-            _width, _height, 0.0, 0.0, Colors.TRANSPARENT_WHITE, Colors.YELLOW,
+            _width size _height, RectCorners(0.0, 0.0), Colors.TRANSPARENT_WHITE, Colors.YELLOW,
             OUTLINE_RECT_STROKE_THICKNESS
         ).apply {
             alpha(0.0)

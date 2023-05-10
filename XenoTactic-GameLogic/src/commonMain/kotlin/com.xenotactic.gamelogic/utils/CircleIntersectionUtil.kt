@@ -1,6 +1,8 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korma.geom.Point
+
+
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.pathing.Segment
 
 /**
@@ -20,7 +22,7 @@ object CircleIntersectionUtil {
         data class PartialIntersection(
             val firstPointInside: Boolean,
             val secondPointInside: Boolean,
-            val intersectionPoint: Point
+            val intersectionPoint: IPoint
         ) : Result()
 
         // The segment fully intersects with the circle.
@@ -31,8 +33,8 @@ object CircleIntersectionUtil {
         // The `firstIntersectionPoint` will always be the point closest to the first point in
         // the segment.
         data class FullIntersection(
-            val firstIntersectionPoint: Point,
-            val secondIntersectionPoint: Point
+            val firstIntersectionPoint: IPoint,
+            val secondIntersectionPoint: IPoint
         ) : Result()
 
         // The circle is just touching EITHER the first or second point of the segment.
@@ -47,22 +49,22 @@ object CircleIntersectionUtil {
 
         // The line is tangent to the circle at a point.
         data class Tangent(
-            val tangentPoint: Point
+            val tangentPoint: IPoint
         ) : Result()
     }
 
     operator fun invoke(
         segment: Segment,
-        circleCenter: Point,
+        circleCenter: IPoint,
         radius: Double
     ): Result {
         return invoke(segment.point1.toPoint(), segment.point2.toPoint(), circleCenter, radius)
     }
 
     operator fun invoke(
-        p1: Point,
-        p2: Point,
-        circleCenter: Point,
+        p1: IPoint,
+        p2: IPoint,
+        circleCenter: IPoint,
         radius: Double
     ): Result {
         val p1ToCenterDst = p1.distanceTo(circleCenter)

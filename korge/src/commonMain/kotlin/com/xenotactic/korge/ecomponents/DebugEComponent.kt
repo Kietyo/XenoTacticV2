@@ -1,26 +1,27 @@
 package com.xenotactic.korge.ecomponents
 
-import com.soywiz.korma.geom.Point
+
+
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.pathing.PathingPoint
 import com.xenotactic.gamelogic.pathing.SearcherType
 import com.xenotactic.gamelogic.pathing.getAvailablePathingPointsFromBlockingEntities
-import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.model.IPoint
 
 sealed class DebugPathingPoints {
     data class ForEntity(
         val cursorPosition: GameUnitTuple,
         val entity: MapEntity,
-        val pathingPoints: List<Point> = listOf()
+        val pathingPoints: List<IPoint> = listOf()
     ): DebugPathingPoints()
 
     object None : DebugPathingPoints()
 }
 
-class DebugEComponent(val engine: Engine) : EComponent {
+class DebugEComponent(val engine: Engine) {
     val pathTypeToPaths = mutableMapOf<SearcherType, PathSequence?>()
 
     val pathingPoints = mutableListOf<PathingPoint>()

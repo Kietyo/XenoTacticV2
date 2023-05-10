@@ -1,6 +1,6 @@
-import com.soywiz.klogger.Logger
-import com.xenotactic.gamelogic.globals.COUNTERS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenBlocking
+import korlibs.logger.Logger
+import com.xenotactic.gamelogic.utils.COUNTERS
+import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenBlocking
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.utils.measureTime
 import solver.*

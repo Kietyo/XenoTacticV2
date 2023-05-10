@@ -1,58 +1,20 @@
 package pathing
 
-import com.soywiz.kds.PriorityQueue
-import com.soywiz.korma.geom.Point
+
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
-import com.xenotactic.gamelogic.globals.PATHING_RADIUS
+import com.xenotactic.gamelogic.utils.PATHING_RADIUS
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.model.toGameUnitPoint
 import com.xenotactic.gamelogic.pathing.*
-import com.xenotactic.gamelogic.utils.horizontalDirectionTo
-import com.xenotactic.gamelogic.utils.verticalDirectionTo
 import com.xenotactic.gamelogic.utils.IntStatCounter
+import korlibs.datastructure.PriorityQueue
 import utils.PathingPointUtil
 import kotlin.math.sign
 
 object AStarSearcher : SearcherInterface {
     private val _counter = IntStatCounter("a star")
-
-    fun getNextPoints(
-        currentPoint: Point,
-        blockingEntities: List<IRectangleEntity>,
-        availablePathingPoints: Set<PathingPoint>,
-    ): List<Point> {
-        return availablePathingPoints.mapNotNull {
-            val verticalDirectionToPathingPoint = currentPoint.verticalDirectionTo(it.v)
-            val horizontalDirectionToPathingPoint = currentPoint.horizontalDirectionTo(it.v)
-            if ((it.entityVerticalDirection == VerticalDirection.DOWN &&
-                        it.entityHorizontalDirection == HorizontalDirection.LEFT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.UP &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.RIGHT) ||
-                (it.entityVerticalDirection == VerticalDirection.DOWN &&
-                        it.entityHorizontalDirection == HorizontalDirection.RIGHT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.UP &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.LEFT) ||
-                (it.entityVerticalDirection == VerticalDirection.UP &&
-                        it.entityHorizontalDirection == HorizontalDirection.LEFT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.DOWN &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.RIGHT) ||
-                (it.entityVerticalDirection == VerticalDirection.UP &&
-                        it.entityHorizontalDirection == HorizontalDirection.RIGHT &&
-                        verticalDirectionToPathingPoint == VerticalDirection.DOWN &&
-                        horizontalDirectionToPathingPoint == HorizontalDirection.LEFT) ||
-                lineIntersectsEntities(
-                    currentPoint,
-                    it.v,
-                    blockingEntities
-                )
-            ) {
-                null
-            } else {
-                it.v
-            }
-        }
-    }
 
     override fun getUpdatablePath(
         mapWidth: Int,
@@ -89,8 +51,8 @@ object AStarSearcher : SearcherInterface {
         private val _blockingEntities: List<IRectangleEntity>,
         private val _blockingPoints: BlockingPointContainer.View
     ) {
-        private val cachedShortestPoints: MutableMap<Pair<Point, Point>, Point> =
-            mutableMapOf<Pair<Point, Point>, Point>()
+        private val cachedShortestPoints: MutableMap<Pair<IPoint, IPoint>, IPoint> =
+            mutableMapOf()
 
         val availablePathingPoints = getAvailablePathingPointsFromBlockingEntities(
             _blockingEntities,
@@ -249,8 +211,8 @@ object AStarSearcher : SearcherInterface {
         ): Path? {
             val endCenter = finish.centerPoint
 
-            val cameFrom = mutableMapOf<Point, Point>()
-            val costSoFar = mutableMapOf<Point, Double>()
+            val cameFrom = mutableMapOf<IPoint, IPoint>()
+            val costSoFar = mutableMapOf<IPoint, Double>()
             val frontier =
                 PriorityQueue<SearchNode> { o1, o2 -> (o1.priority - o2.priority).sign.toInt() }
 
@@ -318,7 +280,7 @@ object AStarSearcher : SearcherInterface {
 
             for (allowedEndPoint in endPoints) {
                 if (cameFrom.containsKey(allowedEndPoint)) {
-                    val resultingPath = mutableListOf<Point>()
+                    val resultingPath = mutableListOf<IPoint>()
                     var currentPoint = allowedEndPoint
                     while (!startingPoints.contains(currentPoint)) {
                         resultingPath.add(currentPoint)
@@ -335,10 +297,10 @@ object AStarSearcher : SearcherInterface {
         }
 
         private fun calculateShortestPointFromStartToEndCircleCached(
-            point: Point,
-            circleCenter: Point,
+            point: IPoint,
+            circleCenter: IPoint,
             radius: Double
-        ): Point {
+        ): IPoint {
             return cachedShortestPoints.getOrPut(
                 Pair(point, circleCenter)
             ) {
@@ -351,5 +313,5 @@ object AStarSearcher : SearcherInterface {
         }
     }
 
-    data class SearchNode(val point: Point, val priority: Double, val exploredPoints: Set<Point>)
+    data class SearchNode(val point: IPoint, val priority: Double, val exploredPoints: Set<IPoint>)
 }

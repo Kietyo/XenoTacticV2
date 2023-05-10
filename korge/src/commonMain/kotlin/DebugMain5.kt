@@ -1,10 +1,13 @@
-import com.soywiz.korge.Korge
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.ui.uiScrollable
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.runBlockingNoJs
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiScrollable
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.io.async.runBlockingNoJs
+import korlibs.math.geom.Size
 import com.xenotactic.gamelogic.utils.GlobalResources
+import com.xenotactic.gamelogic.utils.size
 import com.xenotactic.korge.ui.UITowerEntry
 import kotlin.jvm.JvmStatic
 
@@ -13,7 +16,12 @@ object DebugMain5 {
     @OptIn(KorgeExperimental::class)
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 640, height = 480, bgcolor = Colors.LIGHTGRAY) {
+            Korge(
+                KorgeConfig(
+                    backgroundColor = Colors.LIGHTGRAY,
+                    virtualSize = Size(640, 480)
+                )
+            ) {
             GlobalResources.init()
 
 //            val solidRect = solidRect(250, 400, MaterialColors.BROWN_300)
@@ -67,26 +75,26 @@ object DebugMain5 {
 
 //            val bg = solidRect(500.0, 250.0, MaterialColors.CYAN_800)
 
-            val padding = 10.0
+            val padding = 10f
 
-            val bg = uiScrollable(500.0, 250.0) {
-                val entryHeight = (250.0 - padding * 2 - padding) / 2
+            val bg = uiScrollable(500.0 size 250.0) {
+                val entryHeight = (250f - padding * 2 - padding) / 2
                 repeat(10) {
                     UITowerEntry().addTo(this) {
-                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(entryHeight))
+                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(entryHeight.toDouble()))
 //                    alignTopToTopOf(bg, padding = padding)
 //                    alignLeftToLeftOf(bg, padding = padding)
-                        x += 100.0 * it
+                        x += 100f * it
                     }
                 }
 
                 repeat(10) {
                     UITowerEntry().addTo(this) {
-                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(entryHeight))
+                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(entryHeight.toDouble()))
 //                    alignTopToTopOf(bg, padding = padding)
 //                    alignLeftToLeftOf(bg, padding = padding)
                         y = entryHeight
-                        x += 75.0 * it
+                        x += 75f * it
                     }
                 }
             }

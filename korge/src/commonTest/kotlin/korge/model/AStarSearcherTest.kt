@@ -1,22 +1,20 @@
 package korge.model
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korio.async.suspendTest
-import com.soywiz.korio.file.baseName
-import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
-import com.xenotactic.gamelogic.model.GameMap
+import korlibs.logger.Logger
+import korlibs.io.async.suspendTest
+import korlibs.io.file.baseName
+
+
+import com.xenotactic.gamelogic.utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenAsync
+import com.xenotactic.gamelogic.model.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.EntityPath
 import com.xenotactic.gamelogic.pathing.GamePath
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.test_utils.doublesSimilar
+import com.xenotactic.gamelogic.utils.doublesSimilar
 import com.xenotactic.gamelogic.utils.measureTime
 import pathing.AStarSearcher
 import pathing.PathFinder
@@ -370,9 +368,9 @@ internal class AStarSearcherTest {
         assertEquals(
             PathSequence.create(
                 Path.create(
-                    Point(4.0, 7.05),
-                    Point(6.007071067811865, 7.007071067811865),
-                    Point(8, 1)
+                    IPoint(4.0, 7.05),
+                    IPoint(6.007071067811865, 7.007071067811865),
+                    IPoint(8, 1)
                 )
             ),
             AStarSearcher.getUpdatablePath(
@@ -391,8 +389,8 @@ internal class AStarSearcherTest {
         assertEquals(
             PathSequence.create(
                 Path.create(
-                    Point(2.0, 2.05),
-                    Point(2.9646446609406727, 2.0353553390593273),
+                    IPoint(2.0, 2.05),
+                    IPoint(2.9646446609406727, 2.0353553390593273),
                 )
             ),
             AStarSearcher.getUpdatablePath(

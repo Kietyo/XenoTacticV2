@@ -1,12 +1,7 @@
 package com.xenotactic.gamelogic.mapid
 
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.korio.lang.assert
-import com.xenotactic.gamelogic.korge_utils.getAllGoldenMaps
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenBlocking
 import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.test_utils.*
-import kotlin.test.Test
+import korlibs.io.lang.assert
 import kotlin.test.assertEquals
 
 internal class MapToIdTest {

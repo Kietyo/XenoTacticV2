@@ -1,27 +1,28 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.image
-import com.soywiz.korge.view.renderToBitmap
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.launch
-import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
+import korlibs.logger.Logger
+import korlibs.korge.view.Container
+import korlibs.korge.view.addTo
+import korlibs.korge.view.align.centerOn
+import korlibs.korge.view.container
+import korlibs.korge.view.image
+import korlibs.korge.view.renderToBitmap
+import korlibs.korge.view.solidRect
+import korlibs.image.color.Colors
+import korlibs.io.async.launch
+import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.scenes.VIEWS_INSTANCE
 import kotlinx.coroutines.GlobalScope
 import pathing.PathFinder
 import kotlin.math.min
 
 inline fun Container.uiMapBox(
-    gameMap: GameMap, boxWidth: Double, boxHeight: Double,
-    gameMapGridSize: Double = 25.0
+    gameMap: GameMap, boxWidth: Number, boxHeight: Number,
+    gameMapGridSize: Number = 25.0
 ): UIMapBox =
-    UIMapBox(gameMap, boxWidth, boxHeight, gameMapGridSize).addTo(this)
+    UIMapBox(gameMap, boxWidth.toDouble(), boxHeight.toDouble(), gameMapGridSize).addTo(this)
 
 /**
  * A UI element where a game map is drawn inside of a box.
@@ -29,11 +30,12 @@ inline fun Container.uiMapBox(
 class UIMapBox(
     gameMap: GameMap,
     val boxWidth: Double, val boxHeight: Double,
-    val gameMapGridSize: Double = 25.0,
-    val paddingTopAndBottom: Double = 5.0,
-    val paddingLeftAndRight: Double = 5.0,
+    gameMapGridSize: Number = 25f,
+    val paddingTopAndBottom: Float = 5f,
+    val paddingLeftAndRight: Float = 5f,
     calculateMapPath: Boolean = false
 ) : Container() {
+    val gameMapGridSize = gameMapGridSize.toFloat()
 
     val mapSection = this.solidRect(boxWidth, boxHeight, Colors.BLACK.withAd(0.4))
     val mapContainer: Container = this.container()
@@ -70,7 +72,7 @@ class UIMapBox(
 
         val mapScale = min(scaledByHeight, scaledByWidth)
 
-        mapContainer.scale = mapScale
+        mapContainer.scale = mapScale.toScale()
         mapContainer.removeChildren()
         mapContainer.apply {
             UIMap(

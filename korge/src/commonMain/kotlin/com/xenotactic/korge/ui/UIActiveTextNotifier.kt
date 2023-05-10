@@ -1,15 +1,15 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alpha
-import com.soywiz.korge.view.text
-import com.soywiz.korim.text.TextAlignment
+import korlibs.korge.view.Container
+import korlibs.korge.view.Text
+import korlibs.korge.view.addTo
+import korlibs.korge.view.alpha
+import korlibs.korge.view.text
+import korlibs.image.text.TextAlignment
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PointerActionChangeEvent
 import com.xenotactic.korge.input_processors.PointerAction
 
@@ -40,11 +40,11 @@ class UIActiveTextNotifier(
     private fun afterPointerActionChange() {
         val pointerAction = placementComponent.pointerAction
         if (pointerAction == PointerAction.Inactive) {
-            activeButtonText.alpha = 0.0
+            activeButtonText.alpha = 0f
             return
         }
 
-        activeButtonText.alpha = 1.0
+        activeButtonText.alpha = 1f
         when (pointerAction) {
             PointerAction.Inactive -> TODO()
             is PointerAction.HighlightForPlacement -> {

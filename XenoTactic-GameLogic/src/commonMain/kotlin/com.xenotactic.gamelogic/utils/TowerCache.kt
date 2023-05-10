@@ -1,6 +1,6 @@
 package utils
 
-import com.soywiz.kds.Array2
+import korlibs.datastructure.Array2
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.toGameUnit

@@ -1,6 +1,6 @@
 package daos
 
-import com.soywiz.korio.async.runBlockingNoJs
+import korlibs.io.async.runBlockingNoJs
 import com.xenotactic.gamelogic.daos.Datastore
 import kotlin.test.Test
 

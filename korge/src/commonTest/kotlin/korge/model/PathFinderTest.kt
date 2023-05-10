@@ -1,6 +1,6 @@
 package korge.model
 
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenBlocking
+import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenBlocking
 import pathing.PathFinder
 import kotlin.test.Test
 import kotlin.test.assertNotNull

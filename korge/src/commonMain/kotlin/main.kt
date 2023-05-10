@@ -1,59 +1,47 @@
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.Korge
-import com.soywiz.korge.scene.Module
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.ui.uiText
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korgw.GameWindow
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.color.RGBA
-import com.soywiz.korinject.AsyncInjector
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korma.geom.Anchor
-import com.soywiz.korma.geom.SizeInt
-import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.utils.GlobalResources
-import com.xenotactic.korge.bridges.MapBridge
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.korge.utils.MapBridge
 import com.xenotactic.korge.scenes.*
+import korlibs.image.color.Colors
+import korlibs.korge.KorgeConfig
+import korlibs.korge.KorgeDisplayMode
+import korlibs.korge.scene.sceneContainer
+import korlibs.korge.view.views
+import korlibs.logger.Logger
+import korlibs.math.geom.Anchor
+import korlibs.math.geom.ScaleMode
+import korlibs.math.geom.Size
+import korlibs.render.GameWindow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlin.reflect.KClass
 
-object MainModule : Module() {
-    override val bgcolor: RGBA = Colors["#2b2b2b"]
-    override val size: SizeInt = SizeInt(1000, 720)
-    override val clipBorders: Boolean = false
-    override val mainScene: KClass<out Scene> = RootScene::class
-    override val scaleAnchor: Anchor
-        get() = Anchor.MIDDLE_CENTER
-    override val quality: GameWindow.Quality = GameWindow.Quality.AUTOMATIC
+suspend fun main() = KorgeConfig(
+    virtualSize = Size(1920, 1080),
+    windowSize = Size(1280, 720),
+    backgroundColor = Colors["#2b2b2b"],
+    displayMode = KorgeDisplayMode(
+        ScaleMode.FIT,
+        Anchor.MIDDLE_CENTER,
+        clipBorders = false
+    ),
+    quality = GameWindow.Quality.AUTOMATIC,
+    forceRenderEveryFrame = false).start() {
+    Logger.defaultLevel = Logger.Level.DEBUG
+    //        val globalBus = EventBus(CoroutineScope(Dispatchers.Main))
+    val globalBus = EventBus(CoroutineScope(Dispatchers.Default))
+    println("Preparing main module")
+    println(views)
 
-    val logger = Logger<MainModule>()
+    GlobalResources.init()
 
-    override suspend fun AsyncInjector.configure() {
-        Logger.defaultLevel = Logger.Level.DEBUG
-        val views = this.get<Views>()
-        //        val globalBus = EventBus(CoroutineScope(Dispatchers.Main))
-        val globalBus = EventBus(CoroutineScope(Dispatchers.Default))
-        println("Preparing main module")
-        println(views)
+    val mapBridge = MapBridge()
 
-        GlobalResources.init()
+    //        mapInstance(GameScene(mapBridge))
 
-        val mapBridge = MapBridge()
-
-        //        mapInstance(GameScene(mapBridge))
-
-        mapPrototype { RootScene(views, globalBus, mapBridge) }
+    injector.apply {
+        mapPrototype { RootScene(views(), globalBus, mapBridge) }
         mapPrototype {
-            logger.debug {
-                "mapping GameScene"
-            }
+            println("mapping GameScene")
             GameScene(mapBridge)
         }
         mapPrototype { MapViewerScene(globalBus) }
@@ -61,8 +49,11 @@ object MainModule : Module() {
         mapPrototype { TestScene() }
         mapPrototype { EditorSceneV2() }
         mapPrototype { PlayScene() }
+        mapPrototype { RootScene(views, globalBus, mapBridge) }
+    }
 
+
+    sceneContainer {
+        changeTo<RootScene>()
     }
 }
-
-suspend fun main() = Korge(Korge.Config(module = MainModule, forceRenderEveryFrame = false))

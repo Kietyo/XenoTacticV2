@@ -1,8 +1,8 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.text
-import com.soywiz.korma.math.roundDecimalPlaces
+import korlibs.korge.view.Container
+import korlibs.korge.view.text
+import korlibs.math.roundDecimalPlaces
 import com.xenotactic.gamelogic.utils.GameUnit
 
 class UIPathText : Container() {

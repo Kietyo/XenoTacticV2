@@ -1,26 +1,28 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.ui.uiScrollable
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alignBottomToBottomOf
-import com.soywiz.korge.view.alignLeftToLeftOf
-import com.soywiz.korge.view.alignLeftToRightOf
-import com.soywiz.korge.view.alignTopToBottomOf
-import com.soywiz.korge.view.alignTopToTopOf
-import com.soywiz.korge.view.centerOn
-import com.soywiz.korge.view.centerXOn
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.text
-import com.soywiz.korge.view.visible
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.xenotactic.gamelogic.mapid.MapToId
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiButton
+import korlibs.korge.ui.uiScrollable
+import korlibs.korge.view.Container
+import korlibs.korge.view.Text
+import korlibs.korge.view.addTo
+import korlibs.korge.view.align.alignBottomToBottomOf
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.alignLeftToRightOf
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.align.alignTopToTopOf
+import korlibs.korge.view.align.centerOn
+import korlibs.korge.view.align.centerXOn
+import korlibs.korge.view.container
+import korlibs.korge.view.solidRect
+import korlibs.korge.view.text
+import korlibs.korge.view.visible
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import com.xenotactic.gamelogic.utils.MapToId
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.size
+import korlibs.math.geom.Size
 
 inline fun Container.uiMapInspector(): UIMapInspector =
     UIMapInspector().addTo(this)
@@ -51,7 +53,8 @@ class UIMapInspector(
 
     lateinit var mapSection: UIMapBox
 
-    val content = this.uiScrollable(width = INNER_ELEMENT_WIDTH, 200.0,
+    val content = this.uiScrollable(
+        size = Size(INNER_ELEMENT_WIDTH, 200.0),
         config = {
             this.backgroundColor = Colors.TRANSPARENT_WHITE
         })
@@ -87,13 +90,13 @@ class UIMapInspector(
 
         val sectionButtonsContainer = this.container {
             val sectionButton1 = this.uiButton(
-                sectionButtonWidth, SECTION_BUTTONS_HEIGHT,
-                text = "Details"
+                "Details",
+                size = sectionButtonWidth size SECTION_BUTTONS_HEIGHT,
             )
 
             val sectionButton2 = this.uiButton(
-                sectionButtonWidth, SECTION_BUTTONS_HEIGHT,
-                text = "Scores"
+                "Scores",
+                size = sectionButtonWidth size SECTION_BUTTONS_HEIGHT,
             )
 
             //                val sectionButton1 = this.solidRect(
@@ -114,7 +117,7 @@ class UIMapInspector(
         content.alignTopToBottomOf(sectionButtonsContainer, PADDING_TOP)
 
 //        val text("Map ID: ${MapToId.calculateId(gameMap)}", textSize = 10.0)
-        mapIdText = text("Map ID: asdfasdfasdfasdfsdf", textSize = 10.0) {
+        mapIdText = text("Map ID: asdfasdfasdfasdfsdf", textSize = 10f) {
             alignLeftToLeftOf(mapInspectorBackground, PADDING_LEFT_AND_RIGHT)
             alignBottomToBottomOf(mapInspectorBackground, PADDING_BOTTOM)
             visible(false)

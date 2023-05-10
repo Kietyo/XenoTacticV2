@@ -1,9 +1,9 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.text
-import com.xenotactic.korge.daos.PlayerDataApi
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.text
+import com.xenotactic.korge.utils.PlayerDataApi
 
 class PlayerMapViewerScene: Scene() {
     override suspend fun SContainer.sceneInit() {

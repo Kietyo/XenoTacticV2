@@ -1,9 +1,9 @@
 package com.xenotactic.korge.random
 
+import com.kietyo.ktruth.assertThat
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.components.*
 import com.xenotactic.korge.random.generators.*
 import com.xenotactic.testing.assertThat
 import kotlin.test.Test

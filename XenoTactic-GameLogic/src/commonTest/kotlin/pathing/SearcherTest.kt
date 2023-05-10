@@ -1,8 +1,10 @@
 package pathing
 
-import com.soywiz.korma.geom.Point
+
+
 import com.xenotactic.gamelogic.containers.BlockingPointContainer
 import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.*
 import kotlin.math.sqrt
@@ -453,14 +455,14 @@ internal class SearcherTest {
     fun lineIntersectsEntityTest() {
         assertTrue(
             lineIntersectsEntity(
-                Point(1.0, 1.0), Point(2.0, 2.0),
+                IPoint(1.0, 1.0), IPoint(2.0, 2.0),
                 MapEntity.Rock(1, 1, 1, 1)
             )
         )
 
         assertTrue(
             lineIntersectsEntity(
-                Point(1.0, 1.0), Point(2.0, 2.0),
+                IPoint(1.0, 1.0), IPoint(2.0, 2.0),
                 MapEntity.Rock(2, 2, 1, 1)
             )
         )

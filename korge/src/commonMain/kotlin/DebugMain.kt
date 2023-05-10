@@ -1,15 +1,18 @@
-import com.soywiz.korge.Korge
-import com.soywiz.korge.ui.uiButton
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.readImageDataContainer
-import com.soywiz.korim.format.toProps
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korio.file.std.rootLocalVfs
-import com.soywiz.korma.geom.Anchor
+import com.xenotactic.gamelogic.utils.toScale
+import korlibs.korge.ui.uiButton
+import korlibs.korge.view.*
+import korlibs.image.color.Colors
+import korlibs.image.format.ASE
+import korlibs.image.format.readImageDataContainer
+import korlibs.image.format.toProps
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import korlibs.io.file.std.rootLocalVfs
+import korlibs.math.geom.Anchor
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.math.geom.Size
 import kotlin.jvm.JvmStatic
 
 object DebugMain {
@@ -17,7 +20,12 @@ object DebugMain {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"]) {
+        Korge(
+            KorgeConfig(
+                backgroundColor = Colors["#2b2b2b"],
+                virtualSize = Size(512, 512)
+            )
+        ) {
 
 //            val vfs = rootLocalVfs.listNames()
 //
@@ -84,7 +92,7 @@ object DebugMain {
 //            }
 
             val sprite = UIEightDirectionalSprite(asp).addTo(this) {
-                scale = 4.0
+                scale = 4f.toScale()
                 anchor(Anchor.CENTER)
 //                centerOnXY(0.0, 0.0)
 //                xy(0, 0)
@@ -98,7 +106,7 @@ object DebugMain {
     }
 }
 
-private fun View.centerOnXY(x: Double, y: Double) {
-    this.x = x - scaledWidth / 2.0
-    this.y = y - scaledHeight / 2.0
+private fun View.centerOnXY(x: Float, y: Float) {
+    this.x = x - scaledWidth / 2f
+    this.y = y - scaledHeight / 2f
 }

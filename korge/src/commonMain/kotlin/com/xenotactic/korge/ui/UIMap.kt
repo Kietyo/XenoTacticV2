@@ -1,34 +1,34 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korge.view.vector.gpuGraphics
-import com.soywiz.korim.bitmap.effect.BitmapEffect
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.font.BitmapFont
-import com.soywiz.korim.font.DefaultTtfFont
-import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korio.async.launch
-import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.Rectangle
-import com.soywiz.korma.geom.vector.StrokeInfo
-import com.soywiz.korma.geom.vector.line
-import com.xenotactic.gamelogic.globals.*
-import com.xenotactic.gamelogic.korge_utils.size
-import com.xenotactic.gamelogic.korge_utils.xy
+import korlibs.korge.view.*
+import korlibs.korge.view.vector.gpuGraphics
+import korlibs.image.bitmap.effect.BitmapEffect
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.image.font.BitmapFont
+import korlibs.image.font.DefaultTtfFont
+import korlibs.image.text.TextAlignment
+import korlibs.io.async.launch
+
+import korlibs.math.geom.Point
+import korlibs.math.geom.Rectangle
+
+import korlibs.math.geom.vector.StrokeInfo
+import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.korge.engine.EComponent
-import com.xenotactic.korge.engine.Engine
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.input_processors.PointerAction
-import com.xenotactic.korge.korge_utils.getRoundedGridCoordinates
-import com.xenotactic.korge.korge_utils.makeEntityLabelText
-import com.xenotactic.korge.korge_utils.toWorldCoordinates
+import com.xenotactic.korge.utils.getRoundedGridCoordinates
+import com.xenotactic.korge.utils.makeEntityLabelText
+import com.xenotactic.korge.utils.toWorldCoordinates
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
@@ -41,22 +41,22 @@ enum class BoardType {
 }
 
 data class UIMapSettings(
-    val gridSize: Double = GRID_SIZE,
-    val borderRatio: Double = BORDER_RATIO,
-    val gridLinesRatio: Double = GRID_LINES_RATIO,
-    val gridNumbersRatio: Double = GRID_NUMBERS_RATIO,
-    val pathLinesRatio: Double = PATH_LINES_RATIO,
+    val gridSize: Float = GRID_SIZE,
+    val borderRatio: Float = BORDER_RATIO,
+    val gridLinesRatio: Float = GRID_LINES_RATIO,
+    val gridNumbersRatio: Float = GRID_NUMBERS_RATIO,
+    val pathLinesRatio: Number = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
     val boardType: BoardType = BoardType.CHECKERED_1X1,
 ) {
     val borderSize = gridSize * borderRatio
     val gridLineSize = gridSize * gridLinesRatio
     val gridNumberFontSize = gridSize * gridNumbersRatio
-    val pathLinesWidth = gridSize * pathLinesRatio
+    val pathLinesWidth = gridSize * pathLinesRatio.toFloat()
 }
 
 val ENTITY_TEXT_FONT = BitmapFont(
-    font = DefaultTtfFont, 30.0, effect = BitmapEffect(
+    font = DefaultTtfFont, 30f, effect = BitmapEffect(
         //                        dropShadowX = 1,
         //                        dropShadowY = 1,
         //                        dropShadowRadius = 1,
@@ -70,7 +70,7 @@ class UIMap(
     val shortestPath: PathSequence? = null,
     private val uiMapSettings: UIMapSettings = UIMapSettings(),
     val initialRenderEntities: Boolean = true
-) : Container(), EComponent {
+) : Container() {
     val _gridSize = uiMapSettings.gridSize
     private val _borderSize = uiMapSettings.borderSize
     private val _gridLineSize = uiMapSettings.gridLineSize
@@ -172,10 +172,10 @@ class UIMap(
                 if (num > 0) {
                     val (worldX, worldY) = toWorldCoordinates(
                         _gridSize,
-                        Point(x + 0.5, y + 0.5), gameMap.height
+                        IPoint(x + 0.5, y + 0.5), gameMap.height
                     )
                     val component = _rockCountersLayer.text(
-                        num.toString(), textSize = 15.0, alignment = TextAlignment
+                        num.toString(), textSize = 15f, alignment = TextAlignment
                             .MIDDLE_CENTER,
                         font = ENTITY_TEXT_FONT
                     ).xy(
@@ -258,10 +258,10 @@ class UIMap(
         _gridLinesGraphics.updateShape {
             stroke(Colors.BLACK, info = StrokeInfo(_gridLineSize)) {
                 for (i in 0..gameMap.width) {
-                    this.line(i * _gridSize, 0.0, i * _gridSize, gameMap.height.value * _gridSize)
+                    this.line(Point(i * _gridSize, 0f), Point(i * _gridSize, gameMap.height.toFloat() * _gridSize))
                 }
                 for (j in 0..gameMap.height) {
-                    this.line(0.0, j * _gridSize, gameMap.width.value * _gridSize, j * _gridSize)
+                    this.line(Point(0f, j * _gridSize), Point(gameMap.width.toFloat() * _gridSize, j * _gridSize))
                 }
             }
         }
@@ -280,10 +280,10 @@ class UIMap(
                 textSize = _gridNumberFontSize,
                 alignment = TextAlignment.BOTTOM_LEFT
             ).xy(
-                i * _gridSize, 0.0
+                i * _gridSize, 0f
             )
             _gridNumberLayer.text(i.toString(), textSize = _gridNumberFontSize).xy(
-                i * _gridSize, gameMap.height.value * _gridSize
+                i * _gridSize, gameMap.height.toFloat() * _gridSize
             )
         }
         for (j in 0 until gameMap.height) {
@@ -369,7 +369,6 @@ class UIMap(
 
         // Draw path lines
         if (pathSequence != null) {
-            println("Got path sequence: $pathSequence")
             _pathingLinesGraphics.updateShape {
                 stroke(
                     Colors.YELLOW, info = StrokeInfo(
@@ -378,13 +377,13 @@ class UIMap(
                 ) {
                     for (path in pathSequence.paths) {
                         for (segment in path.getSegments()) {
-                            val (p1WorldX, p1WorldY) = toWorldCoordinates(
+                            val worldP1 = toWorldCoordinates(
                                 _gridSize, segment.point1, gameMap.height
                             )
-                            val (p2WorldX, p2WorldY) = toWorldCoordinates(
+                            val worldP2 = toWorldCoordinates(
                                 _gridSize, segment.point2, gameMap.height
                             )
-                            this.line(p1WorldX.value, p1WorldY.value, p2WorldX.value, p2WorldY.value)
+                            this.line(worldP1.toPoint(), worldP2.toPoint())
                         }
                     }
                 }
@@ -488,16 +487,16 @@ class UIMap(
         globalMouseX: Double,
         globalMouseY: Double
     ): Pair<Double, Double> {
-        val localXY = _boardLayer.globalToLocalXY(globalMouseX, globalMouseY)
+        val localXY = _boardLayer.globalToLocal(Point(globalMouseX, globalMouseY))
         val unprojected = Point(
             localXY.x,
-            mapHeight.value * _gridSize - localXY.y
+            (mapHeight.value * _gridSize - localXY.y).toFloat()
         )
 
         val gridX = unprojected.x / _gridSize
         val gridY = unprojected.y / _gridSize
 
-        return gridX to gridY
+        return gridX.toDouble() to gridY.toDouble()
     }
 
     fun getRoundedGridCoordinates(

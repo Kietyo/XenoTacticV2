@@ -1,13 +1,14 @@
 package com.xenotactic.korge.input_processors
 
-import com.soywiz.korev.MouseButton
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
-import com.soywiz.korge.view.View
-import com.soywiz.korge.view.Views
-import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.plus
-import com.xenotactic.korge.engine.Engine
+import korlibs.event.EventListener
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
+import korlibs.korge.view.View
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.model.IPoint
+import com.xenotactic.gamelogic.utils.minus
+import com.xenotactic.gamelogic.utils.times
+import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus
 import kotlin.math.max
@@ -16,12 +17,12 @@ import kotlin.math.sqrt
 
 const val ZOOM_DELTA = 0.04
 
-class CameraInputProcessor(override val view: View, val engine: Engine) : MouseComponent {
+class CameraInputProcessor(val view: View, val engine: Engine){
     var touchedDownX = 0.0
     var touchedDownY = 0.0
     var isMouseTouchedDown = false
 
-    var originalCameraPosition = Point.Zero
+    var originalCameraPosition = IPoint.ZERO
 
     init {
         engine.eventBus.register<LeftControlAndMinus> {
@@ -32,7 +33,13 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
         }
     }
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(MouseEvent.Type.DRAG, MouseEvent.Type.UP, MouseEvent.Type.DOWN, MouseEvent.Type.SCROLL) {
+            onMouseEvent(it)
+        }
+    }
+
+    fun onMouseEvent(event: MouseEvent) {
         //        println("went here? $event")
         when (event.type) {
 //            MouseEvent.Type.DRAG -> {
@@ -75,7 +82,7 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
         touchedDownX = screenX.toDouble()
         touchedDownY = screenY.toDouble()
         isMouseTouchedDown = true
-        originalCameraPosition = Point(view.x, view.y)
+        originalCameraPosition = IPoint(view.x, view.y)
     }
 
     fun touchUp() {
@@ -95,20 +102,20 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
             //            val multiplier = 1.0 / zoomFactor
             //            val multiplier = (0.9 / zoomFactor).clamp(0.1, 0.9)
             //            val multiplier = zoomFactor.clamp(0.1, 1.0)
-            val multiplier = sqrt(view.scale)
+            val multiplier = sqrt(view.scale.avgD)
             val deltaX = (screenX.toDouble() - touchedDownX) * multiplier
             val deltaY = (screenY.toDouble() - touchedDownY) * multiplier
 
             val newCameraPosition = originalCameraPosition.plus(
-                Point(deltaX, deltaY)
+                IPoint(deltaX, deltaY)
             )
 
-            view.x = newCameraPosition.x
-            view.y = newCameraPosition.y
+            view.x = newCameraPosition.x.toFloat()
+            view.y = newCameraPosition.y.toFloat()
         }
     }
 
-    fun scrolled(amountY: Double) {
+    fun scrolled(amountY: Float) {
         when {
             amountY > -0.5 -> {
                 zoomOutCamera()
@@ -124,21 +131,22 @@ class CameraInputProcessor(override val view: View, val engine: Engine) : MouseC
     val MAX_ZOOM_OUT = 0.2
 
     fun zoomOutCamera() {
-        val newZoomFactor = max(MAX_ZOOM_OUT, view.scale - ZOOM_DELTA)
+        val newZoomFactor = max(MAX_ZOOM_OUT, view.scale.avgD - ZOOM_DELTA)
         setZoomFactor(newZoomFactor)
     }
 
     fun zoomInCamera() {
-        val newZoomFactor = min(1.5, view.scale + ZOOM_DELTA)
+        val newZoomFactor = min(1.5, view.scale.avgD + ZOOM_DELTA)
         setZoomFactor(newZoomFactor)
     }
 
     fun setZoomFactor(newZoomFactor: Double) {
         val prevZoomFactor = view.scale
-        view.scale = newZoomFactor
+        view.scale = newZoomFactor.toScale()
 
         // Make the view re-center after scaling
         view.x += (view.width * (prevZoomFactor - newZoomFactor)) / 2
         view.y += (view.height * (prevZoomFactor - newZoomFactor)) / 2
     }
 }
+

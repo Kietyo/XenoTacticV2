@@ -1,13 +1,11 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korim.bitmap.Bitmap32
-import com.soywiz.korim.font.TtfFont
-import com.soywiz.korim.font.readTtfFont
-import com.soywiz.korim.format.ASE
-import com.soywiz.korim.format.ImageDataContainer
-import com.soywiz.korim.format.readImageDataContainer
-import com.soywiz.korim.format.toProps
-import com.soywiz.korio.file.std.resourcesVfs
+import korlibs.image.font.readTtfFont
+import korlibs.image.format.*
+import korlibs.image.bitmap.Bitmap32
+import korlibs.image.font.TtfFont
+import korlibs.image.format.ImageDataContainer
+import korlibs.io.file.std.resourcesVfs
 import kotlin.native.concurrent.ThreadLocal
 
 @ThreadLocal
@@ -20,6 +18,8 @@ object GlobalResources {
 
     lateinit var DAMAGE_ICON: Bitmap32
     lateinit var COOLDOWN_ICON: Bitmap32
+    lateinit var GOLD_ICON: Bitmap32
+    lateinit var SUPPLY_ICON: Bitmap32
 
     lateinit var FONT_ATKINSON_REGULAR: TtfFont
     lateinit var FONT_ATKINSON_BOLD: TtfFont
@@ -38,6 +38,17 @@ object GlobalResources {
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
         COOLDOWN_ICON = resourcesVfs["cooldown_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
             .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
+//        MONEY_ICON = COOLDOWN_ICON
+
+        val icons = resourcesVfs["icons.aseprite"].readImageDataContainer(ASE.toProps().apply {
+            onlyReadVisibleLayers = false
+        }).toAsepriteModel()
+        val backgroundLayerName = "background"
+        val goldIconLayerName = "gold_icon"
+        val supplyIconLayerName = "supply_icon"
+
+        GOLD_ICON = icons.frames.first().createMergedBitmap(backgroundLayerName, goldIconLayerName)
+        SUPPLY_ICON = icons.frames.first().createMergedBitmap(backgroundLayerName, supplyIconLayerName)
 
         FONT_ATKINSON_REGULAR = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()
         FONT_ATKINSON_BOLD = resourcesVfs["fonts/AtkinsonHyperlegible-Bold.ttf"].readTtfFont()

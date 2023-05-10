@@ -2,7 +2,7 @@
   <artifact type="jar" name="korge-jvm">
     <output-path>$PROJECT_DIR$/korge/build/libs</output-path>
     <root id="archive" name="korge-jvm.jar">
-      <element id="module-output" name="XenoTactic.korge.jvmMain" />
+      <element id="module-output" name="XenoTacticV2.korge.jvmMain" />
     </root>
   </artifact>
 </component>

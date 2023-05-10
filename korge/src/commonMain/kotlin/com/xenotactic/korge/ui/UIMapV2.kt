@@ -1,44 +1,42 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.korge.view.*
-import com.soywiz.korge.view.vector.gpuGraphics
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.MaterialColors
-import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.vector.StrokeInfo
-import com.soywiz.korma.geom.vector.line
+import korlibs.korge.view.*
+import korlibs.korge.view.vector.gpuGraphics
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
+import korlibs.image.text.TextAlignment
+
+import korlibs.math.geom.Point
+
+import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.gamelogic.globals.BORDER_RATIO
-import com.xenotactic.gamelogic.globals.GRID_LINES_RATIO
-import com.xenotactic.gamelogic.globals.GRID_NUMBERS_RATIO
-import com.xenotactic.gamelogic.globals.GRID_SIZE
-import com.xenotactic.gamelogic.globals.PATH_LINES_RATIO
-import com.xenotactic.gamelogic.korge_utils.size
-import com.xenotactic.gamelogic.korge_utils.xy
+import com.xenotactic.gamelogic.utils.BORDER_RATIO
+import com.xenotactic.gamelogic.utils.GRID_LINES_RATIO
+import com.xenotactic.gamelogic.utils.GRID_NUMBERS_RATIO
+import com.xenotactic.gamelogic.utils.GRID_SIZE
+import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
+import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.gamelogic.components.EntitySpeedAreaComponent
-import com.xenotactic.gamelogic.components.EntityTypeComponent
-import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.ResizeMapEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
-import com.xenotactic.korge.korge_utils.toWorldCoordinates
-import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.state.GameMapDimensionsState
-import com.xenotactic.korge.state.GameMapPathState
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.events.ResizeMapEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.korge.utils.toWorldCoordinates
+import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.state.GameMapPathState
 import kotlin.ranges.until
 
 data class UIMapSettingsV2(
-    val gridSize: Double = GRID_SIZE,
-    val borderRatio: Double = BORDER_RATIO,
-    val gridLinesRatio: Double = GRID_LINES_RATIO,
-    val gridNumbersRatio: Double = GRID_NUMBERS_RATIO,
-    val pathLinesRatio: Double = PATH_LINES_RATIO,
+    val gridSize: Float = GRID_SIZE,
+    val borderRatio: Float = BORDER_RATIO,
+    val gridLinesRatio: Float = GRID_LINES_RATIO,
+    val gridNumbersRatio: Float = GRID_NUMBERS_RATIO,
+    val pathLinesRatio: Float = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
     val boardType: BoardType = BoardType.CHECKERED_1X1,
 ) {
@@ -53,15 +51,15 @@ class UIMapV2(
     private val uiMapSettingsV2: UIMapSettingsV2 = UIMapSettingsV2(),
 ) : Container() {
     private val gameWorld: GameWorld = engine.gameWorld
-    private val gameMapDimensionsState = engine.injections.getSingleton<GameMapDimensionsState>()
+    private val gameMapDimensionsState = engine.stateInjections.getSingleton<GameMapDimensionsState>()
     val gridSize get() = uiMapSettingsV2.gridSize
-    val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
+    private val gridNumberFontSize get() = uiMapSettingsV2.gridNumberFontSize
     val borderSize get() = uiMapSettingsV2.borderSize
     val mapWidth get() = gameMapDimensionsState.width
     val mapHeight get() = gameMapDimensionsState.height
     val _pathLinesWidth = uiMapSettingsV2.pathLinesWidth
 
-    val gameMapPathState = engine.injections.getSingleton<GameMapPathState>()
+    val gameMapPathState = engine.stateInjections.getSingleton<GameMapPathState>()
 
     private val _boardLayer = this.container {
         //        this.propagateEvents = false
@@ -90,6 +88,10 @@ class UIMapV2(
         //        useNativeRendering = false
     }
 
+//    private val _pathingLinesGraphics = this.cpuGraphics {
+//        //        useNativeRendering = false
+//    }
+
     val monsterLayer = this.container().apply {
     }
 
@@ -107,7 +109,7 @@ class UIMapV2(
         }
     }
 
-    fun resetUIMap() {
+    private fun resetUIMap() {
 //        drawBoard()
         drawBoardV2()
         drawGridNumbers()
@@ -122,70 +124,22 @@ class UIMapV2(
         val heightDiffWorldUnit = (event.newMapHeight - event.oldMapHeight).toWorldUnit(gridSize)
         gameWorld.uiEntityFamily.getSequence().forEach {
             val uiMapEntityComponent = gameWorld.uiEntityViewComponentContainer.getComponent(it)
-            uiMapEntityComponent.entityView.y += heightDiffWorldUnit.value
+            uiMapEntityComponent.entityView.y += heightDiffWorldUnit.toFloat()
             val uiMapEntityTextComponent =
                 gameWorld.uiMapEntityTextComponentContainer.getComponentOrNull(it)
             if (uiMapEntityTextComponent != null) {
-                uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.value
+                uiMapEntityTextComponent.textView.y += heightDiffWorldUnit.toFloat()
             }
         }
         renderPathLines(gameMapPathState.shortestPath)
     }
 
-    fun getWorldCoordinates(x: GameUnit, y: GameUnit, entityHeight: GameUnit = GameUnit(0)) =
+    fun getWorldCoordinates(x: GameUnit, y: GameUnit, entityHeight: GameUnit = GameUnit(0)): WorldPoint =
         Pair(WorldUnit(x.value * gridSize), WorldUnit((mapHeight - y - entityHeight).value * gridSize))
 
     fun toWorldDimensions(width: GameUnit, height: GameUnit) = Pair(
         WorldUnit(width * gridSize), WorldUnit(height * gridSize)
     )
-
-    private fun drawBoard() {
-        println("Drawing board")
-        _boardLayer.removeChildren()
-        when (uiMapSettingsV2.boardType) {
-            BoardType.SOLID -> _boardLayer.solidRect(
-                gridSize * mapWidth.value,
-                gridSize * mapHeight.value,
-                MaterialColors.GREEN_600
-            )
-
-            BoardType.CHECKERED_1X1 -> {
-                var altColorWidth = true
-                for (i in 0 until mapWidth) {
-                    var altColorHeight = altColorWidth
-                    for (j in 0 until mapHeight) {
-                        val currColor =
-                            if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
-                                .GREEN_800
-                        _boardLayer.solidRect(gridSize, gridSize, currColor)
-                            .xy(i * gridSize, j * gridSize)
-                        altColorHeight = !altColorHeight
-                    }
-                    altColorWidth = !altColorWidth
-                }
-            }
-
-            BoardType.CHECKERED_2X2 -> {
-                var altColorWidth = true
-                val gridSize = gridSize * 2
-                for (i in 0 until ((mapWidth.toInt() + 1) / 2)) {
-                    var altColorHeight = altColorWidth
-                    for (j in 0 until ((mapHeight.toInt() + 1) / 2)) {
-                        val gridWidth = if ((i + 1) * 2 > mapWidth.value) this.gridSize else gridSize
-                        val gridHeight = if ((j + 1) * 2 > mapHeight.value) this.gridSize else gridSize
-                        val currColor =
-                            if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
-                                .GREEN_800
-                        _boardLayer.solidRect(gridWidth, gridHeight, currColor)
-                            .xy(i * gridSize, j * gridSize)
-                        altColorHeight = !altColorHeight
-                    }
-                    altColorWidth = !altColorWidth
-                }
-            }
-        }
-        println("Finished drawing board!")
-    }
 
     private fun drawBoardV2() {
         println("Drawing board")
@@ -256,10 +210,10 @@ class UIMapV2(
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BOTTOM_LEFT
             ).xy(
-                i * gridSize, 0.0
+                i * gridSize, 0f
             )
             _gridNumberLayer.text(i.toString(), textSize = gridNumberFontSize).xy(
-                i * gridSize, mapHeight.value * gridSize
+                i * gridSize, mapHeight.toFloat() * gridSize
             )
         }
         for (j in 0 until mapHeight) {
@@ -281,13 +235,13 @@ class UIMapV2(
     }
 
     fun getGridPositionsFromGlobalMouse(
-        globalMouseX: Double,
-        globalMouseY: Double
-    ): Pair<Double, Double> {
-        val localXY = globalToLocalXY(globalMouseX, globalMouseY)
+        globalMouseX: Float,
+        globalMouseY: Float
+    ): Pair<Float, Float> {
+        val localXY = globalToLocal(Point(globalMouseX, globalMouseY))
         val unprojected = Point(
             localXY.x,
-            mapHeight.value * gridSize - localXY.y
+            (mapHeight.value * gridSize - localXY.y).toFloat()
         )
 
         val gridX = unprojected.x / gridSize
@@ -297,12 +251,12 @@ class UIMapV2(
     }
 
     fun getRoundedGridCoordinates(
-        gridX: Double,
-        gridY: Double,
+        gridX: Number,
+        gridY: Number,
         entityWidth: GameUnit,
         entityHeight: GameUnit,
     ): GameUnitTuple =
-        com.xenotactic.korge.korge_utils.getRoundedGridCoordinates(
+        com.xenotactic.korge.utils.getRoundedGridCoordinates(
             gridX,
             gridY,
             entityWidth,
@@ -367,7 +321,6 @@ class UIMapV2(
 
         // Draw path lines
         if (pathSequence != null) {
-            println("Got path sequence: $pathSequence")
             _pathingLinesGraphics.updateShape {
                 stroke(
                     Colors.YELLOW.withAd(0.75), info = StrokeInfo(
@@ -376,17 +329,15 @@ class UIMapV2(
                 ) {
                     for (path in pathSequence.paths) {
                         for (segment in path.getSegments()) {
-                            val (p1WorldX, p1WorldY) = toWorldCoordinates(
+                            val worldP1 = toWorldCoordinates(
                                 gridSize, segment.point1, mapHeight
                             )
-                            val (p2WorldX, p2WorldY) = toWorldCoordinates(
+                            val worldP2 = toWorldCoordinates(
                                 gridSize, segment.point2, mapHeight
                             )
                             this.line(
-                                p1WorldX.value,
-                                p1WorldY.value,
-                                p2WorldX.value,
-                                p2WorldY.value
+                                worldP1.toPoint(),
+                                worldP2.toPoint()
                             )
                         }
                     }

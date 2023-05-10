@@ -1,5 +1,4 @@
 
-
 buildscript {
     val korgePluginVersion: String by project
 
@@ -12,5 +11,22 @@ buildscript {
 
     dependencies {
         classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+
+//        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+//        classpath("korlibs.korge:korlibs.korge.gradle.plugin:$korgePluginVersion")
+//        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+//        classpath("korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
     }
+}
+
+//tasks{
+//    withType<KotlinCompile> {
+//        kotlinOptions {
+//            freeCompilerArgs += listOf("-Xskip-prerelease-check")
+//        }
+//    }
+//}
+
+repositories {
+    mavenCentral()
 }

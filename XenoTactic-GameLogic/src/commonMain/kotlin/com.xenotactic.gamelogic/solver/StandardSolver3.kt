@@ -1,6 +1,6 @@
 package solver
 
-import com.soywiz.kds.PriorityQueue
+import korlibs.datastructure.PriorityQueue
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import pathing.PathFinder

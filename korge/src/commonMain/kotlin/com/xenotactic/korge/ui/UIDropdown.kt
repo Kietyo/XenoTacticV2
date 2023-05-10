@@ -1,25 +1,25 @@
 package com.xenotactic.korge.ui
 
-import com.soywiz.klogger.Logger
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onScroll
-import com.soywiz.korge.input.onUpOutside
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.ScalingOption
-import com.soywiz.korge.view.SolidRect
-import com.soywiz.korge.view.Text
-import com.soywiz.korge.view.addTo
-import com.soywiz.korge.view.alignLeftToLeftOf
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.scaleWhileMaintainingAspect
-import com.soywiz.korge.view.solidRect
-import com.soywiz.korge.view.text
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.color.RGBA
-import com.soywiz.korio.async.Signal
-import com.soywiz.korio.async.launchImmediately
-import com.xenotactic.korge.korge_utils.isScrollDown
-import com.xenotactic.korge.korge_utils.isScrollUp
+import korlibs.logger.Logger
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onScroll
+import korlibs.korge.input.onUpOutside
+import korlibs.korge.view.Container
+import korlibs.korge.view.ScalingOption
+import korlibs.korge.view.SolidRect
+import korlibs.korge.view.Text
+import korlibs.korge.view.addTo
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.container
+import korlibs.korge.view.scaleWhileMaintainingAspect
+import korlibs.korge.view.solidRect
+import korlibs.korge.view.text
+import korlibs.image.color.Colors
+import korlibs.image.color.RGBA
+import korlibs.io.async.Signal
+import korlibs.io.async.launchImmediately
+import com.xenotactic.korge.utils.isScrollDown
+import com.xenotactic.korge.utils.isScrollUp
 import kotlinx.coroutines.Dispatchers
 import kotlin.math.max
 import kotlin.math.min
@@ -48,9 +48,9 @@ sealed class UIDropdownOption {
 }
 
 data class UIDropdownSettings(
-    val dropdownWidth: Double = 100.0,
-    val dropdownHeight: Double = 20.0,
-    val dropdownEntryTextPaddingLeft: Double = 5.0,
+    val dropdownWidth: Float = 100f,
+    val dropdownHeight: Float = 20f,
+    val dropdownEntryTextPaddingLeft: Float = 5f,
 )
 
 inline fun Container.uiDropdown(
@@ -62,14 +62,14 @@ class UIDropdown(
     initialOptions: List<UIDropdownOption> = emptyList(),
     settings: UIDropdownSettings = UIDropdownSettings(),
 ) : Container() {
-    val dropdownWidth: Double = settings.dropdownWidth
-    val dropdownHeight: Double = settings.dropdownHeight
-    val dropdownEntryTextPaddingLeft: Double = settings.dropdownEntryTextPaddingLeft
+    val dropdownWidth = settings.dropdownWidth
+    val dropdownHeight = settings.dropdownHeight
+    val dropdownEntryTextPaddingLeft = settings.dropdownEntryTextPaddingLeft
 
     fun Container.uiDropDownEntry(
-        entryWidth: Double,
-        entryHeight: Double,
-        textPaddingLeft: Double,
+        entryWidth: Float,
+        entryHeight: Float,
+        textPaddingLeft: Float,
         data: IndexedValue<UIDropdownOption>
     ): UIDropDownEntry = UIDropDownEntry(
         entryWidth, entryHeight, textPaddingLeft,
@@ -77,9 +77,9 @@ class UIDropdown(
     ).addTo(this)
 
     class UIDropDownEntry(
-        val entryWidth: Double,
-        val entryHeight: Double,
-        val textPaddingLeft: Double,
+        val entryWidth: Float,
+        val entryHeight: Float,
+        val textPaddingLeft: Float,
         var data: IndexedValue<UIDropdownOption>
     ) : Container() {
         val entryTextWidth = entryWidth - textPaddingLeft
@@ -89,10 +89,12 @@ class UIDropdown(
         init {
             dropdownBg = this.solidRect(entryWidth, entryHeight)
             currentDropdownText = this.text(
-                data.value.text, textSize = entryHeight, color = Colors.BLACK,
+                data.value.text, textSize = entryHeight.toFloat(), color = Colors.BLACK,
                 autoScaling = true
             ) {
-                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(entryTextWidth, entryHeight))
+                scaleWhileMaintainingAspect(
+                    ScalingOption.ByWidthAndHeight(entryTextWidth.toDouble(), entryHeight.toDouble())
+                )
                 alignLeftToLeftOf(dropdownBg, padding = textPaddingLeft)
             }
         }

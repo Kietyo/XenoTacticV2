@@ -1,14 +1,13 @@
 package com.xenotactic.korge.random
 
-import com.soywiz.klogger.Logger
-import com.xenotactic.gamelogic.globals.GAME_HEIGHT
-import com.xenotactic.gamelogic.globals.GAME_WIDTH
+import korlibs.logger.Logger
+import com.xenotactic.gamelogic.utils.GAME_HEIGHT
+import com.xenotactic.gamelogic.utils.GAME_WIDTH
 import com.xenotactic.gamelogic.model.*
 import pathing.AStarSearcher
 import com.xenotactic.gamelogic.pathing.SearcherInterface
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.models.GameWorld
+import com.xenotactic.gamelogic.model.GameWorld
 import kotlin.random.Random
 
 class RandomMapGeneratorMaxAttemptsError(

@@ -1,10 +1,10 @@
 package com.xenotactic.korge.input_processors
 
-import com.soywiz.korev.MouseButton
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
-import com.soywiz.korge.view.View
-import com.soywiz.korge.view.Views
+import korlibs.event.EventListener
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
+
+import korlibs.korge.view.View
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -12,24 +12,27 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.until
 import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
 import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.ui.UIMap
 import kotlin.math.floor
 
 class ObjectPlacementInputProcessor(
-    override val view: View,
+    val view: View,
     val uiMapView: UIMap,
     val engine: Engine,
     val eventBus: EventBus
-) : MouseComponent {
+) {
     val objectPlacementComponent = engine.injections.getSingleton<ObjectPlacementEComponent>()
     val gameMapComponent = engine.injections.getSingleton<GameMapControllerEComponent>()
 
-    val gridSize: Double
-        get() = uiMapView._gridSize
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(*MouseEvent.Type.ALL) {
+            onMouseEvent(it)
+        }
+    }
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun onMouseEvent(event: MouseEvent) {
         val (gridX, gridY) = uiMapView.getGridPositionsFromGlobalMouse(
             event.x.toDouble(), event.y.toDouble()
         )
@@ -51,8 +54,8 @@ class ObjectPlacementInputProcessor(
                 //                            event.y.toDouble()
                 //                        )
                 //                    }
-                //                    camera.globalToLocalXY(event.x.toDouble(), event.y.toDouble()): ${
-                //                        camera.globalToLocalXY(
+                //                    camera.globalToLocal(event.x.toDouble(), event.y.toDouble()): ${
+                //                        camera.globalToLocal(
                 //                            event.x.toDouble(),
                 //                            event.y.toDouble()
                 //                        )

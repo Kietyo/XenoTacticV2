@@ -1,45 +1,47 @@
 package com.xenotactic.korge.scenes
 
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.*
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.*
 import com.xenotactic.ecs.World
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.engine.Engine
-import com.xenotactic.korge.events.EventBus
-import com.xenotactic.korge.events.ResizeMapEvent
-import com.xenotactic.korge.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.events.ResizeMapEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.*
-import com.xenotactic.korge.models.GameWorld
-import com.xenotactic.korge.models.SettingsContainer
+import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.korge.state.MouseDragSettingsState
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.state.GameMapApi
-import com.xenotactic.korge.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.utils.GameMapApi
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
-import com.xenotactic.korge.component_listeners.PreSelectionComponentListener
-import com.xenotactic.korge.component_listeners.SelectionComponentListener
+import com.xenotactic.korge.listeners_component.PreSelectionComponentListener
+import com.xenotactic.korge.listeners_component.SelectionComponentListener
+import korlibs.korge.view.align.centerOnStage
+import korlibs.korge.view.align.centerXOnStage
 
 class EditorSceneV2 : Scene() {
     override suspend fun SContainer.sceneInit() {
         val eventBus = EventBus(this@EditorSceneV2)
         val gameWorld = World()
-        val settingsContainer = SettingsContainer()
+        val mouseDragSettingsState = MouseDragSettingsState()
         val width = 10.toGameUnit()
         val height = 10.toGameUnit()
         val engine = Engine(eventBus, GameWorld(world = gameWorld)).apply {
-            injections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
+            stateInjections.setSingletonOrThrow(GameMapDimensionsState(this, width, height))
             injections.setSingletonOrThrow(GameMapApi(this))
-            injections.setSingletonOrThrow(settingsContainer)
+            injections.setSingletonOrThrow(mouseDragSettingsState)
         }
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
 
-        val mouseDragInputProcessor = MouseDragInputProcessor(uiMapV2, settingsContainer.mouseDragStateSettings)
-        addComponent(mouseDragInputProcessor)
+        val mouseDragInputProcessor = MouseDragInputProcessor(views, uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
+        mouseDragInputProcessor.setup(this)
 
         engine.apply {
-            injections.setSingletonOrThrow(EditorState(engine))
+            stateInjections.setSingletonOrThrow(EditorState(engine))
             injections.setSingletonOrThrow(mouseDragInputProcessor)
             injections.setSingletonOrThrow(uiMapV2)
         }
@@ -50,17 +52,21 @@ class EditorSceneV2 : Scene() {
             addComponentListener(SelectionComponentListener(engine))
         }
 
-        addComponent(EditorPlacementInputProcessor(
-            this, engine
-        ))
+        val editorPlacementInputProcessor = EditorPlacementInputProcessor(
+            views, this, engine
+        )
+        editorPlacementInputProcessor.setup(this)
 
-        addComponent(CameraInputProcessor(uiMapV2, engine))
+        val cameraInputProcessor = CameraInputProcessor(uiMapV2, engine)
+        cameraInputProcessor.setup(this)
 
-        addComponent(KeyInputProcessor(this, engine))
+        val keyInputProcessor = KeyInputProcessor(this, engine)
+        keyInputProcessor.setup(this)
 
-        addComponent(SelectorMouseProcessorV2(this@sceneInit, engine).apply {
+        val selectorMouseProcessorV2 = SelectorMouseProcessorV2(views, this@sceneInit, engine).apply {
             engine.injections.setSingletonOrThrow(this)
-        })
+        }
+        selectorMouseProcessorV2.setup(this)
 
         val uiEditorButtonsV2 =
             UIEditorButtonsV2(engine, this).addTo(this).apply {

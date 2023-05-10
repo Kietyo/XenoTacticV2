@@ -1,10 +1,10 @@
 package scrap
 
-import com.soywiz.korio.async.suspendTest
-import com.soywiz.korio.file.VfsFile
-import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.TEST_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.toGameMap
+import korlibs.io.async.suspendTest
+import korlibs.io.file.VfsFile
+import com.xenotactic.gamelogic.utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.utils.TEST_DATA_VFS
+import com.xenotactic.gamelogic.utils.toGameMap
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

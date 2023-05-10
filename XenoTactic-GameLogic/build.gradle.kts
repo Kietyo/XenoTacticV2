@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.serialization")
     id("maven-publish")
     id("org.jetbrains.kotlin.plugin.allopen") version "1.6.0"
-    id("org.jetbrains.kotlinx.benchmark") version "0.4.2"
+    id("org.jetbrains.kotlinx.benchmark")
     application
 }
 
@@ -29,6 +29,18 @@ group = "com.xenotactic.gamelogic"
 version = "1.0.0"
 
 val gitliveVersion = "1.4.3"
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+}
+
+tasks{
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xskip-prerelease-check")
+        }
+    }
+}
 
 kotlin {
     jvm {
@@ -74,6 +86,7 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:$kotlinxBenchmark")
                 implementation(project(":XenoECS"))
+                implementation(project(":ktruth"))
 
                 implementation(kotlin("test"))
 
@@ -95,7 +108,9 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation("com.soywiz.korlibs.korma:korma:$korgePluginVersion")
                 implementation(kotlin("test"))
+                implementation(project(":ktruth"))
 //                implementation(kotlin("test-js"))
             }
         }

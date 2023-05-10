@@ -1,6 +1,8 @@
 package com.xenotactic.gamelogic.utils
 
-import com.soywiz.korma.geom.Point
+
+
+import korlibs.math.geom.MPoint
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
@@ -12,6 +14,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
 
     fun toInt() = value.toInt()
     fun toDouble() = value
+    fun toFloat() = value.toFloat()
+
     operator fun plus(other: GameUnit): GameUnit {
         return GameUnit(value + other.value)
     }
@@ -48,9 +52,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return value.toInt() until o.value.toInt()
     }
 
-    operator fun times(o: Double): GameUnit {
-        return GameUnit(value * o)
-    }
+    operator fun times(o: Double) = GameUnit(value * o)
+    operator fun times(other: Number) = GameUnit(value * other.toDouble())
 
     operator fun div(d: Double): GameUnit {
         return GameUnit(value / d)
@@ -64,11 +67,12 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return value.compareTo(o.toDouble())
     }
 
-    fun toWorldUnit(gridSize: Double): WorldUnit {
-        return WorldUnit(value * gridSize)
+    fun toWorldUnit(gridSize: Number): WorldUnit {
+        return WorldUnit(value * gridSize.toDouble())
     }
 
     infix fun tup(gridYInt: GameUnit): GameUnitTuple = GameUnitTuple(this, gridYInt)
+
 
     companion object {
         val ZERO = GameUnit(0)
@@ -104,7 +108,7 @@ fun distance(p1: GameUnitTuple, p2: GameUnitTuple) =
     com.xenotactic.gamelogic.utils.distance(p1.x, p1.y, p2.x, p2.y)
 
 fun distance(x1: GameUnit, y1: GameUnit, x2: GameUnit, y2: GameUnit) =
-    Point.Companion.distance(x1.toDouble(), y1.toDouble(), x2.toDouble(), y2.toDouble()).toGameUnit()
+    MPoint.Companion.distance(x1.toDouble(), y1.toDouble(), x2.toDouble(), y2.toDouble()).toGameUnit()
 
 fun <T> Iterable<T>.sumOf(function: (T) -> GameUnit): GameUnit {
     var sum = GameUnit(0.0)

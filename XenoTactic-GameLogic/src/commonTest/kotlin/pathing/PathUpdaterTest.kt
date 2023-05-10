@@ -1,27 +1,25 @@
 package pathing
 
-import com.soywiz.kds.iterators.parallelMap
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.VfsFile
-import com.soywiz.korio.file.baseName
-import com.soywiz.korma.geom.Point
-import com.xenotactic.gamelogic.korge_utils.GOLDENS_DATA_VFS
-import com.xenotactic.gamelogic.korge_utils.loadGameMapFromGoldenAsync
+
+import korlibs.datastructure.iterators.parallelMap
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.VfsFile
+import korlibs.io.file.baseName
+import com.xenotactic.gamelogic.utils.GOLDENS_DATA_VFS
+import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenAsync
 import com.xenotactic.gamelogic.model.GameMap
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import com.xenotactic.gamelogic.model.IPoint
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.pathing.Path
 import com.xenotactic.gamelogic.pathing.PathSequence
-
-
+import com.xenotactic.gamelogic.utils.doublesSimilar
 import com.xenotactic.gamelogic.utils.measureTime
 import com.xenotactic.gamelogic.utils.removeAllIndents
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import solver.*
-import com.xenotactic.gamelogic.test_utils.doublesSimilar
 import test_utils.TowerPlacementLogger
 import utils.StatCounterMap
-
 import kotlin.random.Random
 import kotlin.test.*
 
@@ -41,9 +39,9 @@ internal class PathUpdaterTest {
         assertEquals(
             PathSequence.create(
                 Path.create(
-                    Point(4.0, 7.05),
-                    Point(6.007071067811865, 7.007071067811865),
-                    Point(8, 1)
+                    IPoint(4.0, 7.05),
+                    IPoint(6.007071067811865, 7.007071067811865),
+                    IPoint(8, 1)
                 )
             ),
             pathUpdater.gamePath?.toPathSequence()

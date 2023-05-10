@@ -1,16 +1,16 @@
 package com.xenotactic.korge.input_processors
 
-import com.soywiz.klock.TimeProvider
-import com.soywiz.korev.MouseButton
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korge.component.MouseComponent
-import com.soywiz.korge.input.DraggableInfo
-import com.soywiz.korge.view.View
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.xy
-import com.soywiz.korma.geom.Point
-import com.xenotactic.korge.engine.EComponent
+import korlibs.time.TimeProvider
+import korlibs.event.EventListener
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
 
+import korlibs.korge.input.DraggableInfo
+import korlibs.korge.view.View
+import korlibs.korge.view.Views
+import korlibs.korge.view.xy
+
+import korlibs.math.geom.Point
 
 fun DraggableInfo.asString(): String {
     return """
@@ -38,9 +38,10 @@ data class MouseDragStateSettings(
 )
 
 data class MouseDragInputProcessor(
-    override val view: View,
+    val views: Views,
+    val view: View,
     val settings: MouseDragStateSettings = MouseDragStateSettings()
-) : MouseComponent, EComponent {
+)  {
     private val autoMove = true
     val info = DraggableInfo(view)
 
@@ -49,6 +50,16 @@ data class MouseDragInputProcessor(
         MouseEvent.Type.DRAG,
         MouseEvent.Type.UP,
     )
+
+    fun setup(eventListener: EventListener) {
+        eventListener.onEvents(
+            MouseEvent.Type.DOWN,
+            MouseEvent.Type.DRAG,
+            MouseEvent.Type.UP
+        ) {
+            onMouseEvent(it)
+        }
+    }
 
     fun adjustSettings(fn: MouseDragStateSettings.() -> Unit) {
         fn(settings)
@@ -73,6 +84,7 @@ data class MouseDragInputProcessor(
                 }
                 return MouseDragStateType.UNKNOWN
             }
+
             MouseEvent.Type.UP -> {
                 if (event.button == MouseButton.LEFT) {
                     return MouseDragStateType.END
@@ -85,15 +97,16 @@ data class MouseDragInputProcessor(
                 }
                 return MouseDragStateType.UNKNOWN
             }
+
             MouseEvent.Type.DRAG -> return MouseDragStateType.DRAG
             else -> return MouseDragStateType.UNKNOWN
         }
     }
 
-    private val currentPosition = Point()
+    private var currentPosition = Point()
 
-    var startX = 0.0
-    var startY = 0.0
+    var startX = 0f
+    var startY = 0f
 
     private var dragging = false
 
@@ -101,7 +114,7 @@ data class MouseDragInputProcessor(
         dragging = false
     }
 
-    override fun onMouseEvent(views: Views, event: MouseEvent) {
+    fun onMouseEvent(event: MouseEvent) {
         if (!settings.isEnabled) return
         if (event.type !in ALLOWED_EVENTS) {
             return
@@ -117,7 +130,8 @@ data class MouseDragInputProcessor(
 
         if (dragging) {
             if (event.type != MouseEvent.Type.DRAG &&
-                    event.button != activeButton) {
+                event.button != activeButton
+            ) {
                 return
             }
         }
@@ -141,7 +155,7 @@ data class MouseDragInputProcessor(
 
         require(state != MouseDragStateType.UNKNOWN)
 
-        currentPosition.copyFrom(views.globalMouseXY)
+        currentPosition = views.globalMousePos
 
         when (state) {
             MouseDragStateType.START -> {
@@ -151,9 +165,11 @@ data class MouseDragInputProcessor(
                 startY = currentPosition.y
                 info.reset()
             }
+
             MouseDragStateType.END -> {
                 dragging = false
             }
+
             else -> Unit
         }
 
@@ -165,7 +181,11 @@ data class MouseDragInputProcessor(
             deltaY,
             state == MouseDragStateType.START,
             state == MouseDragStateType.END,
-            TimeProvider.now()
+            TimeProvider.now(),
+            startX,
+            startY,
+            currentPosition.x,
+            currentPosition.y
         )
 
         if (dragging) {
@@ -177,15 +197,16 @@ data class MouseDragInputProcessor(
         val state = getState(event)
         val view = view
         if (state == MouseDragStateType.START) {
-            info.viewStartXY.copyFrom(view.pos)
+            info.viewStartXY = view.pos
+
         }
         //println("localDXY=${info.localDX(view)},${info.localDY(view)}")
-        info.viewPrevXY.copyFrom(view.pos)
-        info.viewNextXY.setTo(
+        info.viewPrevXY = view.pos
+        info.viewNextXY = Point(
             info.viewStartX + info.localDX(view),
             info.viewStartY + info.localDY(view)
         )
-        info.viewDeltaXY.setTo(info.viewNextX - info.viewPrevX, info.viewNextY - info.viewPrevY)
+        info.viewDeltaXY = Point(info.viewNextX - info.viewPrevX, info.viewNextY - info.viewPrevY)
         if (autoMove) {
             view.xy(info.viewNextXY)
         }
