@@ -30,6 +30,7 @@ import com.xenotactic.korge.random.RandomMapGeneratorV2
 import com.xenotactic.korge.random.generators.*
 import com.xenotactic.korge.state.*
 import com.xenotactic.korge.systems.*
+import com.xenotactic.korge.ui.UIDebugInfo
 import com.xenotactic.korge.ui.UIGuiContainer
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
@@ -132,13 +133,7 @@ class PlayScene : Scene() {
             addSystem(UIMonsterHealthRenderSystem(this))
         }
 
-        val infoText = text("Hello world")
-        val pathLengthText = text("Hello world") {
-            alignTopToBottomOf(infoText)
-            eventBus.register<UpdatedPathLineEvent> {
-                text = "Path length: ${it.newPathLength?.toInt()}"
-            }
-        }
+
 
 //        gameMapApi.placeEntities(randomMap.map.getAllEntities())
         gameSimulator.gameMapApi.placeEntities(randomMap2.gameWorld)
@@ -149,6 +144,9 @@ class PlayScene : Scene() {
 //            MapEntity.ROCK_4X2.at(10, 3),
 ////            MapEntity.Tower(20, 0)
 //        )
+
+        val uiDebugInfo = UIDebugInfo(engine)
+        engine.injections.setSingletonOrThrow(uiDebugInfo)
 
         UIGuiContainer(this, engine, gameWorld, gameSimulator.gameMapApi)
 
@@ -169,6 +167,7 @@ class PlayScene : Scene() {
         )
         editorPlacementInputProcessor.setup(this)
 
+
         val deltaTime = TimeSpan(gameSimulator.millisPerTick.inWholeMilliseconds.toDouble())
         var accumulatedTime = TimeSpan.ZERO
         val updateInfoTextFrequency = TimeSpan(250.0)
@@ -178,7 +177,7 @@ class PlayScene : Scene() {
             }
             accumulatedTime += deltaTime
             if (accumulatedTime >= updateInfoTextFrequency) {
-                infoText.text = "Update time: $updateTime"
+                uiDebugInfo.infoText.text = "Update time: $updateTime"
                 accumulatedTime = TimeSpan.ZERO
             }
         }

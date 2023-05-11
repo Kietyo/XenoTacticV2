@@ -57,6 +57,16 @@ class UIGuiContainer(
     private val middleSelectionContainer = stage.container { }
 
     init {
+        val topLeftPanel = stage.container {
+            uiButton(label = "Settings") {  }
+            scale = 1.5.toScale()
+        }
+
+        val uiDebugInfo = engine.injections.getSingleton<UIDebugInfo>()
+        uiDebugInfo.addTo(stage) {
+            alignTopToBottomOf(topLeftPanel)
+        }
+
         val buttonsPanel = stage.container {
             val spawnCreepButton = uiButton("Spawn creep") {
                 onClick {

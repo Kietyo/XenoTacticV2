@@ -53,10 +53,6 @@ class UITowerUpgradeIcon(
             }
         }
 
-        onAttachDetach(onDetach = {
-            setNumTowerUpgradesText(1)
-        })
-
         onOver {
             this.tooltip.addTo(guiContainer.stage) {
                 scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
