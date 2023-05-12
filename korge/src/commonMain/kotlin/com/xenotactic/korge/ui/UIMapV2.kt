@@ -152,13 +152,13 @@ class UIMapV2(
                     var altColorWidth = true
                     for (i in 0 until mapWidth) {
                         var altColorHeight = altColorWidth
-                        val xGrid = i * gridSize
+                        val xGrid = i.toWorldUnit(gridSize)
                         for (j in 0 until mapHeight) {
                             val currColor =
                                 if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                     .GREEN_800
                             this.fillStyle(currColor) {
-                                this.fillRect(xGrid, j * gridSize, gridSize, gridSize)
+                                this.fillRect(xGrid.toFloat(), j.toWorldUnit(gridSize).toFloat(), gridSize, gridSize)
                             }
                             altColorHeight = !altColorHeight
                         }
@@ -198,8 +198,8 @@ class UIMapV2(
                 for (x in 0 until mapWidth) {
                     stroke(Colors.BLACK.withAd(alpha), info = strokeInfo) {
                         line(
-                            Point(x.toGameUnit().toWorldUnit(gridSize), WorldUnit.ZERO),
-                            Point(x.toGameUnit().toWorldUnit(gridSize), mapHeight.toWorldUnit(gridSize))
+                            Point(x.toWorldUnit(gridSize), WorldUnit.ZERO),
+                            Point(x.toWorldUnit(gridSize), mapHeight.toWorldUnit(gridSize))
                         )
                     }
                 }
@@ -207,8 +207,8 @@ class UIMapV2(
                 for (y in 0 until mapHeight) {
                     stroke(Colors.BLACK.withAd(alpha), info = strokeInfo) {
                         line(
-                            Point(WorldUnit.ZERO, y.toGameUnit().toWorldUnit(gridSize)),
-                            Point(mapWidth.toWorldUnit(gridSize), y.toGameUnit().toWorldUnit(gridSize))
+                            Point(WorldUnit.ZERO, y.toWorldUnit(gridSize)),
+                            Point(mapWidth.toWorldUnit(gridSize), y.toWorldUnit(gridSize))
                         )
                     }
                 }
@@ -226,31 +226,33 @@ class UIMapV2(
         }
 
         for (i in 0 until mapWidth) {
+            val iNumString = i.toInt().toString()
             _gridNumberLayer.text(
-                i.toString(),
+                iNumString,
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BOTTOM_LEFT
             ).xy(
-                i * gridSize, 0f
+                i.toWorldUnit(gridSize), 0.toWorldUnit()
             )
-            _gridNumberLayer.text(i.toString(), textSize = gridNumberFontSize).xy(
-                i * gridSize, mapHeight.toFloat() * gridSize
+            _gridNumberLayer.text(iNumString, textSize = gridNumberFontSize).xy(
+                i.toWorldUnit(gridSize), mapHeight.toWorldUnit(gridSize)
             )
         }
         for (j in 0 until mapHeight) {
+            val jNumString = j.toInt().toString()
             _gridNumberLayer.text(
-                j.toString(),
+                jNumString,
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_RIGHT
             ).xy(
-                -10.0, mapHeight.value * gridSize - j * gridSize
+                (-10.0).toWorldUnit(), mapHeight.toWorldUnit(gridSize) - j.toWorldUnit(gridSize)
             )
             _gridNumberLayer.text(
-                j.toString(),
+                jNumString,
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_LEFT
             ).xy(
-                mapWidth.value * gridSize + 10.0, mapHeight.value * gridSize - j * gridSize
+                mapWidth.toWorldUnit(gridSize) + 10.toWorldUnit(), mapHeight.toWorldUnit(gridSize) - j.toWorldUnit(gridSize)
             )
         }
     }

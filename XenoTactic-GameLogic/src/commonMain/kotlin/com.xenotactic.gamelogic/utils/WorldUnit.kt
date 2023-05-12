@@ -16,6 +16,7 @@ value class WorldUnit(val value: Double) {
     operator fun minus(other: WorldUnit) = WorldUnit(value - other.value)
     fun toDouble(): Double = value
     fun toFloat() = value.toFloat()
+    operator fun plus(other: WorldUnit) = WorldUnit(value + other.value)
 
     companion object {
         val ZERO = WorldUnit(0.0)

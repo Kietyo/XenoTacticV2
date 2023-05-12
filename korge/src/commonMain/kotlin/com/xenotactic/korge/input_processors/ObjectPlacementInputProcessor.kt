@@ -146,8 +146,8 @@ class ObjectPlacementInputProcessor(
                         currentEntity.height
                     )
 
-                if ((gridXToInt.toInt() !in 0 until  gameMapComponent.width)
-                    || gridYToInt.toInt() !in 0 until gameMapComponent.height
+                if ((gridXToInt !in 0 until  gameMapComponent.width)
+                    || gridYToInt !in 0 until gameMapComponent.height
                 ) {
                     pointerAction.placementLocation = null
                     return

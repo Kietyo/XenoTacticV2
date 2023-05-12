@@ -168,11 +168,11 @@ class UIMap(
         val rockCounters = RockCounterUtil.calculate(gameMap)
         for (x in 0 until gameMap.width) {
             for (y in 0 until gameMap.height) {
-                val num = rockCounters[x, y]
+                val num = rockCounters[x.toInt(), y.toInt()]
                 if (num > 0) {
                     val (worldX, worldY) = toWorldCoordinates(
                         _gridSize,
-                        IPoint(x + 0.5, y + 0.5), gameMap.height
+                        IPoint(x.toFloat() + 0.5, y.toFloat() + 0.5), gameMap.height
                     )
                     val component = _rockCountersLayer.text(
                         num.toString(), textSize = 15f, alignment = TextAlignment
@@ -209,7 +209,7 @@ class UIMap(
                             if (altColorHeight) MaterialColors.GREEN_600 else MaterialColors
                                 .GREEN_800
                         _boardLayer.solidRect(_gridSize, _gridSize, currColor)
-                            .xy(i * _gridSize, j * _gridSize)
+                            .xy(i.toWorldUnit(_gridSize), j.toWorldUnit(_gridSize))
                         altColorHeight = !altColorHeight
                     }
                     altColorWidth = !altColorWidth
@@ -280,10 +280,10 @@ class UIMap(
                 textSize = _gridNumberFontSize,
                 alignment = TextAlignment.BOTTOM_LEFT
             ).xy(
-                i * _gridSize, 0f
+                i.toWorldUnit(_gridSize), 0.toWorldUnit()
             )
             _gridNumberLayer.text(i.toString(), textSize = _gridNumberFontSize).xy(
-                i * _gridSize, gameMap.height.toFloat() * _gridSize
+                i.toWorldUnit(_gridSize), gameMap.height.toWorldUnit(_gridSize)
             )
         }
         for (j in 0 until gameMap.height) {
@@ -292,14 +292,15 @@ class UIMap(
                 textSize = _gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_RIGHT
             ).xy(
-                -10.0, gameMap.height.value * _gridSize - j * _gridSize
+                (-10.0).toWorldUnit(), gameMap.height.toWorldUnit(_gridSize) - j.toWorldUnit(_gridSize)
             )
             _gridNumberLayer.text(
                 j.toString(),
                 textSize = _gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_LEFT
             ).xy(
-                gameMap.width.value * _gridSize + 10.0, gameMap.height.value * _gridSize - j * _gridSize
+                gameMap.width.toWorldUnit(_gridSize) + 10.toWorldUnit(),
+                gameMap.height.toWorldUnit(_gridSize) - j.toWorldUnit(_gridSize)
             )
         }
     }
@@ -427,16 +428,16 @@ class UIMap(
             .visible(true)
     }
 
-//    fun renderHighlightEntity(entity: MapEntity) {
-//        val (worldX, worldY) = toWorldCoordinates(
-//            _gridSize, entity, gameMap.width, gameMap
-//                .height
-//        )
-//        createEntityView(entity).apply {
-//            addTo(_highlightLayer)
-//            xy(worldX, worldY)
-//        }
-//    }
+    //    fun renderHighlightEntity(entity: MapEntity) {
+    //        val (worldX, worldY) = toWorldCoordinates(
+    //            _gridSize, entity, gameMap.width, gameMap
+    //                .height
+    //        )
+    //        createEntityView(entity).apply {
+    //            addTo(_highlightLayer)
+    //            xy(worldX, worldY)
+    //        }
+    //    }
 
     fun clearHighlightLayer() {
         _highlightLayer.removeChildren()
