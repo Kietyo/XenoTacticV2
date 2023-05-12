@@ -48,8 +48,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return value.compareTo(i.value)
     }
 
-    infix fun until(o: GameUnit): IntRange {
-        return value.toInt() until o.value.toInt()
+    infix fun until(o: GameUnit): GameUnitRange {
+        return GameUnitRange(this, o)
     }
 
     operator fun times(o: Double) = GameUnit(value * o)
@@ -100,8 +100,8 @@ operator fun Int.rangeTo(o: GameUnit): IntRange {
     return this..o.value.toInt()
 }
 
-infix fun Int.until(o: GameUnit): IntRange {
-    return this until o.value.toInt()
+infix fun Int.until(o: GameUnit): GameUnitRange {
+    return this.toGameUnit() until o
 }
 
 fun distance(p1: GameUnitTuple, p2: GameUnitTuple) =
@@ -116,4 +116,10 @@ fun <T> Iterable<T>.sumOf(function: (T) -> GameUnit): GameUnit {
         sum += function(it)
     }
     return sum
+}
+
+public class GameUnitRange(
+    override val start: GameUnit, override val endInclusive: GameUnit
+): ClosedRange<GameUnit> {
+
 }

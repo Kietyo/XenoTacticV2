@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.korge.ui.UIMapV2
 
-class SetInitialPositionFamilyListener(
+class SetInitialPositionForUIEntityFamilyListener(
     val world: World
 ) : FamilyListener {
     override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(

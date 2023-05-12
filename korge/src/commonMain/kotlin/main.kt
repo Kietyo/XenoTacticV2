@@ -25,7 +25,7 @@ suspend fun main() = KorgeConfig(
         clipBorders = false
     ),
     quality = GameWindow.Quality.AUTOMATIC,
-    forceRenderEveryFrame = false).start() {
+    forceRenderEveryFrame = true).start() {
     Logger.defaultLevel = Logger.Level.DEBUG
     //        val globalBus = EventBus(CoroutineScope(Dispatchers.Main))
     val globalBus = EventBus(CoroutineScope(Dispatchers.Default))

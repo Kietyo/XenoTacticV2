@@ -38,7 +38,8 @@ data class UIMapSettingsV2(
     val gridNumbersRatio: Float = GRID_NUMBERS_RATIO,
     val pathLinesRatio: Float = PATH_LINES_RATIO,
     val drawGridNumbers: Boolean = true,
-    val boardType: BoardType = BoardType.CHECKERED_1X1,
+    val boardType: BoardType = BoardType.CHECKERED_2X2,
+    val drawGridLines: Boolean = true,
 ) {
     val borderSize = gridSize * borderRatio
     val gridLineSize = gridSize * gridLinesRatio
@@ -71,10 +72,10 @@ class UIMapV2(
 
     private val _gridNumberLayer = this.container()
 
-//    val speedAreaLayer = this.clipContainer(
-//        mapWidth.toWorldUnit(gridSize).toDouble(),
-//        mapHeight.toWorldUnit(gridSize).toDouble()
-//    )
+    //    val speedAreaLayer = this.clipContainer(
+    //        mapWidth.toWorldUnit(gridSize).toDouble(),
+    //        mapHeight.toWorldUnit(gridSize).toDouble()
+    //    )
 
     val speedAreaLayer = this.container()
     val speedAreaLayerGraphics = this.graphics()
@@ -88,18 +89,14 @@ class UIMapV2(
         //        useNativeRendering = false
     }
 
-//    private val _pathingLinesGraphics = this.cpuGraphics {
-//        //        useNativeRendering = false
-//    }
-
     val monsterLayer = this.container().apply {
     }
 
     val targetingLinesLayer = this.graphics { }
     val projectileLayer = this.graphics { }
 
-    val _highlightLayer = this.container()
-    val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
+    private val _highlightLayer = this.container()
+    private val _highlightRectangle = this.solidRect(0, 0, Colors.YELLOW).alpha(0.5).visible(false)
 
     init {
         resetUIMap()
@@ -110,7 +107,7 @@ class UIMapV2(
     }
 
     private fun resetUIMap() {
-//        drawBoard()
+        //        drawBoard()
         drawBoardV2()
         drawGridNumbers()
     }
@@ -146,8 +143,8 @@ class UIMapV2(
         _boardGraphicsLayer.updateShape {
             when (uiMapSettingsV2.boardType) {
                 BoardType.SOLID -> _boardLayer.solidRect(
-                    gridSize * mapWidth.value,
-                    gridSize * mapHeight.value,
+                    mapWidth.toWorldUnit(gridSize).value,
+                    mapHeight.toWorldUnit(gridSize).value,
                     MaterialColors.GREEN_600
                 )
 
@@ -189,6 +186,30 @@ class UIMapV2(
                             altColorHeight = !altColorHeight
                         }
                         altColorWidth = !altColorWidth
+                    }
+                }
+            }
+
+            if (uiMapSettingsV2.drawGridLines) {
+                val alpha = 0.5
+                val strokeInfo = StrokeInfo(
+                    thickness = 1f,
+                )
+                for (x in 0 until mapWidth) {
+                    stroke(Colors.BLACK.withAd(alpha), info = strokeInfo) {
+                        line(
+                            Point(x.toGameUnit().toWorldUnit(gridSize), WorldUnit.ZERO),
+                            Point(x.toGameUnit().toWorldUnit(gridSize), mapHeight.toWorldUnit(gridSize))
+                        )
+                    }
+                }
+
+                for (y in 0 until mapHeight) {
+                    stroke(Colors.BLACK.withAd(alpha), info = strokeInfo) {
+                        line(
+                            Point(WorldUnit.ZERO, y.toGameUnit().toWorldUnit(gridSize)),
+                            Point(mapWidth.toWorldUnit(gridSize), y.toGameUnit().toWorldUnit(gridSize))
+                        )
                     }
                 }
             }
@@ -317,7 +338,7 @@ class UIMapV2(
     }
 
     fun renderPathLines(pathSequence: PathSequence?) {
-//        _pathingLinesGraphics.updateShape { }
+        //        _pathingLinesGraphics.updateShape { }
 
         // Draw path lines
         if (pathSequence != null) {

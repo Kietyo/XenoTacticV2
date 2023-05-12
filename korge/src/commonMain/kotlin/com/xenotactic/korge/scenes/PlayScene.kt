@@ -17,8 +17,7 @@ import com.xenotactic.korge.listeners_component.UIMapEntityTextComponentListener
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.listeners_event.TowerUpgradeEventListeners
 import com.xenotactic.korge.listeners_event.UIMapEventListeners
-import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
-import com.xenotactic.korge.listeners_family.SetInitialPositionFamilyListener
+import com.xenotactic.korge.listeners_family.SetInitialPositionForUIEntityFamilyListener
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
@@ -34,7 +33,6 @@ import com.xenotactic.korge.ui.UIDebugInfo
 import com.xenotactic.korge.ui.UIGuiContainer
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
-import korlibs.korge.view.align.alignTopToBottomOf
 import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.align.centerXOnStage
 import kotlin.time.ExperimentalTime
@@ -116,7 +114,7 @@ class PlayScene : Scene() {
 
         gameWorld.world.apply {
             injections = engine.injections
-            addFamilyListener(SetInitialPositionFamilyListener(this))
+            addFamilyListener(SetInitialPositionForUIEntityFamilyListener(this))
             addComponentListener(PreSelectionComponentListener(engine))
             addComponentListener(SelectionComponentListener(engine))
             addComponentListener(UIMapEntityComponentListener())

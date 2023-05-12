@@ -32,6 +32,8 @@ import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.state.*
 import korlibs.event.Key.SHIFT
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiWindow
 import korlibs.korge.view.align.*
 
 enum class ViewType {
@@ -40,8 +42,9 @@ enum class ViewType {
     MULTI_TOWER_SELECTION
 }
 
+@OptIn(KorgeExperimental::class)
 class UIGuiContainer(
-    val stage: SContainer,
+    val hstage: SContainer,
     val engine: Engine,
     val gameWorld: GameWorld,
     val gameMapApi: GameMapApi
@@ -54,11 +57,17 @@ class UIGuiContainer(
     private val mutableGoldState = engine.stateInjections.getSingleton<MutableGoldState>()
     private val gameSimulator = engine.injections.getSingletonOrNull<GameSimulator>()
 
+    val stage = hstage.container {  }
     private val middleSelectionContainer = stage.container { }
+    val settingsWindows = stage.container {  }
 
     init {
         val topLeftPanel = stage.container {
-            uiButton(label = "Settings") {  }
+            uiButton(label = "Settings") {
+                onClick {
+
+                }
+            }
             scale = 1.5.toScale()
         }
 

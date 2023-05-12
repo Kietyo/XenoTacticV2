@@ -18,6 +18,8 @@ value class WorldUnit(val value: Double) {
     fun toFloat() = value.toFloat()
 
     companion object {
+        val ZERO = WorldUnit(0.0)
+
         operator fun invoke(v: GameUnit) = WorldUnit(v.toDouble())
     }
 }
