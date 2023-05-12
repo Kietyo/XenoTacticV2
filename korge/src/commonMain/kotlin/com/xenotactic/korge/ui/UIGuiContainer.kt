@@ -85,13 +85,6 @@ class UIGuiContainer(
                 }
             }
 
-            val addTowerButton = uiButton("Add tower") {
-                onClick {
-                    println("Add tower button clicked!")
-                    editorState.toggle(MapEntityType.TOWER)
-                }
-            }
-
             val printWorldButton = uiButton("Print world") {
                 onClick {
                     println("print world button clicked!")
@@ -124,7 +117,6 @@ class UIGuiContainer(
             distributeVertically(
                 listOf(
                     spawnCreepButton,
-                    addTowerButton,
                     printWorldButton,
                     printEventLog,
                     deleteEntitiesButton
