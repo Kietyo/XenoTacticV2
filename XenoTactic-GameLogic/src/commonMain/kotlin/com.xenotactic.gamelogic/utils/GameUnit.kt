@@ -44,12 +44,12 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
         return value.compareTo(i.toDouble())
     }
 
-    override operator fun compareTo(i: GameUnit): Int {
-        return value.compareTo(i.value)
+    override operator fun compareTo(other: GameUnit): Int {
+        return value.compareTo(other.value)
     }
 
     infix fun until(o: GameUnit): GameUnitRange {
-        return GameUnitRange(this, o)
+        return GameUnitRange(this, o - 1)
     }
 
     operator fun times(o: Double) = GameUnit(value * o)
@@ -72,7 +72,7 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
     }
 
     infix fun tup(gridYInt: GameUnit): GameUnitTuple = GameUnitTuple(this, gridYInt)
-
+    operator fun inc(): GameUnit = this + 1
 
     companion object {
         val ZERO = GameUnit(0)
@@ -105,7 +105,7 @@ infix fun Int.until(o: GameUnit): GameUnitRange {
 }
 
 fun distance(p1: GameUnitTuple, p2: GameUnitTuple) =
-    com.xenotactic.gamelogic.utils.distance(p1.x, p1.y, p2.x, p2.y)
+    distance(p1.x, p1.y, p2.x, p2.y)
 
 fun distance(x1: GameUnit, y1: GameUnit, x2: GameUnit, y2: GameUnit) =
     MPoint.Companion.distance(x1.toDouble(), y1.toDouble(), x2.toDouble(), y2.toDouble()).toGameUnit()
@@ -118,8 +118,20 @@ fun <T> Iterable<T>.sumOf(function: (T) -> GameUnit): GameUnit {
     return sum
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 public class GameUnitRange(
     override val start: GameUnit, override val endInclusive: GameUnit
-): ClosedRange<GameUnit> {
+): ClosedRange<GameUnit>, OpenEndRange<GameUnit>, Iterable<GameUnit> {
+    override val endExclusive: GameUnit get() = endInclusive + 1
+    override fun isEmpty(): Boolean = start < endInclusive
 
+    override fun contains(value: GameUnit) = value >= start && value <= endInclusive
+    override fun iterator(): Iterator<GameUnit> = object : Iterator<GameUnit> {
+        var current = start
+        var final = endInclusive
+        override fun hasNext(): Boolean = current <= final
+        override fun next(): GameUnit {
+            return current++
+        }
+    }
 }

@@ -9,7 +9,7 @@ class TypedEntityContainer<T : MapEntity> : EntityContainer<T> {
     private val entities = mutableMapOf<Int, MutableMap<Int, T>>()
 
     override fun placeEntity(entity: T) {
-        for (i in 0 until  entity.width) {
+        for (i in 0 until entity.width) {
             for (j in 0 until entity.height) {
                 println("i: $i, j: $j")
                 placeEntity(entity.x + i, entity.y + j, entity)
