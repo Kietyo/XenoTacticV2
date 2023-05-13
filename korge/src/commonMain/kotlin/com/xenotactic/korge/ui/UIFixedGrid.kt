@@ -107,6 +107,14 @@ class UIFixedGrid(
         return y * gridEntryViewHeight + (y + 1) * entryPaddingVertical.toFloat()
     }
 
+    fun clear() {
+        rowloop@ for (y in 0 until maxRows) {
+            for (x in 0 until maxColumns) {
+                clearEntry(x, y)
+            }
+        }
+    }
+
     companion object {
         val logger = Logger<UIFixedGrid>()
     }

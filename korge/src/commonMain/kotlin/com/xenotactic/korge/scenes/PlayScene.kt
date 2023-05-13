@@ -89,10 +89,10 @@ class PlayScene : Scene() {
         val uiMapV2 = UIMapV2(engine).addTo(this)
         engine.injections.setSingletonOrThrow(uiMapV2)
 
+        uiMapV2.centerOnStage()
+
         val cameraInputProcessor = CameraInputProcessor(uiMapV2, engine)
         cameraInputProcessor.setup(this)
-
-        uiMapV2.centerOnStage()
 
         val mouseDragInputProcessor =
             MouseDragInputProcessor(views, uiMapV2, mouseDragSettingsState.mouseDragStateSettings)

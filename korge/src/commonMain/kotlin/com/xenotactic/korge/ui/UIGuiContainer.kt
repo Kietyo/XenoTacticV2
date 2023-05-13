@@ -33,6 +33,7 @@ import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.state.*
 import korlibs.event.Key.SHIFT
 import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.ui.uiTooltipContainer
 import korlibs.korge.ui.uiWindow
 import korlibs.korge.view.align.*
 
@@ -210,6 +211,28 @@ class UIGuiContainer(
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         )
 
+        val tooltipSize = bottomRightGridWidth / 1.5
+
+
+        val tooltipSellEntities = UITooltipDescription(null, null, "SELL",
+            "Sell tower(s), refunds 100% of the\nbasic tower cost, but not upgrades.")
+        val sellEntitiesView = UITextRect(
+            "Sell\nEntities",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+            var tooltip: UITooltipDescription? = null
+            onOver {
+                tooltip = tooltipSellEntities.addTo(this@UIGuiContainer.stage) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
+                    alignBottomToTopOf(this@apply, padding = 5.0)
+                    alignRightToRightOf(this@apply)
+                }
+            }
+            onOut {
+                tooltip?.removeFromParent()
+            }
+        }
+
         val tooltipAddTower = UITooltipDescription(gameplayState.basicTowerCost)
         val tooltipUpgradeDamage = UITooltipDescription(
             gameplayState.initialDamageUpgradeCost,
@@ -224,7 +247,6 @@ class UIGuiContainer(
             "Upgrade tower speed."
         )
 
-        val tooltipSize = bottomRightGridWidth / 1.5
         val addTowerView = UITextRect(
             "Add\nTower",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
@@ -287,6 +309,7 @@ class UIGuiContainer(
         }
 
         fun resetInitial() {
+            bottomRightGrid.clear()
             bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
             bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
             bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
@@ -377,6 +400,7 @@ class UIGuiContainer(
 
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
+                bottomRightGrid.setEntry(3, 1, sellEntitiesView)
 
                 holdShiftText.addTo(stage) {
                     alignLeftToLeftOf(bottomRightGrid, padding = bottomRightGridHorizontalPadding / 2.0)

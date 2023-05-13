@@ -7,81 +7,96 @@ import com.xenotactic.gamelogic.utils.GlobalResources
 import korlibs.korge.view.align.*
 
 class UITooltipDescription(
-    goldCost: Int,
+    goldCost: Int?,
     supplyCost: Int? = 1,
     titleText: String = "BASIC TOWER",
     descriptionText: String = "A basic tower."
 ): Container() {
-    private lateinit var goldCostSectionText: Text
+    private var goldCostSectionText: Text? = null
 
     init {
-        val padding = 5.0
-        val bg = solidRect(200, 100, MaterialColors.YELLOW_100)
+        val padding = 5f
+        val bg = solidRect(20, 20, MaterialColors.YELLOW_100)
         val textColor = Colors.BLACK
 
         val headerTextSize = 23f
         val descriptionTextSize = 18f
 
-        val titleTextUI = text(
-            titleText,
-            textSize = headerTextSize,
-            color = textColor,
-            font = GlobalResources.FONT_ATKINSON_BOLD
-        ) {
-            alignTopToTopOf(bg, padding)
-            alignLeftToLeftOf(bg, padding)
-        }
-
-        val costSection = container {
-            val goldCostSection = container {
-                val i = image(GlobalResources.GOLD_ICON) {
-                    smoothing = false
-                }
-                goldCostSectionText = text(
-                    goldCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40f, color = textColor
-                ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
-                    alignLeftToRightOf(i, padding = 5.0)
-                    centerYOn(i)
-                }
+        val content = container {
+            val titleTextUI = text(
+                titleText,
+                textSize = headerTextSize,
+                color = textColor,
+                font = GlobalResources.FONT_ATKINSON_BOLD
+            ) {
+                alignTopToTopOf(bg, padding)
+                alignLeftToLeftOf(bg, padding)
             }
 
-            supplyCost?.let {
-                val supplyCostSection = container {
-                    val i = image(GlobalResources.SUPPLY_ICON) {
-                        smoothing = false
+            var hasCostSection = false
+            val costSection = container {
+                val viewsToAlign = mutableListOf<View>()
+                goldCost?.let {
+                    hasCostSection = true
+                    val goldCostSection = container {
+                        val i = image(GlobalResources.GOLD_ICON) {
+                            smoothing = false
+                        }
+                        goldCostSectionText = text(
+                            goldCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
+                            textSize = 40f, color = textColor
+                        ) {
+                            scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
+                            alignLeftToRightOf(i, padding = 5.0)
+                            centerYOn(i)
+                        }
                     }
-                    val t = text(
-                        supplyCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
-                        textSize = 40f, color = textColor
-                    ) {
-                        scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
-                        alignLeftToRightOf(i, padding = 5.0)
-                        centerYOn(i)
-                    }
-                    alignLeftToRightOf(goldCostSection, padding = 10.0)
+                    viewsToAlign.add(goldCostSection)
                 }
+
+                supplyCost?.let {
+                    hasCostSection = true
+                    val supplyCostSection = container {
+                        val i = image(GlobalResources.SUPPLY_ICON) {
+                            smoothing = false
+                        }
+                        val t = text(
+                            supplyCost.toString(), font = GlobalResources.FONT_ATKINSON_BOLD,
+                            textSize = 40f, color = textColor
+                        ) {
+                            scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeightD))
+                            alignLeftToRightOf(i, padding = 5.0)
+                            centerYOn(i)
+                        }
+                    }
+                    viewsToAlign.add(supplyCostSection)
+                }
+
+                viewsToAlign.windowed(2) {
+                    it[1].alignLeftToRightOf(it[0], padding = 10.0)
+                }
+
+                scaleWhileMaintainingAspect(ScalingOption.ByHeight(23.0))
+                alignLeftToLeftOf(bg, padding)
+                alignTopToBottomOf(titleTextUI)
             }
 
-
-            scaleWhileMaintainingAspect(ScalingOption.ByHeight(23.0))
-            alignLeftToLeftOf(bg, padding)
-            alignTopToBottomOf(titleTextUI)
+            val descriptionTextUI = text(
+                descriptionText,
+                textSize = descriptionTextSize,
+                font = GlobalResources.FONT_ATKINSON_REGULAR,
+                color = textColor
+            ).addTo(this) {
+                alignTopToBottomOf(if (hasCostSection) costSection else titleTextUI, padding)
+                alignLeftToLeftOf(bg, padding)
+            }
         }
 
-        val descriptionTextUI = text(
-            descriptionText,
-            textSize = descriptionTextSize,
-            font = GlobalResources.FONT_ATKINSON_REGULAR,
-            color = textColor
-        ).addTo(this) {
-            alignTopToBottomOf(costSection, padding)
-            alignLeftToLeftOf(bg, padding)
-        }
+        bg.width = content.width + padding * 2
+        bg.height = content.height + padding * 2
     }
 
     fun updateMoneyCost(newCost: Int) {
-        goldCostSectionText.text = newCost.toString()
+        goldCostSectionText?.text = newCost.toString()
     }
 }

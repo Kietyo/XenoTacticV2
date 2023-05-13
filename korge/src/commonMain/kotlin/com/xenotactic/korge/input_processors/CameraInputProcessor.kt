@@ -39,7 +39,7 @@ class CameraInputProcessor(val view: View, val engine: Engine){
         }
     }
 
-    fun onMouseEvent(event: MouseEvent) {
+    private fun onMouseEvent(event: MouseEvent) {
         //        println("went here? $event")
         when (event.type) {
 //            MouseEvent.Type.DRAG -> {
@@ -129,14 +129,15 @@ class CameraInputProcessor(val view: View, val engine: Engine){
 
     // Max zoom out. Lower value = more zoom out.
     val MAX_ZOOM_OUT = 0.2
+    val MAX_ZOOM_IN = 2.0
 
-    fun zoomOutCamera() {
+    private fun zoomOutCamera() {
         val newZoomFactor = max(MAX_ZOOM_OUT, view.scale.avgD - ZOOM_DELTA)
         setZoomFactor(newZoomFactor)
     }
 
-    fun zoomInCamera() {
-        val newZoomFactor = min(1.5, view.scale.avgD + ZOOM_DELTA)
+    private fun zoomInCamera() {
+        val newZoomFactor = min(MAX_ZOOM_IN, view.scale.avgD + ZOOM_DELTA)
         setZoomFactor(newZoomFactor)
     }
 
