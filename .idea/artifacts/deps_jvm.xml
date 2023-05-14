@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="deps-jvm">
+    <output-path>$PROJECT_DIR$/deps/build/libs</output-path>
+    <root id="archive" name="deps-jvm.jar">
+      <element id="module-output" name="XenoTacticV2.deps.jvmMain" />
+    </root>
+  </artifact>
+</component>

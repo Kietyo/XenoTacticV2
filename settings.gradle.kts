@@ -18,8 +18,13 @@
 //}
 
 pluginManagement {
+//    repositories {
+//        println("Setting up repo in settings.gradle.kts")
+//        mavenLocal(); mavenCentral(); google(); gradlePluginPortal()
+//    }
     val kotlinVersion: String by settings
     val kotlinxBenchmark: String by settings
+//    val composeVersion: String by settings
     plugins {
         kotlin("multiplatform") version kotlinVersion
         kotlin("plugin.serialization") version kotlinVersion
@@ -28,6 +33,12 @@ pluginManagement {
 //        id("com.soywiz.kproject.settings") version "0.0.6"
     }
 }
+
+plugins {
+    //id("com.soywiz.kproject.settings") version "0.0.1-SNAPSHOT"
+    id("com.soywiz.kproject.settings") version "0.2.7"
+}
+
 
 //include(":Client")
 //include(":Server")
@@ -40,3 +51,8 @@ project(":XenoECS").projectDir = file("..\\XenoECS")
 
 include("ktruth")
 project(":ktruth").projectDir = file("..\\ktruth")
+
+//include("korge-compose")
+//project(":korge-compose").projectDir = file("..\\korge-compose\\korge-compose")
+
+//kproject("./deps")
