@@ -223,7 +223,6 @@ class UIGuiContainer(
             var tooltip: UITooltipDescription? = null
             onOver {
                 tooltip = tooltipSellEntities.addTo(this@UIGuiContainer.stage) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
                     alignBottomToTopOf(this@apply, padding = 5.0)
                     alignRightToRightOf(this@apply)
                 }

@@ -19,8 +19,8 @@ class UITooltipDescription(
         val bg = solidRect(20, 20, MaterialColors.YELLOW_100)
         val textColor = Colors.BLACK
 
-        val headerTextSize = 23f
-        val descriptionTextSize = 18f
+        val headerTextSize = 24f
+        val descriptionTextSize = 20f
 
         val content = container {
             val titleTextUI = text(

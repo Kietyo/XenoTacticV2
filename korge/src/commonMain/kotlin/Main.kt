@@ -1,5 +1,4 @@
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.utils.MapBridge
 import com.xenotactic.korge.scenes.*
 import korlibs.image.color.Colors
@@ -32,7 +31,6 @@ suspend fun main() = KorgeConfig(
     println("Preparing main module")
     println(views)
 
-    GlobalResources.init()
 
     val mapBridge = MapBridge()
 

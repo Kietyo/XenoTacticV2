@@ -39,6 +39,7 @@ plugins {
     id("com.soywiz.kproject.settings") version "0.2.7"
 }
 
+kproject("./deps")
 
 //include(":Client")
 //include(":Server")
@@ -55,4 +56,3 @@ project(":ktruth").projectDir = file("..\\ktruth")
 //include("korge-compose")
 //project(":korge-compose").projectDir = file("..\\korge-compose\\korge-compose")
 
-//kproject("./deps")

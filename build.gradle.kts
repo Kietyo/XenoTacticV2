@@ -20,6 +20,12 @@ buildscript {
     }
 }
 
+plugins {
+    id("org.jetbrains.compose") version "1.4.0"
+    id("com.soywiz.korge") version "4.0.0"
+}
+
+
 //allprojects {
 //    repositories {
 //        println("Setting up allprojects>repositories>build.gradle.kts")
@@ -38,6 +44,22 @@ buildscript {
 //        }
 //    }
 //}
+
+//tasks{
+//    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+//        kotlinOptions {
+//            println("Updating free compiler args.")
+//            freeCompilerArgs += listOf(
+//                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true",
+//                "suppressKotlinVersionCompatibilityCheck=1.8.21")
+//        }
+//    }
+//}
+
+compose {
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.8.21")
+    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.8.20"))
+}
 
 repositories {
     mavenCentral()

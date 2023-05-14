@@ -8,6 +8,7 @@ import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.text
 import com.xenotactic.korge.utils.MapBridge
 import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.korge.events.PlayMapEvent
 
 lateinit var VIEWS_INSTANCE: Views
@@ -20,6 +21,9 @@ class RootScene(
         VIEWS_INSTANCE = views
 
         this.text("Loading...", textSize = 50f).centerOnStage()
+
+        GlobalResources.init()
+
 
 //        val test = resourcesVfs["test.txt"]
 //
