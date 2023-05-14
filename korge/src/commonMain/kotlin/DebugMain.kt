@@ -23,7 +23,7 @@ object DebugMain {
         Korge(
             KorgeConfig(
                 backgroundColor = Colors["#2b2b2b"],
-                virtualSize = Size(512, 512)
+                virtualSize = Size(1280, 720)
             )
         ) {
 

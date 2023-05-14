@@ -43,7 +43,6 @@ enum class ViewType {
     MULTI_TOWER_SELECTION
 }
 
-@OptIn(KorgeExperimental::class)
 class UIGuiContainer(
     val hstage: SContainer,
     val engine: Engine,
@@ -58,9 +57,9 @@ class UIGuiContainer(
     private val mutableGoldState = engine.stateInjections.getSingleton<MutableGoldState>()
     private val gameSimulator = engine.injections.getSingletonOrNull<GameSimulator>()
 
-    val stage = hstage.container {  }
+    val stage = hstage.container { }
     private val middleSelectionContainer = stage.container { }
-    val settingsWindows = stage.container {  }
+    val settingsWindows = stage.container { }
 
     init {
         val topLeftPanel = stage.container {
@@ -213,16 +212,19 @@ class UIGuiContainer(
 
         val tooltipSize = bottomRightGridWidth / 1.5
 
-
-        val tooltipSellEntities = UITooltipDescription(null, null, "SELL",
-            "Sell tower(s), refunds 100% of the\nbasic tower cost, but not upgrades.")
         val sellEntitiesView = UITextRect(
             "Sell\nEntities",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
-            var tooltip: UITooltipDescription? = null
+            val tooltip = UITooltipDescription(
+                null, null, "SELL",
+                "Sell tower(s), refunds 100% of the\nbasic tower cost, but not upgrades."
+            )
+            onClick {
+                eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
+            }
             onOver {
-                tooltip = tooltipSellEntities.addTo(this@UIGuiContainer.stage) {
+                tooltip.addTo(this@UIGuiContainer.stage) {
                     alignBottomToTopOf(this@apply, padding = 5.0)
                     alignRightToRightOf(this@apply)
                 }
@@ -284,7 +286,7 @@ class UIGuiContainer(
             {
                 world[it, DamageUpgradeComponent::class].numUpgrades
             },
-            { eventBus.send(UpgradeTowerDamageEvent(it))}
+            { eventBus.send(UpgradeTowerDamageEvent(it)) }
         )
 
         val towerSpeedUpgradeView = UITowerUpgradeIcon(

@@ -131,8 +131,6 @@ class PlayScene : Scene() {
             addSystem(UIMonsterHealthRenderSystem(this))
         }
 
-
-
 //        gameMapApi.placeEntities(randomMap.map.getAllEntities())
         gameSimulator.gameMapApi.placeEntities(randomMap2.gameWorld)
 //        gameMapApi.placeEntities(
