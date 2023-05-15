@@ -16,6 +16,12 @@ import com.xenotactic.gamelogic.utils.toGameUnit
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
+fun View.centerOnXY(x: Float, y: Float) {
+    this.x = x - scaledWidth / 2f
+    this.y = y - scaledHeight / 2f
+}
+
+
 fun getRoundedGridCoordinates(
     gridX: Number,
     gridY: Number,

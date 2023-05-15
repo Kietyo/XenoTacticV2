@@ -36,10 +36,10 @@ pluginManagement {
 
 plugins {
     //id("com.soywiz.kproject.settings") version "0.0.1-SNAPSHOT"
-    id("com.soywiz.kproject.settings") version "0.2.7"
+//    id("com.soywiz.kproject.settings") version "0.2.7"
 }
 
-kproject("./deps")
+//kproject("./deps")
 
 //include(":Client")
 //include(":Server")

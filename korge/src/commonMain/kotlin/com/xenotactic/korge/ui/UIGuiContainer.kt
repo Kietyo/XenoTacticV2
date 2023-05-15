@@ -229,8 +229,11 @@ class UIGuiContainer(
                     alignRightToRightOf(this@apply)
                 }
             }
+            onAttachDetach {
+                tooltip.removeFromParent()
+            }
             onOut {
-                tooltip?.removeFromParent()
+                tooltip.removeFromParent()
             }
         }
 

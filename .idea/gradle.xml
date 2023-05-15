@@ -11,9 +11,7 @@
             <option value="$PROJECT_DIR$/../XenoECS" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/XenoTactic-GameLogic" />
-            <option value="$PROJECT_DIR$/deps" />
             <option value="$PROJECT_DIR$/korge" />
-            <option value="$PROJECT_DIR$/../korge-compose/korge-compose" />
             <option value="$PROJECT_DIR$/../ktruth" />
           </set>
         </option>

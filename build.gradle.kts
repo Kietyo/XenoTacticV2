@@ -20,10 +20,10 @@ buildscript {
     }
 }
 
-plugins {
-    id("org.jetbrains.compose") version "1.4.0"
-    id("com.soywiz.korge") version "4.0.0"
-}
+//plugins {
+//    id("org.jetbrains.compose") version "1.4.0"
+//    id("com.soywiz.korge") version "4.0.0"
+//}
 
 
 //allprojects {
@@ -56,10 +56,10 @@ plugins {
 //    }
 //}
 
-compose {
-    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.8.21")
-    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.8.20"))
-}
+//compose {
+//    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.8.21")
+//    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.8.20"))
+//}
 
 repositories {
     mavenCentral()
