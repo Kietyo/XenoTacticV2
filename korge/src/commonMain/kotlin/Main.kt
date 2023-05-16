@@ -25,6 +25,7 @@ suspend fun main() = KorgeConfig(
     ),
     quality = GameWindow.Quality.AUTOMATIC,
     forceRenderEveryFrame = true).start() {
+
     Logger.defaultLevel = Logger.Level.DEBUG
     //        val globalBus = EventBus(CoroutineScope(Dispatchers.Main))
     val globalBus = EventBus(CoroutineScope(Dispatchers.Default))
@@ -52,6 +53,10 @@ suspend fun main() = KorgeConfig(
 
 
     sceneContainer {
-        changeTo<RootScene>()
+//        changeTo<RootScene>()
+//        changeTo<TestScene>()
+        changeTo({
+            TestScene()
+        })
     }
 }
