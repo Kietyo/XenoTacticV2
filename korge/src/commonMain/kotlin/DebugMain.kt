@@ -19,37 +19,39 @@ object DebugMain {
             )
         ) {
 
-            Row().addTo(this) {
-                item {
-                    Column {
-                        item {
-                            Text("Hello world")
-                        }
-                        item {
-                            Text("Hello world 2")
-                        }
-                    }
-                }
-
-                item {
-                    Column {
-                        item {
-                            Text("Hello world")
-                        }
-                        item {
-                            Text("Hello world 2")
-                        }
-                    }.content
-                }
-            }
-//            val column = Column().addTo(this) {
-//                item {
-//                    Text("Hello world")
+//            Row().addTo(this) {
+//                addLayout {
+//                    Column {
+//                        addItem {
+//                            Text("Hello world")
+//                        }
+//                        addItem {
+//                            Text("Hello world 2")
+//                        }
+//                    }
 //                }
-//                item {
-//                    Text("Hello world 2")
+//
+//                addItem {
+//                    Column {
+//                        addItem {
+//                            Text("Hello world")
+//                        }
+//                        addItem {
+//                            Text("Hello world 2")
+//                        }
+//                    }.content
 //                }
 //            }
+
+            Column().addTo(this) {
+                addLayout {
+                    Row {
+                        addItem { Text("User Name") }
+                        addItem { Text("Kills") }
+                        addItem { Text("Damage") }
+                    }
+                }
+            }
 
         }
     }
@@ -71,11 +73,11 @@ class Column: UILayout {
         }
     }
 
-    fun item(addFn: () -> View) {
+    fun addItem(addFn: () -> View) {
         content.addChild(addFn())
     }
 
-    fun item(addFn: () -> UILayout) {
+    fun addLayout(addFn: () -> UILayout) {
         content.addChild(addFn().content)
     }
 
@@ -98,11 +100,20 @@ class Column: UILayout {
 class Row: UILayout {
     override val content = Container()
 
-    fun item(addFn: () -> View) {
+    companion object {
+        operator fun invoke(fn: Row.() -> Unit): Row {
+            val row = Row()
+            fn(row)
+            row.relayout()
+            return row
+        }
+    }
+
+    fun addItem(modifier: Modifier = Modifier, addFn: () -> View) {
         content.addChild(addFn())
     }
 
-    fun item(addFn: () -> UILayout) {
+    fun addLayout(addFn: () -> UILayout) {
         content.addChild(addFn().content)
     }
 
@@ -120,4 +131,8 @@ class Row: UILayout {
         relayout()
         return this
     }
+}
+
+interface Modifier {
+    companion object: Modifier
 }
