@@ -5,13 +5,12 @@ import com.xenotactic.korge.ui.Column
 import com.xenotactic.korge.ui.Modifier
 import com.xenotactic.korge.ui.Modifiers
 import com.xenotactic.korge.ui.Row
+import korlibs.image.color.Colors
 import korlibs.logger.Logger
 import korlibs.korge.scene.Scene
 import korlibs.korge.ui.UIText
 import korlibs.korge.view.SContainer
-import korlibs.korge.view.container
-import korlibs.korge.view.line
-import korlibs.korge.view.text
+import korlibs.korge.view.align.centerOnStage
 import korlibs.math.geom.Size
 
 class TestScene : Scene() {
@@ -27,24 +26,38 @@ class TestScene : Scene() {
         //            )
         //        }
 
+        //        val content = container {
+        //            solidRect(Size(100, 100), color = Colors.RED)
+        //            uiText("UI test")
+        //        }
+        //
+        //        content.scale = Scale(3)
+        //        content.x += 50
+        //        content.y += 50
+
         val col = Column().addTo(
             this@sceneInit.stage!!,
-            modifiers = Modifiers.with(Modifier.Spacing(between = 5f))
+            modifiers = Modifiers.of(
+                Modifier.SpacingBetween(between = 5f),
+                Modifier.SolidBackgroundColor(Colors.RED),
+                Modifier.Padding(left = 5f)
+            )
         ) {
-            val spacing = Modifier.Spacing(start = 10f, between = 0f)
-
+            val rowSpacing = Modifier.SpacingBetween(between = 0f)
             addLayout {
-                Row(modifiers = Modifiers.with(spacing)) {
+                Row(modifiers = Modifiers.of(rowSpacing)) {
                     addItem { UIText("User Name", size = Size(100, 18)) }
                     addItem { UIText("Kills", size = Size(64, 18)) }
-                    addItem { UIText("Damage").apply {
-                        width = 1f
-                    } }
+                    addItem {
+                        UIText("Damage").apply {
+                            width = 1f
+                        }
+                    }
                 }
             }
 
             addLayout {
-                Row(modifiers = Modifiers.with(spacing)) {
+                Row(modifiers = Modifiers.of(rowSpacing)) {
                     addItem { UIText("Xenotactic", size = Size(100, 18)) }
                     addItem { UIText("13", size = Size(64, 18)) }
                     addItem { UIText("123456") }
@@ -53,6 +66,7 @@ class TestScene : Scene() {
         }
 
         col.content.scale = 3.toScale()
+        col.content.centerOnStage()
 
         //        this.sgraphics {
         //            this.stroke(

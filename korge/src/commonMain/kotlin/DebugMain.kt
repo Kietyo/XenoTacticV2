@@ -1,13 +1,13 @@
-import com.xenotactic.ecs.TypedInjections
-import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.ui.*
-import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.rootLocalVfs
 import korlibs.korge.Korge
 import korlibs.korge.KorgeConfig
 import korlibs.korge.ui.UIText
+import korlibs.korge.ui.uiText
+import korlibs.korge.view.container
+import korlibs.korge.view.solidRect
 import korlibs.math.geom.Size
 import kotlin.jvm.JvmStatic
 
@@ -22,6 +22,11 @@ object DebugMain {
                 virtualSize = Size(1280, 720)
             )
         ) {
+
+            val content = container {
+                solidRect(Size(100, 100))
+                uiText("UI test")
+            }
 
             //            Row().addTo(this) {
             //                addLayout {
@@ -49,10 +54,10 @@ object DebugMain {
 
             val col = Column().addTo(
                 this,
-                modifiers = Modifiers.with(Modifier.Spacing(start = 10f, between = 10f))
+                modifiers = Modifiers.of(Modifier.SpacingBetween(between = 10f))
             ) {
                 addLayout {
-                    Row(modifiers = Modifiers.with(Modifier.Spacing(between = 10f))) {
+                    Row(modifiers = Modifiers.of(Modifier.SpacingBetween(between = 10f))) {
                         addItem { UIText("User Name") }
                         addItem { UIText("Kills") }
                         addItem { UIText("Damage") }

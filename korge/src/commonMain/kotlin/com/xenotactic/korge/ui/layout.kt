@@ -1,13 +1,20 @@
 package com.xenotactic.korge.ui
 
 import com.xenotactic.ecs.TypedInjections
-import korlibs.korge.view.Container
-import korlibs.korge.view.Stage
-import korlibs.korge.view.View
-import korlibs.korge.view.addTo
+import korlibs.image.color.Colors
+import korlibs.image.color.RGBA
+import korlibs.korge.view.*
+import korlibs.math.geom.Size
 
 sealed interface Modifier {
-    data class Spacing(val start: Float = 0f, val between: Float = 0f) : Modifier
+    fun and(modifier: Modifier): Modifiers {
+        return Modifiers.of(this, modifier)
+    }
+
+    data class SpacingBetween(val between: Float = 0f) : Modifier
+    data class SolidBackgroundColor(val colors: RGBA = Colors.TRANSPARENT) : Modifier
+    data class Padding(val left: Float = 0f, val right: Float = 0f,
+        val top: Float = 0f, val bottom: Float = 0f) : Modifier
 }
 
 data class Modifiers(val modifiers: TypedInjections<Modifier> = TypedInjections()) {
@@ -16,11 +23,24 @@ data class Modifiers(val modifiers: TypedInjections<Modifier> = TypedInjections(
         return modifier ?: default()
     }
 
+    inline fun <reified T : Modifier> getOrNull(): T? {
+        return modifiers.getSingletonOrNull<T>()
+    }
+
+    fun and(modifier: Modifier): Modifiers {
+        val newModifiers = Modifiers()
+        newModifiers.modifiers.putAll(modifiers)
+        newModifiers.modifiers.setSingletonOrThrow(modifier)
+        return newModifiers
+    }
+
     companion object {
-        fun with(modifier: Modifier): Modifiers {
-            val modifiers = Modifiers()
-            modifiers.modifiers.setSingletonOrThrow(modifier)
-            return modifiers
+        fun of(vararg modifiers: Modifier): Modifiers {
+            val modifiersContainer = Modifiers()
+            for (modifier in modifiers) {
+                modifiersContainer.modifiers.setSingletonOrThrow(modifier)
+            }
+            return modifiersContainer
         }
 
         val NONE = Modifiers()
@@ -33,6 +53,7 @@ interface UILayout {
 
 class Column : UILayout {
     override val content = Container()
+    private val innerContent = content.container { }
 
     companion object {
         operator fun invoke(fn: Column.() -> Unit): Column {
@@ -44,26 +65,42 @@ class Column : UILayout {
     }
 
     fun addItem(addFn: () -> View) {
-        content.addChild(addFn())
+        innerContent.addChild(addFn())
     }
 
     fun addLayout(addFn: () -> UILayout) {
-        content.addChild(addFn().content)
+        innerContent.addChild(addFn().content)
     }
 
     fun relayout(modifiers: Modifiers = Modifiers.NONE) {
         var i = 0
-        val spacing = modifiers.getOrDefault { Modifier.Spacing() }
-        var currHeight = spacing.start
-        content.children.forEach {
+        val spacing = modifiers.getOrDefault { Modifier.SpacingBetween() }
+        var currHeight = 0f
+        innerContent.children.forEach {
             it.y = currHeight
             currHeight += it.height
 
-            if (i in 1..content.children.indices.last) {
+            if (i in 1..innerContent.children.indices.last) {
                 it.y += spacing.between
                 currHeight += spacing.between
             }
             i++
+        }
+
+        val padding = modifiers.getOrNull<Modifier.Padding>()
+        if (padding != null) {
+            val width = innerContent.children.maxOf { it.width } + padding.left + padding.right
+            val height = currHeight + padding.top + padding.bottom
+            val rect = SolidRect(Size(width, height), color = Colors.TRANSPARENT)
+            content.addChildAt(rect, 0)
+            innerContent.x = padding.left
+            innerContent.y = padding.top
+        }
+
+        val solidBackgroundColor = modifiers.getOrNull<Modifier.SolidBackgroundColor>()
+        if (solidBackgroundColor != null) {
+            val rect = SolidRect(Size(content.width, content.height), solidBackgroundColor.colors)
+            content.addChildAt(rect, 0)
         }
     }
 
@@ -100,18 +137,13 @@ class Row : UILayout {
     fun relayout(modifiers: Modifiers) {
         var currWidth = 0f
         var i = 0
-        val rowModifier = modifiers.getOrDefault<Modifier.Spacing> {
-            Modifier.Spacing()
+        val rowModifier = modifiers.getOrDefault<Modifier.SpacingBetween> {
+            Modifier.SpacingBetween()
         }
         content.children.forEach {
             it.x = currWidth
 
-            if (i == 0) {
-                it.x += rowModifier.start
-                currWidth += rowModifier.start
-            }
-
-            if (i <= content.children.indices.endInclusive) {
+            if (i in 1..content.children.indices.endInclusive) {
                 it.x += rowModifier.between
                 currWidth += rowModifier.between
             }
