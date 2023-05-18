@@ -53,10 +53,10 @@ suspend fun main() = KorgeConfig(
 
 
     sceneContainer {
-//        changeTo<RootScene>()
+        changeTo<RootScene>()
 //        changeTo<TestScene>()
-        changeTo({
-            TestScene()
-        })
+//        changeTo({
+//            TestScene()
+//        })
     }
 }

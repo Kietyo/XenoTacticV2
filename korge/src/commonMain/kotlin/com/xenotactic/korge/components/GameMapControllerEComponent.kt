@@ -1,4 +1,4 @@
-package com.xenotactic.korge.ecomponents
+package com.xenotactic.korge.components
 
 import korlibs.logger.Logger
 import com.xenotactic.gamelogic.utils.GAME_HEIGHT

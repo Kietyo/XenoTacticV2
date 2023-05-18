@@ -24,7 +24,6 @@ class RootScene(
 
         GlobalResources.init()
 
-
 //        val test = resourcesVfs["test.txt"]
 //
 //        logger.info {

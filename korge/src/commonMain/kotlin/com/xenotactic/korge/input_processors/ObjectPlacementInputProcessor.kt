@@ -10,8 +10,8 @@ import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.until
-import com.xenotactic.korge.ecomponents.GameMapControllerEComponent
-import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
+import com.xenotactic.korge.components.GameMapControllerEComponent
+import com.xenotactic.korge.components.ObjectPlacementEComponent
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.ui.UIMap

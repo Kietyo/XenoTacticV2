@@ -10,7 +10,7 @@ import com.xenotactic.gamelogic.utils.MapToId
 import com.xenotactic.korge.utils.PlayerDataApi
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PlayMapEvent
-import com.xenotactic.korge.ecomponents.ResizeDebugComponent
+import com.xenotactic.korge.components.ResizeDebugComponent
 import com.xenotactic.korge.utils.alignLeftToLeftOfWindow
 import com.xenotactic.korge.utils.alignRightToRightOfWindow
 import com.xenotactic.korge.utils.alignTopToTopOfWindow

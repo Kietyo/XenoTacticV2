@@ -216,13 +216,38 @@ class UIGuiContainer(
             "Sell\nEntities",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
+            onClick {
+                eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
+            }
             val tooltip = UITooltipDescription(
                 null, null, "SELL",
                 "Sell tower(s), refunds 100% of the\nbasic tower cost, but not upgrades."
             )
-            onClick {
-                eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
+            onOver {
+                tooltip.addTo(this@UIGuiContainer.stage) {
+                    alignBottomToTopOf(this@apply, padding = 5.0)
+                    alignRightToRightOf(this@apply)
+                }
             }
+            onAttachDetach {
+                tooltip.removeFromParent()
+            }
+            onOut {
+                tooltip.removeFromParent()
+            }
+        }
+
+        val showRangeView = UITextRect(
+            "Show\nRange",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+            onClick {
+
+            }
+            val tooltip = UITooltipDescription(
+                null, null, "SHOW RANGE",
+                "Show the range of the selected tower(s)."
+            )
             onOver {
                 tooltip.addTo(this@UIGuiContainer.stage) {
                     alignBottomToTopOf(this@apply, padding = 5.0)
@@ -400,9 +425,13 @@ class UIGuiContainer(
                     tooltipUpgradeDamage.updateMoneyCost(
                         gameplayState.initialDamageUpgradeCost + damageUpgradeComponent.numUpgrades
                     )
+                    tooltipUpgradeSpeed.updateMoneyCost(
+                        gameplayState.initialSpeedUpgradeCost + speedUpgradeComponent.numUpgrades
+                    )
                 }
 
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
+                bottomRightGrid.setEntry(3, 0, showRangeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
                 bottomRightGrid.setEntry(3, 1, sellEntitiesView)
 

@@ -7,7 +7,7 @@ import korlibs.korge.view.alpha
 import korlibs.korge.view.text
 import korlibs.image.text.TextAlignment
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.ecomponents.ObjectPlacementEComponent
+import com.xenotactic.korge.components.ObjectPlacementEComponent
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.PointerActionChangeEvent
