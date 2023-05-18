@@ -62,6 +62,8 @@ value class GameUnit(val value: Double) : Comparable<GameUnit> {
     operator fun div(d: GameUnit): GameUnit {
         return GameUnit(value / d.value)
     }
+    operator fun div(other: Number) = GameUnit(value / other.toDouble())
+
 
     operator fun compareTo(o: Number): Int {
         return value.compareTo(o.toDouble())

@@ -30,6 +30,7 @@ import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableCurrentlySelectedTowerState
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
+import com.xenotactic.korge.components.MutableShowRangeTimeComponent
 import com.xenotactic.korge.state.*
 import korlibs.event.Key.SHIFT
 import korlibs.korge.annotations.KorgeExperimental
@@ -237,12 +238,20 @@ class UIGuiContainer(
             }
         }
 
+        val mutableCurrentlySelectedTowerState = MutableCurrentlySelectedTowerState(null)
+        engine.stateInjections.setSingletonOrThrow(mutableCurrentlySelectedTowerState)
+
+
         val showRangeView = UITextRect(
             "Show\nRange",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
             onClick {
-
+                mutableCurrentlySelectedTowerState.currentTowerId?.also {
+                    world.modifyEntity(it) {
+                        addComponentOrThrow(MutableShowRangeTimeComponent(5000))
+                    }
+                }
             }
             val tooltip = UITooltipDescription(
                 null, null, "SHOW RANGE",
@@ -301,8 +310,6 @@ class UIGuiContainer(
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         )
 
-        val mutableCurrentlySelectedTowerState = MutableCurrentlySelectedTowerState(null)
-        engine.stateInjections.setSingletonOrThrow(mutableCurrentlySelectedTowerState)
 
         val towerDamageUpgradeView = UITowerUpgradeIcon(
             engine,

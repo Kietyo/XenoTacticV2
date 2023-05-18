@@ -10,10 +10,6 @@ import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.listeners_component.PreSelectionComponentListener
-import com.xenotactic.korge.listeners_component.SelectionComponentListener
-import com.xenotactic.korge.listeners_component.UIMapEntityComponentListener
-import com.xenotactic.korge.listeners_component.UIMapEntityTextComponentListener
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.listeners_event.TowerUpgradeEventListeners
 import com.xenotactic.korge.listeners_event.UIMapEventListeners
@@ -23,6 +19,7 @@ import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.korge.input_processors.CameraInputProcessor
+import com.xenotactic.korge.listeners_component.*
 import com.xenotactic.korge.state.MouseDragSettingsState
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
@@ -119,6 +116,7 @@ class PlayScene : Scene() {
             addComponentListener(SelectionComponentListener(engine))
             addComponentListener(UIMapEntityComponentListener())
             addComponentListener(UIMapEntityTextComponentListener(engine))
+            addComponentListener(MutableShowRangeTimeComponentListener(engine))
 
             addSystem(UIMonsterUpdatePositionSystem(this))
             addSystem(UIEightDirectionalMonsterSpriteDirectionSystem(this))

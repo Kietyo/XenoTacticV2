@@ -63,24 +63,34 @@ class UIMapV2(
     val gameMapPathState = engine.stateInjections.getSingleton<GameMapPathState>()
 
     private val _boardLayer = this.container {
+        name = "_boardLayer"
         //        this.propagateEvents = false
         //        this.mouseChildren = false
         //        this.hitTestEnabled = false
     }
 
-    private val _boardGraphicsLayer = this.graphics { }
+    private val _boardGraphicsLayer = this.graphics {
+        name = "_boardGraphicsLayer"
+    }
 
-    private val _gridNumberLayer = this.container()
+    private val _gridNumberLayer = this.container {
+        name = "_gridNumberLayer"
+    }
 
     //    val speedAreaLayer = this.clipContainer(
     //        mapWidth.toWorldUnit(gridSize).toDouble(),
     //        mapHeight.toWorldUnit(gridSize).toDouble()
     //    )
 
-    val speedAreaLayer = this.container()
-    val speedAreaLayerGraphics = this.graphics()
+    val speedAreaLayer = this.container {
+        name = "speedAreaLayer"
+    }
+    val speedAreaLayerGraphics = this.graphics() {
+        name = "speedAreaLayerGraphics"
+    }
 
-    val entityLayer = this.container().apply {
+    val entityLayer = this.container {
+        name = "entityLayer"
     }
 
     val entityLabelLayer = this.container()
