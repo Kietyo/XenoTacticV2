@@ -249,7 +249,7 @@ class UIGuiContainer(
             onClick {
                 mutableCurrentlySelectedTowerState.currentTowerId?.also {
                     world.modifyEntity(it) {
-                        addComponentOrThrow(MutableShowRangeTimeComponent(5000))
+                        addComponentOrThrow(MutableShowRangeTimeComponent(4000))
                     }
                 }
             }

@@ -49,3 +49,22 @@ cocoyaxi[core]:x86-windows -> 2.0.3#2
 
 Issues
 - 22/8/21 - After using rock placement mode in editor, can no longer move map.
+
+TODO
+- Ability to delete multiple selected towers
+- Multi tower selection display UI. Show the damage/speed upgrades in the overview.
+- Monster spawner system
+- Air waves
+- Editor
+- Random wave creator
+- Distantling
+- Closeling
+- Multi shot tower
+- Bounce tower
+
+## Changelog
+
+A week is defined from Monday to Sunday.
+Date should start on Monday.
+
+### Week of 2023-05-15
