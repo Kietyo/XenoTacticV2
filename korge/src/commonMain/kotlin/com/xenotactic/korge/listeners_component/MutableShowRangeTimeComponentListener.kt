@@ -2,11 +2,10 @@ package com.xenotactic.korge.listeners_component
 
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
+import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.gamelogic.components.UIEntityContainerComponent
 import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.utils.toWorldUnit
 import com.xenotactic.korge.components.MutableShowRangeTimeComponent
 import com.xenotactic.korge.components.UIShowRangeComponent
 import com.xenotactic.korge.ui.UIMapV2
@@ -24,23 +23,34 @@ class MutableShowRangeTimeComponentListener(
         require(old == null)
         require(new.showTimeRemainingMillis > 0)
 
-        val uiEntityContainerComponent = world[entityId, UIEntityContainerComponent::class]
         val rangeComponent = world[entityId, RangeComponent::class]
         val sizeComponent = world[entityId, SizeComponent::class]
-
+        val bottomLeftPositionComponent = world[entityId, BottomLeftPositionComponent::class]
         val radius = rangeComponent.range.toWorldUnit(uiMap.gridSize)
-        val xOffset = (sizeComponent.width / 2).toWorldUnit(uiMap.gridSize)
-        val yOffset = (sizeComponent.height / 2).toWorldUnit(uiMap.gridSize)
+
+        val (worldX, worldY) = uiMap.getWorldCoordinates(
+            bottomLeftPositionComponent.x - rangeComponent.range + sizeComponent.width / 2,
+            bottomLeftPositionComponent.y + rangeComponent.range + sizeComponent.height / 2,
+        )
+
         val rangeView = Circle(
-            radius.toFloat(), fill = Colors.WHITE.withAd(0.5),
-            strokeThickness = 1f
-        ).addTo(uiEntityContainerComponent.container) {
-            x += xOffset.toFloat() - radius.toFloat()
-            y += yOffset.toFloat() - radius.toFloat()
+            radius.toFloat(),
+            fill = Colors.WHITE.withAd(0.15),
+            stroke = Colors.WHITE.withAd(0.75),
+            strokeThickness = 5f
+        ).addTo(uiMap.rangeIndicatorLayer) {
+            x = worldX.toFloat()
+            y = worldY.toFloat()
         }
 
         world.modifyEntity(entityId) {
             addComponentOrThrow(UIShowRangeComponent(rangeView))
+        }
+    }
+
+    override fun onRemove(entityId: EntityId, component: MutableShowRangeTimeComponent) {
+        world.modifyEntity(entityId) {
+            removeComponent<UIShowRangeComponent>()
         }
     }
 }

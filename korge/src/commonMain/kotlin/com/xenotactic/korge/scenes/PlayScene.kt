@@ -117,6 +117,7 @@ class PlayScene : Scene() {
             addComponentListener(UIMapEntityComponentListener())
             addComponentListener(UIMapEntityTextComponentListener(engine))
             addComponentListener(MutableShowRangeTimeComponentListener(engine))
+            addComponentListener(UIShowRangeComponentListener(engine))
 
             addSystem(UIMonsterUpdatePositionSystem(this))
             addSystem(UIEightDirectionalMonsterSpriteDirectionSystem(this))
@@ -125,6 +126,7 @@ class PlayScene : Scene() {
             addSystem(UITowerGunRotatingSystem(engine))
 
             addSystem(UIProjectileRenderSystem(engine))
+            addSystem(UIMutableRangeTimeUpdateSystem(this))
 
             addSystem(UIMonsterHealthRenderSystem(this))
         }

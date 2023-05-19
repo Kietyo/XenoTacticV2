@@ -9,8 +9,4 @@ class UIMapEntityComponentListener : ComponentListener<UIEntityViewComponent> {
         component.entityView.removeFromParent()
     }
 
-    override fun onExisting(entityId: EntityId, component: UIEntityViewComponent) {
-        TODO("Not yet implemented")
-    }
-
 }

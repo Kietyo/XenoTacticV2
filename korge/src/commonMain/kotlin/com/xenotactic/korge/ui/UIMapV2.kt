@@ -93,13 +93,21 @@ class UIMapV2(
         name = "entityLayer"
     }
 
-    val entityLabelLayer = this.container()
+    val entityLabelLayer = this.container() {
+        name = "entityLabelLayer"
+    }
+
+    val rangeIndicatorLayer = this.container() {
+        name = "rangeIndicatorLayer"
+    }
 
     private val _pathingLinesGraphics = this.gpuGraphics {
+        name = "_pathingLinesGraphics"
         //        useNativeRendering = false
     }
 
-    val monsterLayer = this.container().apply {
+    val monsterLayer = this.container() {
+        name = "monsterLayer"
     }
 
     val targetingLinesLayer = this.graphics { }

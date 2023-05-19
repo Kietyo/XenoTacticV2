@@ -170,7 +170,9 @@ class UIMapEventListeners(
                     MapEntityType.TELEPORT_OUT,
                     MapEntityType.SMALL_BLOCKER -> addTo(uiMap.entityLayer)
 
-                    MapEntityType.SPEED_AREA -> addTo(uiMap.speedAreaLayer)
+                    MapEntityType.SPEED_AREA -> {
+                        addTo(uiMap.speedAreaLayer)
+                    }
                     MapEntityType.MONSTER -> addTo(uiMap.monsterLayer)
                 }
             }
