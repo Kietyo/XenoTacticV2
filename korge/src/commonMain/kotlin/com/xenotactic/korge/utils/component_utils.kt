@@ -1,17 +1,15 @@
 package com.xenotactic.korge.utils
 
+import com.xenotactic.ecs.AbstractEntity
 import korlibs.korge.view.*
 import korlibs.math.geom.*
 import com.xenotactic.ecs.StatefulEntity
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
-import com.xenotactic.gamelogic.utils.intersectRectangles
 import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
-import com.xenotactic.gamelogic.utils.xy
-import com.xenotactic.gamelogic.utils.GlobalResources
-import com.xenotactic.gamelogic.utils.WorldUnit
+import com.xenotactic.gamelogic.utils.*
 
 fun GameUnitTuple.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
     return BottomLeftPositionComponent(x, y)
@@ -36,13 +34,28 @@ fun StatefulEntity.intersectsEntity(position: GameUnitTuple, size: GameUnitTuple
     )
 }
 
-fun StatefulEntity.isFullyCoveredBy(entities: Iterable<IRectangleEntity>): Boolean {
-    return entities.any {
-        this.isFullyCoveredBy(it)
+fun AbstractEntity.isFullyCoveredBy(rectangleEntities: Iterable<IRectangleEntity>): Boolean {
+    val thisPosition = get(BottomLeftPositionComponent::class)
+    val thisSize = get(SizeComponent::class)
+
+    val entityPoints = mutableSetOf<GameUnitTuple>()
+    for (i in 0 until thisSize.width) {
+        for (j in 0 until thisSize.height) {
+            entityPoints.add(GameUnitTuple(thisPosition.x + i, thisPosition.y + j))
+        }
     }
+
+    println("entityPoints: $entityPoints")
+
+    for (rectangleEntity in rectangleEntities) {
+        entityPoints -= rectangleEntity.blockGameUnitPoints
+        if (entityPoints.isEmpty()) return true
+    }
+
+    return false
 }
 
-fun StatefulEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
+fun AbstractEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
     val thisPosition = get(BottomLeftPositionComponent::class)
     val thisSize = get(SizeComponent::class)
     return com.xenotactic.gamelogic.utils.isFullyCoveredBy(

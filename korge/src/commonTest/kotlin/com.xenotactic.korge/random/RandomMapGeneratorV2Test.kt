@@ -53,20 +53,20 @@ internal class RandomMapGeneratorV2Test {
         )
 
         assertThat(startEntity).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(17.toGameUnit(), 17.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityStartComponent,
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.START)
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(17.toGameUnit(), 17.toGameUnit()),
+            EntityStartComponent,
+            EntityTypeComponent(MapEntityType.START)
         )
 
         val finishEntity = result.world.getFirstStatefulEntityMatching(
             FamilyConfiguration.allOf(EntityFinishComponent::class)
         )
         assertThat(finishEntity).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(8.toGameUnit(), 1.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityFinishComponent,
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.FINISH)
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(8.toGameUnit(), 1.toGameUnit()),
+            EntityFinishComponent,
+            EntityTypeComponent(MapEntityType.FINISH)
         )
 
         val checkpointEntities = result.world.getStatefulEntitySnapshots(
@@ -74,27 +74,27 @@ internal class RandomMapGeneratorV2Test {
         )
         assertThat(checkpointEntities).hasSize(3)
         val sequenceNumToCheckpointEntity = checkpointEntities.associateBy({
-            it[com.xenotactic.gamelogic.components.EntityCheckpointComponent::class].sequenceNumber
+            it[EntityCheckpointComponent::class].sequenceNumber
         }) {
             it
         }
         assertThat(sequenceNumToCheckpointEntity[0]!!).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(16.toGameUnit(), 7.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityCheckpointComponent(0),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.CHECKPOINT)
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(16.toGameUnit(), 7.toGameUnit()),
+            EntityCheckpointComponent(0),
+            EntityTypeComponent(MapEntityType.CHECKPOINT)
         )
         assertThat(sequenceNumToCheckpointEntity[1]!!).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(13.toGameUnit(), 14.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityCheckpointComponent(1),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.CHECKPOINT)
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(13.toGameUnit(), 14.toGameUnit()),
+            EntityCheckpointComponent(1),
+            EntityTypeComponent(MapEntityType.CHECKPOINT)
         )
         assertThat(sequenceNumToCheckpointEntity[2]!!).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(9.toGameUnit(), 3.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityCheckpointComponent(2),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.CHECKPOINT)
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(9.toGameUnit(), 3.toGameUnit()),
+            EntityCheckpointComponent(2),
+            EntityTypeComponent(MapEntityType.CHECKPOINT)
         )
 
         val teleportInEntities = result.world.getStatefulEntitySnapshots(
@@ -107,72 +107,72 @@ internal class RandomMapGeneratorV2Test {
         assertThat(teleportOutEntities).hasSize(2)
 
         val sequenceNumToTeleportIn = teleportInEntities.associateBy({
-            it[com.xenotactic.gamelogic.components.EntityTeleportInComponent::class].sequenceNumber
+            it[EntityTeleportInComponent::class].sequenceNumber
         }) {
             it
         }
         val sequenceNumToTeleportOut = teleportOutEntities.associateBy({
-            it[com.xenotactic.gamelogic.components.EntityTeleportOutComponent::class].sequenceNumber
+            it[EntityTeleportOutComponent::class].sequenceNumber
         }) {
             it
         }
 
         assertThat(sequenceNumToTeleportIn[0]!!).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.EntityTeleportInComponent(0),
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(4.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.TELEPORT_IN)
+            EntityTeleportInComponent(0),
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(4.toGameUnit(), 2.toGameUnit()),
+            EntityTypeComponent(MapEntityType.TELEPORT_IN)
         )
         assertThat(sequenceNumToTeleportOut[0]!!).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.EntityTeleportOutComponent(0),
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(1.toGameUnit(), 14.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.TELEPORT_OUT)
+            EntityTeleportOutComponent(0),
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(1.toGameUnit(), 14.toGameUnit()),
+            EntityTypeComponent(MapEntityType.TELEPORT_OUT)
         )
         assertThat(sequenceNumToTeleportIn[1]!!).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.EntityTeleportInComponent(1),
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(17.toGameUnit(), 4.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.TELEPORT_IN)
+            EntityTeleportInComponent(1),
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(17.toGameUnit(), 4.toGameUnit()),
+            EntityTypeComponent(MapEntityType.TELEPORT_IN)
         )
         assertThat(sequenceNumToTeleportOut[1]!!).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.EntityTeleportOutComponent(1),
-            com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(17.toGameUnit(), 9.toGameUnit()),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.TELEPORT_OUT)
+            EntityTeleportOutComponent(1),
+            SizeComponent(2.toGameUnit(), 2.toGameUnit()),
+            BottomLeftPositionComponent(17.toGameUnit(), 9.toGameUnit()),
+            EntityTypeComponent(MapEntityType.TELEPORT_OUT)
         )
 
 
         val rockEntities = result.gameWorld.rocks
         assertThat(rockEntities).hasSize(2)
         assertThat(rockEntities[0]).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(10, 17),
-            com.xenotactic.gamelogic.components.SizeComponent(4, 2),
-            com.xenotactic.gamelogic.components.EntityRockComponent,
-            com.xenotactic.gamelogic.components.EntityBlockingComponent,
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.ROCK)
+            BottomLeftPositionComponent(10, 17),
+            SizeComponent(4, 2),
+            EntityRockComponent,
+            EntityBlockingComponent,
+            EntityTypeComponent(MapEntityType.ROCK)
         )
         assertThat(rockEntities[1]).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(16, 15),
-            com.xenotactic.gamelogic.components.SizeComponent(4, 2),
-            com.xenotactic.gamelogic.components.EntityRockComponent,
-            com.xenotactic.gamelogic.components.EntityBlockingComponent,
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.ROCK)
+            BottomLeftPositionComponent(16, 15),
+            SizeComponent(4, 2),
+            EntityRockComponent,
+            EntityBlockingComponent,
+            EntityTypeComponent(MapEntityType.ROCK)
         )
 
         val speedAreas = result.gameWorld.speedAreas
         assertThat(speedAreas).hasSize(2)
         assertThat(speedAreas[0]).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(8, 5),
-            com.xenotactic.gamelogic.components.SizeComponent(20, 20),
-            com.xenotactic.gamelogic.components.EntitySpeedAreaComponent(0.3647766653668693),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.SPEED_AREA)
+            BottomLeftPositionComponent(8, 5),
+            SizeComponent(20, 20),
+            EntitySpeedAreaComponent(0.3647766653668693),
+            EntityTypeComponent(MapEntityType.SPEED_AREA)
         )
         assertThat(speedAreas[1]).containsExactlyComponents(
-            com.xenotactic.gamelogic.components.BottomLeftPositionComponent(14, -16),
-            com.xenotactic.gamelogic.components.SizeComponent(20, 20),
-            com.xenotactic.gamelogic.components.EntitySpeedAreaComponent(0.6793122886342378),
-            com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.SPEED_AREA)
+            BottomLeftPositionComponent(14, -16),
+            SizeComponent(20, 20),
+            EntitySpeedAreaComponent(0.6793122886342378),
+            EntityTypeComponent(MapEntityType.SPEED_AREA)
         )
     }
 

@@ -17,7 +17,7 @@ interface IRectangleEntity {
     val blockGameUnitPoints: Set<GameUnitTuple>
         get() {
             val gameUnitPoints = mutableSetOf<GameUnitTuple>()
-            for (i in 0 until  width) {
+            for (i in 0 until width) {
                 for (j in 0 until height) {
                     gameUnitPoints.add(GameUnitTuple(x + i, y + j))
                 }
