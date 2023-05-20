@@ -1,4 +1,4 @@
-package korge.model
+package com.xenotactic.korge.model
 
 import com.xenotactic.gamelogic.utils.loadGameMapFromGoldenBlocking
 import pathing.PathFinder

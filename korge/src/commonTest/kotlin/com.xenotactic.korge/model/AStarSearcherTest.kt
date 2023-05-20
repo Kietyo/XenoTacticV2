@@ -1,4 +1,4 @@
-package korge.model
+package com.xenotactic.korge.model
 
 import korlibs.logger.Logger
 import korlibs.io.async.suspendTest

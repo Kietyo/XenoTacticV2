@@ -1,4 +1,4 @@
-package korge.model
+package com.xenotactic.korge.model
 
 import korlibs.image.color.MaterialColors
 import com.xenotactic.gamelogic.utils.SpeedAreaColorUtil

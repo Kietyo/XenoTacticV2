@@ -1,4 +1,4 @@
-package test_utils
+package com.xenotactic.korge.test_utils
 
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity

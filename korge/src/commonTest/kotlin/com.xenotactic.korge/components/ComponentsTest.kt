@@ -1,8 +1,6 @@
 package com.xenotactic.korge.components
 
 import korlibs.io.lang.portableSimpleName
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Serializable
 import kotlin.test.Test
 
 internal class ComponentsTest {

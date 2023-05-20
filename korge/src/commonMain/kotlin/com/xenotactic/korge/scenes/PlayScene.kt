@@ -6,9 +6,7 @@ import korlibs.korge.input.keys
 import korlibs.korge.scene.Scene
 import korlibs.korge.view.*
 import com.xenotactic.gamelogic.utils.GameSimulator
-import com.xenotactic.gamelogic.random.MapGeneratorConfiguration
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.gamelogic.random.RandomMapGenerator
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.listeners_event.TowerUpgradeEventListeners
@@ -44,19 +42,13 @@ class PlayScene : Scene() {
 //        val seed = 1338L
 //        val seed = 1349L
 //        val seed = 1350L
-        val seed = 1351L
+//        val seed = 1351L
+        val seed = 1352L
 
         val width = 30.toGameUnit()
         val height = 20.toGameUnit()
 
-        val randomMap = RandomMapGenerator.generate(
-            MapGeneratorConfiguration(
-                seed,
-                width, height, 2, 10, 2, 5
-            )
-        )
-
-        val randomMap2 = RandomMapGeneratorV2.generate(
+        val randomMap = RandomMapGeneratorV2.generate(
             MapGeneratorConfigurationV2(
                 seed,
                 listOf(
@@ -70,9 +62,6 @@ class PlayScene : Scene() {
                 width, height
             )
         )
-
-        println(randomMap)
-
 
         val gameWorld = GameWorld()
         val mouseDragSettingsState = MouseDragSettingsState()
@@ -132,7 +121,7 @@ class PlayScene : Scene() {
         }
 
 //        gameMapApi.placeEntities(randomMap.map.getAllEntities())
-        gameSimulator.gameMapApi.placeEntities(randomMap2.gameWorld)
+        gameSimulator.gameMapApi.placeEntities(randomMap.gameWorld)
 //        gameMapApi.placeEntities(
 //            MapEntity.Start(22, 0),
 //            MapEntity.Finish(3, 2),

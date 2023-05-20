@@ -1,4 +1,4 @@
-package state
+package com.xenotactic.korge.state
 
 import com.kietyo.ktruth.assertThat
 import com.xenotactic.gamelogic.model.MapEntity

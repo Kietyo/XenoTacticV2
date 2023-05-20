@@ -61,6 +61,7 @@ TODO
 - Closeling
 - Multi shot tower
 - Bounce tower
+- Make the game open source
 
 ## Changelog
 

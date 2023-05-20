@@ -1,6 +1,7 @@
-package random
+package com.xenotactic.korge.random
 
 import korlibs.io.lang.assert
+import random.BinomialDistribution
 import kotlin.test.Test
 
 internal class BinomialDistributionTest {

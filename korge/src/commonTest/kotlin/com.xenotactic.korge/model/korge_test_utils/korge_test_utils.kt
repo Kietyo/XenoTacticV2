@@ -1,4 +1,4 @@
-package korge.model.korge_test_utils
+package com.xenotactic.korge.model.korge_test_utils
 
 import korlibs.io.file.VfsFile
 import com.xenotactic.gamelogic.utils.generateRandomFileName

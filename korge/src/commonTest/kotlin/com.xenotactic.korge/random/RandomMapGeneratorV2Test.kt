@@ -2,6 +2,7 @@ package com.xenotactic.korge.random
 
 import com.kietyo.ktruth.assertThat
 import com.xenotactic.ecs.FamilyConfiguration
+import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.random.generators.*
@@ -47,7 +48,9 @@ internal class RandomMapGeneratorV2Test {
 
         assertThat(result.world.numEntities).isEqualTo(13)
 
-        val startEntity = result.world.getFirstStatefulEntityMatching(FamilyConfiguration.allOf(com.xenotactic.gamelogic.components.EntityStartComponent::class))
+        val startEntity = result.world.getFirstStatefulEntityMatching(
+            FamilyConfiguration.allOf(EntityStartComponent::class)
+        )
 
         assertThat(startEntity).containsExactlyComponents(
             com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
@@ -56,7 +59,9 @@ internal class RandomMapGeneratorV2Test {
             com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.START)
         )
 
-        val finishEntity = result.world.getFirstStatefulEntityMatching(FamilyConfiguration.allOf(com.xenotactic.gamelogic.components.EntityFinishComponent::class))
+        val finishEntity = result.world.getFirstStatefulEntityMatching(
+            FamilyConfiguration.allOf(EntityFinishComponent::class)
+        )
         assertThat(finishEntity).containsExactlyComponents(
             com.xenotactic.gamelogic.components.SizeComponent(2.toGameUnit(), 2.toGameUnit()),
             com.xenotactic.gamelogic.components.BottomLeftPositionComponent(8.toGameUnit(), 1.toGameUnit()),
@@ -65,7 +70,7 @@ internal class RandomMapGeneratorV2Test {
         )
 
         val checkpointEntities = result.world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(com.xenotactic.gamelogic.components.EntityCheckpointComponent::class)
+            FamilyConfiguration.allOf(EntityCheckpointComponent::class)
         )
         assertThat(checkpointEntities).hasSize(3)
         val sequenceNumToCheckpointEntity = checkpointEntities.associateBy({
@@ -93,11 +98,11 @@ internal class RandomMapGeneratorV2Test {
         )
 
         val teleportInEntities = result.world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(com.xenotactic.gamelogic.components.EntityTeleportInComponent::class)
+            FamilyConfiguration.allOf(EntityTeleportInComponent::class)
         )
         assertThat(teleportInEntities).hasSize(2)
         val teleportOutEntities = result.world.getStatefulEntitySnapshots(
-            FamilyConfiguration.allOf(com.xenotactic.gamelogic.components.EntityTeleportOutComponent::class)
+            FamilyConfiguration.allOf(EntityTeleportOutComponent::class)
         )
         assertThat(teleportOutEntities).hasSize(2)
 
@@ -169,5 +174,36 @@ internal class RandomMapGeneratorV2Test {
             com.xenotactic.gamelogic.components.EntitySpeedAreaComponent(0.6793122886342378),
             com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.SPEED_AREA)
         )
+    }
+
+    @Test
+    fun regressionTest1() {
+        val seed = 1352L
+
+        val width = 30.toGameUnit()
+        val height = 20.toGameUnit()
+
+        val randomMap = RandomMapGeneratorV2.generate(
+            MapGeneratorConfigurationV2(
+                seed,
+                listOf(
+                    StartGenerator,
+                    FinishGenerator,
+                    CheckpointsGenerator(2),
+                    RocksGenerator(10),
+                    TeleportsGenerator(2),
+                    SpeedAreaGenerator(5)
+                ),
+                width, height
+            )
+        )
+
+        assertThat(randomMap).isInstanceOf<MapGeneratorResultV2.Success>()
+
+        val pathFindingResult = randomMap.gameWorld.getPathFindingResult(
+            width, height
+        )
+
+        assertThat(pathFindingResult).isInstanceOf<MapGeneratorResultV2.Success>()
     }
 }
