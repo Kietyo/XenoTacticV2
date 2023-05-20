@@ -152,4 +152,11 @@ class GameMapApi(
         return 1E3 / weaponSpeed
     }
 
+    fun isAtMaxSupply(): Boolean {
+        val currentSupplyLimit = gameplayState.initialMaxSupply
+        val towers = gameWorld.towers
+        require(towers.size <= currentSupplyLimit)
+        return towers.size == currentSupplyLimit
+    }
+
 }

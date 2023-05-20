@@ -61,7 +61,7 @@ fun AbstractEntity.isFullyCoveredBy(rectangleEntities: Iterable<IRectangleEntity
 fun AbstractEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
     val thisPosition = get(BottomLeftPositionComponent::class)
     val thisSize = get(SizeComponent::class)
-    return com.xenotactic.gamelogic.utils.isFullyCoveredBy(
+    return isFullyCoveredBy(
         thisPosition.x.toDouble(),
         thisPosition.y.toDouble(),
         thisSize.width.toDouble(),

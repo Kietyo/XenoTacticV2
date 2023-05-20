@@ -139,6 +139,11 @@ class GameWorld(
             )
         )
 
+    val towers
+        get() = world.getStatefulEntitySnapshots(
+            FamilyConfiguration.allOf(EntityTowerComponent::class)
+        )
+
     val blockingEntities
         get() = world.getStatefulEntitySnapshots(
             FamilyConfiguration.allOf(EntityBlockingComponent::class)

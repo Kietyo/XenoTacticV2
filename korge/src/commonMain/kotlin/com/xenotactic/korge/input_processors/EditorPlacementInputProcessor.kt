@@ -161,6 +161,14 @@ class EditorPlacementInputProcessor(
                             )
                             return
                         }
+                        if (gameMapApi.isAtMaxSupply()) {
+                            engine.eventBus.send(
+                                PlaceEntityErrorEvent(
+                                    "Unable to place '${editorState.entityTypeToPlace}': Supply limit"
+                                )
+                            )
+                            return
+                        }
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     }
