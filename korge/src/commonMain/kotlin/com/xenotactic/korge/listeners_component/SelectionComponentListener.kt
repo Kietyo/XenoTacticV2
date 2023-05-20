@@ -1,17 +1,17 @@
 package com.xenotactic.korge.listeners_component
 
-import korlibs.korge.view.Graphics
-import korlibs.korge.view.addTo
-import korlibs.image.color.Colors
-import korlibs.math.geom.vector.StrokeInfo
 import com.xenotactic.ecs.ComponentListener
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.SelectedComponent
-import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.toWorldDimensions
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.ui.UIMapV2
+import korlibs.image.color.Colors
+import korlibs.korge.view.Graphics
+import korlibs.korge.view.addTo
 import korlibs.korge.view.align.centerOn
+import korlibs.math.geom.vector.StrokeInfo
 
 class SelectionComponentListener(
     val engine: Engine
@@ -21,7 +21,8 @@ class SelectionComponentListener(
     private val SELECTION_COLOR = Colors.YELLOW
 
     override fun onAddOrReplace(entityId: EntityId, old: SelectedComponent?, new: SelectedComponent) {
-        val uiEntityContainerComponent = world.get(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
+        val uiEntityContainerComponent =
+            world.get(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
         val sizeComponent = world[entityId, com.xenotactic.gamelogic.components.SizeComponent::class]
 
         val (worldWidth, worldHeight) = toWorldDimensions(sizeComponent.width, sizeComponent.height, uiMap.gridSize)
@@ -43,7 +44,8 @@ class SelectionComponentListener(
 
     override fun onRemove(entityId: EntityId, component: SelectedComponent) {
         println("Removed selection for entity: $entityId")
-        val uiEntityContainerComponent = world.getOrNull(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
+        val uiEntityContainerComponent =
+            world.getOrNull(entityId, com.xenotactic.gamelogic.components.UIEntityContainerComponent::class)
         if (uiEntityContainerComponent == null) {
             // This entity was already removed.
             return

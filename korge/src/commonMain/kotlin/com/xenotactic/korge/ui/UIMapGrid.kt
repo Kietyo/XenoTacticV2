@@ -1,13 +1,13 @@
 package com.xenotactic.korge.ui
 
-import korlibs.logger.Logger
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.size
+import korlibs.image.color.MaterialColors
 import korlibs.korge.ui.uiScrollable
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
-import korlibs.image.color.MaterialColors
-import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.gamelogic.utils.size
+import korlibs.logger.Logger
 
 inline fun Container.uiMapGrid(
     eventBus: EventBus,
@@ -57,7 +57,7 @@ class UIMapGrid(
 
         this.uiScrollable(
             gameMapViewWidth size
-            gameMapViewHeight,
+                    gameMapViewHeight,
             config = {
                 this.backgroundColor = MaterialColors.GRAY_600
             }

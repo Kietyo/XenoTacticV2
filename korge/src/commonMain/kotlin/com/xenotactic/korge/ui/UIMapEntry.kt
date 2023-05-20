@@ -1,24 +1,20 @@
 package com.xenotactic.korge.ui
 
-import korlibs.logger.Logger
+import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.size
+import korlibs.image.color.Colors
+import korlibs.io.async.Signal
 import korlibs.korge.input.MouseEvents
 import korlibs.korge.input.onClick
 import korlibs.korge.input.onOut
 import korlibs.korge.input.onOver
 import korlibs.korge.ui.uiButton
 import korlibs.korge.ui.uiVerticalStack
-import korlibs.korge.view.Container
-import korlibs.korge.view.addTo
+import korlibs.korge.view.*
 import korlibs.korge.view.align.alignLeftToRightOf
 import korlibs.korge.view.align.alignTopToTopOf
-import korlibs.korge.view.alpha
 import korlibs.korge.view.align.centerOn
-import korlibs.korge.view.roundRect
-import korlibs.korge.view.solidRect
-import korlibs.image.color.Colors
-import korlibs.io.async.Signal
-import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.utils.size
+import korlibs.logger.Logger
 import korlibs.math.geom.RectCorners
 import kotlin.math.min
 

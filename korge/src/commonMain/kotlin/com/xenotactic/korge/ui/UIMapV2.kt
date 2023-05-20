@@ -1,35 +1,24 @@
 package com.xenotactic.korge.ui
 
-import korlibs.korge.view.*
-import korlibs.korge.view.vector.gpuGraphics
+import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.events.ResizeMapEvent
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.state.GameMapPathState
+import com.xenotactic.gamelogic.utils.*
+import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.utils.toWorldCoordinates
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.image.text.TextAlignment
-
+import korlibs.korge.view.*
+import korlibs.korge.view.vector.gpuGraphics
 import korlibs.math.geom.Point
-
 import korlibs.math.geom.vector.StrokeInfo
-import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.gamelogic.utils.BORDER_RATIO
-import com.xenotactic.gamelogic.utils.GRID_LINES_RATIO
-import com.xenotactic.gamelogic.utils.GRID_NUMBERS_RATIO
-import com.xenotactic.gamelogic.utils.GRID_SIZE
-import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
-import com.xenotactic.gamelogic.utils.size
-import com.xenotactic.gamelogic.utils.xy
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.utils.*
-import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.events.ResizeMapEvent
-import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
-import com.xenotactic.korge.utils.toWorldCoordinates
-import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.gamelogic.state.GameMapDimensionsState
-import com.xenotactic.gamelogic.state.GameMapPathState
-import kotlin.ranges.until
 
 data class UIMapSettingsV2(
     val gridSize: Float = GRID_SIZE,
@@ -270,7 +259,8 @@ class UIMapV2(
                 textSize = gridNumberFontSize,
                 alignment = TextAlignment.BASELINE_LEFT
             ).xy(
-                mapWidth.toWorldUnit(gridSize) + 10.toWorldUnit(), mapHeight.toWorldUnit(gridSize) - j.toWorldUnit(gridSize)
+                mapWidth.toWorldUnit(gridSize) + 10.toWorldUnit(),
+                mapHeight.toWorldUnit(gridSize) - j.toWorldUnit(gridSize)
             )
         }
     }

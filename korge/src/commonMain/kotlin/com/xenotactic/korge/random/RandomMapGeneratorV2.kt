@@ -1,13 +1,14 @@
 package com.xenotactic.korge.random
 
-import korlibs.logger.Logger
+import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.pathing.SearcherInterface
 import com.xenotactic.gamelogic.utils.GAME_HEIGHT
 import com.xenotactic.gamelogic.utils.GAME_WIDTH
-import com.xenotactic.gamelogic.model.*
-import pathing.AStarSearcher
-import com.xenotactic.gamelogic.pathing.SearcherInterface
 import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.model.GameWorld
+import korlibs.logger.Logger
+import pathing.AStarSearcher
 import kotlin.random.Random
 
 class RandomMapGeneratorMaxAttemptsError(
@@ -105,7 +106,8 @@ sealed class MapGeneratorResultV2 {
 class RandomMapGeneratorV2 private constructor(private val config: MapGeneratorConfigurationV2) {
     private val gameWorld: GameWorld = GameWorld()
     private val random: Random = Random(config.seed)
-    private val context: GenerationContext = GenerationContext(config.width, config.height, gameWorld, random, config.failureAfterTotalAttempts)
+    private val context: GenerationContext =
+        GenerationContext(config.width, config.height, gameWorld, random, config.failureAfterTotalAttempts)
 
     companion object {
         /**
@@ -137,100 +139,99 @@ class RandomMapGeneratorV2 private constructor(private val config: MapGeneratorC
             }
         }
 
-//        var currentPath = PathFinder.getShortestPath(gameWorld, config.searcher)!!
-//        var attemptNum = 0
-//        val addedRocks = mutableListOf<MapEntity.Rock>()
-//        for (i in 0 until config.rocks) {
-//            var rock: MapEntity.Rock
-//            var newRockList: List<MapEntity.Rock>
-//
-//            // Keep generating candidates for the rock
-//            do {
-//                numTotalAttempts++
-//                attemptNum++
-//                //                if (attemptNum > 100) {
-//                //                    println(
-//                //                        """
-//                //                        start: $start,
-//                //                        finish: $finish,
-//                //                        addedCheckPoints: $addedCheckPoints,
-//                //                        addedTpOut: $addedTpOut,
-//                //                        addedRocks: $addedRocks
-//                //                    """.trimIndent()
-//                //                    )
-//                //                }
-//                if (numTotalAttempts >= config.failureAfterTotalAttempts) {
-//                    return failure("Failed to create place ROCK $i.")
-//                }
-//                val rockType = if (random.nextBoolean()) MapEntity.ROCK_2X4 else MapEntity.ROCK_4X2
-//                val (rockX, rockY) = getRandomPointWithinMapBounds(rockType)
-//                rock = rockType.copy(x = rockX, y = rockY)
-//                newRockList = addedRocks + rock
-//                if (
-//                    start.isFullyCoveredBy(newRockList) ||
-//                    finish.isFullyCoveredBy(newRockList) ||
-//                    addedCheckpoints.any { it.isFullyCoveredBy(newRockList) } ||
-//                    // TODO: This is not enough, rocks still get placed on top of tp in/outs
-//                    addedTpIns.any { it.isFullyCoveredBy(newRockList) } ||
-//                    addedTpOuts.any { it.isFullyCoveredBy(newRockList) }
-//                ) {
-//                    continue
-//                }
-//
-//                if (currentPath.intersectsRectangle(rock.getRectangle())
-//                ) {
-//                    val possibleNewPath = PathFinder.getShortestPathWithBlockingEntities(
-//                        gameWorld,
-//                        listOf(rock)
-//                    ) ?: continue
-//                    currentPath = possibleNewPath
-//                }
-//                break
-//            } while (true)
-//            addedRocks.add(rock)
-//            gameWorld.placeEntity(rock)
-//        }
-//
-//        repeat(config.speedAreas) {
-//            val radius = random.nextInt(1, 11)
-//            val diameter = radius * 2
-//            val speedEffect = random.nextDouble(0.25, 1.90)
-//
-//            val (speedX, speedY) = getRandomPointPartiallyInMap(diameter, diameter)
-//            gameWorld.placeEntity(MapEntity.SpeedArea(speedX, speedY, radius.toGameUnit(), speedEffect))
-//        }
+        //        var currentPath = PathFinder.getShortestPath(gameWorld, config.searcher)!!
+        //        var attemptNum = 0
+        //        val addedRocks = mutableListOf<MapEntity.Rock>()
+        //        for (i in 0 until config.rocks) {
+        //            var rock: MapEntity.Rock
+        //            var newRockList: List<MapEntity.Rock>
+        //
+        //            // Keep generating candidates for the rock
+        //            do {
+        //                numTotalAttempts++
+        //                attemptNum++
+        //                //                if (attemptNum > 100) {
+        //                //                    println(
+        //                //                        """
+        //                //                        start: $start,
+        //                //                        finish: $finish,
+        //                //                        addedCheckPoints: $addedCheckPoints,
+        //                //                        addedTpOut: $addedTpOut,
+        //                //                        addedRocks: $addedRocks
+        //                //                    """.trimIndent()
+        //                //                    )
+        //                //                }
+        //                if (numTotalAttempts >= config.failureAfterTotalAttempts) {
+        //                    return failure("Failed to create place ROCK $i.")
+        //                }
+        //                val rockType = if (random.nextBoolean()) MapEntity.ROCK_2X4 else MapEntity.ROCK_4X2
+        //                val (rockX, rockY) = getRandomPointWithinMapBounds(rockType)
+        //                rock = rockType.copy(x = rockX, y = rockY)
+        //                newRockList = addedRocks + rock
+        //                if (
+        //                    start.isFullyCoveredBy(newRockList) ||
+        //                    finish.isFullyCoveredBy(newRockList) ||
+        //                    addedCheckpoints.any { it.isFullyCoveredBy(newRockList) } ||
+        //                    // TODO: This is not enough, rocks still get placed on top of tp in/outs
+        //                    addedTpIns.any { it.isFullyCoveredBy(newRockList) } ||
+        //                    addedTpOuts.any { it.isFullyCoveredBy(newRockList) }
+        //                ) {
+        //                    continue
+        //                }
+        //
+        //                if (currentPath.intersectsRectangle(rock.getRectangle())
+        //                ) {
+        //                    val possibleNewPath = PathFinder.getShortestPathWithBlockingEntities(
+        //                        gameWorld,
+        //                        listOf(rock)
+        //                    ) ?: continue
+        //                    currentPath = possibleNewPath
+        //                }
+        //                break
+        //            } while (true)
+        //            addedRocks.add(rock)
+        //            gameWorld.placeEntity(rock)
+        //        }
+        //
+        //        repeat(config.speedAreas) {
+        //            val radius = random.nextInt(1, 11)
+        //            val diameter = radius * 2
+        //            val speedEffect = random.nextDouble(0.25, 1.90)
+        //
+        //            val (speedX, speedY) = getRandomPointPartiallyInMap(diameter, diameter)
+        //            gameWorld.placeEntity(MapEntity.SpeedArea(speedX, speedY, radius.toGameUnit(), speedEffect))
+        //        }
 
         return MapGeneratorResultV2.Success(config.width, config.height, gameWorld)
     }
 
+    //    fun createEntity(entityType: MapEntity): MapEntity {
+    //        return when (entityType) {
+    //            is MapEntity.Start -> MapEntity.Start(getRandomPointWithinMapBounds(entityType))
+    //            is MapEntity.Finish -> MapEntity.Finish(getRandomPointWithinMapBounds(entityType))
+    //            is MapEntity.Checkpoint -> TODO()
+    //            is MapEntity.Rock -> TODO()
+    //            is MapEntity.Tower -> TODO()
+    //            is MapEntity.TeleportIn -> TODO()
+    //            is MapEntity.TeleportOut -> TODO()
+    //            is MapEntity.SmallBlocker -> TODO()
+    //            is MapEntity.SpeedArea -> TODO()
+    //        }
+    //    }
 
-//    fun createEntity(entityType: MapEntity): MapEntity {
-//        return when (entityType) {
-//            is MapEntity.Start -> MapEntity.Start(getRandomPointWithinMapBounds(entityType))
-//            is MapEntity.Finish -> MapEntity.Finish(getRandomPointWithinMapBounds(entityType))
-//            is MapEntity.Checkpoint -> TODO()
-//            is MapEntity.Rock -> TODO()
-//            is MapEntity.Tower -> TODO()
-//            is MapEntity.TeleportIn -> TODO()
-//            is MapEntity.TeleportOut -> TODO()
-//            is MapEntity.SmallBlocker -> TODO()
-//            is MapEntity.SpeedArea -> TODO()
-//        }
-//    }
-
-//    fun getRandomPointPartiallyInMap(entityWidth: Int, entityHeight: Int): GameUnitPoint {
-//        return GameUnitPoint(
-//            random.nextInt(-entityWidth + 1, gameWorld.width.toInt() - 1),
-//            random.nextInt(-entityHeight + 1, gameWorld.height.toInt() - 1)
-//        )
-//    }
-//
-//    fun getRandomPointWithinMapBounds(entityType: MapEntity): GameUnitPoint {
-//        return GameUnitPoint(
-//            random.nextInt(0, gameWorld.width.toInt() - entityType.width.toInt() + 1),
-//            random.nextInt(0, gameWorld.height.toInt() - entityType.height.toInt() + 1)
-//        )
-//    }
+    //    fun getRandomPointPartiallyInMap(entityWidth: Int, entityHeight: Int): GameUnitPoint {
+    //        return GameUnitPoint(
+    //            random.nextInt(-entityWidth + 1, gameWorld.width.toInt() - 1),
+    //            random.nextInt(-entityHeight + 1, gameWorld.height.toInt() - 1)
+    //        )
+    //    }
+    //
+    //    fun getRandomPointWithinMapBounds(entityType: MapEntity): GameUnitPoint {
+    //        return GameUnitPoint(
+    //            random.nextInt(0, gameWorld.width.toInt() - entityType.width.toInt() + 1),
+    //            random.nextInt(0, gameWorld.height.toInt() - entityType.height.toInt() + 1)
+    //        )
+    //    }
 
 }
 

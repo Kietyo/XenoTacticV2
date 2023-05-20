@@ -1,8 +1,8 @@
 package com.xenotactic.korge.state
 
-import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.utils.State
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
@@ -13,7 +13,7 @@ class EditorState(
     val engine: Engine,
     var isEditingEnabled: Boolean = false,
     var entityTypeToPlace: MapEntityType = MapEntityType.ROCK
-): State {
+) : State {
     private val DEFAULT_NOTIFICATION_TEXT = "N/A"
 
     private val uiMapV2 = engine.injections.getSingleton<UIMapV2>()

@@ -1,16 +1,16 @@
 package com.xenotactic.korge.ui
 
-import korlibs.korge.view.*
-import korlibs.image.color.Colors
-import korlibs.image.color.MaterialColors
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.GlobalResources
 import com.xenotactic.gamelogic.utils.toWorldUnit
-import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
 import com.xenotactic.korge.utils.createUIEntityContainerForTower
 import com.xenotactic.korge.utils.distributeVertically
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import korlibs.io.util.toStringDecimal
+import korlibs.korge.view.*
 import korlibs.korge.view.align.*
 
 class UITowerDetails(
@@ -122,7 +122,6 @@ class UITowerDetails(
                     )
                 )
             }
-
 
             val iconsContainer = container {
                 val iconPadding = 15.0

@@ -1,27 +1,21 @@
 package com.xenotactic.korge.input_processors
 
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.GameMapApi
+import com.xenotactic.korge.state.DeadUIZonesState
 import korlibs.event.EventListener
 import korlibs.event.MouseButton
 import korlibs.event.MouseEvent
-
-import korlibs.korge.view.Container
-import korlibs.korge.view.Views
-import korlibs.korge.view.alpha
-import korlibs.korge.view.solidRect
-import korlibs.korge.view.visible
-import korlibs.korge.view.xy
 import korlibs.image.color.Colors
+import korlibs.korge.view.*
 import korlibs.math.geom.Point
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.korge.state.DeadUIZonesState
-import com.xenotactic.gamelogic.utils.GameMapApi
 
 class SelectorMouseProcessorV2(
     val views: Views,
     val view: Container,
     val engine: Engine,
     var isEnabled: Boolean = true
-)  {
+) {
 
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val deadUIZonesState = engine.stateInjections.getSingleton<DeadUIZonesState>()
@@ -140,15 +134,15 @@ class SelectorMouseProcessorV2(
                         addIfNotExists(com.xenotactic.gamelogic.components.PreSelectionComponent)
                     }
                 }
-//                engine.eventBus.send(
-//                    SelectedUIEntitiesEvent(
-//                        SelectionType.PRE_SELECTION,
-//                        previousSelectionSnapshot,
-//                        intersectingEntities
-//                    )
-//                )
+                //                engine.eventBus.send(
+                //                    SelectedUIEntitiesEvent(
+                //                        SelectionType.PRE_SELECTION,
+                //                        previousSelectionSnapshot,
+                //                        intersectingEntities
+                //                    )
+                //                )
             }
-//            previousSelectionSnapshot = intersectingEntities
+            //            previousSelectionSnapshot = intersectingEntities
         }
 
     }

@@ -1,19 +1,20 @@
 package com.xenotactic.korge.ui
 
-import korlibs.korge.annotations.KorgeExperimental
-import korlibs.korge.input.onClick
-import korlibs.korge.ui.*
-import korlibs.korge.view.*
 import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.state.GameMapDimensionsState
 import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.korge.events.EscapeButtonActionEvent
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.PlacedEntityEvent
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.gamelogic.state.GameMapDimensionsState
-import com.xenotactic.gamelogic.utils.size
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.input.onClick
+import korlibs.korge.ui.*
+import korlibs.korge.view.Container
+import korlibs.korge.view.SContainer
 import korlibs.korge.view.align.alignBottomToBottomOf
 import korlibs.korge.view.align.centerOn
 import korlibs.korge.view.align.centerXOn
@@ -126,7 +127,7 @@ class UIEditorButtonsV2(
             editorState.switchToPlayingMode()
         }
 
-        val deleteEntitiesButton = UIButton(text="Delete entities")
+        val deleteEntitiesButton = UIButton(text = "Delete entities")
 
         engine.eventBus.register<EntitySelectionChangedEvent> {
             println("EntitySelectionChangedEvent: Went in here?! ${engine.gameWorld.selectionFamily.getList()}")
@@ -143,7 +144,7 @@ class UIEditorButtonsV2(
     fun resize() {
         centerXOn(this.baseView)
         alignBottomToBottomOf(this.baseView)
-//        alignBottomToBottomOfWindow()
+        //        alignBottomToBottomOfWindow()
     }
 
 }

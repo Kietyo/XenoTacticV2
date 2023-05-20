@@ -1,9 +1,9 @@
 package com.xenotactic.korge.ui
 
-import korlibs.korge.view.*
+import com.xenotactic.gamelogic.utils.GlobalResources
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
-import com.xenotactic.gamelogic.utils.GlobalResources
+import korlibs.korge.view.*
 import korlibs.korge.view.align.*
 
 class UITooltipDescription(
@@ -11,7 +11,7 @@ class UITooltipDescription(
     supplyCost: Int? = 1,
     titleText: String = "BASIC TOWER",
     descriptionText: String = "A basic tower."
-): Container() {
+) : Container() {
     private var goldCostSectionText: Text? = null
 
     init {

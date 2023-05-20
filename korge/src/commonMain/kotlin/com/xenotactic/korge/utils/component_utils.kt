@@ -1,15 +1,18 @@
 package com.xenotactic.korge.utils
 
 import com.xenotactic.ecs.AbstractEntity
-import korlibs.korge.view.*
-import korlibs.math.geom.*
 import com.xenotactic.ecs.StatefulEntity
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.IRectangleEntity
-import com.xenotactic.gamelogic.views.EightDirection
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
+import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.utils.*
+import com.xenotactic.gamelogic.views.EightDirection
+import korlibs.korge.view.*
+import korlibs.math.geom.Anchor
+import korlibs.math.geom.Angle
+import korlibs.math.geom.Point
+import korlibs.math.geom.degrees
 
 fun GameUnitTuple.toBottomLeftPositionComponent(): BottomLeftPositionComponent {
     return BottomLeftPositionComponent(x, y)
@@ -71,7 +74,7 @@ fun AbstractEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
 }
 
 fun intersectRectangles(thisPosition: GameUnitTuple, thisSize: GameUnitTuple,
-                        otherPosition: GameUnitTuple, otherSize: GameUnitTuple
+    otherPosition: GameUnitTuple, otherSize: GameUnitTuple
 ): Boolean {
     return intersectRectangles(
         thisPosition.x.toDouble(),
@@ -143,7 +146,7 @@ fun createUIEntityContainerForTower(
         smoothing = false
         anchor(Anchor.CENTER)
         xy(worldWidth / 2, worldHeight / 2)
-//                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toFloat() * 20.0/32, worldHeight.toFloat() * 8.0/32))
+        //                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toFloat() * 20.0/32, worldHeight.toFloat() * 8.0/32))
         scaleWhileMaintainingAspect(
             ScalingOption.ByWidthAndHeight(
                 worldWidth.toDouble(),

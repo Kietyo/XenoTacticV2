@@ -1,23 +1,23 @@
 package com.xenotactic.korge.input_processors
 
-import korlibs.event.EventListener
-import korlibs.event.MouseButton
-import korlibs.event.MouseEvent
-import korlibs.korge.view.View
-import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.model.IPoint
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.minus
 import com.xenotactic.gamelogic.utils.times
 import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.events.LeftControlAndEqual
 import com.xenotactic.korge.events.LeftControlAndMinus
+import korlibs.event.EventListener
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
+import korlibs.korge.view.View
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
 const val ZOOM_DELTA = 0.04
 
-class CameraInputProcessor(val view: View, val engine: Engine){
+class CameraInputProcessor(val view: View, val engine: Engine) {
     var touchedDownX = 0.0
     var touchedDownY = 0.0
     var isMouseTouchedDown = false
@@ -42,33 +42,33 @@ class CameraInputProcessor(val view: View, val engine: Engine){
     private fun onMouseEvent(event: MouseEvent) {
         //        println("went here? $event")
         when (event.type) {
-//            MouseEvent.Type.DRAG -> {
-//                //				println(
-//                //					"view.x: ${view.x}, view.y: ${view.y}," +
-//                //							" view.width: ${view.width}, view.height: ${view
-//                //							.height}, " +
-//                //							"view.globalXY(): ${view.globalXY()}, view.scale:
-//                //							${view.scale}, " +
-//                //							"view.scaledHeight: ${view.scaledHeight}, view
-//                //							.scaledWidth: ${
-//                //								view
-//                //									.scaledWidth
-//                //							}, " +
-//                //							"\nview.mouse.currentPosGlobal: ${view.mouse
-//                //							.currentPosGlobal}, " +
-//                //							"view.mouse.currentPosLocal: ${view.mouse
-//                //							.currentPosLocal}, " +
-//                //							"view.mouse.currentPosStage: ${view.mouse
-//                //							.currentPosStage}"
-//                //				)
-//                //				println(it)
-//                touchDragged(event.x, event.y)
-//            }
-//            MouseEvent.Type.UP -> touchUp()
-//            MouseEvent.Type.DOWN -> touchDown(
-//                event.x, event.y,
-//                event.button
-//            )
+            //            MouseEvent.Type.DRAG -> {
+            //                //				println(
+            //                //					"view.x: ${view.x}, view.y: ${view.y}," +
+            //                //							" view.width: ${view.width}, view.height: ${view
+            //                //							.height}, " +
+            //                //							"view.globalXY(): ${view.globalXY()}, view.scale:
+            //                //							${view.scale}, " +
+            //                //							"view.scaledHeight: ${view.scaledHeight}, view
+            //                //							.scaledWidth: ${
+            //                //								view
+            //                //									.scaledWidth
+            //                //							}, " +
+            //                //							"\nview.mouse.currentPosGlobal: ${view.mouse
+            //                //							.currentPosGlobal}, " +
+            //                //							"view.mouse.currentPosLocal: ${view.mouse
+            //                //							.currentPosLocal}, " +
+            //                //							"view.mouse.currentPosStage: ${view.mouse
+            //                //							.currentPosStage}"
+            //                //				)
+            //                //				println(it)
+            //                touchDragged(event.x, event.y)
+            //            }
+            //            MouseEvent.Type.UP -> touchUp()
+            //            MouseEvent.Type.DOWN -> touchDown(
+            //                event.x, event.y,
+            //                event.button
+            //            )
             MouseEvent.Type.SCROLL -> scrolled(event.scrollDeltaYPixels)
             else -> Unit
         }
@@ -121,6 +121,7 @@ class CameraInputProcessor(val view: View, val engine: Engine){
                 zoomOutCamera()
 
             }
+
             amountY < 0.5 -> {
                 zoomInCamera()
             }

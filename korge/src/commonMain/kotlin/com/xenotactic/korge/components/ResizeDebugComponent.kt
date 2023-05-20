@@ -1,16 +1,9 @@
 package com.xenotactic.korge.components
 
+import com.xenotactic.korge.utils.getReferenceParent
 import korlibs.event.EventListener
 import korlibs.event.ReshapeEvent
-import korlibs.korge.view.Container
-import korlibs.korge.view.Text
-import korlibs.korge.view.getVisibleGlobalArea
-import korlibs.korge.view.getVisibleLocalArea
-import korlibs.korge.view.getVisibleWindowArea
-import korlibs.korge.view.text
-import korlibs.korge.view.visible
-import korlibs.korge.view.xy
-import com.xenotactic.korge.utils.getReferenceParent
+import korlibs.korge.view.*
 
 class ResizeDebugComponent(val view: Container) {
     val text: Text = view.text("", textSize = 12f)

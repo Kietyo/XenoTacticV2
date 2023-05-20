@@ -1,6 +1,5 @@
 package com.xenotactic.korge.listeners_event
 
-import korlibs.logger.Logger
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.state.GameplayState
@@ -10,6 +9,7 @@ import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.events.UpgradedTowerDamageEvent
 import com.xenotactic.korge.events.UpgradedTowerSpeedEvent
+import korlibs.logger.Logger
 
 class TowerUpgradeEventListeners(
     val engine: Engine

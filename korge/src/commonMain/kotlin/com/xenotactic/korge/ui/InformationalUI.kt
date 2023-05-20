@@ -1,20 +1,15 @@
 package com.xenotactic.korge.ui
 
-import korlibs.event.EventListener
-import korlibs.event.ReshapeEvent
-import korlibs.korge.view.Container
-import korlibs.korge.view.Text
-import korlibs.korge.view.getVisibleLocalArea
-import korlibs.korge.view.getVisibleWindowArea
-import korlibs.korge.view.text
-import korlibs.korge.view.xy
-import korlibs.math.geom.Point
-import korlibs.math.roundDecimalPlaces
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.korge.components.GameMapControllerEComponent
-import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.korge.components.GameMapControllerEComponent
+import korlibs.event.EventListener
+import korlibs.event.ReshapeEvent
+import korlibs.korge.view.*
+import korlibs.math.geom.Point
+import korlibs.math.roundDecimalPlaces
 
 class InformationalUI(
     val view: Container, val engine: Engine,

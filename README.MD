@@ -62,6 +62,8 @@ TODO
 - Multi shot tower
 - Bounce tower
 - Make the game open source
+- Pressing show range multiple times results in exceptions
+- 
 
 ## Changelog
 

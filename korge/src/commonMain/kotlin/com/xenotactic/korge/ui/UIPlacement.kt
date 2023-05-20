@@ -1,6 +1,18 @@
 package com.xenotactic.korge.ui
 
-import korlibs.logger.Logger
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.korge.components.GameMapControllerEComponent
+import com.xenotactic.korge.components.ObjectPlacementEComponent
+import com.xenotactic.korge.events.EscapeButtonActionEvent
+import com.xenotactic.korge.events.ExitGameSceneEvent
+import com.xenotactic.korge.events.PointerActionChangeEvent
+import com.xenotactic.korge.events.SpawnCreepEvent
+import com.xenotactic.korge.input_processors.PointerAction
+import korlibs.io.async.AsyncSignal
 import korlibs.korge.input.onClick
 import korlibs.korge.ui.UIVerticalStack
 import korlibs.korge.ui.uiButton
@@ -9,24 +21,8 @@ import korlibs.korge.ui.uiWindow
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
 import korlibs.korge.view.align.centerOnStage
-import korlibs.io.async.AsyncSignal
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.korge.components.GameMapControllerEComponent
-import com.xenotactic.korge.components.ObjectPlacementEComponent
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.korge.events.EscapeButtonActionEvent
-import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.events.ExitGameSceneEvent
-import com.xenotactic.korge.events.PointerActionChangeEvent
-import com.xenotactic.korge.events.SpawnCreepEvent
-import com.xenotactic.korge.input_processors.PointerAction
-import solver.OptimizationGoal
-import solver.SolverParams
-import solver.SolverResult
-import solver.SolverSettings
-import solver.StandardSolver3
+import korlibs.logger.Logger
+import solver.*
 
 inline fun Container.uiPlacement(engine: Engine, eventBus: EventBus): UIPlacement =
     UIPlacement(engine, eventBus).addTo(this)
@@ -136,15 +132,15 @@ class UIPlacement(
             }
         }
 
-//        onStageResizedV2(true) { width, height ->
-//            logger.debug {
-//                "stage resized? width: $width, height: $height"
-//            }
-//
-//            placementContainer.alignRightToRightOfWindow()
-////            placementContainer.alignBottomToBottomOfWindow(width, height)
-//            placementContainer.alignBottomToBottomOf(placementContainer.getReferenceParent())
-//        }
+        //        onStageResizedV2(true) { width, height ->
+        //            logger.debug {
+        //                "stage resized? width: $width, height: $height"
+        //            }
+        //
+        //            placementContainer.alignRightToRightOfWindow()
+        ////            placementContainer.alignBottomToBottomOfWindow(width, height)
+        //            placementContainer.alignBottomToBottomOf(placementContainer.getReferenceParent())
+        //        }
 
         eventBus.register<EscapeButtonActionEvent> {
             handleEscapeAction()

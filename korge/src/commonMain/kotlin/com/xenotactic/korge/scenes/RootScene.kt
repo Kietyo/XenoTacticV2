@@ -1,15 +1,15 @@
 package com.xenotactic.korge.scenes
 
-import korlibs.logger.Logger
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.GlobalResources
+import com.xenotactic.korge.events.PlayMapEvent
+import com.xenotactic.korge.utils.MapBridge
 import korlibs.korge.scene.Scene
 import korlibs.korge.view.SContainer
 import korlibs.korge.view.Views
 import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.text
-import com.xenotactic.korge.utils.MapBridge
-import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.gamelogic.utils.GlobalResources
-import com.xenotactic.korge.events.PlayMapEvent
+import korlibs.logger.Logger
 
 lateinit var VIEWS_INSTANCE: Views
 
@@ -24,17 +24,17 @@ class RootScene(
 
         GlobalResources.init()
 
-//        val test = resourcesVfs["test.txt"]
-//
-//        logger.info {
-//            """
-//                test: $test
-//                test.path: ${test.path}
-//                test.absolutePath: ${test.absolutePath}
-//            """.trimIndent()
-//        }
-//
-//        test.writeString("test string")
+        //        val test = resourcesVfs["test.txt"]
+        //
+        //        logger.info {
+        //            """
+        //                test: $test
+        //                test.path: ${test.path}
+        //                test.absolutePath: ${test.absolutePath}
+        //            """.trimIndent()
+        //        }
+        //
+        //        test.writeString("test string")
 
         globalEventBus.register<PlayMapEvent> {
             logger.info {
@@ -44,10 +44,10 @@ class RootScene(
             sceneContainer.pushTo<GameScene>()
         }
 
-//        sceneContainer.changeTo<TestScene>()
-//        sceneContainer.changeTo<EditorSceneV2>()
+        //        sceneContainer.changeTo<TestScene>()
+        //        sceneContainer.changeTo<EditorSceneV2>()
         sceneContainer.changeTo<PlayScene>()
-//        sceneContainer.changeTo<MapViewerScene>()
+        //        sceneContainer.changeTo<MapViewerScene>()
     }
 
     override suspend fun sceneAfterDestroy() {

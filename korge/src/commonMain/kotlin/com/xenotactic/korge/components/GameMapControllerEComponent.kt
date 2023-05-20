@@ -1,19 +1,16 @@
 package com.xenotactic.korge.components
 
-import korlibs.logger.Logger
-import com.xenotactic.gamelogic.utils.GAME_HEIGHT
-import com.xenotactic.gamelogic.utils.GAME_WIDTH
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.gamelogic.model.GRectInt
 import com.xenotactic.gamelogic.model.GameMap
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.pathing.PathSequence
 import com.xenotactic.gamelogic.utils.*
-import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.events.AddEntityEvent
-import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.events.RemovedEntityEvent
-import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import korlibs.logger.Logger
 import pathing.PathFinder
 
 // The game map controller.
@@ -69,6 +66,7 @@ class GameMapControllerEComponent(
                     val newHeight = min(gameMap.height, entity.y + entityHeight) - entity.y
                     MapEntity.Rock(newX, newY, newWidth, newHeight)
                 }
+
                 else -> entity
             }
             gameMap.placeEntity(placementEntity)
@@ -77,8 +75,6 @@ class GameMapControllerEComponent(
         println("new gamemap: $gameMap")
         updateShortestPath(PathFinder.getShortestPath(gameMap))
     }
-
-
 
     fun placeEntity(entity: MapEntity) {
         placeEntities(entity)
@@ -116,8 +112,9 @@ class GameMapControllerEComponent(
 
         eventBus.send(
             UpdatedPathLineEvent(
-            shortestPath,
-            shortestPath?.pathLength)
+                shortestPath,
+                shortestPath?.pathLength
+            )
         )
     }
 

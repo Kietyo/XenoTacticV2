@@ -12,15 +12,14 @@ import kotlin.time.Duration
 class UIMonsterHealthRenderSystem(
     val world: World
 ) : System() {
-    override val familyConfiguration: FamilyConfiguration
-        = FamilyConfiguration(
+    override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
         allOfComponents = setOf(
             MonsterComponent::class,
             HealthComponent::class,
             MaxHealthComponent::class,
             UIHealthBarComponent::class
-            )
         )
+    )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach {

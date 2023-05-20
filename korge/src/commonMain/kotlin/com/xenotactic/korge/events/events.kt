@@ -1,7 +1,7 @@
 package com.xenotactic.korge.events
 
-import korlibs.korge.view.View
 import com.xenotactic.gamelogic.model.MapEntity
+import korlibs.korge.view.View
 
 object GoldensEntryHoverOutEvent
 

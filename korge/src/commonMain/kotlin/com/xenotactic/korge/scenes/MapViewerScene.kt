@@ -1,33 +1,29 @@
 package com.xenotactic.korge.scenes
 
-import korlibs.logger.Logger
-import korlibs.korge.annotations.KorgeExperimental
-import korlibs.korge.scene.Scene
-import korlibs.korge.view.*
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.utils.MapToId
 import com.xenotactic.gamelogic.utils.getGoldenJsonFiles
 import com.xenotactic.gamelogic.utils.toGameMap
-import com.xenotactic.gamelogic.utils.MapToId
-import com.xenotactic.korge.utils.PlayerDataApi
-import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.events.PlayMapEvent
 import com.xenotactic.korge.components.ResizeDebugComponent
+import com.xenotactic.korge.events.PlayMapEvent
+import com.xenotactic.korge.ui.*
+import com.xenotactic.korge.utils.PlayerDataApi
 import com.xenotactic.korge.utils.alignLeftToLeftOfWindow
 import com.xenotactic.korge.utils.alignRightToRightOfWindow
 import com.xenotactic.korge.utils.alignTopToTopOfWindow
-import com.xenotactic.korge.ui.MapWithMetadata
-import com.xenotactic.korge.ui.UIHeader
-import com.xenotactic.korge.ui.UIHeaderSection
-import com.xenotactic.korge.ui.UIMapEntry
-import com.xenotactic.korge.ui.uiFixedGrid
-import com.xenotactic.korge.ui.uiMapInspector
+import korlibs.korge.annotations.KorgeExperimental
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.addTo
 import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.korge.view.getVisibleGlobalArea
+import korlibs.korge.view.onStageResized
+import korlibs.logger.Logger
 import kotlinx.coroutines.launch
 import verify
 import kotlin.collections.component1
 import kotlin.collections.component2
-import kotlin.collections.map
 import kotlin.collections.set
-import kotlin.collections.take
 
 class MapViewerScene(
     val globalEventBus: EventBus
@@ -115,6 +111,7 @@ class MapViewerScene(
                     header.updateSelectionBox(it)
                     mapGrid.resetWithEntries(playEntries)
                 }
+
                 UIHeaderSection.EDITOR -> TODO()
                 UIHeaderSection.MY_MAPS -> {
                     header.updateSelectionBox(it)

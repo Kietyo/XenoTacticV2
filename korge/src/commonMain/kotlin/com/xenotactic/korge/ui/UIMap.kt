@@ -1,7 +1,17 @@
 package com.xenotactic.korge.ui
 
-import korlibs.korge.view.*
-import korlibs.korge.view.vector.gpuGraphics
+import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.IPoint
+import com.xenotactic.gamelogic.model.MapEntity
+import com.xenotactic.gamelogic.pathing.PathSequence
+import com.xenotactic.gamelogic.utils.*
+import com.xenotactic.gamelogic.views.UIEntity
+import com.xenotactic.korge.events.RemovedEntityEvent
+import com.xenotactic.korge.input_processors.PointerAction
+import com.xenotactic.korge.utils.getRoundedGridCoordinates
+import com.xenotactic.korge.utils.makeEntityLabelText
+import com.xenotactic.korge.utils.toWorldCoordinates
 import korlibs.image.bitmap.effect.BitmapEffect
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
@@ -9,30 +19,14 @@ import korlibs.image.font.BitmapFont
 import korlibs.image.font.DefaultTtfFont
 import korlibs.image.text.TextAlignment
 import korlibs.io.async.launch
-
+import korlibs.korge.view.*
+import korlibs.korge.view.vector.gpuGraphics
 import korlibs.math.geom.Point
 import korlibs.math.geom.Rectangle
-
 import korlibs.math.geom.vector.StrokeInfo
-import com.xenotactic.gamelogic.utils.size
-import com.xenotactic.gamelogic.utils.xy
-import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.MapEntity
-import com.xenotactic.gamelogic.pathing.PathSequence
-import com.xenotactic.gamelogic.utils.*
-import com.xenotactic.gamelogic.views.UIEntity
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.model.IPoint
-import com.xenotactic.korge.events.RemovedEntityEvent
-import com.xenotactic.korge.input_processors.PointerAction
-import com.xenotactic.korge.utils.getRoundedGridCoordinates
-import com.xenotactic.korge.utils.makeEntityLabelText
-import com.xenotactic.korge.utils.toWorldCoordinates
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
-import kotlin.ranges.until
 
 enum class BoardType {
     SOLID,

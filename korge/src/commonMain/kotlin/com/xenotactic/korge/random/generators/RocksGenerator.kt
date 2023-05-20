@@ -4,10 +4,10 @@ import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.pathing.PathFindingResult
-import com.xenotactic.korge.utils.StagingEntityUtils
-import com.xenotactic.korge.utils.isFullyCoveredBy
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
+import com.xenotactic.korge.utils.StagingEntityUtils
+import com.xenotactic.korge.utils.isFullyCoveredBy
 
 class RocksGenerator(
     val numRocks: Int

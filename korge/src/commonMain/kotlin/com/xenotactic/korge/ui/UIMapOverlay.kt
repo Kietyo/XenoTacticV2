@@ -1,18 +1,12 @@
 package com.xenotactic.korge.ui
 
-import korlibs.logger.Logger
-import korlibs.korge.input.onClick
-import korlibs.korge.view.Container
-import korlibs.korge.view.ScalingOption
-import korlibs.korge.view.View
-import korlibs.korge.view.addTo
-import korlibs.korge.view.align.centerOn
-import korlibs.korge.view.getVisibleGlobalArea
-import korlibs.korge.view.scaleWhileMaintainingAspect
-import korlibs.korge.view.solidRect
-import korlibs.image.color.Colors
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.input_processors.CameraInputProcessor
+import korlibs.image.color.Colors
+import korlibs.korge.input.onClick
+import korlibs.korge.view.*
+import korlibs.korge.view.align.centerOn
+import korlibs.logger.Logger
 
 object UIMapOverlayOutsideClickedEvent
 
@@ -36,10 +30,12 @@ class UIMapOverlay(
             engine.eventBus.send(UIMapOverlayOutsideClickedEvent)
         }
 
-        view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
-            globalAreaDimensions.widthD,
-            globalAreaDimensions.heightD
-        ))
+        view.scaleWhileMaintainingAspect(
+            ScalingOption.ByWidthAndHeight(
+                globalAreaDimensions.widthD,
+                globalAreaDimensions.heightD
+            )
+        )
         view.centerOn(background)
         view.addTo(this)
         // Add an empty onClick listener to "eat" the input if the view itself is clicked.

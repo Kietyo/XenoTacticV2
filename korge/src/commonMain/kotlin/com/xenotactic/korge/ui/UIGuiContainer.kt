@@ -1,41 +1,37 @@
 package com.xenotactic.korge.ui
 
 import com.xenotactic.ecs.ComponentListener
-import korlibs.korge.component.onAttachDetach
-import korlibs.korge.input.keys
-import korlibs.korge.input.onClick
-import korlibs.korge.input.onOut
-import korlibs.korge.input.onOver
-import korlibs.korge.ui.uiButton
-import korlibs.korge.view.*
-import korlibs.image.color.MaterialColors
 import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
-import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.GoldStateUpdated
-import com.xenotactic.korge.listeners_event.RemoveUIEntitiesEvent
-import com.xenotactic.korge.events.EntitySelectionChangedEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
-import com.xenotactic.korge.events.UpgradeTowerDamageEvent
-import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
-import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
-import com.xenotactic.korge.utils.alignRightToRightOfWindow
-import com.xenotactic.korge.utils.distributeVertically
-import com.xenotactic.korge.utils.isEmpty
 import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableCurrentlySelectedTowerState
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.components.MutableShowRangeTimeComponent
-import com.xenotactic.korge.state.*
-import korlibs.event.Key.SHIFT
-import korlibs.korge.annotations.KorgeExperimental
-import korlibs.korge.ui.uiTooltipContainer
-import korlibs.korge.ui.uiWindow
+import com.xenotactic.korge.events.EntitySelectionChangedEvent
+import com.xenotactic.korge.events.UpgradeTowerDamageEvent
+import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
+import com.xenotactic.korge.listeners_event.RemoveUIEntitiesEvent
+import com.xenotactic.korge.state.DeadUIZonesState
+import com.xenotactic.korge.state.EditorState
+import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
+import com.xenotactic.korge.utils.alignRightToRightOfWindow
+import com.xenotactic.korge.utils.distributeVertically
+import com.xenotactic.korge.utils.isEmpty
+import korlibs.image.color.MaterialColors
+import korlibs.korge.component.onAttachDetach
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onOut
+import korlibs.korge.input.onOver
+import korlibs.korge.ui.uiButton
+import korlibs.korge.view.*
 import korlibs.korge.view.align.*
 
 enum class ViewType {
@@ -241,7 +237,6 @@ class UIGuiContainer(
         val mutableCurrentlySelectedTowerState = MutableCurrentlySelectedTowerState(null)
         engine.stateInjections.setSingletonOrThrow(mutableCurrentlySelectedTowerState)
 
-
         val showRangeView = UITextRect(
             "Show\nRange",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
@@ -309,7 +304,6 @@ class UIGuiContainer(
             "Income\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         )
-
 
         val towerDamageUpgradeView = UITowerUpgradeIcon(
             engine,

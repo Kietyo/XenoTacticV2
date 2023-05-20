@@ -1,19 +1,14 @@
 package com.xenotactic.korge.ui
 
+import com.xenotactic.korge.utils.scaledDimensions
+import korlibs.image.color.Colors
+import korlibs.io.async.Signal
 import korlibs.korge.input.onClick
-import korlibs.korge.view.Container
-import korlibs.korge.view.SolidRect
-import korlibs.korge.view.Text
+import korlibs.korge.view.*
 import korlibs.korge.view.align.alignLeftToRightOf
 import korlibs.korge.view.align.alignRightToRightOf
 import korlibs.korge.view.align.centerOn
 import korlibs.korge.view.align.centerYOn
-import korlibs.korge.view.container
-import korlibs.korge.view.solidRect
-import korlibs.korge.view.text
-import korlibs.image.color.Colors
-import korlibs.io.async.Signal
-import com.xenotactic.korge.utils.scaledDimensions
 import kotlin.collections.set
 
 enum class UIHeaderSection {
@@ -58,12 +53,12 @@ class UIHeader(
                     onHeaderSectionClick(UIHeaderSection.PLAY)
                 }
             }
-//            val editorText = this.text("Editor", textSize = headerTextSize) {
-//                sectionToTextMap[UIHeaderSection.EDITOR] = this
-//                onClick {
-//                    onHeaderSectionClick(UIHeaderSection.EDITOR)
-//                }
-//            }
+            //            val editorText = this.text("Editor", textSize = headerTextSize) {
+            //                sectionToTextMap[UIHeaderSection.EDITOR] = this
+            //                onClick {
+            //                    onHeaderSectionClick(UIHeaderSection.EDITOR)
+            //                }
+            //            }
             val myMapsText = this.text("My Maps", textSize = headerTextSize) {
                 sectionToTextMap[UIHeaderSection.MY_MAPS] = this
                 onClick {

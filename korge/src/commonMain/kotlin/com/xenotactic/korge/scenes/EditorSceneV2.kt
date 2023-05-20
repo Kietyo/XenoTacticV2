@@ -1,24 +1,25 @@
 package com.xenotactic.korge.scenes
 
-import korlibs.korge.scene.Scene
-import korlibs.korge.view.*
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.events.ResizeMapEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
-import com.xenotactic.korge.input_processors.*
 import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.korge.state.MouseDragSettingsState
-import com.xenotactic.korge.state.EditorState
-import com.xenotactic.gamelogic.utils.GameMapApi
 import com.xenotactic.gamelogic.state.GameMapDimensionsState
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.GameMapApi
+import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.korge.input_processors.*
+import com.xenotactic.korge.listeners_component.PreSelectionComponentListener
+import com.xenotactic.korge.listeners_component.SelectionComponentListener
+import com.xenotactic.korge.state.EditorState
+import com.xenotactic.korge.state.MouseDragSettingsState
 import com.xenotactic.korge.ui.UIEditorButtonsV2
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
-import com.xenotactic.korge.listeners_component.PreSelectionComponentListener
-import com.xenotactic.korge.listeners_component.SelectionComponentListener
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.addTo
 import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.align.centerXOnStage
 
@@ -37,7 +38,8 @@ class EditorSceneV2 : Scene() {
         val uiMapV2 = UIMapV2(engine).addTo(this)
         uiMapV2.centerOnStage()
 
-        val mouseDragInputProcessor = MouseDragInputProcessor(views, uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
+        val mouseDragInputProcessor =
+            MouseDragInputProcessor(views, uiMapV2, mouseDragSettingsState.mouseDragStateSettings)
         mouseDragInputProcessor.setup(this)
 
         engine.apply {
@@ -82,7 +84,7 @@ class EditorSceneV2 : Scene() {
         }
         eventBus.register<ResizeMapEvent> {
             uiMapV2.handleResizeMapEvent(it)
-//            uiMapV2.centerOnStage()
+            //            uiMapV2.centerOnStage()
         }
     }
 }

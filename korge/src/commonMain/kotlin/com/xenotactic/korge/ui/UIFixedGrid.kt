@@ -1,13 +1,13 @@
 package com.xenotactic.korge.ui
 
-import korlibs.logger.Logger
-import korlibs.korge.view.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.image.color.RGBA
+import korlibs.korge.view.*
+import korlibs.logger.Logger
 import korlibs.math.geom.PointInt
 
-val EMPTY_BOX_FN: (x: Int, y:Int, width: Float, height: Float) -> View = {x,y,width, height ->
+val EMPTY_BOX_FN: (x: Int, y: Int, width: Float, height: Float) -> View = { x, y, width, height ->
     SolidRect(width, height, MaterialColors.TEAL_100)
 }
 
@@ -54,10 +54,12 @@ class UIFixedGrid(
 
     init {
         this.solidRect(gridWidth.toFloat(), gridHeight.toFloat(), color = backgroundColor)
-        println("""
+        println(
+            """
             gridEntryViewWidth: $gridEntryViewWidth
             gridEntryViewHeight: $gridEntryViewHeight
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 
     val gridEntryContainer = container()
@@ -71,9 +73,11 @@ class UIFixedGrid(
         val point = PointInt(x, y)
         val currView = coordToView[point]!!
         currView.removeFromParent()
-        val scaledView = view.scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(
-            gridEntryViewWidth.toDouble(), gridEntryViewHeight.toDouble()
-        ))
+        val scaledView = view.scaleWhileMaintainingAspect(
+            ScalingOption.ByWidthAndHeight(
+                gridEntryViewWidth.toDouble(), gridEntryViewHeight.toDouble()
+            )
+        )
         scaledView.addTo(gridEntryContainer)
         scaledView.x = calculateXPosition(x)
         scaledView.y = calculateYPosition(y)

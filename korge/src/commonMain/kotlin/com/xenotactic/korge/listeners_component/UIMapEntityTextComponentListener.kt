@@ -14,7 +14,8 @@ class UIMapEntityTextComponentListener(
         uiMap.entityLabelLayer.removeChild(component.textView)
     }
 
-    override fun onExisting(entityId: EntityId, component: com.xenotactic.gamelogic.components.UIMapEntityTextComponent) {
+    override fun onExisting(entityId: EntityId,
+        component: com.xenotactic.gamelogic.components.UIMapEntityTextComponent) {
         TODO("Not yet implemented")
     }
 

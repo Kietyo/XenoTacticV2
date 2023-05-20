@@ -1,28 +1,27 @@
 package com.xenotactic.korge.input_processors
 
+import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.model.RectangleEntity
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.gamelogic.utils.GameMapApi
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.korge.state.EditorState
+import com.xenotactic.korge.ui.NotificationTextUpdateEvent
+import com.xenotactic.korge.ui.UIMapV2
+import com.xenotactic.korge.utils.StagingEntityUtils
 import korlibs.event.EventListener
 import korlibs.event.MouseButton
 import korlibs.event.MouseEvent
 import korlibs.korge.view.BaseView
 import korlibs.korge.view.Views
-import com.xenotactic.ecs.StagingEntity
-import com.xenotactic.gamelogic.model.*
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.toGameUnit
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.korge.utils.StagingEntityUtils
-import com.xenotactic.korge.state.EditorState
-import com.xenotactic.gamelogic.utils.GameMapApi
-import com.xenotactic.korge.ui.NotificationTextUpdateEvent
-import com.xenotactic.korge.ui.UIMapV2
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 
-
 data class PlacedEntityEvent(val entityType: MapEntityType)
 data class PlaceEntityErrorEvent(val errorMsg: String)
-
 
 class EditorPlacementInputProcessor(
     val views: Views,
@@ -51,10 +50,12 @@ class EditorPlacementInputProcessor(
     var stagingTeleportIn: StagingEntity? = null
 
     fun setup(eventListener: EventListener) {
-        eventListener.onEvents(MouseEvent.Type.DOWN,
+        eventListener.onEvents(
+            MouseEvent.Type.DOWN,
             MouseEvent.Type.DRAG,
             MouseEvent.Type.UP,
-            MouseEvent.Type.MOVE) {
+            MouseEvent.Type.MOVE
+        ) {
             onMouseEvent(views, it)
         }
     }
@@ -94,7 +95,9 @@ class EditorPlacementInputProcessor(
                 MapEntityType.TOWER
             )
         ) {
-            val (entityWidth, entityHeight) = MapEntityType.getEntitySize(editorState.entityTypeToPlace) as MapEntityType.EntitySize.Fixed
+            val (entityWidth, entityHeight) = MapEntityType.getEntitySize(
+                editorState.entityTypeToPlace
+            ) as MapEntityType.EntitySize.Fixed
             val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(
                 gridX,
                 gridY,

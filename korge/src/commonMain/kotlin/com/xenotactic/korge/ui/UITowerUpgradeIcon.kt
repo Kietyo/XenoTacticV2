@@ -1,14 +1,11 @@
 package com.xenotactic.korge.ui
 
 import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableCurrentlySelectedTowerState
 import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.calculateCostOfUpgrades
-import com.xenotactic.korge.events.UpgradeTowerDamageEvent
 import korlibs.event.Key
 import korlibs.image.bitmap.Bitmap
-import korlibs.korge.component.onAttachDetach
 import korlibs.korge.input.keys
 import korlibs.korge.input.onClick
 import korlibs.korge.input.onOut

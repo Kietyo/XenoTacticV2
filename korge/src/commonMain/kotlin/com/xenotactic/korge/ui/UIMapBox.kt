@@ -1,19 +1,14 @@
 package com.xenotactic.korge.ui
 
-import korlibs.logger.Logger
-import korlibs.korge.view.Container
-import korlibs.korge.view.addTo
-import korlibs.korge.view.align.centerOn
-import korlibs.korge.view.container
-import korlibs.korge.view.image
-import korlibs.korge.view.renderToBitmap
-import korlibs.korge.view.solidRect
-import korlibs.image.color.Colors
-import korlibs.io.async.launch
-import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.PATH_LINES_RATIO
 import com.xenotactic.gamelogic.utils.toScale
 import com.xenotactic.korge.scenes.VIEWS_INSTANCE
+import korlibs.image.color.Colors
+import korlibs.io.async.launch
+import korlibs.korge.view.*
+import korlibs.korge.view.align.centerOn
+import korlibs.logger.Logger
 import kotlinx.coroutines.GlobalScope
 import pathing.PathFinder
 import kotlin.math.min
@@ -42,15 +37,12 @@ class UIMapBox(
 
     init {
 
-
-//        mapContainer.scaledWidth = maxMapWidth
-//        mapContainer.scaledHeight = maxMapWidth
-//        mapContainer.scale = mapScale
-//        mapContainer.centerOn(mapSection)
+        //        mapContainer.scaledWidth = maxMapWidth
+        //        mapContainer.scaledHeight = maxMapWidth
+        //        mapContainer.scale = mapScale
+        //        mapContainer.centerOn(mapSection)
 
         updateMap(gameMap, calculateMapPath)
-
-
 
         //        launch(Dispatchers.Default) {
         //            val asBitMap = mapContainer.renderToBitmap(scenes.VIEWS_INSTANCE)

@@ -1,18 +1,16 @@
 package com.xenotactic.korge.utils
 
-import korlibs.memory.clamp
+import com.xenotactic.gamelogic.model.GameUnitTuple
+import com.xenotactic.gamelogic.model.IPoint
+import com.xenotactic.gamelogic.utils.GameUnit
+import com.xenotactic.gamelogic.utils.toGameUnit
 import korlibs.event.MouseButton
 import korlibs.event.MouseEvent
 import korlibs.event.ReshapeEvent
 import korlibs.korge.input.MouseEvents
 import korlibs.korge.view.*
-
 import korlibs.math.geom.Point
-
-import com.xenotactic.gamelogic.model.GameUnitTuple
-import com.xenotactic.gamelogic.model.IPoint
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.toGameUnit
+import korlibs.memory.clamp
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
@@ -20,7 +18,6 @@ fun View.centerOnXY(x: Float, y: Float) {
     this.x = x - scaledWidth / 2f
     this.y = y - scaledHeight / 2f
 }
-
 
 fun getRoundedGridCoordinates(
     gridX: Number,
@@ -34,6 +31,7 @@ fun getRoundedGridCoordinates(
         entityWidth.toInt() == 1 -> floor(
             gridX.toDouble() - entityWidth.value / 2
         ).toInt()
+
         else -> (gridX.toDouble() - entityWidth.value / 2).roundToInt()
     }
 
@@ -41,6 +39,7 @@ fun getRoundedGridCoordinates(
         entityHeight.toInt() == 1 -> floor(
             gridY.toDouble() - entityHeight.value / 2
         ).toInt()
+
         else -> (gridY.toDouble() - entityHeight.value / 2).roundToInt()
     }
 
@@ -107,15 +106,15 @@ fun <T : View> T.debugPrint() {
 }
 
 fun <T : View> T.alignBottomToBottomOfWindow(): T {
-//    val windowsArea = this.getVisibleLocalArea()
+    //    val windowsArea = this.getVisibleLocalArea()
     val windowsArea = this.getVisibleGlobalArea()
-//    println(
-//        """
-//        alignBottomToBottomOfWindow:
-//        windowsArea: $windowsArea
-//    """.trimIndent()
-//    )
-//    debugPrint()
+    //    println(
+    //        """
+    //        alignBottomToBottomOfWindow:
+    //        windowsArea: $windowsArea
+    //    """.trimIndent()
+    //    )
+    //    debugPrint()
     return alignBottomToBottomOfWindow(
         windowsArea.width.toInt() + windowsArea.x.toInt(),
         windowsArea.height.toInt(),
@@ -129,22 +128,22 @@ fun <T : View> T.alignBottomToBottomOfWindow(
     val refParent = getReferenceParent()
     val resizeWHToLocal =
         refParent.globalToLocal(Point(resizedWidth, resizedHeight))
-//    println(
-//        "alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
-//                "resizedHeight=$resizedHeight, yOffset=$yOffset):"
-//    )
-//    debugPrint()
-//    println(
-//        """
-//        resizeWHToLocal: $resizeWHToLocal
-//        refParent.globalToLocal(0.0, yOffset.toDouble()).y: ${
-//            refParent.globalToLocal(
-//                0.0,
-//                yOffset.toDouble()
-//            ).y
-//        }
-//    """.trimIndent()
-//    )
+    //    println(
+    //        "alignBottomToBottomOfWindow(resizedWidth=$resizedWidth, " +
+    //                "resizedHeight=$resizedHeight, yOffset=$yOffset):"
+    //    )
+    //    debugPrint()
+    //    println(
+    //        """
+    //        resizeWHToLocal: $resizeWHToLocal
+    //        refParent.globalToLocal(0.0, yOffset.toDouble()).y: ${
+    //            refParent.globalToLocal(
+    //                0.0,
+    //                yOffset.toDouble()
+    //            ).y
+    //        }
+    //    """.trimIndent()
+    //    )
 
     this.y = resizeWHToLocal.y + yOffset - this.scaledHeight
     return this

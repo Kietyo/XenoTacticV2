@@ -1,34 +1,28 @@
 package com.xenotactic.korge.ui
 
 import MapVerificationResult
-import korlibs.logger.Logger
-import korlibs.korge.input.onClick
-import korlibs.korge.input.onOver
-import korlibs.korge.ui.uiButton
-import korlibs.korge.view.Container
-import korlibs.korge.view.ScalingOption
-import korlibs.korge.view.Text
-import korlibs.korge.view.align.alignBottomToBottomOf
-import korlibs.korge.view.align.alignLeftToLeftOf
-import korlibs.korge.view.align.alignRightToRightOf
-import korlibs.korge.view.align.alignTopToBottomOf
-import korlibs.korge.view.roundRect
-import korlibs.korge.view.scaleWhileMaintainingAspect
-import korlibs.korge.view.solidRect
-import korlibs.korge.view.text
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.model.GameMap
+import com.xenotactic.gamelogic.utils.existsBlocking
+import com.xenotactic.gamelogic.utils.rectCorner
+import com.xenotactic.gamelogic.utils.size
+import com.xenotactic.korge.events.GoldensEntryClickEvent
+import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.image.color.RGBA
 import korlibs.io.async.launch
 import korlibs.io.file.VfsFile
 import korlibs.io.file.baseName
-import com.xenotactic.gamelogic.utils.existsBlocking
-import com.xenotactic.gamelogic.model.GameMap
-import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.gamelogic.utils.rectCorner
-import com.xenotactic.gamelogic.utils.size
-import com.xenotactic.korge.events.GoldensEntryClickEvent
-import com.xenotactic.korge.events.GoldensEntryHoverOnEvent
+import korlibs.korge.input.onClick
+import korlibs.korge.input.onOver
+import korlibs.korge.ui.uiButton
+import korlibs.korge.view.*
+import korlibs.korge.view.align.alignBottomToBottomOf
+import korlibs.korge.view.align.alignLeftToLeftOf
+import korlibs.korge.view.align.alignRightToRightOf
+import korlibs.korge.view.align.alignTopToBottomOf
+import korlibs.logger.Logger
 import kotlinx.coroutines.Dispatchers
 
 data class MapWithMetadata(
@@ -66,7 +60,7 @@ class UIGoldensViewerEntry private constructor(
         )
 
         val entryTextSection = this.solidRect(
-            entryWidth size  TEXT_SECTION_HEIGHT.toDouble(),
+            entryWidth size TEXT_SECTION_HEIGHT.toDouble(),
             color = MaterialColors.GRAY_800
         )
 

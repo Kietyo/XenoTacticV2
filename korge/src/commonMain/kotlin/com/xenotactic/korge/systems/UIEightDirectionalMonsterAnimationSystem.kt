@@ -18,9 +18,11 @@ class UIEightDirectionalMonsterAnimationSystem(
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach {
-            val uiEightDirectionalSpriteComponent = world[it, com.xenotactic.gamelogic.components.UIEightDirectionalSpriteComponent::class]
+            val uiEightDirectionalSpriteComponent =
+                world[it, com.xenotactic.gamelogic.components.UIEightDirectionalSpriteComponent::class]
             val animationComponent = world[it, com.xenotactic.gamelogic.components.AnimationComponent::class]
-            val computedSpeedEffectComponent = world[it, com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent::class]
+            val computedSpeedEffectComponent =
+                world[it, com.xenotactic.gamelogic.components.ComputedSpeedEffectComponent::class]
             animationComponent.cumulatedTimeMillisSinceLastFrame += deltaTime.inWholeMilliseconds
             val baseChangeAfterSpeedEffectTimeMillis =
                 animationComponent.baseChangeTimeMillis / computedSpeedEffectComponent.computedSpeedEffect

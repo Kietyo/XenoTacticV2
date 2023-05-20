@@ -1,9 +1,9 @@
 package com.xenotactic.korge.utils
 
-import korlibs.logger.Logger
-import korlibs.io.file.std.resourcesVfs
-import com.xenotactic.gamelogic.utils.decodeJson
 import com.xenotactic.gamelogic.model.PlayerData
+import com.xenotactic.gamelogic.utils.decodeJson
+import korlibs.io.file.std.resourcesVfs
+import korlibs.logger.Logger
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString
@@ -14,6 +14,7 @@ object PlayerDataApi {
     private val jsonParser = Json {
         prettyPrint = true
     }
+
     suspend fun getPlayerData(): PlayerData {
         return mutex.withLock lock@{
             logger.info { "Getting player data" }

@@ -1,6 +1,6 @@
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.utils.MapBridge
 import com.xenotactic.korge.scenes.*
+import com.xenotactic.korge.utils.MapBridge
 import korlibs.image.color.Colors
 import korlibs.korge.KorgeConfig
 import korlibs.korge.KorgeDisplayMode
@@ -24,14 +24,14 @@ suspend fun main() = KorgeConfig(
         clipBorders = false
     ),
     quality = GameWindow.Quality.AUTOMATIC,
-    forceRenderEveryFrame = true).start() {
+    forceRenderEveryFrame = true
+).start() {
 
     Logger.defaultLevel = Logger.Level.DEBUG
     //        val globalBus = EventBus(CoroutineScope(Dispatchers.Main))
     val globalBus = EventBus(CoroutineScope(Dispatchers.Default))
     println("Preparing main module")
     println(views)
-
 
     val mapBridge = MapBridge()
 
@@ -54,9 +54,9 @@ suspend fun main() = KorgeConfig(
 
     sceneContainer {
         changeTo<RootScene>()
-//        changeTo<TestScene>()
-//        changeTo({
-//            TestScene()
-//        })
+        //        changeTo<TestScene>()
+        //        changeTo({
+        //            TestScene()
+        //        })
     }
 }

@@ -6,11 +6,11 @@ import com.xenotactic.korge.ui.Modifier
 import com.xenotactic.korge.ui.Modifiers
 import com.xenotactic.korge.ui.Row
 import korlibs.image.color.Colors
-import korlibs.logger.Logger
 import korlibs.korge.scene.Scene
 import korlibs.korge.ui.UIText
 import korlibs.korge.view.SContainer
 import korlibs.korge.view.align.centerOnStage
+import korlibs.logger.Logger
 import korlibs.math.geom.Size
 
 class TestScene : Scene() {

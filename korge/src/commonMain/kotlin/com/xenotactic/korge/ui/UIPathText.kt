@@ -1,9 +1,9 @@
 package com.xenotactic.korge.ui
 
+import com.xenotactic.gamelogic.utils.GameUnit
 import korlibs.korge.view.Container
 import korlibs.korge.view.text
 import korlibs.math.roundDecimalPlaces
-import com.xenotactic.gamelogic.utils.GameUnit
 
 class UIPathText : Container() {
     val pathText = text("Path Length: N/A")

@@ -6,7 +6,7 @@ import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.components.UIShowRangeComponent
 import com.xenotactic.korge.ui.UIMapV2
 
-class UIShowRangeComponentListener(val engine: Engine): ComponentListener<UIShowRangeComponent>{
+class UIShowRangeComponentListener(val engine: Engine) : ComponentListener<UIShowRangeComponent> {
     val uiMap = engine.injections.getSingleton<UIMapV2>()
 
     override fun onRemove(entityId: EntityId, component: UIShowRangeComponent) {

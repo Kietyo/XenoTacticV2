@@ -1,16 +1,15 @@
 package com.xenotactic.korge.utils
 
-import korlibs.korge.view.View
-import korlibs.korge.view.align.alignTopToBottomOf
-
 import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
+import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.utils.GameUnit
 import com.xenotactic.gamelogic.utils.WorldUnit
 import com.xenotactic.gamelogic.utils.toWorldCoordinates
-import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
-import com.xenotactic.gamelogic.components.SizeComponent
+import korlibs.korge.view.View
+import korlibs.korge.view.align.alignTopToBottomOf
 
 infix fun Int.to(that: Int): GameUnitTuple = GameUnitTuple(this, that)
 
@@ -24,8 +23,8 @@ fun distributeVertically(views: Iterable<View>) {
     }
 }
 
-
-fun toWorldCoordinates(gridSize: Number, entity: StagingEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
+fun toWorldCoordinates(gridSize: Number, entity: StagingEntity, gameWidth: GameUnit,
+    gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
     val position = entity[BottomLeftPositionComponent::class]
     val size = entity[SizeComponent::class]
     return toWorldCoordinates(
@@ -34,7 +33,8 @@ fun toWorldCoordinates(gridSize: Number, entity: StagingEntity, gameWidth: GameU
     )
 }
 
-fun toWorldCoordinates(gridSize: Number, entity: MapEntity, gameWidth: GameUnit, gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
+fun toWorldCoordinates(gridSize: Number, entity: MapEntity, gameWidth: GameUnit,
+    gameHeight: GameUnit): Pair<WorldUnit, WorldUnit> {
     return toWorldCoordinates(
         gridSize,
         entity.gameUnitPoint, gameHeight, entityHeight = entity.height
@@ -48,7 +48,6 @@ fun toWorldCoordinates(gridSize: Number, entity: MapEntity, gameWidth: GameUnit,
 //    }
 //    return sum
 //}
-
 
 fun main() {
     //     println(getIntersectionPoints(_root_ide_package_.com.soywiz.korma.geom.Point(0f, 0f), _root_ide_package_.com.soywiz.korma.geom.Point(8f, 8f), _root_ide_package_.com.soywiz.korma.geom.Point(3f, 3f), 3f))

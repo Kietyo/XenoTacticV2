@@ -1,17 +1,13 @@
 package com.xenotactic.korge.ui
 
-import korlibs.korge.view.Container
-import korlibs.korge.view.Text
-import korlibs.korge.view.addTo
-import korlibs.korge.view.alpha
-import korlibs.korge.view.text
-import korlibs.image.text.TextAlignment
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.korge.components.ObjectPlacementEComponent
-import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.korge.components.ObjectPlacementEComponent
 import com.xenotactic.korge.events.PointerActionChangeEvent
 import com.xenotactic.korge.input_processors.PointerAction
+import korlibs.image.text.TextAlignment
+import korlibs.korge.view.*
 
 inline fun Container.uiActiveTextNotifier(
     engine: Engine,

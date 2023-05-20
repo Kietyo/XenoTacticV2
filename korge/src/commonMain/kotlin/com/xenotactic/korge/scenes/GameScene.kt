@@ -1,32 +1,31 @@
 package com.xenotactic.korge.scenes
 
-import korlibs.time.TimeSpan
-import korlibs.logger.Logger
-import korlibs.event.Key
-import korlibs.korge.input.draggable
-import korlibs.korge.scene.Scene
-import korlibs.korge.view.*
-import com.xenotactic.korge.utils.MapBridge
+import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.korge.components.GameMapControllerEComponent
 import com.xenotactic.korge.components.GoalEComponent
 import com.xenotactic.korge.components.ObjectPlacementEComponent
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.events.EventBus
+import com.xenotactic.korge.components.ResizeDebugComponent
 import com.xenotactic.korge.events.ExitGameSceneEvent
-import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.KeyInputProcessor
 import com.xenotactic.korge.input_processors.ObjectPlacementInputProcessor
-import com.xenotactic.korge.components.ResizeDebugComponent
+import com.xenotactic.korge.ui.*
+import com.xenotactic.korge.utils.MapBridge
+import com.xenotactic.korge.utils.MapRendererUpdater
 import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
 import com.xenotactic.korge.utils.alignRightToRightOfWindow
-import com.xenotactic.korge.utils.MapRendererUpdater
-import com.xenotactic.korge.ui.UIMap
-import com.xenotactic.korge.ui.UIPathText
-import com.xenotactic.korge.ui.UIPlacementButton
-import com.xenotactic.korge.ui.uiActiveTextNotifier
-import com.xenotactic.korge.ui.uiPlacement
+import korlibs.event.Key
+import korlibs.korge.input.draggable
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.addFixedUpdater
+import korlibs.korge.view.addTo
 import korlibs.korge.view.align.centerXOnStage
+import korlibs.korge.view.onStageResized
+import korlibs.logger.Logger
+import korlibs.time.TimeSpan
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -110,8 +109,8 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
 
         val keyInputProcessor = KeyInputProcessor(this, engine)
         keyInputProcessor.setup(this)
-//        val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
-//        addComponent(monstersComponent)
+        //        val monstersComponent = MonstersEComponent(uiMap, engine, eventBus, uiMap._gridSize)
+        //        addComponent(monstersComponent)
 
         val goalComponent = GoalEComponent(engine, eventBus)
         engine.injections.setSingletonOrThrow(goalComponent)
@@ -158,7 +157,6 @@ class GameScene(val mapBridge: MapBridge) : Scene() {
             "sceneAfterDestroy called"
         }
     }
-
 
     companion object {
         val logger = Logger<GameScene>()

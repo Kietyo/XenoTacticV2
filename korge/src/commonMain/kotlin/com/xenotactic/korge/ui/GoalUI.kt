@@ -1,32 +1,21 @@
 package com.xenotactic.korge.ui
 
-import korlibs.event.EventListener
-import korlibs.event.ReshapeEvent
-import korlibs.korge.ui.UIContainer
-import korlibs.korge.ui.uiContainer
-import korlibs.korge.view.Container
-import korlibs.korge.view.Image
-import korlibs.korge.view.Text
-import korlibs.korge.view.Views
-import korlibs.korge.view.getVisibleLocalArea
-import korlibs.korge.view.getVisibleWindowArea
-import korlibs.korge.view.image
-import korlibs.korge.view.roundRect
-import korlibs.korge.view.text
-import korlibs.korge.view.visible
-import korlibs.korge.view.xy
-import korlibs.image.color.ColorTransform
-import korlibs.image.color.Colors
-import korlibs.image.format.PNG
-import korlibs.image.format.readBitmap
-import korlibs.io.async.runBlockingNoJs
-import korlibs.io.file.std.resourcesVfs
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.events.UpdatedGoalDataEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
 import com.xenotactic.gamelogic.utils.size
 import com.xenotactic.gamelogic.utils.toScale
+import com.xenotactic.korge.events.UpdatedGoalDataEvent
+import korlibs.event.EventListener
+import korlibs.event.ReshapeEvent
+import korlibs.image.color.Colors
+import korlibs.image.format.PNG
+import korlibs.image.format.readBitmap
 import korlibs.image.text.TextAlignment
+import korlibs.io.async.runBlockingNoJs
+import korlibs.io.file.std.resourcesVfs
+import korlibs.korge.ui.UIContainer
+import korlibs.korge.ui.uiContainer
+import korlibs.korge.view.*
 import korlibs.math.geom.RectCorners
 import korlibs.math.geom.Size
 
@@ -57,7 +46,7 @@ class GoalUI(val view: Container, val eventBus: EventBus) {
         goalContainer = view.uiContainer {
             this.roundRect(
                 192.0 size
-                64.0 + _textPaddingFromGoalImage + 20.0 + _borderPadding,
+                        64.0 + _textPaddingFromGoalImage + 20.0 + _borderPadding,
                 RectCorners(10f, 10f),
                 fill = Colors.BLACK.withAd(0.2)
             )

@@ -1,20 +1,19 @@
 package com.xenotactic.korge.input_processors
 
-import korlibs.event.EventListener
-import korlibs.event.MouseButton
-import korlibs.event.MouseEvent
-
-import korlibs.korge.view.View
+import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.MapEntity
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.utils.Engine
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.gamelogic.utils.until
 import com.xenotactic.korge.components.GameMapControllerEComponent
 import com.xenotactic.korge.components.ObjectPlacementEComponent
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.events.EventBus
 import com.xenotactic.korge.ui.UIMap
+import korlibs.event.EventListener
+import korlibs.event.MouseButton
+import korlibs.event.MouseEvent
+import korlibs.korge.view.View
 import kotlin.math.floor
 
 class ObjectPlacementInputProcessor(
@@ -146,7 +145,7 @@ class ObjectPlacementInputProcessor(
                         currentEntity.height
                     )
 
-                if ((gridXToInt !in 0 until  gameMapComponent.width)
+                if ((gridXToInt !in 0 until gameMapComponent.width)
                     || gridYToInt !in 0 until gameMapComponent.height
                 ) {
                     pointerAction.placementLocation = null

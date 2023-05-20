@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="korge-compose-js">
+    <output-path>$PROJECT_DIR$/../korge-compose/korge-compose/build/libs</output-path>
+    <root id="archive" name="korge-compose-js.jar">
+      <element id="module-output" name="XenoTacticV2.korge-compose.jsMain" />
+    </root>
+  </artifact>
+</component>

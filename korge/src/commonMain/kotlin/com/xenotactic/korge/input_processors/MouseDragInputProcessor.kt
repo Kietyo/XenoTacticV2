@@ -1,16 +1,14 @@
 package com.xenotactic.korge.input_processors
 
-import korlibs.time.TimeProvider
 import korlibs.event.EventListener
 import korlibs.event.MouseButton
 import korlibs.event.MouseEvent
-
 import korlibs.korge.input.DraggableInfo
 import korlibs.korge.view.View
 import korlibs.korge.view.Views
 import korlibs.korge.view.xy
-
 import korlibs.math.geom.Point
+import korlibs.time.TimeProvider
 
 fun DraggableInfo.asString(): String {
     return """
@@ -41,7 +39,7 @@ data class MouseDragInputProcessor(
     val views: Views,
     val view: View,
     val settings: MouseDragStateSettings = MouseDragStateSettings()
-)  {
+) {
     private val autoMove = true
     val info = DraggableInfo(view)
 
@@ -138,15 +136,15 @@ data class MouseDragInputProcessor(
 
         val state = getState(event)
 
-//        println(
-//            """
-//            dragging: $dragging,
-//            settings: $settings
-//            event: $event,
-//            state: $state
-//            info: ${info.asString()}
-//        """.trimIndent()
-//        )
+        //        println(
+        //            """
+        //            dragging: $dragging,
+        //            settings: $settings
+        //            event: $event,
+        //            state: $state
+        //            info: ${info.asString()}
+        //        """.trimIndent()
+        //        )
 
         if (state == MouseDragStateType.UNKNOWN) {
             require(!dragging)

@@ -8,13 +8,13 @@ import korlibs.korge.view.text
 
 class UIDebugInfo(
     val engine: Engine
-): Container() {
+) : Container() {
     val eventBus = engine.eventBus
-        val infoText = text("Hello world")
-        val pathLengthText = text("Hello world") {
-            alignTopToBottomOf(infoText)
-            eventBus.register<UpdatedPathLineEvent> {
-                text = "Path length: ${it.newPathLength?.toInt()}"
-            }
+    val infoText = text("Hello world")
+    val pathLengthText = text("Hello world") {
+        alignTopToBottomOf(infoText)
+        eventBus.register<UpdatedPathLineEvent> {
+            text = "Path length: ${it.newPathLength?.toInt()}"
         }
+    }
 }

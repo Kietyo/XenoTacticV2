@@ -4,10 +4,10 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.ecs.FamilyListener
 import com.xenotactic.ecs.World
-import com.xenotactic.gamelogic.components.UIEntityViewComponent
-import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
+import com.xenotactic.gamelogic.components.UIEntityViewComponent
+import com.xenotactic.gamelogic.utils.xy
 import com.xenotactic.korge.ui.UIMapV2
 
 class SetInitialPositionForUIEntityFamilyListener(
@@ -32,9 +32,11 @@ class SetInitialPositionForUIEntityFamilyListener(
             bottomLeftPositionComponent.x, bottomLeftPositionComponent.y, sizeComponent.height
         )
 
-        println("""
+        println(
+            """
             entityId: $entityId, bottomLeftPositionComponent: $bottomLeftPositionComponent, sizeComponent: $sizeComponent, worldX: $worldX, worldY: $worldY 
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         uiEntityViewComponent.entityView.xy(worldX, worldY)
     }

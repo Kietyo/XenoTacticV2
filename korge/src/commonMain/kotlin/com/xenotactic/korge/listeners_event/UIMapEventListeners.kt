@@ -1,26 +1,25 @@
 package com.xenotactic.korge.listeners_event
 
+import com.xenotactic.ecs.EntityId
+import com.xenotactic.gamelogic.components.*
+import com.xenotactic.gamelogic.events.AddedEntityEvent
+import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
+import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.state.MutableGoldState
+import com.xenotactic.gamelogic.utils.*
+import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
+import com.xenotactic.korge.ui.UIMapV2
+import com.xenotactic.korge.utils.GUN_VIEW_NAME
+import com.xenotactic.korge.utils.createUIEntityContainerForTower
+import com.xenotactic.korge.utils.getText
+import com.xenotactic.korge.utils.makeEntityLabelText
+import korlibs.image.color.Colors
+import korlibs.image.color.MaterialColors
 import korlibs.korge.internal.KorgeUntested
 import korlibs.korge.ui.UIProgressBar
 import korlibs.korge.view.*
-import korlibs.image.color.Colors
-import korlibs.image.color.MaterialColors
-import korlibs.math.geom.Anchor
-import com.xenotactic.ecs.EntityId
-import com.xenotactic.gamelogic.components.*
-import com.xenotactic.gamelogic.utils.SpeedAreaColorUtil
-import com.xenotactic.gamelogic.model.MapEntityType
-import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.utils.EventListener
-import com.xenotactic.gamelogic.events.AddedEntityEvent
-import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
-import com.xenotactic.korge.utils.*
-import com.xenotactic.gamelogic.utils.GameMapApi
-import com.xenotactic.gamelogic.state.MutableGoldState
-import com.xenotactic.gamelogic.utils.*
-import com.xenotactic.korge.ui.UIMapV2
 import korlibs.korge.view.align.centerOn
+import korlibs.math.geom.Anchor
 import korlibs.math.geom.Size
 
 data class RemoveUIEntitiesEvent(
@@ -173,6 +172,7 @@ class UIMapEventListeners(
                     MapEntityType.SPEED_AREA -> {
                         addTo(uiMap.speedAreaLayer)
                     }
+
                     MapEntityType.MONSTER -> addTo(uiMap.monsterLayer)
                 }
             }

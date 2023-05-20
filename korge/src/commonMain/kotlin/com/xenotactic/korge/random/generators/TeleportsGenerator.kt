@@ -7,9 +7,11 @@ import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.model.TeleportPair
 import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.toRectangleEntity
-import com.xenotactic.korge.utils.*
 import com.xenotactic.korge.random.GenerationContext
 import com.xenotactic.korge.random.IGenerator
+import com.xenotactic.korge.utils.StagingEntityUtils
+import com.xenotactic.korge.utils.intersectRectangles
+import com.xenotactic.korge.utils.intersectsEntity
 import pathing.PathFinder
 
 class TeleportsGenerator(
@@ -92,18 +94,22 @@ class TeleportsGenerator(
             )
 
             val addedTeleportIn = context.world.addEntityReturnStateful {
-                addComponentsFromStagingEntity(StagingEntityUtils.createTeleportIn(
-                    i, teleportInPosition, teleportInSize
-                ))
+                addComponentsFromStagingEntity(
+                    StagingEntityUtils.createTeleportIn(
+                        i, teleportInPosition, teleportInSize
+                    )
+                )
             }
             addedTpIns.add(addedTeleportIn)
 
             val addedTeleportOut = context.world.addEntityReturnStateful {
-                addComponentsFromStagingEntity(StagingEntityUtils.createTeleportOut(
-                    i,
-                    teleportOutPosition,
-                    teleportOutSize
-                ))
+                addComponentsFromStagingEntity(
+                    StagingEntityUtils.createTeleportOut(
+                        i,
+                        teleportOutPosition,
+                        teleportOutSize
+                    )
+                )
             }
             addedTpOuts.add(addedTeleportOut)
         }

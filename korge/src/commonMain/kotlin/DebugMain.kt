@@ -1,4 +1,7 @@
-import com.xenotactic.korge.ui.*
+import com.xenotactic.korge.ui.Column
+import com.xenotactic.korge.ui.Modifier
+import com.xenotactic.korge.ui.Modifiers
+import com.xenotactic.korge.ui.Row
 import korlibs.image.color.Colors
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.rootLocalVfs
@@ -64,22 +67,20 @@ object DebugMain {
                     }
                 }
 
-//                addLayout {
-//                    Row(modifiers = Modifiers.with(Modifier.Spacing(start = 10f, between = 20f))) {
-//                        addItem { Text("Xenotactic") }
-//                        addItem { Text("13") }
-//                        addItem { Text("123456") }
-//                    }
-//                }
+                //                addLayout {
+                //                    Row(modifiers = Modifiers.with(Modifier.Spacing(start = 10f, between = 20f))) {
+                //                        addItem { Text("Xenotactic") }
+                //                        addItem { Text("13") }
+                //                        addItem { Text("123456") }
+                //                    }
+                //                }
             }
 
-//            col.content.scale = 3.toScale()
+            //            col.content.scale = 3.toScale()
 
         }
     }
 }
-
-
 
 //interface Modifier {
 //    companion object : Modifier

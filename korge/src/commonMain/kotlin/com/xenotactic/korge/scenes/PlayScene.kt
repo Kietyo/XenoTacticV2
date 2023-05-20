@@ -1,35 +1,38 @@
 package com.xenotactic.korge.scenes
 
-import korlibs.time.TimeSpan
-import korlibs.event.Key
-import korlibs.korge.input.keys
-import korlibs.korge.scene.Scene
-import korlibs.korge.view.*
-import com.xenotactic.gamelogic.utils.GameSimulator
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.korge.listeners_event.TowerUpgradeEventListeners
-import com.xenotactic.korge.listeners_event.UIMapEventListeners
-import com.xenotactic.korge.listeners_family.SetInitialPositionForUIEntityFamilyListener
+import com.xenotactic.gamelogic.utils.GameSimulator
+import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.input_processors.EditorPlacementInputProcessor
 import com.xenotactic.korge.input_processors.MouseDragInputProcessor
 import com.xenotactic.korge.input_processors.SelectorMouseProcessorV2
-import com.xenotactic.gamelogic.model.GameWorld
-import com.xenotactic.korge.input_processors.CameraInputProcessor
 import com.xenotactic.korge.listeners_component.*
-import com.xenotactic.korge.state.MouseDragSettingsState
+import com.xenotactic.korge.listeners_event.TowerUpgradeEventListeners
+import com.xenotactic.korge.listeners_event.UIMapEventListeners
+import com.xenotactic.korge.listeners_family.SetInitialPositionForUIEntityFamilyListener
 import com.xenotactic.korge.random.MapGeneratorConfigurationV2
 import com.xenotactic.korge.random.RandomMapGeneratorV2
 import com.xenotactic.korge.random.generators.*
-import com.xenotactic.korge.state.*
+import com.xenotactic.korge.state.DeadUIZonesState
+import com.xenotactic.korge.state.EditorState
+import com.xenotactic.korge.state.MouseDragSettingsState
 import com.xenotactic.korge.systems.*
 import com.xenotactic.korge.ui.UIDebugInfo
 import com.xenotactic.korge.ui.UIGuiContainer
 import com.xenotactic.korge.ui.UIMapV2
 import com.xenotactic.korge.ui.UINotificationText
+import korlibs.event.Key
+import korlibs.korge.input.keys
+import korlibs.korge.scene.Scene
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.addFixedUpdater
+import korlibs.korge.view.addTo
 import korlibs.korge.view.align.centerOnStage
 import korlibs.korge.view.align.centerXOnStage
+import korlibs.time.TimeSpan
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -38,11 +41,11 @@ class PlayScene : Scene() {
     override suspend fun SContainer.sceneInit() {
         val eventBus = EventBus(this@PlayScene)
 
-//        val seed = 1337L
-//        val seed = 1338L
-//        val seed = 1349L
-//        val seed = 1350L
-//        val seed = 1351L
+        //        val seed = 1337L
+        //        val seed = 1338L
+        //        val seed = 1349L
+        //        val seed = 1350L
+        //        val seed = 1351L
         val seed = 1352L
 
         val width = 30.toGameUnit()
@@ -120,15 +123,15 @@ class PlayScene : Scene() {
             addSystem(UIMonsterHealthRenderSystem(this))
         }
 
-//        gameMapApi.placeEntities(randomMap.map.getAllEntities())
+        //        gameMapApi.placeEntities(randomMap.map.getAllEntities())
         gameSimulator.gameMapApi.placeEntities(randomMap.gameWorld)
-//        gameMapApi.placeEntities(
-//            MapEntity.Start(22, 0),
-//            MapEntity.Finish(3, 2),
-//            MapEntity.ROCK_2X4.at(22, 6),
-//            MapEntity.ROCK_4X2.at(10, 3),
-////            MapEntity.Tower(20, 0)
-//        )
+        //        gameMapApi.placeEntities(
+        //            MapEntity.Start(22, 0),
+        //            MapEntity.Finish(3, 2),
+        //            MapEntity.ROCK_2X4.at(22, 6),
+        //            MapEntity.ROCK_4X2.at(10, 3),
+        ////            MapEntity.Tower(20, 0)
+        //        )
 
         val uiDebugInfo = UIDebugInfo(engine)
         engine.injections.setSingletonOrThrow(uiDebugInfo)
@@ -142,8 +145,8 @@ class PlayScene : Scene() {
         }
 
         val notificationText = UINotificationText(engine, "N/A").addTo(this).apply {
-//            centerXOnStage()
-//            dockedTo(Anchor.CENTER)
+            //            centerXOnStage()
+            //            dockedTo(Anchor.CENTER)
             centerXOnStage()
         }
 
@@ -151,7 +154,6 @@ class PlayScene : Scene() {
             views, this, engine
         )
         editorPlacementInputProcessor.setup(this)
-
 
         val deltaTime = TimeSpan(gameSimulator.millisPerTick.inWholeMilliseconds.toDouble())
         var accumulatedTime = TimeSpan.ZERO

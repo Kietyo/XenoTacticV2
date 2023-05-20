@@ -1,11 +1,11 @@
 package com.xenotactic.korge.utils
 
-import com.xenotactic.korge.components.GameMapControllerEComponent
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.korge.events.AddEntityEvent
 import com.xenotactic.gamelogic.events.EventBus
-import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.gamelogic.events.UpdatedPathLineEvent
+import com.xenotactic.gamelogic.utils.Engine
+import com.xenotactic.korge.components.GameMapControllerEComponent
+import com.xenotactic.korge.events.AddEntityEvent
+import com.xenotactic.korge.events.RemovedEntityEvent
 import com.xenotactic.korge.ui.UIMap
 
 class MapRendererUpdater(
@@ -23,10 +23,10 @@ class MapRendererUpdater(
         }
         eventBus.register<RemovedEntityEvent> {
             TODO()
-//            renderer.handleRemoveEntityEvent(it)
+            //            renderer.handleRemoveEntityEvent(it)
         }
         eventBus.register<UpdatedPathLineEvent> {
-//            TODO()
+            //            TODO()
             uiMap.renderPathLines(gameMapControllerComponent.shortestPath)
         }
     }

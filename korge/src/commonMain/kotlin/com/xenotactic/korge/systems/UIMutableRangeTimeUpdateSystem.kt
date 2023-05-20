@@ -7,12 +7,11 @@ import com.xenotactic.korge.components.MutableShowRangeTimeComponent
 import kotlin.time.Duration
 
 class UIMutableRangeTimeUpdateSystem(val world: World) : System() {
-    override val familyConfiguration: FamilyConfiguration
-        = FamilyConfiguration(
-            allOfComponents = setOf(
-                MutableShowRangeTimeComponent::class
-            )
+    override val familyConfiguration: FamilyConfiguration = FamilyConfiguration(
+        allOfComponents = setOf(
+            MutableShowRangeTimeComponent::class
         )
+    )
 
     override fun update(deltaTime: Duration) {
         getFamily().getSequence().forEach {

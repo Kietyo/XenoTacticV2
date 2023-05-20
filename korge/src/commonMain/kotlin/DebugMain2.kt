@@ -1,19 +1,19 @@
-import korlibs.time.Frequency
-import korlibs.korge.Korge
-import korlibs.korge.KorgeConfig
-import korlibs.korge.ui.uiButton
-import korlibs.korge.view.*
+import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
+import com.xenotactic.korge.utils.getDirection8
+import com.xenotactic.korge.utils.kAngleTo
 import korlibs.image.color.Colors
 import korlibs.image.format.ASE
 import korlibs.image.format.readImageDataContainer
 import korlibs.image.format.toProps
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.resourcesVfs
-import korlibs.math.geom.*
-import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
-import com.xenotactic.korge.utils.getDirection8
-import com.xenotactic.korge.utils.kAngleTo
+import korlibs.korge.Korge
+import korlibs.korge.KorgeConfig
+import korlibs.korge.ui.uiButton
+import korlibs.korge.view.*
 import korlibs.korge.view.align.centerOnStage
+import korlibs.math.geom.*
+import korlibs.time.Frequency
 import kotlin.jvm.JvmStatic
 
 operator fun ClosedRange<Angle>.contains(angle: Angle): Boolean =
