@@ -244,7 +244,11 @@ class UIGuiContainer(
             onClick {
                 mutableCurrentlySelectedTowerState.currentTowerId?.also {
                     world.modifyEntity(it) {
-                        addComponentOrThrow(MutableShowRangeTimeComponent(4000))
+                        val defaultShowTimeMillis = 4000L
+                        val comp = getComponentOrAdd {
+                            MutableShowRangeTimeComponent(defaultShowTimeMillis)
+                        }
+                        comp.showTimeRemainingMillis = defaultShowTimeMillis
                     }
                 }
             }
