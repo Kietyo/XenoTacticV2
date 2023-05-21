@@ -100,6 +100,6 @@ object StagingEntityUtils {
         addComponentOrThrow(size.toSizeComponent())
         addComponentOrThrow(EntityBlockingComponent)
         addComponentOrThrow(EntitySupplyDepotComponent)
-        addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.SUPPLY_DEPOT))
     }
 }

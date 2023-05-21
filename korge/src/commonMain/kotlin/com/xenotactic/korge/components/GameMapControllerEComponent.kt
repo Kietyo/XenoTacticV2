@@ -44,7 +44,7 @@ class GameMapControllerEComponent(
         return gameMap.getFirstTowerAt(x, y)
     }
 
-    fun getFirstSupplyDepotAt(roundedGridX: GameUnit, roundedGridY: GameUnit): MapEntity {
+    fun getFirstSupplyDepotAt(roundedGridX: GameUnit, roundedGridY: GameUnit): MapEntity.SupplyDepot? {
         return gameMap.getFirstSupplyDepotAt(roundedGridX, roundedGridY)
     }
 

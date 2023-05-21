@@ -311,6 +311,7 @@ class UIGuiContainer(
                 editorState.toggle(MapEntityType.SUPPLY_DEPOT)
             }
             val tooltip = UITooltipDescription(
+                goldCost = gameplayState.supplyDepotCost,
                 supplyCost = 0,
                 titleText = "SUPPLY DEPOT",
                 descriptionText = "Adds ${gameplayState.supplyPerDepot} supply.")

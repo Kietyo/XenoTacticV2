@@ -118,6 +118,7 @@ class UIEditorButtonsV2(
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
+                    MapEntityType.SUPPLY_DEPOT -> TODO()
                 }
                 editorState.switchToPlayingMode()
             }

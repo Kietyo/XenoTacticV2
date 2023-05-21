@@ -122,6 +122,7 @@ data class GameMap(
             is MapEntity.Tower -> towers.add(entity)
             is MapEntity.SmallBlocker -> smallBlockers.add(entity)
             is MapEntity.SpeedArea -> speedAreas.add(entity)
+            is MapEntity.SupplyDepot -> supplyDepots.add(entity)
         }
 
         if (entity.isBlockingEntity) {
@@ -153,7 +154,8 @@ data class GameMap(
             is MapEntity.TeleportOut,
             is MapEntity.Start,
             is MapEntity.Finish,
-            is MapEntity.Checkpoint -> true
+            is MapEntity.Checkpoint,
+            is MapEntity.SupplyDepot-> true
             is MapEntity.TeleportIn,
             is MapEntity.Rock,
             is MapEntity.Tower,
@@ -219,8 +221,8 @@ data class GameMap(
         return towers.firstOrNull { it.intersectsUnitBlock(x, y) }
     }
 
-    fun getFirstSupplyDepotAt(x: GameUnit, y: GameUnit): MapEntity {
-        return
+    fun getFirstSupplyDepotAt(x: GameUnit, y: GameUnit): MapEntity.SupplyDepot? {
+        return supplyDepots.firstOrNull { it.intersectsUnitBlock(x, y)}
     }
 
     fun getPathingEntities(): List<MapEntity> {
@@ -255,7 +257,8 @@ data class GameMap(
             is MapEntity.TeleportOut,
             is MapEntity.Tower,
             is MapEntity.SmallBlocker,
-            is MapEntity.SpeedArea -> return null
+            is MapEntity.SpeedArea,
+            is MapEntity.SupplyDepot-> return null
         }
     }
 

@@ -156,6 +156,13 @@ class UIMapEventListeners(
                         scaledHeight = worldHeight.toFloat()
                     }
                 }
+
+                MapEntityType.SUPPLY_DEPOT -> {
+                    uiEntityContainer.solidRect(
+                        worldWidth.toFloat(), worldHeight.toFloat(),
+                        MaterialColors.BROWN_500
+                    )
+                }
             }
 
             uiEntityContainer.apply {
@@ -167,7 +174,8 @@ class UIMapEventListeners(
                     MapEntityType.TOWER,
                     MapEntityType.TELEPORT_IN,
                     MapEntityType.TELEPORT_OUT,
-                    MapEntityType.SMALL_BLOCKER -> addTo(uiMap.entityLayer)
+                    MapEntityType.SMALL_BLOCKER,
+                    MapEntityType.SUPPLY_DEPOT-> addTo(uiMap.entityLayer)
 
                     MapEntityType.SPEED_AREA -> {
                         addTo(uiMap.speedAreaLayer)

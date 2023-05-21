@@ -59,6 +59,7 @@ class UIActiveTextNotifier(
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
+                    MapEntityType.SUPPLY_DEPOT -> "Removing supply depot"
                 }
             }
         }

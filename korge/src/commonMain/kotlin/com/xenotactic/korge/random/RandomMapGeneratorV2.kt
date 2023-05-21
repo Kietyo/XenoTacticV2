@@ -49,6 +49,7 @@ data class GenerationContext(
             MapEntityType.SMALL_BLOCKER -> GameUnitTuple(1, 1)
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
+            MapEntityType.SUPPLY_DEPOT -> GameUnitTuple(2, 2)
         }
     }
 

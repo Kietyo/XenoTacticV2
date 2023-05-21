@@ -226,7 +226,7 @@ class RandomMapGenerator {
     }
 
 
-    fun createEntity(entityType: MapEntity): MapEntity {
+    private fun createEntity(entityType: MapEntity): MapEntity {
         return when (entityType) {
             is MapEntity.Start -> MapEntity.Start(getRandomPointWithinMapBounds(entityType))
             is MapEntity.Finish -> MapEntity.Finish(getRandomPointWithinMapBounds(entityType))
@@ -237,10 +237,11 @@ class RandomMapGenerator {
             is MapEntity.TeleportOut -> TODO()
             is MapEntity.SmallBlocker -> TODO()
             is MapEntity.SpeedArea -> TODO()
+            is MapEntity.SupplyDepot -> TODO()
         }
     }
 
-    fun getRandomPointPartiallyInMap(entityWidth: Int, entityHeight: Int): GameUnitTuple {
+    private fun getRandomPointPartiallyInMap(entityWidth: Int, entityHeight: Int): GameUnitTuple {
         return GameUnitTuple(
             random.nextInt(-entityWidth + 1, map.width.toInt() - 1),
             random.nextInt(-entityHeight + 1, map.height.toInt() - 1)

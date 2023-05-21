@@ -60,7 +60,7 @@ class EditorPlacementInputProcessor(
         }
     }
 
-    fun onMouseEvent(views: Views, event: MouseEvent) {
+    private fun onMouseEvent(views: Views, event: MouseEvent) {
         if (!editorState.isEditingEnabled ||
             !ALLOWED_EVENTS.contains(event.type)
         ) {
@@ -92,7 +92,8 @@ class EditorPlacementInputProcessor(
                 MapEntityType.CHECKPOINT,
                 MapEntityType.TELEPORT_IN,
                 MapEntityType.TELEPORT_OUT,
-                MapEntityType.TOWER
+                MapEntityType.TOWER,
+                MapEntityType.SUPPLY_DEPOT
             )
         ) {
             val (entityWidth, entityHeight) = MapEntityType.getEntitySize(
@@ -174,6 +175,14 @@ class EditorPlacementInputProcessor(
                     }
 
                     MapEntityType.SUPPLY_DEPOT -> {
+                        if (gameMapApi.checkNewEntityIntersectsExistingBlockingEntities(entityToAdd)) {
+                            engine.eventBus.send(
+                                PlaceEntityErrorEvent(
+                                    "Unable to place '${editorState.entityTypeToPlace}': Intersects with another blocking entity"
+                                )
+                            )
+                            return
+                        }
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     }

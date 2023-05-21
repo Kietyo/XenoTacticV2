@@ -37,7 +37,7 @@ class GameSimulator(
 
     private val gameMapDimensionsState = GameMapDimensionsState(engine, width, height)
     private val gameMapPathState = GameMapPathState(engine)
-    private val gameplayState = GameplayState(61, 0.04, 7, 4, 5)
+    private val gameplayState = GameplayState(61, 0.04, 7, 4, 5, 31)
     private val mutableEventQueueState = MutableEventQueueState()
     private val mutableGoldState = MutableGoldState(200, eventBus)
     private val stateUtils: StateUtils
