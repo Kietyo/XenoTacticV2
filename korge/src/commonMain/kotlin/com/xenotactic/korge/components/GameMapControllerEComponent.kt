@@ -44,6 +44,10 @@ class GameMapControllerEComponent(
         return gameMap.getFirstTowerAt(x, y)
     }
 
+    fun getFirstSupplyDepotAt(roundedGridX: GameUnit, roundedGridY: GameUnit): MapEntity {
+        return gameMap.getFirstSupplyDepotAt(roundedGridX, roundedGridY)
+    }
+
     fun intersectsBlockingEntities(entity: MapEntity): Boolean {
         return gameMap.intersectsBlockingEntities(entity)
     }
@@ -134,6 +138,7 @@ class GameMapControllerEComponent(
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
+            MapEntityType.SUPPLY_DEPOT -> "Supply depot"
         }
 
         return "Placement Mode: $entityName"

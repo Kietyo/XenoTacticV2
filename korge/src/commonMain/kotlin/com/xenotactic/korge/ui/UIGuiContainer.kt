@@ -270,7 +270,6 @@ class UIGuiContainer(
             }
         }
 
-        val tooltipAddTower = UITooltipDescription(gameplayState.basicTowerCost)
         val tooltipUpgradeDamage = UITooltipDescription(
             gameplayState.initialDamageUpgradeCost,
             null,
@@ -291,16 +290,39 @@ class UIGuiContainer(
             onClick {
                 editorState.toggle(MapEntityType.TOWER)
             }
-            var tooltip: UITooltipDescription? = null
+            val tooltip = UITooltipDescription(gameplayState.basicTowerCost)
             onOver {
-                tooltip = tooltipAddTower.addTo(this@UIGuiContainer.stage) {
+                tooltip.addTo(this@UIGuiContainer.stage) {
                     scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
                     alignBottomToTopOf(this@apply, padding = 5.0)
                     centerXOn(this@apply)
                 }
             }
             onOut {
-                tooltip?.removeFromParent()
+                tooltip.removeFromParent()
+            }
+        }
+
+        val addSupplyDepotView = UITextRect(
+            "Add\nSupply\nDepot",
+            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        ).apply {
+            onClick {
+                editorState.toggle(MapEntityType.SUPPLY_DEPOT)
+            }
+            val tooltip = UITooltipDescription(
+                supplyCost = 0,
+                titleText = "SUPPLY DEPOT",
+                descriptionText = "Adds ${gameplayState.supplyPerDepot} supply.")
+            onOver {
+                tooltip.addTo(this@UIGuiContainer.stage) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
+                    alignBottomToTopOf(this@apply, padding = 5.0)
+                    centerXOn(this@apply)
+                }
+            }
+            onOut {
+                tooltip.removeFromParent()
             }
         }
 
@@ -349,6 +371,7 @@ class UIGuiContainer(
             bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
 
             bottomRightGrid.setEntry(0, 1, addTowerView)
+            bottomRightGrid.setEntry(1, 1, addSupplyDepotView)
         }
 
         deadUIZonesState.zones.add(bottomRightGrid)
@@ -435,8 +458,8 @@ class UIGuiContainer(
                     )
                 }
 
-                bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(3, 0, showRangeView)
+                bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
                 bottomRightGrid.setEntry(3, 1, sellEntitiesView)
 

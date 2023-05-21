@@ -191,6 +191,10 @@ class ObjectPlacementInputProcessor(
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
+                    MapEntityType.SUPPLY_DEPOT -> gameMapComponent.getFirstSupplyDepotAt(
+                        roundedGridX,
+                        roundedGridY
+                    )
                 }
 
                 if (firstEntityAtPoint == null) {

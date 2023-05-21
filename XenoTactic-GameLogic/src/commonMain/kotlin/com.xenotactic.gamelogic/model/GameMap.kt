@@ -22,6 +22,7 @@ data class GameMap(
     private val rocks: MutableList<MapEntity.Rock> = mutableListOf(),
     private val smallBlockers: MutableList<MapEntity.SmallBlocker> = mutableListOf(),
     private val speedAreas: MutableList<MapEntity.SpeedArea> = mutableListOf(),
+    private val supplyDepots: MutableList<MapEntity.SupplyDepot> = mutableListOf(),
 ) {
 
     @Transient
@@ -77,6 +78,7 @@ data class GameMap(
             MapEntityType.SMALL_BLOCKER -> smallBlockers.asSequence()
             MapEntityType.SPEED_AREA -> speedAreas.asSequence()
             MapEntityType.MONSTER -> emptySequence()
+            else -> TODO("Unsupported entity type: $entityType")
         }
     }
 
@@ -138,6 +140,7 @@ data class GameMap(
             is MapEntity.Tower -> towers.remove(entity)
             is MapEntity.SpeedArea -> speedAreas.remove(entity)
             is MapEntity.SmallBlocker -> smallBlockers.remove(entity)
+            is MapEntity.SupplyDepot -> supplyDepots.remove(entity)
         }
 
         if (entity.isBlockingEntity) {
@@ -214,6 +217,10 @@ data class GameMap(
 
     fun getFirstTowerAt(x: GameUnit, y: GameUnit): MapEntity.Tower? {
         return towers.firstOrNull { it.intersectsUnitBlock(x, y) }
+    }
+
+    fun getFirstSupplyDepotAt(x: GameUnit, y: GameUnit): MapEntity {
+        return
     }
 
     fun getPathingEntities(): List<MapEntity> {

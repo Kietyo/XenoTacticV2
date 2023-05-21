@@ -122,6 +122,7 @@ class GameMapApi(
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
+            MapEntityType.SUPPLY_DEPOT -> "Supply depot"
         }
 
         return "Placement Mode: $entityName"

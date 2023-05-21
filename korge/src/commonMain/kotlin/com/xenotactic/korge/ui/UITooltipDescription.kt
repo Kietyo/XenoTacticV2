@@ -7,8 +7,8 @@ import korlibs.korge.view.*
 import korlibs.korge.view.align.*
 
 class UITooltipDescription(
-    goldCost: Int?,
-    supplyCost: Int? = 1,
+    goldCost: Int? = null,
+    supplyCost: Int? = null,
     titleText: String = "BASIC TOWER",
     descriptionText: String = "A basic tower."
 ) : Container() {

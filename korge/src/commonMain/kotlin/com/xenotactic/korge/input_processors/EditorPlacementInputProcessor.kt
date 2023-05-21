@@ -172,6 +172,11 @@ class EditorPlacementInputProcessor(
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     }
+
+                    MapEntityType.SUPPLY_DEPOT -> {
+                        gameMapApi.placeEntities(entityToAdd)
+                        engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
+                    }
                 }
             }
         } else {
@@ -200,6 +205,7 @@ class EditorPlacementInputProcessor(
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
+            MapEntityType.SUPPLY_DEPOT -> StagingEntityUtils.createSupplyDepot(position)
         }
     }
 

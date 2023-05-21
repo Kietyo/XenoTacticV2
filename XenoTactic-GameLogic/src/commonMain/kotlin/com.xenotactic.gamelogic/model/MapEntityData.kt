@@ -7,6 +7,7 @@ sealed class MapEntityData {
     object Finish : MapEntityData()
     object Rock : MapEntityData()
     object Tower : MapEntityData()
+    object SupplyDepot : MapEntityData()
     object SmallBlocker : MapEntityData()
     data class TeleportIn(val sequenceNumber: Int) : MapEntityData() {
         val ordinalSequenceNumber get() = sequenceNumber + 1
@@ -35,6 +36,7 @@ sealed class MapEntityData {
             is TeleportOut -> MapEntityType.TELEPORT_OUT
             Tower -> MapEntityType.TOWER
             Monster -> MapEntityType.MONSTER
+            SupplyDepot -> MapEntityType.SUPPLY_DEPOT
         }
     }
 
@@ -50,6 +52,7 @@ sealed class MapEntityData {
             is TeleportOut -> "TP ${ordinalSequenceNumber} OUT"
             Tower -> null
             Monster -> null
+            SupplyDepot -> null
         }
     }
 }

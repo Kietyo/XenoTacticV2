@@ -167,6 +167,9 @@ class GameSimulator(
                     MapEntityType.SMALL_BLOCKER -> Unit
                     MapEntityType.SPEED_AREA -> Unit
                     MapEntityType.MONSTER -> Unit
+                    MapEntityType.SUPPLY_DEPOT -> {
+                        addComponentOrThrow(SelectableComponent)
+                    }
                 }
             }
 

@@ -15,13 +15,14 @@ class UIEntity(
     val entityType: MapEntityType,
     val entityWidth: GameUnit,
     val entityHeight: GameUnit,
-//    val engine: Engine?,
+    //    val engine: Engine?,
     gridSize: Number,
     borderSize: Number,
     val speedEffect: Double? = null,
 ) : Container() {
     val gridSize = gridSize.toFloat()
     val borderSize = borderSize.toFloat()
+
     init {
         val (worldWidth, worldHeight) = toWorldDimensions(entityWidth, entityHeight, gridSize)
         println(
@@ -96,17 +97,24 @@ class UIEntity(
             }
 
             MapEntityType.MONSTER -> {
-//                val diameter = worldWidth
+                //                val diameter = worldWidth
                 UIEightDirectionalSprite(GlobalResources.MONSTER_SPRITE).addTo(this@UIEntity) {
                     anchor(Anchor.CENTER)
                     scaledWidth = worldWidth.toFloat()
                     scaledHeight = worldHeight.toFloat()
                 }
-//                Circle((diameter / 2).value, Colors.RED).apply {
-//                    addTo(this@UIEntity)
-//                    anchor(Anchor.CENTER)
-//                }
+                //                Circle((diameter / 2).value, Colors.RED).apply {
+                //                    addTo(this@UIEntity)
+                //                    anchor(Anchor.CENTER)
+                //                }
 
+            }
+
+            MapEntityType.SUPPLY_DEPOT -> {
+                solidRect(
+                    worldWidth.toFloat(), worldHeight.toFloat(),
+                    MaterialColors.BROWN_500
+                )
             }
         }
 

@@ -93,4 +93,13 @@ object StagingEntityUtils {
         addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
         addComponentOrThrow(SupplyCostComponent(1))
     }
+
+    fun createSupplyDepot(position: GameUnitTuple,
+        size: GameUnitTuple = GameUnitTuple(2, 2)) = StagingEntity {
+        addComponentOrThrow(position.toBottomLeftPositionComponent())
+        addComponentOrThrow(size.toSizeComponent())
+        addComponentOrThrow(EntityBlockingComponent)
+        addComponentOrThrow(EntitySupplyDepotComponent)
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
+    }
 }

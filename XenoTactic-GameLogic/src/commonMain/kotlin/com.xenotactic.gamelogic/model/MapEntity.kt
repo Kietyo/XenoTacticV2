@@ -15,7 +15,8 @@ enum class MapEntityType {
     TELEPORT_OUT,
     SMALL_BLOCKER,
     SPEED_AREA,
-    MONSTER;
+    MONSTER,
+    SUPPLY_DEPOT;
 
     sealed class EntitySize {
         // No fixed size
@@ -37,6 +38,7 @@ enum class MapEntityType {
                     SMALL_BLOCKER -> true
                     SPEED_AREA -> false
                     MONSTER -> false
+                    SUPPLY_DEPOT -> true
                 }
             }.toSet()
 
@@ -66,7 +68,8 @@ enum class MapEntityType {
                 CHECKPOINT,
                 TOWER,
                 TELEPORT_IN,
-                TELEPORT_OUT -> EntitySize.Fixed(2.toGameUnit(), 2.toGameUnit())
+                TELEPORT_OUT,
+                SUPPLY_DEPOT-> EntitySize.Fixed(2.toGameUnit(), 2.toGameUnit())
 
                 ROCK, SPEED_AREA -> EntitySize.Varied
                 SMALL_BLOCKER -> EntitySize.Fixed(1.toGameUnit(), 1.toGameUnit())
@@ -110,6 +113,7 @@ sealed class MapEntity : IRectangleEntity {
             is TeleportOut -> TeleportOut(this.sequenceNumber, p.x, p.y)
             is SmallBlocker -> SmallBlocker(p.x, p.y)
             is SpeedArea -> SpeedArea(p.x, p.y, radius, speedEffect)
+            is SupplyDepot -> SupplyDepot(p)
         }
     }
 
@@ -340,6 +344,24 @@ sealed class MapEntity : IRectangleEntity {
     }
 
     @Serializable
+    data class SupplyDepot(override val x: GameUnit, override val y: GameUnit) : MapEntity() {
+        override val width: GameUnit = 2.toGameUnit()
+        override val height: GameUnit = 2.toGameUnit()
+        override val type: MapEntityType = MapEntityType.SUPPLY_DEPOT
+        override val friendlyName: String = "Supply depot"
+        override val isBlockingEntity: Boolean = true
+
+        constructor(gameUnitPoint: GameUnitTuple) : this(
+            gameUnitPoint.x,
+            gameUnitPoint.y
+        )
+
+        companion object {
+            operator fun invoke(x: Int, y: Int) = SupplyDepot(x.toGameUnit(), y.toGameUnit())
+        }
+    }
+
+    @Serializable
     data class SmallBlocker(
         override val x: GameUnit,
         override val y: GameUnit,
@@ -377,6 +399,8 @@ sealed class MapEntity : IRectangleEntity {
         }
     }
 
+
+
     fun toMapEntityData(): MapEntityData {
         return when (this) {
             is Checkpoint -> MapEntityData.Checkpoint(sequenceNumber)
@@ -388,6 +412,7 @@ sealed class MapEntity : IRectangleEntity {
             is TeleportIn -> MapEntityData.TeleportIn(sequenceNumber)
             is TeleportOut -> MapEntityData.TeleportOut(sequenceNumber)
             is Tower -> MapEntityData.Tower
+            is SupplyDepot -> MapEntityData.SupplyDepot
         }
     }
 

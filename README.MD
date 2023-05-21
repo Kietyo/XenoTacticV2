@@ -63,6 +63,7 @@ TODO
 - Bounce tower
 - Make the game open source
 - Show up error when user attempts to place tower when tower supply is max
+- Supply depot tower
 
 ## Changelog
 
