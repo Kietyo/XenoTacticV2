@@ -2,7 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="XenoTacticV2.deps" target="18" />
       <module name="XenoTacticV2.korge-compose" target="18" />
     </bytecodeTargetLevel>
   </component>

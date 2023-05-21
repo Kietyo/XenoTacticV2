@@ -60,7 +60,7 @@ internal class Solver_utilsKtTest {
     @Test
     fun allEntitiesTakenIntoConsideration() {
         for (type in MapEntityType.values()) {
-            when (type) {
+             when (type) {
                 MapEntityType.START -> {
                     val map = GameMap(2 ,2)
                     map.placeEntity(MapEntity.Start(0, 0))
@@ -146,7 +146,16 @@ internal class Solver_utilsKtTest {
                 MapEntityType.MONSTER -> {
 
                 }
-            }
+
+                 MapEntityType.SUPPLY_DEPOT -> {
+                     val map = GameMap(2, 2)
+                     map.placeEntity(MapEntity.SupplyDepot(0, 0))
+                     assertEquals(
+                         emptyList(),
+                         getAvailableTowerPlacementSpots(map)
+                     )
+                 }
+             }
         }
     }
 }

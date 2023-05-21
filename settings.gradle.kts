@@ -30,13 +30,14 @@ pluginManagement {
         kotlin("plugin.serialization") version kotlinVersion
         kotlin("plugin.allopen") version kotlinVersion
         id("org.jetbrains.kotlinx.benchmark") version kotlinxBenchmark
+//        id("com.soywiz.kproject.settings") version "0.2.7"
 //        id("com.soywiz.kproject.settings") version "0.0.6"
     }
 }
 
 plugins {
     //id("com.soywiz.kproject.settings") version "0.0.1-SNAPSHOT"
-//    id("com.soywiz.kproject.settings") version "0.2.7"
+    id("com.soywiz.kproject.settings") version "0.2.7"
 }
 
 //kproject("./deps")
@@ -50,8 +51,8 @@ include(":XenoTactic-GameLogic")
 include("XenoECS")
 project(":XenoECS").projectDir = file("..\\XenoECS")
 
-include("ktruth")
-project(":ktruth").projectDir = file("..\\ktruth")
+//include("ktruth")
+//project(":ktruth").projectDir = file("..\\ktruth")
 
 //include("korge-compose")
 //project(":korge-compose").projectDir = file("..\\korge-compose\\korge-compose")

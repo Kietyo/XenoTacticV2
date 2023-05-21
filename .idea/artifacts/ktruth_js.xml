@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ktruth-js">
+    <output-path>$PROJECT_DIR$/../ktruth/build/libs</output-path>
+    <root id="archive" name="ktruth-js.jar">
+      <element id="module-output" name="XenoTacticV2.ktruth.jsMain" />
+    </root>
+  </artifact>
+</component>

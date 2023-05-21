@@ -4,6 +4,7 @@ import com.kietyo.ktruth.assertThat
 import com.xenotactic.ecs.FamilyConfiguration
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.pathing.PathFindingResult
 import com.xenotactic.gamelogic.utils.toGameUnit
 import com.xenotactic.korge.random.generators.*
 import com.xenotactic.testing.assertThat
@@ -204,6 +205,6 @@ internal class RandomMapGeneratorV2Test {
             width, height
         )
 
-        assertThat(pathFindingResult).isInstanceOf<MapGeneratorResultV2.Success>()
+        assertThat(pathFindingResult).isInstanceOf<PathFindingResult.Success>()
     }
 }
