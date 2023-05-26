@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="XenoECS-jvm">
+    <output-path>$PROJECT_DIR$/../XenoECS/build/libs</output-path>
+    <root id="archive" name="XenoECS-jvm.jar">
+      <element id="module-output" name="XenoTacticV2.XenoECS.jvmMain" />
+    </root>
+  </artifact>
+</component>

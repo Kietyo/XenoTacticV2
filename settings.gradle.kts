@@ -18,10 +18,10 @@
 //}
 
 pluginManagement {
-//    repositories {
-//        println("Setting up repo in settings.gradle.kts")
-//        mavenLocal(); mavenCentral(); google(); gradlePluginPortal()
-//    }
+    repositories {
+        println("Setting up repo in settings.gradle.kts")
+        mavenLocal(); mavenCentral(); google(); gradlePluginPortal()
+    }
     val kotlinVersion: String by settings
     val kotlinxBenchmark: String by settings
 //    val composeVersion: String by settings
@@ -30,14 +30,12 @@ pluginManagement {
         kotlin("plugin.serialization") version kotlinVersion
         kotlin("plugin.allopen") version kotlinVersion
         id("org.jetbrains.kotlinx.benchmark") version kotlinxBenchmark
-//        id("com.soywiz.kproject.settings") version "0.2.7"
-//        id("com.soywiz.kproject.settings") version "0.0.6"
     }
 }
 
 plugins {
     //id("com.soywiz.kproject.settings") version "0.0.1-SNAPSHOT"
-    id("com.soywiz.kproject.settings") version "0.2.7"
+    id("com.soywiz.kproject.settings") version "0.3.1"
 }
 
 //kproject("./deps")
@@ -48,8 +46,8 @@ include(":korge")
 include(":XenoTactic-GameLogic")
 //include(":Fleks")
 
-include("XenoECS")
-project(":XenoECS").projectDir = file("..\\XenoECS")
+//include("XenoECS")
+//project(":XenoECS").projectDir = file("..\\XenoECS")
 
 //include("ktruth")
 //project(":ktruth").projectDir = file("..\\ktruth")
