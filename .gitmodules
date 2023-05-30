@@ -1,0 +1,6 @@
+[submodule "ktruth"]
+	path = ktruth
+	url = https://github.com/Kietyo/ktruth
+[submodule "XenoECS"]
+	path = XenoECS
+	url = https://github.com/Kietyo/XenoECS

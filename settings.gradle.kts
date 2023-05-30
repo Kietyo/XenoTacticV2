@@ -46,10 +46,10 @@ include(":korge")
 include(":XenoTactic-GameLogic")
 //include(":Fleks")
 
-//include("XenoECS")
+include("XenoECS")
 //project(":XenoECS").projectDir = file("..\\XenoECS")
 
-//include("ktruth")
+include("ktruth")
 //project(":ktruth").projectDir = file("..\\ktruth")
 
 //include("korge-compose")

@@ -1,4 +1,4 @@
 dependencies:
 #  - ../korge-compose/korge-compose
-  - ../ktruth
-  - ../XenoECS
+#  - ../ktruth
+#  - ../XenoECS

@@ -3,6 +3,8 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="XenoTacticV2.korge-compose" target="18" />
+      <module name="XenoTacticV2.ktruth" target="18" />
+      <module name="XenoTacticV2.XenoECS" target="18" />
     </bytecodeTargetLevel>
   </component>
 </project>
