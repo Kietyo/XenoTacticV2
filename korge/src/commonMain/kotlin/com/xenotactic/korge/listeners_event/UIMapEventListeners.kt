@@ -114,6 +114,13 @@ class UIMapEventListeners(
                     addComponentOrThrow(UIGunBarrelComponent(tower.getChildByName(GUN_VIEW_NAME)!!))
                 }
 
+                MapEntityType.SUPPLY_DEPOT -> {
+                    uiEntityContainer.solidRect(
+                        worldWidth.toFloat(), worldHeight.toFloat(),
+                        MaterialColors.BROWN_500
+                    )
+                }
+
                 MapEntityType.ROCK -> {
                     uiEntityContainer.solidRect(
                         worldWidth.toFloat(), worldHeight.toFloat(),
@@ -157,12 +164,7 @@ class UIMapEventListeners(
                     }
                 }
 
-                MapEntityType.SUPPLY_DEPOT -> {
-                    uiEntityContainer.solidRect(
-                        worldWidth.toFloat(), worldHeight.toFloat(),
-                        MaterialColors.BROWN_500
-                    )
-                }
+
             }
 
             uiEntityContainer.apply {

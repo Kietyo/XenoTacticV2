@@ -128,6 +128,8 @@ fun IRectangleEntity.getSizeComponent(): SizeComponent {
 
 const val GUN_VIEW_NAME = "gun"
 
+
+
 fun createUIEntityContainerForTower(
     worldWidth: WorldUnit,
     worldHeight: WorldUnit,
