@@ -16,7 +16,7 @@ buildscript {
     }
 }
 
-configureAutoVersions()
+//configureAutoVersions()
 
 repositories {
     mavenCentral()

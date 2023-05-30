@@ -1,7 +1,23 @@
-Attributions
+## Setup & Run
+
+Make sure in your gradle setting that you select the correct JVM version.
+Use Java 17+.
+
+![Settings Window](screenshots/gradle_jvm.png)
+
+To Run (only tested in IntelliJ):
+
+- Open Gradle menu on the right side
+- Run Tasks > run > runJvm
+  ![Run](screenshots/gradle_run.png)
+
+
+## Attributions
 - MemDixy/cyanochlorite - Idea for rock counters
 - TheCurse - Early development support/advice
 - Lawlzer - Early development support/advice
+
+## Notes
 
 Trying to get Native working for curl http client engine
 
@@ -47,10 +63,10 @@ cocoyaxi[core]:x86-windows -> 2.0.3#2
 ```
 - Installed visual studio
 
-Issues
+## Issues
 - 22/8/21 - After using rock placement mode in editor, can no longer move map.
 
-TODO
+## TODO
 - Ability to delete multiple selected towers
 - Multi tower selection display UI. Show the damage/speed upgrades in the overview.
 - Monster spawner system

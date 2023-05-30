@@ -47,5 +47,5 @@ dependencies {
 
 	//    add("commonMainImplementation", project(":Fleks"))
 	add("commonMainImplementation", project(":XenoECS"))
-	add("commonMainApi", project(":deps"))
+//	add("commonMainApi", project(":deps"))
 }
