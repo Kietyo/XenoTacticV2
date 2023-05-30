@@ -1,3 +1,8 @@
+## What is this?
+
+This is an attempt to create Entropy TD (a Starcraft 2 arcade map) as a standalone game. This is implemented using
+[Korge](https://korge.org/), which is a game engine/framework written in Kotlin.
+
 ## Setup & Run
 
 Make sure in your gradle setting that you select the correct JVM version.
@@ -11,8 +16,8 @@ To Run (only tested in IntelliJ):
 - Run Tasks > run > runJvm
   ![Run](screenshots/gradle_run.png)
 
-
 ## Attributions
+
 - MemDixy/cyanochlorite - Idea for rock counters
 - TheCurse - Early development support/advice
 - Lawlzer - Early development support/advice
@@ -22,7 +27,7 @@ To Run (only tested in IntelliJ):
 Trying to get Native working for curl http client engine
 
 - tried installing curl via https://curl.se/windows/
- was able to install it in to the path, but got error when running afterwards:
+  was able to install it in to the path, but got error when running afterwards:
 
 ```shell
 > Task :linkDebugTestNative
@@ -42,11 +47,12 @@ Execution failed for task ':linkDebugTestNative'.
 Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
 ```
 
-
 Turns out, maybe I need to install libcurl?
+
 - Went to https://github.com/microsoft/vcpkg
 - Tried to install libcurl but was told need to install visual studio
-- 
+-
+
 ```shell
 PS C:\Users\kietm\OneDrive\Documents\GitHub\vcpkg> .\vcpkg.exe install cocoyaxi
 Computing installation plan...
@@ -61,12 +67,15 @@ cocoyaxi[core]:x86-windows -> 2.0.3#2
   Error: in triplet x64-windows: Unable to find a valid Visual Studio instance
   Could not locate a complete Visual Studio instance
 ```
+
 - Installed visual studio
 
 ## Issues
+
 - 22/8/21 - After using rock placement mode in editor, can no longer move map.
 
 ## TODO
+
 - Ability to delete multiple selected towers
 - Multi tower selection display UI. Show the damage/speed upgrades in the overview.
 - Monster spawner system
