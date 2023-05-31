@@ -10,6 +10,6 @@ class StateUtils(
 
     val currentMaxSupply
         get() =
-            gameWorld.supplyDepotsFamily.size * gameplayState.supplyPerDepot + gameplayState.initialMaxSupply
+            gameWorld.supplyDepotsFamily.size * gameplayState.supplyPerDepot + gameplayState.initialSupply
 
 }

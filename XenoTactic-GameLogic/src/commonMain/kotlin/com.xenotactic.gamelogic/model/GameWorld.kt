@@ -161,6 +161,14 @@ class GameWorld(
             }.sum()
         }
 
+    fun calculateMaxSupply(initialSupply: Int, supplyPerDepot: Int, maxSupply: Int): Int {
+        val numDepots = world.getOrCreateFamily(
+            FamilyConfiguration.allOf(EntitySupplyDepotComponent::class)
+        ).size
+
+        return minOf(initialSupply + numDepots * supplyPerDepot, maxSupply)
+    }
+
     private inline fun <reified T1 : Any, R> Sequence<EntityId>.mapComponent(
         crossinline transform: (T1) -> R): Sequence<R> {
         return this.map {

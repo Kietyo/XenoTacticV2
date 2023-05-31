@@ -154,7 +154,7 @@ class GameMapApi(
     }
 
     fun isAtMaxSupply(): Boolean {
-        val currentSupplyLimit = gameplayState.initialMaxSupply
+        val currentSupplyLimit = gameplayState.initialSupply
         val towers = gameWorld.towers
         require(towers.size <= currentSupplyLimit)
         return towers.size == currentSupplyLimit

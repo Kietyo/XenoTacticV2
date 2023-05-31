@@ -161,7 +161,9 @@ class UIGuiContainer(
                 val i = image(GlobalResources.SUPPLY_ICON) {
                     smoothing = false
                 }
-                val calculateTextFn = { "${gameWorld.currentSupplyUsage}/${gameplayState.initialMaxSupply}" }
+                val calculateTextFn = { "${gameWorld.currentSupplyUsage}/${gameWorld.calculateMaxSupply(
+                    gameplayState.initialSupply, gameplayState.supplyPerDepot, gameplayState.maxSupply
+                )}" }
                 val t = text(
                     calculateTextFn(),
                     font = GlobalResources.FONT_ATKINSON_BOLD,
