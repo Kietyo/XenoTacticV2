@@ -3,10 +3,7 @@ package com.xenotactic.korge.input_processors
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.RectangleEntity
-import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.gamelogic.utils.GameMapApi
-import com.xenotactic.gamelogic.utils.GameUnit
-import com.xenotactic.gamelogic.utils.toGameUnit
+import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
 import com.xenotactic.korge.ui.UIMapV2
@@ -146,29 +143,16 @@ class EditorPlacementInputProcessor(
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
                     MapEntityType.TOWER -> {
-                        if (gameMapApi.checkNewEntitiesBlocksPath(entityToAdd)) {
-                            engine.eventBus.send(
-                                PlaceEntityErrorEvent(
-                                    "Unable to place '${editorState.entityTypeToPlace}': Blocks path"
+                        when (val it = checkCanPlaceTowerEntity(gameMapApi, entityToAdd)) {
+                            is RestrictionResult.Error -> {
+                                engine.eventBus.send(
+                                    PlaceEntityErrorEvent(
+                                        "Unable to place '${editorState.entityTypeToPlace}': ${it.errorMessage}"
+                                    )
                                 )
-                            )
-                            return
-                        }
-                        if (gameMapApi.checkNewEntityIntersectsExistingBlockingEntities(entityToAdd)) {
-                            engine.eventBus.send(
-                                PlaceEntityErrorEvent(
-                                    "Unable to place '${editorState.entityTypeToPlace}': Intersects with another blocking entity"
-                                )
-                            )
-                            return
-                        }
-                        if (gameMapApi.isAtMaxSupply()) {
-                            engine.eventBus.send(
-                                PlaceEntityErrorEvent(
-                                    "Unable to place '${editorState.entityTypeToPlace}': Supply limit"
-                                )
-                            )
-                            return
+                                return
+                            }
+                            RestrictionResult.Ok -> Unit
                         }
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))

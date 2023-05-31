@@ -162,6 +162,11 @@ class GameSimulator(
             val entityTypeComponent = entity[EntityTypeComponent::class]
 
             if (entityTypeComponent.type == MapEntityType.TOWER) {
+                when (checkCanPlaceTowerEntity(gameMapApi, entity)) {
+                    is RestrictionResult.Error -> break
+                    RestrictionResult.Ok -> Unit
+                }
+
                 // check we have enough gold
                 val towerCost = gameplayState.basicTowerCost
                 if (towerCost > mutableGoldState.currentGold) {
