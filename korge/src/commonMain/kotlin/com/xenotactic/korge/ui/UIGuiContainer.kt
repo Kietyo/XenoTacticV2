@@ -37,7 +37,8 @@ import korlibs.korge.view.align.*
 enum class ViewType {
     NONE,
     SINGLE_TOWER_SELECTION,
-    MULTI_TOWER_SELECTION
+    MULTI_TOWER_SELECTION,
+    SINGLE_DEPOT_SELECTION
 }
 
 class UIGuiContainer(
@@ -395,6 +396,10 @@ class UIGuiContainer(
                 ViewType.MULTI_TOWER_SELECTION -> {
                     middleSelectionContainer.removeChildren()
                 }
+
+                ViewType.SINGLE_DEPOT_SELECTION -> {
+
+                }
             }
             resetInitial()
         }
@@ -464,6 +469,17 @@ class UIGuiContainer(
                 bottomRightGrid.setEntry(3, 0, showRangeView)
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
+                bottomRightGrid.setEntry(3, 1, sellEntitiesView)
+
+                holdShiftText.addTo(stage) {
+                    alignLeftToLeftOf(bottomRightGrid, padding = bottomRightGridHorizontalPadding / 2.0)
+                    alignBottomToTopOf(bottomRightGrid)
+                }
+            } else if (gameWorld.selectionFamily.size == 1 && gameWorld.isSupplyDepotEntity(gameWorld.selectionFamily.first())) {
+                resetView()
+                currentViewType = ViewType.SINGLE_DEPOT_SELECTION
+                val towerId = gameWorld.selectionFamily.first()
+                mutableCurrentlySelectedTowerState.currentTowerId = towerId
                 bottomRightGrid.setEntry(3, 1, sellEntitiesView)
 
                 holdShiftText.addTo(stage) {

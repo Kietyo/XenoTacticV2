@@ -221,6 +221,9 @@ class GameWorld(
         return world.getComponentContainer<EntityTowerComponent>().containsComponent(id)
     }
 
+    fun isSupplyDepotEntity(id: EntityId): Boolean {
+        return world.getComponentContainer<EntitySupplyDepotComponent>().containsComponent(id)
+    }
 
 }
 

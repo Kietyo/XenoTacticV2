@@ -105,17 +105,52 @@ class GameSimulator(
 
     private fun handleRemoveEntitiesEvent(event: GameEvent.RemoveEntities) {
         event.entities.forEach {
-            val isTowerEntity = gameWorld.world.existsComponent<EntityTowerComponent>(it)
+            val mapEntityComponent = world.getOrNull(it, EntityTypeComponent::class)
 
-            if (isTowerEntity) {
-                mutableGoldState.currentGold += gameplayState.basicTowerCost
+            if (mapEntityComponent != null) {
+                when (mapEntityComponent.type) {
+                    MapEntityType.START -> TODO()
+                    MapEntityType.FINISH -> TODO()
+                    MapEntityType.CHECKPOINT -> TODO()
+                    MapEntityType.ROCK -> TODO()
+                    MapEntityType.TOWER -> {
+                        mutableGoldState.currentGold += gameplayState.basicTowerCost
+                    }
+
+                    MapEntityType.TELEPORT_IN -> TODO()
+                    MapEntityType.TELEPORT_OUT -> TODO()
+                    MapEntityType.SMALL_BLOCKER -> TODO()
+                    MapEntityType.SPEED_AREA -> TODO()
+                    MapEntityType.MONSTER -> TODO()
+                    MapEntityType.SUPPLY_DEPOT -> {
+                        mutableGoldState.currentGold += gameplayState.supplyDepotCost
+                    }
+                }
             }
 
             gameWorld.world.modifyEntity(it) {
                 removeThisEntity()
             }
-            if (isTowerEntity) {
-                eventBus.send(RemovedTowerEntityEvent(it))
+
+            if (mapEntityComponent != null) {
+                when (mapEntityComponent.type) {
+                    MapEntityType.START -> TODO()
+                    MapEntityType.FINISH -> TODO()
+                    MapEntityType.CHECKPOINT -> TODO()
+                    MapEntityType.ROCK -> TODO()
+                    MapEntityType.TOWER -> {
+                        eventBus.send(RemovedTowerEntityEvent(it))
+                    }
+
+                    MapEntityType.TELEPORT_IN -> TODO()
+                    MapEntityType.TELEPORT_OUT -> TODO()
+                    MapEntityType.SMALL_BLOCKER -> TODO()
+                    MapEntityType.SPEED_AREA -> TODO()
+                    MapEntityType.MONSTER -> TODO()
+                    MapEntityType.SUPPLY_DEPOT -> {
+
+                    }
+                }
             }
         }
         updateShortestPath()
