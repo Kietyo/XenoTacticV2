@@ -9,10 +9,7 @@ import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
 import com.xenotactic.korge.ui.UIMapV2
-import com.xenotactic.korge.utils.GUN_VIEW_NAME
-import com.xenotactic.korge.utils.createUIEntityContainerForTower
-import com.xenotactic.korge.utils.getText
-import com.xenotactic.korge.utils.makeEntityLabelText
+import com.xenotactic.korge.utils.*
 import korlibs.image.color.Colors
 import korlibs.image.color.MaterialColors
 import korlibs.korge.internal.KorgeUntested
@@ -33,7 +30,6 @@ class UIMapEventListeners(
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     val gameWorld = engine.gameWorld
     val world = gameWorld.world
-    private val resourcesState = engine.stateInjections.getSingleton<MutableGoldState>()
 
     init {
         engine.eventBus.register<AddedEntityEvent> {
@@ -115,10 +111,11 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.SUPPLY_DEPOT -> {
-                    uiEntityContainer.solidRect(
-                        worldWidth.toFloat(), worldHeight.toFloat(),
-                        MaterialColors.BROWN_500
-                    )
+                    createUIEntityContainerForSupplyDepot(worldWidth, worldHeight, uiEntityContainer)
+//                    uiEntityContainer.solidRect(
+//                        worldWidth.toFloat(), worldHeight.toFloat(),
+//                        MaterialColors.BROWN_500
+//                    )
                 }
 
                 MapEntityType.ROCK -> {

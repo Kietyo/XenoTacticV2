@@ -28,7 +28,9 @@ object GlobalResources {
     suspend fun init() {
         MONSTER_SPRITE = resourcesVfs["8_directional_character.aseprite"].readImageDataContainer(ASE.toProps())
         val towerSprites =
-            resourcesVfs["tower_sprites.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
+            resourcesVfs["tower_sprites.aseprite"].readImageDataContainer(ASE.toProps().apply {
+                onlyReadVisibleLayers = false
+            }).toAsepriteModel()
 
         TOWER_BASE_SPRITE = towerSprites.getAsepriteLayerWithAllFrames("base").frames.first().computeUncroppedBitmap()
         TOWER_BASE_DETAIL_SPRITE =

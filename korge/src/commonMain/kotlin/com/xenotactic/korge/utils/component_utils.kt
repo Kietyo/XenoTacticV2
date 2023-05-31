@@ -128,12 +128,10 @@ fun IRectangleEntity.getSizeComponent(): SizeComponent {
 
 const val GUN_VIEW_NAME = "gun"
 
-
-
-fun createUIEntityContainerForTower(
+fun populateTowerBaseUiEntityContainer(
     worldWidth: WorldUnit,
     worldHeight: WorldUnit,
-    uiEntityContainer: Container = Container()): Container {
+    uiEntityContainer: Container) {
     uiEntityContainer.image(GlobalResources.TOWER_BASE_SPRITE) {
         smoothing = false
         scaledWidth = worldWidth.toFloat()
@@ -144,6 +142,13 @@ fun createUIEntityContainerForTower(
         scaledWidth = worldWidth.toFloat()
         scaledHeight = worldHeight.toFloat()
     }
+}
+
+fun createUIEntityContainerForTower(
+    worldWidth: WorldUnit,
+    worldHeight: WorldUnit,
+    uiEntityContainer: Container = Container()): Container {
+    populateTowerBaseUiEntityContainer(worldWidth, worldHeight, uiEntityContainer)
     val gunImage = uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
         smoothing = false
         anchor(Anchor.CENTER)
@@ -156,6 +161,19 @@ fun createUIEntityContainerForTower(
             )
         )
         name(GUN_VIEW_NAME)
+    }
+    return uiEntityContainer
+}
+
+fun createUIEntityContainerForSupplyDepot(
+    worldWidth: WorldUnit,
+    worldHeight: WorldUnit,
+    uiEntityContainer: Container = Container()): Container {
+    populateTowerBaseUiEntityContainer(worldWidth, worldHeight, uiEntityContainer)
+    uiEntityContainer.image(GlobalResources.DEPOT_SPRITE) {
+        smoothing = false
+        scaledWidth = worldWidth.toFloat()
+        scaledHeight = worldHeight.toFloat()
     }
     return uiEntityContainer
 }
