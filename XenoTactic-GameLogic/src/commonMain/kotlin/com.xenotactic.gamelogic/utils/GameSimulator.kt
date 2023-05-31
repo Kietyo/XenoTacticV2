@@ -184,6 +184,11 @@ class GameSimulator(
             }
 
             if (entityTypeComponent.type == MapEntityType.SUPPLY_DEPOT) {
+                when (checkCanPlaceEntity(gameMapApi, entity)) {
+                    is RestrictionResult.Error -> break
+                    RestrictionResult.Ok -> Unit
+                }
+
                 // check we have enough gold
                 val towerCost = gameplayState.supplyDepotCost
                 if (towerCost > mutableGoldState.currentGold) {

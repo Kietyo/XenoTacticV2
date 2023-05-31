@@ -159,13 +159,16 @@ class EditorPlacementInputProcessor(
                     }
 
                     MapEntityType.SUPPLY_DEPOT -> {
-                        if (gameMapApi.checkNewEntityIntersectsExistingBlockingEntities(entityToAdd)) {
-                            engine.eventBus.send(
-                                PlaceEntityErrorEvent(
-                                    "Unable to place '${editorState.entityTypeToPlace}': Intersects with another blocking entity"
+                        when (val it = checkCanPlaceTowerEntity(gameMapApi, entityToAdd)) {
+                            is RestrictionResult.Error -> {
+                                engine.eventBus.send(
+                                    PlaceEntityErrorEvent(
+                                        "Unable to place '${editorState.entityTypeToPlace}': ${it.errorMessage}"
+                                    )
                                 )
-                            )
-                            return
+                                return
+                            }
+                            RestrictionResult.Ok -> Unit
                         }
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
