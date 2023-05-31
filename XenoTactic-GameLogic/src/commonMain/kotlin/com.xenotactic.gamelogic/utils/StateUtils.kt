@@ -1,5 +1,7 @@
 package com.xenotactic.gamelogic.utils
 
+import com.xenotactic.ecs.FamilyConfiguration
+import com.xenotactic.gamelogic.components.EntitySupplyDepotComponent
 import com.xenotactic.gamelogic.state.GameplayState
 
 class StateUtils(
@@ -9,7 +11,6 @@ class StateUtils(
     val gameWorld = engine.gameWorld
 
     val currentMaxSupply
-        get() =
-            gameWorld.supplyDepotsFamily.size * gameplayState.supplyPerDepot + gameplayState.initialSupply
+        get() = gameWorld.calculateMaxSupply(gameplayState.initialSupply, gameplayState.supplyPerDepot, gameplayState.maxSupply)
 
 }

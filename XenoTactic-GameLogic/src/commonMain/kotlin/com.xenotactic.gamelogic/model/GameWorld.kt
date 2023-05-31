@@ -162,10 +162,7 @@ class GameWorld(
         }
 
     fun calculateMaxSupply(initialSupply: Int, supplyPerDepot: Int, maxSupply: Int): Int {
-        val numDepots = world.getOrCreateFamily(
-            FamilyConfiguration.allOf(EntitySupplyDepotComponent::class)
-        ).size
-
+        val numDepots = supplyDepotsFamily.size
         return minOf(initialSupply + numDepots * supplyPerDepot, maxSupply)
     }
 

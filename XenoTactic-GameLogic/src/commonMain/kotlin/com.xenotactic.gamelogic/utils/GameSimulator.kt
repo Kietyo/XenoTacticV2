@@ -142,6 +142,16 @@ class GameSimulator(
                 mutableGoldState.currentGold -= towerCost
             }
 
+            if (entityTypeComponent.type == MapEntityType.SUPPLY_DEPOT) {
+                // check we have enough gold
+                val towerCost = gameplayState.supplyDepotCost
+                if (towerCost > mutableGoldState.currentGold) {
+                    break
+                }
+
+                mutableGoldState.currentGold -= towerCost
+            }
+
             val entityId = gameWorld.world.addEntity {
                 addComponentsFromStagingEntity(entity)
                 when (entityTypeComponent.type) {
