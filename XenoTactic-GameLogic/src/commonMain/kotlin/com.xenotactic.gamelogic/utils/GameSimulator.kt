@@ -4,6 +4,7 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.events.AddedEntityEvent
+import com.xenotactic.gamelogic.events.RemovedSupplyDepotEntityEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.state.*
@@ -148,7 +149,7 @@ class GameSimulator(
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
                     MapEntityType.SUPPLY_DEPOT -> {
-
+                        eventBus.send(RemovedSupplyDepotEntityEvent(it))
                     }
                 }
             }

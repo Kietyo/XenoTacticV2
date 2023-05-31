@@ -55,6 +55,6 @@ object GlobalResources {
         SUPPLY_ICON = icons.frames.first().createMergedBitmap(backgroundLayerName, supplyIconLayerName)
 
         FONT_ATKINSON_REGULAR = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()
-        FONT_ATKINSON_BOLD = resourcesVfs["fonts/AtkinsonHyperlegible-Bold.ttf"].readTtfFont()
+        FONT_ATKINSON_BOLD = resourcesVfs["fonts/AtkinsonHyperlegible-Bold.ttf"].readTtfFont(enableLigatures = false)
     }
 }

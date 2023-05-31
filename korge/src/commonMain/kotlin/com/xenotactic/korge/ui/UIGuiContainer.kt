@@ -7,6 +7,7 @@ import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.GoldStateUpdated
+import com.xenotactic.gamelogic.events.RemovedSupplyDepotEntityEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -179,6 +180,9 @@ class UIGuiContainer(
                     t.text = calculateTextFn()
                 }
                 eventBus.register<RemovedTowerEntityEvent> {
+                    t.text = calculateTextFn()
+                }
+                eventBus.register<RemovedSupplyDepotEntityEvent> {
                     t.text = calculateTextFn()
                 }
 
@@ -369,6 +373,7 @@ class UIGuiContainer(
         }
 
         fun resetInitial() {
+            holdShiftText.removeFromParent()
             bottomRightGrid.clear()
             bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
             bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
