@@ -1,4 +1,4 @@
-import korlibs.korge.gradle.configureAutoVersions
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     val korgePluginVersion: String by project
@@ -14,6 +14,10 @@ buildscript {
     dependencies {
         classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
     }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.freeCompilerArgs = listOf("-Xcontext-receivers")
 }
 
 //configureAutoVersions()

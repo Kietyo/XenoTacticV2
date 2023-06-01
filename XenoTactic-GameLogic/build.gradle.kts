@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 val korgePluginVersion: String by project
 val kotlinxSerialization: String by project
 val kotlinxBenchmark: String by project
@@ -34,12 +36,16 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
-tasks{
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs += listOf("-Xskip-prerelease-check")
-        }
-    }
+//tasks{
+//    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+//        kotlinOptions {
+//            freeCompilerArgs += listOf("-Xskip-prerelease-check", "-Xcontext-receivers")
+//        }
+//    }
+//}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.freeCompilerArgs += listOf("-Xskip-prerelease-check", "-Xcontext-receivers")
 }
 
 kotlin {

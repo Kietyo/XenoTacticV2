@@ -12,11 +12,13 @@ enum class ErrorType(val description: String, val shortString: String) {
     MAX_SUPPLY("Unable to place because already at max supply.", "Is at max supply"),
 }
 
+data class StagingEntityContext(val entity: StagingEntity)
+
 sealed class Validator(val errorType: ErrorType) {
     abstract fun hasError(): Boolean
 
-    class CheckEntityBlocksPath(val gameMapApi: GameMapApi, val entity: StagingEntity) :
-        Validator(ErrorType.BLOCKS_PATH) {
+    context(StagingEntityContext)
+    class CheckEntityBlocksPath(val gameMapApi: GameMapApi) : Validator(ErrorType.BLOCKS_PATH) {
         override fun hasError(): Boolean {
             return gameMapApi.checkNewEntitiesBlocksPath(entity)
         }
@@ -34,14 +36,6 @@ sealed class Validator(val errorType: ErrorType) {
             return gameMapApi.isAtMaxSupply()
         }
     }
-}
-
-sealed class RestrictionResult {
-    data class Errors(
-        val errors: List<ErrorType>,
-    ) : RestrictionResult() {}
-
-    object Ok : RestrictionResult()
 }
 
 sealed class ValidationResult {
@@ -67,10 +61,12 @@ fun validate(vararg validators: Validator): ValidationResult {
 }
 
 fun checkCanPlaceEntity(gameMapApi: GameMapApi, entity: StagingEntity): ValidationResult {
-    return validate(
-        Validator.CheckEntityBlocksPath(gameMapApi, entity),
-        Validator.CheckIntersectsBlockingEntities(gameMapApi, entity)
-    )
+    return with(StagingEntityContext(entity)) {
+        validate(
+            Validator.CheckEntityBlocksPath(gameMapApi),
+            Validator.CheckIntersectsBlockingEntities(gameMapApi, entity)
+        )
+    }
 }
 
 fun checkCanPlaceTowerEntity(gameMapApi: GameMapApi, entity: StagingEntity): ValidationResult {
@@ -80,4 +76,8 @@ fun checkCanPlaceTowerEntity(gameMapApi: GameMapApi, entity: StagingEntity): Val
             validate(Validator.CheckIsAtMaxSupply(gameMapApi))
         }
     }
+}
+
+fun checkCanPlaceSupplyDepotEntity() {
+
 }
