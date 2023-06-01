@@ -144,31 +144,31 @@ class EditorPlacementInputProcessor(
                     MapEntityType.MONSTER -> TODO()
                     MapEntityType.TOWER -> {
                         when (val it = checkCanPlaceTowerEntity(gameMapApi, entityToAdd)) {
-                            is RestrictionResult.Error -> {
+                            is ValidationResult.Errors -> {
                                 engine.eventBus.send(
                                     PlaceEntityErrorEvent(
-                                        "Unable to place '${editorState.entityTypeToPlace}': ${it.errorMessage}"
+                                        "Unable to place '${editorState.entityTypeToPlace}': ${it.firstErrorShortString}"
                                     )
                                 )
                                 return
                             }
-                            RestrictionResult.Ok -> Unit
+                            ValidationResult.Ok -> Unit
                         }
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     }
 
                     MapEntityType.SUPPLY_DEPOT -> {
-                        when (val it = checkCanPlaceTowerEntity(gameMapApi, entityToAdd)) {
-                            is RestrictionResult.Error -> {
+                        when (val it = checkCanPlaceEntity(gameMapApi, entityToAdd)) {
+                            is ValidationResult.Errors -> {
                                 engine.eventBus.send(
                                     PlaceEntityErrorEvent(
-                                        "Unable to place '${editorState.entityTypeToPlace}': ${it.errorMessage}"
+                                        "Unable to place '${editorState.entityTypeToPlace}': ${it.firstErrorShortString}"
                                     )
                                 )
                                 return
                             }
-                            RestrictionResult.Ok -> Unit
+                            ValidationResult.Ok -> Unit
                         }
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))

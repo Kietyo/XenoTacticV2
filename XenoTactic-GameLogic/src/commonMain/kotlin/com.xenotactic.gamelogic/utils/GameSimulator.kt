@@ -163,8 +163,8 @@ class GameSimulator(
 
             if (entityTypeComponent.type == MapEntityType.TOWER) {
                 when (checkCanPlaceTowerEntity(gameMapApi, entity)) {
-                    is RestrictionResult.Error -> break
-                    RestrictionResult.Ok -> Unit
+                    is ValidationResult.Errors -> break
+                    ValidationResult.Ok -> Unit
                 }
 
                 // check we have enough gold
@@ -185,8 +185,8 @@ class GameSimulator(
 
             if (entityTypeComponent.type == MapEntityType.SUPPLY_DEPOT) {
                 when (checkCanPlaceEntity(gameMapApi, entity)) {
-                    is RestrictionResult.Error -> break
-                    RestrictionResult.Ok -> Unit
+                    is ValidationResult.Errors -> break
+                    ValidationResult.Ok -> Unit
                 }
 
                 // check we have enough gold
