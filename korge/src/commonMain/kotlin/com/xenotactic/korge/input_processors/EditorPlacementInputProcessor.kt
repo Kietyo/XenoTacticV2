@@ -3,6 +3,7 @@ package com.xenotactic.korge.input_processors
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.RectangleEntity
+import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.korge.state.EditorState
 import com.xenotactic.korge.ui.NotificationTextUpdateEvent
@@ -26,6 +27,7 @@ class EditorPlacementInputProcessor(
     val engine: Engine
 ) {
     private val editorState = engine.stateInjections.getSingleton<EditorState>()
+    private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val uiMap = engine.injections.getSingleton<UIMapV2>()
 
@@ -143,7 +145,7 @@ class EditorPlacementInputProcessor(
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
                     MapEntityType.TOWER -> {
-                        when (val it = checkCanPlaceTowerEntity(gameMapApi, entityToAdd)) {
+                        when (val it = checkCanPlaceTowerEntity(engine, entityToAdd)) {
                             is ValidationResult.Errors -> {
                                 engine.eventBus.send(
                                     PlaceEntityErrorEvent(
@@ -159,7 +161,7 @@ class EditorPlacementInputProcessor(
                     }
 
                     MapEntityType.SUPPLY_DEPOT -> {
-                        when (val it = checkCanPlaceEntity(gameMapApi, entityToAdd)) {
+                        when (val it = checkCanPlaceEntity(engine, entityToAdd)) {
                             is ValidationResult.Errors -> {
                                 engine.eventBus.send(
                                     PlaceEntityErrorEvent(
@@ -191,7 +193,7 @@ class EditorPlacementInputProcessor(
             )
 
             MapEntityType.ROCK -> TODO()
-            MapEntityType.TOWER -> StagingEntityUtils.createTower(position)
+            MapEntityType.TOWER -> StagingEntityUtils.createTower(position, gameplayState.basicTowerCost)
             MapEntityType.TELEPORT_IN -> StagingEntityUtils.createTeleportIn(gameMapApi.numCompletedTeleports, position)
             MapEntityType.TELEPORT_OUT -> StagingEntityUtils.createTeleportOut(
                 gameMapApi.numCompletedTeleports,
@@ -201,7 +203,7 @@ class EditorPlacementInputProcessor(
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
-            MapEntityType.SUPPLY_DEPOT -> StagingEntityUtils.createSupplyDepot(position)
+            MapEntityType.SUPPLY_DEPOT -> StagingEntityUtils.createSupplyDepot(position, gameplayState.supplyDepotCost)
         }
     }
 

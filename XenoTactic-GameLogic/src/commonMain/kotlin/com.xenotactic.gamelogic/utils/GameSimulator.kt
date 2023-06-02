@@ -162,15 +162,9 @@ class GameSimulator(
             val entityTypeComponent = entity[EntityTypeComponent::class]
 
             if (entityTypeComponent.type == MapEntityType.TOWER) {
-                when (checkCanPlaceTowerEntity(gameMapApi, entity)) {
+                when (checkCanPlaceTowerEntity(engine, entity)) {
                     is ValidationResult.Errors -> break
                     ValidationResult.Ok -> Unit
-                }
-
-                // check we have enough gold
-                val towerCost = gameplayState.basicTowerCost
-                if (towerCost > mutableGoldState.currentGold) {
-                    break
                 }
 
                 val towerSupplyCost = entity[SupplyCostComponent::class]
@@ -180,21 +174,16 @@ class GameSimulator(
                     break
                 }
 
+                val towerCost = entity[EntityCostComponent::class].cost
                 mutableGoldState.currentGold -= towerCost
             }
 
             if (entityTypeComponent.type == MapEntityType.SUPPLY_DEPOT) {
-                when (checkCanPlaceEntity(gameMapApi, entity)) {
+                when (checkCanPlaceSupplyDepotEntity(engine, entity)) {
                     is ValidationResult.Errors -> break
                     ValidationResult.Ok -> Unit
                 }
-
-                // check we have enough gold
-                val towerCost = gameplayState.supplyDepotCost
-                if (towerCost > mutableGoldState.currentGold) {
-                    break
-                }
-
+                val towerCost = entity[EntityCostComponent::class].cost
                 mutableGoldState.currentGold -= towerCost
             }
 

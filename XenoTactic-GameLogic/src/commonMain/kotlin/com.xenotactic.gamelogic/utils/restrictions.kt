@@ -1,6 +1,8 @@
 package com.xenotactic.gamelogic.utils
 
 import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.components.EntityCostComponent
+import com.xenotactic.gamelogic.state.MutableGoldState
 
 enum class ErrorType(val description: String, val shortString: String) {
     NONE("No errors", "No errors"),
@@ -10,32 +12,7 @@ enum class ErrorType(val description: String, val shortString: String) {
         "Intersects with another entity"
     ),
     MAX_SUPPLY("Unable to place because already at max supply.", "Is at max supply"),
-}
-
-data class StagingEntityContext(val entity: StagingEntity)
-
-sealed class Validator(val errorType: ErrorType) {
-    abstract fun hasError(): Boolean
-
-    context(StagingEntityContext)
-    class CheckEntityBlocksPath(val gameMapApi: GameMapApi) : Validator(ErrorType.BLOCKS_PATH) {
-        override fun hasError(): Boolean {
-            return gameMapApi.checkNewEntitiesBlocksPath(entity)
-        }
-    }
-
-    class CheckIntersectsBlockingEntities(val gameMapApi: GameMapApi, val entity: StagingEntity) :
-        Validator(ErrorType.INTERSECTS_BLOCKING_ENTITIES) {
-        override fun hasError(): Boolean {
-            return gameMapApi.checkNewEntityIntersectsExistingBlockingEntities(entity)
-        }
-    }
-
-    class CheckIsAtMaxSupply(val gameMapApi: GameMapApi) : Validator(ErrorType.MAX_SUPPLY) {
-        override fun hasError(): Boolean {
-            return gameMapApi.isAtMaxSupply()
-        }
-    }
+    NOT_ENOUGH_GOLD("Unable to place because there's not enough gold", "Not enough gold.")
 }
 
 sealed class ValidationResult {
@@ -43,41 +20,97 @@ sealed class ValidationResult {
         init {
             require(errors.isNotEmpty())
         }
-        val firstErrorShortString get() = errors.first().shortString
+        val firstErrorShortString
+            get() = errors.first().shortString
     }
     object Ok : ValidationResult()
 }
 
-fun validate(vararg validators: Validator): ValidationResult {
-    val errors =
-        validators.mapNotNull {
-            if (it.hasError()) {
-                it.errorType
-            } else {
-                null
+sealed class ValidatorTypes(val errorType: ErrorType) {
+    abstract fun hasError(): Boolean
+
+    object NoError : ValidatorTypes(ErrorType.NONE) {
+        override fun hasError(): Boolean = false
+    }
+
+    data class CheckEntityBlocksPath(val gameMapApi: GameMapApi, val entity: StagingEntity) :
+        ValidatorTypes(ErrorType.BLOCKS_PATH) {
+        override fun hasError(): Boolean {
+            return gameMapApi.checkNewEntitiesBlocksPath(entity)
+        }
+    }
+
+    data class CheckIntersectsBlockingEntities(
+        val gameMapApi: GameMapApi,
+        val entity: StagingEntity
+    ) : ValidatorTypes(ErrorType.INTERSECTS_BLOCKING_ENTITIES) {
+        override fun hasError(): Boolean {
+            return gameMapApi.checkNewEntityIntersectsExistingBlockingEntities(entity)
+        }
+    }
+
+    data class CheckIsAtMaxSupply(val gameMapApi: GameMapApi) :
+        ValidatorTypes(ErrorType.MAX_SUPPLY) {
+        override fun hasError(): Boolean {
+            return gameMapApi.isAtMaxSupply()
+        }
+    }
+
+    data class CheckNotEnoughGold(
+        val mutableGoldState: MutableGoldState,
+        val entity: StagingEntity
+    ) : ValidatorTypes(ErrorType.NOT_ENOUGH_GOLD) {
+        override fun hasError(): Boolean {
+            val cost = entity.get(EntityCostComponent::class)
+            return cost.cost > mutableGoldState.currentGold
+        }
+    }
+}
+
+class Validator(val engine: Engine, val entity: StagingEntity) {
+    val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    private fun getChecker(errorType: ErrorType): ValidatorTypes {
+        return when (errorType) {
+            ErrorType.NONE -> ValidatorTypes.NoError
+            ErrorType.BLOCKS_PATH -> ValidatorTypes.CheckEntityBlocksPath(gameMapApi, entity)
+            ErrorType.INTERSECTS_BLOCKING_ENTITIES ->
+                ValidatorTypes.CheckIntersectsBlockingEntities(gameMapApi, entity)
+            ErrorType.MAX_SUPPLY -> ValidatorTypes.CheckIsAtMaxSupply(gameMapApi)
+            ErrorType.NOT_ENOUGH_GOLD ->
+                ValidatorTypes.CheckNotEnoughGold(
+                    engine.stateInjections.getSingleton<MutableGoldState>(),
+                    entity
+                )
+        }
+    }
+
+    fun validate(errorsToValidate: Iterable<ErrorType>): ValidationResult {
+        val errors =
+            errorsToValidate.mapNotNull {
+                val checker = getChecker(it)
+                if (checker.hasError()) {
+                    checker.errorType
+                } else {
+                    null
+                }
             }
-        }
-    return if (errors.isEmpty()) ValidationResult.Ok else ValidationResult.Errors(errors)
-}
-
-fun checkCanPlaceEntity(gameMapApi: GameMapApi, entity: StagingEntity): ValidationResult {
-    return with(StagingEntityContext(entity)) {
-        validate(
-            Validator.CheckEntityBlocksPath(gameMapApi),
-            Validator.CheckIntersectsBlockingEntities(gameMapApi, entity)
-        )
+        return if (errors.isEmpty()) ValidationResult.Ok else ValidationResult.Errors(errors)
     }
 }
 
-fun checkCanPlaceTowerEntity(gameMapApi: GameMapApi, entity: StagingEntity): ValidationResult {
-    return when (val it = checkCanPlaceEntity(gameMapApi, entity)) {
-        is ValidationResult.Errors -> it
-        ValidationResult.Ok -> {
-            validate(Validator.CheckIsAtMaxSupply(gameMapApi))
-        }
-    }
+val PLACEMENT_ERRORS = listOf(ErrorType.BLOCKS_PATH, ErrorType.INTERSECTS_BLOCKING_ENTITIES)
+
+fun checkCanPlaceEntity(engine: Engine, entity: StagingEntity): ValidationResult {
+    val validator = Validator(engine, entity)
+    return validator.validate(PLACEMENT_ERRORS)
 }
 
-fun checkCanPlaceSupplyDepotEntity() {
+fun checkCanPlaceTowerEntity(engine: Engine, entity: StagingEntity): ValidationResult {
+    val validator = Validator(engine, entity)
+    return validator.validate(PLACEMENT_ERRORS + ErrorType.MAX_SUPPLY + ErrorType.NOT_ENOUGH_GOLD)
+}
 
+fun checkCanPlaceSupplyDepotEntity(engine: Engine, entity: StagingEntity): ValidationResult {
+    val validator = Validator(engine, entity)
+    return validator.validate(PLACEMENT_ERRORS + ErrorType.NOT_ENOUGH_GOLD)
 }

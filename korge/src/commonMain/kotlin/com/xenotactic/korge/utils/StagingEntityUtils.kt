@@ -14,8 +14,8 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityStartComponent)
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.START))
+        addComponentOrThrow(EntityStartComponent)
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.START))
     }
 
     fun createFinish(
@@ -24,8 +24,8 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityFinishComponent)
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.FINISH))
+        addComponentOrThrow(EntityFinishComponent)
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.FINISH))
     }
 
     fun createCheckpoint(
@@ -35,8 +35,8 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityCheckpointComponent(sequenceNum))
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.CHECKPOINT))
+        addComponentOrThrow(EntityCheckpointComponent(sequenceNum))
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.CHECKPOINT))
     }
 
     fun createTeleportIn(
@@ -46,8 +46,8 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTeleportInComponent(sequenceNum))
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.TELEPORT_IN))
+        addComponentOrThrow(EntityTeleportInComponent(sequenceNum))
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.TELEPORT_IN))
     }
 
     fun createTeleportOut(
@@ -57,8 +57,8 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTeleportOutComponent(sequenceNum))
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.TELEPORT_OUT))
+        addComponentOrThrow(EntityTeleportOutComponent(sequenceNum))
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.TELEPORT_OUT))
     }
 
     fun createRock(
@@ -66,9 +66,9 @@ object StagingEntityUtils {
     ) = StagingEntity {
         addComponentOrThrow(rect.getBottomLeftPositionComponent())
         addComponentOrThrow(rect.getSizeComponent())
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityRockComponent)
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityBlockingComponent)
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.ROCK))
+        addComponentOrThrow(EntityRockComponent)
+        addComponentOrThrow(EntityBlockingComponent)
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.ROCK))
     }
 
     fun createSpeedArea(
@@ -79,11 +79,12 @@ object StagingEntityUtils {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(SizeComponent(diameter, diameter))
         addComponentOrThrow(EntitySpeedAreaComponent(speedEffect))
-        addComponentOrThrow(com.xenotactic.gamelogic.components.EntityTypeComponent(MapEntityType.SPEED_AREA))
+        addComponentOrThrow(EntityTypeComponent(MapEntityType.SPEED_AREA))
     }
 
     fun createTower(
         position: GameUnitTuple,
+        cost: Int,
         size: GameUnitTuple = GameUnitTuple(2, 2)
     ) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
@@ -91,15 +92,18 @@ object StagingEntityUtils {
         addComponentOrThrow(EntityBlockingComponent)
         addComponentOrThrow(EntityTowerComponent)
         addComponentOrThrow(EntityTypeComponent(MapEntityType.TOWER))
+        addComponentOrThrow(EntityCostComponent(cost))
         addComponentOrThrow(SupplyCostComponent(1))
     }
 
     fun createSupplyDepot(position: GameUnitTuple,
+        cost: Int,
         size: GameUnitTuple = GameUnitTuple(2, 2)) = StagingEntity {
         addComponentOrThrow(position.toBottomLeftPositionComponent())
         addComponentOrThrow(size.toSizeComponent())
         addComponentOrThrow(EntityBlockingComponent)
         addComponentOrThrow(EntitySupplyDepotComponent)
         addComponentOrThrow(EntityTypeComponent(MapEntityType.SUPPLY_DEPOT))
+        addComponentOrThrow(EntityCostComponent(cost))
     }
 }
