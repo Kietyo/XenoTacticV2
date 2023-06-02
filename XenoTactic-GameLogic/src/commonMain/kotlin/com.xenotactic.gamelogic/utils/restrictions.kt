@@ -2,6 +2,8 @@ package com.xenotactic.gamelogic.utils
 
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.EntityCostComponent
+import com.xenotactic.gamelogic.components.SupplyCostComponent
+import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.state.MutableGoldState
 
 enum class ErrorType(val description: String, val shortString: String) {
@@ -12,7 +14,8 @@ enum class ErrorType(val description: String, val shortString: String) {
         "Intersects with another entity"
     ),
     MAX_SUPPLY("Unable to place because already at max supply.", "Is at max supply"),
-    NOT_ENOUGH_GOLD("Unable to place because there's not enough gold", "Not enough gold.")
+    NOT_ENOUGH_GOLD("Unable to place because there's not enough gold", "Not enough gold."),
+    NOT_ENOUGH_SUPPLY("Unable to place because there's not enough supply.", "Not enough supply")
 }
 
 sealed class ValidationResult {
@@ -65,10 +68,25 @@ sealed class ValidatorTypes(val errorType: ErrorType) {
             return cost.cost > mutableGoldState.currentGold
         }
     }
+
+    data class CheckNotEnoughSupply(
+        val gameWorld: GameWorld,
+        val stateUtils: StateUtils,
+        val entity: StagingEntity
+    ) : ValidatorTypes(ErrorType.NOT_ENOUGH_SUPPLY) {
+        override fun hasError(): Boolean {
+            val supplyCostComponent = entity.get(SupplyCostComponent::class)
+            val currentSupplyUsage = gameWorld.currentSupplyUsage
+            val currentMaxSupplyCost = stateUtils.currentMaxSupply
+            return (supplyCostComponent.cost + currentSupplyUsage) > currentMaxSupplyCost
+        }
+    }
 }
 
 class Validator(val engine: Engine, val entity: StagingEntity) {
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
+    val stateUtils = StateUtils(engine)
+
     private fun getChecker(errorType: ErrorType): ValidatorTypes {
         return when (errorType) {
             ErrorType.NONE -> ValidatorTypes.NoError
@@ -81,6 +99,8 @@ class Validator(val engine: Engine, val entity: StagingEntity) {
                     engine.stateInjections.getSingleton<MutableGoldState>(),
                     entity
                 )
+            ErrorType.NOT_ENOUGH_SUPPLY ->
+                ValidatorTypes.CheckNotEnoughSupply(engine.gameWorld, stateUtils, entity)
         }
     }
 

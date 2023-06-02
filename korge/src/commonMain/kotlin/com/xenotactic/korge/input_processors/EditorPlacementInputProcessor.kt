@@ -19,24 +19,17 @@ import kotlin.math.max
 import kotlin.math.min
 
 data class PlacedEntityEvent(val entityType: MapEntityType)
+
 data class PlaceEntityErrorEvent(val errorMsg: String)
 
-class EditorPlacementInputProcessor(
-    val views: Views,
-    val view: BaseView,
-    val engine: Engine
-) {
+class EditorPlacementInputProcessor(val views: Views, val view: BaseView, val engine: Engine) {
     private val editorState = engine.stateInjections.getSingleton<EditorState>()
     private val gameplayState = engine.stateInjections.getSingleton<GameplayState>()
     private val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     private val uiMap = engine.injections.getSingleton<UIMapV2>()
 
-    private val ALLOWED_EVENTS = setOf(
-        MouseEvent.Type.DOWN,
-        MouseEvent.Type.DRAG,
-        MouseEvent.Type.UP,
-        MouseEvent.Type.MOVE
-    )
+    private val ALLOWED_EVENTS =
+        setOf(MouseEvent.Type.DOWN, MouseEvent.Type.DRAG, MouseEvent.Type.UP, MouseEvent.Type.MOVE)
 
     var downGridX = 0f
     var downGridY = 0f
@@ -60,9 +53,7 @@ class EditorPlacementInputProcessor(
     }
 
     private fun onMouseEvent(views: Views, event: MouseEvent) {
-        if (!editorState.isEditingEnabled ||
-            !ALLOWED_EVENTS.contains(event.type)
-        ) {
+        if (!editorState.isEditingEnabled || !ALLOWED_EVENTS.contains(event.type)) {
             return
         }
 
@@ -85,33 +76,27 @@ class EditorPlacementInputProcessor(
 
         if (editorState.entityTypeToPlace == MapEntityType.ROCK) {
             handleRockPlacement(event.type, gridX, gridY)
-        } else if (editorState.entityTypeToPlace in setOf(
-                MapEntityType.START,
-                MapEntityType.FINISH,
-                MapEntityType.CHECKPOINT,
-                MapEntityType.TELEPORT_IN,
-                MapEntityType.TELEPORT_OUT,
-                MapEntityType.TOWER,
-                MapEntityType.SUPPLY_DEPOT
-            )
+        } else if (
+            editorState.entityTypeToPlace in
+                setOf(
+                    MapEntityType.START,
+                    MapEntityType.FINISH,
+                    MapEntityType.CHECKPOINT,
+                    MapEntityType.TELEPORT_IN,
+                    MapEntityType.TELEPORT_OUT,
+                    MapEntityType.TOWER,
+                    MapEntityType.SUPPLY_DEPOT
+                )
         ) {
-            val (entityWidth, entityHeight) = MapEntityType.getEntitySize(
-                editorState.entityTypeToPlace
-            ) as MapEntityType.EntitySize.Fixed
-            val (gridXInt, gridYInt) = uiMap.getRoundedGridCoordinates(
-                gridX,
-                gridY,
-                entityWidth,
-                entityHeight
-            )
+            val (entityWidth, entityHeight) =
+                MapEntityType.getEntitySize(editorState.entityTypeToPlace)
+                    as MapEntityType.EntitySize.Fixed
+            val (gridXInt, gridYInt) =
+                uiMap.getRoundedGridCoordinates(gridX, gridY, entityWidth, entityHeight)
             uiMap.renderEntityHighlightRectangle(gridXInt, gridYInt, entityWidth, entityHeight)
             if (event.type == MouseEvent.Type.UP) {
                 val entityToAdd =
-                    createEntityToAdd(
-                        editorState.entityTypeToPlace,
-                        gridXInt,
-                        gridYInt
-                    )
+                    createEntityToAdd(editorState.entityTypeToPlace, gridXInt, gridYInt)
                 when (editorState.entityTypeToPlace) {
                     MapEntityType.START -> TODO()
                     MapEntityType.FINISH -> TODO()
@@ -128,19 +113,14 @@ class EditorPlacementInputProcessor(
                         )
                         return
                     }
-
                     MapEntityType.TELEPORT_OUT -> {
                         require(stagingTeleportIn != null)
 
-                        gameMapApi.placeEntities(
-                            stagingTeleportIn!!,
-                            entityToAdd
-                        )
+                        gameMapApi.placeEntities(stagingTeleportIn!!, entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                         uiMap.clearHighlightLayer()
                         return
                     }
-
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
@@ -159,7 +139,6 @@ class EditorPlacementInputProcessor(
                         gameMapApi.placeEntities(entityToAdd)
                         engine.eventBus.send(PlacedEntityEvent(editorState.entityTypeToPlace))
                     }
-
                     MapEntityType.SUPPLY_DEPOT -> {
                         when (val it = checkCanPlaceEntity(engine, entityToAdd)) {
                             is ValidationResult.Errors -> {
@@ -182,35 +161,34 @@ class EditorPlacementInputProcessor(
         }
     }
 
-    private fun createEntityToAdd(entityType: MapEntityType, gridXInt: GameUnit, gridYInt: GameUnit): StagingEntity {
+    private fun createEntityToAdd(
+        entityType: MapEntityType,
+        gridXInt: GameUnit,
+        gridYInt: GameUnit
+    ): StagingEntity {
         val position = gridXInt tup gridYInt
         return when (entityType) {
             MapEntityType.START -> StagingEntityUtils.createStart(position)
             MapEntityType.FINISH -> StagingEntityUtils.createFinish(position)
-            MapEntityType.CHECKPOINT -> StagingEntityUtils.createCheckpoint(
-                gameMapApi.numCheckpoints,
-                position
-            )
-
+            MapEntityType.CHECKPOINT ->
+                StagingEntityUtils.createCheckpoint(gameMapApi.numCheckpoints, position)
             MapEntityType.ROCK -> TODO()
-            MapEntityType.TOWER -> StagingEntityUtils.createTower(position, gameplayState.basicTowerCost)
-            MapEntityType.TELEPORT_IN -> StagingEntityUtils.createTeleportIn(gameMapApi.numCompletedTeleports, position)
-            MapEntityType.TELEPORT_OUT -> StagingEntityUtils.createTeleportOut(
-                gameMapApi.numCompletedTeleports,
-                position
-            )
-
+            MapEntityType.TOWER ->
+                StagingEntityUtils.createTower(position, gameplayState.basicTowerCost)
+            MapEntityType.TELEPORT_IN ->
+                StagingEntityUtils.createTeleportIn(gameMapApi.numCompletedTeleports, position)
+            MapEntityType.TELEPORT_OUT ->
+                StagingEntityUtils.createTeleportOut(gameMapApi.numCompletedTeleports, position)
             MapEntityType.SMALL_BLOCKER -> TODO()
             MapEntityType.SPEED_AREA -> TODO()
             MapEntityType.MONSTER -> TODO()
-            MapEntityType.SUPPLY_DEPOT -> StagingEntityUtils.createSupplyDepot(position, gameplayState.supplyDepotCost)
+            MapEntityType.SUPPLY_DEPOT ->
+                StagingEntityUtils.createSupplyDepot(position, gameplayState.supplyDepotCost)
         }
     }
 
     private fun handleRockPlacement(eventType: MouseEvent.Type, gridX: Float, gridY: Float) {
-        if (eventType == MouseEvent.Type.DOWN ||
-            eventType == MouseEvent.Type.MOVE
-        ) {
+        if (eventType == MouseEvent.Type.DOWN || eventType == MouseEvent.Type.MOVE) {
             downGridX = gridX
             downGridY = gridY
         }
@@ -261,5 +239,4 @@ class EditorPlacementInputProcessor(
             uiMap.renderEntityHighlightRectangle(roundedGridX, roundedGridY, width, height)
         }
     }
-
 }

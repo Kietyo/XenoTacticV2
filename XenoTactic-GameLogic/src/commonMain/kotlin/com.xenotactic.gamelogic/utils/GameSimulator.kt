@@ -166,14 +166,6 @@ class GameSimulator(
                     is ValidationResult.Errors -> break
                     ValidationResult.Ok -> Unit
                 }
-
-                val towerSupplyCost = entity[SupplyCostComponent::class]
-                val currentSupplyUsage = gameWorld.currentSupplyUsage
-                val currentMaxSupplyCost = stateUtils.currentMaxSupply
-                if ((towerSupplyCost.cost + currentSupplyUsage) > currentMaxSupplyCost) {
-                    break
-                }
-
                 val towerCost = entity[EntityCostComponent::class].cost
                 mutableGoldState.currentGold -= towerCost
             }
