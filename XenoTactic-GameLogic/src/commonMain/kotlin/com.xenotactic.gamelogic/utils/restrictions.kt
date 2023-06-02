@@ -4,6 +4,7 @@ import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.EntityCostComponent
 import com.xenotactic.gamelogic.components.SupplyCostComponent
 import com.xenotactic.gamelogic.model.GameWorld
+import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableGoldState
 
 enum class ErrorType(val description: String, val shortString: String) {
@@ -15,7 +16,11 @@ enum class ErrorType(val description: String, val shortString: String) {
     ),
     MAX_SUPPLY("Unable to place because already at max supply.", "Is at max supply"),
     NOT_ENOUGH_GOLD("Unable to place because there's not enough gold", "Not enough gold."),
-    NOT_ENOUGH_SUPPLY("Unable to place because there's not enough supply.", "Not enough supply")
+    NOT_ENOUGH_SUPPLY("Unable to place because there's not enough supply.", "Not enough supply"),
+    SELLING_SUPPLY_DEPOT_LEADS_TO_INSUFFICIENT_SUPPLY(
+        "Unable to sell the supply depot because it will result in insufficient supply",
+        "Unable to sell"
+    )
 }
 
 sealed class ValidationResult {
@@ -81,27 +86,51 @@ sealed class ValidatorTypes(val errorType: ErrorType) {
             return (supplyCostComponent.cost + currentSupplyUsage) > currentMaxSupplyCost
         }
     }
+
+    data class SellingSupplyDepotLeadsToInsufficientSupply(
+        val gameWorld: GameWorld,
+        val gameplayState: GameplayState,
+    ) : ValidatorTypes(ErrorType.SELLING_SUPPLY_DEPOT_LEADS_TO_INSUFFICIENT_SUPPLY) {
+        override fun hasError(): Boolean {
+            val currentNumDepots = gameWorld.supplyDepotsFamily.size
+            require(currentNumDepots >= 1)
+            val uncappedSupply =
+                gameplayState.initialSupply + currentNumDepots * gameplayState.supplyPerDepot
+            val uncappedSupplyAfterSelling = uncappedSupply - gameplayState.supplyPerDepot
+            val currentSupplyUsage = gameWorld.currentSupplyUsage
+            return currentSupplyUsage > uncappedSupplyAfterSelling
+        }
+    }
 }
 
-class Validator(val engine: Engine, val entity: StagingEntity) {
+class Validator(val engine: Engine, val entity: StagingEntity? = null) {
     val gameMapApi = engine.injections.getSingleton<GameMapApi>()
     val stateUtils = StateUtils(engine)
 
     private fun getChecker(errorType: ErrorType): ValidatorTypes {
         return when (errorType) {
             ErrorType.NONE -> ValidatorTypes.NoError
-            ErrorType.BLOCKS_PATH -> ValidatorTypes.CheckEntityBlocksPath(gameMapApi, entity)
+            ErrorType.BLOCKS_PATH -> ValidatorTypes.CheckEntityBlocksPath(gameMapApi, entity!!)
             ErrorType.INTERSECTS_BLOCKING_ENTITIES ->
-                ValidatorTypes.CheckIntersectsBlockingEntities(gameMapApi, entity)
+                ValidatorTypes.CheckIntersectsBlockingEntities(gameMapApi, entity!!)
             ErrorType.MAX_SUPPLY -> ValidatorTypes.CheckIsAtMaxSupply(gameMapApi)
             ErrorType.NOT_ENOUGH_GOLD ->
                 ValidatorTypes.CheckNotEnoughGold(
                     engine.stateInjections.getSingleton<MutableGoldState>(),
-                    entity
+                    entity!!
                 )
             ErrorType.NOT_ENOUGH_SUPPLY ->
-                ValidatorTypes.CheckNotEnoughSupply(engine.gameWorld, stateUtils, entity)
+                ValidatorTypes.CheckNotEnoughSupply(engine.gameWorld, stateUtils, entity!!)
+            ErrorType.SELLING_SUPPLY_DEPOT_LEADS_TO_INSUFFICIENT_SUPPLY ->
+                ValidatorTypes.SellingSupplyDepotLeadsToInsufficientSupply(
+                    engine.gameWorld,
+                    engine.stateInjections.getSingleton<GameplayState>()
+                )
         }
+    }
+
+    fun validate(vararg errorsToValidate: ErrorType): ValidationResult {
+        return validate(errorsToValidate.toList())
     }
 
     fun validate(errorsToValidate: Iterable<ErrorType>): ValidationResult {
@@ -132,5 +161,15 @@ fun checkCanPlaceTowerEntity(engine: Engine, entity: StagingEntity): ValidationR
 
 fun checkCanPlaceSupplyDepotEntity(engine: Engine, entity: StagingEntity): ValidationResult {
     val validator = Validator(engine, entity)
-    return validator.validate(PLACEMENT_ERRORS + ErrorType.NOT_ENOUGH_GOLD)
+    return validator.validate(
+        PLACEMENT_ERRORS +
+            ErrorType.NOT_ENOUGH_GOLD
+    )
+}
+
+fun checkCanSellSupplyDepotEntity(engine: Engine): ValidationResult {
+    val validator = Validator(engine)
+    return validator.validate(
+        ErrorType.SELLING_SUPPLY_DEPOT_LEADS_TO_INSUFFICIENT_SUPPLY
+    )
 }

@@ -105,7 +105,7 @@ class GameSimulator(
     }
 
     private fun handleRemoveEntitiesEvent(event: GameEvent.RemoveEntities) {
-        event.entities.forEach {
+        for (it in event.entities) {
             val mapEntityComponent = world.getOrNull(it, EntityTypeComponent::class)
 
             if (mapEntityComponent != null) {
@@ -124,6 +124,10 @@ class GameSimulator(
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
                     MapEntityType.SUPPLY_DEPOT -> {
+                        when (checkCanSellSupplyDepotEntity(engine)) {
+                            is ValidationResult.Errors -> break
+                            ValidationResult.Ok -> Unit
+                        }
                         mutableGoldState.currentGold += gameplayState.supplyDepotCost
                     }
                 }
