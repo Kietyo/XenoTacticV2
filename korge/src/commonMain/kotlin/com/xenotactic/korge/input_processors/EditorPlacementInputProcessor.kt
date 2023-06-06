@@ -1,6 +1,7 @@
 package com.xenotactic.korge.input_processors
 
 import com.xenotactic.ecs.StagingEntity
+import com.xenotactic.gamelogic.events.InformErrorMessageEvent
 import com.xenotactic.gamelogic.model.MapEntityType
 import com.xenotactic.gamelogic.model.RectangleEntity
 import com.xenotactic.gamelogic.state.GameplayState
@@ -19,8 +20,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 data class PlacedEntityEvent(val entityType: MapEntityType)
-
-data class PlaceEntityErrorEvent(val errorMsg: String)
 
 class EditorPlacementInputProcessor(val views: Views, val view: BaseView, val engine: Engine) {
     private val editorState = engine.stateInjections.getSingleton<EditorState>()
@@ -128,7 +127,7 @@ class EditorPlacementInputProcessor(val views: Views, val view: BaseView, val en
                         when (val it = checkCanPlaceTowerEntity(engine, entityToAdd)) {
                             is ValidationResult.Errors -> {
                                 engine.eventBus.send(
-                                    PlaceEntityErrorEvent(
+                                    InformErrorMessageEvent(
                                         "Unable to place '${editorState.entityTypeToPlace}': ${it.firstErrorShortString}"
                                     )
                                 )
@@ -143,7 +142,7 @@ class EditorPlacementInputProcessor(val views: Views, val view: BaseView, val en
                         when (val it = checkCanPlaceEntity(engine, entityToAdd)) {
                             is ValidationResult.Errors -> {
                                 engine.eventBus.send(
-                                    PlaceEntityErrorEvent(
+                                    InformErrorMessageEvent(
                                         "Unable to place '${editorState.entityTypeToPlace}': ${it.firstErrorShortString}"
                                     )
                                 )

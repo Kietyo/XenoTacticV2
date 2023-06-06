@@ -19,7 +19,7 @@ enum class ErrorType(val description: String, val shortString: String) {
     NOT_ENOUGH_SUPPLY("Unable to place because there's not enough supply.", "Not enough supply"),
     SELLING_SUPPLY_DEPOT_LEADS_TO_INSUFFICIENT_SUPPLY(
         "Unable to sell the supply depot because it will result in insufficient supply",
-        "Unable to sell"
+        "Unable to sell supply depot, will result in insufficient supply"
     )
 }
 

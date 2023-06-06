@@ -4,6 +4,7 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.ecs.StagingEntity
 import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.events.AddedEntityEvent
+import com.xenotactic.gamelogic.events.InformErrorMessageEvent
 import com.xenotactic.gamelogic.events.RemovedSupplyDepotEntityEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.gamelogic.model.MapEntityType
@@ -12,12 +13,8 @@ import com.xenotactic.gamelogic.system.*
 import kotlin.time.Duration.Companion.milliseconds
 
 sealed class GameEvent {
-    data class PlaceEntities(
-        val entities: Collection<StagingEntity>
-    ): GameEvent()
-    data class RemoveEntities(
-        val entities: Set<EntityId>
-    ): GameEvent()
+    data class PlaceEntities(val entities: Collection<StagingEntity>) : GameEvent()
+    data class RemoveEntities(val entities: Set<EntityId>) : GameEvent()
 }
 
 class GameSimulator(
@@ -117,15 +114,17 @@ class GameSimulator(
                     MapEntityType.TOWER -> {
                         mutableGoldState.currentGold += gameplayState.basicTowerCost
                     }
-
                     MapEntityType.TELEPORT_IN -> TODO()
                     MapEntityType.TELEPORT_OUT -> TODO()
                     MapEntityType.SMALL_BLOCKER -> TODO()
                     MapEntityType.SPEED_AREA -> TODO()
                     MapEntityType.MONSTER -> TODO()
                     MapEntityType.SUPPLY_DEPOT -> {
-                        when (checkCanSellSupplyDepotEntity(engine)) {
-                            is ValidationResult.Errors -> break
+                        when (val result = checkCanSellSupplyDepotEntity(engine)) {
+                            is ValidationResult.Errors -> {
+                                eventBus.send(InformErrorMessageEvent(result.firstErrorShortString))
+                                break
+                            }
                             ValidationResult.Ok -> Unit
                         }
                         mutableGoldState.currentGold += gameplayState.supplyDepotCost
@@ -133,9 +132,7 @@ class GameSimulator(
                 }
             }
 
-            gameWorld.world.modifyEntity(it) {
-                removeThisEntity()
-            }
+            gameWorld.world.modifyEntity(it) { removeThisEntity() }
 
             if (mapEntityComponent != null) {
                 when (mapEntityComponent.type) {
@@ -146,7 +143,6 @@ class GameSimulator(
                     MapEntityType.TOWER -> {
                         eventBus.send(RemovedTowerEntityEvent(it))
                     }
-
                     MapEntityType.TELEPORT_IN -> TODO()
                     MapEntityType.TELEPORT_OUT -> TODO()
                     MapEntityType.SMALL_BLOCKER -> TODO()
@@ -158,6 +154,7 @@ class GameSimulator(
                 }
             }
         }
+
         updateShortestPath()
     }
 
@@ -183,36 +180,36 @@ class GameSimulator(
                 mutableGoldState.currentGold -= towerCost
             }
 
-            val entityId = gameWorld.world.addEntity {
-                addComponentsFromStagingEntity(entity)
-                when (entityTypeComponent.type) {
-                    MapEntityType.START -> Unit
-                    MapEntityType.FINISH -> Unit
-                    MapEntityType.CHECKPOINT -> Unit
-                    MapEntityType.ROCK -> {
-                        addComponentOrThrow(SelectableComponent)
-                    }
-                    MapEntityType.TOWER -> {
-                        addComponentOrThrow(BaseDamageComponent(10.0))
-                        addComponentOrThrow(DamageUpgradeComponent(0))
-                        addComponentOrThrow(SpeedUpgradeComponent(0))
-                        addComponentOrThrow(DamageMultiplierComponent(1.0))
-                        addComponentOrThrow(RangeComponent(7.toGameUnit()))
-                        addComponentOrThrow(BaseWeaponSpeedComponent(1000.0))
-                        addComponentOrThrow(ReloadDowntimeComponent(0.0))
-                        addComponentOrThrow(SelectableComponent)
-                    }
-
-                    MapEntityType.TELEPORT_IN -> Unit
-                    MapEntityType.TELEPORT_OUT -> Unit
-                    MapEntityType.SMALL_BLOCKER -> Unit
-                    MapEntityType.SPEED_AREA -> Unit
-                    MapEntityType.MONSTER -> Unit
-                    MapEntityType.SUPPLY_DEPOT -> {
-                        addComponentOrThrow(SelectableComponent)
+            val entityId =
+                gameWorld.world.addEntity {
+                    addComponentsFromStagingEntity(entity)
+                    when (entityTypeComponent.type) {
+                        MapEntityType.START -> Unit
+                        MapEntityType.FINISH -> Unit
+                        MapEntityType.CHECKPOINT -> Unit
+                        MapEntityType.ROCK -> {
+                            addComponentOrThrow(SelectableComponent)
+                        }
+                        MapEntityType.TOWER -> {
+                            addComponentOrThrow(BaseDamageComponent(10.0))
+                            addComponentOrThrow(DamageUpgradeComponent(0))
+                            addComponentOrThrow(SpeedUpgradeComponent(0))
+                            addComponentOrThrow(DamageMultiplierComponent(1.0))
+                            addComponentOrThrow(RangeComponent(7.toGameUnit()))
+                            addComponentOrThrow(BaseWeaponSpeedComponent(1000.0))
+                            addComponentOrThrow(ReloadDowntimeComponent(0.0))
+                            addComponentOrThrow(SelectableComponent)
+                        }
+                        MapEntityType.TELEPORT_IN -> Unit
+                        MapEntityType.TELEPORT_OUT -> Unit
+                        MapEntityType.SMALL_BLOCKER -> Unit
+                        MapEntityType.SPEED_AREA -> Unit
+                        MapEntityType.MONSTER -> Unit
+                        MapEntityType.SUPPLY_DEPOT -> {
+                            addComponentOrThrow(SelectableComponent)
+                        }
                     }
                 }
-            }
 
             eventBus.send(AddedEntityEvent(entityId))
         }
@@ -220,10 +217,11 @@ class GameSimulator(
     }
 
     private fun updateShortestPath() {
-        val pathFinderResult = gameWorld.getPathFindingResult(
-            gameMapDimensionsState.width,
-            gameMapDimensionsState.height,
-        )
+        val pathFinderResult =
+            gameWorld.getPathFindingResult(
+                gameMapDimensionsState.width,
+                gameMapDimensionsState.height,
+            )
 
         gameMapPathState.updatePath(pathFinderResult.toGamePathOrNull()?.toPathSequence())
     }

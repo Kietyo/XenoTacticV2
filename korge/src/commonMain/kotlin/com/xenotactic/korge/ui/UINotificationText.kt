@@ -1,7 +1,7 @@
 package com.xenotactic.korge.ui
 
 import com.xenotactic.gamelogic.utils.Engine
-import com.xenotactic.korge.input_processors.PlaceEntityErrorEvent
+import com.xenotactic.gamelogic.events.InformErrorMessageEvent
 import korlibs.image.color.Colors
 import korlibs.io.async.launchImmediately
 import korlibs.korge.view.Container
@@ -48,7 +48,7 @@ class UINotificationText(
             this.notificationText.text = it.text
             resize()
         }
-        engine.eventBus.register<PlaceEntityErrorEvent> {
+        engine.eventBus.register<InformErrorMessageEvent> {
             notifyErrorText(it.errorMsg)
             resize()
         }

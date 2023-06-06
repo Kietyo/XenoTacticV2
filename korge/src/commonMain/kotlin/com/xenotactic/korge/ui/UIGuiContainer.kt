@@ -185,7 +185,6 @@ class UIGuiContainer(
                 eventBus.register<RemovedSupplyDepotEntityEvent> {
                     t.text = calculateTextFn()
                 }
-
                 alignLeftToRightOf(goldSection, padding = 40.0)
             }
 
