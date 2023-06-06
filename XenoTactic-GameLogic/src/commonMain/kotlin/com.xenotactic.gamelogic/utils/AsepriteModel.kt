@@ -1,5 +1,6 @@
 package com.xenotactic.gamelogic.utils
 
+import korlibs.image.bitmap.Bitmap
 import korlibs.image.bitmap.Bitmap32
 import korlibs.image.bitmap.BmpSlice
 import korlibs.image.bitmap.bmp
@@ -45,6 +46,10 @@ data class AsepriteFrameWithAllLayers(
             layersMatching.first()
         }
         return createMergedBitmapInternal(layers)
+    }
+
+    fun getBitmapForLayer(layerName: String): Bitmap {
+        return layers.first { it.name == layerName }.bitmapSlice.bmp
     }
 
     private fun createMergedBitmapInternal(layers: List<AsepriteLayer>): Bitmap32 {
