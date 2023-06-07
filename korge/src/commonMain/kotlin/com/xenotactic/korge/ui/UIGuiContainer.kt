@@ -139,58 +139,8 @@ class UIGuiContainer(
             alignRightToRightOfWindow()
         }
 
-        val topRightResources = stage.container {
-            val goldSection = container {
-                val i = image(GlobalResources.GOLD_ICON) {
-                    smoothing = false
-                }
-                val calculateTextFn = { gold: Int -> gold.toString() }
-                val t = text(
-                    calculateTextFn(mutableGoldState.currentGold), font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40f
-                ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight.toDouble()))
-                    alignLeftToRightOf(i, padding = 5.0)
-                    centerYOn(i)
-                }
-
-                eventBus.register<GoldStateUpdated> {
-                    t.text = calculateTextFn(it.current)
-                }
-            }
-
-            val supplySection = container {
-                val i = image(GlobalResources.SUPPLY_ICON) {
-                    smoothing = false
-                }
-                val calculateTextFn = { "${gameWorld.currentSupplyUsage}/${gameWorld.calculateMaxSupply(
-                    gameplayState.initialSupply, gameplayState.supplyPerDepot, gameplayState.maxSupply
-                )}" }
-                val t = text(
-                    calculateTextFn(),
-                    font = GlobalResources.FONT_ATKINSON_BOLD,
-                    textSize = 40f
-                ) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByHeight(i.scaledHeight.toDouble()))
-                    alignLeftToRightOf(i, padding = 5.0)
-                    centerYOn(i)
-                }
-
-                eventBus.register<AddedEntityEvent> {
-                    t.text = calculateTextFn()
-                }
-                eventBus.register<RemovedTowerEntityEvent> {
-                    t.text = calculateTextFn()
-                }
-                eventBus.register<RemovedSupplyDepotEntityEvent> {
-                    t.text = calculateTextFn()
-                }
-                alignLeftToRightOf(goldSection, padding = 40.0)
-            }
-
-
+        val topRightResources = UITopRightResourcesGui(engine).addTo(stage) {
             scaleWhileMaintainingAspect(ScalingOption.ByHeight(25.0))
-
             y += 5f
             alignRightToRightOfWindow(padding = 10f)
         }
