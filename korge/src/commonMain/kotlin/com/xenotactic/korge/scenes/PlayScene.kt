@@ -136,7 +136,7 @@ class PlayScene : Scene() {
         val uiDebugInfo = UIDebugInfo(engine)
         engine.injections.setSingletonOrThrow(uiDebugInfo)
 
-        UIGuiContainer(this, engine, gameWorld, gameSimulator.gameMapApi)
+        UIGuiContainer(this, engine, gameSimulator.gameMapApi)
 
         keys {
             this.down(Key.ESCAPE) {

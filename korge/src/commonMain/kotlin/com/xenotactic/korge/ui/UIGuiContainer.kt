@@ -38,6 +38,7 @@ import korlibs.korge.view.align.*
 enum class ViewType {
     NONE,
     SINGLE_TOWER_SELECTION,
+    SINGLE_TOWER_SELECTION_UPGRADE,
     MULTI_TOWER_SELECTION,
     SINGLE_DEPOT_SELECTION
 }
@@ -45,9 +46,9 @@ enum class ViewType {
 class UIGuiContainer(
     val hstage: SContainer,
     val engine: Engine,
-    val gameWorld: GameWorld,
     val gameMapApi: GameMapApi
 ) {
+    val gameWorld: GameWorld = engine.gameWorld
     val world = gameWorld.world
     val eventBus = engine.eventBus
     private val editorState = engine.stateInjections.getSingleton<EditorState>()
@@ -59,6 +60,73 @@ class UIGuiContainer(
     val stage = hstage.container { }
     private val middleSelectionContainer = stage.container { }
     val settingsWindows = stage.container { }
+
+    val bottomRightGridWidth = 400.0
+    val tooltipSize = bottomRightGridWidth / 1.5
+
+    var currentViewType = ViewType.NONE
+    val mutableCurrentlySelectedTowerState = MutableCurrentlySelectedTowerState(null)
+    val bottomRightGrid: UIFixedGrid
+    val holdShiftText: Text
+
+    val globalDamageUpgradeView = UITextRect(
+        "Global\nDamage\nUpgrade",
+        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+    )
+
+    val globalRangeUpgradeView = UITextRect(
+        "Global\nRange\nUpgrade",
+        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+    )
+
+    val incomeUpgradeView = UITextRect(
+        "Income\nUpgrade",
+        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+    )
+
+    val addTowerView = UITextRect(
+        "Add\nTower",
+        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+    ).apply {
+        onClick {
+            editorState.toggle(MapEntityType.TOWER)
+        }
+        val tooltip = UITooltipDescription(gameplayState.basicTowerCost)
+        onOver {
+            tooltip.addTo(this@UIGuiContainer.stage) {
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
+                alignBottomToTopOf(this@apply, padding = 5.0)
+                centerXOn(this@apply)
+            }
+        }
+        onOut {
+            tooltip.removeFromParent()
+        }
+    }
+
+    val addSupplyDepotView = UITextRect(
+        "Add\nSupply\nDepot",
+        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+    ).apply {
+        onClick {
+            editorState.toggle(MapEntityType.SUPPLY_DEPOT)
+        }
+        val tooltip = UITooltipDescription(
+            goldCost = gameplayState.supplyDepotCost,
+            supplyCost = 0,
+            titleText = "SUPPLY DEPOT",
+            descriptionText = "Adds ${gameplayState.supplyPerDepot} supply.")
+        onOver {
+            tooltip.addTo(this@UIGuiContainer.stage) {
+                scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
+                alignBottomToTopOf(this@apply, padding = 5.0)
+                centerXOn(this@apply)
+            }
+        }
+        onOut {
+            tooltip.removeFromParent()
+        }
+    }
 
     init {
         val topLeftPanel = stage.container {
@@ -123,14 +191,12 @@ class UIGuiContainer(
             )
             scale = 2.0.toScale()
         }
-
         buttonsPanel.alignBottomToBottomOfWindow()
 
-        val bottomRightGridWidth = 400.0
         val bottomRightGridHeight = bottomRightGridWidth / 2
         val bottomRightGridHorizontalPadding = 5.0
 
-        val bottomRightGrid = UIFixedGrid(
+        bottomRightGrid = UIFixedGrid(
             4, 2, bottomRightGridWidth, bottomRightGridHeight, bottomRightGridHorizontalPadding, 5.0,
             backgroundColor = MaterialColors.TEAL_600
         ).addTo(stage) {
@@ -153,17 +219,7 @@ class UIGuiContainer(
             3.0, 3.0
         )
 
-        val globalDamageUpgradeView = UITextRect(
-            "Global\nDamage\nUpgrade",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        )
 
-        val globalRangeUpgradeView = UITextRect(
-            "Global\nRange\nUpgrade",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        )
-
-        val tooltipSize = bottomRightGridWidth / 1.5
 
         val sellEntitiesView = UITextRect(
             "Sell\nEntities",
@@ -190,7 +246,6 @@ class UIGuiContainer(
             }
         }
 
-        val mutableCurrentlySelectedTowerState = MutableCurrentlySelectedTowerState(null)
         engine.stateInjections.setSingletonOrThrow(mutableCurrentlySelectedTowerState)
 
         val showRangeView = UITextRect(
@@ -239,50 +294,6 @@ class UIGuiContainer(
             "Upgrade tower speed."
         )
 
-        val addTowerView = UITextRect(
-            "Add\nTower",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        ).apply {
-            onClick {
-                editorState.toggle(MapEntityType.TOWER)
-            }
-            val tooltip = UITooltipDescription(gameplayState.basicTowerCost)
-            onOver {
-                tooltip.addTo(this@UIGuiContainer.stage) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
-                    alignBottomToTopOf(this@apply, padding = 5.0)
-                    centerXOn(this@apply)
-                }
-            }
-            onOut {
-                tooltip.removeFromParent()
-            }
-        }
-
-        val addSupplyDepotView = UITextRect(
-            "Add\nSupply\nDepot",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        ).apply {
-            onClick {
-                editorState.toggle(MapEntityType.SUPPLY_DEPOT)
-            }
-            val tooltip = UITooltipDescription(
-                goldCost = gameplayState.supplyDepotCost,
-                supplyCost = 0,
-                titleText = "SUPPLY DEPOT",
-                descriptionText = "Adds ${gameplayState.supplyPerDepot} supply.")
-            onOver {
-                tooltip.addTo(this@UIGuiContainer.stage) {
-                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
-                    alignBottomToTopOf(this@apply, padding = 5.0)
-                    centerXOn(this@apply)
-                }
-            }
-            onOut {
-                tooltip.removeFromParent()
-            }
-        }
-
         val towerUpgradeView = Container().apply {
             image(GlobalResources.UPGRADE_TOWER_ICON) {
                 width = 50f
@@ -305,11 +316,6 @@ class UIGuiContainer(
                 tooltip.removeFromParent()
             }
         }
-
-        val incomeUpgradeView = UITextRect(
-            "Income\nUpgrade",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
-        )
 
         val towerDamageUpgradeView = UITowerUpgradeIcon(
             engine,
@@ -336,7 +342,7 @@ class UIGuiContainer(
         )
 
         val textHeightSize = bottomRightGridHeight / 7
-        val holdShiftText = Text(
+        holdShiftText = Text(
             "HOLD SHIFT (+5)",
             font = GlobalResources.FONT_ATKINSON_BOLD,
             textSize = 12f
@@ -344,42 +350,13 @@ class UIGuiContainer(
             scaleWhileMaintainingAspect(ScalingOption.ByHeight(textHeightSize))
         }
 
-        fun resetInitial() {
-            holdShiftText.removeFromParent()
-            bottomRightGrid.clear()
-            bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
-            bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
-            bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
 
-            bottomRightGrid.setEntry(0, 1, addTowerView)
-            bottomRightGrid.setEntry(1, 1, addSupplyDepotView)
-        }
 
         deadUIZonesState.zones.add(bottomRightGrid)
 
-        var currentViewType = ViewType.NONE
 
-        fun resetView() {
-            when (currentViewType) {
-                ViewType.NONE -> Unit
-                ViewType.SINGLE_TOWER_SELECTION -> {
-                    mutableCurrentlySelectedTowerState.currentTowerId = null
-                    middleSelectionContainer.removeChildren()
-                    holdShiftText.removeFromParent()
-                    bottomRightGrid.clearEntry(0, 1)
-                    bottomRightGrid.clearEntry(1, 1)
-                }
 
-                ViewType.MULTI_TOWER_SELECTION -> {
-                    middleSelectionContainer.removeChildren()
-                }
 
-                ViewType.SINGLE_DEPOT_SELECTION -> {
-
-                }
-            }
-            resetInitial()
-        }
 
         resetInitial()
 
@@ -407,8 +384,9 @@ class UIGuiContainer(
             })
 
         eventBus.register<EntitySelectionChangedEvent> {
+            resetView()
+
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
-                resetView()
                 currentViewType = ViewType.SINGLE_TOWER_SELECTION
                 val towerId = gameWorld.selectionFamily.first()
                 mutableCurrentlySelectedTowerState.currentTowerId = towerId
@@ -454,7 +432,6 @@ class UIGuiContainer(
                     alignBottomToTopOf(bottomRightGrid)
                 }
             } else if (gameWorld.selectionFamily.size == 1 && gameWorld.isSupplyDepotEntity(gameWorld.selectionFamily.first())) {
-                resetView()
                 currentViewType = ViewType.SINGLE_DEPOT_SELECTION
                 val towerId = gameWorld.selectionFamily.first()
                 mutableCurrentlySelectedTowerState.currentTowerId = towerId
@@ -465,17 +442,12 @@ class UIGuiContainer(
                     alignBottomToTopOf(bottomRightGrid)
                 }
             } else if (gameWorld.selectionFamily.size > 1) {
-                resetView()
                 currentViewType = ViewType.MULTI_TOWER_SELECTION
                 middleSelectionContainer.apply {
                     multiTowerSelectGrid.addTo(this)
                     centerXOnStage()
                     alignBottomToBottomOfWindow()
                 }
-            } else if (gameWorld.selectionFamily.isEmpty) {
-                resetView()
-            } else {
-                resetView()
             }
         }
 
@@ -484,5 +456,45 @@ class UIGuiContainer(
                 resetView()
             }
         }
+    }
+
+    fun resetInitial() {
+        holdShiftText.removeFromParent()
+        bottomRightGrid.clear()
+        bottomRightGrid.setEntry(0, 0, globalDamageUpgradeView)
+        bottomRightGrid.setEntry(1, 0, globalRangeUpgradeView)
+        bottomRightGrid.setEntry(2, 0, incomeUpgradeView)
+
+        bottomRightGrid.setEntry(0, 1, addTowerView)
+        bottomRightGrid.setEntry(1, 1, addSupplyDepotView)
+    }
+
+    fun resetView() {
+        when (currentViewType) {
+            ViewType.NONE -> Unit
+            ViewType.SINGLE_TOWER_SELECTION -> {
+                mutableCurrentlySelectedTowerState.currentTowerId = null
+                middleSelectionContainer.removeChildren()
+                holdShiftText.removeFromParent()
+                bottomRightGrid.clearEntry(0, 1)
+                bottomRightGrid.clearEntry(1, 1)
+            }
+
+            ViewType.MULTI_TOWER_SELECTION -> {
+                middleSelectionContainer.removeChildren()
+            }
+
+            ViewType.SINGLE_DEPOT_SELECTION -> {
+
+            }
+
+            ViewType.SINGLE_TOWER_SELECTION_UPGRADE -> Unit
+        }
+        resetInitial()
+    }
+
+    fun setUpgradeSingleTowerView() {
+        currentViewType = ViewType.SINGLE_TOWER_SELECTION_UPGRADE
+
     }
 }
