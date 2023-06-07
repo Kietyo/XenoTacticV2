@@ -20,6 +20,7 @@ object GlobalResources {
 
     lateinit var DAMAGE_ICON: Bitmap
     lateinit var COOLDOWN_ICON: Bitmap
+    lateinit var UPGRADE_TOWER_ICON: Bitmap
     lateinit var GOLD_ICON: Bitmap32
     lateinit var SUPPLY_ICON: Bitmap32
 
@@ -48,6 +49,7 @@ object GlobalResources {
         val supplyIconLayerName = "supply_icon"
         val damageIconLayerName = "damage_icon"
         val cooldownIconLayerName = "cooldown_icon"
+        val upgradeTowerIconLayerName = "upgrade_tower_icon"
 
 //        DAMAGE_ICON = resourcesVfs["damage_icon.aseprite"].readImageDataContainer(ASE.toProps()).toAsepriteModel()
 //            .getAsepriteLayerWithAllFrames("icon").frames.first().computeUncroppedBitmap()
@@ -58,6 +60,7 @@ object GlobalResources {
 
         DAMAGE_ICON = icons.frames.first().createMergedBitmap(backgroundUpgradeLayerName, damageIconLayerName)
         COOLDOWN_ICON = icons.frames.first().createMergedBitmap(backgroundUpgradeLayerName, cooldownIconLayerName)
+        UPGRADE_TOWER_ICON = icons.frames.first().createMergedBitmap(backgroundUpgradeLayerName, upgradeTowerIconLayerName)
         GOLD_ICON = icons.frames.first().createMergedBitmap(backgroundLayerName, goldIconLayerName)
         SUPPLY_ICON = icons.frames.first().createMergedBitmap(backgroundLayerName, supplyIconLayerName)
 

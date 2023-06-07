@@ -333,6 +333,29 @@ class UIGuiContainer(
             }
         }
 
+        val towerUpgradeView = Container().apply {
+            image(GlobalResources.UPGRADE_TOWER_ICON) {
+                width = 50f
+                height = 50f
+            }
+            val tooltip = UITooltipDescription(
+                null,
+                null,
+                "Upgrade Tower",
+                "Choose from a selection\nof tower upgrades."
+            )
+            onOver {
+                tooltip.addTo(this@UIGuiContainer.stage) {
+                    scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(tooltipSize, tooltipSize))
+                    alignBottomToTopOf(this@apply, padding = 5.0)
+                    centerXOn(this@apply)
+                }
+            }
+            onOut {
+                tooltip.removeFromParent()
+            }
+        }
+
         val incomeUpgradeView = UITextRect(
             "Income\nUpgrade",
             50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
@@ -473,6 +496,7 @@ class UIGuiContainer(
                 bottomRightGrid.setEntry(3, 0, showRangeView)
                 bottomRightGrid.setEntry(0, 1, towerDamageUpgradeView)
                 bottomRightGrid.setEntry(1, 1, towerSpeedUpgradeView)
+                bottomRightGrid.setEntry(2, 1, towerUpgradeView)
                 bottomRightGrid.setEntry(3, 1, sellEntitiesView)
 
                 holdShiftText.addTo(stage) {
