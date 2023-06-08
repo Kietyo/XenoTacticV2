@@ -14,6 +14,7 @@ object GlobalResources {
 
     lateinit var MONSTER_SPRITE: ImageDataContainer
     lateinit var GUN_SPRITE: Bitmap32
+    lateinit var HIGH_DAMAGE_GUN_SPRITE: Bitmap32
     lateinit var DEPOT_SPRITE: Bitmap32
     lateinit var TOWER_BASE_SPRITE: Bitmap32
     lateinit var TOWER_BASE_DETAIL_SPRITE: Bitmap32
@@ -38,6 +39,7 @@ object GlobalResources {
         TOWER_BASE_DETAIL_SPRITE =
             towerSprites.getAsepriteLayerWithAllFrames("base_detail").frames.first().computeUncroppedBitmap()
         GUN_SPRITE = towerSprites.getAsepriteLayerWithAllFrames("gun3").frames.first().computeUncroppedBitmap()
+        HIGH_DAMAGE_GUN_SPRITE = towerSprites.getAsepriteLayerWithAllFrames("high_damage").frames.first().computeUncroppedBitmap()
         DEPOT_SPRITE = towerSprites.getAsepriteLayerWithAllFrames("depot").frames.first().computeUncroppedBitmap()
 
         val icons = resourcesVfs["icons.aseprite"].readImageDataContainer(ASE.toProps().apply {

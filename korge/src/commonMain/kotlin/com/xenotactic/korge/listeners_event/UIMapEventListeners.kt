@@ -5,6 +5,7 @@ import com.xenotactic.gamelogic.components.*
 import com.xenotactic.gamelogic.events.AddedEntityEvent
 import com.xenotactic.gamelogic.events.AddedMonsterEntityEvent
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.model.TowerType
 import com.xenotactic.gamelogic.state.MutableGoldState
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.UIEightDirectionalSprite
@@ -106,7 +107,9 @@ class UIMapEventListeners(
                 }
 
                 MapEntityType.TOWER -> {
-                    val tower = createUIEntityContainerForTower(worldWidth, worldHeight, uiEntityContainer)
+                    val tower = createUIEntityContainerForTower(worldWidth, worldHeight,
+                        TowerType.BASIC,
+                        uiEntityContainer)
                     addComponentOrThrow(UIGunBarrelComponent(tower.getChildByName(GUN_VIEW_NAME)!!))
                 }
 

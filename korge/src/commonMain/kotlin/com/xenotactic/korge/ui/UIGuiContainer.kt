@@ -5,12 +5,10 @@ import com.xenotactic.ecs.EntityId
 import com.xenotactic.gamelogic.components.DamageUpgradeComponent
 import com.xenotactic.gamelogic.components.RangeComponent
 import com.xenotactic.gamelogic.components.SpeedUpgradeComponent
-import com.xenotactic.gamelogic.events.AddedEntityEvent
-import com.xenotactic.gamelogic.events.GoldStateUpdated
-import com.xenotactic.gamelogic.events.RemovedSupplyDepotEntityEvent
 import com.xenotactic.gamelogic.events.RemovedTowerEntityEvent
 import com.xenotactic.gamelogic.model.GameWorld
 import com.xenotactic.gamelogic.model.MapEntityType
+import com.xenotactic.gamelogic.model.TowerType
 import com.xenotactic.gamelogic.state.GameplayState
 import com.xenotactic.gamelogic.state.MutableCurrentlySelectedTowerState
 import com.xenotactic.gamelogic.state.MutableGoldState
@@ -22,10 +20,7 @@ import com.xenotactic.korge.events.UpgradeTowerSpeedEvent
 import com.xenotactic.korge.listeners_event.RemoveUIEntitiesEvent
 import com.xenotactic.korge.state.DeadUIZonesState
 import com.xenotactic.korge.state.EditorState
-import com.xenotactic.korge.utils.alignBottomToBottomOfWindow
-import com.xenotactic.korge.utils.alignRightToRightOfWindow
-import com.xenotactic.korge.utils.distributeVertically
-import com.xenotactic.korge.utils.isEmpty
+import com.xenotactic.korge.utils.*
 import korlibs.image.color.MaterialColors
 import korlibs.korge.component.onAttachDetach
 import korlibs.korge.input.onClick
@@ -64,6 +59,8 @@ class UIGuiContainer(
     val bottomRightGridWidth = 400.0
     val tooltipSize = bottomRightGridWidth / 1.5
 
+    val gridSquareLength = 50.0
+
     var currentViewType = ViewType.NONE
     val mutableCurrentlySelectedTowerState = MutableCurrentlySelectedTowerState(null)
     val bottomRightGrid: UIFixedGrid
@@ -71,22 +68,28 @@ class UIGuiContainer(
 
     val globalDamageUpgradeView = UITextRect(
         "Global\nDamage\nUpgrade",
-        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        gridSquareLength, gridSquareLength, 5.0, GlobalResources.FONT_ATKINSON_BOLD
     )
 
     val globalRangeUpgradeView = UITextRect(
         "Global\nRange\nUpgrade",
-        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        gridSquareLength, gridSquareLength, 5.0, GlobalResources.FONT_ATKINSON_BOLD
     )
 
     val incomeUpgradeView = UITextRect(
         "Income\nUpgrade",
-        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        gridSquareLength, gridSquareLength, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+    )
+
+    val highDamageTowerSprite = createUIEntityContainerForTower(
+        gridSquareLength.toWorldUnit(),
+        gridSquareLength.toWorldUnit(),
+        TowerType.HIGH_DAMAGE
     )
 
     val addTowerView = UITextRect(
         "Add\nTower",
-        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        gridSquareLength, gridSquareLength, 5.0, GlobalResources.FONT_ATKINSON_BOLD
     ).apply {
         onClick {
             editorState.toggle(MapEntityType.TOWER)
@@ -106,7 +109,7 @@ class UIGuiContainer(
 
     val addSupplyDepotView = UITextRect(
         "Add\nSupply\nDepot",
-        50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+        gridSquareLength, gridSquareLength, 5.0, GlobalResources.FONT_ATKINSON_BOLD
     ).apply {
         onClick {
             editorState.toggle(MapEntityType.SUPPLY_DEPOT)
@@ -219,11 +222,9 @@ class UIGuiContainer(
             3.0, 3.0
         )
 
-
-
         val sellEntitiesView = UITextRect(
             "Sell\nEntities",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+            gridSquareLength, gridSquareLength, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
             onClick {
                 eventBus.send(RemoveUIEntitiesEvent(gameWorld.selectionFamily.getSequence().toSet()))
@@ -250,7 +251,7 @@ class UIGuiContainer(
 
         val showRangeView = UITextRect(
             "Show\nRange",
-            50.0, 50.0, 5.0, GlobalResources.FONT_ATKINSON_BOLD
+            gridSquareLength, gridSquareLength, 5.0, GlobalResources.FONT_ATKINSON_BOLD
         ).apply {
             onClick {
                 mutableCurrentlySelectedTowerState.currentTowerId?.also {
@@ -296,8 +297,11 @@ class UIGuiContainer(
 
         val towerUpgradeView = Container().apply {
             image(GlobalResources.UPGRADE_TOWER_ICON) {
-                width = 50f
-                height = 50f
+                width = gridSquareLength.toFloat()
+                height = gridSquareLength.toFloat()
+            }
+            onClick {
+                setUpgradeSingleTowerView()
             }
             val tooltip = UITooltipDescription(
                 null,
@@ -313,6 +317,9 @@ class UIGuiContainer(
                 }
             }
             onOut {
+                tooltip.removeFromParent()
+            }
+            onAttachDetach {
                 tooltip.removeFromParent()
             }
         }
@@ -341,6 +348,8 @@ class UIGuiContainer(
             { eventBus.send(UpgradeTowerSpeedEvent(it)) }
         )
 
+
+
         val textHeightSize = bottomRightGridHeight / 7
         holdShiftText = Text(
             "HOLD SHIFT (+5)",
@@ -350,13 +359,7 @@ class UIGuiContainer(
             scaleWhileMaintainingAspect(ScalingOption.ByHeight(textHeightSize))
         }
 
-
-
         deadUIZonesState.zones.add(bottomRightGrid)
-
-
-
-
 
         resetInitial()
 
@@ -384,7 +387,7 @@ class UIGuiContainer(
             })
 
         eventBus.register<EntitySelectionChangedEvent> {
-            resetView()
+            cleanupView()
 
             if (gameWorld.selectionFamily.size == 1 && gameWorld.isTowerEntity(gameWorld.selectionFamily.first())) {
                 currentViewType = ViewType.SINGLE_TOWER_SELECTION
@@ -453,7 +456,7 @@ class UIGuiContainer(
 
         eventBus.register<RemovedTowerEntityEvent> {
             if (mutableCurrentlySelectedTowerState.currentTowerId == it.entityId) {
-                resetView()
+                cleanupView()
             }
         }
     }
@@ -469,7 +472,7 @@ class UIGuiContainer(
         bottomRightGrid.setEntry(1, 1, addSupplyDepotView)
     }
 
-    fun resetView() {
+    fun cleanupView() {
         when (currentViewType) {
             ViewType.NONE -> Unit
             ViewType.SINGLE_TOWER_SELECTION -> {
@@ -494,7 +497,9 @@ class UIGuiContainer(
     }
 
     fun setUpgradeSingleTowerView() {
+        cleanupView()
         currentViewType = ViewType.SINGLE_TOWER_SELECTION_UPGRADE
-
+        bottomRightGrid.clear()
+        bottomRightGrid.setEntry(0,0, highDamageTowerSprite)
     }
 }

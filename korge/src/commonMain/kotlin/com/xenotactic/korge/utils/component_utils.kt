@@ -6,6 +6,7 @@ import com.xenotactic.gamelogic.components.BottomLeftPositionComponent
 import com.xenotactic.gamelogic.components.SizeComponent
 import com.xenotactic.gamelogic.model.GameUnitTuple
 import com.xenotactic.gamelogic.model.IRectangleEntity
+import com.xenotactic.gamelogic.model.TowerType
 import com.xenotactic.gamelogic.utils.*
 import com.xenotactic.gamelogic.views.EightDirection
 import korlibs.korge.view.*
@@ -73,8 +74,11 @@ fun AbstractEntity.isFullyCoveredBy(other: IRectangleEntity): Boolean {
     )
 }
 
-fun intersectRectangles(thisPosition: GameUnitTuple, thisSize: GameUnitTuple,
-    otherPosition: GameUnitTuple, otherSize: GameUnitTuple
+fun intersectRectangles(
+    thisPosition: GameUnitTuple,
+    thisSize: GameUnitTuple,
+    otherPosition: GameUnitTuple,
+    otherSize: GameUnitTuple
 ): Boolean {
     return intersectRectangles(
         thisPosition.x.toDouble(),
@@ -95,26 +99,22 @@ fun Point.kAngleTo(other: Point): Angle {
     return Angle.between(this.x, this.y, other.x, this.y - yDiff)
 }
 
-data class DirectionMatcher(
-    val closedRange: ClosedRange<Angle>,
-    val direction: EightDirection
-)
+data class DirectionMatcher(val closedRange: ClosedRange<Angle>, val direction: EightDirection)
 
-val DIRECTION_MATCHERS = listOf(
-    DirectionMatcher(330.degrees..(30.degrees), EightDirection.RIGHT),
-    DirectionMatcher(60.degrees..(120.degrees), EightDirection.UP),
-    DirectionMatcher(150.degrees..(210.degrees), EightDirection.LEFT),
-    DirectionMatcher(240.degrees..(300.degrees), EightDirection.DOWN),
-    DirectionMatcher(30.degrees..(60.degrees), EightDirection.UP_RIGHT),
-    DirectionMatcher(120.degrees..(150.degrees), EightDirection.UP_LEFT),
-    DirectionMatcher(210.degrees..(240.degrees), EightDirection.DOWN_LEFT),
-    DirectionMatcher(300.degrees..(330.degrees), EightDirection.DOWN_RIGHT),
-)
+val DIRECTION_MATCHERS =
+    listOf(
+        DirectionMatcher(330.degrees..(30.degrees), EightDirection.RIGHT),
+        DirectionMatcher(60.degrees..(120.degrees), EightDirection.UP),
+        DirectionMatcher(150.degrees..(210.degrees), EightDirection.LEFT),
+        DirectionMatcher(240.degrees..(300.degrees), EightDirection.DOWN),
+        DirectionMatcher(30.degrees..(60.degrees), EightDirection.UP_RIGHT),
+        DirectionMatcher(120.degrees..(150.degrees), EightDirection.UP_LEFT),
+        DirectionMatcher(210.degrees..(240.degrees), EightDirection.DOWN_LEFT),
+        DirectionMatcher(300.degrees..(330.degrees), EightDirection.DOWN_RIGHT),
+    )
 
 fun getDirection8(angle: Angle): EightDirection {
-    val matcher = DIRECTION_MATCHERS.first {
-        angle.inBetween(it.closedRange)
-    }
+    val matcher = DIRECTION_MATCHERS.first { angle.inBetween(it.closedRange) }
     return matcher.direction
 }
 
@@ -131,7 +131,8 @@ const val GUN_VIEW_NAME = "gun"
 fun populateTowerBaseUiEntityContainer(
     worldWidth: WorldUnit,
     worldHeight: WorldUnit,
-    uiEntityContainer: Container) {
+    uiEntityContainer: Container
+) {
     uiEntityContainer.image(GlobalResources.TOWER_BASE_SPRITE) {
         smoothing = false
         scaledWidth = worldWidth.toFloat()
@@ -147,20 +148,31 @@ fun populateTowerBaseUiEntityContainer(
 fun createUIEntityContainerForTower(
     worldWidth: WorldUnit,
     worldHeight: WorldUnit,
-    uiEntityContainer: Container = Container()): Container {
+    towerType: TowerType = TowerType.BASIC,
+    uiEntityContainer: Container = Container()
+): Container {
     populateTowerBaseUiEntityContainer(worldWidth, worldHeight, uiEntityContainer)
-    val gunImage = uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
-        smoothing = false
-        anchor(Anchor.CENTER)
-        xy(worldWidth / 2, worldHeight / 2)
-        //                        scaleWhileMaintainingAspect(ScalingOption.ByWidthAndHeight(worldWidth.toFloat() * 20.0/32, worldHeight.toFloat() * 8.0/32))
-        scaleWhileMaintainingAspect(
-            ScalingOption.ByWidthAndHeight(
-                worldWidth.toDouble(),
-                worldHeight.toDouble()
-            )
-        )
-        name(GUN_VIEW_NAME)
+    when (towerType) {
+        TowerType.BASIC ->
+            uiEntityContainer.image(GlobalResources.GUN_SPRITE) {
+                smoothing = false
+                anchor(Anchor.CENTER)
+                xy(worldWidth / 2, worldHeight / 2)
+                scaleWhileMaintainingAspect(
+                    ScalingOption.ByWidthAndHeight(worldWidth.toDouble(), worldHeight.toDouble())
+                )
+                name(GUN_VIEW_NAME)
+            }
+        TowerType.HIGH_DAMAGE ->
+            uiEntityContainer.image(GlobalResources.HIGH_DAMAGE_GUN_SPRITE) {
+                smoothing = false
+                anchor(Anchor.CENTER)
+                xy(worldWidth / 2, worldHeight / 2)
+                scaleWhileMaintainingAspect(
+                    ScalingOption.ByWidthAndHeight(worldWidth.toDouble(), worldHeight.toDouble())
+                )
+                name(GUN_VIEW_NAME)
+            }
     }
     return uiEntityContainer
 }
@@ -168,7 +180,8 @@ fun createUIEntityContainerForTower(
 fun createUIEntityContainerForSupplyDepot(
     worldWidth: WorldUnit,
     worldHeight: WorldUnit,
-    uiEntityContainer: Container = Container()): Container {
+    uiEntityContainer: Container = Container()
+): Container {
     populateTowerBaseUiEntityContainer(worldWidth, worldHeight, uiEntityContainer)
     uiEntityContainer.image(GlobalResources.DEPOT_SPRITE) {
         smoothing = false
