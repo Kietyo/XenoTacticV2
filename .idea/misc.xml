@@ -5,6 +5,7 @@
     <file type="web" url="file://$PROJECT_DIR$/../korge-compose/korge-compose" />
     <file type="web" url="file://$PROJECT_DIR$/../ktruth" />
     <file type="web" url="file://$PROJECT_DIR$/../XenoECS" />
+    <file type="web" url="file://$PROJECT_DIR$/../XenoKorgeCommon" />
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
   <component name="PWA">

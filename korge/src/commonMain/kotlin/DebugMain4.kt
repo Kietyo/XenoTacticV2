@@ -13,10 +13,8 @@ object DebugMain4 {
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
         Korge(
-            KorgeConfig(
                 backgroundColor = Colors.LIGHTGRAY,
                 virtualSize = Size(1280, 720)
-            )
         ) {
             GlobalResources.init()
             //            val font = resourcesVfs["fonts/AtkinsonHyperlegible-Regular.ttf"].readTtfFont()

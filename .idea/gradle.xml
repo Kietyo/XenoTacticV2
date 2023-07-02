@@ -8,6 +8,7 @@
         <option name="gradleJvm" value="18" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/../XenoKorgeCommon" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/XenoECS" />
             <option value="$PROJECT_DIR$/XenoTactic-GameLogic" />

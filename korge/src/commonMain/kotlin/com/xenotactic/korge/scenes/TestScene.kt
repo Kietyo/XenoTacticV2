@@ -1,10 +1,10 @@
 package com.xenotactic.korge.scenes
 
+import com.xeno.korge.common.Column
+import com.xeno.korge.common.Row
+import com.xeno.korge.common.Modifier
+import com.xeno.korge.common.Modifiers
 import com.xenotactic.gamelogic.utils.toScale
-import com.xenotactic.korge.ui.Column
-import com.xenotactic.korge.ui.Modifier
-import com.xenotactic.korge.ui.Modifiers
-import com.xenotactic.korge.ui.Row
 import korlibs.image.color.Colors
 import korlibs.korge.scene.Scene
 import korlibs.korge.ui.UIText
@@ -37,7 +37,7 @@ class TestScene : Scene() {
 
         val col = Column().addTo(
             this@sceneInit.stage!!,
-            modifiers = Modifiers.of(
+            modifiers = com.xeno.korge.common.Modifiers.of(
                 Modifier.SpacingBetween(between = 5f),
                 Modifier.SolidBackgroundColor(Colors.RED),
                 Modifier.Padding(left = 5f)
@@ -45,7 +45,7 @@ class TestScene : Scene() {
         ) {
             val rowSpacing = Modifier.SpacingBetween(between = 0f)
             addLayout {
-                Row(modifiers = Modifiers.of(rowSpacing)) {
+                com.xeno.korge.common.Row(modifiers = com.xeno.korge.common.Modifiers.of(rowSpacing)) {
                     addItem { UIText("User Name", size = Size(100, 18)) }
                     addItem { UIText("Kills", size = Size(64, 18)) }
                     addItem {

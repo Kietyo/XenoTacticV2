@@ -1,12 +1,9 @@
-import com.xenotactic.korge.ui.Column
-import com.xenotactic.korge.ui.Modifier
-import com.xenotactic.korge.ui.Modifiers
-import com.xenotactic.korge.ui.Row
+import com.xeno.korge.common.Column
+import com.xeno.korge.common.Modifier
 import korlibs.image.color.Colors
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.file.std.rootLocalVfs
 import korlibs.korge.Korge
-import korlibs.korge.KorgeConfig
 import korlibs.korge.ui.UIText
 import korlibs.korge.ui.uiText
 import korlibs.korge.view.container
@@ -19,13 +16,7 @@ object DebugMain {
 
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
-        Korge(
-            KorgeConfig(
-                backgroundColor = Colors["#2b2b2b"],
-                virtualSize = Size(1280, 720)
-            )
-        ) {
-
+        Korge(backgroundColor = Colors["#2b2b2b"], virtualSize = Size(1280, 720)) {
             val content = container {
                 solidRect(Size(100, 100))
                 uiText("UI test")
@@ -55,26 +46,34 @@ object DebugMain {
             //                }
             //            }
 
-            val col = Column().addTo(
-                this,
-                modifiers = Modifiers.of(Modifier.SpacingBetween(between = 10f))
-            ) {
-                addLayout {
-                    Row(modifiers = Modifiers.of(Modifier.SpacingBetween(between = 10f))) {
-                        addItem { UIText("User Name") }
-                        addItem { UIText("Kills") }
-                        addItem { UIText("Damage") }
+            val col =
+                Column().addTo(
+                    this,
+                    modifiers =
+                        com.xeno.korge.common.Modifiers.of(Modifier.SpacingBetween(between = 10f))
+                ) {
+                    addLayout {
+                        com.xeno.korge.common.Row(
+                            modifiers =
+                                com.xeno.korge.common.Modifiers.of(
+                                    Modifier.SpacingBetween(between = 10f)
+                                )
+                        ) {
+                            addItem { UIText("User Name") }
+                            addItem { UIText("Kills") }
+                            addItem { UIText("Damage") }
+                        }
                     }
-                }
 
-                //                addLayout {
-                //                    Row(modifiers = Modifiers.with(Modifier.Spacing(start = 10f, between = 20f))) {
-                //                        addItem { Text("Xenotactic") }
-                //                        addItem { Text("13") }
-                //                        addItem { Text("123456") }
-                //                    }
-                //                }
-            }
+                    //                addLayout {
+                    //                    Row(modifiers = Modifiers.with(Modifier.Spacing(start =
+                    // 10f, between = 20f))) {
+                    //                        addItem { Text("Xenotactic") }
+                    //                        addItem { Text("13") }
+                    //                        addItem { Text("123456") }
+                    //                    }
+                    //                }
+                }
 
             //            col.content.scale = 3.toScale()
 
@@ -82,6 +81,6 @@ object DebugMain {
     }
 }
 
-//interface Modifier {
+// interface Modifier {
 //    companion object : Modifier
-//}
+// }

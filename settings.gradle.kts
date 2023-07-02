@@ -51,7 +51,9 @@ include("XenoECS")
 
 include("ktruth")
 //project(":ktruth").projectDir = file("..\\ktruth")
-
 //include("korge-compose")
 //project(":korge-compose").projectDir = file("..\\korge-compose\\korge-compose")
+
+include("XenoKorgeCommon")
+project(":XenoKorgeCommon").projectDir = file("..\\XenoKorgeCommon")
 

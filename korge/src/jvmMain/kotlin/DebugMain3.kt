@@ -25,10 +25,8 @@ object DebugMain3 {
     @JvmStatic
     fun main(args: Array<String>) = runBlockingNoJs {
             Korge(
-                KorgeConfig(
                     backgroundColor = Colors.LIGHTGRAY,
                     virtualSize = Size(640, 480)
-                )
             ) {
 //            text("Hello world")
 
