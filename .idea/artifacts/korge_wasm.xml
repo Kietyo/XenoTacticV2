@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="korge-wasm">
+    <output-path>$PROJECT_DIR$/korge/build/libs</output-path>
+    <root id="archive" name="korge-wasm.jar">
+      <element id="module-output" name="XenoTacticV2.korge.wasmMain" />
+    </root>
+  </artifact>
+</component>

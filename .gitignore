@@ -3,3 +3,4 @@
 build/
 *.hprof
 deps/
+kotlin-js-store/

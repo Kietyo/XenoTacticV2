@@ -16,6 +16,12 @@ To Run (only tested in IntelliJ):
 - Run Tasks > run > runJvm
   ![Run](screenshots/gradle_run.png)
 
+## Building a browser distribution
+
+```shell
+./gradlew jsBrowserDistribution # Outputs to /build/distributions
+```
+
 ## Attributions
 
 - MemDixy/cyanochlorite - Idea for rock counters
